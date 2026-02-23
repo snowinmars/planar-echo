@@ -1,0 +1,27 @@
+{
+  "name": "planar-prism",
+  "version": "0.0.1",
+  "description": "Typescript pipe to transform officially bought InfinityEngine binaries (Planescape:Torment) to json",
+  "main": "./index.ts",
+  "author": "snowinmars",
+  "license": "GPL-3.0-or-later",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "start": "tsc && tsc-alias && node dist/index.js",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.9.0",
+    "@types/node": "^25.3.0",
+    "eslint": "^10.0.1",
+    "tsc": "^2.0.4",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  }
+}
