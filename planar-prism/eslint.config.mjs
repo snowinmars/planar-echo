@@ -1,9 +1,13 @@
 import eslint from '@eslint/js';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig(
+  globalIgnores([
+    './dist/*',
+    './node_modules/*',
+  ]),
   eslint.configs.recommended,
   tseslint.configs.recommended,
   stylistic.configs.customize({

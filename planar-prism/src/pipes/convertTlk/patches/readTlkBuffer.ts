@@ -1,13 +1,15 @@
-import { readString, readShort, readUint } from '../../../pipes/readers.js';
-import type { TlkHeader, TlkItem, TlkEntry } from '../types.js';
+import { createReader } from '../../../pipes/readers.js';
 
-const readHeader = (buffer: Buffer, offset: number): TlkHeader => {
+import type { TlkHeader, TlkItem, TlkEntry } from '../types.js';
+import type { BufferReader } from '../../../pipes/readers.js';
+
+const readHeader = (reader: BufferReader): TlkHeader => {
   /* eslint-disable @stylistic/no-multi-spaces */
-  const signature    = readString(buffer, offset, 4).trim();
-  const version      = readString(buffer, offset +  4, 4).trim();
-  const language     = readShort (buffer, offset +  8);
-  const stringCount  = readUint  (buffer, offset + 10);
-  const stringOffset = readUint  (buffer, offset + 14);
+  const signature    = reader.string(4);
+  const version      = reader.string(4);
+  const language     = reader.short ();
+  const stringCount  = reader.uint  ();
+  const stringOffset = reader.uint  ();
   /* eslint-enable */
 
   return {
@@ -19,14 +21,14 @@ const readHeader = (buffer: Buffer, offset: number): TlkHeader => {
   };
 };
 
-const readTlkString = (i: number, buffer: Buffer, offset: number): TlkItem => {
+const readTlkString = (i: number, reader: BufferReader): TlkItem => {
   /* eslint-disable @stylistic/no-multi-spaces */
-  const flags        = readShort (buffer, offset);
-  const soundResRef  = readString(buffer, offset +  2, 8).trim();
-  const volume       = readUint  (buffer, offset + 10);
-  const pitch        = readUint  (buffer, offset + 14);
-  const stringOffset = readUint  (buffer, offset + 18);
-  const length       = readUint  (buffer, offset + 22);
+  const flags        = reader.short ();
+  const soundResRef  = reader.string(8);
+  const volume       = reader.uint  ();
+  const pitch        = reader.uint  ();
+  const stringOffset = reader.uint  ();
+  const length       = reader.uint  ();
   /* eslint-enable */
 
   return {
@@ -41,12 +43,7 @@ const readTlkString = (i: number, buffer: Buffer, offset: number): TlkItem => {
   };
 };
 
-const readTlkBuffer = (buffer: Buffer): TlkEntry => {
-  const header = readHeader(buffer, 0);
-
-  if (header.signature !== 'TLK') throw new Error(`Unsupported signature: '${header.signature}'`);
-  if (header.version !== 'V1') throw new Error(`Unsupported version: '${header.version}'`);
-
+const readItems = (reader: BufferReader, header: TlkHeader): Map<number, TlkItem> => {
   const itemsMap = new Map<number, TlkItem>();
   const headerLengthBytes = 18;
   const tlkStringLengthBytes = 26;
@@ -54,11 +51,11 @@ const readTlkBuffer = (buffer: Buffer): TlkEntry => {
 
   for (let i = 0; i < header.stringCount; i++) {
     const offset = headerLengthBytes + i * tlkStringLengthBytes;
-    const item = readTlkString(i, buffer, offset);
+    const item = readTlkString(i, reader.fork(offset));
 
     let text = '';
     if (item.length > 0) {
-      text = readString(buffer, stringBlockStart + item.offset, item.length, 'utf8').trim();
+      text = reader.fork(stringBlockStart + item.offset).string(item.length, false, 'utf8');
     }
 
     itemsMap.set(item.index, {
@@ -66,6 +63,19 @@ const readTlkBuffer = (buffer: Buffer): TlkEntry => {
       text,
     });
   }
+
+  return itemsMap;
+};
+
+const readTlkBuffer = (buffer: Buffer): TlkEntry => {
+  const reader = createReader(buffer);
+
+  const header = readHeader(reader);
+
+  if (header.signature !== 'tlk') throw new Error(`Unsupported signature: '${header.signature}'`);
+  if (header.version !== 'v1') throw new Error(`Unsupported version: '${header.version}'`);
+
+  const itemsMap = readItems(reader, header);
 
   return {
     header,

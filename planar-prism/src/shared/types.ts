@@ -39,9 +39,18 @@ export enum DecompiledItemType {
   wed = 'wed',
   wmp = 'wmp',
 }
+export type GameName
+  = | 'bg1'
+    | 'bg2'
+    | 'iwd'
+    | 'iwd2'
+    | 'pst'
+    | 'pstee';
+;
 export type Pathes = Readonly<{
   weidu: string;
   game: string;
+  gameName: GameName;
   tlkPath: string;
   lang: Lang;
   output: Readonly<{
@@ -49,6 +58,7 @@ export type Pathes = Readonly<{
     decimpiledBiff: string;
     decimpiledBiffJson: string;
     jsonDialogues: string;
+    jsonItems: string;
   }>;
 }>;
 export type Biff = Readonly<{
@@ -67,3 +77,4 @@ export const just = <T>(maybe: Maybe<T>): T => {
   throw new Error('Null reference exception');
 };
 export const maybe = <T>(value: T): Maybe<T> => value ?? null;
+export type PartialWriteable<T> = Partial<{ -readonly [P in keyof T]: T[P] }>;

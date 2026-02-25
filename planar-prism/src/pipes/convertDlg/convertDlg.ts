@@ -19,19 +19,40 @@ const readNpcDialogueFile = async (filePath: string, resourceName: string, tlk: 
   return nested;
 };
 
-const convertDlg = async (pathes: Pathes, items: DecompiledItem[], tlk: TlkEntry, percentCallback: ((percent: number) => void) | null = null): Promise<NpcDialogue[]> => {
-  const npcDialogues: NpcDialogue[] = [];
+const convertDlg = (
+  pathes: Pathes,
+  decompiledItems: DecompiledItem[],
+  tlk: TlkEntry,
+  percentCallback: ((percent: number) => void) | null = null,
+): AsyncIterableIterator<NpcDialogue> => {
   let i = 0;
 
-  for (const item of items) {
-    const npcDialogue = await readNpcDialogueFile(join(pathes.output.decimpiledBiff, item.name), item.name, tlk);
-    const percent = Math.round(i * 100 / items.length);
-    percentCallback?.(percent);
-    npcDialogues.push(npcDialogue);
-    i++;
-  }
+  const iterator: AsyncIterableIterator<NpcDialogue> = {
+    [Symbol.asyncIterator]() {
+      return this;
+    },
 
-  return npcDialogues;
+    async next(): Promise<IteratorResult<NpcDialogue>> {
+      if (i >= decompiledItems.length) {
+        return { done: true, value: undefined };
+      }
+
+      const decompiledItem = decompiledItems[i]!;
+      const npcDialogue = await readNpcDialogueFile(
+        join(pathes.output.decimpiledBiff, decompiledItem.name),
+        decompiledItem.name,
+        tlk,
+      );
+
+      const percent = Math.round((i + 1) * 100 / decompiledItems.length);
+      percentCallback?.(percent);
+
+      i++;
+      return { done: false, value: npcDialogue };
+    },
+  };
+
+  return iterator;
 };
 
 export default convertDlg;

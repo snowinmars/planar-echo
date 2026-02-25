@@ -54,10 +54,12 @@ const createPathes = (lang: Lang): Pathes => {
   const decimpiledBiff = normalize(join(outputPath, 'decimpiledBiff'));
   const decimpiledBiffJson = normalize(join(decimpiledBiff, 'output.json'));
   const jsonDialogues = normalize(join(outputPath, 'json', 'dialogues'));
+  const jsonItems = normalize(join(outputPath, 'json', 'items'));
 
   return {
     weidu: weiduExePath,
     game: gameFolder,
+    gameName: 'pstee',
     tlkPath,
     lang,
     output: {
@@ -65,6 +67,7 @@ const createPathes = (lang: Lang): Pathes => {
       decimpiledBiff,
       decimpiledBiffJson,
       jsonDialogues,
+      jsonItems,
     },
   };
 };
@@ -120,7 +123,7 @@ Promise.resolve()
 
     logger.info(`Converting dlgs to json...`);
     const npcDialogues = await convertDlg(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.dlg), tlk, logPercent);
-    for (const npcDialogue of npcDialogues) {
+    for await (const npcDialogue of npcDialogues) {
       await writeFile(join(pathes.output.jsonDialogues, npcDialogue.resourceName), JSON.stringify(npcDialogue, null, 2), { encoding: 'utf8' });
     }
 
@@ -128,7 +131,12 @@ Promise.resolve()
     await convertGlsl (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.glsl));
     await convertIds (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ids));
     await convertIni (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ini));
-    await convertItm (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.itm));
+
+    const items = await convertItm (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.itm), tlk, logPercent);
+    for await (const item of items) {
+      await writeFile(join(pathes.output.jsonItems, item.resourceName), JSON.stringify(item, null, 2), { encoding: 'utf8' });
+    }
+
     await convertLua (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.lua));
     await convertMenu (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.menu));
     await convertMos (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.mos));

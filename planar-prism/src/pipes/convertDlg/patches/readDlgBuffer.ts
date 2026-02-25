@@ -1,4 +1,4 @@
-import { readString, readUint } from '../../../pipes/readers.js';
+import createReader, { type BufferReader } from '../../../pipes/readers.js';
 import type {
   PlainNpcDialogueHeader,
   PlainNpcDialogueState,
@@ -23,23 +23,23 @@ const intMax = 4294967295;
 //   return flags;
 // };
 
-const readHeader = (buffer: Buffer, offset: number): PlainNpcDialogueHeader => {
+const readHeader = (reader: BufferReader): PlainNpcDialogueHeader => {
   /* eslint-disable @stylistic/no-multi-spaces */
-  const signature               = readString(buffer, offset, 4).trim();
-  const version                 = readString(buffer, offset + 4, 4).trim();
+  const signature               = reader.string(4);
+  const version                 = reader.string(4);
 
-  const statesCount             = readUint(buffer, offset + 8);
-  const statesOffset            = readUint(buffer, offset + 12);
-  const responsesCount          = readUint(buffer, offset + 16);
-  const responsesOffset         = readUint(buffer, offset + 20);
-  const stateTriggersOffset     = readUint(buffer, offset + 24);
-  const stateTriggersCount      = readUint(buffer, offset + 28);
-  const responsesTriggersOffset = readUint(buffer, offset + 32);
-  const responseTriggersCount   = readUint(buffer, offset + 36);
-  const actionsOffset           = readUint(buffer, offset + 40);
-  const actionsCount            = readUint(buffer, offset + 44);
+  const statesCount             = reader.uint();
+  const statesOffset            = reader.uint();
+  const responsesCount          = reader.uint();
+  const responsesOffset         = reader.uint();
+  const stateTriggersOffset     = reader.uint();
+  const stateTriggersCount      = reader.uint();
+  const responsesTriggersOffset = reader.uint();
+  const responseTriggersCount   = reader.uint();
+  const actionsOffset           = reader.uint();
+  const actionsCount            = reader.uint();
 
-  const threatResponse          = statesOffset > 0x30 ? readUint(buffer, offset + 48) : 0;
+  const threatResponse          = statesOffset > 0x30 ? reader.uint() : 0;
   /* eslint-enable */
 
   return {
@@ -59,15 +59,15 @@ const readHeader = (buffer: Buffer, offset: number): PlainNpcDialogueHeader => {
   };
 };
 
-const readStates = (buffer: Buffer, offset: number, numberOfStates: number): PlainNpcDialogueState[] => {
+const readStates = (reader: BufferReader, numberOfStates: number): PlainNpcDialogueState[] => {
   const states: PlainNpcDialogueState[] = [];
 
   for (let i = 0; i < numberOfStates; i++) {
     /* eslint-disable @stylistic/no-multi-spaces */
-    const textRef            = readUint(buffer, offset);
-    const firstResponseIndex = readUint(buffer, offset + 4);
-    const responsesCount     = readUint(buffer, offset + 8);
-    const triggerIndex       = readUint(buffer, offset + 12);
+    const textRef            = reader.uint();
+    const firstResponseIndex = reader.uint();
+    const responsesCount     = reader.uint();
+    const triggerIndex       = reader.uint();
     /* eslint-enable */
 
     const _textRef = textRef === intMax ? -1 : textRef;
@@ -87,24 +87,22 @@ const readStates = (buffer: Buffer, offset: number, numberOfStates: number): Pla
     };
 
     states.push(state);
-
-    offset += 16;
   }
 
   return states;
 };
 
-const readResponses = (buffer: Buffer, offset: number, numberOfResponses: number): PlainNpcDialogueResponse[] => {
+const readResponses = (reader: BufferReader, numberOfResponses: number): PlainNpcDialogueResponse[] => {
   const responses: PlainNpcDialogueResponse[] = [];
   for (let i = 0; i < numberOfResponses; i++) {
     /* eslint-disable @stylistic/no-multi-spaces */
-    const flags           = readUint  (buffer, offset);
-    const textRef         = readUint  (buffer, offset +  4);
-    const journalRef      = readUint  (buffer, offset +  8);
-    const triggerIndex    = readUint  (buffer, offset + 12);
-    const actionIndex     = readUint  (buffer, offset + 16);
-    const nextDialog      = readString(buffer, offset + 20, offset + 28);
-    const nextDialogState = readUint  (buffer, offset + 28);
+    const flags           = reader.uint();
+    const textRef         = reader.uint();
+    const journalRef      = reader.uint();
+    const triggerIndex    = reader.uint();
+    const actionIndex     = reader.uint();
+    const nextDialog      = reader.string(8);
+    const nextDialogState = reader.uint();
     /* eslint-enable */
 
     const _textRef = textRef === intMax ? -1 : textRef;
@@ -125,20 +123,19 @@ const readResponses = (buffer: Buffer, offset: number, numberOfResponses: number
     };
 
     responses.push(response);
-    offset += 32;
   }
 
   return responses;
 };
 
-const readStateTriggers = (buffer: Buffer, offset: number, numberOfStateTriggers: number): PlainNpcDialogueStateTrigger[] => {
+const readStateTriggers = (reader: BufferReader, numberOfStateTriggers: number): PlainNpcDialogueStateTrigger[] => {
   const stateTriggers: PlainNpcDialogueStateTrigger[] = [];
 
   for (let i = 0; i < numberOfStateTriggers; i++) {
     /* eslint-disable @stylistic/no-multi-spaces */
-    const off  = readUint  (buffer, offset);
-    const len  = readUint  (buffer, offset + 4);
-    const text = readString(buffer, off, len).trim();
+    const off  = reader.uint();
+    const len  = reader.uint();
+    const text = reader.fork(off).string(len);
     /* eslint-enable */
 
     const stateTrigger: PlainNpcDialogueStateTrigger = {
@@ -149,21 +146,19 @@ const readStateTriggers = (buffer: Buffer, offset: number, numberOfStateTriggers
     };
 
     stateTriggers.push(stateTrigger);
-
-    offset += 8;
   }
 
   return stateTriggers;
 };
 
-const readResponsesTriggers = (buffer: Buffer, offset: number, numberOfResponseTriggers: number): PlainNpcDialogueResponseTrigger[] => {
+const readResponsesTriggers = (reader: BufferReader, numberOfResponseTriggers: number): PlainNpcDialogueResponseTrigger[] => {
   const responsesTriggers: PlainNpcDialogueResponseTrigger[] = [];
 
   for (let i = 0; i < numberOfResponseTriggers; i++) {
     /* eslint-disable @stylistic/no-multi-spaces */
-    const off  = readUint  (buffer, offset);
-    const len  = readUint  (buffer, offset + 4);
-    const text = readString(buffer, off, len).trim();
+    const off  = reader.uint();
+    const len  = reader.uint();
+    const text = reader.fork(off).string(len);
     /* eslint-enable */
 
     const responseTrigger: PlainNpcDialogueResponseTrigger = {
@@ -174,21 +169,19 @@ const readResponsesTriggers = (buffer: Buffer, offset: number, numberOfResponseT
     };
 
     responsesTriggers.push(responseTrigger);
-
-    offset += 8;
   }
 
   return responsesTriggers;
 };
 
-const readActions = (buffer: Buffer, offset: number, numberOfActions: number): PlainNpcDialogueAction[] => {
+const readActions = (reader: BufferReader, numberOfActions: number): PlainNpcDialogueAction[] => {
   const actions: PlainNpcDialogueAction[] = [];
 
   for (let i = 0; i < numberOfActions; i++) {
     /* eslint-disable @stylistic/no-multi-spaces */
-    const off  = readUint  (buffer, offset);
-    const len  = readUint  (buffer, offset + 4);
-    const text = readString(buffer, off, len).trim();
+    const off  = reader.uint();
+    const len  = reader.uint();
+    const text = reader.fork(off).string(len);
     /* eslint-enable */
 
     const action: PlainNpcDialogueAction = {
@@ -199,45 +192,37 @@ const readActions = (buffer: Buffer, offset: number, numberOfActions: number): P
     };
 
     actions.push(action);
-
-    offset += 8;
   }
 
   return actions;
 };
 
 const readDlgBuffer = (buffer: Buffer, resourceName: string): PlainNpcDialogue => {
-  const header: PlainNpcDialogueHeader = readHeader(
-    buffer,
-    0,
-  );
+  const reader = createReader(buffer);
 
-  if (header.signature !== 'DLG') throw new Error(`Unsupported signature: ${header.signature}`);
-  if (header.version !== 'V1.0') throw new Error(`Unsupported version: ${header.version}`);
+  const header: PlainNpcDialogueHeader = readHeader(reader);
+
+  if (header.signature !== 'dlg') throw new Error(`Unsupported signature: ${header.signature}`);
+  if (header.version !== 'v1.0') throw new Error(`Unsupported version: ${header.version}`);
 
   const states: PlainNpcDialogueState[] = readStates(
-    buffer,
-    header.statesOffset,
+    reader.fork(header.statesOffset),
     header.statesCount,
   );
   const responses: PlainNpcDialogueResponse[] = readResponses(
-    buffer,
-    header.responsesOffset,
+    reader.fork(header.responsesOffset),
     header.responsesCount,
   );
   const stateTriggers: PlainNpcDialogueStateTrigger[] = readStateTriggers(
-    buffer,
-    header.stateTriggersOffset,
+    reader.fork(header.stateTriggersOffset),
     header.stateTriggersCount,
   );
   const responsesTriggers: PlainNpcDialogueResponseTrigger[] = readResponsesTriggers(
-    buffer,
-    header.responsesTriggersOffset,
+    reader.fork(header.responsesTriggersOffset),
     header.responseTriggersCount,
   );
   const actions: PlainNpcDialogueAction[] = readActions(
-    buffer,
-    header.actionsOffset,
+    reader.fork(header.actionsOffset),
     header.actionsCount,
   );
 
