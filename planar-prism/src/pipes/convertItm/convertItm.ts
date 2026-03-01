@@ -1,10 +1,9 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
 import readItemBuffer from './patches/readItemBuffer.js';
-
 import type { DecompiledItem, GameName, Pathes } from '../../shared/types.js';
-import type { TlkEntry } from '../convertTlk/types.js';
 import type { ItemV10, ItemV11, ItemV20 } from './patches/readItemBufferTypes.js';
+import type { TlkEntry } from '../convertTlk/types.js';
 
 const readItemFile = async (filePath: string, resourceName: string, gameName: GameName, tlk: TlkEntry): Promise<ItemV10 | ItemV11 | ItemV20> => {
   const buffer = await readFile(filePath);

@@ -1,4 +1,4 @@
-import { extend } from '../../../pipes/offsetMap.js';
+import { extend } from '../../../../pipes/offsetMap.js';
 import type { ItemFeatureBlockV10 } from './readFeatureBlockTypesV10.js';
 
 const attackTypeV10 = {

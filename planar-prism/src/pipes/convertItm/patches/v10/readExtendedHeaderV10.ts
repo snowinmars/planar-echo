@@ -1,26 +1,25 @@
-import { offsetMap } from './readExtendedHeaderTypesV11.js';
+import { offsetMap } from './readExtendedHeaderTypesV10.js';
+import type { BufferReader } from '../../../../pipes/readers.js';
+import type { ItemExtendedHeaderV10 } from './readExtendedHeaderTypesV10.js';
+import type { ItemMeta } from '../readItemBufferTypes.js';
+import type { PartialWriteable } from '../../../../shared/types.js';
 
-import type { PartialWriteable } from '../../../shared/types.js';
-import type { BufferReader } from '../../../pipes/readers.js';
-import type { ItemMeta } from './readItemBufferTypes.js';
-import type { ItemExtendedHeaderV11 } from './readExtendedHeaderTypesV11.js';
+const readExtendedHeaderV10 = (reader: BufferReader, meta: ItemMeta): ItemExtendedHeaderV10 => {
+  // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.htm#Header_Proficiency
 
-const readExtendedHeaderV11 = (reader: BufferReader, meta: ItemMeta): ItemExtendedHeaderV11 => {
-  // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.1.htm
-
-  const tmp: PartialWriteable<ItemExtendedHeaderV11> = {};
+  const tmp: PartialWriteable<ItemExtendedHeaderV10> = {};
 
   tmp.attackType = reader.map.byte(offsetMap.attackType.parse);
   tmp.idRequired = reader.map.byte(offsetMap.idRequired.parseFlags);
-  tmp.location = reader.map.byte(offsetMap.location.parse);
+  tmp.location = reader.map.byte(offsetMap.location.parse, offsetMap.location[0]);
   tmp.alternativeDiceSides = reader.byte();
   tmp.useIcon = reader.string(8);
   tmp.targetType = reader.map.byte(offsetMap.targetType.parse);
   tmp.targetCount = reader.byte();
   tmp.range = reader.short();
-  tmp.projectileType = reader.map.byte(offsetMap.projectileType.parse);
+  tmp.launcherRequired = reader.map.byte(offsetMap.launcherRequired.parse);
   tmp.alternativeDiceThrown = reader.byte();
-  tmp.speed = reader.byte();
+  tmp.speedFactor = reader.byte();
   tmp.alternativeDamageBonus = reader.byte();
   tmp.thac0bonus = reader.short();
   tmp.diceSides = reader.byte();
@@ -28,20 +27,19 @@ const readExtendedHeaderV11 = (reader: BufferReader, meta: ItemMeta): ItemExtend
   tmp.diceThrown = reader.byte();
   tmp.secondaryType = reader.byte();
   tmp.damageBonus = reader.short();
-  tmp.damageType = reader.map.short(offsetMap.damageType.parse);
+  tmp.damageType = reader.map.short(offsetMap.damageType.parse, offsetMap.damageType[0]);
   tmp.countOfFeatureBlocks = reader.short();
   tmp.indexIntoFeatureBlocks = reader.short();
-  tmp.charges = reader.short();
+  tmp.maxCharges = reader.short();
   tmp.chargeDepletionBehaviour = reader.map.short(offsetMap.chargeDepletionBehaviour.parse);
   tmp.flags = reader.map.uint(offsetMap.flags.parseFlags);
   tmp.projectileAnimation = reader.short();
   tmp.meleeAnimation1 = reader.short();
   tmp.meleeAnimation2 = reader.short();
   tmp.meleeAnimation3 = reader.short();
-
-  reader.skip.short();
-  reader.skip.short();
-  reader.skip.short();
+  tmp.bowArrowQualifier = reader.boolean.short(meta.resourceName);
+  tmp.crossbowBoltQualifier = reader.boolean.short(meta.resourceName);
+  tmp.miscProjectileQualifier = reader.boolean.short(meta.resourceName);
 
   return {
     attackType: tmp.attackType,
@@ -52,9 +50,9 @@ const readExtendedHeaderV11 = (reader: BufferReader, meta: ItemMeta): ItemExtend
     targetType: tmp.targetType,
     targetCount: tmp.targetCount,
     range: tmp.range,
-    projectileType: tmp.projectileType,
+    launcherRequired: tmp.launcherRequired,
     alternativeDiceThrown: tmp.alternativeDiceThrown,
-    speed: tmp.speed,
+    speedFactor: tmp.speedFactor,
     alternativeDamageBonus: tmp.alternativeDamageBonus,
     thac0bonus: tmp.thac0bonus,
     diceSides: tmp.diceSides,
@@ -65,15 +63,18 @@ const readExtendedHeaderV11 = (reader: BufferReader, meta: ItemMeta): ItemExtend
     damageType: tmp.damageType,
     countOfFeatureBlocks: tmp.countOfFeatureBlocks,
     indexIntoFeatureBlocks: tmp.indexIntoFeatureBlocks,
-    charges: tmp.charges,
+    maxCharges: tmp.maxCharges,
     chargeDepletionBehaviour: tmp.chargeDepletionBehaviour,
     flags: tmp.flags,
     projectileAnimation: tmp.projectileAnimation,
     meleeAnimation1: tmp.meleeAnimation1,
     meleeAnimation2: tmp.meleeAnimation2,
     meleeAnimation3: tmp.meleeAnimation3,
+    bowArrowQualifier: tmp.bowArrowQualifier,
+    crossbowBoltQualifier: tmp.crossbowBoltQualifier,
+    miscProjectileQualifier: tmp.miscProjectileQualifier,
     featureBlocks: [],
   };
 };
 
-export default readExtendedHeaderV11;
+export default readExtendedHeaderV10;

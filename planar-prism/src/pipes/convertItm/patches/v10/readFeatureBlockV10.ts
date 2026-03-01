@@ -1,9 +1,8 @@
 import { offsetMap } from './readFeatureBlockTypesV10.js';
-
-import type { PartialWriteable } from '../../../shared/types.js';
-import type { BufferReader } from '../../../pipes/readers.js';
-import type { ItemMeta } from './readItemBufferTypes.js';
+import type { BufferReader } from '../../../../pipes/readers.js';
 import type { ItemFeatureBlockV10 } from './readFeatureBlockTypesV10.js';
+import type { ItemMeta } from '../readItemBufferTypes.js';
+import type { PartialWriteable } from '../../../../shared/types.js';
 
 const readFeatureBlockV10 = (reader: BufferReader, meta: ItemMeta): ItemFeatureBlockV10 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.htm#Header_Proficiency

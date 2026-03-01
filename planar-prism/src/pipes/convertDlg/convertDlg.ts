@@ -1,13 +1,11 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
-
 import attachWeights from './patches/attachWeights.js';
-import readDlgBuffer from './patches/readDlgBuffer.js';
-import patchTranslation from './patches/patchTranslation.js';
 import nestDialogue from './patches/nestDialogue.js';
-
-import type { NpcDialogue } from './types.js';
+import patchTranslation from './patches/patchTranslation.js';
+import readDlgBuffer from './patches/readDlgBuffer.js';
 import type { DecompiledItem, Pathes } from 'src/shared/types.js';
+import type { NpcDialogue } from './types.js';
 import type { TlkEntry } from '../convertTlk/types.js';
 
 const readNpcDialogueFile = async (filePath: string, resourceName: string, tlk: TlkEntry): Promise<NpcDialogue> => {

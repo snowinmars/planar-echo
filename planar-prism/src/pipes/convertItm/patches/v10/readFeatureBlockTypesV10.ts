@@ -1,4 +1,4 @@
-import { extend } from '../../../pipes/offsetMap.js';
+import { extend } from '../../../../pipes/offsetMap.js';
 
 const targetTypeV10 = {
   0: 'none',

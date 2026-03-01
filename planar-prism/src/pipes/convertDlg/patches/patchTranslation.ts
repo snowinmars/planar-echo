@@ -1,5 +1,5 @@
-import type { TlkEntry } from '../../../pipes/convertTlk/types.js';
 import type { PlainNpcDialogue } from '../types.js';
+import type { TlkEntry } from '../../../pipes/convertTlk/types.js';
 
 const patchTranslation = (dialogue: PlainNpcDialogue, tlk: TlkEntry): PlainNpcDialogue => {
   const states = dialogue.states.map(x => ({ ...x }));

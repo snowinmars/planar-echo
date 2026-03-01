@@ -1,9 +1,8 @@
 import { offsetMap } from './readExtendedHeaderTypesV20.js';
-
-import type { PartialWriteable } from '../../../shared/types.js';
-import type { BufferReader } from '../../../pipes/readers.js';
-import type { ItemMeta } from './readItemBufferTypes.js';
+import type { BufferReader } from '../../../../pipes/readers.js';
 import type { ItemExtendedHeaderV20 } from './readExtendedHeaderTypesV20.js';
+import type { ItemMeta } from '../readItemBufferTypes.js';
+import type { PartialWriteable } from '../../../../shared/types.js';
 
 const readExtendedHeaderV20 = (reader: BufferReader, meta: ItemMeta): ItemExtendedHeaderV20 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v2.0.htm

@@ -1,14 +1,13 @@
-import { offsetMap } from './readFeatureBlockTypesV20.js';
+import { offsetMap } from './readFeatureBlockTypesV11.js';
+import type { BufferReader } from '../../../../pipes/readers.js';
+import type { ItemFeatureBlockV11 } from './readFeatureBlockTypesV11.js';
+import type { ItemMeta } from '../readItemBufferTypes.js';
+import type { PartialWriteable } from '../../../../shared/types.js';
 
-import type { PartialWriteable } from '../../../shared/types.js';
-import type { BufferReader } from '../../../pipes/readers.js';
-import type { ItemMeta } from './readItemBufferTypes.js';
-import type { ItemFeatureBlockV20 } from './readFeatureBlockTypesV20.js';
+const readFeatureBlockV11 = (reader: BufferReader, meta: ItemMeta): ItemFeatureBlockV11 => {
+  // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.1.htm
 
-const readFeatureBlockV20 = (reader: BufferReader, meta: ItemMeta): ItemFeatureBlockV20 => {
-  // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v2.0.htm
-
-  const tmp: PartialWriteable<ItemFeatureBlockV20> = {};
+  const tmp: PartialWriteable<ItemFeatureBlockV11> = {};
 
   tmp.opcodeNumber = reader.short();
   tmp.targetType = reader.map.byte(offsetMap.targetType.parse);
@@ -23,7 +22,7 @@ const readFeatureBlockV20 = (reader: BufferReader, meta: ItemMeta): ItemFeatureB
   tmp.resource = reader.string(8);
   tmp.diceThrown = reader.uint();
   tmp.diceSides = reader.uint();
-  tmp.savingThrowType = reader.map.uint(offsetMap.savingThrowType.parse);
+  tmp.savingThrowType = reader.map.uint(offsetMap.savingThrowType.parseFlags);
   tmp.savingThrowBonus = reader.uint();
   tmp.special = reader.uint();
 
@@ -47,4 +46,4 @@ const readFeatureBlockV20 = (reader: BufferReader, meta: ItemMeta): ItemFeatureB
   };
 };
 
-export default readFeatureBlockV20;
+export default readFeatureBlockV11;

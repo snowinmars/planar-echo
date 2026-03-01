@@ -1,5 +1,5 @@
-import { extend } from '../../../pipes/offsetMap.js';
-import type { Maybe } from '../../../shared/types.js';
+import { extend } from '../../../../pipes/offsetMap.js';
+import type { Maybe } from '../../../../shared/types.js';
 
 const flagsV11 = {
 // byte 1

@@ -1,12 +1,12 @@
-import type { ItemExtendedHeaderV10 } from './readExtendedHeaderTypesV10.js';
-import type { ItemExtendedHeaderV11 } from './readExtendedHeaderTypesV11.js';
-import type { ItemExtendedHeaderV20 } from './readExtendedHeaderTypesV20.js';
-import type { ItemFeatureBlockV10 } from './readFeatureBlockTypesV10.js';
-import type { ItemFeatureBlockV11 } from './readFeatureBlockTypesV11.js';
-import type { ItemFeatureBlockV20 } from './readFeatureBlockTypesV20.js';
-import type { ItemHeaderV10 } from './readHeaderTypesV10.js';
-import type { ItemHeaderV11 } from './readHeaderTypesV11.js';
-import type { ItemHeaderV20 } from './readHeaderTypesV20.js';
+import type { ItemExtendedHeaderV10 } from './v10/readExtendedHeaderTypesV10.js';
+import type { ItemExtendedHeaderV11 } from './v11/readExtendedHeaderTypesV11.js';
+import type { ItemExtendedHeaderV20 } from './v20/readExtendedHeaderTypesV20.js';
+import type { ItemFeatureBlockV10 } from './v10/readFeatureBlockTypesV10.js';
+import type { ItemFeatureBlockV11 } from './v11/readFeatureBlockTypesV11.js';
+import type { ItemFeatureBlockV20 } from './v20/readFeatureBlockTypesV20.js';
+import type { ItemHeaderV10 } from './v10/readHeaderTypesV10.js';
+import type { ItemHeaderV11 } from './v11/readHeaderTypesV11.js';
+import type { ItemHeaderV20 } from './v20/readHeaderTypesV20.js';
 
 export type ItemMeta = Readonly<{
   signature: string;

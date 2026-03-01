@@ -1,33 +1,52 @@
-import { offsetMap } from './readHeaderTypesV20.js';
+import { offsetMap } from './readHeaderTypesV10.js';
+import type { BufferReader } from '../../../../pipes/readers.js';
+import type { ItemHeaderV10 } from './readHeaderTypesV10.js';
+import type { ItemMeta } from '../readItemBufferTypes.js';
+import type { PartialWriteable } from '../../../../shared/types.js';
 
-import type { PartialWriteable } from '../../../shared/types.js';
-import type { BufferReader } from '../../../pipes/readers.js';
-import type { ItemMeta } from './readItemBufferTypes.js';
-import type { ItemHeaderV20 } from './readHeaderTypesV20.js';
+const readHeaderV10 = (reader: BufferReader, meta: ItemMeta): ItemHeaderV10 => {
+  // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.htm
 
-const readHeaderV20 = (reader: BufferReader, meta: ItemMeta): ItemHeaderV20 => {
-  // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v2.0.htm
-
-  const tmp: PartialWriteable<ItemHeaderV20> = {};
+  const tmp: PartialWriteable<ItemHeaderV10> = {};
 
   tmp.signature = meta.signature;
   tmp.version = meta.version;
 
   tmp.unidentifiedNameRef = reader.uint();
   tmp.identifiedNameRef = reader.uint();
-
   if (tmp.unidentifiedNameRef === meta.emptyInt) tmp.unidentifiedNameRef = -1;
   if (tmp.identifiedNameRef === meta.emptyInt) tmp.identifiedNameRef = -1;
 
-  tmp.replacementItem = reader.string(8);
+  if (meta.isBg || meta.isBg2 || meta.isBgee) {
+    tmp.replacementItem = reader.string(8);
+  }
+  else if (meta.isPstee) {
+    tmp.dropSound = reader.string(8);
+  }
+
   tmp.flags = reader.map.uint(offsetMap.flags.parseFlags);
   tmp.itemType = reader.map.short(offsetMap.itemTypes.parse);
   tmp.unusableBy = reader.map.uint(offsetMap.unusableBy.parseFlags);
-  tmp.weaponAnimation = reader.short();
+
+  if (meta.isBg || meta.isIwd) {
+    tmp.itemAnimation = reader.map.short(offsetMap.itemAnimationBgIwd.parse);
+  }
+  else if (meta.isBg2) {
+    tmp.itemAnimation = reader.map.short(offsetMap.itemAnimationBg2.parse);
+  }
+  else if (meta.isEe) {
+    tmp.itemAnimation = reader.map.short(offsetMap.itemAnimationEe.parse);
+  }
+  else {
+    const unknownItemAnimationShort = reader.short();
+    tmp.itemAnimation = offsetMap.itemAnimationEe.parse(unknownItemAnimationShort);
+    console.warn(`Undocumented item animation ${unknownItemAnimationShort} for ${meta.resourceName} parsed as Enchanged Edition item animation`);
+  }
+
   tmp.minLevel = reader.short();
   tmp.minStrength = reader.short();
   tmp.minStrengthBonus = reader.byte();
-  reader.skip.byte(); // kitUsability1 unused
+  tmp.kitUsability1 = reader.map.byte(offsetMap.kitUsability1.parseFlags);
   tmp.minIntelligence = reader.byte();
   tmp.kitUsability2 = reader.map.byte(offsetMap.kitUsability2.parseFlags);
   tmp.minDexterity = reader.byte();
@@ -35,7 +54,7 @@ const readHeaderV20 = (reader: BufferReader, meta: ItemMeta): ItemHeaderV20 => {
   tmp.minWisdom = reader.byte();
   tmp.kitUsability4 = reader.map.byte(offsetMap.kitUsability4.parseFlags);
   tmp.minConstitution = reader.byte();
-  tmp.weaponProficiency = reader.byte(); // reader.map.byte(offsetMap.weaponProficiency.parse);
+  tmp.weaponProficiency = reader.map.byte(offsetMap.weaponProficiency.parse);
   tmp.minCharisma = reader.short();
   tmp.price = reader.uint();
   tmp.stackAmount = reader.short();
@@ -57,21 +76,21 @@ const readHeaderV20 = (reader: BufferReader, meta: ItemMeta): ItemHeaderV20 => {
   tmp.indexIntoEquippingFeatureBlocks = reader.short();
   tmp.countOfEquippingFeatureBlocks = reader.short();
 
-  reader.skip.custom(16);
-
   return {
     signature: tmp.signature,
     version: tmp.version,
     unidentifiedNameRef: tmp.unidentifiedNameRef,
     identifiedNameRef: tmp.identifiedNameRef,
     replacementItem: tmp.replacementItem,
+    dropSound: tmp.dropSound,
     flags: tmp.flags,
     itemType: tmp.itemType,
     unusableBy: tmp.unusableBy,
-    weaponAnimation: tmp.weaponAnimation,
+    itemAnimation: tmp.itemAnimation,
     minLevel: tmp.minLevel,
     minStrength: tmp.minStrength,
     minStrengthBonus: tmp.minStrengthBonus,
+    kitUsability1: tmp.kitUsability1,
     minIntelligence: tmp.minIntelligence,
     kitUsability2: tmp.kitUsability2,
     minDexterity: tmp.minDexterity,
@@ -99,4 +118,4 @@ const readHeaderV20 = (reader: BufferReader, meta: ItemMeta): ItemHeaderV20 => {
   };
 };
 
-export default readHeaderV20;
+export default readHeaderV10;

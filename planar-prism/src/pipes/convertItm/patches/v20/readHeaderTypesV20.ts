@@ -1,4 +1,4 @@
-import { extend } from '../../../pipes/offsetMap.js';
+import { extend } from '../../../../pipes/offsetMap.js';
 
 const flagsV20 = {
 // byte 1
