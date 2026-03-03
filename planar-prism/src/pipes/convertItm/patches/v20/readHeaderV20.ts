@@ -20,7 +20,7 @@ const readHeaderV20 = (reader: BufferReader, meta: ItemMeta): ItemHeaderV20 => {
 
   tmp.replacementItem = reader.string(8);
   tmp.flags = reader.map.uint(offsetMap.flags.parseFlags);
-  tmp.itemType = reader.map.short(offsetMap.itemTypes.parse);
+  tmp.itemType = reader.map.short(offsetMap.itemType.parse);
   tmp.unusableBy = reader.map.uint(offsetMap.unusableBy.parseFlags);
   tmp.weaponAnimation = reader.short();
   tmp.minLevel = reader.short();

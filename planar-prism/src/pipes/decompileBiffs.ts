@@ -4,6 +4,8 @@ import listBiffs from './listBiffs.js';
 import { DecompiledItemType, type Biff, type DecompiledItem, type Pathes } from '../shared/types.js';
 import execConsole from '../shared/execConsole.js';
 
+const decompiledItemsCache = new Map<string, DecompiledItem>();
+
 const detectDecompiledItemType = (extension: string): DecompiledItemType => {
   switch (extension) {
     case '.2da': return DecompiledItemType.twoda;
@@ -16,6 +18,7 @@ const detectDecompiledItemType = (extension: string): DecompiledItemType => {
     case '.dlg': return DecompiledItemType.dlg;
     case '.eff': return DecompiledItemType.eff;
     case '.glsl': return DecompiledItemType.glsl;
+    case '.gam': return DecompiledItemType.gam;
     case '.ids': return DecompiledItemType.ids;
     case '.ini': return DecompiledItemType.ini;
     case '.itm': return DecompiledItemType.itm;
@@ -40,7 +43,7 @@ const detectDecompiledItemType = (extension: string): DecompiledItemType => {
   }
 };
 
-const regex = /\[(.*?)\] created from \[(.*?)\]/g;
+const regex = /\[(.*?)\] created from \[(.*?)\]/;
 const getCommand = ({ weidu, game, output, lang }: Pathes, biff: Biff): string => `"${weidu}" --game "${game}" --use-lang ${lang} --out "${output.decimpiledBiff}" --biff-get "[${biff.name}]"`;
 const decompileBiff = (pathes: Pathes, biff: Biff): Promise<DecompiledItem[]> => {
   return execConsole<DecompiledItem>(getCommand(pathes, biff), (line) => {
@@ -55,21 +58,23 @@ const decompileBiff = (pathes: Pathes, biff: Biff): Promise<DecompiledItem[]> =>
   });
 };
 
-const decompileBiffs = async (pathes: Pathes, percentCallback: ((percent: number) => void) | null = null): Promise<DecompiledItem[]> => {
+const decompileBiffs = async (pathes: Pathes, percentCallback: ((percent: number, resource: string) => void) | null = null): Promise<DecompiledItem[]> => {
   const biffs: Biff[] = await listBiffs(pathes);
-  // biffs = biffs.filter(x => x.name.toLowerCase().includes('ca_mrt')); // DEV usage
-  const decompiledItems: DecompiledItem[] = [];
+  // biffs = biffs.filter(x => x.name.toLowerCase().includes('idsfiles')); // DEV usage
   const totalSizeBytes = biffs.reduce((acc, cur) => acc + cur.sizeBytes, 0);
   let doneSizeBytes = 0;
   for (const biff of biffs) {
-    const x = await decompileBiff(pathes, biff);
+    const items = await decompileBiff(pathes, biff);
     doneSizeBytes += biff.sizeBytes;
     const percent = doneSizeBytes * 100 / totalSizeBytes;
-    percentCallback?.(Math.round(percent));
-    decompiledItems.push(...x);
+    percentCallback?.(Math.round(percent), biff.name);
+    // decompiledItems.push(...x);
+    for (const item of items) {
+      if (!decompiledItemsCache.has(item.name)) decompiledItemsCache.set(item.name, item);
+    }
   }
 
-  return decompiledItems;
+  return [...decompiledItemsCache.values()];
 };
 
 export default decompileBiffs;

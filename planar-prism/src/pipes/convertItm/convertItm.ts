@@ -5,7 +5,9 @@ import type { DecompiledItem, GameName, Pathes } from '../../shared/types.js';
 import type { ItemV10, ItemV11, ItemV20 } from './patches/readItemBufferTypes.js';
 import type { TlkEntry } from '../convertTlk/types.js';
 
-const readItemFile = async (filePath: string, resourceName: string, gameName: GameName, tlk: TlkEntry): Promise<ItemV10 | ItemV11 | ItemV20> => {
+type Item = ItemV10 | ItemV11 | ItemV20;
+
+const readItemFile = async (filePath: string, resourceName: string, gameName: GameName, tlk: TlkEntry): Promise<Item> => {
   const buffer = await readFile(filePath);
 
   const raw = await readItemBuffer(buffer, resourceName, gameName);
@@ -17,16 +19,16 @@ const convertItm = (
   pathes: Pathes,
   decompiledItems: DecompiledItem[],
   tlk: TlkEntry,
-  percentCallback: ((percent: number) => void) | null = null,
-): AsyncIterableIterator<(ItemV10 | ItemV11 | ItemV20)> => {
+  percentCallback: ((percent: number, resource: string) => void) | null = null,
+): AsyncIterableIterator<(Item)> => {
   let i = 0;
 
-  const iterator: AsyncIterableIterator<(ItemV10 | ItemV11 | ItemV20)> = {
+  const iterator: AsyncIterableIterator<(Item)> = {
     [Symbol.asyncIterator]() {
       return this;
     },
 
-    async next(): Promise<IteratorResult<(ItemV10 | ItemV11 | ItemV20)>> {
+    async next(): Promise<IteratorResult<(Item)>> {
       if (i >= decompiledItems.length) {
         return { done: true, value: undefined };
       }
@@ -40,7 +42,7 @@ const convertItm = (
       );
 
       const percent = Math.round((i + 1) * 100 / decompiledItems.length);
-      percentCallback?.(percent);
+      percentCallback?.(percent, item.resourceName);
 
       i++;
       return { done: false, value: item };

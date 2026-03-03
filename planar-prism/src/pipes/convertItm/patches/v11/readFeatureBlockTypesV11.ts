@@ -1,5 +1,9 @@
 import { extend } from '../../../../pipes/offsetMap.js';
 
+/* createGenerator().register().enum("targetTypeV11",
+ *   ['none','self (pre-projectile)','pre-target','party','everyone (inc. party)','everyone (excl. party)',]
+ * ).write();
+ */
 const targetTypeV11 = {
   0: 'none',
   1: 'self (pre-projectile)',
@@ -10,6 +14,11 @@ const targetTypeV11 = {
 } as const;
 type TargetTypeV11 = typeof targetTypeV11[keyof typeof targetTypeV11];
 
+/* createGenerator().register().enum("timingModeV11", {
+ *   0: ['duration','permanent','while equipped','delayed duration','delayed','delayed (transforms to 8)','duration?','permanent?','permanent (unsaved)','permanent (after death)','trigger'],
+ *   4096: ['absolute duration']
+ * }).write();
+ */
 const timingModeV11 = {
   0: 'duration',
   1: 'permanent',
@@ -26,6 +35,10 @@ const timingModeV11 = {
 } as const;
 type TimingModeV11 = typeof timingModeV11[keyof typeof timingModeV11];
 
+/* createGenerator().register().enum("resistanceV11",
+ *   ['nonmagical','can be dispelled/affected by resistance','cannot be dispelled/ignores resistance','can be dispelled/ignores resistance',]
+ * ).write();
+ */
 const resistanceV11 = {
   0: 'nonmagical',
   1: 'can be dispelled/affected by resistance',
@@ -34,12 +47,20 @@ const resistanceV11 = {
 } as const;
 type ResistanceV11 = typeof resistanceV11[keyof typeof resistanceV11];
 
+/* createGenerator().register().flags("savingThrowTypeV11", {
+ *   byte1: ['spells','breathe','death','wands','polymorph',]
+ * }).write();
+ */
 const savingThrowTypeV11 = {
-  0: 'spells',
-  1: 'breathe',
-  2: 'death',
-  3: 'wands',
-  4: 'polymorph',
+  // byte1
+  0x1: 'spells',
+  0x2: 'breathe',
+  0x4: 'death',
+  0x8: 'wands',
+  0x10: 'polymorph',
+  // 0x20: unused
+  // 0x40: unused
+  // 0x80: unused
 } as const;
 type SavingThrowTypeV11 = typeof savingThrowTypeV11[keyof typeof savingThrowTypeV11];
 

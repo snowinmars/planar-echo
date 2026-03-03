@@ -1,6 +1,10 @@
 import { extend } from '../../../../pipes/offsetMap.js';
 import type { ItemFeatureBlockV20 } from './readFeatureBlockTypesV20.js';
 
+/* createGenerator().register().enum("attackTypeV20",
+ *   ['none','melee','ranged','magic','launcher',]
+ * ).write();
+ */
 const attackTypeV20 = {
   0: 'none',
   1: 'melee',
@@ -10,13 +14,27 @@ const attackTypeV20 = {
 } as const;
 type AttackTypeV20 = typeof attackTypeV20[keyof typeof attackTypeV20];
 
+/* createGenerator().register().flags("idRequiredV20", {
+ *   byte1: ['id required','non-id required',],
+ * }).write();
+ */
 const idRequiredV20 = {
-  // byte 1
-  0: 'id required',
-  1: 'non-id required',
+  // byte1
+  0x1: 'id required',
+  0x2: 'non-id required',
+  // 0x4: unused
+  // 0x8: unused
+  // 0x10: unused
+  // 0x20: unused
+  // 0x40: unused
+  // 0x80: unused
 } as const;
 type IdRequiredV20 = typeof idRequiredV20[keyof typeof idRequiredV20];
 
+/* createGenerator().register().enum("locationV20",
+ *   ['none','weapon','spell','equipment','innate',]
+ * ).write();
+ */
 const locationV20 = {
   0: 'none',
   1: 'weapon',
@@ -26,6 +44,10 @@ const locationV20 = {
 } as const;
 type LocationV20 = typeof locationV20[keyof typeof locationV20];
 
+/* createGenerator().register().enum("targetTypeV20",
+ *   ['invalid (cannot be selected)','creature','crash','character potrait','area','self','crash','none (self, ignores game pause)',]
+ * ).write();
+ */
 const targetTypeV20 = {
   0: 'invalid (cannot be selected)',
   1: 'creature',
@@ -38,6 +60,10 @@ const targetTypeV20 = {
 } as const;
 type TargetTypeV20 = typeof targetTypeV20[keyof typeof targetTypeV20];
 
+/* createGenerator().register().enum("projectileTypeV20",
+ *   ['none','arrow','bolt','bullet',]
+ * ).write();
+ */
 const projectileTypeV20 = {
   0: 'none',
   1: 'arrow',
@@ -46,6 +72,10 @@ const projectileTypeV20 = {
 } as const;
 type ProjectileTypeV20 = typeof projectileTypeV20[keyof typeof projectileTypeV20];
 
+/* createGenerator().register().enum("damageTypeV20",
+ *   ['none','piercing/magic','blunt','slashing','ranged','fists','piercing/blunt (more)','piercing/slashing (more)','blunt/slashing (less)','blunt missile',]
+ * ).write();
+ */
 const damageTypeV20 = {
   0: 'none',
   1: 'piercing/magic',
@@ -60,37 +90,50 @@ const damageTypeV20 = {
 } as const;
 type DamageTypeV20 = typeof damageTypeV20[keyof typeof damageTypeV20];
 
+/* createGenerator().register().enum("chargeDepletionBehaviourV20",
+ *   ['do not vanish','expended','expended (w/o sound)','recharge each day',]
+ * ).write();
+ */
 const chargeDepletionBehaviourV20 = {
-  0: 'don\'t vanish',
+  0: 'do not vanish',
   1: 'expended',
   2: 'expended (w/o sound)',
   3: 'recharge each day',
 } as const;
 type ChargeDepletionBehaviourV20 = typeof chargeDepletionBehaviourV20[keyof typeof chargeDepletionBehaviourV20];
 
+/* createGenerator().register().flags("flagsV20", {
+ *   byte1: ['add strength bonus', 'breakable'],
+ *   byte2: [null, null, 'hostile', 'recharges'],
+ * }).write();
+ */
 const flagsV20 = {
-  // byte 1
+  // byte1
   0x1: 'add strength bonus',
   0x2: 'breakable',
-  // 0x4: 'unknown',
-  // 0x8: 'unknown',
-  // 0x10: 'unknown',
-  // 0x20: 'unknown',
-  // 0x40: 'unknown',
-  // 0x80: 'unknown',
+  // 0x4: unused
+  // 0x8: unused
+  // 0x10: unused
+  // 0x20: unused
+  // 0x40: unused
+  // 0x80: unused
 
-  // byte 2
-  // 0x100: 'unknown',
-  // 0x200: 'unknown',
+  // byte2
+  // 0x100: unused
+  // 0x200: unused
   0x400: 'hostile',
   0x800: 'recharges',
-  // 0x1000: 'unknown',
-  // 0x2000: 'unknown',
-  // 0x4000: 'unknown',
-  // 0x8000: 'unknown',
+  // 0x1000: unused
+  // 0x2000: unused
+  // 0x4000: unused
+  // 0x8000: unused
 } as const;
 type FlagsV20 = typeof flagsV20[keyof typeof flagsV20];
 
+/* createGenerator().register().enum("anotherAttackTypeV20",
+ *   ['normal','bypass armor','keen',]
+ * ).write();
+ */
 const anotherAttackTypeV20 = {
   0: 'normal',
   1: 'bypass armor',

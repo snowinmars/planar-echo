@@ -1,8 +1,13 @@
 import { extend } from '../../../../pipes/offsetMap.js';
 import type { Maybe } from '../../../../shared/types.js';
 
+/* createGenerator().register().flags("flagsV11", {
+ *   byte1: ['unsellable (critical item)','two-handed','movable','displayable','cursed','cannot scribe to spellbook (scrolls)','magical',],
+ *   byte2: ['silver','cold-iron','steel','conversable','pulsating',]
+ * }).write();
+ */
 const flagsV11 = {
-// byte 1
+  // byte1
   0x1: 'unsellable (critical item)',
   0x2: 'two-handed',
   0x4: 'movable',
@@ -12,100 +17,113 @@ const flagsV11 = {
   0x40: 'magical',
   // 0x80: unused
 
-  // byte 2
+  // byte2
   0x100: 'silver',
   0x200: 'cold-iron',
   0x400: 'steel',
   0x800: 'conversable',
   0x1000: 'pulsating',
+  // 0x2000: unused
+  // 0x4000: unused
+  // 0x8000: unused
 } as const;
 type FlagsV11 = typeof flagsV11[keyof typeof flagsV11];
 
+/* createGenerator().register().enum("itemTypeV11",
+ *   ['books/misc','amulets and necklaces','armor','belts and girdles','boots','arrows','bracers and gauntlets','helms, hats, and other head-wear','keys// (not in icewind dale?)','potions','rings','scrolls','shields// (not in iwd)','food','bullets// (for a sling)','bows','daggers','maces// (in bg, this includes clubs)','slings','small swords','large swords// (in bg, this includes 2-handed and bastard swords)','hammers','morning stars','flails','darts','axes// (specifically, 1-handed axes -- halberds and 2-handed polearms not included)','quarterstaff','crossbow','hand-to-hand weapons// (fist, fist irons, punch daggers, etc)','spears','halberds// (2-handed polearms)','crossbow bolts','cloaks and robes','gold pieces// (not an inventory item, but can appear as "monster dropped" treasure)','gems','wands','containers/eye/broken armor','broken shields/bracelets','broken swords/earrings','tattoos// (pst)','lenses// (pst)','bucklers/teeth','candles','unknown','clubs// (iwd)','unknown','unknown','large shields// (iwd)','unknown','medium shields// (iwd)','notes','unknown','unknown','small shields// (iwd)','unknown','telescopes// (iwd)','drinks// (iwd)','great swords// (iwd)','container','fur/pelt','leather armor','studded leather armor','chain mail','splint mail','half plate','full plate','hide armor','robe','unknown','bastard sword','scarf','food// (iwd2)','hat','gauntlet','eyeballs','earrings','teeth [weapon 0 slot]','bracelets']
+ * ).write();
+ */
 const itemTypeV11 = {
-  0x00: 'books/misc',
-  0x01: 'amulets and necklaces',
-  0x02: 'armor',
-  0x03: 'belts and girdles',
-  0x04: 'boots',
-  0x05: 'arrows',
-  0x06: 'bracers and gauntlets',
-  0x07: 'helms, hats, and other head-wear',
-  0x08: 'keys', // (not in icewind dale?)
-  0x09: 'potions',
-  0x0a: 'rings',
-  0x0b: 'scrolls',
-  0x0c: 'shields', // (not in iwd)
-  0x0d: 'food',
-  0x0e: 'bullets', // (for a sling)
-  0x0f: 'bows',
-  0x10: 'daggers',
-  0x11: 'maces', // (in bg, this includes clubs)
-  0x12: 'slings',
-  0x13: 'small swords',
-  0x14: 'large swords', // (in bg, this includes 2-handed and bastard swords)
-  0x15: 'hammers',
-  0x16: 'morning stars',
-  0x17: 'flails',
-  0x18: 'darts',
-  0x19: 'axes', // (specifically, 1-handed axes -- halberds and 2-handed polearms not included)
-  0x1a: 'quarterstaff',
-  0x1b: 'crossbow',
-  0x1c: 'hand-to-hand weapons', // (fist, fist irons, punch daggers, etc)
-  0x1d: 'spears',
-  0x1e: 'halberds', // (2-handed polearms)
-  0x1f: 'crossbow bolts',
-  0x20: 'cloaks and robes',
-  0x21: 'gold pieces', // (not an inventory item, but can appear as "monster dropped" treasure)
-  0x22: 'gems',
-  0x23: 'wands',
-  0x24: 'containers/eye/broken armor',
-  0x25: 'broken shields/bracelets',
-  0x26: 'broken swords/earrings',
-  0x27: 'tattoos', // (pst)
-  0x28: 'lenses', // (pst)
-  0x29: 'bucklers/teeth',
-  0x2a: 'candles',
-  0x2b: 'unknown',
-  0x2c: 'clubs', // (iwd)
-  0x2d: 'unknown',
-  0x2e: 'unknown',
-  0x2f: 'large shields', // (iwd)
-  0x30: 'unknown',
-  0x31: 'medium shields', // (iwd)
-  0x32: 'notes',
-  0x33: 'unknown',
-  0x34: 'unknown',
-  0x35: 'small shields', // (iwd)
-  0x36: 'unknown',
-  0x37: 'telescopes', // (iwd)
-  0x38: 'drinks', // (iwd)
-  0x39: 'great swords', // (iwd)
-  0x3a: 'container',
-  0x3b: 'fur/pelt',
-  0x3c: 'leather armor',
-  0x3d: 'studded leather armor',
-  0x3e: 'chain mail',
-  0x3f: 'splint mail',
-  0x40: 'half plate',
-  0x41: 'full plate',
-  0x42: 'hide armor',
-  0x43: 'robe',
-  0x44: 'unknown',
-  0x45: 'bastard sword',
-  0x46: 'scarf',
-  0x47: 'food', // (iwd2)
-  0x48: 'hat',
-  0x49: 'gauntlet',
-
-  0x4a: 'eyeballs', // pstee eyeglas1.itm
-  0x4b: 'earrings', // pstee anear1.itm
-  0x4c: 'teeth [weapon 0 slot]', // pstee fdteeth.itm
-  0x4d: 'bracelets', // pstee bell.itm
+  0: 'books/misc',
+  1: 'amulets and necklaces',
+  2: 'armor',
+  3: 'belts and girdles',
+  4: 'boots',
+  5: 'arrows',
+  6: 'bracers and gauntlets',
+  7: 'helms, hats, and other head-wear',
+  8: 'keys', // (not in icewind dale?)
+  9: 'potions',
+  10: 'rings',
+  11: 'scrolls',
+  12: 'shields', // (not in iwd)
+  13: 'food',
+  14: 'bullets', // (for a sling)
+  15: 'bows',
+  16: 'daggers',
+  17: 'maces', // (in bg, this includes clubs)
+  18: 'slings',
+  19: 'small swords',
+  20: 'large swords', // (in bg, this includes 2-handed and bastard swords)
+  21: 'hammers',
+  22: 'morning stars',
+  23: 'flails',
+  24: 'darts',
+  25: 'axes', // (specifically, 1-handed axes -- halberds and 2-handed polearms not included)
+  26: 'quarterstaff',
+  27: 'crossbow',
+  28: 'hand-to-hand weapons', // (fist, fist irons, punch daggers, etc)
+  29: 'spears',
+  30: 'halberds', // (2-handed polearms)
+  31: 'crossbow bolts',
+  32: 'cloaks and robes',
+  33: 'gold pieces', // (not an inventory item, but can appear as "monster dropped" treasure)
+  34: 'gems',
+  35: 'wands',
+  36: 'containers/eye/broken armor',
+  37: 'broken shields/bracelets',
+  38: 'broken swords/earrings',
+  39: 'tattoos', // (pst)
+  40: 'lenses', // (pst)
+  41: 'bucklers/teeth',
+  42: 'candles',
+  43: 'unknown',
+  44: 'clubs', // (iwd)
+  45: 'unknown',
+  46: 'unknown',
+  47: 'large shields', // (iwd)
+  48: 'unknown',
+  49: 'medium shields', // (iwd)
+  50: 'notes',
+  51: 'unknown',
+  52: 'unknown',
+  53: 'small shields', // (iwd)
+  54: 'unknown',
+  55: 'telescopes', // (iwd)
+  56: 'drinks', // (iwd)
+  57: 'great swords', // (iwd)
+  58: 'container',
+  59: 'fur/pelt',
+  60: 'leather armor',
+  61: 'studded leather armor',
+  62: 'chain mail',
+  63: 'splint mail',
+  64: 'half plate',
+  65: 'full plate',
+  66: 'hide armor',
+  67: 'robe',
+  68: 'unknown',
+  69: 'bastard sword',
+  70: 'scarf',
+  71: 'food', // (iwd2)
+  72: 'hat',
+  73: 'gauntlet',
+  74: 'eyeballs',
+  75: 'earrings',
+  76: 'teeth [weapon 0 slot]',
+  77: 'bracelets',
 } as const;
 type ItemTypeV11 = typeof itemTypeV11[keyof typeof itemTypeV11];
 
+/* createGenerator().register().flags("unusableByV11", {
+ *   byte1: ['unusable by chaotic','unusable by evil','unusable by good','unusable by good-evil neutral','unusable by lawful','unusable by lawful-chaotic neutral','unusable by sensates','unusable by priest',],
+ *   byte2: ['unusable by godsmen','unusable by anarchist','unusable by chaosmen','unusable by fighter','no faction','unusable by fighter mage','unusable by dustmen','unusable by mercykillers',],
+ *   byte3: ['unusable by indeps','unusable by fighter thief','unusable by mage','unusable by mage thief','unusable by dak\'kon','unusable by fall-from-grace','unusable by thief','unusable by vhailor',],
+ *   byte4: ['unusable by ignus','unusable by morte','unusable by nordom',null,'unusable by annah',null,'unusable by nameless one',],
+ * }).write();
+ */
 const unusableByV11 = {
-  // byte 1
+  // byte1
   0x1: 'unusable by chaotic',
   0x2: 'unusable by evil',
   0x4: 'unusable by good',
@@ -115,7 +133,7 @@ const unusableByV11 = {
   0x40: 'unusable by sensates',
   0x80: 'unusable by priest',
 
-  // byte 2
+  // byte2
   0x100: 'unusable by godsmen',
   0x200: 'unusable by anarchist',
   0x400: 'unusable by chaosmen',
@@ -125,7 +143,7 @@ const unusableByV11 = {
   0x4000: 'unusable by dustmen',
   0x8000: 'unusable by mercykillers',
 
-  // byte 3
+  // byte3
   0x10000: 'unusable by indeps',
   0x20000: 'unusable by fighter thief',
   0x40000: 'unusable by mage',
@@ -135,27 +153,36 @@ const unusableByV11 = {
   0x400000: 'unusable by thief',
   0x800000: 'unusable by vhailor',
 
-  // byte 4
+  // byte4
   0x1000000: 'unusable by ignus',
   0x2000000: 'unusable by morte',
   0x4000000: 'unusable by nordom',
-  //   0x8000000: 'unknown',
+  // 0x8000000: unused
   0x10000000: 'unusable by annah',
-  //   0x20000000: 'unknown',
+  // 0x20000000: unused
   0x40000000: 'unusable by nameless one',
-//   0x80000000: 'unknown',
+  // 0x80000000: unused
 } as const;
 type UnusableByV11 = typeof unusableByV11[keyof typeof unusableByV11];
 
+/* createGenerator().register().enum("weaponAnimationV11", {
+ *   0x3153: ['long sword'],
+ *   0x5841: ['axe'],
+ *   0x4c43: ['club'],
+ *   0x4444: ['dagger'],
+ *   0x4857: ['warhammer'],
+ *   0x2020: ['fist'],
+ *   0x4243: ['crossbow'],
+ * }).write();
+ */
 const weaponAnimationV11 = {
-  0x3153: 'long sword',
-  0x5841: 'axe',
-  0x4c43: 'club',
-  0x4444: 'dagger',
-  0x4857: 'warhammer',
-  0x2020: 'fist',
-
-  0x4243: 'crossbow', // pstee nordxbow.itm
+  8224: 'fist',
+  12627: 'long sword',
+  16963: 'crossbow',
+  17476: 'dagger',
+  18519: 'warhammer',
+  19523: 'club',
+  22593: 'axe',
 } as const;
 type WeaponAnimationV11 = typeof weaponAnimationV11[keyof typeof weaponAnimationV11];
 

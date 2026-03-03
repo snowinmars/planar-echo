@@ -66,6 +66,7 @@ const createMeta = (gameName: GameName, resourceName: string, signature: string,
 };
 
 const detectVersionToUse = (meta: ItemMeta): string => {
+  if (meta.signature !== 'itm') throw new Error(`Unsupported signature for item: ${meta.signature}`);
   if (meta.isv11 || (meta.isv10 && meta.isPstee)) return v11;
   if (meta.isv10) return v10;
   if (meta.isv20) return v20;
@@ -76,13 +77,8 @@ const readItemBuffer = (buffer: Buffer, resourceName: string, gameName: GameName
   const reader = createReader(buffer);
 
   const signature = reader.string(4);
-  if (signature !== 'itm') throw new Error(`Unsupported signature: ${signature}`);
-
   const version = reader.string(4);
-  if (version !== v10 && version !== v11 && version !== v20) throw new Error(`Unsupported version: ${version}`);
-
   const meta = createMeta(gameName, resourceName, signature, version);
-
   const versionToUse = detectVersionToUse(meta);
 
   switch (versionToUse) {
@@ -191,7 +187,7 @@ const readItemBuffer = (buffer: Buffer, resourceName: string, gameName: GameName
       };
       return item;
     }
-    default:throw new Error(`Unsupported version: ${version}`);
+    default:throw new Error('Should not happens');
   }
 };
 

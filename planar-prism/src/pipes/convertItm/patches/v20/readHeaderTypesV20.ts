@@ -1,105 +1,124 @@
 import { extend } from '../../../../pipes/offsetMap.js';
 
+/* createGenerator().register().flags("flagsV20", {
+ *   byte1: ['unsellable (critical item, kept on ground)','two-handed','movable','displayable','cursed',null,'magical','bow',],
+ *   byte2: ['silver','cold-iron','stolen (unsellable)','cannot place in carryable container','pulsating',]
+ * }).write();
+ */
 const flagsV20 = {
-// byte 1
+  // byte1
   0x1: 'unsellable (critical item, kept on ground)',
   0x2: 'two-handed',
   0x4: 'movable',
   0x8: 'displayable',
   0x10: 'cursed',
-  // 0x20: unused,
+  // 0x20: unused
   0x40: 'magical',
   0x80: 'bow',
 
-  // byte 2
+  // byte2
   0x100: 'silver',
   0x200: 'cold-iron',
   0x400: 'stolen (unsellable)',
   0x800: 'cannot place in carryable container',
   0x1000: 'pulsating',
+  // 0x2000: unused
+  // 0x4000: unused
+  // 0x8000: unused
 } as const;
 type FlagsV20 = typeof flagsV20[keyof typeof flagsV20];
 
-const itemTypesV20 = {
-  0x00: 'books/misc',
-  0x01: 'amulets and necklaces',
-  0x02: 'armor',
-  0x03: 'belts and girdles',
-  0x04: 'boots',
-  0x05: 'arrows',
-  0x06: 'bracers and gauntlets',
-  0x07: 'helms, hats, and other head-wear',
-  0x08: 'keys', // (not in icewind dale?)
-  0x09: 'potions',
-  0x0a: 'rings',
-  0x0b: 'scrolls',
-  0x0c: 'shields', // (not in iwd)
-  0x0d: 'food',
-  0x0e: 'bullets', // (for a sling)
-  0x0f: 'bows',
-  0x10: 'daggers',
-  0x11: 'maces', // (in bg, this includes clubs)
-  0x12: 'slings',
-  0x13: 'small swords',
-  0x14: 'large swords',
-  0x15: 'hammers',
-  0x16: 'morning stars',
-  0x17: 'flails',
-  0x18: 'darts',
-  0x19: 'axes', // (specifically, 1-handed axes -- halberds and 2-handed polearms not included)
-  0x1a: 'quarterstaff',
-  0x1b: 'crossbow',
-  0x1c: 'hand-to-hand weapons', // (fist, fist irons, punch daggers, etc)
-  0x1d: 'spears',
-  0x1e: 'halberds', // (2-handed polearms)
-  0x1f: 'crossbow bolts',
-  0x20: 'cloaks and robes',
-  0x21: 'gold pieces', // (not an inventory item, but can appear as "monster dropped" treasure)
-  0x22: 'gems',
-  0x23: 'wands',
-  0x24: 'containers',
-  0x25: 'books',
-  0x26: 'familiars',
-  0x27: 'tattoos', // (pst)
-  0x28: 'lenses', // (pst)
-  0x29: 'bucklers/teeth',
-  0x2a: 'candles',
-  0x2b: 'child body',
-  0x2c: 'clubs',
-  0x2d: 'female body',
-  0x2e: 'key',
-  0x2f: 'large shields',
-  0x30: 'male body',
-  0x31: 'medium shields',
-  0x32: 'notes',
-  0x33: 'rods',
-  0x34: 'skulls',
-  0x35: 'small shields',
-  0x36: 'spider body',
-  0x37: 'telescopes',
-  0x38: 'drinks',
-  0x39: 'great swords',
-  0x3a: 'container',
-  0x3b: 'fur/pelt',
-  0x3c: 'leather armor',
-  0x3d: 'studded leather armor',
-  0x3e: 'chain mail',
-  0x3f: 'splint mail',
-  0x40: 'half plate',
-  0x41: 'full plate',
-  0x42: 'hide armor',
-  0x43: 'robe',
-  0x44: 'scale mail',
-  0x45: 'bastard sword',
-  0x46: 'scarf',
-  0x47: 'food',
-  0x48: 'hat',
-  0x49: 'gauntlet',
+/* createGenerator().register().enum("itemTypeV20",
+ *   ['books/misc','amulets and necklaces','armor','belts and girdles','boots','arrows','bracers and gauntlets','helms, hats, and other head-wear','keys// (not in icewind dale?)','potions','rings','scrolls','shields// (not in iwd)','food','bullets// (for a sling)','bows','daggers','maces// (in bg, this includes clubs)','slings','small swords','large swords','hammers','morning stars','flails','darts','axes// (specifically, 1-handed axes -- halberds and 2-handed polearms ot included)','quarterstaff','crossbow','hand-to-hand weapons// (fist, fist irons, punch daggers, etc)','spears','halberds// (2-handed polearms)','crossbow bolts','cloaks and robes','gold pieces// (not an inventory item, but can appear as "monster ropped" treasure)','gems','wands','containers','books','familiars','tattoos// (pst)','lenses// (pst)','bucklers/teeth','candles','child body','clubs','female body','key','large shields','male body','medium shields','notes','rods','skulls','small shields','spider body','telescopes','drinks','great swords','container','fur/pelt','leather armor','studded leather armor','chain mail','splint mail','half plate','full plate','hide armor','robe','scale mail','bastard sword','scarf','food','hat','gauntlet',]
+ * ).write();
+ */
+const itemTypeV20 = {
+  0: 'books/misc',
+  1: 'amulets and necklaces',
+  2: 'armor',
+  3: 'belts and girdles',
+  4: 'boots',
+  5: 'arrows',
+  6: 'bracers and gauntlets',
+  7: 'helms, hats, and other head-wear',
+  8: 'keys', // (not in icewind dale?)
+  9: 'potions',
+  10: 'rings',
+  11: 'scrolls',
+  12: 'shields', // (not in iwd)
+  13: 'food',
+  14: 'bullets', // (for a sling)
+  15: 'bows',
+  16: 'daggers',
+  17: 'maces', // (in bg, this includes clubs)
+  18: 'slings',
+  19: 'small swords',
+  20: 'large swords',
+  21: 'hammers',
+  22: 'morning stars',
+  23: 'flails',
+  24: 'darts',
+  25: 'axes', // (specifically, 1-handed axes -- halberds and 2-handed polearms ot included)
+  26: 'quarterstaff',
+  27: 'crossbow',
+  28: 'hand-to-hand weapons', // (fist, fist irons, punch daggers, etc)
+  29: 'spears',
+  30: 'halberds', // (2-handed polearms)
+  31: 'crossbow bolts',
+  32: 'cloaks and robes',
+  33: 'gold pieces', // (not an inventory item, but can appear as "monster ropped" treasure)
+  34: 'gems',
+  35: 'wands',
+  36: 'containers',
+  37: 'books',
+  38: 'familiars',
+  39: 'tattoos', // (pst)
+  40: 'lenses', // (pst)
+  41: 'bucklers/teeth',
+  42: 'candles',
+  43: 'child body',
+  44: 'clubs',
+  45: 'female body',
+  46: 'key',
+  47: 'large shields',
+  48: 'male body',
+  49: 'medium shields',
+  50: 'notes',
+  51: 'rods',
+  52: 'skulls',
+  53: 'small shields',
+  54: 'spider body',
+  55: 'telescopes',
+  56: 'drinks',
+  57: 'great swords',
+  58: 'container',
+  59: 'fur/pelt',
+  60: 'leather armor',
+  61: 'studded leather armor',
+  62: 'chain mail',
+  63: 'splint mail',
+  64: 'half plate',
+  65: 'full plate',
+  66: 'hide armor',
+  67: 'robe',
+  68: 'scale mail',
+  69: 'bastard sword',
+  70: 'scarf',
+  71: 'food',
+  72: 'hat',
+  73: 'gauntlet',
 } as const;
-type ItemTypesV20 = typeof itemTypesV20[keyof typeof itemTypesV20];
+type ItemTypeV20 = typeof itemTypeV20[keyof typeof itemTypeV20];
 
+/* createGenerator().register().flags("unusableByV20", {
+ *   byte1: ['barbarian','bard','cleric','druid','fighter','monk','paladin','ranger',],
+ *   byte2: ['rogue','sorcerer','wizard',null,'chaotic','evil','good','x neutral',],
+ *   byte3: ['lawful','neutral',null,null,null,null,null,'elf',],
+ *   byte4: ['dwarf','half-elf','halfling','human','gnome','half-orc',],
+ * }).write();
+ */
 const unusableByV20 = {
-  // byte 1
+  // byte1
   0x1: 'barbarian',
   0x2: 'bard',
   0x4: 'cleric',
@@ -109,69 +128,86 @@ const unusableByV20 = {
   0x40: 'paladin',
   0x80: 'ranger',
 
-  // byte 2
+  // byte2
   0x100: 'rogue',
   0x200: 'sorcerer',
   0x400: 'wizard',
-  0x800: 'unknown',
+  // 0x800: unused
   0x1000: 'chaotic',
   0x2000: 'evil',
   0x4000: 'good',
   0x8000: 'x neutral',
 
-  // byte 3
+  // byte3
   0x10000: 'lawful',
   0x20000: 'neutral',
-  // 0x40000: unknown,
-  // 0x80000: unknown,
-  // 0x100000: unknown,
-  // 0x200000: unknown,
-  // 0x400000: unknown,
+  // 0x40000: unused
+  // 0x80000: unused
+  // 0x100000: unused
+  // 0x200000: unused
+  // 0x400000: unused
   0x800000: 'elf',
 
-  // byte 4
+  // byte4
   0x1000000: 'dwarf',
   0x2000000: 'half-elf',
   0x4000000: 'halfling',
   0x8000000: 'human',
   0x10000000: 'gnome',
   0x20000000: 'half-orc',
+  // 0x40000000: unused
+  // 0x80000000: unused
 } as const;
 type UnusableByV20 = typeof unusableByV20[keyof typeof unusableByV20];
 
+/* createGenerator().register().flags('kitUsability2V20', {
+ *   byte1: ['cleric of lathander','cleric of selune','cleric of helm','cleric of oghma','cleric of tempus','cleric of bane','cleric of mask','cleric of talos',]
+ * }).write();
+ */
 const kitUsability2V20 = {
-  0: 'cleric of lathander',
-  1: 'cleric of selune',
-  2: 'cleric of helm',
-  3: 'cleric of oghma',
-  4: 'cleric of tempus',
-  5: 'cleric of bane',
-  6: 'cleric of mask',
-  7: 'cleric of talos',
+  // byte1
+  0x1: 'cleric of lathander',
+  0x2: 'cleric of selune',
+  0x4: 'cleric of helm',
+  0x8: 'cleric of oghma',
+  0x10: 'cleric of tempus',
+  0x20: 'cleric of bane',
+  0x40: 'cleric of mask',
+  0x80: 'cleric of talos',
 } as const;
 type KitUsability2V20 = typeof kitUsability2V20[keyof typeof kitUsability2V20];
 
+/* createGenerator().register().flags('kitUsability3V20', {
+ *   byte1: ['diviner','enchanter','illusionist','evoker','necromancer','transmuter','generalist mage','cleric of ilmater',]
+ * }).write();
+ */
 const kitUsability3V20 = {
-  0: 'diviner',
-  1: 'enchanter',
-  2: 'illusionist',
-  3: 'evoker',
-  4: 'necromancer',
-  5: 'transmuter',
-  6: 'generalist mage',
-  7: 'cleric of ilmater',
+  // byte1
+  0x1: 'diviner',
+  0x2: 'enchanter',
+  0x4: 'illusionist',
+  0x8: 'evoker',
+  0x10: 'necromancer',
+  0x20: 'transmuter',
+  0x40: 'generalist mage',
+  0x80: 'cleric of ilmater',
 } as const;
 type KitUsability3V20 = typeof kitUsability3V20[keyof typeof kitUsability3V20];
 
+/* createGenerator().register().flags('kitUsability4V20', {
+ *   byte1: ['paladin of ilmater','paladin of helm','paladin of mystra','monk of the old order','monk of the broken ones','monk of the dark moon','abjurer','conjurer',]
+ * }).write();
+ */
 const kitUsability4V20 = {
-  0: 'paladin of ilmater',
-  1: 'paladin of helm',
-  2: 'paladin of mystra',
-  3: 'monk of the old order',
-  4: 'monk of the broken ones',
-  5: 'monk of the dark moon',
-  6: 'abjurer',
-  7: 'conjurer',
+  // byte1
+  0x1: 'paladin of ilmater',
+  0x2: 'paladin of helm',
+  0x4: 'paladin of mystra',
+  0x8: 'monk of the old order',
+  0x10: 'monk of the broken ones',
+  0x20: 'monk of the dark moon',
+  0x40: 'abjurer',
+  0x80: 'conjurer',
 } as const;
 type KitUsability4V20 = typeof kitUsability4V20[keyof typeof kitUsability4V20];
 
@@ -229,7 +265,7 @@ type KitUsability4V20 = typeof kitUsability4V20[keyof typeof kitUsability4V20];
 
 export const offsetMap = {
   flags: extend(flagsV20),
-  itemTypes: extend(itemTypesV20),
+  itemType: extend(itemTypeV20),
   unusableBy: extend(unusableByV20),
   kitUsability2: extend(kitUsability2V20),
   kitUsability3: extend(kitUsability3V20),
@@ -244,7 +280,7 @@ export type ItemHeaderV20 = Readonly<{
   identifiedNameRef: number;
   replacementItem: string;
   flags: FlagsV20[];
-  itemType: ItemTypesV20;
+  itemType: ItemTypeV20;
   unusableBy: UnusableByV20[];
   weaponAnimation: number;
   minLevel: number;

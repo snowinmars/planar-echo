@@ -25,7 +25,7 @@ const readHeaderV10 = (reader: BufferReader, meta: ItemMeta): ItemHeaderV10 => {
   }
 
   tmp.flags = reader.map.uint(offsetMap.flags.parseFlags);
-  tmp.itemType = reader.map.short(offsetMap.itemTypes.parse);
+  tmp.itemType = reader.map.short(offsetMap.itemType.parse);
   tmp.unusableBy = reader.map.uint(offsetMap.unusableBy.parseFlags);
 
   if (meta.isBg || meta.isIwd) {

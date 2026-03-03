@@ -21,7 +21,7 @@ const convertDlg = (
   pathes: Pathes,
   decompiledItems: DecompiledItem[],
   tlk: TlkEntry,
-  percentCallback: ((percent: number) => void) | null = null,
+  percentCallback: ((percent: number, resource: string) => void) | null = null,
 ): AsyncIterableIterator<NpcDialogue> => {
   let i = 0;
 
@@ -36,17 +36,17 @@ const convertDlg = (
       }
 
       const decompiledItem = decompiledItems[i]!;
-      const npcDialogue = await readNpcDialogueFile(
+      const item = await readNpcDialogueFile(
         join(pathes.output.decimpiledBiff, decompiledItem.name),
         decompiledItem.name,
         tlk,
       );
 
       const percent = Math.round((i + 1) * 100 / decompiledItems.length);
-      percentCallback?.(percent);
+      percentCallback?.(percent, item.resourceName);
 
       i++;
-      return { done: false, value: npcDialogue };
+      return { done: false, value: item };
     },
   };
 

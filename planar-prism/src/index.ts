@@ -41,20 +41,24 @@ import convertWmp from './pipes/convertWmp/convertWmp.js';
 
 import type { DecompiledItem, Pathes } from './shared/types.js';
 import convertTlk from './pipes/convertTlk/convertTlk.js';
+import type { Ids } from './pipes/convertIds/patches/readIdsBufferTypes.js';
 
-const logPercent = (x: number): void => {
-  logger.info(`Done ${x}%`);
+const logPercent = (x: number, r: string): void => {
+  logger.info(`Done ${x}% in '${r}'`);
 };
 const createPathes = (lang: Lang): Pathes => {
   const weiduExePath = normalize('D:/Games/weidu/weidu.exe');
   const chitinKeyPath = normalize('D:/Games/Steam/steamapps/common/Project P/CHITIN.KEY');
   const gameFolder = normalize(dirname(chitinKeyPath));
   const tlkPath = normalize(join(gameFolder, 'lang', lang.toString(), 'dialog.tlk'));
-  const outputPath = normalize('E:/prg/snowinmars/iexo/echo');
+  const outputPath = normalize('E:/prg/snowinmars/planar-echo/planar-ghost');
   const decimpiledBiff = normalize(join(outputPath, 'decimpiledBiff'));
   const decimpiledBiffJson = normalize(join(decimpiledBiff, 'output.json'));
   const jsonDialogues = normalize(join(outputPath, 'json', 'dialogues'));
   const jsonItems = normalize(join(outputPath, 'json', 'items'));
+  const jsonIds = normalize(join(outputPath, 'json', 'ids'));
+  const jsonCreatures = normalize(join(outputPath, 'json', 'creatures'));
+  const jsonEffects = normalize(join(outputPath, 'json', 'effects'));
 
   return {
     weidu: weiduExePath,
@@ -68,6 +72,9 @@ const createPathes = (lang: Lang): Pathes => {
       decimpiledBiffJson,
       jsonDialogues,
       jsonItems,
+      jsonIds,
+      jsonCreatures,
+      jsonEffects,
     },
   };
 };
@@ -113,13 +120,27 @@ Promise.resolve()
     const tlk = await convertTlk(pathes);
     writeFile(join(pathes.output.jsonDialogues, 'dialog.tlk'), JSON.stringify(tlk, null, 2), { encoding: 'utf8' });
 
+    logger.info(`Converting ids to json...`);
+    const idsIterator = await convertIds (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ids), tlk, logPercent);
+    const ids: Ids[] = [];
+    for await (const id of idsIterator) {
+      ids.push(id);
+      await writeFile(join(pathes.output.jsonIds, id.resourceName), JSON.stringify(id, null, 2), { encoding: 'utf8' });
+    }
+
     await convertTwoda(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.twoda));
     await convertAre (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.are));
     await convertBam (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.bam));
     await convertBcs (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.bcs));
     await convertBmp (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.bmp));
     await convertChu (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.chu));
-    await convertCre (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.cre));
+
+    logger.info(`Converting cre to json...`);
+    const creatures = await convertCre(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.cre), tlk, ids, logPercent);
+    for await (const creature of creatures) {
+      if (!creature) continue;
+      await writeFile(join(pathes.output.jsonCreatures, creature.resourceName), JSON.stringify(creature, null, 2), { encoding: 'utf8' });
+    }
 
     logger.info(`Converting dlgs to json...`);
     const npcDialogues = await convertDlg(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.dlg), tlk, logPercent);
@@ -127,12 +148,16 @@ Promise.resolve()
       await writeFile(join(pathes.output.jsonDialogues, npcDialogue.resourceName), JSON.stringify(npcDialogue, null, 2), { encoding: 'utf8' });
     }
 
-    await convertEff (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.eff));
+    logger.info(`Converting eff to json...`);
+    const effects = await convertEff(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.eff), tlk, logPercent);
+    for await (const effect of effects) {
+      await writeFile(join(pathes.output.jsonEffects, effect.resourceName), JSON.stringify(effect, null, 2), { encoding: 'utf8' });
+    }
+
     await convertGlsl (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.glsl));
-    await convertIds (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ids));
     await convertIni (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ini));
 
-    const items = await convertItm (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.itm), tlk, logPercent);
+    const items = await convertItm(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.itm), tlk, logPercent);
     for await (const item of items) {
       await writeFile(join(pathes.output.jsonItems, item.resourceName), JSON.stringify(item, null, 2), { encoding: 'utf8' });
     }

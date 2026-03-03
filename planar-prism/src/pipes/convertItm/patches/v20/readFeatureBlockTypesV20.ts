@@ -1,5 +1,9 @@
 import { extend } from '../../../../pipes/offsetMap.js';
 
+/* createGenerator().register().enum("targetTypeV20",
+ *   ['none','self (pre-projectile)','pre-target','party','everyone (inc. party)','everyone (excl. party)','Everyone matching specific value of caster (or Party if cast by party member)','everyone matching specific value of target','everyone (excl. caster)','self (post-projectile)',]
+ * ).write();
+ */
 const targetTypeV20 = {
   0: 'none',
   1: 'self (pre-projectile)',
@@ -14,6 +18,11 @@ const targetTypeV20 = {
 } as const;
 type TargetTypeV20 = typeof targetTypeV20[keyof typeof targetTypeV20];
 
+/* createGenerator().register().enum("timingModeV20", {
+ *   0: ['duration','permanent','while equipped','delayed duration','delayed','delayed (transforms to 8)','duration?','permanent?','permanent (unsaved)','permanent (after death)','trigger'],
+ *   4096: ['absolute duration']
+ * }).write();
+ */
 const timingModeV20 = {
   0: 'duration',
   1: 'permanent',
@@ -30,6 +39,10 @@ const timingModeV20 = {
 } as const;
 type TimingModeV20 = typeof timingModeV20[keyof typeof timingModeV20];
 
+/* createGenerator().register().enum("resistanceV20",
+ *   ['nonmagical','can be dispelled/affected by resistance','cannot be dispelled/ignores resistance','can be dispelled/ignores resistance',]
+ * ).write();
+ */
 const resistanceV20 = {
   0: 'nonmagical',
   1: 'can be dispelled/affected by resistance',
@@ -38,12 +51,20 @@ const resistanceV20 = {
 } as const;
 type ResistanceV20 = typeof resistanceV20[keyof typeof resistanceV20];
 
+/* createGenerator().register().flags("savingThrowTypeV20", {
+ *   byte1: ['spells','breathe','death','wands','polymorph',]
+ * }).write();
+ */
 const savingThrowTypeV20 = {
-  0: 'spells',
-  1: 'breathe',
-  2: 'death',
-  3: 'wands',
-  4: 'polymorph',
+  // byte1
+  0x1: 'spells',
+  0x2: 'breathe',
+  0x4: 'death',
+  0x8: 'wands',
+  0x10: 'polymorph',
+  // 0x20: unused
+  // 0x40: unused
+  // 0x80: unused
 } as const;
 type SavingThrowTypeV20 = typeof savingThrowTypeV20[keyof typeof savingThrowTypeV20];
 
@@ -68,7 +89,7 @@ export type ItemFeatureBlockV20 = Readonly<{
   resource: string;
   diceThrown: number;
   diceSides: number;
-  savingThrowType: SavingThrowTypeV20;
+  savingThrowType: SavingThrowTypeV20[];
   savingThrowBonus: number;
   special: number;
 }>;

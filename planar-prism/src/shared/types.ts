@@ -18,6 +18,7 @@ export enum DecompiledItemType {
   dlg = 'dlg',
   eff = 'eff',
   glsl = 'glsl',
+  gam = 'gam',
   ids = 'ids',
   ini = 'ini',
   itm = 'itm',
@@ -58,6 +59,9 @@ export type Pathes = Readonly<{
     decimpiledBiff: string;
     decimpiledBiffJson: string;
     jsonDialogues: string;
+    jsonIds: string;
+    jsonCreatures: string;
+    jsonEffects: string;
     jsonItems: string;
   }>;
 }>;

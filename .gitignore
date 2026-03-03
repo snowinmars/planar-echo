@@ -199,3 +199,6 @@ dist
 **/sound/
 src/sources/
 src/htmlcov/
+
+planar-ghost/decimpiledBiff
+planar-ghost/json

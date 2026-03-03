@@ -7,6 +7,9 @@ const prepareOutput = async (pathes: Pathes): Promise<void> => {
   await mkdir(pathes.output.decimpiledBiff);
   await mkdir(pathes.output.jsonDialogues, { recursive: true });
   await mkdir(pathes.output.jsonItems, { recursive: true });
+  await mkdir(pathes.output.jsonIds, { recursive: true });
+  await mkdir(pathes.output.jsonCreatures, { recursive: true });
+  await mkdir(pathes.output.jsonEffects, { recursive: true });
 };
 
 export default prepareOutput;
