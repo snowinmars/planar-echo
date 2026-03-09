@@ -8,6 +8,7 @@ import prepareOutput from './pipes/validate/prepareOutput.js';
 import { DecompiledItemType, Lang } from './shared/types.js';
 import decompileBiffs from './pipes/decompileBiffs.js';
 import logger from './shared/logger.js';
+import { jsonStringify, jsonParse } from './shared/json.js';
 
 import convertTwoda from './pipes/convertTwoda/convertTwoda.js';
 import convertAre from './pipes/convertAre/convertAre.js';
@@ -105,8 +106,8 @@ Promise.resolve()
     if (doDecompileBiffs) {
       logger.info(`Decompiling biffs archives from '${pathes.game}' to '${pathes.output.decimpiledBiff}'; might take a while`);
       const decompileBiffsStarted = new Date();
-      decompiledItems = await decompileBiffs(pathes, logPercent);
-      await writeFile(pathes.output.decimpiledBiffJson, JSON.stringify(decompiledItems, null, 2), { encoding: 'utf8' });
+      decompiledItems = await decompileBiffs(pathes);
+      await writeFile(pathes.output.decimpiledBiffJson, jsonStringify(decompiledItems), { encoding: 'utf8' });
       const decompileBiffsTookSec = Math.round((new Date().getTime() - decompileBiffsStarted.getTime()) / 1000);
       logger.info(`Decompiled ${decompiledItems.length} items from '${pathes.game}' biff archives to '${pathes.output.decimpiledBiff}'; took ${decompileBiffsTookSec} seconds; save output to ${pathes.output.decimpiledBiffJson}`);
     }
@@ -118,14 +119,14 @@ Promise.resolve()
 
     logger.info(`Converting tlks to json...`);
     const tlk = await convertTlk(pathes);
-    writeFile(join(pathes.output.jsonDialogues, 'dialog.tlk'), JSON.stringify(tlk, null, 2), { encoding: 'utf8' });
+    writeFile(join(pathes.output.jsonDialogues, 'dialog.tlk'), jsonStringify(tlk), { encoding: 'utf8' });
 
     logger.info(`Converting ids to json...`);
     const idsIterator = await convertIds (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ids), tlk, logPercent);
     const ids: Ids[] = [];
     for await (const id of idsIterator) {
       ids.push(id);
-      await writeFile(join(pathes.output.jsonIds, id.resourceName), JSON.stringify(id, null, 2), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.jsonIds, id.resourceName), jsonStringify(id), { encoding: 'utf8' });
     }
 
     await convertTwoda(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.twoda));
@@ -139,19 +140,19 @@ Promise.resolve()
     const creatures = await convertCre(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.cre), tlk, ids, logPercent);
     for await (const creature of creatures) {
       if (!creature) continue;
-      await writeFile(join(pathes.output.jsonCreatures, creature.resourceName), JSON.stringify(creature, null, 2), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.jsonCreatures, creature.resourceName), jsonStringify(creature), { encoding: 'utf8' });
     }
 
     logger.info(`Converting dlgs to json...`);
     const npcDialogues = await convertDlg(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.dlg), tlk, logPercent);
     for await (const npcDialogue of npcDialogues) {
-      await writeFile(join(pathes.output.jsonDialogues, npcDialogue.resourceName), JSON.stringify(npcDialogue, null, 2), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.jsonDialogues, npcDialogue.resourceName), jsonStringify(npcDialogue), { encoding: 'utf8' });
     }
 
     logger.info(`Converting eff to json...`);
     const effects = await convertEff(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.eff), tlk, logPercent);
     for await (const effect of effects) {
-      await writeFile(join(pathes.output.jsonEffects, effect.resourceName), JSON.stringify(effect, null, 2), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.jsonEffects, effect.resourceName), jsonStringify(effect), { encoding: 'utf8' });
     }
 
     await convertGlsl (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.glsl));
@@ -159,7 +160,7 @@ Promise.resolve()
 
     const items = await convertItm(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.itm), tlk, logPercent);
     for await (const item of items) {
-      await writeFile(join(pathes.output.jsonItems, item.resourceName), JSON.stringify(item, null, 2), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.jsonItems, item.resourceName), jsonStringify(item), { encoding: 'utf8' });
     }
 
     await convertLua (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.lua));
