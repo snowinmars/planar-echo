@@ -5,6 +5,7 @@ import type { TlkEntry } from '../convertTlk/types.js';
 import type { CreatureV10, CreatureV12, CreatureV22, CreatureV90 } from './patches/readCreatureBufferTypes.js';
 import readCreatureBuffer from './patches/readCreatureBuffer.js';
 import type { Ids } from '../convertIds/patches/readIdsBufferTypes.js';
+import patchTranslation from './patches/patchTranslation.js';
 
 type Creature = CreatureV10 | CreatureV12 | CreatureV22 | CreatureV90;
 
@@ -12,8 +13,9 @@ const readCreatureFile = async (filePath: string, resourceName: string, gameName
   const buffer = await readFile(filePath);
 
   const raw = await readCreatureBuffer(buffer, resourceName, gameName, ids);
+  const translated = patchTranslation(raw, tlk);
 
-  return raw;
+  return translated;
 };
 
 const convertCre = (

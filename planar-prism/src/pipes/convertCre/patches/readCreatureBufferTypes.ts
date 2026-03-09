@@ -47,15 +47,15 @@ export type CreatureV10 = Readonly<{
 
 export type CreatureV12 = Readonly<{
   resourceName: string;
-
+  header: CreatureHeaderV10; // TODO [snow]: tmp, rewrite
 }>;
 
 export type CreatureV22 = Readonly<{
   resourceName: string;
-
+  header: CreatureHeaderV10; // TODO [snow]: tmp, rewrite
 }>;
 
 export type CreatureV90 = Readonly<{
   resourceName: string;
-
+  header: CreatureHeaderV10; // TODO [snow]: tmp, rewrite
 }>;

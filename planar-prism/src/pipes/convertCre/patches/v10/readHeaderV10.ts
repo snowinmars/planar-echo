@@ -15,6 +15,8 @@ const readHeaderV10 = (reader: BufferReader, meta: CreatureMeta): CreatureHeader
 
   tmp.longNameRef = reader.uint();
   tmp.shortNameRef = reader.uint();
+  if (tmp.longNameRef === meta.emptyInt) tmp.longNameRef = -1;
+  if (tmp.shortNameRef === meta.emptyInt) tmp.shortNameRef = -1;
   tmp.creatureFlags = reader.map.uint(offsetMap.creatureFlags.parseFlags);
   tmp.xpGainedForKilling = reader.uint();
   tmp.creaturePowerLevelOrXpOfCreature = reader.uint();
@@ -203,7 +205,9 @@ const readHeaderV10 = (reader: BufferReader, meta: CreatureMeta): CreatureHeader
     signature: tmp.signature,
     version: tmp.version,
     longNameRef: tmp.longNameRef,
+    longName: `UNTRANSLATED LONGNAME ${tmp.longNameRef}`,
     shortNameRef: tmp.shortNameRef,
+    shortName: `UNTRANSLATED SHORTNAME ${tmp.shortNameRef}`,
     creatureFlags: tmp.creatureFlags,
     xpGainedForKilling: tmp.xpGainedForKilling,
     creaturePowerLevelOrXpOfCreature: tmp.creaturePowerLevelOrXpOfCreature,

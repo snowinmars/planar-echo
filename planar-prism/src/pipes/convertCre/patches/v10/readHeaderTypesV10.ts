@@ -437,7 +437,9 @@ export type CreatureHeaderV10 = Readonly<{
   signature: string;
   version: string;
   longNameRef: number;
+  longName: string;
   shortNameRef: number;
+  shortName: string;
   creatureFlags: CreatureFlagsV10[];
   xpGainedForKilling: number;
   creaturePowerLevelOrXpOfCreature: number;
