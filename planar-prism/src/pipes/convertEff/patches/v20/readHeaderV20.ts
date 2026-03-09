@@ -14,12 +14,12 @@ const readHeaderV20 = (reader: BufferReader, meta: EffectMeta): EffectHeaderV20 
   tmp.externalEffectsSignature = reader.string(4);
   tmp.externalEffectsVersion = reader.string(4);
 
-  tmp.targetType = reader.map.uint(offsetMap.targetType.parse);
+  tmp.type = reader.map.uint(offsetMap.type.parse);
+  tmp.target = reader.uint(); // TODO [snow]: to enum
   tmp.power = reader.uint();
   tmp.parameter1 = reader.uint();
   tmp.parameter2 = reader.uint();
-  tmp.timingMode = reader.map.short(offsetMap.timingMode.parse);
-  tmp.timing = reader.short();
+  tmp.timingMode = reader.map.uint(offsetMap.timingMode.parse);
   tmp.duration = reader.uint();
   tmp.probability1 = reader.short();
   tmp.probability2 = reader.short();
@@ -29,13 +29,22 @@ const readHeaderV20 = (reader: BufferReader, meta: EffectMeta): EffectHeaderV20 
   tmp.savingThrowType = reader.map.uint(offsetMap.savingThrowType.parseFlags);
   tmp.saveBonus = reader.uint();
   tmp.special = reader.uint();
-  tmp.primaryTypeSchool = reader.uint();
+  tmp.primaryTypeSchool = reader.uint(); // TODO [snow]: to enum
   reader.skip.uint();
-  tmp.parentResourceLowestAffectedLevel = reader.uint();
-  tmp.parentResourceHighestAffectedLevel = reader.uint();
+  if (meta.isPstee) {
+    tmp.minimumLevel = reader.uint();
+    tmp.maximumLevel = reader.uint();
+  }
+  else {
+    tmp.parentResourceLowestAffectedLevel = reader.uint();
+    tmp.parentResourceHighestAffectedLevel = reader.uint();
+  }
   tmp.dispelOrResistance = reader.map.uint(offsetMap.dispelOrResistance.parseFlags);
   tmp.parameter3 = reader.uint();
   tmp.parameter4 = reader.uint();
+  if (meta.isPstee) {
+    tmp.parameter5 = reader.uint();
+  }
   tmp.timeApplied = reader.uint();
   tmp.resource2Ref = reader.string(8);
   tmp.resource3Ref = reader.string(8);
@@ -63,12 +72,12 @@ const readHeaderV20 = (reader: BufferReader, meta: EffectMeta): EffectHeaderV20 
     version: tmp.version,
     externalEffectsSignature: tmp.externalEffectsSignature,
     externalEffectsVersion: tmp.externalEffectsVersion,
-    targetType: tmp.targetType,
+    type: tmp.type,
+    target: tmp.target,
     power: tmp.power,
     parameter1: tmp.parameter1,
     parameter2: tmp.parameter2,
     timingMode: tmp.timingMode,
-    timing: tmp.timing,
     duration: tmp.duration,
     probability1: tmp.probability1,
     probability2: tmp.probability2,
@@ -79,11 +88,14 @@ const readHeaderV20 = (reader: BufferReader, meta: EffectMeta): EffectHeaderV20 
     saveBonus: tmp.saveBonus,
     special: tmp.special,
     primaryTypeSchool: tmp.primaryTypeSchool,
+    minimumLevel: tmp.minimumLevel,
+    maximumLevel: tmp.maximumLevel,
     parentResourceLowestAffectedLevel: tmp.parentResourceLowestAffectedLevel,
     parentResourceHighestAffectedLevel: tmp.parentResourceHighestAffectedLevel,
     dispelOrResistance: tmp.dispelOrResistance,
     parameter3: tmp.parameter3,
     parameter4: tmp.parameter4,
+    parameter5: tmp.parameter5,
     timeApplied: tmp.timeApplied,
     resource2Ref: tmp.resource2Ref,
     resource3Ref: tmp.resource3Ref,

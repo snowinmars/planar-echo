@@ -1,10 +1,11 @@
 import { extend } from '../../../../pipes/offsetMap.js';
+import type { Maybe } from '../../../../shared/types.js';
 
-/* createGenerator().register().enum("targetTypeV20",
+/* createGenerator().register().enum("typeV20",
  *   ['none','self','projectile target','party','everyone','everyone except party','caster group','target group','everyone except self','original caster'],
  * ).write();
  */
-const targetTypeV20 = {
+const typeV20 = {
   0: 'none',
   1: 'self',
   2: 'projectile target',
@@ -19,7 +20,7 @@ const targetTypeV20 = {
   146: 'cast spell',
   265: 'modify global variable',
 } as const;
-type TargetTypeV20 = typeof targetTypeV20[keyof typeof targetTypeV20];
+type TypeV20 = typeof typeV20[keyof typeof typeV20];
 
 /* createGenerator().register().enum("timingModeV20", {
  *   0: ['instant/limited','instant/permanent','instant/while equipped','delay/limited','delay/permanent','delay/while equipped','limited after duration','permanent after duration','equipped after duration','instant/permanent (after death)','instant/limited'],
@@ -165,7 +166,7 @@ const parentResourceFlagsV20 = {
 type ParentResourceFlagsV20 = typeof parentResourceFlagsV20[keyof typeof parentResourceFlagsV20];
 
 export const offsetMap = {
-  targetType: extend(targetTypeV20),
+  type: extend(typeV20),
   timingMode: extend(timingModeV20),
   savingThrowType: extend(savingThrowTypeV20),
   dispelOrResistance: extend(dispelOrResistanceV20),
@@ -178,12 +179,12 @@ export type EffectHeaderV20 = Readonly<{
   version: string;
   externalEffectsSignature: string;
   externalEffectsVersion: string;
-  targetType: TargetTypeV20;
+  type: TypeV20;
+  target: number; // TargetV20;
   power: number;
-  parameter1: number;
+  parameter1: number; // TODO [snow]: opcodes are just wow
   parameter2: number;
   timingMode: TimingModeV20;
-  timing: number;
   duration: number;
   probability1: number;
   probability2: number;
@@ -194,12 +195,15 @@ export type EffectHeaderV20 = Readonly<{
   saveBonus: number;
   special: number;
   primaryTypeSchool: number;
-  parentResourceLowestAffectedLevel: number;
-  parentResourceHighestAffectedLevel: number;
+  minimumLevel: Maybe<number>;
+  maximumLevel: Maybe<number>;
+  parentResourceLowestAffectedLevel: Maybe<number>;
+  parentResourceHighestAffectedLevel: Maybe<number>;
   dispelOrResistance: DispelOrResistanceV20[];
   parameter3: number;
   parameter4: number;
-  timeApplied: number;
+  parameter5: Maybe<number>;
+  timeApplied: Maybe<number>;
   resource2Ref: string;
   resource3Ref: string;
   casterXcoordinate: number;
