@@ -24,15 +24,15 @@ const convertCre = (
   tlk: TlkEntry,
   ids: Ids[],
   percentCallback: ((percent: number, resource: string) => void) | null = null,
-): AsyncIterableIterator<(Creature)> => {
+): AsyncIterableIterator<Creature> => {
   let i = 0;
 
-  const iterator: AsyncIterableIterator<(Creature)> = {
+  const iterator: AsyncIterableIterator<Creature> = {
     [Symbol.asyncIterator]() {
       return this;
     },
 
-    async next(): Promise<IteratorResult<(Creature)>> {
+    async next(): Promise<IteratorResult<Creature>> {
       if (i >= decompiledItems.length) {
         return { done: true, value: undefined };
       }

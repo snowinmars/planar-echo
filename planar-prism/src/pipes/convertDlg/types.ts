@@ -103,6 +103,7 @@ export type NpcDialogueState = Readonly<{
   soundResRef: string;
   flags: number;
   trigger: NpcDialogueStateTrigger | null;
+  action: string | null;
   responses: NpcDialogueResponse[];
   origins: Readonly<{
     stateIndex: number;

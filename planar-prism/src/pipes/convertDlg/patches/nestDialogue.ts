@@ -51,6 +51,7 @@ export const nestDialogue = (dialogue: PlainNpcDialogue): NpcDialogue => {
       trigger: state.triggerIndex >= 0
         ? stateTriggersByIdx.get(state.triggerIndex) || null
         : null,
+      action: '', // sets later in zero patch
       responses,
       origins: state.stateOrigins,
       weightStates: state.weightStates,

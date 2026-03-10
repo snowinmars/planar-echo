@@ -183,7 +183,7 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0): BufferR
   const string = (length: number, asIs: Maybe<boolean> = false, encoding: Maybe<BufferEncoding> = 'ascii'): string => {
     const value = buffer.toString(encoding ?? 'ascii', offset, offset + length).replace(/\0/g, '');
     offset += length;
-    return asIs ? value : value.trim().toLowerCase();
+    return asIs ? value : value.trim().toLowerCase().replaceAll('\r\n', '\n');
   };
   const mapString = <T>(length: number, map: BufferReaderStringMapFunction<T>, asIs: Maybe<boolean> = false, encoding: Maybe<BufferEncoding> = 'ascii'): T => map(string(length, asIs, encoding));
 
@@ -204,7 +204,7 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0): BufferR
       let v = x;
       if (trim) v = v.trim();
       if (toLower) v = v.toLowerCase();
-      return v;
+      return v.replaceAll('\r\n', '\n');
     };
 
     return {
