@@ -44,7 +44,7 @@ const detectDecompiledItemType = (extension: string): DecompiledItemType => {
 const regex = /\[(.*?)\] created from \[(.*?)\]/;
 const getCommand = ({ weidu, game, output, lang }: Pathes, biffs: Biff[]): string => {
   const biffNames = biffs.map(b => `${b.name}`).join(' ');
-  return `"${weidu}" --game "${game}" --use-lang ${lang} --out "${output.decimpiledBiff}" --biff-get "[${biffNames}]"`;
+  return `"${weidu}" --game "${game}" --use-lang ${lang} --out "${output.decimpiledBiff.root}" --biff-get "[${biffNames}]"`;
 };
 const decompileBiffs = async (pathes: Pathes): Promise<DecompiledItem[]> => {
   const decompiledItemsCache = new Map<string, DecompiledItem>();

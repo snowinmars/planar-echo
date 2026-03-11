@@ -37,7 +37,7 @@ const convertDlg = (
 
       const decompiledItem = decompiledItems[i]!;
       const item = await readNpcDialogueFile(
-        join(pathes.output.decimpiledBiff, decompiledItem.name),
+        join(pathes.output.decimpiledBiff.root, decompiledItem.name),
         decompiledItem.name,
         tlk,
       );

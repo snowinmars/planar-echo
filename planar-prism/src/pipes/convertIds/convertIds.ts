@@ -33,7 +33,7 @@ const convertIds = (
 
       const decompiledItem = decompiledItems[i]!;
       const item = await readIdsFile(
-        join(pathes.output.decimpiledBiff, decompiledItem.name),
+        join(pathes.output.decimpiledBiff.root, decompiledItem.name),
         decompiledItem.name,
         pathes.gameName,
         tlk,

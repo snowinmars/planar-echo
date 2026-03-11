@@ -8,7 +8,7 @@ import prepareOutput from './pipes/validate/prepareOutput.js';
 import { DecompiledItemType, Lang } from './shared/types.js';
 import decompileBiffs from './pipes/decompileBiffs.js';
 import logger from './shared/logger.js';
-import { jsonStringify, jsonParse } from './shared/json.js';
+import { jsonStringify } from './shared/json.js';
 
 import convertTwoda from './pipes/convertTwoda/convertTwoda.js';
 import convertAre from './pipes/convertAre/convertAre.js';
@@ -44,6 +44,12 @@ import type { DecompiledItem, Pathes } from './shared/types.js';
 import convertTlk from './pipes/convertTlk/convertTlk.js';
 import type { Ids } from './pipes/convertIds/patches/readIdsBufferTypes.js';
 
+import buildDialogueSkeletons from './build/buildDialogueSkeletons.js';
+import zeroPatch from './build/patches/zero/zeroPatch.js';
+import translateDialogues from './build/translateDialogue.js';
+import type { Ini } from './pipes/convertIni/convertIniTypes.js';
+
+
 const logPercent = (x: number, r: string): void => {
   logger.info(`Done ${x}% in '${r}'`);
 };
@@ -53,13 +59,25 @@ const createPathes = (lang: Lang): Pathes => {
   const gameFolder = normalize(dirname(chitinKeyPath));
   const tlkPath = normalize(join(gameFolder, 'lang', lang.toString(), 'dialog.tlk'));
   const outputPath = normalize('E:/prg/snowinmars/planar-echo/planar-ghost');
-  const decimpiledBiff = normalize(join(outputPath, 'decimpiledBiff'));
-  const decimpiledBiffJson = normalize(join(decimpiledBiff, 'output.json'));
-  const jsonDialogues = normalize(join(outputPath, 'json', 'dialogues'));
-  const jsonItems = normalize(join(outputPath, 'json', 'items'));
-  const jsonIds = normalize(join(outputPath, 'json', 'ids'));
-  const jsonCreatures = normalize(join(outputPath, 'json', 'creatures'));
-  const jsonEffects = normalize(join(outputPath, 'json', 'effects'));
+
+  const decimpiledBiffRoot = normalize(join(outputPath, 'decimpiledBiff'));
+  const decimpiledBiffCacheJson = normalize(join(decimpiledBiffRoot, 'output.json'));
+
+  const jsonRoot = normalize(join(outputPath, 'json'));
+  const jsonDialogues = normalize(join(jsonRoot, 'dialogues'));
+  const jsonItems = normalize(join(jsonRoot, 'items'));
+  const jsonIds = normalize(join(jsonRoot, 'ids'));
+  const jsonInis = normalize(join(jsonRoot, 'inis'));
+  const jsonCreatures = normalize(join(jsonRoot, 'creatures'));
+  const jsonEffects = normalize(join(jsonRoot, 'effects'));
+
+  const ghostRoot = normalize(join(outputPath, 'ghost'));
+  const ghostDialogues = normalize(join(ghostRoot, 'dialogues'));
+  const ghostItems = normalize(join(ghostRoot, 'items'));
+  const ghostIds = normalize(join(ghostRoot, 'ids'));
+  const ghostInis = normalize(join(ghostRoot, 'inis'));
+  const ghostCreatures = normalize(join(ghostRoot, 'creatures'));
+  const ghostEffects = normalize(join(ghostRoot, 'effects'));
 
   return {
     weidu: weiduExePath,
@@ -69,13 +87,26 @@ const createPathes = (lang: Lang): Pathes => {
     lang,
     output: {
       root: outputPath,
-      decimpiledBiff,
-      decimpiledBiffJson,
-      jsonDialogues,
-      jsonItems,
-      jsonIds,
-      jsonCreatures,
-      jsonEffects,
+      decimpiledBiff: {
+        root: decimpiledBiffRoot,
+        cacheJson: decimpiledBiffCacheJson,
+      },
+      json: {
+        dialogues: jsonDialogues,
+        items: jsonItems,
+        ids: jsonIds,
+        inis: jsonInis,
+        creatures: jsonCreatures,
+        effects: jsonEffects,
+      },
+      ghost: {
+        dialogues: ghostDialogues,
+        items: ghostItems,
+        ids: ghostIds,
+        inis: ghostInis,
+        creatures: ghostCreatures,
+        effects: ghostEffects,
+      },
     },
   };
 };
@@ -107,28 +138,36 @@ Promise.resolve()
       logger.info(`Decompiling biffs archives from '${pathes.game}' to '${pathes.output.decimpiledBiff}'; might take a while`);
       const decompileBiffsStarted = new Date();
       decompiledItems = await decompileBiffs(pathes);
-      await writeFile(pathes.output.decimpiledBiffJson, jsonStringify(decompiledItems), { encoding: 'utf8' });
+      await writeFile(pathes.output.decimpiledBiff.cacheJson, jsonStringify(decompiledItems), { encoding: 'utf8' });
       const decompileBiffsTookSec = Math.round((new Date().getTime() - decompileBiffsStarted.getTime()) / 1000);
-      logger.info(`Decompiled ${decompiledItems.length} items from '${pathes.game}' biff archives to '${pathes.output.decimpiledBiff}'; took ${decompileBiffsTookSec} seconds; save output to ${pathes.output.decimpiledBiffJson}`);
+      logger.info(`Decompiled ${decompiledItems.length} items from '${pathes.game}' biff archives to '${pathes.output.decimpiledBiff.root}'; took ${decompileBiffsTookSec} seconds; save output to ${pathes.output.decimpiledBiff.cacheJson}`);
     }
     else {
-      const json = await readFile(pathes.output.decimpiledBiffJson, { encoding: 'utf8' });
+      const json = await readFile(pathes.output.decimpiledBiff.cacheJson, { encoding: 'utf8' });
       decompiledItems = JSON.parse(json);
-      logger.info(`Restore decompilation state from ${pathes.output.decimpiledBiffJson}`);
+      logger.info(`Restore decompilation state from ${pathes.output.decimpiledBiff.cacheJson}`);
     }
 
     logger.info(`Converting tlks to json...`);
     const tlk = await convertTlk(pathes);
-    writeFile(join(pathes.output.jsonDialogues, 'dialog.tlk'), jsonStringify(tlk), { encoding: 'utf8' });
+    writeFile(join(pathes.output.json.dialogues, 'dialog.tlk'), jsonStringify(tlk), { encoding: 'utf8' });
 
     logger.info(`Converting ids to json...`);
     const idsIterator = await convertIds (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ids), tlk, logPercent);
     const ids: Ids[] = [];
     for await (const id of idsIterator) {
       ids.push(id);
-      await writeFile(join(pathes.output.jsonIds, id.resourceName), jsonStringify(id), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.json.ids, id.resourceName), jsonStringify(id), { encoding: 'utf8' });
     }
 
+    logger.info(`Converting ini to json...`);
+    const iniIterator = await convertIni (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ini), logPercent);
+    const inis: Ini[] = [];
+    for await (const ini of iniIterator) {
+      if (!ini) continue;
+      inis.push(ini);
+      await writeFile(join(pathes.output.json.inis, ini.resourceName), jsonStringify(ini), { encoding: 'utf8' });
+    }
     await convertTwoda(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.twoda));
     await convertAre (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.are));
     await convertBam (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.bam));
@@ -140,27 +179,26 @@ Promise.resolve()
     const creatures = await convertCre(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.cre), tlk, ids, logPercent);
     for await (const creature of creatures) {
       if (!creature) continue;
-      await writeFile(join(pathes.output.jsonCreatures, creature.resourceName), jsonStringify(creature), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.json.creatures, creature.resourceName), jsonStringify(creature), { encoding: 'utf8' });
     }
 
     logger.info(`Converting dlgs to json...`);
     const npcDialogues = await convertDlg(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.dlg), tlk, logPercent);
     for await (const npcDialogue of npcDialogues) {
-      await writeFile(join(pathes.output.jsonDialogues, npcDialogue.resourceName), jsonStringify(npcDialogue), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.json.dialogues, npcDialogue.resourceName), jsonStringify(npcDialogue), { encoding: 'utf8' });
     }
 
     logger.info(`Converting eff to json...`);
     const effects = await convertEff(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.eff), tlk, logPercent);
     for await (const effect of effects) {
-      await writeFile(join(pathes.output.jsonEffects, effect.resourceName), jsonStringify(effect), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.json.effects, effect.resourceName), jsonStringify(effect), { encoding: 'utf8' });
     }
 
     await convertGlsl (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.glsl));
-    await convertIni (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.ini));
 
     const items = await convertItm(pathes, decompiledItems.filter(x => x.type === DecompiledItemType.itm), tlk, logPercent);
     for await (const item of items) {
-      await writeFile(join(pathes.output.jsonItems, item.resourceName), jsonStringify(item), { encoding: 'utf8' });
+      await writeFile(join(pathes.output.json.items, item.resourceName), jsonStringify(item), { encoding: 'utf8' });
     }
 
     await convertLua (pathes, decompiledItems.filter(x => x.type === DecompiledItemType.lua));

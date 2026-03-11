@@ -48,6 +48,14 @@ export type GameName
     | 'pst'
     | 'pstee';
 ;
+type OutDir = Readonly<{
+  dialogues: string;
+  ids: string;
+  inis: string;
+  creatures: string;
+  effects: string;
+  items: string;
+}>;
 export type Pathes = Readonly<{
   weidu: string;
   game: string;
@@ -56,13 +64,12 @@ export type Pathes = Readonly<{
   lang: Lang;
   output: Readonly<{
     root: string;
-    decimpiledBiff: string;
-    decimpiledBiffJson: string;
-    jsonDialogues: string;
-    jsonIds: string;
-    jsonCreatures: string;
-    jsonEffects: string;
-    jsonItems: string;
+    decimpiledBiff: Readonly<{
+      root: string;
+      cacheJson: string;
+    }>;
+    json: OutDir;
+    ghost: OutDir;
   }>;
 }>;
 export type Biff = Readonly<{
