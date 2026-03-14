@@ -10,7 +10,14 @@ export default defineConfig(
     './node_modules/*',
   ]),
   eslint.configs.recommended,
-  tseslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true
+      }
+    }
+  },
   stylistic.configs.customize({
     quotes: 'single',
     semi: true,
@@ -22,6 +29,8 @@ export default defineConfig(
   {
     rules: {
       '@stylistic/max-statements-per-line': ['error', { max: 1, ignoredNodes: ['BreakStatement', 'IfStatement', 'SwitchStatement', 'ThrowStatement'] }],
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-unsafe-assignment': 'off'
       // 'sort-imports': ['error', {
       //   ignoreCase: true,
       //   ignoreDeclarationSort: false,
