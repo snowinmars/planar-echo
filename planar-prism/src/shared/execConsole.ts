@@ -1,7 +1,9 @@
 import { spawn } from 'child_process';
 
 import logger from '../shared/logger.js';
-import { just, type Maybe } from './types.js';
+import { just } from './maybe.js';
+
+import type { Maybe } from './maybe.js';
 
 const splitCommand = (command: string): [string, string[]] => {
   let args: string[] = [];

@@ -1,4 +1,6 @@
-import { just, type Maybe } from '../shared/types.js';
+import { just } from '../shared/maybe.js';
+
+import type { Maybe } from '../shared/maybe.js';
 
 // export const readBit = (buffer: Buffer, offset: number): (0 | 1) => {
 //   // You cannot read bit.
@@ -17,7 +19,7 @@ import { just, type Maybe } from '../shared/types.js';
 // };
 
 type ReadFunction = () => number;
-type ReadMapFunction = <T>(map: BufferReaderNumberMapFunction<T>, or: Maybe<T>) => T;
+type ReadMapFunction = <T>(map: BufferReaderNumberMapFunction<T>, or?: Maybe<T>) => T;
 type ReadBooleanFunction = (sourceName?: Maybe<string>) => boolean;
 type ReadSkipFunction = () => void;
 type NumberBucket<T> = Readonly<{
@@ -35,6 +37,10 @@ export type BufferReader = Readonly<{
   buffer: Buffer;
   offset: number;
   offsetHex: string;
+  forkedOffsets: number[];
+  forkedOffsetsHex: string[];
+  totalOffset: number;
+  totalOffsetHex: string;
   customBytes: (length: number) => number[];
   fork: (newOffset?: Maybe<number>) => BufferReader;
   readLineByLine: () => IterableIterator<string>;
@@ -58,8 +64,9 @@ const numberAsBoolean = (x: number, sourceName: Maybe<string> = null): boolean =
   }
 };
 
-export const createReader = (buffer: Buffer, initialOffset: number = 0): BufferReader => {
+export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOffsets: number[] = []): BufferReader => {
   let offset = initialOffset;
+
   const skipCustom = (bytes: number): void => {
     offset += bytes;
   };
@@ -195,7 +202,10 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0): BufferR
     }
     return bytes;
   };
-  const fork = (newOffset: Maybe<number> = null): BufferReader => createReader(buffer, newOffset ?? offset);
+  const fork = (newOffset: Maybe<number> = null): BufferReader => {
+    const o = newOffset ?? offset;
+    return createReader(buffer, o, [...forkedOffsets, o]);
+  };
   const readLineByLine = (trim = true, toLower = true, encoding: BufferEncoding = 'utf-8'): IterableIterator<string> => {
     let startOffset = offset;
     let currentPos = offset;
@@ -244,6 +254,10 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0): BufferR
     get buffer() { return buffer; },
     get offset() { return offset; },
     get offsetHex() { return `0x${offset.toString(16)}`; },
+    get forkedOffsets() { return forkedOffsets; },
+    get forkedOffsetsHex() { return forkedOffsets.map(x => `0x${x.toString(16)}`); },
+    get totalOffset() { return forkedOffsets.reduce((acc, cur) => acc + cur, offset); },
+    get totalOffsetHex() { return `0x${(forkedOffsets.reduce((acc, cur) => acc + cur, offset)).toString(16)}`; },
     fork,
     customBytes,
     readLineByLine,

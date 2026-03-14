@@ -1,10 +1,14 @@
-import type { NpcDialogue, NpcDialogueResponse, NpcDialogueState } from '../pipes/convertDlg/types.js';
-import type { NpcDialogueEcho } from './buildDialogueSkeletonsTypes.js';
 import createWriter from '../shared/writer.js';
-import { just, type Maybe } from '../shared/types.js';
+import { just } from '../shared/maybe.js';
 
-const isResponseDesctructor = (response: NpcDialogueResponse) => !response.nextDialog;
-const isResponseExtern = (response: NpcDialogueResponse, resourceName: string) => `${response.nextDialog}.dlg` !== resourceName;
+import type { Maybe } from '../shared/maybe.js';
+import type { NpcDialogueEcho } from './buildDialogueSkeletonsTypes.js';
+import type { DlgResponse } from '../steps/4.biffs2json/dlg/v1.types/3.response.js';
+import type { DlgState } from 'src/steps/4.biffs2json/dlg/v1.types/2.states.js';
+import type { Dlg } from 'src/steps/4.biffs2json/dlg/types.js';
+
+const isResponseDesctructor = (response: DlgResponse) => !response.nextDialog;
+const isResponseExtern = (response: DlgResponse, resourceName: string) => `${just(response.nextDialog)}.dlg` !== resourceName;
 
 const formState = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`;
 const formResponse = (npcLowercaseId: string, stateIndex: number, responseIndex: number): string => `${formState(npcLowercaseId, stateIndex)}_response${responseIndex}`;
@@ -18,7 +22,7 @@ const formAction = (actionText: string, offset: number): string => {
   return actionText.replaceAll('\n', ';\n' + x);
 };
 
-const formLabelArgsProps = (state: NpcDialogueState, weight: number): Maybe<string> => {
+const formLabelArgsProps = (state: DlgState, weight: number): Maybe<string> => {
   const isCtor = weight !== -1;
   const hasAction = !!state.action;
   if (!isCtor && !hasAction) return null;
@@ -44,7 +48,7 @@ const formLabelArgsProps = (state: NpcDialogueState, weight: number): Maybe<stri
   return writer.done();
 };
 
-const formResponseActionArgsProps = (response: NpcDialogueResponse): string => {
+const formResponseActionArgsProps = (response: DlgResponse): string => {
   const hasAction = !!response.action;
   if (!hasAction) throw new Error(`Why do you want to formResponseActionArgsProps for response '${response.index}', that has no action?`);
 
@@ -56,7 +60,7 @@ const formResponseActionArgsProps = (response: NpcDialogueResponse): string => {
     .done();
 };
 
-const buildDialogueSkeleton = (npcDialogue: NpcDialogue): string => {
+const buildDialogueSkeleton = (npcDialogue: Dlg): string => {
   const npcLowercaseId = npcDialogue.resourceName.split('.')[0]!;
   const npcUppercaseId = npcLowercaseId[0]!.toUpperCase() + npcLowercaseId.slice(1);
 
@@ -82,7 +86,7 @@ const buildDialogueSkeleton = (npcDialogue: NpcDialogue): string => {
 
     for (const response of state.responses) {
       const responseId = formResponse(npcLowercaseId, state.index, response.index);
-      const targetState = formState(response.nextDialog, response.nextDialogState);
+      const targetState = formState(just(response.nextDialog), just(response.nextDialogState));
 
       const hasAction = !!response.action;
       if (hasAction) {
@@ -132,7 +136,7 @@ const buildDialogueSkeleton = (npcDialogue: NpcDialogue): string => {
 };
 
 const buildDialogueSkeletons = (
-  npcDialogues: NpcDialogue[],
+  npcDialogues: Dlg[],
   percentCallback: ((percent: number, resource: string) => void) | null = null,
 ): NpcDialogueEcho[] => {
   const npcDialogueEchoes: NpcDialogueEcho[] = [];

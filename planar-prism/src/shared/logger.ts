@@ -6,7 +6,10 @@ import {
 
 const logger = createLogger({
   level: 'debug',
-  format: format.json(),
+  format: format.combine(
+    format.errors({ stack: true }),
+    format.json(),
+  ),
   transports: [
     new transports.Console({
       format: format.simple(),

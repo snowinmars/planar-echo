@@ -1,4 +1,4 @@
-import type { Maybe } from './types.js';
+import type { Maybe } from './maybe.js';
 
 type Writer = Readonly<{
   write: (x: string, offset?: Maybe<number>) => Writer;

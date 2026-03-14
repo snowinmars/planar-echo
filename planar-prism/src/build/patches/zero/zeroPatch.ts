@@ -1,11 +1,13 @@
 import createWriter from '../../../shared/writer.js';
-import type { NpcDialogue, NpcDialogueState } from '../../../pipes/convertDlg/types.js';
+
+import type { DlgState } from 'src/steps/4.biffs2json/dlg/v1.types/2.states.js';
+import type { Dlg } from 'src/steps/4.biffs2json/dlg/types.js';
 
 const morte1 = 'dmorte1.dlg';
 
-const patchMorte1 = (npcDialogue: NpcDialogue): NpcDialogue => {
+const patchMorte1 = (npcDialogue: Dlg): Dlg => {
   const morte1_state0 = npcDialogue.states.find(x => x.index === 0)!;
-  const new_morte1_state0: NpcDialogueState = {
+  const new_morte1_state0: DlgState = {
     ...morte1_state0,
     action: createWriter()
       .writeLine(`l.talkMorte();`, 6)
@@ -27,7 +29,7 @@ const patchMorte1 = (npcDialogue: NpcDialogue): NpcDialogue => {
   };
 };
 
-const zeroPatch = (npcDialogues: NpcDialogue[]): NpcDialogue[] => {
+const zeroPatch = (npcDialogues: Dlg[]): Dlg[] => {
   const morte1Index = npcDialogues.findIndex(x => x.resourceName === morte1);
   const newMorte1 = patchMorte1(npcDialogues[morte1Index]!);
 
