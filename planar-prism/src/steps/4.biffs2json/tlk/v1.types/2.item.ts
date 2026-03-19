@@ -1,4 +1,5 @@
 import { extend } from '../../../../pipes/offsetMap.js';
+import type { Maybe } from '../../../../shared/maybe.js';
 
 /* createGenerator().register().flags('flagsV10',{
  *   byte1:['no message data','text exists','sound exists','standard message','token exists'],
@@ -24,7 +25,7 @@ export const offsetMap = {
 export type Item = Readonly<{
   index: number;
   flags: FlagsV10[];
-  soundResRef: string;
+  soundResRef: Maybe<string>;
   volume: number;
   pitch: number;
   offset: number;

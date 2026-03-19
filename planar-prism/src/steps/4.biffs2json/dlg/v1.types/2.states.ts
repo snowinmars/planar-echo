@@ -24,7 +24,7 @@ export type DlgState = Readonly<{
   textRef: number;
   responses: DlgResponse[];
   trigger: Maybe<DlgFunction>;
-  action: string | null;
+  action: Maybe<string>;
   textTlk: Maybe<Item>;
   origins: StateOrigin[];
   weightStates: number[];

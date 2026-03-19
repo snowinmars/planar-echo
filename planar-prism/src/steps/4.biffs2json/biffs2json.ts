@@ -7,6 +7,7 @@ import parseCre from './cre/index.js';
 import parseDlg from './dlg/index.js';
 import parseEffV10 from './eff/parseEffV10.js';
 import parseEffV20 from './eff/parseEffV20.js';
+import parseItm from './itm/parseItm.js';
 
 import type { Pathes } from '../1.createPathes/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../3.decompileBiffs/index.js';
@@ -18,10 +19,11 @@ import type { Dlg } from './dlg/types.js';
 import type { EffectV10 } from './eff/v10.types/effectV10.js';
 import type { EffectV20 } from './eff/v20.types/effectV20.js';
 import type { ItmV10, ItmV11, ItmV20 } from './itm/types.js';
-import parseItm from './itm/parseItm.js';
+import type { AllJsons } from './types.js';
 
 type Creature = CreatureV10 | CreatureV12 | CreatureV22 | CreatureV90;
 type Itm = ItmV10 | ItmV11 | ItmV20;
+type Effect = EffectV10 | EffectV20;
 
 const logPercent: LogPercent = (x, r) => {
   logger.info(`Done ${x}% in '${r}'`);
@@ -30,7 +32,7 @@ const logPercent: LogPercent = (x, r) => {
 const biffs2json = async (
   decompiledBiffs: Map<DecompiledBiffType, DecompiledBiff[]>,
   pathes: Pathes,
-): Promise<void> => {
+): Promise<AllJsons> => {
   logger.info(`Converting tlk to json...`);
   const tlk = await parseTlk(pathes.tlkPath);
   await pathes.output.saveJson.dialogues('dialog.tlk', tlk);
@@ -80,7 +82,7 @@ const biffs2json = async (
   ///
 
   logger.info(`Converting eff to json...`);
-  const effs: (EffectV10 | EffectV20)[] = [];
+  const effs: Effect[] = [];
   // const effIterator = parseEffV10(pathes, decompiledBiffs.get('eff')!, ids, logPercent);
   const effIterator = parseEffV20(pathes, decompiledBiffs.get('eff')!, ids, logPercent);
   for await (const eff of effIterator) {
@@ -97,6 +99,16 @@ const biffs2json = async (
     itms.push(itm);
     await pathes.output.saveJson.items(itm.resourceName, itm);
   }
+
+  return {
+    tlk,
+    ids,
+    inis,
+    cres,
+    dlgs,
+    effs,
+    itms,
+  };
 };
 
 export default biffs2json;

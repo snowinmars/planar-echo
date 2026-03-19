@@ -30,6 +30,7 @@ import type { ValidateResult } from './steps/2.validate/index.js';
 import validate from './steps/2.validate/index.js';
 import decompileBiffs from './steps/3.decompileBiffs/index.js';
 import biffs2json from './steps/4.biffs2json/index.js';
+import json2Ghost from './steps/5.json2Ghost/index.js';
 
 // type Creature = CreatureV10 | CreatureV12 | CreatureV22 | CreatureV90;
 // type Effect = EffectV10 | EffectV20;
@@ -76,7 +77,8 @@ const throwIfInvalid = (pathes: Pathes, validateResult: ValidateResult): void =>
 
   const decompiledBiffs = await decompileBiffs(pathes);
 
-  const all = await biffs2json(decompiledBiffs, pathes);
+  const allJsons = await biffs2json(decompiledBiffs, pathes);
+  const allGhosts = await json2Ghost(allJsons, pathes);
 
   // // await convertTwoda(pathes, all.decompiledItems.get('twoda')!);
   // // await convertAre (pathes, all.decompiledItems.get('are')!);
@@ -101,10 +103,4 @@ const throwIfInvalid = (pathes: Pathes, validateResult: ValidateResult): void =>
   // // await convertWbm (pathes, all.decompiledItems.get('wbm')!);
   // // await convertWed (pathes, all.decompiledItems.get('wed')!);
   // // await convertWmp (pathes, all.decompiledItems.get('wmp')!);
-
-  // const zeroPatchedNpdDialogues = zeroPatch(all.npcDialogues);
-  // const x = await buildDialogueSkeletons(zeroPatchedNpdDialogues, logPercent);
-  // const y = await translateDialogues(zeroPatchedNpdDialogues, all.creatures, 'ru_RU', logPercent);
-  // await writeFile(join(pathes.output.json.dialogues, `${x[0]!.resourceName}.ghost.ts`), x[0]!.content, { encoding: 'utf8' });
-  // await writeFile(join(pathes.output.json.dialogues, `${y[0]!.resourceName}.ghost.ts`), y[0]!.content, { encoding: 'utf8' });
 })().catch(e => logger.error(e));

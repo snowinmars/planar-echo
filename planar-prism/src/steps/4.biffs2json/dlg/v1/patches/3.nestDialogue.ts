@@ -63,7 +63,7 @@ const nestState = ({
     index: state.index,
     textRef: state.textRef,
     trigger,
-    action: '', // sets later in zero patch
+    action: nothing(), // sets later in zero patch
     responses: _responses,
     origins: state.stateOrigins,
     weightStates: state.weightStates,

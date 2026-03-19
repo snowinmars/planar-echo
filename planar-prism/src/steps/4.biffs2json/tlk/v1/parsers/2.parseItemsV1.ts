@@ -1,3 +1,4 @@
+import { nothing } from '../../../../../shared/maybe.js';
 import { offsetMap } from '../../v1.types/2.item.js';
 
 import type { BufferReader } from '../../../../../pipes/readers.js';
@@ -17,7 +18,7 @@ const parseTlkString = (i: number, reader: BufferReader): Item => {
   return {
     index: i,
     flags,
-    soundResRef,
+    soundResRef: soundResRef || nothing(),
     volume,
     pitch,
     offset: stringOffset,
@@ -39,7 +40,7 @@ const parseItemsV1 = (reader: BufferReader, header: Header): Map<number, Item> =
 
     let text = '';
     if (item.length > 0) {
-      text = reader.fork(stringBlockStart + item.offset).string(item.length, false, 'utf8');
+      text = reader.fork(stringBlockStart + item.offset).string(item.length, true, 'utf8').trim();
     }
 
     itemsMap.set(item.index, {
