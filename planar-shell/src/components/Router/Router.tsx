@@ -1,12 +1,14 @@
-import { lazy, FC } from 'react';
+import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom'
 
-const Home = lazy(() => import('@/components/Home/Home'));
+import type { FC } from 'react';
+
+const Landing = lazy(() => import('@/components/Landing'));
 
 const RouterComponent: FC = () => {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Landing />} />
         </Routes>
     )
 }

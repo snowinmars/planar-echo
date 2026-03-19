@@ -1,0 +1,11 @@
+{
+  "landing": {
+    "welcome": "Welcome",
+    "checkbox1": "I bought Planescape:Torment in the official source",
+    "checkbox2": "I bought Planescape:Torment in the official source"
+  },
+  "themes": {
+    "light": "Light",
+    "dark": "Dark"
+  }
+}
