@@ -1,0 +1,30 @@
+.buy {
+  display: flex;
+  line-height: 2em;
+}
+
+.storeLink:hover {
+  transform: scale(1.2) rotate(5deg);
+  transition: transform 0.2s ease;
+  animation: combo 0.2s ease;
+}
+
+.steam,
+.gog {
+  width: 2em;
+  height: 2em;
+  margin: 0 0.5em;
+}
+
+.steam {
+  color: white;
+}
+
+.gog {
+  color: black;
+}
+
+@keyframes combo {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.2) rotate(5deg); }
+}
