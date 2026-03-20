@@ -9,13 +9,22 @@
     "start": "ts-node src/index.ts",
     "build": "tsc",
     "serve": "node dist/index.js",
-    "gen": "openapi --input ./src/swagger/_swagger.json --output ./src/swagger/client --client axios"
+    "gen": "openapi-ts --input ./src/swagger/swagger.json --output ./src/swagger/client --plugins @hey-api/client-axios"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "@asteasolutions/zod-to-openapi": "^8.4.3",
+    "express": "^5.2.1",
+    "express-zod-safe": "^3.2.0",
+    "rxjs": "^7.8.2",
+    "winston": "^3.19.0"
+  },
+  "_devD": {
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@hey-api/openapi-ts": "^0.94.3",
     "@stylistic/eslint-plugin": "^5.9.0",
     "@types/express": "^5.0.6",
     "@types/node": "^25.4.0",
@@ -24,8 +33,6 @@
     "@typescript-eslint/eslint-plugin": "^8.57.0",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.5",
     "openapi-typescript-codegen": "^0.30.0",
     "prettier": "^3.8.1",

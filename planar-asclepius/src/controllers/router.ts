@@ -1,7 +1,17 @@
 import express from 'express';
-import ping from './ping/ping';
-import getGhostDialogueDialogueIdSkeleton from './ghostDialogue/getGhostDialogueDialogueIdSkeleton';
-import getGhostDialogueDialogueIdTranslationLanguage from './ghostDialogue/getGhostDialogueDialogueIdTranslationLanguage';
+import { z } from 'zod';
+import {
+  OpenApiGeneratorV3,
+  OpenAPIRegistry,
+  extendZodWithOpenApi,
+} from '@asteasolutions/zod-to-openapi';
+import registerValidateChitinKeyPath from './fs/validate/chitinKeyPath';
+import registerPing from './ping/ping';
+import registerGhostDialogueDialogueIdSkeleton from './ghost/dialogue/dialogueId/skeleton';
+import registerGhostDialogueDialogueIdLanguage from './ghost/dialogue/dialogueId/language';
+
+extendZodWithOpenApi(z);
+const registry = new OpenAPIRegistry();
 
 /**
  * @swagger
@@ -11,82 +21,36 @@ import getGhostDialogueDialogueIdTranslationLanguage from './ghostDialogue/getGh
  */
 const router = express.Router();
 
-/**
- * @swagger
- * /ping:
- *   get:
- *     tags: [Health]
- *     summary: Ping
- *     responses:
- *       200:
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               type: string
- *               example: "pong"
- */
-router.get('/ping', ping);
+registerValidateChitinKeyPath(registry, router);
+registerPing(registry, router);
+registerGhostDialogueDialogueIdSkeleton(registry, router);
+registerGhostDialogueDialogueIdLanguage(registry, router);
 
-/**
- * @swagger
- * /ghost/dialogue/{dialogueId}/skeleton:
- *   get:
- *     tags: [GhostDialogue]
- *     summary: Get skeleton of the dialogue in ghost format
- *     parameters:
- *       - in: path
- *         name: dialogueId
- *         required: true
- *         schema:
- *           type: string
- *         description: Id of the dlg file
- *         example: "annah"
- *     responses:
- *       200:
- *         description: Skeleton of the dialogue in ghost format
- *         content:
- *           text/plain:
- *             schema:
- *               type: string
- *             example: "export const annahDialogueSkeleton = {...}"
- *       400:
- *         description: File not found or invalid request
- */
-router.get('/ghost/dialogue/:dialogueId/skeleton', getGhostDialogueDialogueIdSkeleton);
+const getOpenApiDocumentation = (registry: OpenAPIRegistry) => {
+  const generator = new OpenApiGeneratorV3(registry.definitions);
 
-/**
- * @swagger
- * /ghost/dialogue/{dialogueId}/translation/{language}:
- *   get:
- *     tags: [GhostDialogue]
- *     summary: Get translation of the dialogue in ghost format
- *     parameters:
- *       - in: path
- *         name: dialogueId
- *         required: true
- *         schema:
- *           type: string
- *         description: Id of the dlg file
- *         example: "annah"
- *       - in: path
- *         name: language
- *         required: true
- *         schema:
- *           type: string
- *           enum: [ru_RU, en_US]
- *         example: "ru_RU"
- *     responses:
- *       200:
- *         description: Translation of the dialogue in ghost format
- *         content:
- *           text/plain:
- *             schema:
- *               type: string
- *               example: "export const annahDialogueTranslation = {...}"
- *       400:
- *         description: File not found or invalid request
- */
-router.get('/ghost/dialogue/:dialogueId/translation/:language', getGhostDialogueDialogueIdTranslationLanguage);
+  return generator.generateDocument({
+    openapi: '3.0.0',
+    info: {
+      version: '0.0.1',
+      title: 'Planar-asclepius API',
+      contact: {
+        name: '@snowinmars',
+        email: 'snowinmars@yandex.ru',
+      },
+    },
+    servers: [
+      {
+        url: 'http://localhost:3003',
+        description: 'Development server',
+      },
+    ],
+  });
+};
+
+router.get('/api/openApi', (_, res) => {
+  const docs = getOpenApiDocumentation(registry);
+  return res.status(200).json(docs);
+});
 
 export default router;

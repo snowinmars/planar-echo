@@ -8,6 +8,7 @@ export default defineConfig(
   globalIgnores([
     './dist/*',
     './node_modules/*',
+    './src/swagger/client/*'
   ]),
   eslint.configs.recommended,
   tseslint.configs.recommendedTypeChecked,

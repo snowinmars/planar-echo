@@ -1,13 +1,14 @@
 import express from 'express';
 import { stat } from 'fs/promises';
-import swaggerUi from 'swagger-ui-express';
+import swaggerUi, { JsonObject } from 'swagger-ui-express';
 import { join } from 'path';
 
-import { ghostDir, shellDir } from './helpers/folders';
-import { swaggerSpec } from './swagger/swagger';
+import { ghostDir, shellDir } from './shared/folders';
+import swaggerSpec from './swagger/swagger.json';
 import router from './controllers/router';
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3003;
 
 stat(ghostDir)
@@ -31,8 +32,8 @@ app.get('/api/swagger/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
+app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec as JsonObject));
 
-app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/static', express.static(join(shellDir, 'dist')));
 
 app.use(router);
