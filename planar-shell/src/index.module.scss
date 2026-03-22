@@ -1,0 +1,26 @@
+.footer {
+  display: flex;
+  flex-grow: 1;
+  justify-content: right;
+  align-items: center;
+  margin: 0 2em;
+
+  .license {
+    margin: 0 1em;
+  }
+
+  .github,
+  .telegram,
+  .email {
+    width: 2em;
+    height: 2em;
+    margin: 0 1em;
+    font-size: 1rem;
+
+    &:hover {
+      transform: scale(1.2) rotate(5deg);
+      transition: transform 0.2s ease;
+      animation: combo 0.2s ease;
+    }
+  }
+}
