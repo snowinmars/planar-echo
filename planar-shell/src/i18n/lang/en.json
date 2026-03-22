@@ -1,8 +1,22 @@
 {
   "landing": {
-    "welcome": "Welcome",
-    "checkbox1": "I bought Planescape:Torment in the official source",
-    "checkbox2": "I bought Planescape:Torment in the official source"
+    "welcome1": "Welcome. This is a tool, that can convert Infinity Engine game into custom game engine.",
+    "welcome2": "The tool does required original game to work, because by itself the tool know hothing about the game. Buy the original game.",
+    "step1": {
+      "language": "Game language"
+    },
+    "step2": {
+      "weiduExePath": "Path to weidu.exe",
+      "weiduLink": "Download weidu",
+      "comments": {
+        "weiduExeVersion": "Found verion of weidu.exe =",
+        "loading": "Checking...",
+        "connection": "Check connetion",
+        "FILE_NOT_FOUND": "File not found",
+        "WEIDU_ERROR": "Weidu error",
+        "unknown": "Error, see F12"
+      }
+    }
   },
   "themes": {
     "light": "Light",

@@ -2,13 +2,21 @@
   "landing": {
     "welcome1": "Привет. Это инструмент для автоматической конвертации игр на Infinity Engine в кастомный движок.",
     "welcome2": "Инструмент не содержит в себе файлов игры. Чтобы он работал - купи оригинал.",
-    "welcome3": "Купи оригинальную игру.",
-    "welcome4": "Укажи путь к weidu.exe",
-    "welcome5": "Получите готовые .exe/.apk файлы, которые запустятся где угодно",
-    "welcome6": "Без оригинальных файлов игра не работает. Инструмент не содержит кода игры — только конвертер.",
-    "checkbox1": "Я купил Planescape:Torment в официальном источнике",
-    "checkbox2": "Я понимаю, что результаты работы planar echo ",
-    "chitinKeyInput": "Файл chitin.key"
+    "step1": {
+      "language": "Язык игры"
+    },
+    "step2": {
+      "weiduExePath": "Путь к weidu.exe",
+      "weiduLink": "Скачать weidu",
+      "comments": {
+        "weiduExeVersion": "Найдена версия weidu.exe =",
+        "loading": "Проверяю...",
+        "connection": "Проверь соединение",
+        "FILE_NOT_FOUND": "Файл не найден",
+        "WEIDU_ERROR": "Ошибка weidu",
+        "unknown": "Ошибка, см. F12"
+      }
+    }
   },
   "themes": {
     "light": "Светлая",

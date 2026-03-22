@@ -9,14 +9,18 @@
     "start": "ts-node src/index.ts",
     "build": "tsc",
     "serve": "node dist/index.js",
-    "gen": "openapi-ts --input ./src/swagger/swagger.json --output ./src/swagger/client --plugins @hey-api/client-axios"
+    "gen": "yarn _gen && yarn push-client",
+    "_gen": "openapi-ts -f ./openapi-ts.config.ts",
+    "push-client": "node ./src/dev/copy-client.js"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.4.3",
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "express-zod-safe": "^3.2.0",
     "rxjs": "^7.8.2",
-    "winston": "^3.19.0"
+    "winston": "^3.19.0",
+    "zod": "^4.3.6"
   },
   "_devD": {
     "eslint-import-resolver-typescript": "^4.4.4",
@@ -26,14 +30,18 @@
     "@eslint/js": "^10.0.1",
     "@hey-api/openapi-ts": "^0.94.3",
     "@stylistic/eslint-plugin": "^5.9.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/json-schema": "^7.0.15",
     "@types/node": "^25.4.0",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.1",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
+    "openapi-types": "^12.1.3",
     "openapi-typescript-codegen": "^0.30.0",
     "prettier": "^3.8.1",
     "swagger-jsdoc": "^6.2.8",

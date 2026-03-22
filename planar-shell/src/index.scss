@@ -9,16 +9,7 @@ body,
 
     margin: 0;
     padding: 0;
-
-    color: var(--ee-body-fg);
-    background-color: var(--ee-body-bg);
-
-    font-size: var(--font-size);
-    line-height: 1.5; // ?
 }
 
 :root {
-    --ee-body-fg: black;
-    --ee-body-bg: white;
-    --font-size: 16px;
 }

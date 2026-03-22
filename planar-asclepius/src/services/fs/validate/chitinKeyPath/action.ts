@@ -17,7 +17,7 @@ export default async ({
     ok: false,
     error: {
       code: 'FILE_NOT_FOUND',
-      message: `CHITIN.key not found at: ${chitinKey}`,
+      message: `CHITIN.key is not found at: ${chitinKey}`,
       status: 404,
     },
   };

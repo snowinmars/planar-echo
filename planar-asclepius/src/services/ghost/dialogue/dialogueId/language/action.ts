@@ -16,7 +16,7 @@ export default async ({
       error: {
         code: 'FILE_NOT_FOUND',
         status: 404,
-        message: `Skeleton '${dialogueId}' not found at '${translatedDialoguePath}'`,
+        message: `Skeleton '${dialogueId}' is not found at '${translatedDialoguePath}'`,
       },
     };
   };

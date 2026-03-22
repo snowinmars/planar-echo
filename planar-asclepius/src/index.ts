@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { stat } from 'fs/promises';
 import swaggerUi, { JsonObject } from 'swagger-ui-express';
 import { join } from 'path';
@@ -28,6 +29,11 @@ stat(shellDir)
     process.exit(1);
   });
 
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: false,
+}));
+
 app.get('/api/swagger/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
@@ -41,6 +47,7 @@ app.use(router);
 app.listen(PORT, () => {
   console.log(`Asclepius is running http://localhost:${PORT}`);
   console.log(`  Swagger at http://localhost:${PORT}/api/swagger/`);
+  console.log(`  Generated swagger.json at http://localhost:${PORT}/api/openApi/`);
   console.log(`planar-ghost directory: ${ghostDir}`);
   console.log(`planar-shell directory: ${shellDir}`);
 });

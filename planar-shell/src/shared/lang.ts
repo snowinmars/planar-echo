@@ -1,5 +1,5 @@
-export type Lang =
-    | 'dev'
+export type Lang
+  = | 'dev'
     | 'cs_CZ'
     | 'de_DE'
     | 'en_US'

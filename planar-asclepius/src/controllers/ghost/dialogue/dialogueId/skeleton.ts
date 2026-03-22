@@ -30,7 +30,7 @@ const responseOk = z.object({
 const responseError = z.object({
   error: z.object({
     message: z.string(),
-    code: z.int(),
+    code: z.enum(['FILE_NOT_FOUND']),
   }),
 });
 const routeConfig = (params: ZodObject): RouteConfig => ({
