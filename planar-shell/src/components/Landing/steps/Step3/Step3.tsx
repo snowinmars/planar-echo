@@ -47,7 +47,7 @@ const Step3: FC<Step3Props> = ({
         image={imageUrl}
         alt="Choose chitin.key path"
       />
-      <CardContent>
+      <CardContent className={styles.cardContent}>
         <Loading show={loading} />
 
         <Content

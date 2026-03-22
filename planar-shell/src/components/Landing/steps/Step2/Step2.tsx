@@ -48,7 +48,7 @@ const Step2: FC<Step2Props> = ({
         image={imageUrl}
         alt="Choose weidu.exe path"
       />
-      <CardContent>
+      <CardContent className={styles.cardContent}>
         <Loading show={loading} />
 
         <Content

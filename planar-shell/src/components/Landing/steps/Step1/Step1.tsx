@@ -45,7 +45,7 @@ const Step1: FC<Step1Props> = ({
         image={imageUrl}
         alt="Choose language"
       />
-      <CardContent>
+      <CardContent className={styles.cardContent}>
         <FormControl
           className={styles.inputWrapper}
           fullWidth
