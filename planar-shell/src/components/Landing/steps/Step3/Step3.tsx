@@ -7,7 +7,7 @@ import Loading from './children/Loading/Loading';
 import useChitinKeyValidation from './stores/store';
 import Content from './children/Content/Content';
 
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
 
 import styles from './Step3.module.scss';
@@ -17,6 +17,7 @@ type Language = 'ru' | 'en';
 type Step3Props = WithClassName & Readonly<{
   disabled: boolean;
   setStatus: (x: boolean) => void;
+  setChitinKeyPath: (x: string) => void;
   imageUrl: string;
   weiduExePath: string;
   lang: Language;
@@ -25,6 +26,7 @@ const Step3: FC<Step3Props> = ({
   className,
   disabled,
   setStatus,
+  setChitinKeyPath,
   imageUrl,
   weiduExePath,
   lang,
@@ -37,6 +39,10 @@ const Step3: FC<Step3Props> = ({
     setPath,
     validate,
   } = useChitinKeyValidation(setStatus);
+
+  useEffect(() => {
+    setChitinKeyPath(path);
+  }, [path]);
 
   return (
     <Card className={clsx(styles.card, className)}>

@@ -11,7 +11,8 @@ import Step1 from './steps/Step1/Step1';
 import Step2 from './steps/Step2/Step2';
 import Step3 from './steps/Step3/Step3';
 import Step4 from './steps/Step4/Step4';
-import { Paper } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router';
 
@@ -19,6 +20,7 @@ import type { FC } from 'react';
 
 import styles from './Landing.module.scss';
 import RunnerGuard from './children/RunnerGuard/RunnerGuard';
+import Converter from './children/Converter/Converter';
 
 type Language = 'ru' | 'en';
 
@@ -31,6 +33,7 @@ const Landing: FC = () => {
 
   const [lang, setLang] = useState<Language>('ru');
   const [weiduExePath, setWeiduExePath] = useState('');
+  const [chitinKeyPath, setChitinKeyPath] = useState('');
 
   return (
     <>
@@ -84,7 +87,12 @@ const Landing: FC = () => {
           </Grid>
         </Grid>
 
+        <Divider className={styles.divider} />
+
         <Grid container spacing="1em">
+          <Grid size={{ xs: 12 }}>
+            <Typography variant="h4">Convert the game</Typography>
+          </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <Step1
               className={styles.step1}
@@ -117,6 +125,9 @@ const Landing: FC = () => {
               setStatus={(x) => {
                 setStep3Status(x);
               }}
+              setChitinKeyPath={(x) => {
+                setChitinKeyPath(x);
+              }}
               imageUrl="https://d.newsweek.com/en/full/2271421/german-shepherd-puppy.jpg"
               weiduExePath={weiduExePath}
               lang={lang}
@@ -132,8 +143,14 @@ const Landing: FC = () => {
               imageUrl="https://i.pinimg.com/736x/1f/c4/b5/1fc4b52caa1829c75c0aed37cba79394.jpg"
             />
           </Grid>
+          <Grid size={{ xs: 12 }}>
+            <Converter
+              weiduExePath={weiduExePath}
+              chitinKeyPath={chitinKeyPath}
+              lang={lang}
+            />
+          </Grid>
         </Grid>
-
       </Container>
     </>
   );
