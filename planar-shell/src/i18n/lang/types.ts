@@ -5,5 +5,5 @@ export type Lang = Readonly<{
   themes: Readonly<{
     light: string;
     dark: string;
-  }>
-}>
+  }>;
+}>;

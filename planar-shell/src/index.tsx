@@ -10,11 +10,11 @@ import {
 } from '@/engine/store/count';
 import '@/i18n/index';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeContextProvider } from './theme/context';
 
 import type { AllStoresProps } from '@/engine/store/StoreCollector';
 
 import './index.scss';
-import { ThemeContextProvider } from './theme/context';
 
 const storeConfigs: AllStoresProps[] = [
   { provider: CountStoreContextProvider, initialData: initialCountStore },
