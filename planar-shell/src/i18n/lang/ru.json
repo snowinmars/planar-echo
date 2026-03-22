@@ -9,13 +9,28 @@
       "weiduExePath": "Путь к weidu.exe",
       "weiduLink": "Скачать weidu",
       "comments": {
-        "weiduExeVersion": "Найдена версия weidu.exe =",
+        "weiduExeVersion": "Найдена версия weidu.exe:",
         "loading": "Проверяю...",
         "connection": "Проверь соединение",
-        "FILE_NOT_FOUND": "Файл не найден",
+        "FILE_NOT_FOUND": "Файл weidu.exe не найден",
         "WEIDU_ERROR": "Ошибка weidu",
         "unknown": "Ошибка, см. F12"
       }
+    },
+    "step3": {
+      "chitinKeyPath": "Путь к CHITIN.KEY",
+      "chitinKeyLink": "Что такое CHITIN.KEY?",
+      "comments": {
+        "biffsCount": "Найдено исходников:",
+        "loading": "Проверяю...",
+        "connection": "Проверь соединение",
+        "FILE_NOT_FOUND": "Файл CHITIN.KEY не найден",
+        "unknown": "Ошибка, см. F12"
+      }
+    },
+    "step4": {
+      "ownGame": "Я конвертирую то, что мне принадлежит.",
+      "comment": "Я не нарушаю авторские права - я бесплатно стимулирую продажи оригинала.."
     }
   },
   "themes": {

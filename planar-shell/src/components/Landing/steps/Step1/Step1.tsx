@@ -13,29 +13,37 @@ import FormControl from '@mui/material/FormControl';
 import type { FC } from 'react';
 
 import styles from './Step1.module.scss';
+import type { WithClassName } from '@/types/fcWithClassName';
 
-type Language = '' | 'ru' | 'en';
+type Language = 'ru' | 'en';
 
-type Step1Props = Readonly<{
+type Step1Props = WithClassName & Readonly<{
   setStatus: (x: boolean) => void;
+  setLang: (x: Language) => void;
   imageUrl: string;
 }>;
-const Step1: FC<Step1Props> = ({ setStatus, imageUrl }) => {
+const Step1: FC<Step1Props> = ({
+  className,
+  setStatus,
+  setLang,
+  imageUrl,
+}) => {
   const { i18n, t } = useTranslation();
   const [languages] = useState(() => getNativeLangNames(i18n.options.resources || {}));
-  const [language, setLanguage] = useState<Language>('');
+  const [language, setLanguage] = useState<Language | ''>('');
 
   useEffect(() => {
     setStatus(!!language);
+    if (language !== '') setLang(language);
   }, [language]);
 
   return (
-    <Card>
+    <Card className={className}>
       <CardMedia
         component="img"
         height="140"
         image={imageUrl}
-        alt="Buy game image"
+        alt="Choose language"
       />
       <CardContent>
         <FormControl

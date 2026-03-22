@@ -7,6 +7,9 @@ import type { FC } from 'react';
 
 import styles from './Comment.module.scss';
 import { ValidationState } from '../../stores/types';
+import Steam from '@/svg/steam';
+import Gog from '@/svg/gog';
+import clsx from 'clsx';
 
 const colorizeStatus = (status: ValidationState['status']): TypographyOwnProps['color'] => {
   switch (status) {
@@ -31,15 +34,38 @@ const Comment: FC<CommentProps> = ({ comment, status }) => {
   );
 
   return (
-    <Typography color={colorizeStatus(status)}>
+    <Typography
+      className={styles.comment}
+      color={colorizeStatus(status)}
+    >
       <Link
         className={styles.link}
-        href="https://github.com/WeiDUorg/weidu/releases/tag/v251.00"
+        href="https://www.google.ru/search?q=chitin%20key"
         target="_blank"
         rel="noopener"
       >
-        {t('landing.step2.weiduLink')}
+        {t('landing.step3.chitinKeyLink')}
         <OpenInNewIcon fontSize="small" />
+      </Link>
+
+      <Link
+        className={clsx(styles.link, styles.storeLink)}
+        href="https://store.steampowered.com/app/466300/Planescape_Torment_Enhanced_Edition/"
+        target="_blank"
+        rel="noopener"
+        variant="body2"
+      >
+        <Steam className={styles.steam} />
+      </Link>
+
+      <Link
+        className={clsx(styles.link, styles.storeLink)}
+        href="https://www.gog.com/en/game/planescape_torment_enhanced_edition"
+        target="_blank"
+        rel="noopener"
+        variant="body2"
+      >
+        <Gog className={styles.gog} />
       </Link>
     </Typography>
   );

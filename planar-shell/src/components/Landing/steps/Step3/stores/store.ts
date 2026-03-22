@@ -1,25 +1,24 @@
 import { create } from 'zustand';
-import { postFsValidateWeiduPath, PostFsValidateWeiduPathErrors } from '@/swagger/client';
+import { postFsValidateChitinKeyPath, PostFsValidateChitinKeyPathErrors } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
-import { ValidationState } from './types';
+import { Language, ValidationState } from './types';
 import { useEffect } from 'react';
 import { TFunction } from 'i18next';
 
 type FormErrorStateProps = Readonly<{
-  error: PostFsValidateWeiduPathErrors[400 | 404];
+  error: PostFsValidateChitinKeyPathErrors[404];
   t: TFunction<'translation', undefined>;
 }>;
 const translateErrorState = ({ error, t }: FormErrorStateProps): string => {
   const isConnectionIssue = !error.error;
-  if (isConnectionIssue) return t('landing.step2.comments.connection');
+  if (isConnectionIssue) return t('landing.step3.comments.connection');
   switch (error.error.code) {
-    case 'FILE_NOT_FOUND': return t('landing.step2.comments.FILE_NOT_FOUND');
-    case 'WEIDU_ERROR': return t('landing.step2.comments.WEIDU_ERROR');
-    default: return t('landing.step2.comments.unknown');
+    case 'FILE_NOT_FOUND': return t('landing.step3.comments.FILE_NOT_FOUND');
+    default: return t('landing.step3.comments.unknown');
   }
 };
 
-const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
+const useChitinKeyValidationStore = create<ValidationState>((set, get) => ({
   path: '',
   loading: false,
   comment: '',
@@ -35,7 +34,7 @@ const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
     });
   },
 
-  validate: async (t: TFunction<'translation', undefined>) => {
+  validate: async (weiduExePath: string, lang: Language, t: TFunction<'translation', undefined>) => {
     const { path } = get();
 
     if (!path) {
@@ -49,14 +48,18 @@ const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
 
     set({
       loading: true,
-      comment: t('landing.step2.comments.loading'),
+      comment: t('landing.step3.comments.loading'),
       status: 'normal',
     });
 
     try {
-      const { data, error } = await postFsValidateWeiduPath({
+      const { data, error } = await postFsValidateChitinKeyPath({
         client,
-        body: { weiduExePath: path },
+        body: {
+          weiduExePath,
+          lang,
+          chitinKeyPath: path,
+        },
       });
 
       set({ loading: false });
@@ -69,7 +72,7 @@ const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
       }
       else {
         set({
-          comment: `${t('landing.step2.comments.weiduExeVersion')} ${data.data.version}`,
+          comment: `${t('landing.step3.comments.biffsCount')} ${data.data.biffsCount}`,
           status: 'success',
         });
       }
@@ -77,15 +80,15 @@ const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
     catch (e: unknown) {
       console.error(e);
       set({
-        comment: t('landing.step2.comments.unknown'),
+        comment: t('landing.step3.comments.unknown'),
         status: 'error',
       });
     }
   },
 }));
 
-const useWeiduValidation = (onStatusChange: (isValid: boolean) => void): ValidationState => {
-  const { path, loading, comment, status, setPath, validate } = useWeiduExeValidationStore();
+const useChitinKeyValidation = (onStatusChange: (isValid: boolean) => void): ValidationState => {
+  const { path, loading, comment, status, setPath, validate } = useChitinKeyValidationStore();
 
   useEffect(() => {
     onStatusChange(status === 'success');
@@ -101,4 +104,4 @@ const useWeiduValidation = (onStatusChange: (isValid: boolean) => void): Validat
   };
 };
 
-export default useWeiduValidation;
+export default useChitinKeyValidation;

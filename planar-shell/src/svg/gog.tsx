@@ -1,9 +1,8 @@
-
-import { WithClassName } from "@/types/fcWithClassName";
-import React, {FC} from "react";
+import { WithClassName } from '@/types/fcWithClassName';
+import React, { FC } from 'react';
 
 // https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg
-const Gog: FC<WithClassName> = ({className}): JSX.Element => (
+const Gog: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg
     className={className}
     viewBox="0 0 75 91"
@@ -25,5 +24,5 @@ const Gog: FC<WithClassName> = ({className}): JSX.Element => (
     <path d="M38.734 47.308v6.257a1.244 1.244 0 0 1-1.238 1.25c-.006 0-.008-.007-.014-.007v.007h-6.256v-.007s-.007.007-.014.007a1.244 1.244 0 0 1-1.24-1.25V47.3c0-.688.552-1.247 1.24-1.247h6.284a1.24 1.24 0 0 1 1.238 1.247zm.937-5.421H29.036A3.23 3.23 0 0 0 25.8 45.11v10.64a3.233 3.233 0 0 0 3.236 3.233h10.635a3.233 3.233 0 0 0 3.232-3.233V45.11a3.232 3.232 0 0 0-3.232-3.224" />
     <path d="M73.783 66.252c0 1.075-.433 2.04-1.137 2.745a3.864 3.864 0 0 1-2.743 1.135H5.483a3.876 3.876 0 0 1-3.88-3.88V5.482A3.872 3.872 0 0 1 2.74 2.738a3.868 3.868 0 0 1 2.743-1.136h64.42a3.87 3.87 0 0 1 2.743 1.136 3.861 3.861 0 0 1 1.137 2.742zm-.005-64.647A5.459 5.459 0 0 0 69.903 0H5.483a5.459 5.459 0 0 0-3.875 1.605A5.461 5.461 0 0 0 0 5.481v60.77c0 1.513.615 2.889 1.608 3.878a5.467 5.467 0 0 0 3.875 1.607h64.42a5.467 5.467 0 0 0 3.875-1.607 5.467 5.467 0 0 0 1.608-3.877V5.482a5.467 5.467 0 0 0-1.608-3.877" />
   </svg>
-)
+);
 export default Gog;

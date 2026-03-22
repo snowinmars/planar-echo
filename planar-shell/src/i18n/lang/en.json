@@ -9,13 +9,28 @@
       "weiduExePath": "Path to weidu.exe",
       "weiduLink": "Download weidu",
       "comments": {
-        "weiduExeVersion": "Found verion of weidu.exe =",
+        "weiduExeVersion": "Found verion of weidu.exe:",
         "loading": "Checking...",
         "connection": "Check connetion",
-        "FILE_NOT_FOUND": "File not found",
+        "FILE_NOT_FOUND": "File weidu.exe was not found",
         "WEIDU_ERROR": "Weidu error",
         "unknown": "Error, see F12"
       }
+    },
+    "step3": {
+      "chitinKeyPath": "Path to CHITIN.KEY",
+      "chitinKeyLink": "What is CHITIN.KEY?",
+      "comments": {
+        "biffsCount": "Found sources:",
+        "loading": "Checking...",
+        "connection": "Check connection",
+        "FILE_NOT_FOUND": "File CHITIN.KEY was not found",
+        "unknown": "Error, see F12"
+      }
+    },
+    "step4": {
+      "ownGame": "I convert what I own.",
+      "comment": "I do not infringe on copyrights - I stimulate sales of the original for free."
     }
   },
   "themes": {

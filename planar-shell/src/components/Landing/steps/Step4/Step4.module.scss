@@ -1,0 +1,19 @@
+.card {
+  position: relative;
+}
+
+.disabledImage {
+  filter: opacity(0.5);
+}
+
+.checkboxIcon {
+  color: red;
+  width: 1.5em;
+  transition: all;
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { rotate: 0; }
+  to { rotate: 360deg; }
+}

@@ -1,4 +1,4 @@
-import { dirname, normalize } from 'path';
+import { dirname, normalize, basename } from 'path';
 import fileExists from '../../../../shared/fileExists';
 import listBiffs from './listBiffs';
 
@@ -14,6 +14,16 @@ export default async ({
 
   const chitinKeyExists = await fileExists(chitinKey);
   if (!chitinKeyExists) return {
+    ok: false,
+    error: {
+      code: 'FILE_NOT_FOUND',
+      message: `CHITIN.key is not found at: ${chitinKey}`,
+      status: 404,
+    },
+  };
+
+  const correctName = basename(chitinKey).toLowerCase() === 'chitin.key';
+  if (!correctName) return {
     ok: false,
     error: {
       code: 'FILE_NOT_FOUND',

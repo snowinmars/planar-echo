@@ -1,30 +1,33 @@
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-
 import { clsx } from 'clsx';
 import Comment from './children/Comment/Comment';
 import Loading from './children/Loading/Loading';
-
-import { useEffect, type FC } from 'react';
-
-import styles from './Step2.module.scss';
-import useWeiduValidation from './stores/store';
+import useChitinKeyValidation from './stores/store';
 import Content from './children/Content/Content';
+
+import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
 
-type Step2Props = WithClassName & Readonly<{
+import styles from './Step3.module.scss';
+
+type Language = 'ru' | 'en';
+
+type Step3Props = WithClassName & Readonly<{
   disabled: boolean;
   setStatus: (x: boolean) => void;
-  setWeiduExePath: (x: string) => void;
   imageUrl: string;
+  weiduExePath: string;
+  lang: Language;
 }>;
-const Step2: FC<Step2Props> = ({
+const Step3: FC<Step3Props> = ({
   className,
   disabled,
   setStatus,
   imageUrl,
-  setWeiduExePath,
+  weiduExePath,
+  lang,
 }) => {
   const {
     path,
@@ -33,11 +36,7 @@ const Step2: FC<Step2Props> = ({
     status,
     setPath,
     validate,
-  } = useWeiduValidation(setStatus);
-
-  useEffect(() => {
-    setWeiduExePath(path);
-  }, [path]);
+  } = useChitinKeyValidation(setStatus);
 
   return (
     <Card className={clsx(styles.card, className)}>
@@ -46,7 +45,7 @@ const Step2: FC<Step2Props> = ({
         component="img"
         height="140"
         image={imageUrl}
-        alt="Choose weidu.exe path"
+        alt="Choose chitin.key path"
       />
       <CardContent>
         <Loading show={loading} />
@@ -57,6 +56,8 @@ const Step2: FC<Step2Props> = ({
           setPath={setPath}
           validate={validate}
           disabled={disabled}
+          weiduExePath={weiduExePath}
+          lang={lang}
         />
 
         <Comment comment={comment} status={status} />
@@ -65,4 +66,4 @@ const Step2: FC<Step2Props> = ({
   );
 };
 
-export default Step2;
+export default Step3;
