@@ -1,6 +1,6 @@
 import { offsetMap } from '../v11.types/3.featureBlock.js';
 
-import type { BufferReader } from '../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { FeatureBlockV11 } from '../v11.types/3.featureBlock.js';
 
 const parseFeatureBlock = (reader: BufferReader): FeatureBlockV11 => {

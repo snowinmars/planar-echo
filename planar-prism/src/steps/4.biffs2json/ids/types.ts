@@ -1,4 +1,4 @@
-import type { Maybe } from '../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 
 export type IdsHeader = Readonly<{
   wrongSignature: Maybe<string>;

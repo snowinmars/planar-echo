@@ -1,6 +1,5 @@
-import { TFunction } from 'i18next';
-
-export type Language = 'ru' | 'en';
+import type { GameLanguage } from '@planar/shared';
+import type { TFunction } from 'i18next';
 
 export type ValidationState = Readonly<{
   path: string;
@@ -8,5 +7,5 @@ export type ValidationState = Readonly<{
   comment: string;
   status: 'normal' | 'success' | 'error';
   setPath: (path: string) => void;
-  validate: (weiduExePath: string, lang: Language, t: TFunction<'translation', undefined>) => Promise<void>;
+  validate: (weiduExePath: string, lang: GameLanguage, t: TFunction<'translation', undefined>) => Promise<void>;
 }>;

@@ -1,11 +1,11 @@
-import createWriter from '../shared/writer.js';
-import { just } from '../shared/maybe.js';
+import createWriter from '@/shared/writer.js';
+import { just } from '@planar/shared';
 
-import type { Maybe } from '../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
+import type { DlgResponse } from '@/steps/4.biffs2json/dlg/v1.types/3.response.js';
+import type { DlgState } from '@/steps/4.biffs2json/dlg/v1.types/2.states.js';
+import type { Dlg } from '@/steps/4.biffs2json/dlg/types.js';
 import type { NpcDialogueEcho } from './buildDialogueSkeletonsTypes.js';
-import type { DlgResponse } from '../steps/4.biffs2json/dlg/v1.types/3.response.js';
-import type { DlgState } from 'src/steps/4.biffs2json/dlg/v1.types/2.states.js';
-import type { Dlg } from 'src/steps/4.biffs2json/dlg/types.js';
 
 const isResponseDesctructor = (response: DlgResponse) => !response.nextDialog;
 const isResponseExtern = (response: DlgResponse, resourceName: string) => `${just(response.nextDialog)}.dlg` !== resourceName;

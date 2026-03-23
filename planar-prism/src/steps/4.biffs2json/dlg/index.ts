@@ -1,3 +1,2 @@
-import parseDlg from './parseDlg.js';
-
-export default parseDlg;
+export type { RawDlg, Dlg } from './types.js';
+export { default as parseDlg } from './parseDlg.js';

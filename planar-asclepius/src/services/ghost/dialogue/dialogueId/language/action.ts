@@ -1,14 +1,14 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
-import fileExists from '../../../../../shared/fileExists';
+import { fileExists } from '@planar/shared';
 import type { Command, Result } from './types';
 
 export default async ({
   dialogueId,
-  language,
+  gameLanguage,
   ghostDir,
 }: Command): Promise<Result> => {
-  const translatedDialoguePath = join(ghostDir, 'ghost', 'dialogues', `${dialogueId}Dialogue_${language}.ghost`);
+  const translatedDialoguePath = join(ghostDir, 'ghost', 'dialogues', `${dialogueId}Dialogue_${gameLanguage}.ghost`);
   const found = await fileExists(translatedDialoguePath);
   if (!found) {
     return {

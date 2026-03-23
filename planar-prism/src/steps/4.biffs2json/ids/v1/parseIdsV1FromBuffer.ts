@@ -1,4 +1,4 @@
-import createReader from '../../../../pipes/readers.js';
+import createReader from '@/pipes/readers.js';
 import parseKeyValueV1 from './parsers/parseKeyValueV1.js';
 
 import type {

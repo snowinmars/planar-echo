@@ -15,7 +15,8 @@
       "tryToRun": "Проверить локальные файлы игры"
     },
     "step1": {
-      "language": "Язык игры"
+      "gameName": "Игра",
+      "gameLanguage": "Язык игры"
     },
     "step2": {
       "weiduExePath": "Путь к weidu.exe",

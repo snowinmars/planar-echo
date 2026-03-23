@@ -1,4 +1,4 @@
-import { extend } from '../../../../pipes/offsetMap.js';
+import { extend } from '@/pipes/offsetMap.js';
 
 /* createGenerator().register().enum('spellTypeV10',
  *   ['priest','wizard','innate']

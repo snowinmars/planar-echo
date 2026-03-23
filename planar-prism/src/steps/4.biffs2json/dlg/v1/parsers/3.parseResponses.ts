@@ -1,9 +1,9 @@
-import { nothing } from '../../../../../shared/maybe.js';
+import { nothing } from '@planar/shared';
 import { offsetMap } from '../../v1.types/3.response.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
-import type { Signature, Versions } from '../../types.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
+import type { Signature, Versions } from '../../types.js';
 import type { RawResponse } from '../../v1.types/3.response.js';
 
 const normalizeRef = (value: number, emptyInt: number): number => value === emptyInt ? -1 : value;

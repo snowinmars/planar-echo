@@ -1,8 +1,8 @@
+import { nothing } from '@planar/shared';
+import { externalOffsetMap } from '@/pipes/offsetMap.js';
 import { offsetMap } from '../../v10.types/1.header.js';
-import { externalOffsetMap } from '../../../../../pipes/offsetMap.js';
-import { nothing } from '../../../../../shared/maybe.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
 import type { CreatureHeaderV10 } from '../../v10.types/1.header.js';
 import type { Signature, Versions } from '../../types.js';

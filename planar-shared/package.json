@@ -1,0 +1,30 @@
+{
+  "name": "@planar/shared",
+  "version": "0.0.1",
+  "description": "Shared code for planar-echo projects",
+  "author": "snowinmars",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "GPL-3.0-or-later",
+  "private": false,
+  "scripts": {
+    "start": "tsc && tsc-alias",
+    "lint": "eslint"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^25.3.0",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^10.1.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "tsc": "^2.0.4",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  }
+}

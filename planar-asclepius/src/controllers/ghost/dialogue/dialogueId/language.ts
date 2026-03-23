@@ -2,9 +2,12 @@ import { Router } from 'express';
 import validate from 'express-zod-safe';
 import { z, ZodEnum, ZodObject, ZodString } from 'zod';
 import { OpenAPIRegistry, RouteConfig } from '@asteasolutions/zod-to-openapi';
-import action from '../../../../services/ghost/dialogue/dialogueId/language/action';
+import action from '@/services/ghost/dialogue/dialogueId/language/action';
+import { gameLanguages } from '@planar/shared';
 
-const languages = ['ru', 'en'] as const;
+import type { GameLanguage } from '@planar/shared';
+
+type ZodGameLanguages = Record<GameLanguage, GameLanguage>;
 
 const registerDialogueIdParam = (registry: OpenAPIRegistry): ZodString => {
   return registry.registerParameter(
@@ -20,16 +23,16 @@ const registerDialogueIdParam = (registry: OpenAPIRegistry): ZodString => {
   );
 };
 
-const registerLanguageParam = (registry: OpenAPIRegistry): ZodEnum<{ ru: 'ru'; en: 'en' }> => {
+const registerGameLanguageParam = (registry: OpenAPIRegistry): ZodEnum<ZodGameLanguages> => {
   return registry.registerParameter(
-    'language',
-    z.enum(languages).openapi({
+    'gameLanguage',
+    z.enum<GameLanguage[]>(Object.keys(gameLanguages) as GameLanguage[]).openapi({
       param: {
-        name: 'language',
+        name: 'gameLanguage',
         in: 'path',
         description: 'Skeleton dialogue language',
       },
-      example: languages[0],
+      example: 'ru_RU' as GameLanguage,
     }),
   );
 };
@@ -50,7 +53,7 @@ const responseError = z.object({
 });
 const routeConfig = (params: ZodObject): RouteConfig => ({
   method: 'post',
-  path: '/api/ghost/dialogue/{dialogueId}/{language}',
+  path: '/api/ghost/dialogue/{dialogueId}/{gameLanguage}',
   tags: ['ghostDialogue'],
   description: 'Get translation of the dialogue in ghost format',
   request: {
@@ -86,16 +89,16 @@ const routeConfig = (params: ZodObject): RouteConfig => ({
 
 export default (registry: OpenAPIRegistry, router: Router): void => {
   const dialogueId = registerDialogueIdParam(registry);
-  const language = registerLanguageParam(registry);
+  const gameLanguage = registerGameLanguageParam(registry);
 
-  registry.registerPath(routeConfig(z.object({ dialogueId, language })));
+  registry.registerPath(routeConfig(z.object({ dialogueId, gameLanguage })));
 
-  router.post('/api/ghost/dialogue/:dialogueId/:language',
-    validate({ body, params: { dialogueId, language } }),
+  router.post('/api/ghost/dialogue/:dialogueId/:gameLanguage',
+    validate({ body, params: { dialogueId, gameLanguage } }),
     async (req, res) => {
       const result = await action({
         dialogueId: req.params.dialogueId,
-        language: req.params.language,
+        gameLanguage: req.params.gameLanguage,
         ghostDir: req.body.ghostDir,
       });
 

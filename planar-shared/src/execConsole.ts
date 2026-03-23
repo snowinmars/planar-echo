@@ -1,6 +1,5 @@
 import { spawn } from 'child_process';
 
-import logger from './logger';
 import { just } from './maybe';
 
 import type { Maybe } from './maybe';
@@ -17,13 +16,11 @@ const splitCommand = (command: string): [string, string[]] => {
   return [cmd, args];
 };
 
-const execConsole = async <T>(
+export const execConsole = async <T>(
   command: string,
   map: (line: string) => Maybe<T>,
   ignoreStdout = false,
 ): Promise<T[]> => {
-  logger.debug(`Executing '${command}'`);
-
   return new Promise((resolve, reject) => {
     const [cmd, args] = splitCommand(command);
 
@@ -79,5 +76,3 @@ const execConsole = async <T>(
     });
   });
 };
-
-export default execConsole;

@@ -1,4 +1,4 @@
-import { extend } from '../../../../pipes/offsetMap.js';
+import { extend } from '@/pipes/offsetMap.js';
 
 /* createGenerator().register().flags("flagsV20", {
  *   byte1: ['unsellable (critical item, kept on ground)','two-handed','movable','displayable','cursed',null,'magical','bow',],

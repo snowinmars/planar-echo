@@ -2,13 +2,12 @@ import type { FC } from 'react';
 
 import Button from '@mui/material/Button';
 import useConverterStore from './stores/store';
-
-type Language = 'ru' | 'en';
+import { GameLanguage } from '@planar/shared';
 
 type ConverterProps = Readonly<{
   chitinKeyPath: string;
   weiduExePath: string;
-  lang: Language;
+  gameLanguage: GameLanguage;
 }>;
 const Converter: FC<ConverterProps> = ({
 }: ConverterProps) => {

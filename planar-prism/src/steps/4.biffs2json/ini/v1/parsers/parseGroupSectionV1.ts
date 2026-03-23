@@ -1,6 +1,6 @@
-import { parseDecOrNothing } from '../../../../../shared/customParsers.js';
+import { parseDecOrNothing } from '@/shared/customParsers.js';
 
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 import type { Section, SectionEntry } from '../../iniParser/iniParserTypes.js';
 import type { GroupIniSection } from '../../types.js';
 

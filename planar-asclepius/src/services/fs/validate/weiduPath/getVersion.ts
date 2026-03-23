@@ -1,5 +1,5 @@
-import execConsole from '../../../../shared/execConsole';
-import { Maybe, nothing } from '../../../../shared/maybe';
+import { nothing, execConsole } from '@planar/shared';
+import type { Maybe } from '@planar/shared';
 
 type GetVerionsProps = Readonly<{
   weiduExe: string;

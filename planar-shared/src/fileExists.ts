@@ -1,6 +1,6 @@
 import { access, constants } from 'fs/promises';
 
-const fileExists = async (filePath: string): Promise<boolean> => {
+export const fileExists = async (filePath: string): Promise<boolean> => {
   try {
     await access(filePath, constants.F_OK);
     return true;
@@ -9,5 +9,3 @@ const fileExists = async (filePath: string): Promise<boolean> => {
     return false;
   }
 };
-
-export default fileExists;

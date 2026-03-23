@@ -1,6 +1,6 @@
 import { offsetMap } from '../v11.types/1.header.js';
 
-import type { BufferReader } from '../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../types.js';
 import type { HeaderV11 } from '../v11.types/1.header.js';
 import type { Signature, Versions } from '../types.js';

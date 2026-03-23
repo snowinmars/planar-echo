@@ -1,7 +1,7 @@
 import createWriter from '../../../shared/writer.js';
 
-import type { DlgState } from 'src/steps/4.biffs2json/dlg/v1.types/2.states.js';
-import type { Dlg } from 'src/steps/4.biffs2json/dlg/types.js';
+import type { DlgState } from '../../../steps/4.biffs2json/dlg/v1.types/2.states.js';
+import type { Dlg } from '../../../steps/4.biffs2json/dlg/types.js';
 
 const morte1 = 'dmorte1.dlg';
 

@@ -22,6 +22,7 @@ import Github from './svg/github';
 import EmailIcon from '@mui/icons-material/Email';
 import Telegram from '@/svg/telegram';
 
+import type { FC } from 'react';
 import type { AllStoresProps } from '@/engine/store/StoreCollector';
 
 import './index.scss';
@@ -31,16 +32,46 @@ const storeConfigs: AllStoresProps[] = [
   { provider: CountStoreContextProvider, initialData: initialCountStore },
 ];
 
+const Footer: FC = () => (
+  <footer className={styles.footer}>
+    <Link
+      className={styles.license}
+      href="https://github.com/snowinmars/planar-echo/blob/master/LICENSE"
+      target="_blank"
+      rel="noopener"
+    >
+      GNU/GPLv3
+    </Link>
+
+    <Link
+      href="mailto:snowinmars@yandex.ru"
+      target="_blank"
+      rel="noopener"
+    >
+      <EmailIcon className={styles.email} />
+    </Link>
+    <Link
+      href="https://t.me/snowinmars"
+      target="_blank"
+      rel="noopener"
+    >
+      <Telegram className={styles.telegram} />
+    </Link>
+    <Link
+      href="https://github.com/snowinmars/planar-echo/"
+      target="_blank"
+      rel="noopener"
+    >
+      <Github className={styles.github} />
+    </Link>
+  </footer>
+);
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <StoreCollector stores={storeConfigs}>
       <ThemeContextProvider>
-        <BrowserRouter
-          // future={{
-          //   v7_startTransition: true,
-          //   v7_relativeSplatPath: true,
-          // }}
-        >
+        <BrowserRouter>
           <Suspense fallback={<Loading />}>
             <CssBaseline />
 
@@ -58,38 +89,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <RouterComponent />
             </Container>
 
-            <footer className={styles.footer}>
-              <Link
-                className={styles.license}
-                href="https://github.com/snowinmars/planar-echo/blob/master/LICENSE"
-                target="_blank"
-                rel="noopener"
-              >
-                GNU/GPLv3
-              </Link>
-
-              <Link
-                href="mailto:snowinmars@yandex.ru"
-                target="_blank"
-                rel="noopener"
-              >
-                <EmailIcon className={styles.email} />
-              </Link>
-              <Link
-                href="https://t.me/snowinmars"
-                target="_blank"
-                rel="noopener"
-              >
-                <Telegram className={styles.telegram} />
-              </Link>
-              <Link
-                href="https://github.com/snowinmars/planar-echo/"
-                target="_blank"
-                rel="noopener"
-              >
-                <Github className={styles.github} />
-              </Link>
-            </footer>
+            <Footer />
           </Suspense>
         </BrowserRouter>
       </ThemeContextProvider>

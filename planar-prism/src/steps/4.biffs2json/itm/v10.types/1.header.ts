@@ -1,6 +1,6 @@
-import { extend } from '../../../../pipes/offsetMap.js';
+import { extend } from '@/pipes/offsetMap.js';
 
-import type { Maybe } from '../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 
 /* createGenerator().register().flags('flagsV10',{
  *   byte1:['unsellable (critical item)','two-handed','movable/droppable','displayable','cursed','cannot scribe to spellbook (scrolls)','magical','left-handed'],

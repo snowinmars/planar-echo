@@ -1,6 +1,8 @@
+import { GameLanguage } from '@planar/shared';
+
 export type Command = Readonly<{
   dialogueId: string;
-  language: 'ru' | 'en';
+  gameLanguage: GameLanguage;
   ghostDir: string;
 }>;
 

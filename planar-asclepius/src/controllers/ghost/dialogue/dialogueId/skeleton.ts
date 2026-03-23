@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import validate from 'express-zod-safe';
-import action from '../../../../services/ghost/dialogue/dialogueId/skeleton/action';
+import action from '@/services/ghost/dialogue/dialogueId/skeleton/action';
 
 import type { ZodObject, ZodString } from 'zod';
 import type { OpenAPIRegistry, RouteConfig } from '@asteasolutions/zod-to-openapi';

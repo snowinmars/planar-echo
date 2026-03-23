@@ -3,21 +3,21 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-
 import { useEffect, useRef, type FC } from 'react';
+import { debounce, interval, Subject } from 'rxjs';
+
+import type { GameLanguage } from '@planar/shared';
 import type { TFunction } from 'i18next';
 
 import styles from './Content.module.scss';
-import { Language } from '../../stores/types';
-import { debounce, interval, Subject } from 'rxjs';
 
 type ContentProps = Readonly<{
   path: string;
   loading: boolean;
   setPath: (path: string) => void;
-  validate: (weiduExePath: string, lang: Language, t: TFunction<'translation', undefined>) => Promise<void>;
+  validate: (weiduExePath: string, gameLanguage: GameLanguage, t: TFunction<'translation', undefined>) => Promise<void>;
   weiduExePath: string;
-  lang: Language;
+  gameLanguage: GameLanguage;
   disabled: boolean;
 }>;
 
@@ -27,17 +27,19 @@ const Content: FC<ContentProps> = ({
   setPath,
   validate,
   weiduExePath,
-  lang,
+  gameLanguage,
   disabled,
 }: ContentProps) => {
   const { t } = useTranslation();
 
-  const {current: validate$} = useRef(new Subject<void>());
+  const { current: validate$ } = useRef(new Subject<void>());
   useEffect(() => {
     const subscription = validate$
       .pipe(debounce(() => interval(1000)))
-      .subscribe(() => validate(weiduExePath, lang, t).catch(e => console.error(e)));
-      return () => subscription.unsubscribe();
+      .subscribe(() => {
+        validate(weiduExePath, gameLanguage, t).catch(e => console.error(e));
+      });
+    return () => subscription.unsubscribe();
   }, [validate$]);
 
   return (

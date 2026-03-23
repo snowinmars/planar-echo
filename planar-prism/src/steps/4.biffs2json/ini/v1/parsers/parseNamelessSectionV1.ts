@@ -1,8 +1,8 @@
-import { parseDecOrThrow } from '../../../../../shared/customParsers.js';
-import { nothing } from '../../../../../shared/maybe.js';
+import { parseDecOrThrow } from '@/shared/customParsers.js';
+import { nothing } from '@planar/shared';
 import parseCoordsV1 from './parseCoordsV1.js';
 
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 import type { NamelessIniSection } from '../../types.js';
 import type { Section, SectionEntry } from '../../iniParser/iniParserTypes.js';
 

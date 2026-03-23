@@ -1,16 +1,15 @@
-import execConsole from '../../../../shared/execConsole';
-import { nothing } from '../../../../shared/maybe';
+import { nothing, execConsole } from '@planar/shared';
 
-import type { Maybe } from '../../../../shared/maybe';
+import type { GameLanguage, Maybe } from '@planar/shared';
 
 type ListBiffsProps = Readonly<{
   weiduExe: string;
   gameFolder: string;
-  lang: string;
+  gameLanguage: GameLanguage;
 }>;
 const listBiffsregex = /\[(.*?)\]\s+(\d+) bytes.*/;
-const listBiffs = async ({ weiduExe, gameFolder, lang }: ListBiffsProps): Promise<string[]> => execConsole<string>(
-  `"${weiduExe}" --game "${gameFolder}" --list-biffs --use-lang ${lang}`,
+const listBiffs = async ({ weiduExe, gameFolder, gameLanguage }: ListBiffsProps): Promise<string[]> => execConsole<string>(
+  `"${weiduExe}" --game "${gameFolder}" --list-biffs --use-lang ${gameLanguage}`,
   (line: string): Maybe<string> => {
     const matches = listBiffsregex.exec(line);
     const isTechInfo = !matches || matches.length <= 1;

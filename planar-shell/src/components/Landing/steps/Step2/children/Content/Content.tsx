@@ -4,7 +4,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import {Subject, debounce, interval } from 'rxjs';
+import { Subject, debounce, interval } from 'rxjs';
 
 import type { FC } from 'react';
 
@@ -27,12 +27,14 @@ const Content: FC<ContentProps> = ({
 }: ContentProps) => {
   const { t } = useTranslation();
 
-  const {current: validate$} = useRef(new Subject<void>());
+  const { current: validate$ } = useRef(new Subject<void>());
   useEffect(() => {
     const subscription = validate$
       .pipe(debounce(() => interval(1000)))
-      .subscribe(() => validate().catch(e => console.error(e)));
-      return () => subscription.unsubscribe();
+      .subscribe(() => {
+        validate().catch(e => console.error(e));
+      });
+    return () => subscription.unsubscribe();
   }, [validate$]);
 
   return (

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
@@ -7,12 +8,11 @@ import Loading from './children/Loading/Loading';
 import useChitinKeyValidation from './stores/store';
 import Content from './children/Content/Content';
 
-import { useEffect, type FC } from 'react';
+import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
+import type { GameLanguage } from '@planar/shared';
 
 import styles from './Step3.module.scss';
-
-type Language = 'ru' | 'en';
 
 type Step3Props = WithClassName & Readonly<{
   disabled: boolean;
@@ -20,7 +20,7 @@ type Step3Props = WithClassName & Readonly<{
   setChitinKeyPath: (x: string) => void;
   imageUrl: string;
   weiduExePath: string;
-  lang: Language;
+  gameLanguage: GameLanguage;
 }>;
 const Step3: FC<Step3Props> = ({
   className,
@@ -29,7 +29,7 @@ const Step3: FC<Step3Props> = ({
   setChitinKeyPath,
   imageUrl,
   weiduExePath,
-  lang,
+  gameLanguage,
 }) => {
   const {
     path,
@@ -63,7 +63,7 @@ const Step3: FC<Step3Props> = ({
           validate={validate}
           disabled={disabled}
           weiduExePath={weiduExePath}
-          lang={lang}
+          gameLanguage={gameLanguage}
         />
 
         <Comment comment={comment} status={status} />

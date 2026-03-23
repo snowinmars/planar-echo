@@ -1,4 +1,4 @@
-import { just, nothing } from '../../../../shared/maybe.js';
+import { just, nothing } from '@planar/shared';
 import parseHeaderV10 from './parsers/1.parseHeaderV10.js';
 import parseKnownSpellsV10 from './parsers/2.parseKnownSpellsV10.js';
 import parseSpellMemorizationInfosV10 from './parsers/3.parseSpellMemorizationInfosV10.js';
@@ -8,12 +8,12 @@ import parseEffectsV20 from './parsers/5.parseEffectsV20.js';
 import parseCreatureItemsV10 from './parsers/6.parseCreatureItemsV10.js';
 import parseItemSlotsV10 from './parsers/7.parseItemSlotsV10.js';
 
+import type { Maybe } from '@planar/shared';
+import type { BufferReader } from '@/pipes/readers.js';
+import type { Meta } from '../../types.js';
 import type { CreatureV10, Signature, Versions } from '../types.js';
-import type { Maybe } from '../../../../shared/maybe.js';
-import type { BufferReader } from '../../../../pipes/readers.js';
 import type { EffectV10 } from '../v10.types/5.effectV10.js';
 import type { EffectV20 } from '../v10.types/5.effectV20.js';
-import type { Meta } from '../../types.js';
 
 const parseCreaturesV10FromBuffer = (reader: BufferReader, meta: Meta<Signature, Versions>): CreatureV10 => {
   const header = parseHeaderV10(reader, meta);

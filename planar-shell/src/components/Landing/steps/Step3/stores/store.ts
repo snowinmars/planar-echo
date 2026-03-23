@@ -1,9 +1,11 @@
 import { create } from 'zustand';
+import { useEffect } from 'react';
 import { postApiFsValidateChitinKeyPath, PostApiFsValidateChitinKeyPathErrors } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
-import { Language, ValidationState } from './types';
-import { useEffect } from 'react';
-import { TFunction } from 'i18next';
+
+import type { TFunction } from 'i18next';
+import type { ValidationState } from './types';
+import type { GameLanguage } from '@planar/shared';
 
 type FormErrorStateProps = Readonly<{
   error: PostApiFsValidateChitinKeyPathErrors[404];
@@ -34,7 +36,7 @@ const useChitinKeyValidationStore = create<ValidationState>((set, get) => ({
     });
   },
 
-  validate: async (weiduExePath: string, lang: Language, t: TFunction<'translation', undefined>) => {
+  validate: async (weiduExePath: string, gameLanguage: GameLanguage, t: TFunction<'translation', undefined>) => {
     const { path } = get();
 
     if (!path) {
@@ -57,7 +59,7 @@ const useChitinKeyValidationStore = create<ValidationState>((set, get) => ({
         client,
         body: {
           weiduExePath,
-          lang,
+          gameLanguage,
           chitinKeyPath: path,
         },
       });

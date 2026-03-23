@@ -15,6 +15,7 @@
       "tryToRun": "Check local game files"
     },
     "step1": {
+      "gameName": "Game",
       "language": "Game language"
     },
     "step2": {

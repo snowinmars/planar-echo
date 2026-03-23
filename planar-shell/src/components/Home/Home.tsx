@@ -53,33 +53,33 @@ import Typography from '@mui/material/Typography';
 // ;
 
 const Home: FC = () => {
-    const {
-        count,
-        countInc,
-        countDec,
-    } = useCountStoreCount();
+  const {
+    count,
+    countInc,
+    countDec,
+  } = useCountStoreCount();
 
-    return (
-        <div className={styles.home}>
-            <Typography>
-                {count}
-            </Typography>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={countInc}
-            >
-                +
-            </Button>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={countDec}
-            >
-                -
-            </Button>
-        </div>
-    );
-}
+  return (
+    <div className={styles.home}>
+      <Typography>
+        {count}
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={countInc}
+      >
+        +
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={countDec}
+      >
+        -
+      </Button>
+    </div>
+  );
+};
 
 export default Home;

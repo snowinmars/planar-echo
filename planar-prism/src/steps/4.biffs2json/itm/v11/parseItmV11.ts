@@ -2,7 +2,7 @@ import parseHeader from './1.parseHeader.js';
 import parseExtendedHeaders from './2.parseExtendedHeader.js';
 import parseFeatureBlocks from './3.parseFeatureBlock.js';
 
-import type { BufferReader } from '../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { ItmV11, Signature, Versions } from '../types.js';
 import type { Meta } from '../../types.js';
 

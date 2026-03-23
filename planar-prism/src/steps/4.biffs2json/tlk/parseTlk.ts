@@ -1,9 +1,9 @@
-import { createReader } from '../../../pipes/readers.js';
+import { createReader } from '@/pipes/readers.js';
 import { readFile } from 'fs/promises';
 import parseTlkV1FromBuffer from './v1/parseTlkV1FromBuffer.js';
 
 import type { Tlk } from './types.js';
-import type { Pathes } from '../../../steps/1.createPathes/index.js';
+import type { Pathes } from '@/steps/1.createPathes/index.js';
 import type { Item } from './v1.types/2.item.js';
 
 const parseTlk = async (tlkPath: Pathes['tlkPath']): Promise<Tlk> => {

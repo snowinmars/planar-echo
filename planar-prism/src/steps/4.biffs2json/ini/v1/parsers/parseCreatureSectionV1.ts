@@ -1,4 +1,4 @@
-import { parseDecOrThrow, parseDecOrDefault } from '../../../../../shared/customParsers.js';
+import { parseDecOrThrow, parseDecOrDefault } from '@/shared/customParsers.js';
 import parseDirectionV1 from './parseDirectionV1.js';
 import parseSpawnPointsV1 from './parseSpawnPointsV1.js';
 import parseScopedVariableV1 from './parseScopedVariableV1.js';
@@ -8,8 +8,7 @@ import parseSpecVarOperationV1 from './parseSpecVarOperationV1.js';
 import parseBooleanV1 from './parseBooleanV1.js';
 import parsePointSelectV1 from './parsePointSelectV1.js';
 
-import type { PartialWriteable } from '../../../../../shared/types.js';
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { PartialWriteable, Maybe } from '@planar/shared';
 import type { CreatureIniSection } from '../../types.js';
 import type { Section } from '../../iniParser/iniParserTypes.js';
 import type { Signature, Versions } from '../../types.js';

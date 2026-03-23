@@ -1,4 +1,4 @@
-import type { BufferReader } from '../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../types.js';
 import type { ItmV10, Signature, Versions } from '../types.js';
 

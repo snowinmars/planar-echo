@@ -1,4 +1,4 @@
-import { nothing } from '../../../../../shared/maybe.js';
+import { nothing } from '@planar/shared';
 
 import type { RawDlg, Dlg } from '../../types.js';
 import type { DlgState } from '../../v1.types/2.states.js';

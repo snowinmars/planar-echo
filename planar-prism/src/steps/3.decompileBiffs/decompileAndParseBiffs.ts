@@ -1,15 +1,21 @@
-import { normalize, basename, dirname, extname } from 'path';
-import execConsole from '../../shared/execConsole.js';
-import { nothing } from '../../shared/maybe.js';
+import {
+  normalize,
+  basename,
+  dirname,
+  extname,
+} from 'path';
+import { nothing } from '@planar/shared';
+import execConsole from '@/shared/execConsole.js';
+import { reportProgressSeq } from '@/shared/report.js';
+import listBiffs from './listBiffs.js';
 
+import type { Maybe } from '@planar/shared';
 import type {
-  DecompileBiffsProps,
   Biff,
   DecompiledBiff,
   DecompiledBiffType,
+  DecompileBiffsProps,
 } from './types.js';
-import type { Maybe } from '../../shared/maybe.js';
-import listBiffs from './listBiffs.js';
 
 const detectDecompiledItemType = (extension: string): DecompiledBiffType => {
   switch (extension) {
@@ -48,7 +54,7 @@ const detectDecompiledItemType = (extension: string): DecompiledBiffType => {
   }
 };
 const decompileBiffsRegex = /\[(.*?)\] created from \[(.*?)\]/;
-const parseDecompiledItem = (line: string): Maybe<DecompiledBiff> => {
+const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => {
   const noMatches = line.startsWith('No matches for');
   if (noMatches) throw new Error(line);
 
@@ -56,15 +62,24 @@ const parseDecompiledItem = (line: string): Maybe<DecompiledBiff> => {
   const isTechInfo = !matches || matches.length <= 1;
   if (isTechInfo) return nothing();
 
-  const resourceName = basename(normalize(matches![1]!.trim()));
-  const fromBiffParent = basename(dirname(normalize(matches![2]!.trim())));
-  const fromBiffResourceName = fromBiffParent + '/' + basename(normalize(matches![2]!.trim()));
+  const resourceName = basename(normalize(matches[1]!.trim()));
+  const fromBiffParent = basename(dirname(normalize(matches[2]!.trim())));
+  const fromBiffResourceName = fromBiffParent + '/' + basename(normalize(matches[2]!.trim()));
   const type = detectDecompiledItemType(extname(resourceName) || resourceName); // there is a filename '.bcs'
+
+  reportProgressSeq({
+    value: i,
+    step: 'decompileBiffs',
+    params: {
+      action: 'parseDecompiledItem',
+    },
+  });
+
   return { resourceName, fromBiffResourceName, type };
 };
-const getDecompileBiffsCommand = ({ weiduExe, gameFolder, output, lang }: DecompileBiffsProps, biffs: Biff[]): string => {
+const getDecompileBiffsCommand = ({ weiduExe, gameFolder, output, gameLanguage }: DecompileBiffsProps, biffs: Biff[]): string => {
   const biffNames = biffs.map(b => `${b.resourceName}`).join(' ');
-  return `"${weiduExe}" --game "${gameFolder}" --use-lang ${lang} --out "${output.decimpiledBiff.root}" --biff-get "[${biffNames}]"`;
+  return `"${weiduExe}" --game "${gameFolder}" --use-lang ${gameLanguage} --out "${output.decimpiledBiff.root}" --biff-get "[${biffNames}]"`;
 };
 const decompileAndParseBiffs = async (props: DecompileBiffsProps): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
   const biffs: Biff[] = await listBiffs(props);

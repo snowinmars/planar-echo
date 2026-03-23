@@ -1,7 +1,7 @@
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
+import { parseDecOrThrow } from '@/shared/customParsers.js';
 import type { Section, SectionEntry } from '../../iniParser/iniParserTypes.js';
 import type { GeneralIniSection } from '../../types.js';
-import { parseDecOrThrow } from '../../../../../shared/customParsers.js';
 
 const findEntry = (entries: SectionEntry[], key: string): Maybe<string> => entries.find(e => e.key === key)?.value;
 

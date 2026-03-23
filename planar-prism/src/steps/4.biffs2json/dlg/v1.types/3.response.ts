@@ -1,5 +1,5 @@
-import { extend } from '../../../../pipes/offsetMap.js';
-import type { Maybe } from '../../../../shared/maybe.js';
+import { extend } from '@/pipes/offsetMap.js';
+import type { Maybe } from '@planar/shared';
 import type { Item } from '../../tlk/v1.types/2.item.js';
 import type { DlgFunction } from './4.function.js';
 

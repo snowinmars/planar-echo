@@ -20,6 +20,7 @@
     "express-zod-safe": "^3.2.0",
     "rxjs": "^7.8.2",
     "winston": "^3.19.0",
+    "ws": "^8.20.0",
     "zod": "^4.3.6"
   },
   "_devD": {
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@hey-api/openapi-ts": "^0.94.3",
+    "@planar/shared": "file:../planar-shared",
     "@stylistic/eslint-plugin": "^5.9.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
@@ -36,6 +38,7 @@
     "@types/node": "^25.4.0",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
     "@typescript-eslint/parser": "^8.57.1",
     "eslint": "^10.0.3",
@@ -47,6 +50,7 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1"
   }

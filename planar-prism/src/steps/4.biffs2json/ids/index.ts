@@ -1,5 +1,2 @@
-import parseIds from './parseIds.js';
-import type { Ids } from './types.js';
-
-export default parseIds;
-export type { Ids };
+export { default as parseIds } from './parseIds.js';
+export type { Ids } from './types.js';

@@ -1,9 +1,9 @@
 import { normalize } from 'path';
-import fileExists from '../../../../shared/fileExists';
+import { fileExists } from '@planar/shared';
+import logger from '@/shared/logger';
+import getVersion from './getVersion';
 
 import type { Command, Result } from './types';
-import getVersion from './getVersion';
-import logger from '../../../../shared/logger';
 
 export default async ({
   weiduExePath,

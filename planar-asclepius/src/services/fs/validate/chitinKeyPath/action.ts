@@ -1,5 +1,5 @@
 import { dirname, normalize, basename } from 'path';
-import fileExists from '../../../../shared/fileExists';
+import { fileExists } from '@planar/shared';
 import listBiffs from './listBiffs';
 
 import type { Command, Result } from './types';
@@ -7,7 +7,7 @@ import type { Command, Result } from './types';
 export default async ({
   weiduExePath,
   chitinKeyPath,
-  lang,
+  gameLanguage,
 }: Command): Promise<Result> => {
   const weiduExe = normalize(weiduExePath);
   const chitinKey = normalize(chitinKeyPath);
@@ -33,7 +33,7 @@ export default async ({
   };
 
   const gameFolder = dirname(chitinKey);
-  const biffs = await listBiffs({ weiduExe, gameFolder, lang });
+  const biffs = await listBiffs({ weiduExe, gameFolder, gameLanguage });
   if (!biffs.length) return {
     ok: false,
     error: {

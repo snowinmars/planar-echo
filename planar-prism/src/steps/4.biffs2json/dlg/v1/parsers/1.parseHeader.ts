@@ -1,9 +1,9 @@
+import { nothing } from '@planar/shared';
 import { offsetMap } from '../../v1.types/1.header.js';
-import { nothing } from '../../../../../shared/maybe.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
-import { type RawHeader } from '../../v1.types/1.header.js';
+import type { RawHeader } from '../../v1.types/1.header.js';
 import type { Signature, Versions } from '../../types.js';
 
 const parseHeader = (reader: BufferReader, meta: Meta<Signature, Versions>): RawHeader => {

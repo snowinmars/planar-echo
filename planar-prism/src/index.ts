@@ -1,5 +1,6 @@
 import { confirm } from './node-ask/index.js';
 import logger from './shared/logger.js';
+import { disposeReports, reportError } from './shared/report.js';
 
 // import convertTwoda from './pipes/convertTwoda/convertTwoda.js';
 // import convertAre from './pipes/convertAre/convertAre.js';
@@ -25,55 +26,32 @@ import logger from './shared/logger.js';
 // import convertWed from './pipes/convertWed/convertWed.js';
 // import convertWmp from './pipes/convertWmp/convertWmp.js';
 
-import createPathes, { type Pathes } from './steps/1.createPathes/index.js';
-import type { ValidateResult } from './steps/2.validate/index.js';
-import validate from './steps/2.validate/index.js';
-import decompileBiffs from './steps/3.decompileBiffs/index.js';
-import biffs2json from './steps/4.biffs2json/index.js';
-import json2Ghost from './steps/5.json2Ghost/index.js';
+import { createPathes } from '@/steps/1.createPathes/index.js';
+import { validate } from '@/steps/2.validate/index.js';
+import { decompileBiffs } from '@/steps/3.decompileBiffs/index.js';
+import { biffs2json } from '@/steps/4.biffs2json/index.js';
+import json2Ghost from '@/steps/5.json2Ghost/index.js';
+
+import type { PrismIndexStartMessage } from '@planar/shared';
 
 // type Creature = CreatureV10 | CreatureV12 | CreatureV22 | CreatureV90;
 // type Effect = EffectV10 | EffectV20;
 // type Item = ItemV10 | ItemV11 | ItemV20;
 
-const silent = false;
-
-const throwIfInvalid = (pathes: Pathes, validateResult: ValidateResult): void => {
-  switch (validateResult.weidu) {
-    case 'ok': {
-      logger.info(`Weidu is ok at '${pathes.weiduExe}'`);
-      break;
-    }
-    case 'cannot': throw new Error(`Cannot access weidu.exe using '${pathes.weiduExe}' path; check that file exists and has correct access rights; also make sure that the path case is right`);
-    default: throw new Error(`Weidu validate result is out of range: '${validateResult.weidu}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  }
-
-  switch (validateResult.gameFolder) {
-    case 'ok': {
-      logger.info(`Game is ok at '${pathes.gameFolder}'`);
-      break;
-    }
-    case 'cannot': throw new Error(`Cannot access binaries using '${pathes.gameFolder}' path; check that the path leads to the CHITIN.KEY file in the game folder and the file has correct access rights; also make sure that the path case is right`);
-    default: throw new Error(`Weidu validate result is out of range: '${validateResult.gameFolder}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  }
-};
-
-(async () => {
+const main = async (props: PrismIndexStartMessage['data']) => {
   logger.info('Starting...');
+
+  const devSilent = false;
+  const silent = isIpc ? true : devSilent;
 
   const recreateOutput = silent ? true : await confirm('Recreate output folder?');
 
   const pathes = await createPathes({
-    weiduExe: 'D:/Games/weidu/weidu.exe',
-    chitinKey: 'D:/Games/Steam/steamapps/common/Project P/CHITIN.KEY',
-    ghost: 'E:/prg/snowinmars/planar-echo/planar-ghost',
-    lang: 'ru_RU',
-    gameName: 'pstee',
+    ...props,
     recreate: recreateOutput,
   });
 
-  const validateResult = await validate(pathes);
-  throwIfInvalid(pathes, validateResult);
+  await validate(pathes);
 
   const decompiledBiffs = await decompileBiffs(pathes);
 
@@ -103,4 +81,30 @@ const throwIfInvalid = (pathes: Pathes, validateResult: ValidateResult): void =>
   // // await convertWbm (pathes, all.decompiledItems.get('wbm')!);
   // // await convertWed (pathes, all.decompiledItems.get('wed')!);
   // // await convertWmp (pathes, all.decompiledItems.get('wmp')!);
-})().catch(e => logger.error(e));
+
+  disposeReports();
+};
+
+const isIpc = !!process.send;
+console.warn(isIpc ? 'Run ipc mode' : 'Run cli mode');
+
+if (isIpc) {
+  process.on('message', (msg: PrismIndexStartMessage) => {
+    if (msg.type === 'start') {
+      console.log(JSON.stringify(msg));
+      main(msg.data).catch((e: unknown) => {
+        console.error(e);
+        reportError(JSON.stringify(e));
+      });
+    }
+  });
+}
+else {
+  main({
+    weiduExe: 'D:/Games/weidu/weidu.exe',
+    chitinKey: 'D:/Games/Steam/steamapps/common/Project P/CHITIN.KEY',
+    ghost: 'E:/prg/snowinmars/planar-echo/planar-ghost',
+    gameLanguage: 'ru_RU',
+    gameName: 'pstee',
+  }).catch(e => console.error(e));
+}

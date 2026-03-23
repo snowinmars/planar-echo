@@ -1,4 +1,4 @@
-import { nothing } from '../../../../shared/maybe.js';
+import { nothing } from '@planar/shared';
 import { parseIniFromString } from '../iniParser/iniParser.js';
 import parseNamelessSectionV1 from './parsers/parseNamelessSectionV1.js';
 import parseNamelessvarSectionV1 from './parsers/parseNamelessvarSectionV1.js';
@@ -9,11 +9,11 @@ import parseGroupSectionV1 from './parsers/parseGroupSectionV1.js';
 import parseCreatureSectionV1 from './parsers/parseCreatureSectionV1.js';
 import parseMonsterPlanescapeSectionV1 from './parsers/parseMonsterPlanescapeIniSectionV1.js';
 import parseSoundsSectionV1 from './parsers/parseSoundsSectionV1.js';
+import parseNumberedSectionV1 from './parsers/parseNumberedSectionV1.js';
 
-import type { Maybe } from '../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 import type { Ini, Signature, Versions } from '../types.js';
 import type { Meta } from '../../types.js';
-import parseNumberedSectionV1 from './parsers/parseNumberedSectionV1.js';
 
 const patchIniSyntax = (content: string, resourceName: string): string => {
   switch (resourceName) {

@@ -1,11 +1,8 @@
-import execConsole from '../../shared/execConsole.js';
-import { nothing } from '../../shared/maybe.js';
+import execConsole from '@/shared/execConsole.js';
+import { nothing } from '@planar/shared';
 
-import type {
-  ListBiffsProps,
-  Biff,
-} from './types.js';
-import type { Maybe } from '../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
+import type { ListBiffsProps, Biff } from './types.js';
 
 const listBiffsregex = /\[(.*?)\]\s+(\d+) bytes.*/;
 const parseBiff = (line: string): Maybe<Biff> => {
@@ -13,11 +10,11 @@ const parseBiff = (line: string): Maybe<Biff> => {
   const isTechInfo = !matches || matches.length <= 1;
   if (isTechInfo) return nothing();
 
-  const resourceName = matches![1]!.trim();
-  const sizeBytes = parseInt(matches![2]!.trim());
+  const resourceName = matches[1]!.trim();
+  const sizeBytes = parseInt(matches[2]!.trim());
   return { resourceName, sizeBytes };
 };
-const getListBiffsCommand = ({ weiduExe, gameFolder, lang }: ListBiffsProps): string => `"${weiduExe}" --game "${gameFolder}" --list-biffs --use-lang ${lang}`;
+const getListBiffsCommand = ({ weiduExe, gameFolder, gameLanguage }: ListBiffsProps): string => `"${weiduExe}" --game "${gameFolder}" --list-biffs --use-lang ${gameLanguage}`;
 const listBiffs = async (props: ListBiffsProps): Promise<Biff[]> => execConsole<Biff>(getListBiffsCommand(props), parseBiff);
 
 export default listBiffs;

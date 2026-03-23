@@ -1,4 +1,4 @@
-import { extend } from '../../../../pipes/offsetMap.js';
+import { extend } from '@/pipes/offsetMap.js';
 import type { FeatureBlockV11 } from './3.featureBlock.js';
 
 /* createGenerator().register().enum("attackTypeV11",

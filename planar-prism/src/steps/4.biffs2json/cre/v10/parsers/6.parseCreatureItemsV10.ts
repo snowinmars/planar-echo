@@ -1,8 +1,8 @@
 import { offsetMap } from './../../v10.types/6.item.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
-import type { Signature, Versions } from '../../types.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
+import type { Signature, Versions } from '../../types.js';
 import type { ItemV10 } from '../../v10.types/6.item.js';
 
 const parse = (reader: BufferReader): ItemV10 => {

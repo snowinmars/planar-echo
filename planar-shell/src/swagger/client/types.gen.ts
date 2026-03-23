@@ -6,9 +6,17 @@ export type ClientOptions = {
 
 export type DialogueId = string;
 
-export const Language = { RU: 'ru', EN: 'en' } as const;
+export const GameLanguage = {
+    CS_CZ: 'cs_CZ',
+    DE_DE: 'de_DE',
+    EN_US: 'en_US',
+    FR_FR: 'fr_FR',
+    KO_KR: 'ko_KR',
+    PL_PL: 'pl_PL',
+    RU_RU: 'ru_RU'
+} as const;
 
-export type Language = typeof Language[keyof typeof Language];
+export type GameLanguage = typeof GameLanguage[keyof typeof GameLanguage];
 
 /**
  * Skeleton dialogue id
@@ -18,13 +26,13 @@ export type DialogueId2 = DialogueId & unknown;
 /**
  * Skeleton dialogue language
  */
-export type Language2 = Language;
+export type GameLanguage2 = GameLanguage;
 
 export type PostApiFsValidateChitinKeyPathData = {
     body: {
         weiduExePath: string;
         chitinKeyPath: string;
-        lang: 'ru' | 'en';
+        gameLanguage: 'cs_CZ' | 'de_DE' | 'en_US' | 'fr_FR' | 'ko_KR' | 'pl_PL' | 'ru_RU';
     };
     path?: never;
     query?: never;
@@ -160,7 +168,7 @@ export type PostApiGhostDialogueByDialogueIdSkeletonResponses = {
 
 export type PostApiGhostDialogueByDialogueIdSkeletonResponse = PostApiGhostDialogueByDialogueIdSkeletonResponses[keyof PostApiGhostDialogueByDialogueIdSkeletonResponses];
 
-export type PostApiGhostDialogueByDialogueIdByLanguageData = {
+export type PostApiGhostDialogueByDialogueIdByGameLanguageData = {
     body: {
         ghostDir: string;
     };
@@ -172,13 +180,13 @@ export type PostApiGhostDialogueByDialogueIdByLanguageData = {
         /**
          * Skeleton dialogue language
          */
-        language: Language;
+        gameLanguage: GameLanguage;
     };
     query?: never;
-    url: '/api/ghost/dialogue/{dialogueId}/{language}';
+    url: '/api/ghost/dialogue/{dialogueId}/{gameLanguage}';
 };
 
-export type PostApiGhostDialogueByDialogueIdByLanguageErrors = {
+export type PostApiGhostDialogueByDialogueIdByGameLanguageErrors = {
     /**
      * Dialogue translation is not found by this path
      */
@@ -190,9 +198,9 @@ export type PostApiGhostDialogueByDialogueIdByLanguageErrors = {
     };
 };
 
-export type PostApiGhostDialogueByDialogueIdByLanguageError = PostApiGhostDialogueByDialogueIdByLanguageErrors[keyof PostApiGhostDialogueByDialogueIdByLanguageErrors];
+export type PostApiGhostDialogueByDialogueIdByGameLanguageError = PostApiGhostDialogueByDialogueIdByGameLanguageErrors[keyof PostApiGhostDialogueByDialogueIdByGameLanguageErrors];
 
-export type PostApiGhostDialogueByDialogueIdByLanguageResponses = {
+export type PostApiGhostDialogueByDialogueIdByGameLanguageResponses = {
     /**
      * Dialogue translation content in ghost format
      */
@@ -203,4 +211,4 @@ export type PostApiGhostDialogueByDialogueIdByLanguageResponses = {
     };
 };
 
-export type PostApiGhostDialogueByDialogueIdByLanguageResponse = PostApiGhostDialogueByDialogueIdByLanguageResponses[keyof PostApiGhostDialogueByDialogueIdByLanguageResponses];
+export type PostApiGhostDialogueByDialogueIdByGameLanguageResponse = PostApiGhostDialogueByDialogueIdByGameLanguageResponses[keyof PostApiGhostDialogueByDialogueIdByGameLanguageResponses];

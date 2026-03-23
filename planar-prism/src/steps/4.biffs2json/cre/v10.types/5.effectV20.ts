@@ -1,4 +1,4 @@
-import { extend } from '../../../../pipes/offsetMap.js';
+import { extend } from '@/pipes/offsetMap.js';
 
 /* createGenerator().register().enum('targetTypeV20',
  *   ['none','self','projectile target','party','everyone','everyone except party','caster group','target group','everyone except self','original caster',]

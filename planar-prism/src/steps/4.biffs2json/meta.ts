@@ -1,4 +1,4 @@
-import type { GameName } from '../1.createPathes/types.js';
+import type { GameName } from '@planar/shared';
 import type { Ids } from './ids/index.js';
 import type { Meta } from './types.js';
 
