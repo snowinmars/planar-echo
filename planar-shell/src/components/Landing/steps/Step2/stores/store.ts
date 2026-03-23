@@ -1,21 +1,19 @@
 import { create } from 'zustand';
-import { postFsValidateWeiduPath, PostFsValidateWeiduPathErrors } from '@/swagger/client';
+import { postApiFsValidateWeiduPath, PostApiFsValidateWeiduPathErrors } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 import { ValidationState } from './types';
 import { useEffect } from 'react';
-import { TFunction } from 'i18next';
 
 type FormErrorStateProps = Readonly<{
-  error: PostFsValidateWeiduPathErrors[400 | 404];
-  t: TFunction<'translation', undefined>;
+  error: PostApiFsValidateWeiduPathErrors[400 | 404];
 }>;
-const translateErrorState = ({ error, t }: FormErrorStateProps): string => {
+const translateErrorState = ({ error }: FormErrorStateProps): string => {
   const isConnectionIssue = !error.error;
-  if (isConnectionIssue) return t('landing.step2.comments.connection');
+  if (isConnectionIssue) return 'landing.step2.comments.connection';
   switch (error.error.code) {
-    case 'FILE_NOT_FOUND': return t('landing.step2.comments.FILE_NOT_FOUND');
-    case 'WEIDU_ERROR': return t('landing.step2.comments.WEIDU_ERROR');
-    default: return t('landing.step2.comments.unknown');
+    case 'FILE_NOT_FOUND': return 'landing.step2.comments.FILE_NOT_FOUND';
+    case 'WEIDU_ERROR': return 'landing.step2.comments.WEIDU_ERROR';
+    default: return 'landing.step2.comments.unknown';
   }
 };
 
@@ -35,7 +33,7 @@ const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
     });
   },
 
-  validate: async (t: TFunction<'translation', undefined>) => {
+  validate: async () => {
     const { path } = get();
 
     if (!path) {
@@ -49,12 +47,12 @@ const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
 
     set({
       loading: true,
-      comment: t('landing.step2.comments.loading'),
+      comment: 'landing.step2.comments.loading',
       status: 'normal',
     });
 
     try {
-      const { data, error } = await postFsValidateWeiduPath({
+      const { data, error } = await postApiFsValidateWeiduPath({
         client,
         body: { weiduExePath: path },
       });
@@ -63,13 +61,13 @@ const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
 
       if (error) {
         set({
-          comment: translateErrorState({ error, t }),
+          comment: translateErrorState({ error }),
           status: 'error',
         });
       }
       else {
         set({
-          comment: `${t('landing.step2.comments.weiduExeVersion')} ${data.data.version}`,
+          comment: `${'landing.step2.comments.weiduExeVersion'} ${data.data.version}`,
           status: 'success',
         });
       }
@@ -77,7 +75,7 @@ const useWeiduExeValidationStore = create<ValidationState>((set, get) => ({
     catch (e: unknown) {
       console.error(e);
       set({
-        comment: t('landing.step2.comments.unknown'),
+        comment: 'landing.step2.comments.unknown',
         status: 'error',
       });
     }

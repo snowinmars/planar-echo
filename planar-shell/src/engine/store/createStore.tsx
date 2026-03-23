@@ -22,7 +22,7 @@ export type CreateStoreResult<TData, TFunctions> = Readonly<{
 export const createStore = <TData, TFunctions>(props: CreateStoreProps<TData, TFunctions>): CreateStoreResult<TData, TFunctions> => {
   const context = createContext<Store<TData, TFunctions>>(null!);
   const provider = ({ children, initialData }: ProviderProps<TData>) => {
-    const storeRef = useRef<Store<TData, TFunctions>>();
+    const storeRef = useRef<Store<TData, TFunctions>>(null);
     if (!storeRef.current) {
       const data = props.createData(initialData);
       const functions = props.createFunctions(data);

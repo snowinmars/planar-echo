@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetApiPingData, GetApiPingResponses, PostFsValidateChitinKeyPathData, PostFsValidateChitinKeyPathErrors, PostFsValidateChitinKeyPathResponses, PostFsValidateWeiduPathData, PostFsValidateWeiduPathErrors, PostFsValidateWeiduPathResponses, PostGhostDialogueByDialogueIdByLanguageData, PostGhostDialogueByDialogueIdByLanguageErrors, PostGhostDialogueByDialogueIdByLanguageResponses, PostGhostDialogueByDialogueIdSkeletonData, PostGhostDialogueByDialogueIdSkeletonErrors, PostGhostDialogueByDialogueIdSkeletonResponses } from './types.gen';
+import type { GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostDialogueByDialogueIdByLanguageData, PostApiGhostDialogueByDialogueIdByLanguageErrors, PostApiGhostDialogueByDialogueIdByLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -21,9 +21,9 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 /**
  * Validates CHITIN.key folder as a game folder
  */
-export const postFsValidateChitinKeyPath = <ThrowOnError extends boolean = false>(options: Options<PostFsValidateChitinKeyPathData, ThrowOnError>) => (options.client ?? client).post<PostFsValidateChitinKeyPathResponses, PostFsValidateChitinKeyPathErrors, ThrowOnError>({
+export const postApiFsValidateChitinKeyPath = <ThrowOnError extends boolean = false>(options: Options<PostApiFsValidateChitinKeyPathData, ThrowOnError>) => (options.client ?? client).post<PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateChitinKeyPathErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/fs/validate/chitinKeyPath',
+    url: '/api/fs/validate/chitinKeyPath',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -34,9 +34,9 @@ export const postFsValidateChitinKeyPath = <ThrowOnError extends boolean = false
 /**
  * Validates weidu.exe access
  */
-export const postFsValidateWeiduPath = <ThrowOnError extends boolean = false>(options: Options<PostFsValidateWeiduPathData, ThrowOnError>) => (options.client ?? client).post<PostFsValidateWeiduPathResponses, PostFsValidateWeiduPathErrors, ThrowOnError>({
+export const postApiFsValidateWeiduPath = <ThrowOnError extends boolean = false>(options: Options<PostApiFsValidateWeiduPathData, ThrowOnError>) => (options.client ?? client).post<PostApiFsValidateWeiduPathResponses, PostApiFsValidateWeiduPathErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/fs/validate/weiduPath',
+    url: '/api/fs/validate/weiduPath',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -56,9 +56,9 @@ export const getApiPing = <ThrowOnError extends boolean = false>(options?: Optio
 /**
  * Get skeleton of the dialogue in ghost format
  */
-export const postGhostDialogueByDialogueIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostGhostDialogueByDialogueIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostGhostDialogueByDialogueIdSkeletonResponses, PostGhostDialogueByDialogueIdSkeletonErrors, ThrowOnError>({
+export const postApiGhostDialogueByDialogueIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDialogueByDialogueIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDialogueByDialogueIdSkeletonResponses, PostApiGhostDialogueByDialogueIdSkeletonErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/ghost/dialogue/{dialogueId}/skeleton',
+    url: '/api/ghost/dialogue/{dialogueId}/skeleton',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -69,9 +69,9 @@ export const postGhostDialogueByDialogueIdSkeleton = <ThrowOnError extends boole
 /**
  * Get translation of the dialogue in ghost format
  */
-export const postGhostDialogueByDialogueIdByLanguage = <ThrowOnError extends boolean = false>(options: Options<PostGhostDialogueByDialogueIdByLanguageData, ThrowOnError>) => (options.client ?? client).post<PostGhostDialogueByDialogueIdByLanguageResponses, PostGhostDialogueByDialogueIdByLanguageErrors, ThrowOnError>({
+export const postApiGhostDialogueByDialogueIdByLanguage = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDialogueByDialogueIdByLanguageData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDialogueByDialogueIdByLanguageResponses, PostApiGhostDialogueByDialogueIdByLanguageErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/ghost/dialogue/{dialogueId}/{language}',
+    url: '/api/ghost/dialogue/{dialogueId}/{language}',
     ...options,
     headers: {
         'Content-Type': 'application/json',

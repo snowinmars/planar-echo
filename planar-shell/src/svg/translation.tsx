@@ -1,5 +1,5 @@
 import { WithClassName } from '@/types/fcWithClassName';
-import React, { FC, JSX } from 'react';
+import { FC, JSX } from 'react';
 
 // https://icons.getbootstrap.com/icons/translate/
 const Translation: FC<WithClassName> = ({ className }): JSX.Element => (

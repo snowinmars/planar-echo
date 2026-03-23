@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 
-import styles from './Converter.module.scss';
 import Button from '@mui/material/Button';
 import useConverterStore from './stores/store';
 
@@ -12,9 +11,6 @@ type ConverterProps = Readonly<{
   lang: Language;
 }>;
 const Converter: FC<ConverterProps> = ({
-  chitinKeyPath,
-  weiduExePath,
-  lang,
 }: ConverterProps) => {
   const { status, setStatus } = useConverterStore();
   return (
@@ -25,6 +21,7 @@ const Converter: FC<ConverterProps> = ({
         }}
       >
         I have space on hdd and want to start
+        {status}
       </Button>
     </div>
   );

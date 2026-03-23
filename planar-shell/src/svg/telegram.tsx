@@ -1,16 +1,16 @@
 import { WithClassName } from '@/types/fcWithClassName';
-import React, { FC, JSX } from 'react';
+import { FC, JSX } from 'react';
 
 // https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg
 const Telegram: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg
     className={className}
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 240 240"
     id="Livello_1"
     data-name="Livello 1"
-    viewBox="0 0 240 240"
-  >
+    xmlns="http://www.w3.org/2000/svg"
+    // xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
     <defs>
       <linearGradient id="linear-gradient" x1="120" y1="240" x2="120" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#1d93d2" />

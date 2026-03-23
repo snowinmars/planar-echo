@@ -20,7 +20,7 @@ export type DialogueId2 = DialogueId & unknown;
  */
 export type Language2 = Language;
 
-export type PostFsValidateChitinKeyPathData = {
+export type PostApiFsValidateChitinKeyPathData = {
     body: {
         weiduExePath: string;
         chitinKeyPath: string;
@@ -28,10 +28,10 @@ export type PostFsValidateChitinKeyPathData = {
     };
     path?: never;
     query?: never;
-    url: '/fs/validate/chitinKeyPath';
+    url: '/api/fs/validate/chitinKeyPath';
 };
 
-export type PostFsValidateChitinKeyPathErrors = {
+export type PostApiFsValidateChitinKeyPathErrors = {
     /**
      * Game folder is not found by this path
      */
@@ -43,9 +43,9 @@ export type PostFsValidateChitinKeyPathErrors = {
     };
 };
 
-export type PostFsValidateChitinKeyPathError = PostFsValidateChitinKeyPathErrors[keyof PostFsValidateChitinKeyPathErrors];
+export type PostApiFsValidateChitinKeyPathError = PostApiFsValidateChitinKeyPathErrors[keyof PostApiFsValidateChitinKeyPathErrors];
 
-export type PostFsValidateChitinKeyPathResponses = {
+export type PostApiFsValidateChitinKeyPathResponses = {
     /**
      * How many biffs are found by weidu in the game folder
      */
@@ -56,18 +56,18 @@ export type PostFsValidateChitinKeyPathResponses = {
     };
 };
 
-export type PostFsValidateChitinKeyPathResponse = PostFsValidateChitinKeyPathResponses[keyof PostFsValidateChitinKeyPathResponses];
+export type PostApiFsValidateChitinKeyPathResponse = PostApiFsValidateChitinKeyPathResponses[keyof PostApiFsValidateChitinKeyPathResponses];
 
-export type PostFsValidateWeiduPathData = {
+export type PostApiFsValidateWeiduPathData = {
     body: {
         weiduExePath: string;
     };
     path?: never;
     query?: never;
-    url: '/fs/validate/weiduPath';
+    url: '/api/fs/validate/weiduPath';
 };
 
-export type PostFsValidateWeiduPathErrors = {
+export type PostApiFsValidateWeiduPathErrors = {
     /**
      * Weidu error
      */
@@ -88,9 +88,9 @@ export type PostFsValidateWeiduPathErrors = {
     };
 };
 
-export type PostFsValidateWeiduPathError = PostFsValidateWeiduPathErrors[keyof PostFsValidateWeiduPathErrors];
+export type PostApiFsValidateWeiduPathError = PostApiFsValidateWeiduPathErrors[keyof PostApiFsValidateWeiduPathErrors];
 
-export type PostFsValidateWeiduPathResponses = {
+export type PostApiFsValidateWeiduPathResponses = {
     /**
      * Weidu.exe version
      */
@@ -101,7 +101,7 @@ export type PostFsValidateWeiduPathResponses = {
     };
 };
 
-export type PostFsValidateWeiduPathResponse = PostFsValidateWeiduPathResponses[keyof PostFsValidateWeiduPathResponses];
+export type PostApiFsValidateWeiduPathResponse = PostApiFsValidateWeiduPathResponses[keyof PostApiFsValidateWeiduPathResponses];
 
 export type GetApiPingData = {
     body?: never;
@@ -119,7 +119,7 @@ export type GetApiPingResponses = {
 
 export type GetApiPingResponse = GetApiPingResponses[keyof GetApiPingResponses];
 
-export type PostGhostDialogueByDialogueIdSkeletonData = {
+export type PostApiGhostDialogueByDialogueIdSkeletonData = {
     body: {
         ghostDir: string;
     };
@@ -130,10 +130,10 @@ export type PostGhostDialogueByDialogueIdSkeletonData = {
         dialogueId: DialogueId & unknown;
     };
     query?: never;
-    url: '/ghost/dialogue/{dialogueId}/skeleton';
+    url: '/api/ghost/dialogue/{dialogueId}/skeleton';
 };
 
-export type PostGhostDialogueByDialogueIdSkeletonErrors = {
+export type PostApiGhostDialogueByDialogueIdSkeletonErrors = {
     /**
      * Dialogue skeleton is not found by this path
      */
@@ -145,9 +145,9 @@ export type PostGhostDialogueByDialogueIdSkeletonErrors = {
     };
 };
 
-export type PostGhostDialogueByDialogueIdSkeletonError = PostGhostDialogueByDialogueIdSkeletonErrors[keyof PostGhostDialogueByDialogueIdSkeletonErrors];
+export type PostApiGhostDialogueByDialogueIdSkeletonError = PostApiGhostDialogueByDialogueIdSkeletonErrors[keyof PostApiGhostDialogueByDialogueIdSkeletonErrors];
 
-export type PostGhostDialogueByDialogueIdSkeletonResponses = {
+export type PostApiGhostDialogueByDialogueIdSkeletonResponses = {
     /**
      * Dialogue skeleton content in ghost format
      */
@@ -158,9 +158,9 @@ export type PostGhostDialogueByDialogueIdSkeletonResponses = {
     };
 };
 
-export type PostGhostDialogueByDialogueIdSkeletonResponse = PostGhostDialogueByDialogueIdSkeletonResponses[keyof PostGhostDialogueByDialogueIdSkeletonResponses];
+export type PostApiGhostDialogueByDialogueIdSkeletonResponse = PostApiGhostDialogueByDialogueIdSkeletonResponses[keyof PostApiGhostDialogueByDialogueIdSkeletonResponses];
 
-export type PostGhostDialogueByDialogueIdByLanguageData = {
+export type PostApiGhostDialogueByDialogueIdByLanguageData = {
     body: {
         ghostDir: string;
     };
@@ -175,10 +175,10 @@ export type PostGhostDialogueByDialogueIdByLanguageData = {
         language: Language;
     };
     query?: never;
-    url: '/ghost/dialogue/{dialogueId}/{language}';
+    url: '/api/ghost/dialogue/{dialogueId}/{language}';
 };
 
-export type PostGhostDialogueByDialogueIdByLanguageErrors = {
+export type PostApiGhostDialogueByDialogueIdByLanguageErrors = {
     /**
      * Dialogue translation is not found by this path
      */
@@ -190,9 +190,9 @@ export type PostGhostDialogueByDialogueIdByLanguageErrors = {
     };
 };
 
-export type PostGhostDialogueByDialogueIdByLanguageError = PostGhostDialogueByDialogueIdByLanguageErrors[keyof PostGhostDialogueByDialogueIdByLanguageErrors];
+export type PostApiGhostDialogueByDialogueIdByLanguageError = PostApiGhostDialogueByDialogueIdByLanguageErrors[keyof PostApiGhostDialogueByDialogueIdByLanguageErrors];
 
-export type PostGhostDialogueByDialogueIdByLanguageResponses = {
+export type PostApiGhostDialogueByDialogueIdByLanguageResponses = {
     /**
      * Dialogue translation content in ghost format
      */
@@ -203,4 +203,4 @@ export type PostGhostDialogueByDialogueIdByLanguageResponses = {
     };
 };
 
-export type PostGhostDialogueByDialogueIdByLanguageResponse = PostGhostDialogueByDialogueIdByLanguageResponses[keyof PostGhostDialogueByDialogueIdByLanguageResponses];
+export type PostApiGhostDialogueByDialogueIdByLanguageResponse = PostApiGhostDialogueByDialogueIdByLanguageResponses[keyof PostApiGhostDialogueByDialogueIdByLanguageResponses];

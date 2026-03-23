@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
-import { Language, ValidationState } from './types';
+import { ValidationState } from './types';
 
-const useConverterStore = create<ValidationState>((set, get) => ({
+const useConverterStore = create<ValidationState>((set) => ({
   status: 'loading',
   setStatus: (status: ValidationState['status']) => {
     set({ status });

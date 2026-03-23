@@ -24,7 +24,7 @@ const Landing: FC = () => {
   const [step1Status, setStep1Status] = useState(false);
   const [step2Status, setStep2Status] = useState(false);
   const [step3Status, setStep3Status] = useState(false);
-  const [step4Status, setStep4Status] = useState(false);
+  const [_, setStep4Status] = useState(false);
 
   const [lang, setLang] = useState<Language>('ru');
   const [weiduExePath, setWeiduExePath] = useState('');

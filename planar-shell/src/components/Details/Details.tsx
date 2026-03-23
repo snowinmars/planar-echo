@@ -1,6 +1,4 @@
-import React, { FC } from 'react';
-
-import styles from './Details.module.scss';
+import { FC } from 'react';
 
 const Details: FC = () => {
   return (

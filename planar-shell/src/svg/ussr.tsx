@@ -1,5 +1,5 @@
 import { WithClassName } from '@/types/fcWithClassName';
-import React, { FC, JSX } from 'react';
+import { FC, JSX } from 'react';
 
 // https://upload.wikimedia.org/wikipedia/commons/7/7e/Hammer_and_sickle.svg
 { /* <metadata id="metadata5">
@@ -14,14 +14,14 @@ import React, { FC, JSX } from 'react';
 const Ussr: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg
     className={className}
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns:cc="http://creativecommons.org/ns#"
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-    xmlns:svg="http://www.w3.org/2000/svg"
-    xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 550 550"
     version="1.1"
     id="svg8"
+    xmlns="http://www.w3.org/2000/svg"
+    // xmlns:dc="http://purl.org/dc/elements/1.1/"
+    // xmlns:cc="http://creativecommons.org/ns#"
+    // xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    // xmlns:svg="http://www.w3.org/2000/svg"
   >
     <g id="layer1" transform="translate(18.000002,-824.0001)">
       <path fill="currentColor" d="m 157.54301,922.36336 -16.97149,16.9707 -45.256019,45.2539 -56.570993,56.57034 62.227502,62.2246 56.571,-56.5684 299.82842,299.8124 a 32.001491,31.999993 0 0 0 45.25601,0 32.001491,31.999993 0 0 0 0,-45.2539 l -299.82646,-299.8143 16.9715,-16.97074 50.91448,-50.91015 z" id="path1492" />

@@ -50,7 +50,7 @@ const responseError = z.object({
 });
 const routeConfig = (params: ZodObject): RouteConfig => ({
   method: 'post',
-  path: '/ghost/dialogue/{dialogueId}/{language}',
+  path: '/api/ghost/dialogue/{dialogueId}/{language}',
   tags: ['ghostDialogue'],
   description: 'Get translation of the dialogue in ghost format',
   request: {
@@ -90,7 +90,7 @@ export default (registry: OpenAPIRegistry, router: Router): void => {
 
   registry.registerPath(routeConfig(z.object({ dialogueId, language })));
 
-  router.post('/ghost/dialogue/:dialogueId/:language',
+  router.post('/api/ghost/dialogue/:dialogueId/:language',
     validate({ body, params: { dialogueId, language } }),
     async (req, res) => {
       const result = await action({

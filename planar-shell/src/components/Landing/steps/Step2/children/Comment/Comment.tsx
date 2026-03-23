@@ -26,7 +26,7 @@ const Comment: FC<CommentProps> = ({ comment, status }) => {
 
   if (comment) return (
     <Typography color={colorizeStatus(status)}>
-      {comment}
+      {t(comment)}
     </Typography>
   );
 

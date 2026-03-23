@@ -22,7 +22,7 @@ const responseError = z.object({
 });
 const routeConfig: RouteConfig = {
   method: 'post',
-  path: '/fs/validate/chitinKeyPath',
+  path: '/api/fs/validate/chitinKeyPath',
   tags: ['fsValidate'],
   description: 'Validates CHITIN.key folder as a game folder',
   request: {
@@ -58,7 +58,7 @@ const routeConfig: RouteConfig = {
 export default (registry: OpenAPIRegistry, router: Router): void => {
   registry.registerPath(routeConfig);
 
-  router.post('/fs/validate/chitinKeyPath',
+  router.post('/api/fs/validate/chitinKeyPath',
     validate({ body }),
     async (req, res) => {
       const result = await action({

@@ -1,12 +1,12 @@
 import { create } from 'zustand';
-import { postFsValidateChitinKeyPath, PostFsValidateChitinKeyPathErrors } from '@/swagger/client';
+import { postApiFsValidateChitinKeyPath, PostApiFsValidateChitinKeyPathErrors } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 import { Language, ValidationState } from './types';
 import { useEffect } from 'react';
 import { TFunction } from 'i18next';
 
 type FormErrorStateProps = Readonly<{
-  error: PostFsValidateChitinKeyPathErrors[404];
+  error: PostApiFsValidateChitinKeyPathErrors[404];
   t: TFunction<'translation', undefined>;
 }>;
 const translateErrorState = ({ error, t }: FormErrorStateProps): string => {
@@ -53,7 +53,7 @@ const useChitinKeyValidationStore = create<ValidationState>((set, get) => ({
     });
 
     try {
-      const { data, error } = await postFsValidateChitinKeyPath({
+      const { data, error } = await postApiFsValidateChitinKeyPath({
         client,
         body: {
           weiduExePath,

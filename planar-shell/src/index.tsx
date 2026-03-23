@@ -14,7 +14,6 @@ import { ThemeContextProvider } from './theme/context';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
@@ -37,10 +36,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <StoreCollector stores={storeConfigs}>
       <ThemeContextProvider>
         <BrowserRouter
-          future={{
-            v7_startTransition: true,
-            v7_relativeSplatPath: true,
-          }}
+          // future={{
+          //   v7_startTransition: true,
+          //   v7_relativeSplatPath: true,
+          // }}
         >
           <Suspense fallback={<Loading />}>
             <CssBaseline />

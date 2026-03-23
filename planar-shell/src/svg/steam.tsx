@@ -1,13 +1,13 @@
 import { WithClassName } from '@/types/fcWithClassName';
-import React, { FC, JSX } from 'react';
+import { FC, JSX } from 'react';
 
 // https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg
 const Steam: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg
     className={className}
-    xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 65 65"
     fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <use x=".5" y=".5" />
     <defs>

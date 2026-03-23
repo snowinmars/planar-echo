@@ -34,13 +34,22 @@ app.use(cors({
   credentials: false,
 }));
 
+app.use(express.static(join(shellDir, 'dist')));
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  if (req.path.startsWith('/assets')) {
+    return next();
+  }
+  res.sendFile(join(shellDir, 'dist', 'index.html'));
+});
+
 app.get('/api/swagger/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
 app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec as JsonObject));
-
-app.use('/static', express.static(join(shellDir, 'dist')));
 
 app.use(router);
 

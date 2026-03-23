@@ -20,7 +20,7 @@ const responseError = z.object({
 });
 const routeConfig: RouteConfig = {
   method: 'post',
-  path: '/fs/validate/weiduPath',
+  path: '/api/fs/validate/weiduPath',
   tags: ['fsValidate'],
   description: 'Validates weidu.exe access',
   request: {
@@ -64,7 +64,7 @@ const routeConfig: RouteConfig = {
 export default (registry: OpenAPIRegistry, router: Router): void => {
   registry.registerPath(routeConfig);
 
-  router.post('/fs/validate/weiduPath',
+  router.post('/api/fs/validate/weiduPath',
     validate({ body }),
     async (req, res) => {
       const result = await action({

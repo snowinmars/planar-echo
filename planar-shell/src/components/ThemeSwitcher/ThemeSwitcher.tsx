@@ -10,8 +10,6 @@ import type {FC} from 'react';
 import type { ThemeMode } from '@/theme/types';
 import type { WithClassName } from '@/types/fcWithClassName';
 
-import styles from './ThemeSwitcher.module.scss';
-
 export const ThemeSwitcher: FC<WithClassName> = ({className}) => {
   const [themes] = useState<ThemeMode[]>(() => ['light', 'dark']);
   const [ theme, setTheme ] = useTheme();
