@@ -1,7 +1,19 @@
 {
   "landing": {
-    "welcome1": "Welcome. This is a tool, that can convert Infinity Engine game into custom game engine.",
-    "welcome2": "The tool does required original game to work, because by itself the tool know hothing about the game. Buy the original game.",
+    "intro": {
+      "techdemo": "Tech demo build",
+      "details": "Read more",
+      "convert": "Reshape the form",
+      "1": "Hi.",
+      "2": "This is planar-echo: an open source tool for reshaping Infinity Engine games into modern form.",
+      "3": "Long story short.",
+      "4": "Planar echo does require original game to work, because the tool know nothing about the game.",
+      "5": "Run this tool agaist Infinity Engine game - and get linux/android/web/windows game version.",
+      "6": "Requirements: node js to run the planar-echo and the original game you own."
+    },
+    "runnerGuard": {
+      "tryToRun": "Check local game files"
+    },
     "step1": {
       "language": "Game language"
     },

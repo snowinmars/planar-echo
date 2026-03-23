@@ -32,36 +32,40 @@ const Landing: FC = () => {
 
   return (
     <>
-
       <Paper elevation={0} sx={{ p: 4, textAlign: 'center' }}>
-        <Typography variant="h4">Hi.</Typography>
+        <Typography variant="h4">{t('landing.intro.1')}</Typography>
 
         <Typography color="text.secondary">
-          This is planar-echo: an open source tool for converting classic Infinity Engine games into game on custom engine, that will run everywhere.
+          {t('landing.intro.2')}
         </Typography>
 
         <Typography color="error">
-          Tech demo build v0.0.1
+        {t('landing.intro.techdemo')}
+        {' '}
+        v0.0.1
         </Typography>
       </Paper>
 
       <Grid container spacing="1em">
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h4">Long story short</Typography>
+          <Typography variant="h4">{t('landing.intro.3')}</Typography>
 
           <Typography color="text.secondary">
-            Planar echo does require original game to work, because the tool know nothing about the game.
+          {t('landing.intro.4')}
+
           </Typography>
 
           <Typography color="text.secondary">
-            Run this tool agaist Infinity Engine game - and get linux/android/web/windows version of the same game.
+          {t('landing.intro.5')}
+
           </Typography>
 
           <Typography color="text.secondary">
-            Requirements: node js to run the planar-echo and the game you own.
+          {t('landing.intro.6')}
+
           </Typography>
 
-          <Link component={RouterLink} to="/details">Read more</Link>
+          <Link component={RouterLink} to="/details">{t('landing.intro.details')}</Link>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
@@ -73,7 +77,7 @@ const Landing: FC = () => {
 
       <Grid container spacing="1em">
         <Grid size={{ xs: 12 }}>
-          <Typography variant="h4">Convert the game</Typography>
+          <Typography variant="h4">{t('landing.intro.convert')}</Typography>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <Step1
