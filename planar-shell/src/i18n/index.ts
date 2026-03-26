@@ -27,8 +27,9 @@ i18n
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
       lookupLocalStorage: 'i18nextLng',
+      convertDetectedLanguage: lng => lng.replace('-', '_'),
     },
-    fallbackLng: 'en',
+    fallbackLng: 'en_US',
     interpolation: {
       escapeValue: false,
     },

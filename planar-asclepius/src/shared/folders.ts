@@ -1,5 +1,6 @@
-import { fileExists } from '@planar/shared';
-import { normalize, join } from 'path';
+import { fileExists } from '@planar/shared/node';
+import { normalize, join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 type ValidateIndexPathesProps = Readonly<{
   ghostDir: string;
@@ -27,6 +28,8 @@ const validateIndexPathes = async ({
   if (!ghostDirExists || !shellDirExists || !prismDirExists) process.exit(17);
 };
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const ghostDir = normalize(join(__dirname, '../../../planar-ghost'));
 const shellDir = normalize(join(__dirname, '../../../planar-shell'));
 const prismDir = normalize(join(__dirname, '../../../planar-prism'));

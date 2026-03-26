@@ -1,18 +1,17 @@
-export { execConsole } from './execConsole';
-export { fileExists } from './fileExists';
-export { gameNames } from './gameName';
-export { gameLanguages } from './gameLanguage';
-export { jsonStringify, jsonParse } from './json';
-export { just, maybe, nothing } from './maybe';
+export { gameNames } from './gameName.js';
+export { gameLanguages } from './gameLanguage.js';
+export { jsonStringify, jsonParse } from './json.js';
+export { just, maybe, nothing } from './maybe.js';
+export { objectEntries, objectKeys, objectValues } from './objects.js';
 
-export type { GameName } from './gameName';
-export type { GameLanguage } from './gameLanguage';
-export type { Nothing, Maybe } from './maybe';
-export type { PartialWriteable } from './partialWriteable';
+export type { GameName } from './gameName.js';
+export type { GameLanguage } from './gameLanguage.js';
+export type { Nothing, Maybe } from './maybe.js';
+export type { PartialWriteable } from './partialWriteable.js';
 export type {
   PrismIndexStartMessage,
   PrismIndexProgressMessage,
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
-} from './prismIndexStartMessage';
-export type { SafeError } from './safeError';
+} from './prismIndexStartMessage.js';
+export type { SafeError } from './safeError.js';

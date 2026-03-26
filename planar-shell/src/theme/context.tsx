@@ -4,6 +4,7 @@ import lightTheme from './palletes/light';
 import darkTheme from './palletes/dark';
 import { ThemeMode } from './types';
 import storageManager from './storageManager';
+import localStorageKey from '@/shared/planarLocalStorage';
 
 type ThemeContextType = [ThemeMode, (theme: ThemeMode) => void];
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -14,7 +15,7 @@ export const useTheme = () => {
   return context;
 };
 
-const manager = storageManager({ key: 'planar-echo', storageWindow: window });
+const manager = storageManager({ key: localStorageKey.namespace, storageWindow: window });
 
 export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<ThemeMode>(() => manager.get('dark') as ThemeMode);

@@ -2,7 +2,8 @@ import { fork } from 'child_process';
 import { join } from 'path';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { prismDir } from '../shared/folders';
+import { prismDir } from '../shared/folders.js';
+
 import type {
   PrismIndexStartMessage,
   PrismIndexProgressMessage,

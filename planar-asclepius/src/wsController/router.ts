@@ -1,5 +1,5 @@
 import { WebSocketServer } from 'ws';
-import runPrismIndex from '../wsController/prism/runIndex';
+import runPrismIndex from '../wsController/prism/runIndex.js';
 
 import type { IncomingMessage, Server, ServerResponse } from 'http';
 import type { WebSocket } from 'ws';

@@ -16,13 +16,25 @@
     },
     "step1": {
       "gameName": "Game",
-      "language": "Game language"
+      "gameLanguage": "Game language",
+      "gameNames": {
+        "bg1": "Baldur's Gate",
+        "bg1ee": "Baldur's Gate: Enhanced Edition",
+        "bg2": "Baldur's Gate II",
+        "bg2ee": "Baldur's Gate II: Enhanced Edition",
+        "iwd": "Icewind Dale",
+        "iwdee": "Icewind Dale: Enhanced Edition",
+        "iwd2": "Icewind Dale II",
+        "iwd2ee": "Icewind Dale II: Enhanced Edition",
+        "pst": "Planescape: Torment",
+        "pstee": "Planescape: Torment: Enhanced Edition"
+      }
     },
     "step2": {
       "weiduExePath": "Path to weidu.exe",
       "weiduLink": "Download weidu",
       "comments": {
-        "weiduExeVersion": "Found verion of weidu.exe:",
+        "weiduExeVersion": "Found verion of weidu.exe: {{version}}",
         "loading": "Checking...",
         "connection": "Check connetion",
         "FILE_NOT_FOUND": "File weidu.exe was not found",
@@ -34,7 +46,7 @@
       "chitinKeyPath": "Path to CHITIN.KEY",
       "chitinKeyLink": "What is CHITIN.KEY?",
       "comments": {
-        "biffsCount": "Found sources:",
+        "biffsCount": "Found sources: {{biffsCount}}",
         "loading": "Checking...",
         "connection": "Check connection",
         "FILE_NOT_FOUND": "File CHITIN.KEY was not found",

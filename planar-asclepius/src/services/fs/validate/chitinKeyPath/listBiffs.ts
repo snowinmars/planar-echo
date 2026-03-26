@@ -1,4 +1,5 @@
-import { nothing, execConsole } from '@planar/shared';
+import { nothing } from '@planar/shared';
+import { execConsole } from '@planar/shared/node';
 
 import type { GameLanguage, Maybe } from '@planar/shared';
 

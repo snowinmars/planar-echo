@@ -10,11 +10,11 @@ const Telegram: FC<WithClassName> = ({ className }): JSX.Element => (
     data-name="Livello 1"
     xmlns="http://www.w3.org/2000/svg"
     // xmlns:xlink="http://www.w3.org/1999/xlink"
-    >
+  >
     <defs>
       <linearGradient id="linear-gradient" x1="120" y1="240" x2="120" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#1d93d2" />
-        <stop offset="1" stop-color="#38b0e3" />
+        <stop offset="0" stopColor="#1d93d2" />
+        <stop offset="1" stopColor="#38b0e3" />
       </linearGradient>
     </defs>
     <title>Telegram_logo</title>

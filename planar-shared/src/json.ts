@@ -1,3 +1,5 @@
+import { objectEntries } from './objects.js';
+
 const MAP_TYPE = 'map';
 const isMap = (value: unknown): value is Map<unknown, unknown> => value instanceof Map;
 
@@ -10,7 +12,7 @@ const mapToObject = <K, V>(map: Map<K, V>): Record<string, V> => {
 };
 
 const objectToMap = <V>(obj: Record<string, V>): Map<string, V> => {
-  return new Map(Object.entries(obj));
+  return new Map(objectEntries(obj));
 };
 
 const replacer = (key: string, value: unknown): unknown => {

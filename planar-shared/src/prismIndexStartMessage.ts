@@ -1,5 +1,5 @@
-import { GameLanguage } from './gameLanguage';
-import { GameName } from './gameName';
+import type { GameLanguage } from './gameLanguage.js';
+import type { GameName } from './gameName.js';
 
 /**
  * Props to file prism index.js

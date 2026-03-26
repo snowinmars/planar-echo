@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import validate from 'express-zod-safe';
 import { z, ZodEnum, ZodObject, ZodString } from 'zod';
-import { OpenAPIRegistry, RouteConfig } from '@asteasolutions/zod-to-openapi';
-import action from '@/services/ghost/dialogue/dialogueId/language/action';
-import { gameLanguages } from '@planar/shared';
+import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
+import action from '@/services/ghost/dialogue/dialogueId/language/action.js';
+import { gameLanguages, objectKeys } from '@planar/shared';
 
 import type { GameLanguage } from '@planar/shared';
+import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 
 type ZodGameLanguages = Record<GameLanguage, GameLanguage>;
 
@@ -26,7 +27,7 @@ const registerDialogueIdParam = (registry: OpenAPIRegistry): ZodString => {
 const registerGameLanguageParam = (registry: OpenAPIRegistry): ZodEnum<ZodGameLanguages> => {
   return registry.registerParameter(
     'gameLanguage',
-    z.enum<GameLanguage[]>(Object.keys(gameLanguages) as GameLanguage[]).openapi({
+    z.enum<GameLanguage[]>(objectKeys(gameLanguages)).openapi({
       param: {
         name: 'gameLanguage',
         in: 'path',

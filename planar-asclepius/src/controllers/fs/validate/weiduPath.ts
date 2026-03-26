@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import validate from 'express-zod-safe';
 import { z } from 'zod';
-import { OpenAPIRegistry, RouteConfig } from '@asteasolutions/zod-to-openapi';
-import action from '@/services/fs/validate/weiduPath/actions';
+import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
+import action from '@/services/fs/validate/weiduPath/actions.js';
+
+import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 
 const body = z.object({
   weiduExePath: z.string().min(1, 'Weidu path is required'),

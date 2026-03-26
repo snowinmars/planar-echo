@@ -1,8 +1,8 @@
 import { dirname, normalize, basename } from 'path';
-import { fileExists } from '@planar/shared';
-import listBiffs from './listBiffs';
+import { fileExists } from '@planar/shared/node';
+import listBiffs from './listBiffs.js';
 
-import type { Command, Result } from './types';
+import type { Command, Result } from './types.js';
 
 export default async ({
   weiduExePath,

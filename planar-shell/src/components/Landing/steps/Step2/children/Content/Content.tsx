@@ -1,51 +1,38 @@
-import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReplayIcon from '@mui/icons-material/Replay';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import { Subject, debounce, interval } from 'rxjs';
 
 import type { FC } from 'react';
+import type { LandingStateStep2 } from '@/components/Landing/store/types';
 
 import styles from './Content.module.scss';
 
 type ContentProps = Readonly<{
-  path: string;
-  loading: boolean;
-  setPath: (path: string) => void;
-  validate: () => Promise<void>;
   disabled: boolean;
+  weiduExePath: LandingStateStep2['weiduExePath'];
+  setWeiduExePath: LandingStateStep2['setWeiduExePath'];
+  loading: LandingStateStep2['step2Loading'];
+  validate: LandingStateStep2['step2Validate'];
 }>;
-
 const Content: FC<ContentProps> = ({
-  path,
-  loading,
-  setPath,
-  validate,
   disabled,
+  weiduExePath,
+  setWeiduExePath,
+  loading,
+  validate,
 }: ContentProps) => {
   const { t } = useTranslation();
-
-  const { current: validate$ } = useRef(new Subject<void>());
-  useEffect(() => {
-    const subscription = validate$
-      .pipe(debounce(() => interval(1000)))
-      .subscribe(() => {
-        validate().catch(e => console.error(e));
-      });
-    return () => subscription.unsubscribe();
-  }, [validate$]);
 
   return (
     <Paper className={styles.inputWrapper}>
       <TextField
         className={styles.input}
-        value={path}
+        value={weiduExePath}
         onChange={(e) => {
           const value = e.target.value;
-          setPath(value);
-          if (value) validate$.next();
+          setWeiduExePath(value);
         }}
         disabled={loading || disabled}
         fullWidth
@@ -56,9 +43,9 @@ const Content: FC<ContentProps> = ({
       <IconButton
         className={styles.inputReload}
         aria-label="replay"
-        disabled={!path || loading}
+        disabled={!weiduExePath || loading}
         onClick={() => {
-          if (path) validate().catch(e => console.error(e));
+          if (weiduExePath) validate().catch(e => console.error(e));
         }}
       >
         <ReplayIcon />

@@ -1,8 +1,8 @@
 import { spawn } from 'child_process';
 
-import { just } from './maybe';
+import { just } from './maybe.js';
 
-import type { Maybe } from './maybe';
+import type { Maybe } from './maybe.js';
 
 const splitCommand = (command: string): [string, string[]] => {
   let args: string[] = [];

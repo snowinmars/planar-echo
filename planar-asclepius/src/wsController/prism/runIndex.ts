@@ -1,4 +1,5 @@
-import runPrismScript from '../../shared/runPrismScript';
+import runPrismScript from '@/shared/runPrismScript.js';
+
 import type { WebSocket } from 'ws';
 import type { PrismIndexStartMessage } from '@planar/shared';
 

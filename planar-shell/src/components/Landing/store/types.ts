@@ -1,0 +1,45 @@
+import type { GameLanguage, GameName, Maybe } from '@planar/shared';
+import type { StateCreator } from 'zustand';
+
+export type ZustandSetType<T> = Parameters<StateCreator<T>>[0];
+export type ZustandGetType<T> = Parameters<StateCreator<T>>[1];
+
+export type LandingState = LandingStateStep1 & LandingStateStep2 & LandingStateStep3 & LandingStateStep4;
+
+export type LandingStateStep1 = Readonly<{
+  gameLanguage: GameLanguage | '';
+  setGameLanguage: (gameLanguage: GameLanguage | '') => void;
+  gameName: GameName | '';
+  setGameName: (gameName: GameName | '') => void;
+  step1Valid: boolean;
+}>;
+
+export type LandingStateStep2 = Readonly<{
+  weiduExePath: string;
+  setWeiduExePath: (weiduExePath: string) => void;
+  step2Valid: boolean;
+  step2Loading: boolean;
+  step2Comment: string;
+  step2CommentArgs: Record<string, string>;
+  step2ResultType: Maybe<'success' | 'error'>;
+  step2Validate: () => Promise<void>;
+  step2Destroy: () => void;
+}>;
+
+export type LandingStateStep3 = Readonly<{
+  chitinKeyPath: string;
+  setChitinKeyPath: (chitinKeyPath: string) => void;
+  step3Valid: boolean;
+  step3Loading: boolean;
+  step3Comment: string;
+  step3CommentArgs: Record<string, string>;
+  step3ResultType: Maybe<'success' | 'error'>;
+  step3Validate: () => Promise<void>;
+  step3Destroy: () => void;
+}>;
+
+export type LandingStateStep4 = Readonly<{
+  ownGame: boolean;
+  setOwnGame: (x: boolean) => void;
+  step4Valid: boolean;
+}>;

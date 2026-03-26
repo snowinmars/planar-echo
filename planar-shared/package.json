@@ -1,15 +1,15 @@
 {
   "name": "@planar/shared",
+  "type": "module",
+  "private": false,
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowinmars/planar-echo.git"
+  },
   "version": "0.0.1",
   "description": "Shared code for planar-echo projects",
   "author": "snowinmars",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "license": "GPL-3.0-or-later",
-  "private": false,
   "scripts": {
     "start": "tsc && tsc-alias",
     "lint": "eslint"
@@ -26,5 +26,22 @@
     "tsc-alias": "^1.8.16",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./node": {
+      "import": "./dist/node.js",
+      "types": "./dist/node.d.ts",
+      "default": "./dist/node.js"
+   }
   }
 }

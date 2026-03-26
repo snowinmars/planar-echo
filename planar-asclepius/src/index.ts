@@ -1,13 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import swaggerUi, { JsonObject } from 'swagger-ui-express';
+import swaggerUi from 'swagger-ui-express';
 import { join } from 'path';
 import { createServer } from 'http';
+import { ghostDir, shellDir } from './shared/folders.js';
+import swaggerSpec from './swagger/swagger.json' with { type: 'json' }; ;
+import router from './controllers/router.js';
+import createWsRouter from './wsController/router.js';
 
-import { ghostDir, shellDir } from './shared/folders';
-import swaggerSpec from './swagger/swagger.json';
-import router from './controllers/router';
-import createWsRouter from './wsController/router';
+import type { JsonObject } from 'swagger-ui-express';
 
 const app = express();
 app.use(express.json());

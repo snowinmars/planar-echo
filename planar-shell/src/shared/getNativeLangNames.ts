@@ -1,5 +1,5 @@
-import { GameLanguage } from '@planar/shared';
-import type { Resource } from 'i18next';
+import { GameLanguage, objectKeys } from '@planar/shared';
+import type { Resource, ResourceLanguage } from 'i18next';
 import { gameLanguages } from '@planar/shared';
 
 type NativeLang = Readonly<{
@@ -7,7 +7,7 @@ type NativeLang = Readonly<{
   name: string;
 }>;
 const getNativeLangNames = (resources: Resource): NativeLang[] => {
-  return Object.keys(resources || {})
+  return objectKeys<string, ResourceLanguage>(resources || {})
     .map((x: string): NativeLang => {
       const lang = x as GameLanguage;
       const name = gameLanguages[lang];

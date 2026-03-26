@@ -1,4 +1,6 @@
-import { nothing, execConsole } from '@planar/shared';
+import { nothing } from '@planar/shared';
+import { execConsole } from '@planar/shared/node';
+
 import type { Maybe } from '@planar/shared';
 
 type GetVerionsProps = Readonly<{

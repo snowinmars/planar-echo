@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
-import { fileExists } from '@planar/shared';
-import type { Command, Result } from './types';
+import { fileExists } from '@planar/shared/node';
+import type { Command, Result } from './types.js';
 
 export default async ({
   dialogueId,
