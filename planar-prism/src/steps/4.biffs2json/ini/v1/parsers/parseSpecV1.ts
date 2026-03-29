@@ -1,5 +1,5 @@
-import { parseDecOrDefault } from '../../../../../shared/customParsers.js';
-import type { Maybe } from '../../../../../shared/maybe.js';
+import { parseDecOrDefault } from '@/shared/customParsers.js';
+import type { Maybe } from '@planar/shared';
 import type { CreatureIniSpec } from '../../types.js';
 
 const parseSpecV1 = (s: Maybe<string>): string | CreatureIniSpec => {

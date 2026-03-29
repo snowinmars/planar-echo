@@ -1,21 +1,29 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
-import { nothing } from '../../../shared/maybe.js';
-import iterate from '../../../steps/iterate.js';
+import { nothing } from '@planar/shared';
+import iterate from '@/steps/iterate.js';
+import { createReader } from '@/pipes/readers.js';
+import { reportProgress } from '@/shared/report.js';
+import createMeta from '../meta.js';
 import parseCreaturesV10FromBuffer from './v10/parseCreaturesV10FromBuffer.js';
-import { createReader } from '../../../pipes/readers.js';
+import patchWithTranslation from './v10/patches/patchTranslation.js';
 
-import type { Maybe } from '../../../shared/maybe.js';
-import type { DecompiledBiff } from '../../../steps/3.decompileBiffs/index.js';
-import type { Pathes } from '../../../steps/1.createPathes/index.js';
-import type { CreatureV10, Signature, Versions } from './types.js';
-import type { LogPercent } from '../../../shared/types.js';
+import type { Maybe } from '@planar/shared';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { LogPercent } from '@/shared/types.js';
 import type { Ids } from '../ids/index.js';
 import type { Tlk } from '../tlk/index.js';
-import patchWithTranslation from './v10/patches/patchTranslation.js';
-import createMeta from '../meta.js';
+import type {
+  CreatureV10,
+  CreatureV12,
+  CreatureV22,
+  CreatureV90,
+  Signature,
+  Versions,
+} from './types.js';
 
-type Creature = CreatureV10;
+type Creature = CreatureV10 | CreatureV12 | CreatureV22 | CreatureV90;
 
 const parseCre = (
   pathes: Pathes,
@@ -25,7 +33,7 @@ const parseCre = (
   percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<Creature> => iterate<DecompiledBiff, Creature>(
   decompiledItems,
-  async (decompiledItem) => {
+  async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
 
     const buffer = await readFile(join(pathes.output.decimpiledBiff.root, resourceName));
@@ -49,6 +57,16 @@ const parseCre = (
       case 'v1.0': {
         const raw = parseCreaturesV10FromBuffer(reader, meta);
         const translated = patchWithTranslation(raw, tlk);
+
+        const percent = Math.round((i + 1) * 100 / decompiledItems.length);
+        reportProgress({
+          value: percent,
+          step: 'parseCre',
+          params: {
+            version: meta.version,
+            resourceName,
+          },
+        });
 
         return translated;
       }

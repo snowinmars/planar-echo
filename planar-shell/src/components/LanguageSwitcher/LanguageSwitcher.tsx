@@ -10,6 +10,7 @@ import getNativeLangNames from '@/shared/getNativeLangNames';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
+import type { GameLanguage } from '@planar/shared';
 
 export const LanguageSwitcher: FC<WithClassName> = ({ className }) => {
   const { i18n } = useTranslation();
@@ -26,7 +27,7 @@ export const LanguageSwitcher: FC<WithClassName> = ({ className }) => {
         onChange={(e) => {
           setLoading(true);
           try {
-            i18n.changeLanguage(e.target.value as 'en' | 'ru')
+            i18n.changeLanguage(e.target.value as GameLanguage)
               .then(() => {
                 setLoading(false);
               })
@@ -46,7 +47,7 @@ export const LanguageSwitcher: FC<WithClassName> = ({ className }) => {
       >
         {
           languages.map(lang => (
-            <MenuItem key={lang.code} value={lang.code}>
+            <MenuItem disabled={lang.code !== 'ru_RU' && lang.code !== 'en_US'} key={lang.code} value={lang.code}>
               <Typography>{lang.name}</Typography>
             </MenuItem>
           ))

@@ -1,6 +1,6 @@
-import { nothing } from '../../../../../shared/maybe.js';
+import { nothing } from '@planar/shared';
 
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 import type { Section, SectionEntry } from '../../iniParser/iniParserTypes.js';
 import type { SpawnMainIniSection } from '../../types.js';
 

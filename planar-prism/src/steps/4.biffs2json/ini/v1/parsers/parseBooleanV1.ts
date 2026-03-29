@@ -1,4 +1,4 @@
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 
 const parseBooleanV1 = (s: Maybe<string>): boolean => {
   if (!s) throw new Error(`Cannot parse Boolean from nothing`);

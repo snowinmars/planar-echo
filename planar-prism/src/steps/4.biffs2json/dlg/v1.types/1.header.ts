@@ -1,5 +1,5 @@
-import { extend } from '../../../../pipes/offsetMap.js';
-import type { Maybe } from '../../../../shared/maybe.js';
+import { extend } from '@/pipes/offsetMap.js';
+import type { Maybe } from '@planar/shared';
 
 /* createGenerator().register().flags('threatResponseV10',{
  *   byte1:['enemy','escapearea','nothing'],

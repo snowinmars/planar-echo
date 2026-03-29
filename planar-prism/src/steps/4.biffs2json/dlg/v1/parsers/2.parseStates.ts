@@ -1,6 +1,6 @@
-import { nothing } from '../../../../../shared/maybe.js';
+import { nothing } from '@planar/shared';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
 import type { RawState } from '../../v1.types/2.states.js';
 import type { Signature, Versions } from '../../types.js';

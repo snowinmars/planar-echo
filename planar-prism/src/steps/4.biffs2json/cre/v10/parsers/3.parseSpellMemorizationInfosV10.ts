@@ -1,9 +1,12 @@
 import { offsetMap } from '../../v10.types/3.spellMemorizationInfo.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
-import type { Signature, Versions } from '../../types.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
-import type { SpellMemorizationInfoPsteeV10, SpellMemorizationInfoV10 } from '../../v10.types/3.spellMemorizationInfo.js';
+import type { Signature, Versions } from '../../types.js';
+import type {
+  SpellMemorizationInfoPsteeV10,
+  SpellMemorizationInfoV10,
+} from '../../v10.types/3.spellMemorizationInfo.js';
 
 type SpellMemorizationInfo = SpellMemorizationInfoV10 | SpellMemorizationInfoPsteeV10;
 

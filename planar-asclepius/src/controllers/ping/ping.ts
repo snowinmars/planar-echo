@@ -1,6 +1,8 @@
-import { OpenAPIRegistry, RouteConfig } from '@asteasolutions/zod-to-openapi';
-import type { Router } from 'express';
+import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import { z } from 'zod';
+
+import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
+import type { Router } from 'express';
 
 const responseOk = z.literal('pong');
 const routeConfig: RouteConfig = {

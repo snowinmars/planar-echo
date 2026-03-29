@@ -6,11 +6,16 @@ export const dialogueIdSchema = {
     example: 'dmorte.dlg'
 } as const;
 
-export const languageSchema = {
+export const gameLanguageSchema = {
     type: 'string',
     enum: [
-        'ru',
-        'en'
+        'cs_CZ',
+        'de_DE',
+        'en_US',
+        'fr_FR',
+        'ko_KR',
+        'pl_PL',
+        'ru_RU'
     ],
-    example: 'ru'
+    example: 'cs_CZ'
 } as const;

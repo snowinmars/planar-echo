@@ -1,4 +1,4 @@
-import { extend } from '../../../../pipes/offsetMap.js';
+import { extend } from '@/pipes/offsetMap.js';
 
 /* createGenerator().register().flags('alignmentV10', {
  *   byte1: ['identified','unstealable','stolen','undroppable'],

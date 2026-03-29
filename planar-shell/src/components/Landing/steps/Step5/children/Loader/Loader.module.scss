@@ -1,0 +1,60 @@
+.loader {
+  position: relative;
+  overflow: hidden;
+  height: 1.5em;
+}
+
+.svg {
+  font-family:monospace;
+  width: 100%;
+  height: 1em;
+}
+
+.label {
+  text-align: center;
+}
+
+.svgWrapper, .label {
+  position: absolute;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+.svgWrapper {
+  top: 0;
+}
+
+.label {
+  top: 1.5em;
+}
+
+.loader:hover .svgWrapper {
+  top: -1.5em;
+}
+
+.loader:hover .label {
+  top: 0;
+}
+
+@keyframes colorShift {
+  0% {
+    filter: opacity(1);
+    background-position: top right, bottom right;
+  }
+  50% {
+    filter: opacity(0.4);
+  }
+  100% {
+    filter: opacity(1);
+    background-position: top left, bottom left;
+  }
+}
+
+.loading {
+  animation: colorShift 5s infinite linear;
+  background:
+    repeating-linear-gradient(-135deg, #000000ff 0 0.5em,#0000 0 4em),
+    repeating-linear-gradient( -45deg, #000000ff 0 0.5em,#0000 0 4em);
+  background-size:  200% 50%;
+  background-repeat: no-repeat;
+}

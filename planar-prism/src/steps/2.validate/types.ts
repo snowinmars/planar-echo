@@ -6,7 +6,7 @@ export type GameFolderValidateResult
   = | 'ok'
     | 'cannot'
 ;
-export type ValidateResult = Readonly<{
+export type ValidationResult = Readonly<{
   weidu: WeiduValidateResult;
   gameFolder: GameFolderValidateResult;
 }>;

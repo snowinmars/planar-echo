@@ -1,7 +1,7 @@
-import { parseDecOrThrow } from '../../../../../shared/customParsers.js';
+import { parseDecOrThrow } from '@/shared/customParsers.js';
 import parseDirectionV1 from './parseDirectionV1.js';
 
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 import type { CreatureIniSpawnPoint } from '../../types.js';
 
 const parseSpawnPoint = (s: string): CreatureIniSpawnPoint => {

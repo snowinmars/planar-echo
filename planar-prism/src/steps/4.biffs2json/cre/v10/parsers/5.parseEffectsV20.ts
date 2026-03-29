@@ -1,8 +1,8 @@
 import { offsetMap } from './../../v10.types/5.effectV20.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
-import type { Signature, Versions } from '../../types.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
+import type { Signature, Versions } from '../../types.js';
 import type { EffectV20 } from '../../v10.types/5.effectV20.js';
 
 const parse = (reader: BufferReader): EffectV20 => {

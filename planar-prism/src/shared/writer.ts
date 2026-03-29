@@ -1,4 +1,4 @@
-import type { Maybe } from './maybe.js';
+import type { Maybe } from '@planar/shared';
 
 type Writer = Readonly<{
   write: (x: string, offset?: Maybe<number>) => Writer;

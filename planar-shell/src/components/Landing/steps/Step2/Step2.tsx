@@ -1,65 +1,50 @@
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-
 import { clsx } from 'clsx';
 import Comment from './children/Comment/Comment';
 import Loading from './children/Loading/Loading';
+import Content from './children/Content/Content';
 
-import { useEffect, type FC } from 'react';
+import type { FC } from 'react';
+import type { WithClassName } from '@/types/fcWithClassName';
+import type { LandingStateStep2 } from '../../store/types';
 
 import styles from './Step2.module.scss';
-import useWeiduValidation from './stores/store';
-import Content from './children/Content/Content';
-import type { WithClassName } from '@/types/fcWithClassName';
 
 type Step2Props = WithClassName & Readonly<{
   disabled: boolean;
-  setStatus: (x: boolean) => void;
-  setWeiduExePath: (x: string) => void;
   imageUrl: string;
+  weiduExePath: LandingStateStep2['weiduExePath'];
+  setWeiduExePath: LandingStateStep2['setWeiduExePath'];
+  loading: LandingStateStep2['step2Loading'];
+  comment: LandingStateStep2['step2Comment'];
+  commentArgs: LandingStateStep2['step2CommentArgs'];
+  resultType: LandingStateStep2['step2ResultType'];
+  validate: LandingStateStep2['step2Validate'];
 }>;
-const Step2: FC<Step2Props> = ({
-  className,
-  disabled,
-  setStatus,
-  imageUrl,
-  setWeiduExePath,
-}) => {
-  const {
-    path,
-    loading,
-    comment,
-    status,
-    setPath,
-    validate,
-  } = useWeiduValidation(setStatus);
-
-  useEffect(() => {
-    setWeiduExePath(path);
-  }, [path]);
-
+const Step2: FC<Step2Props> = (props) => {
   return (
-    <Card className={clsx(styles.card, className)}>
+    <Card className={clsx(styles.card, props.className)}>
       <CardMedia
-        className={clsx((loading || disabled) && styles.disabledImage)}
+        className={clsx((props.disabled || props.loading) && styles.disabledImage)}
         component="img"
         height="140"
-        image={imageUrl}
+        image={props.imageUrl}
         alt="Choose weidu.exe path"
       />
       <CardContent className={styles.cardContent}>
-        <Loading show={loading} />
+        <Loading show={props.loading} />
 
         <Content
-          path={path}
-          loading={loading}
-          setPath={setPath}
-          validate={validate}
-          disabled={disabled}
+          disabled={props.disabled}
+          weiduExePath={props.weiduExePath}
+          setWeiduExePath={props.setWeiduExePath}
+          loading={props.loading}
+          validate={props.validate}
         />
 
-        <Comment comment={comment} status={status} />
+        <Comment comment={props.comment} commentArgs={props.commentArgs} resultType={props.resultType} />
       </CardContent>
     </Card>
   );

@@ -1,5 +1,5 @@
-import { parseDecOrThrow } from '../../../../../shared/customParsers.js';
-import type { Maybe } from '../../../../../shared/maybe.js';
+import { parseDecOrThrow } from '@/shared/customParsers.js';
+import type { Maybe } from '@planar/shared';
 
 const parseCoordsV1 = (s: Maybe<string>): [number, number] => {
   if (!s) throw new Error(`Cannot parse Coords from nothing`);

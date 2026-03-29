@@ -1,30 +1,40 @@
 {
-  "name": "planar-prism",
-  "version": "0.0.1",
-  "description": "Typescript pipe to transform officially bought InfinityEngine binaries (Planescape:Torment) to json",
-  "main": "./index.ts",
-  "author": "snowinmars",
-  "license": "GPL-3.0-or-later",
-  "private": false,
+  "name": "@planar/prism",
   "type": "module",
+  "private": false,
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowinmars/planar-echo.git"
+  },
+  "version": "0.0.1",
+  "description": "Typescript pipe to transform officially bought InfinityEngine binaries (f.e., Planescape:Torment) to json and ghost",
+  "author": "snowinmars",
   "scripts": {
-    "start": "tsc && tsc-alias && node dist/index.js",
-    "lint": "eslint"
+    "compile": "tsc && tsc-alias",
+    "start": "yarn compile && node dist/index.js",
+    "lint": "eslint",
+    "test": "node dist/test.js"
   },
   "dependencies": {
+    "rxjs": "^7.8.2",
     "winston": "^3.19.0"
+  },
+  "_devD": {
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@planar/shared": "file:../planar-shared",
     "@stylistic/eslint-plugin": "^5.9.0",
-    "@typescript-eslint/parser": "^8.56.1",
-    "eslint-import-resolver-typescript": "^4.4.4",
     "@types/node": "^25.3.0",
+    "@typescript-eslint/parser": "^8.56.1",
     "eslint": "^10.0.1",
-    "eslint-plugin-import": "^2.32.0",
     "tsc": "^2.0.4",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1"
-  }
+  },
+  "main": "./src/index.ts"
 }

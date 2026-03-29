@@ -1,6 +1,6 @@
 import { offsetMap } from '../v10.types/effectV10.js';
 
-import type { BufferReader } from '../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../types.js';
 import type { Signature, Versions } from '../types.js';
 import type { EffectV10 } from '../v10.types/effectV10.js';

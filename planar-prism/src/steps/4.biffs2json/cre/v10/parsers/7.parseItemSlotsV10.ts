@@ -1,6 +1,6 @@
-import type { BufferReader } from '../../../../../pipes/readers.js';
-import type { Signature, Versions } from '../../types.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
+import type { Signature, Versions } from '../../types.js';
 import type { ItemSlotsBg1Bg2BgeeV10, ItemSlotsPsteeV10 } from '../../v10.types/7.itemSlot.js';
 
 type ItemSlotsV10 = ItemSlotsBg1Bg2BgeeV10 | ItemSlotsPsteeV10;

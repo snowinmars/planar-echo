@@ -1,4 +1,4 @@
-import type { Tlk } from '../../../../../steps/4.biffs2json/tlk/index.js';
+import type { Tlk } from '@/steps/4.biffs2json/tlk/index.js';
 import type { RawDlg } from '../../types.js';
 import type { RawState } from '../../v1.types/2.states.js';
 import type { RawResponse } from '../../v1.types/3.response.js';

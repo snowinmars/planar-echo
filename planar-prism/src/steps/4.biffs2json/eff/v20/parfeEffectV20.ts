@@ -1,7 +1,7 @@
-import { nothing } from '../../../../shared/maybe.js';
+import { nothing } from '@planar/shared';
 import { offsetMap } from '../v20.types/effectV20.js';
 
-import type { BufferReader } from '../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../types.js';
 import type { Signature, Versions } from '../types.js';
 import type { EffectV20 } from '../v20.types/effectV20.js';

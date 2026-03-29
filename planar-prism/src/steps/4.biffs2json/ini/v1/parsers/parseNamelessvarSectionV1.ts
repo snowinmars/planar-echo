@@ -1,5 +1,5 @@
-import { parseDecOrThrow } from '../../../../../shared/customParsers.js';
-import { type Maybe, nothing } from '../../../../../shared/maybe.js';
+import { parseDecOrThrow } from '@/shared/customParsers.js';
+import type { Maybe } from '@planar/shared';
 import type { Section } from '../../iniParser/iniParserTypes.js';
 
 const parseNamelessvarSectionV1 = (section: Section): Maybe<Map<string, number>> => {

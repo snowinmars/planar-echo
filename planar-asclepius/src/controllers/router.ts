@@ -5,11 +5,11 @@ import {
   OpenAPIRegistry,
   extendZodWithOpenApi,
 } from '@asteasolutions/zod-to-openapi';
-import registerValidateChitinKeyPath from './fs/validate/chitinKeyPath';
-import registerValidateWeiduPath from './fs/validate/weiduPath';
-import registerPing from './ping/ping';
-import registerGhostDialogueDialogueIdSkeleton from './ghost/dialogue/dialogueId/skeleton';
-import registerGhostDialogueDialogueIdLanguage from './ghost/dialogue/dialogueId/language';
+import registerValidateChitinKeyPath from './fs/validate/chitinKeyPath.js';
+import registerValidateWeiduPath from './fs/validate/weiduPath.js';
+import registerPing from './ping/ping.js';
+import registerGhostDialogueDialogueIdSkeleton from './ghost/dialogue/dialogueId/skeleton.js';
+import registerGhostDialogueDialogueIdLanguage from './ghost/dialogue/dialogueId/language.js';
 
 extendZodWithOpenApi(z);
 const registry = new OpenAPIRegistry();

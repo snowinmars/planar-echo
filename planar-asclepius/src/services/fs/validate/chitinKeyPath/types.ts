@@ -1,7 +1,9 @@
+import type { GameLanguage } from '@planar/shared';
+
 export type Command = Readonly<{
   weiduExePath: string;
   chitinKeyPath: string;
-  lang: 'ru' | 'en';
+  gameLanguage: GameLanguage;
 }>;
 
 export type Result

@@ -1,13 +1,14 @@
-import { createReader } from '../../../pipes/readers.js';
+import { createReader } from '@/pipes/readers.js';
 import { readFile } from 'fs/promises';
 import parseTlkV1FromBuffer from './v1/parseTlkV1FromBuffer.js';
 
 import type { Tlk } from './types.js';
-import type { Pathes } from '../../../steps/1.createPathes/index.js';
+import type { Pathes } from '@/steps/1.createPathes/index.js';
 import type { Item } from './v1.types/2.item.js';
+import { reportProgress } from '@/shared/report.js';
 
-const parseTlk = async (tlkPath: Pathes['tlkPath']): Promise<Tlk> => {
-  const buffer = await readFile(tlkPath);
+const parseTlk = async (resourceName: Pathes['tlkPath']): Promise<Tlk> => {
+  const buffer = await readFile(resourceName);
   const reader = createReader(buffer);
 
   const signature = reader.string(4);
@@ -15,6 +16,15 @@ const parseTlk = async (tlkPath: Pathes['tlkPath']): Promise<Tlk> => {
 
   if (signature !== 'tlk') throw new Error(`Unsupported signature for tlk: '${signature}'`);
   if (version !== 'v1') throw new Error(`Unsupported version for tlk: '${version}'`);
+
+  reportProgress({
+    value: 1,
+    step: 'parseTlk',
+    params: {
+      version: version,
+      resourceName,
+    },
+  });
 
   const raw = parseTlkV1FromBuffer(
     reader,
@@ -37,6 +47,15 @@ const parseTlk = async (tlkPath: Pathes['tlkPath']): Promise<Tlk> => {
     text: 'n/a',
   };
   raw.itemsMap.set(-1, emptyTlkItem);
+
+  reportProgress({
+    value: 100,
+    step: 'parseTlk',
+    params: {
+      version: version,
+      resourceName,
+    },
+  });
 
   return {
     ...raw,

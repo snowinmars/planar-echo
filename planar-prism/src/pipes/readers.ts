@@ -1,6 +1,6 @@
-import { just } from '../shared/maybe.js';
+import { just } from '@planar/shared';
 
-import type { Maybe } from '../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 
 // export const readBit = (buffer: Buffer, offset: number): (0 | 1) => {
 //   // You cannot read bit.

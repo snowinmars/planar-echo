@@ -1,6 +1,6 @@
-import { nothing } from './maybe.js';
+import { nothing } from '@planar/shared';
 
-import type { Maybe } from './maybe.js';
+import type { Maybe } from '@planar/shared';
 
 export const parseDecOrThrow = (s: Maybe<string>): number => {
   if (!s) throw new Error(`Cannot parse base 10 inteter from nothing`);

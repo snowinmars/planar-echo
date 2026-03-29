@@ -1,22 +1,32 @@
-import logger from '../../shared/logger.js';
-import { entryExists, loadFromFile, saveToFile } from '../../shared/customFs.js';
-
+import logger from '@/shared/logger.js';
+import { entryExists, loadFromFile, saveToFile } from '@/shared/customFs.js';
+import { reportProgress } from '@/shared/report.js';
 import decompileAndParseBiffs from './decompileAndParseBiffs.js';
 
+import type { Pathes } from '@/steps/1.createPathes/index.js';
 import type {
   DecompiledBiff,
   DecompiledBiffType,
 } from './types.js';
-import type { Pathes } from '../1.createPathes/index.js';
 
 const decompileBiffs = async (pathes: Pathes): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
   const cacheJson = pathes.output.decimpiledBiff.cacheJson;
   const output = pathes.output.decimpiledBiff.root;
   const gameFolder = pathes.gameFolder;
 
+  reportProgress({
+    value: 1,
+    step: 'decompileBiffs',
+  });
+
   const hasPreviousDecompilation = await entryExists(cacheJson);
   if (hasPreviousDecompilation) {
     logger.info(`Restore decompilation state from ${cacheJson}`);
+
+    reportProgress({
+      value: 100,
+      step: 'decompileBiffs',
+    });
 
     return loadFromFile(cacheJson);
   }
@@ -25,6 +35,11 @@ const decompileBiffs = async (pathes: Pathes): Promise<Map<DecompiledBiffType, D
 
     const decompiledBiffs = await decompileAndParseBiffs(pathes);
     await saveToFile(cacheJson, decompiledBiffs);
+
+    reportProgress({
+      value: 100,
+      step: 'decompileBiffs',
+    });
 
     logger.info(`Decompiled biff archives from '${gameFolder}' to '${output}' with cache at ${cacheJson}`);
 

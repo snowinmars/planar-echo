@@ -1,21 +1,22 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
-import { nothing } from '../../../shared/maybe.js';
-import iterate from '../../../steps/iterate.js';
+import { nothing } from '@planar/shared';
+import iterate from '@/steps/iterate.js';
+import createReader from '@/pipes/readers.js';
+import { reportProgress } from '@/shared/report.js';
 import parseDlgV1FromBuffer from './v1/parseDlgV1FromBuffer.js';
 import attachWeights from './v1/patches/1.attachWeights.js';
 import patchTranslation from './v1/patches/2.patchTranslation.js';
 import nestDialogue from './v1/patches/3.nestDialogue.js';
-import createReader from '../../../pipes/readers.js';
+import createMeta from '../meta.js';
 
-import type { DecompiledBiff } from '../../../steps/3.decompileBiffs/index.js';
-import type { Pathes } from '../../../steps/1.createPathes/index.js';
-import type { LogPercent } from '../../../shared/types.js';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { LogPercent } from '@/shared/types.js';
+import type { Maybe } from '@planar/shared';
 import type { Dlg } from './types.js';
-import type { Maybe } from '../../../shared/maybe.js';
 import type { Tlk } from '../tlk/index.js';
 import type { Signature, Versions } from './types.js';
-import createMeta from '../meta.js';
 import type { Ids } from '../ids/index.js';
 
 const parseDlg = (
@@ -26,7 +27,7 @@ const parseDlg = (
   percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<Dlg> => iterate<DecompiledBiff, Dlg>(
   decompiledItems,
-  async (decompiledItem) => {
+  async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
 
     const buffer = await readFile(join(pathes.output.decimpiledBiff.root, resourceName));
@@ -50,6 +51,16 @@ const parseDlg = (
     const weighted = attachWeights(raw);
     const translated = patchTranslation(weighted, tlk);
     const nested = nestDialogue(translated);
+
+    const percent = Math.round((i + 1) * 100 / decompiledItems.length);
+    reportProgress({
+      value: percent,
+      step: 'parseDlg',
+      params: {
+        version: meta.version,
+        resourceName,
+      },
+    });
 
     return nested;
   },

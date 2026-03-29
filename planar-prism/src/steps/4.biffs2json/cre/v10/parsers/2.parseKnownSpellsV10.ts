@@ -1,9 +1,9 @@
 import { offsetMap } from '../../v10.types/2.knownSpell.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
+import type { Meta } from '../../../types.js';
 import type { KnownSpellV10 } from '../../v10.types/2.knownSpell.js';
 import type { Signature, Versions } from '../../types.js';
-import type { Meta } from '../../../types.js';
 
 const parse = (reader: BufferReader): KnownSpellV10 => {
   const resourceName = reader.string(8);

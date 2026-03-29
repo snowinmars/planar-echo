@@ -1,5 +1,5 @@
-import { extend } from '../../../../pipes/offsetMap.js';
-import type { Maybe } from '../../../../shared/maybe.js';
+import { extend } from '@/pipes/offsetMap.js';
+import type { Maybe } from '@planar/shared';
 
 /* createGenerator().register().enum("typeV20",
  *   ['none','self','projectile target','party','everyone','everyone except party','caster group','target group','everyone except self','original caster'],

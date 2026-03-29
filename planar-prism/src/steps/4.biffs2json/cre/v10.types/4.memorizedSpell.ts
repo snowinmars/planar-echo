@@ -1,4 +1,4 @@
-import { extend } from '../../../../pipes/offsetMap.js';
+import { extend } from '@/pipes/offsetMap.js';
 
 /* createGenerator().register().flags('memorisedV10', {
  *   byte1: ['Memorised','Disabled'],

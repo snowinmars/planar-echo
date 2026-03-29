@@ -1,4 +1,4 @@
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 import type { CreatureIniPointSelect } from '../../types.js';
 
 const parsePointSelectV1 = (s: Maybe<string>): CreatureIniPointSelect => {

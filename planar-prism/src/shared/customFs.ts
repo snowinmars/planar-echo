@@ -1,4 +1,4 @@
-import { jsonParse, jsonStringify } from './json.js';
+import { jsonParse, jsonStringify } from '@planar/shared';
 import {
   mkdir,
   rm,
@@ -8,7 +8,7 @@ import {
   constants as fsConstants,
 } from 'fs/promises';
 
-import type { Maybe } from './maybe.js';
+import type { Maybe } from '@planar/shared';
 
 export const mkdirsIfNotExists = async (entryPathes: string[], recreate = false): Promise<void> => {
   for (const entryPath of entryPathes) await mkdirIfNotExists(entryPath, recreate);

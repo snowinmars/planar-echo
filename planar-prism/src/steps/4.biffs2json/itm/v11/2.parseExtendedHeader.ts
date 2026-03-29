@@ -1,7 +1,7 @@
 import { offsetMap } from '../v11.types/2.extendedHeader.js';
 import { parseFeatureBlock } from './3.parseFeatureBlock.js';
 
-import type { BufferReader } from '../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { ExtendedHeaderV11 } from '../v11.types/2.extendedHeader.js';
 import type { FeatureBlockV11 } from '../v11.types/3.featureBlock.js';
 

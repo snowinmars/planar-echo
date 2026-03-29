@@ -1,13 +1,17 @@
 import { Router } from 'express';
 import validate from 'express-zod-safe';
 import { z } from 'zod';
-import { OpenAPIRegistry, RouteConfig } from '@asteasolutions/zod-to-openapi';
-import action from '../../../services/fs/validate/chitinKeyPath/action';
+import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
+import action from '@/services/fs/validate/chitinKeyPath/action.js';
+import { gameLanguages, objectKeys } from '@planar/shared';
+
+import type { GameLanguage } from '@planar/shared';
+import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 
 const body = z.object({
   weiduExePath: z.string().min(1, 'Weidu path is required'),
   chitinKeyPath: z.string().min(1, 'CHITIN.key path is required'),
-  lang: z.enum(['ru', 'en']),
+  gameLanguage: z.enum<GameLanguage[]>(objectKeys(gameLanguages)),
 });
 const responseOk = z.object({
   data: z.object({
@@ -64,7 +68,7 @@ export default (registry: OpenAPIRegistry, router: Router): void => {
       const result = await action({
         weiduExePath: req.body.weiduExePath,
         chitinKeyPath: req.body.chitinKeyPath,
-        lang: req.body.lang,
+        gameLanguage: req.body.gameLanguage,
       });
 
       if (result.ok) {

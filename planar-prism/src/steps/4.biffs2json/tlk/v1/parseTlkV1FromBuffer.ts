@@ -1,7 +1,8 @@
-import type { BufferReader } from '../../../../pipes/readers.js';
-import type { Tlk } from '../types.js';
 import parseHeaderV1 from './parsers/1.parseHeaderV1.js';
 import parseItemsV1 from './parsers/2.parseItemsV1.js';
+
+import type { BufferReader } from '@/pipes/readers.js';
+import type { Tlk } from '../types.js';
 import type { Item } from '../v1.types/2.item.js';
 
 const get = (itemsMap: Map<number, Item>, id: number): Item => {

@@ -1,4 +1,4 @@
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 import type { CreatureIniSpecVarOperation } from '../../types.js';
 
 const parseSpecVarOperationV1 = (s: Maybe<string>): CreatureIniSpecVarOperation => {

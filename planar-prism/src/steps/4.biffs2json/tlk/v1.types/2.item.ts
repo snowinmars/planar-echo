@@ -1,5 +1,5 @@
-import { extend } from '../../../../pipes/offsetMap.js';
-import type { Maybe } from '../../../../shared/maybe.js';
+import { extend } from '@/pipes/offsetMap.js';
+import type { Maybe } from '@planar/shared';
 
 /* createGenerator().register().flags('flagsV10',{
  *   byte1:['no message data','text exists','sound exists','standard message','token exists'],

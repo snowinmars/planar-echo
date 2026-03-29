@@ -1,4 +1,4 @@
-import type { Maybe } from '../../../../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
 import type { Direction } from '../../types.js';
 
 const parseDirectionV1 = (s: Maybe<string>): Direction => {

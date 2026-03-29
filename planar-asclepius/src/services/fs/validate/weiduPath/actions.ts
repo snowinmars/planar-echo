@@ -1,9 +1,9 @@
 import { normalize } from 'path';
-import fileExists from '../../../../shared/fileExists';
+import { fileExists } from '@planar/shared/node';
+import logger from '@/shared/logger.js';
+import getVersion from './getVersion.js';
 
-import type { Command, Result } from './types';
-import getVersion from './getVersion';
-import logger from '../../../../shared/logger';
+import type { Command, Result } from './types.js';
 
 export default async ({
   weiduExePath,

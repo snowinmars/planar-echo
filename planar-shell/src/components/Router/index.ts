@@ -1,3 +1,3 @@
-import RouterComponent from "./Router";
+import RouterComponent from './Router';
 
 export default RouterComponent;

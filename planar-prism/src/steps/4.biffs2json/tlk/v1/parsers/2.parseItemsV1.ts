@@ -1,7 +1,7 @@
-import { nothing } from '../../../../../shared/maybe.js';
+import { nothing } from '@planar/shared';
 import { offsetMap } from '../../v1.types/2.item.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Item } from '../../v1.types/2.item.js';
 import type { Header } from '../../v1.types/1.header.js';
 

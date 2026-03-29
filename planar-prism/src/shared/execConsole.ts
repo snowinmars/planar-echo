@@ -1,9 +1,9 @@
 import { spawn } from 'child_process';
 
 import logger from '../shared/logger.js';
-import { just } from './maybe.js';
+import { just } from '@planar/shared';
 
-import type { Maybe } from './maybe.js';
+import type { Maybe } from '@planar/shared';
 
 const splitCommand = (command: string): [string, string[]] => {
   let args: string[] = [];
@@ -19,7 +19,7 @@ const splitCommand = (command: string): [string, string[]] => {
 
 const execConsole = async <T>(
   command: string,
-  map: (line: string) => Maybe<T>,
+  map: (line: string, i: number) => Maybe<T>,
   ignoreStdout = false,
 ): Promise<T[]> => {
   logger.debug(`Executing '${command}'`);
@@ -45,13 +45,17 @@ const execConsole = async <T>(
         stdoutBuffer += data;
 
         let newlineIndex;
+        let i = 1;
         while ((newlineIndex = stdoutBuffer.indexOf('\n')) !== -1) {
           const line = stdoutBuffer.slice(0, newlineIndex).trim();
           stdoutBuffer = stdoutBuffer.slice(newlineIndex + 1);
 
           if (line) {
-            const mapped = map(line);
-            if (mapped) results.push(just(mapped));
+            const mapped = map(line, i);
+            if (mapped) {
+              results.push(just(mapped));
+              i++;
+            }
           }
         }
       });
@@ -64,7 +68,7 @@ const execConsole = async <T>(
     proc.on('close', (code) => {
       if (code === 0) {
         if (!ignoreStdout && stdoutBuffer.trim()) {
-          const mapped = map(stdoutBuffer.trim());
+          const mapped = map(stdoutBuffer.trim(), 0);
           if (mapped) results.push(just(mapped));
         }
         resolve(results);

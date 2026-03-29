@@ -1,4 +1,4 @@
-import type { BufferReader } from '../../../../../pipes/readers.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
 import type { Signature, Versions } from '../../types.js';
 import type { RawFunction } from '../../v1.types/4.function.js';

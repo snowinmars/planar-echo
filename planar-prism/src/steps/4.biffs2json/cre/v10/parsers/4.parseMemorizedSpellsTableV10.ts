@@ -1,8 +1,8 @@
 import { offsetMap } from '../../v10.types/4.memorizedSpell.js';
 
-import type { BufferReader } from '../../../../../pipes/readers.js';
-import type { Signature, Versions } from '../../types.js';
+import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
+import type { Signature, Versions } from '../../types.js';
 import type { MemorizedSpellV10 } from '../../v10.types/4.memorizedSpell.js';
 
 const parse = (reader: BufferReader): MemorizedSpellV10 => {

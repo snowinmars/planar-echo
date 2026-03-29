@@ -1,16 +1,11 @@
 import { join, normalize, dirname } from 'path';
+import { mkdirsIfNotExists, saveToFile } from '@/shared/customFs.js';
 
-import { mkdirsIfNotExists, saveToFile } from '../../shared/customFs.js';
-import type { Maybe } from '../../shared/maybe.js';
+import type { Maybe } from '@planar/shared';
+import type { PrismIndexStartMessage } from '@planar/shared';
+import type { Pathes } from './types.js';
 
-import type { GameName, Lang, Pathes } from './types.js';
-
-type CreatePathesProps = Readonly<{
-  weiduExe: string;
-  chitinKey: string;
-  ghost: string;
-  lang: Lang;
-  gameName: GameName;
+type CreatePathesProps = PrismIndexStartMessage['data'] & Readonly<{
   recreate?: Maybe<boolean>;
 }>;
 
@@ -21,7 +16,7 @@ const createPathes = async (props: CreatePathesProps): Promise<Pathes> => {
   const outputPath     = normalize(props.ghost);
 
   const gameFolder     = normalize(dirname(chitinKeyPath));
-  const tlkPath        = normalize(join(gameFolder, 'lang', props.lang, 'dialog.tlk'));
+  const tlkPath        = normalize(join(gameFolder, 'lang', props.gameLanguage, 'dialog.tlk'));
 
   const decimpiledBiffRoot      = normalize(join(outputPath        , 'decimpiledBiff'));
   const decimpiledBiffCacheJson = normalize(join(decimpiledBiffRoot, 'output.json'));
@@ -45,9 +40,9 @@ const createPathes = async (props: CreatePathesProps): Promise<Pathes> => {
   const pathes: Pathes = {
     weiduExe  : weiduExe,
     gameFolder: gameFolder,
-    gameName  : props.gameName,
     tlkPath,
-    lang: props.lang,
+    gameName    : props.gameName,
+    gameLanguage: props.gameLanguage,
     output: {
       root: outputPath,
       decimpiledBiff: {

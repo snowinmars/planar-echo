@@ -1,16 +1,17 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
-import { nothing } from '../../../shared/maybe.js';
-import iterate from '../../../steps/iterate.js';
-import { createReader } from '../../../pipes/readers.js';
+import { nothing } from '@planar/shared';
+import iterate from '@/steps/iterate.js';
+import { createReader } from '@/pipes/readers.js';
+import { reportProgress } from '@/shared/report.js';
 import parseEffV10FromBuffer from './v10/parfeEffectV10.js';
-
-import type { Maybe } from '../../../shared/maybe.js';
-import type { DecompiledBiff } from '../../../steps/3.decompileBiffs/index.js';
-import type { Pathes } from '../../../steps/1.createPathes/index.js';
-import type { LogPercent } from '../../../shared/types.js';
-import type { EffectV10 } from './v10.types/effectV10.js';
 import createMeta from '../meta.js';
+
+import type { Maybe } from '@planar/shared';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { LogPercent } from '@/shared/types.js';
+import type { EffectV10 } from './v10.types/effectV10.js';
 import type { Ids } from '../ids/index.js';
 import type { Signature, Versions } from './types.js';
 
@@ -25,7 +26,7 @@ const parseEffV10 = (
   percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<EffectV10> => iterate<DecompiledBiff, EffectV10>(
   decompiledItems,
-  async (decompiledItem) => {
+  async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
     const meta = createMeta<Signature, Versions>({
       signature: 'eff',
@@ -38,7 +39,19 @@ const parseEffV10 = (
     const buffer = await readFile(join(pathes.output.decimpiledBiff.root, resourceName));
     const reader = createReader(buffer);
 
-    return parseEffV10FromBuffer(reader, meta);
+    const effect = parseEffV10FromBuffer(reader, meta);
+
+    const percent = Math.round((i + 1) * 100 / decompiledItems.length);
+    reportProgress({
+      value: percent,
+      step: 'parseEffV10',
+      params: {
+        version: meta.version,
+        resourceName,
+      },
+    });
+
+    return effect;
   },
   percentCallback,
 );

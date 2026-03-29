@@ -1,5 +1,2 @@
-import parseIni from './parseIni.js';
-import type { Ini } from './types.js';
-
-export default parseIni;
-export type { Ini };
+export { default as parseIni } from './parseIni.js';
+export type { Ini } from './types.js';

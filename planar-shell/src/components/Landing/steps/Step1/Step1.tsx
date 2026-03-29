@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
@@ -9,40 +9,33 @@ import getNativeLangNames from '@/shared/getNativeLangNames';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { gameNames, objectEntries } from '@planar/shared';
 
 import type { FC } from 'react';
+import type { WithClassName } from '@/types/fcWithClassName';
+import type { GameName, GameLanguage } from '@planar/shared';
 
 import styles from './Step1.module.scss';
-import type { WithClassName } from '@/types/fcWithClassName';
-
-type Language = 'ru' | 'en';
 
 type Step1Props = WithClassName & Readonly<{
-  setStatus: (x: boolean) => void;
-  setLang: (x: Language) => void;
+  disabled: boolean;
+  gameName: GameName | '';
+  gameLanguage: GameLanguage | '';
+  setGameName: (x: GameName) => void;
+  setGameLanguage: (x: GameLanguage) => void;
   imageUrl: string;
 }>;
-const Step1: FC<Step1Props> = ({
-  className,
-  setStatus,
-  setLang,
-  imageUrl,
-}) => {
+const Step1: FC<Step1Props> = (props) => {
   const { i18n, t } = useTranslation();
   const [languages] = useState(() => getNativeLangNames(i18n.options.resources || {}));
-  const [language, setLanguage] = useState<Language | ''>('');
-
-  useEffect(() => {
-    setStatus(!!language);
-    if (language !== '') setLang(language);
-  }, [language]);
+  // planarLocalStorage.set('gameLanguage', gameLanguage);
 
   return (
-    <Card className={className}>
+    <Card className={props.className}>
       <CardMedia
         component="img"
         height="140"
-        image={imageUrl}
+        image={props.imageUrl}
         alt="Choose language"
       />
       <CardContent className={styles.cardContent}>
@@ -50,14 +43,40 @@ const Step1: FC<Step1Props> = ({
           className={styles.inputWrapper}
           fullWidth
         >
-          <InputLabel id="landing-step1-language-label">{t('landing.step1.language')}</InputLabel>
+          <InputLabel id="landing-step1-gameName-label">{t('landing.step1.gameName')}</InputLabel>
           <Select
-            value={language}
+            disabled={props.disabled}
+            value={props.gameName}
             onChange={(e) => {
-              setLanguage(e.target.value as Language);
+              props.setGameName(e.target.value as GameName);
             }}
-            label={t('landing.step1.language')}
-            labelId="landing-step1-language-label"
+            label={t('landing.step1.gameName')}
+            labelId="landing-step1-gameName-label"
+            fullWidth
+          >
+            {
+              objectEntries(gameNames).map(([key, name]) => (
+                <MenuItem key={key} value={key} disabled={key !== 'pstee'}>
+                  <Typography>{t(name)}</Typography>
+                </MenuItem>
+              ))
+            }
+          </Select>
+        </FormControl>
+
+        <FormControl
+          className={styles.inputWrapper}
+          fullWidth
+        >
+          <InputLabel id="landing-step1-gameLanguage-label">{t('landing.step1.gameLanguage')}</InputLabel>
+          <Select
+            disabled={props.disabled}
+            value={props.gameLanguage}
+            onChange={(e) => {
+              props.setGameLanguage(e.target.value as GameLanguage);
+            }}
+            label={t('landing.step1.gameLanguage')}
+            labelId="landing-step1-gameLanguage-label"
             fullWidth
           >
             {

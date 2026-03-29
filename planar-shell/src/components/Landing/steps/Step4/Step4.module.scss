@@ -6,6 +6,12 @@
   filter: opacity(0.5);
 }
 
+.checkbox {
+  &>input:disabled+svg {
+    filter: sepia(0.7);
+  }
+}
+
 .checkboxIcon {
   color: red;
   width: 1.5em;

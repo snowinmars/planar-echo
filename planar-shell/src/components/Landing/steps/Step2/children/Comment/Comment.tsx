@@ -4,13 +4,12 @@ import Link from '@mui/material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 import type { FC } from 'react';
+import type { LandingStateStep2 } from '@/components/Landing/store/types';
 
 import styles from './Comment.module.scss';
-import { ValidationState } from '../../stores/types';
 
-const colorizeStatus = (status: ValidationState['status']): TypographyOwnProps['color'] => {
+const colorize = (status: LandingStateStep2['step2ResultType']): TypographyOwnProps['color'] => {
   switch (status) {
-    case 'normal': return 'primary';
     case 'success': return 'success';
     case 'error': return 'error';
     default: return 'primary';
@@ -18,20 +17,21 @@ const colorizeStatus = (status: ValidationState['status']): TypographyOwnProps['
 };
 
 type CommentProps = Readonly<{
-  comment: ValidationState['comment'];
-  status: ValidationState['status'];
+  comment: LandingStateStep2['step2Comment'];
+  commentArgs: LandingStateStep2['step2CommentArgs'];
+  resultType: LandingStateStep2['step2ResultType'];
 }>;
-const Comment: FC<CommentProps> = ({ comment, status }) => {
+const Comment: FC<CommentProps> = ({ comment, commentArgs, resultType }) => {
   const { t } = useTranslation();
 
   if (comment) return (
-    <Typography color={colorizeStatus(status)}>
-      {t(comment)}
+    <Typography color={colorize(resultType)}>
+      {t(comment, commentArgs)}
     </Typography>
   );
 
   return (
-    <Typography color={colorizeStatus(status)}>
+    <Typography color={colorize(resultType)}>
       <Link
         className={styles.link}
         href="https://github.com/WeiDUorg/weidu/releases/tag/v251.00"

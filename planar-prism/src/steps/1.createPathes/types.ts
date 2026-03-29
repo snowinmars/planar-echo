@@ -1,24 +1,5 @@
-export type GameName
-  = | 'bg1'
-    | 'bg1ee'
-    | 'bg2'
-    | 'bg2ee'
-    | 'iwd'
-    | 'iwdee'
-    | 'iwd2'
-    | 'iwd2ee'
-    | 'pst'
-    | 'pstee';
-;
-export type Lang
-  = | 'cs_CZ'
-    | 'de_DE'
-    | 'en_US'
-    | 'fr_FR'
-    | 'ko_KR'
-    | 'pl_PL'
-    | 'ru_RU'
-;
+import type { GameName, GameLanguage } from '@planar/shared';
+
 type OutDir = Readonly<{
   dialogues: string;
   ids: string;
@@ -39,9 +20,9 @@ type OutSave = Readonly<{
 export type Pathes = Readonly<{
   weiduExe: string;
   gameFolder: string;
-  gameName: GameName;
   tlkPath: string;
-  lang: Lang;
+  gameName: GameName;
+  gameLanguage: GameLanguage;
   output: Readonly<{
     root: string;
     decimpiledBiff: Readonly<{
