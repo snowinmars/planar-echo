@@ -10,41 +10,42 @@ import type {
 
 type SpellMemorizationInfo = SpellMemorizationInfoV10 | SpellMemorizationInfoPsteeV10;
 
-const parsePsteeV10 = (reader: BufferReader): SpellMemorizationInfoPsteeV10 => {
-  const spellRef = reader.string(8);
-  const memoraization = reader.ushort();
-  reader.skip.ushort();
+// const parsePsteeV10 = (reader: BufferReader): SpellMemorizationInfoPsteeV10 => {
+//   const spellRef = reader.string(8);
+//   const memoraization = reader.ushort();
+//   reader.skip.ushort();
 
-  return {
-    spellRef,
-    memoraization,
-  };
-};
+//   return {
+//     spellRef,
+//     memoraization,
+//   };
+// };
 
 const parseNonPsteeV10 = (reader: BufferReader): SpellMemorizationInfoV10 => {
   const spellLevel = reader.short();
   const numberOfSpellsMemorizable = reader.short();
   const numberOfSpellsMemorizableAfterEffects = reader.short();
   const spellType = reader.map.short(offsetMap.spellType.parse);
-  const indexIntoMemorizedSpellsArrayOfFirstMemorizedSpellOfThisTypeInThisLevel = reader.uint();
-  const countOfMemorizedSpellEntriesInMemorizedSpellsArrayOfMemorizedSpellsOfThisTypeInThisLevel = reader.uint();
+  const spellTableIndex = reader.uint();
+  const spellsCount = reader.int();
 
   return {
     spellLevel,
     numberOfSpellsMemorizable,
     numberOfSpellsMemorizableAfterEffects,
     spellType,
-    indexIntoMemorizedSpellsArrayOfFirstMemorizedSpellOfThisTypeInThisLevel,
-    countOfMemorizedSpellEntriesInMemorizedSpellsArrayOfMemorizedSpellsOfThisTypeInThisLevel,
+    spellTableIndex,
+    spellsCount,
   };
 };
 
 const parseSpellMemorizationInfosV10 = (reader: BufferReader, count: number, meta: Meta<Signature, Versions>): SpellMemorizationInfo[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
-  const spellMemorizationInfoSize = meta.isPstee ? 12 : 16; // TODO [snow]: lol, how?
-  const parse = meta.isPstee ? parsePsteeV10 : parseNonPsteeV10;
-  return Array.from<never, SpellMemorizationInfo>({ length: count }, (_, i) => parse(reader.fork(reader.offset + i * spellMemorizationInfoSize)));
+  // const spellMemorizationInfoSize = meta.isPstee ? 12 : 16; // TODO [snow]: lol, how?
+  // const parse = meta.isPstee ? parsePsteeV10 : parseNonPsteeV10;
+  const spellMemorizationInfoSize = 16;
+  return Array.from<never, SpellMemorizationInfo>({ length: count }, (_, i) => parseNonPsteeV10(reader.fork(reader.offset + i * spellMemorizationInfoSize)));
 };
 
 export default parseSpellMemorizationInfosV10;

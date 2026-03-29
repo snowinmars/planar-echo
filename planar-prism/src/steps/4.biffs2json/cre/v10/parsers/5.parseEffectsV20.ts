@@ -13,8 +13,7 @@ const parse = (reader: BufferReader): EffectV20 => {
   const power = reader.uint();
   const parameter1 = reader.uint();
   const parameter2 = reader.uint();
-  const timingMode = reader.map.ushort(offsetMap.timingMode.parse);
-  const timing = reader.ushort();
+  const timingMode = reader.map.uint(offsetMap.timingMode.parse);
   const duration = reader.uint();
   const probability1 = reader.ushort();
   const probability2 = reader.ushort();
@@ -35,15 +34,15 @@ const parse = (reader: BufferReader): EffectV20 => {
   const timeApplied = reader.uint();
   const resource2Ref = reader.string(8);
   const resource3Ref = reader.string(8);
-  const casterX = reader.uint();
-  const casterY = reader.uint();
-  const targetX = reader.uint();
-  const targetY = reader.uint();
+  const casterX = reader.uint(true);
+  const casterY = reader.uint(true);
+  const targetX = reader.uint(true);
+  const targetY = reader.uint(true);
   const parentResourceType = reader.map.uint(offsetMap.parentResourceType.parse);
   const parentResource = reader.string(8);
   const parentResourceFlags = reader.map.uint(offsetMap.parentResourceFlags.parseFlags);
   const projectile = reader.uint();
-  const parentResourceSlot = reader.uint();
+  const parentResourceSlot = reader.uint(true);
   const variableName = reader.string(32);
   const casterLevel = reader.uint();
   const firstApply = reader.uint();
@@ -62,7 +61,6 @@ const parse = (reader: BufferReader): EffectV20 => {
     parameter1,
     parameter2,
     timingMode,
-    timing,
     duration,
     probability1,
     probability2,

@@ -2,6 +2,18 @@
   position: relative;
   overflow: hidden;
   height: 1.5em;
+
+  &.dark {
+    .label {
+      background: linear-gradient(90deg, #ffffff00 0%, #030405cc 33%, #030405cc 66%, #ffffff00 100%);
+    }
+  }
+
+  &.light {
+    .label {
+      background: linear-gradient(90deg, #ffffff00 0%, #cccdcecc 33%, #cccdcecc 66%, #ffffff00 100%);
+    }
+  }
 }
 
 .svg {
@@ -21,19 +33,19 @@
 }
 
 .svgWrapper {
-  top: 0;
+  left: 0;
 }
 
 .label {
-  top: 1.5em;
+  left: -100%;
 }
 
 .loader:hover .svgWrapper {
-  top: -1.5em;
+  left: 0.5em;
 }
 
 .loader:hover .label {
-  top: 0;
+  left: 0;
 }
 
 @keyframes colorShift {

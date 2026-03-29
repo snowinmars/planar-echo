@@ -34,8 +34,8 @@ const parseHeaderV10 = (reader: BufferReader, meta: Meta<Signature, Versions>): 
   const leatherColourIndex = reader.byte();
   const armorColourIndex = reader.byte();
   const hairColourIndex = reader.byte();
-  const effStructureVersion = reader.byte();
-  if (effStructureVersion !== 0 && effStructureVersion !== 1) throw new Error(`Unsupported effStructureVersion '${effStructureVersion}' for creature '${meta.resourceName}'`);
+  const effectStructureVersion = reader.byte();
+  if (effectStructureVersion !== 0 && effectStructureVersion !== 1) throw new Error(`Unsupported effectStructureVersion '${effectStructureVersion}' for creature '${meta.resourceName}'`);
   const smallPortrait = reader.string(8);
   const largePortrait = reader.string(8);
   const reputation = reader.ubyte();
@@ -74,14 +74,14 @@ const parseHeaderV10 = (reader: BufferReader, meta: Meta<Signature, Versions>): 
   const fatigue = reader.byte();
   const intoxication = reader.byte();
   const luck = reader.byte();
-  const largeSwordsProficiencyBg1 = reader.byte();
-  const smallSwordsProficiencyBg1 = reader.byte();
-  const bowsProficiencyBg1 = reader.byte();
-  const spearsProficiencyBg1 = reader.byte();
-  const bluntProficiencyBg1 = reader.byte();
-  const spikedProficiencyBg1 = reader.byte();
-  const axeProficiencyBg1 = reader.byte();
-  const missileProficiencyBg1 = reader.byte();
+  const largeSwordsProficiency = reader.byte();
+  const smallSwordsProficiency = reader.byte();
+  const bowsProficiency = reader.byte();
+  const spearsProficiency = reader.byte();
+  const bluntProficiency = reader.byte();
+  const spikedProficiency = reader.byte();
+  const axeProficiency = reader.byte();
+  const missileProficiency = reader.byte();
   const unusedProficiency1 = reader.byte();
   const unusedProficiency2 = reader.byte();
   const unusedProficiency3 = reader.byte();
@@ -258,7 +258,7 @@ const parseHeaderV10 = (reader: BufferReader, meta: Meta<Signature, Versions>): 
     leatherColourIndex,
     armorColourIndex,
     hairColourIndex,
-    effStructureVersion,
+    effectStructureVersion,
     smallPortrait,
     largePortrait,
     reputation,
@@ -297,14 +297,14 @@ const parseHeaderV10 = (reader: BufferReader, meta: Meta<Signature, Versions>): 
     fatigue,
     intoxication,
     luck,
-    largeSwordsProficiencyBg1,
-    smallSwordsProficiencyBg1,
-    bowsProficiencyBg1,
-    spearsProficiencyBg1,
-    bluntProficiencyBg1,
-    spikedProficiencyBg1,
-    axeProficiencyBg1,
-    missileProficiencyBg1,
+    largeSwordsProficiency,
+    smallSwordsProficiency,
+    bowsProficiency,
+    spearsProficiency,
+    bluntProficiency,
+    spikedProficiency,
+    axeProficiency,
+    missileProficiency,
     unusedProficiency1,
     unusedProficiency2,
     unusedProficiency3,

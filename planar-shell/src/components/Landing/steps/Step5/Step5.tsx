@@ -48,7 +48,7 @@ const Converter: FC<ConverterProps> = (props: ConverterProps) => {
         <Grid size={{ xs: 6 }}>
           {
             [...props.progress.values()].filter(x => x.step.startsWith('parse')).map(x => (
-              <L item={x} />
+              <L key={x.step} item={x} />
             ))
           }
         </Grid>

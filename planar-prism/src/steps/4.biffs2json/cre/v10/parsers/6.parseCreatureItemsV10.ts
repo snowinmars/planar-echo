@@ -7,8 +7,7 @@ import type { ItemV10 } from '../../v10.types/6.item.js';
 
 const parse = (reader: BufferReader): ItemV10 => {
   const resourceName = reader.string(8);
-  const time1 = reader.byte();
-  const time2 = reader.byte();
+  const duration = reader.ushort();
   const quantityCharges1 = reader.short();
   const quantityCharges2 = reader.short();
   const quantityCharges3 = reader.short();
@@ -16,8 +15,7 @@ const parse = (reader: BufferReader): ItemV10 => {
 
   return {
     resourceName,
-    time1,
-    time2,
+    duration,
     quantityCharges1,
     quantityCharges2,
     quantityCharges3,

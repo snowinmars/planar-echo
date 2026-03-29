@@ -1,6 +1,3 @@
-import { nothing } from '@planar/shared';
-import { offsetMap } from '../../v1.types/1.header.js';
-
 import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
 import type { RawHeader } from '../../v1.types/1.header.js';
@@ -20,8 +17,7 @@ const parseHeader = (reader: BufferReader, meta: Meta<Signature, Versions>): Raw
   const responseTriggersCount   = reader.uint();
   const actionsOffset           = reader.uint();
   const actionsCount            = reader.uint();
-
-  const threatResponse          = meta.isBg1 ? reader.map.uint(offsetMap.threatResponse.parseFlags) : nothing();
+  const threatResponse          = reader.uint(); // TODO [snow]: to enum
   /* eslint-enable */
 
   return {
@@ -31,12 +27,12 @@ const parseHeader = (reader: BufferReader, meta: Meta<Signature, Versions>): Raw
     statesOffset,
     responsesCount,
     responsesOffset,
-    stateTriggersCount,
     stateTriggersOffset,
-    responseTriggersCount,
+    stateTriggersCount,
     responsesTriggersOffset,
-    actionsCount,
+    responseTriggersCount,
     actionsOffset,
+    actionsCount,
     threatResponse,
   };
 };

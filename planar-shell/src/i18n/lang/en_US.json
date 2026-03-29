@@ -7,9 +7,8 @@
       "1": "Hi.",
       "2": "This is planar-echo: an open source tool for reshaping Infinity Engine games into modern form.",
       "3": "Long story short.",
-      "4": "Planar echo does require original game to work, because the tool know nothing about the game.",
-      "5": "Run this tool agaist Infinity Engine game - and get linux/android/web/windows game version.",
-      "6": "Requirements: node js to run the planar-echo and the original game you own."
+      "4": "Planar echo reconstructs proprietary game data into an open format, empowering a custom engine that runs natively on Linux, Android, Web, and Windows.",
+      "5": "Requirements: node.js and original game files you own."
     },
     "runnerGuard": {
       "tryToRun": "Check local game files"

@@ -28,7 +28,7 @@ const Loader: FC<LoaderProps> = ({ value, loading, variant, label }: LoaderProps
   // TODO [snow]: bad.
   // Redo with woff colr
   return (
-    <div className={styles.loader}>
+    <div className={clsx(styles.loader, theme.palette.mode === 'light' && styles.light, theme.palette.mode === 'dark' && styles.dark)}>
       <div className={clsx(styles.svgWrapper, loading && styles.loading)}>
         <svg
           className={styles.svg}

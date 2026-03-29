@@ -168,7 +168,6 @@ export type EffectV20 = Readonly<{
   parameter1: number;
   parameter2: number;
   timingMode: TimingModeV20;
-  timing: number;
   duration: number;
   probability1: number;
   probability2: number;

@@ -19,10 +19,10 @@ const parseCreaturesV10FromBuffer = (reader: BufferReader, meta: Meta<Signature,
   const header = parseHeaderV10(reader, meta);
 
   const knownSpells = parseKnownSpellsV10(reader.fork(header.knownSpellsOffset), header.knownSpellsCount, meta);
-  const spellMemorizationInfos = parseSpellMemorizationInfosV10(reader.fork(header.memorizedSpellsOffset), header.memorizedSpellsCount, meta);
+  const spellMemorizationInfos = parseSpellMemorizationInfosV10(reader.fork(header.spellMemorizationInfoOffset), header.spellMemorizationInfoEntriesCount, meta);
   const memorizedSpellsTable = parseMemorizedSpellsTableV10(reader.fork(header.memorizedSpellsOffset), header.memorizedSpellsCount, meta);
-  const effectsV10: Maybe<EffectV10[]> = header.effStructureVersion === 0 ? parseEffectsV10(reader.fork(header.offsetToEffects), header.countOfEffects, meta) : nothing();
-  const effectsV20: Maybe<EffectV20[]> = header.effStructureVersion === 1 ? parseEffectsV20(reader.fork(header.offsetToEffects), header.countOfEffects, meta) : nothing();
+  const effectsV10: Maybe<EffectV10[]> = header.effectStructureVersion === 0 ? parseEffectsV10(reader.fork(header.offsetToEffects), header.countOfEffects, meta) : nothing();
+  const effectsV20: Maybe<EffectV20[]> = header.effectStructureVersion === 1 ? parseEffectsV20(reader.fork(header.offsetToEffects), header.countOfEffects, meta) : nothing();
   const itemsTable = parseCreatureItemsV10(reader.fork(header.offsetToItems), header.countOfItems, meta);
   const itemSlots = parseItemSlotsV10(reader.fork(header.offsetToItemSlots), meta);
 

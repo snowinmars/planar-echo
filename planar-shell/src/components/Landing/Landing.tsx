@@ -44,17 +44,10 @@ const Landing: FC = () => {
 
           <Typography color="text.secondary">
             {t('landing.intro.4')}
-
           </Typography>
 
           <Typography color="text.secondary">
             {t('landing.intro.5')}
-
-          </Typography>
-
-          <Typography color="text.secondary">
-            {t('landing.intro.6')}
-
           </Typography>
 
           <Link component={RouterLink} to="/details">{t('landing.intro.details')}</Link>

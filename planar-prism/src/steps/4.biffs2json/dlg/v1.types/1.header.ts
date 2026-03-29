@@ -29,13 +29,13 @@ export type RawHeader = Readonly<{
   statesOffset: number;
   responsesCount: number;
   responsesOffset: number;
-  stateTriggersCount: number;
   stateTriggersOffset: number;
-  responseTriggersCount: number;
+  stateTriggersCount: number;
   responsesTriggersOffset: number;
-  actionsCount: number;
+  responseTriggersCount: number;
   actionsOffset: number;
-  threatResponse: Maybe<ThreatResponseV10[]>;
+  actionsCount: number;
+  threatResponse: number;
 }>;
 
 export type DlgHeader = Readonly<{
@@ -45,11 +45,11 @@ export type DlgHeader = Readonly<{
   statesOffset: number;
   responsesCount: number;
   responsesOffset: number;
-  stateTriggersCount: number;
   stateTriggersOffset: number;
-  responseTriggersCount: number;
+  stateTriggersCount: number;
   responsesTriggersOffset: number;
-  actionsCount: number;
+  responseTriggersCount: number;
   actionsOffset: number;
-  threatResponse: Maybe<ThreatResponseV10[]>;
+  actionsCount: number;
+  threatResponse: number;
 }>;

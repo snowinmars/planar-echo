@@ -20,8 +20,8 @@ export type SpellMemorizationInfoV10 = Readonly<{
   numberOfSpellsMemorizable: number;
   numberOfSpellsMemorizableAfterEffects: number;
   spellType: SpellTypeV10;
-  indexIntoMemorizedSpellsArrayOfFirstMemorizedSpellOfThisTypeInThisLevel: number;
-  countOfMemorizedSpellEntriesInMemorizedSpellsArrayOfMemorizedSpellsOfThisTypeInThisLevel: number;
+  spellTableIndex: number;
+  spellsCount: number;
 }>;
 
 export type SpellMemorizationInfoPsteeV10 = Readonly<{

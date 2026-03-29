@@ -18,7 +18,14 @@ import type { Maybe } from '@planar/shared';
 //   return bitValue === 0 ? 0 : 1;
 // };
 
-type ReadFunction = () => number;
+const maxInt8 = 127;
+const maxUint8 = 255;
+const maxInt16 = 32767;
+const maxUint16 = 65535;
+const maxInt32 = 2147483647;
+const maxUint32 = 4294967295;
+
+type ReadFunction = (ffToZero?: boolean) => number;
 type ReadMapFunction = <T>(map: BufferReaderNumberMapFunction<T>, or?: Maybe<T>) => T;
 type ReadBooleanFunction = (sourceName?: Maybe<string>) => boolean;
 type ReadSkipFunction = () => void;
@@ -73,9 +80,10 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOf
 
   //
 
-  const byte = (): number => {
+  const byte = (ffToZero = false): number => {
     const value = buffer.readInt8(offset);
     offset += 1;
+    if (ffToZero && value === maxInt8) return 0;
     return value;
   };
   const mapByte = <T>(map: BufferReaderNumberMapFunction<T>, or: Maybe<T> = null): T => {
@@ -92,9 +100,10 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOf
 
   //
 
-  const ubyte = (): number => {
+  const ubyte = (ffToZero = false): number => {
     const value = buffer.readUInt8(offset);
     offset += 1;
+    if (ffToZero && value === maxUint8) return 0;
     return value;
   };
   const mapUbyte = <T>(map: BufferReaderNumberMapFunction<T>, or: Maybe<T> = null): T => {
@@ -111,9 +120,10 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOf
 
   //
 
-  const short = (): number => {
+  const short = (ffToZero = false): number => {
     const value = buffer.readInt16LE(offset);
     offset += 2;
+    if (ffToZero && value === maxInt16) return 0;
     return value;
   };
   const mapShort = <T>(map: BufferReaderNumberMapFunction<T>, or: Maybe<T> = null): T => {
@@ -130,9 +140,10 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOf
 
   //
 
-  const ushort = (): number => {
+  const ushort = (ffToZero = false): number => {
     const value = buffer.readUInt16LE(offset);
     offset += 2;
+    if (ffToZero && value === maxUint16) return 0;
     return value;
   };
   const mapUshort = <T>(map: BufferReaderNumberMapFunction<T>, or: Maybe<T> = null): T => {
@@ -149,9 +160,10 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOf
 
   //
 
-  const int = (): number => {
+  const int = (ffToZero = false): number => {
     const value = buffer.readInt32LE(offset);
     offset += 4;
+    if (ffToZero && value === maxInt32) return 0;
     return value;
   };
   const mapInt = <T>(map: BufferReaderNumberMapFunction<T>, or: Maybe<T> = null): T => {
@@ -168,9 +180,10 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOf
 
   //
 
-  const uint = (): number => {
+  const uint = (ffToZero = false): number => {
     const value = buffer.readUInt32LE(offset);
     offset += 4;
+    if (ffToZero && value === maxUint32) return 0;
     return value;
   };
   const mapUint = <T>(map: BufferReaderNumberMapFunction<T>, or: Maybe<T> = null): T => {

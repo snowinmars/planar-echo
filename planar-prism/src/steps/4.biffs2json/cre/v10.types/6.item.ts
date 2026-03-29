@@ -23,8 +23,7 @@ export const offsetMap = {
 
 export type ItemV10 = Readonly<{
   resourceName: string;
-  time1: number;
-  time2: number;
+  duration: number;
   quantityCharges1: number;
   quantityCharges2: number;
   quantityCharges3: number;
