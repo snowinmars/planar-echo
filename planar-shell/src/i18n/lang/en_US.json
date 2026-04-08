@@ -13,6 +13,12 @@
     "runnerGuard": {
       "tryToRun": "Check local game files"
     },
+    "step0": {
+      "serverUrl": "Planar server url",
+      "comments": {
+        "default": "See. README.md"
+      }
+    },
     "step1": {
       "gameName": "Game",
       "gameLanguage": "Game language",
@@ -31,8 +37,8 @@
     },
     "step2": {
       "weiduExePath": "Path to weidu.exe",
-      "weiduLink": "Download weidu",
       "comments": {
+        "default": "Download weidu",
         "weiduExeVersion": "Found verion of weidu.exe: {{version}}",
         "loading": "Checking...",
         "connection": "Check connetion",
@@ -43,8 +49,8 @@
     },
     "step3": {
       "chitinKeyPath": "Path to CHITIN.KEY",
-      "chitinKeyLink": "What is CHITIN.KEY?",
       "comments": {
+        "default": "What is CHITIN.KEY?",
         "biffsCount": "Found sources: {{biffsCount}}",
         "loading": "Checking...",
         "connection": "Check connection",

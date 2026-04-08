@@ -32,5 +32,9 @@ export const useLandingStoreStep1: StateCreator<LandingState, [], [], LandingSta
       const hasGameName = !!gameName;
       set({ step1Valid: hasGameLanguage && hasGameName });
     },
+
+    step1Destroy: () => {
+
+    },
   };
 };

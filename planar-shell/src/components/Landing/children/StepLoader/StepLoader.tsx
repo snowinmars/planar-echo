@@ -2,12 +2,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import type { FC } from 'react';
 
-import styles from './Loading.module.scss';
+import styles from './StepLoader.module.scss';
 
-type LoadingProps = Readonly<{
+type StepLoaderProps = Readonly<{
   show: boolean;
 }>;
-const Loading: FC<LoadingProps> = ({ show }: LoadingProps) => {
+const StepLoader: FC<StepLoaderProps> = ({ show }: StepLoaderProps) => {
   if (!show) return undefined;
 
   return (
@@ -17,4 +17,4 @@ const Loading: FC<LoadingProps> = ({ show }: LoadingProps) => {
   );
 };
 
-export default Loading;
+export default StepLoader;

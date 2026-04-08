@@ -44,7 +44,7 @@ const Comment: FC<CommentProps> = ({ comment, commentArgs, resultType }) => {
         target="_blank"
         rel="noopener"
       >
-        {t('landing.step3.chitinKeyLink')}
+        {t('landing.step3.comments.default')}
         <OpenInNewIcon fontSize="small" />
       </Link>
 

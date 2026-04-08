@@ -2,8 +2,8 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import { clsx } from 'clsx';
+import StepLoader from '../../children/StepLoader/StepLoader';
 import Comment from './children/Comment/Comment';
-import Loading from './children/Loading/Loading';
 import Content from './children/Content/Content';
 
 import type { FC } from 'react';
@@ -36,7 +36,7 @@ const Step3: FC<Step3Props> = (props: Step3Props) => {
         alt="Choose chitin.key path"
       />
       <CardContent className={styles.cardContent}>
-        <Loading show={props.loading} />
+        <StepLoader show={props.loading} />
 
         <Content
           disabled={props.disabled}
@@ -48,7 +48,11 @@ const Step3: FC<Step3Props> = (props: Step3Props) => {
           validate={props.validate}
         />
 
-        <Comment comment={props.comment} commentArgs={props.commentArgs} resultType={props.resultType} />
+        <Comment
+          comment={props.comment}
+          commentArgs={props.commentArgs}
+          resultType={props.resultType}
+        />
       </CardContent>
     </Card>
   );

@@ -38,7 +38,7 @@ const Comment: FC<CommentProps> = ({ comment, commentArgs, resultType }) => {
         target="_blank"
         rel="noopener"
       >
-        {t('landing.step2.weiduLink')}
+        {t('landing.step2.comments.default')}
         <OpenInNewIcon fontSize="small" />
       </Link>
     </Typography>

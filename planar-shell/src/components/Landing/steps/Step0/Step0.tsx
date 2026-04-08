@@ -1,29 +1,29 @@
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import { clsx } from 'clsx';
-import StepLoader from '../../children/StepLoader/StepLoader';
-import Comment from './children/Comment/Comment';
+import clsx from 'clsx';
 import Content from './children/Content/Content';
+import Comment from './children/Comment/Comment';
+import StepLoader from '../../children/StepLoader/StepLoader';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
-import type { LandingStateStep2 } from '../../store/types';
+import type { LandingStateStep0 } from '../../store/types';
 
-import styles from './Step2.module.scss';
+import styles from './Step0.module.scss';
 
-type Step2Props = WithClassName & Readonly<{
+type Step0Props = WithClassName & Readonly<{
   disabled: boolean;
   imageUrl: string;
-  weiduExePath: LandingStateStep2['weiduExePath'];
-  setWeiduExePath: LandingStateStep2['setWeiduExePath'];
-  loading: LandingStateStep2['step2Loading'];
-  comment: LandingStateStep2['step2Comment'];
-  commentArgs: LandingStateStep2['step2CommentArgs'];
-  resultType: LandingStateStep2['step2ResultType'];
-  validate: LandingStateStep2['step2Validate'];
+  serverUrl: LandingStateStep0['serverUrl'];
+  setServerUrl: LandingStateStep0['setServerUrl'];
+  loading: LandingStateStep0['step0Loading'];
+  comment: LandingStateStep0['step0Comment'];
+  commentArgs: LandingStateStep0['step0CommentArgs'];
+  resultType: LandingStateStep0['step0ResultType'];
+  validate: LandingStateStep0['step0Validate'];
 }>;
-const Step2: FC<Step2Props> = (props) => {
+const Step0: FC<Step0Props> = (props) => {
   return (
     <Card className={clsx(styles.card, props.className)}>
       <CardMedia
@@ -31,15 +31,14 @@ const Step2: FC<Step2Props> = (props) => {
         component="img"
         height="140"
         image={props.imageUrl}
-        alt="Choose weidu.exe path"
+        alt="Choose server url"
       />
       <CardContent className={styles.cardContent}>
         <StepLoader show={props.loading} />
 
         <Content
-          disabled={props.disabled}
-          weiduExePath={props.weiduExePath}
-          setWeiduExePath={props.setWeiduExePath}
+          serverUrl={props.serverUrl}
+          setServerUrl={props.setServerUrl}
           loading={props.loading}
           validate={props.validate}
         />
@@ -54,4 +53,4 @@ const Step2: FC<Step2Props> = (props) => {
   );
 };
 
-export default Step2;
+export default Step0;

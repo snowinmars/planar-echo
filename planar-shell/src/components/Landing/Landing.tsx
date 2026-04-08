@@ -17,6 +17,7 @@ import type { GameLanguage, GameName } from '@planar/shared';
 
 import styles from './Landing.module.scss';
 import Step5 from './steps/Step5/Step5';
+import Step0 from './steps/Step0/Step0';
 
 const Landing: FC = () => {
   const { t } = useTranslation();
@@ -63,6 +64,20 @@ const Landing: FC = () => {
       <Grid container spacing="1em">
         <Grid size={{ xs: 12 }}>
           <Typography variant="h4">{t('landing.intro.convert')}</Typography>
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Step0
+            className={styles.step0}
+            disabled={store.step0Loading}
+            serverUrl={store.serverUrl}
+            setServerUrl={store.setServerUrl}
+            loading={store.step0Loading}
+            comment={store.step0Comment}
+            commentArgs={store.step0CommentArgs}
+            resultType={store.step0ResultType}
+            validate={store.step0Validate}
+            imageUrl="https://avatars.mds.yandex.net/i?id=517fdbf2c25f94655d3f31341743d81b_l-8425660-images-thumbs&n=13"
+          />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <Step1

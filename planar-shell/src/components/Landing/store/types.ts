@@ -11,7 +11,19 @@ import type { StateCreator } from 'zustand';
 export type ZustandSetType<T> = Parameters<StateCreator<T>>[0];
 export type ZustandGetType<T> = Parameters<StateCreator<T>>[1];
 
-export type LandingState = LandingStateStep1 & LandingStateStep2 & LandingStateStep3 & LandingStateStep4 & LandingStateStep5;
+export type LandingState = LandingStateStep0 & LandingStateStep1 & LandingStateStep2 & LandingStateStep3 & LandingStateStep4 & LandingStateStep5;
+
+export type LandingStateStep0 = Readonly<{
+  serverUrl: string;
+  setServerUrl: (serverUrl: string) => void;
+  step0Valid: boolean;
+  step0Loading: boolean;
+  step0Comment: string;
+  step0CommentArgs: Record<string, string>;
+  step0ResultType: Maybe<'success' | 'error'>;
+  step0Validate: () => Promise<void>;
+  step0Destroy: () => void;
+}>;
 
 export type LandingStateStep1 = Readonly<{
   gameLanguage: GameLanguage | '';
@@ -19,6 +31,7 @@ export type LandingStateStep1 = Readonly<{
   gameName: GameName | '';
   setGameName: (gameName: GameName | '') => void;
   step1Valid: boolean;
+  step1Destroy: () => void;
 }>;
 
 export type LandingStateStep2 = Readonly<{

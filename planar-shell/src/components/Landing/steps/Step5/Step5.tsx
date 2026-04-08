@@ -19,7 +19,7 @@ const L: FC<LProps> = ({ item }: LProps) => (
   />
 );
 
-type ConverterProps = Readonly<{
+type Step5Props = Readonly<{
   disabled: boolean;
   loading: LandingStateStep5['step5Loading'];
   gameName: LandingStateStep1['gameName'];
@@ -29,7 +29,7 @@ type ConverterProps = Readonly<{
   progress: LandingStateStep5['progress'];
   biff2json: () => Observable<void>;
 }>;
-const Converter: FC<ConverterProps> = (props: ConverterProps) => {
+const Step5: FC<Step5Props> = (props: Step5Props) => {
   const loaders = useMemo(
     () => [...props.progress.values()].filter(x => x.step.startsWith('parse')),
     [props.progress], // TODO [snow]: should be bugged because of reference mutation in zustand; fix with reference change instead of mutation
@@ -62,4 +62,4 @@ const Converter: FC<ConverterProps> = (props: ConverterProps) => {
     </div>
   );
 };
-export default Converter;
+export default Step5;

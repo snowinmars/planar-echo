@@ -13,6 +13,12 @@
     "runnerGuard": {
       "tryToRun": "Проверить локальные файлы игры"
     },
+    "step0": {
+      "serverUrl": "Url сервера planar",
+      "comments": {
+        "default": "См. README.md"
+      }
+    },
     "step1": {
       "gameName": "Игра",
       "gameLanguage": "Язык игры",
@@ -31,8 +37,8 @@
     },
     "step2": {
       "weiduExePath": "Путь к weidu.exe",
-      "weiduLink": "Скачать weidu",
       "comments": {
+        "default": "Скачать weidu",
         "weiduExeVersion": "Найдена версия weidu.exe: {{version}}",
         "loading": "Проверяю...",
         "connection": "Проверь соединение",
@@ -43,8 +49,8 @@
     },
     "step3": {
       "chitinKeyPath": "Путь к CHITIN.KEY",
-      "chitinKeyLink": "Что такое CHITIN.KEY?",
       "comments": {
+        "default": "Что такое CHITIN.KEY?",
         "biffsCount": "Найдено исходников: {{biffsCount}}",
         "loading": "Проверяю...",
         "connection": "Проверь соединение",
@@ -54,7 +60,7 @@
     },
     "step4": {
       "ownGame": "Я конвертирую то, что мне принадлежит.",
-      "comment": "Я не нарушаю авторские права - я бесплатно стимулирую продажи оригинала.."
+      "comment": "Я не нарушаю авторские права - я бесплатно стимулирую продажи оригинала."
     }
   },
   "themes": {

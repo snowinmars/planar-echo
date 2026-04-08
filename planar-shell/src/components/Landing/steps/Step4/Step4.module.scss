@@ -6,6 +6,10 @@
   filter: opacity(0.5);
 }
 
+.cardContent {
+  margin-top: 1em;
+}
+
 .checkbox {
   &>input:disabled+svg {
     filter: sepia(0.7);

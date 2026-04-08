@@ -32,7 +32,7 @@ const Step4: FC<Step4Props> = (props: Step4Props) => {
         image={props.imageUrl}
         alt="I own the game"
       />
-      <CardContent>
+      <CardContent className={styles.cardContent}>
         <FormControlLabel
           disabled={props.disabled}
           value={props.ownGame}

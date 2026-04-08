@@ -4,94 +4,50 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import Select from '@mui/material/Select';
 import getNativeLangNames from '@/shared/getNativeLangNames';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { gameNames, objectEntries } from '@planar/shared';
+import clsx from 'clsx';
+import Content from './children/Content/Content';
+import Comment from './children/Comment/Comment';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
-import type { GameName, GameLanguage } from '@planar/shared';
+import type { LandingStateStep1 } from '../../store/types';
 
 import styles from './Step1.module.scss';
 
 type Step1Props = WithClassName & Readonly<{
   disabled: boolean;
-  gameName: GameName | '';
-  gameLanguage: GameLanguage | '';
-  setGameName: (x: GameName) => void;
-  setGameLanguage: (x: GameLanguage) => void;
   imageUrl: string;
+  gameName: LandingStateStep1['gameName'];
+  gameLanguage: LandingStateStep1['gameLanguage'];
+  setGameName: LandingStateStep1['setGameName'];
+  setGameLanguage: LandingStateStep1['setGameLanguage'];
 }>;
 const Step1: FC<Step1Props> = (props) => {
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
   const [languages] = useState(() => getNativeLangNames(i18n.options.resources || {}));
   // planarLocalStorage.set('gameLanguage', gameLanguage);
 
   return (
-    <Card className={props.className}>
+    <Card className={clsx(styles.card, props.className)}>
       <CardMedia
+        className={clsx(props.disabled && styles.disabledImage)}
         component="img"
         height="140"
         image={props.imageUrl}
         alt="Choose language"
       />
       <CardContent className={styles.cardContent}>
-        <FormControl
-          className={styles.inputWrapper}
-          fullWidth
-        >
-          <InputLabel id="landing-step1-gameName-label">{t('landing.step1.gameName')}</InputLabel>
-          <Select
-            disabled={props.disabled}
-            value={props.gameName}
-            onChange={(e) => {
-              props.setGameName(e.target.value as GameName);
-            }}
-            label={t('landing.step1.gameName')}
-            labelId="landing-step1-gameName-label"
-            fullWidth
-          >
-            {
-              objectEntries(gameNames).map(([key, name]) => (
-                <MenuItem key={key} value={key} disabled={key !== 'pstee'}>
-                  <Typography>{t(name)}</Typography>
-                </MenuItem>
-              ))
-            }
-          </Select>
-        </FormControl>
+        <Content
+          disabled={props.disabled}
+          gameName={props.gameName}
+          gameLanguage={props.gameLanguage}
+          setGameName={props.setGameName}
+          setGameLanguage={props.setGameLanguage}
+          languages={languages}
+        />
 
-        <FormControl
-          className={styles.inputWrapper}
-          fullWidth
-        >
-          <InputLabel id="landing-step1-gameLanguage-label">{t('landing.step1.gameLanguage')}</InputLabel>
-          <Select
-            disabled={props.disabled}
-            value={props.gameLanguage}
-            onChange={(e) => {
-              props.setGameLanguage(e.target.value as GameLanguage);
-            }}
-            label={t('landing.step1.gameLanguage')}
-            labelId="landing-step1-gameLanguage-label"
-            fullWidth
-          >
-            {
-              languages.map(lang => (
-                <MenuItem key={lang.code} value={lang.code}>
-                  <Typography>{lang.name}</Typography>
-                </MenuItem>
-              ))
-            }
-          </Select>
-        </FormControl>
-
-        <Typography>
-          <br />
-        </Typography>
+        <Comment />
       </CardContent>
     </Card>
   );

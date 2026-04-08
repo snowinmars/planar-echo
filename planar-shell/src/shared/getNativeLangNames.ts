@@ -2,7 +2,7 @@ import { GameLanguage, objectKeys } from '@planar/shared';
 import type { Resource, ResourceLanguage } from 'i18next';
 import { gameLanguages } from '@planar/shared';
 
-type NativeLang = Readonly<{
+export type NativeLang = Readonly<{
   code: GameLanguage;
   name: string;
 }>;
