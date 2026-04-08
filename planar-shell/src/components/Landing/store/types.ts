@@ -11,7 +11,7 @@ import type { StateCreator } from 'zustand';
 export type ZustandSetType<T> = Parameters<StateCreator<T>>[0];
 export type ZustandGetType<T> = Parameters<StateCreator<T>>[1];
 
-export type LandingState = LandingStateStep0 & LandingStateStep1 & LandingStateStep2 & LandingStateStep3 & LandingStateStep4 & LandingStateStep5;
+export type LandingState = LandingStateStep0 & LandingStateStep1 & LandingStateStep2 & LandingStateStep3 & LandingStateStep5 & LandingStateStep6;
 
 export type LandingStateStep0 = Readonly<{
   serverUrl: string;
@@ -58,20 +58,20 @@ export type LandingStateStep3 = Readonly<{
   step3Destroy: () => void;
 }>;
 
-export type LandingStateStep4 = Readonly<{
+export type LandingStateStep5 = Readonly<{
   ownGame: boolean;
   setOwnGame: (x: boolean) => void;
-  step4Valid: boolean;
-  step4Destroy: () => void;
+  step5Valid: boolean;
+  step5Destroy: () => void;
 }>;
 
-export type LandingStateStep5 = Readonly<{
-  step5Loading: boolean;
-  step5Comment: string;
-  step5CommentArgs: Record<string, string>;
-  step5ResultType: Maybe<'success' | 'error'>;
-  step5Valid: boolean;
+export type LandingStateStep6 = Readonly<{
+  step6Loading: boolean;
+  step6Comment: string;
+  step6CommentArgs: Record<string, string>;
+  step6ResultType: Maybe<'success' | 'error'>;
+  step6Valid: boolean;
   progress: Map<ProgressStep, PrismIndexProgressMessage['data']>;
   biff2json: () => Observable<void>;
-  step5Destroy: () => void;
+  step6Destroy: () => void;
 }>;

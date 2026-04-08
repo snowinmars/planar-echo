@@ -7,17 +7,17 @@ import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router';
 import { useLandingStore } from './store/store';
 import RunnerGuard from './children/RunnerGuard/RunnerGuard';
+import Step0 from './steps/Step0/Step0';
 import Step1 from './steps/Step1/Step1';
 import Step2 from './steps/Step2/Step2';
 import Step3 from './steps/Step3/Step3';
-import Step4 from './steps/Step4/Step4';
+import Step5 from './steps/Step5/Step5';
+import Step6 from './steps/Step6/Step6';
 
 import type { FC } from 'react';
 import type { GameLanguage, GameName } from '@planar/shared';
 
 import styles from './Landing.module.scss';
-import Step5 from './steps/Step5/Step5';
-import Step0 from './steps/Step0/Step0';
 
 const Landing: FC = () => {
   const { t } = useTranslation();
@@ -82,7 +82,7 @@ const Landing: FC = () => {
         <Grid size={{ xs: 12, md: 6 }}>
           <Step1
             className={styles.step1}
-            disabled={store.step5Loading}
+            disabled={store.step6Loading}
             gameLanguage={store.gameLanguage}
             gameName={store.gameName}
             setGameLanguage={store.setGameLanguage}
@@ -94,7 +94,7 @@ const Landing: FC = () => {
           <Step2
             className={styles.step2}
             disabled={!store.step1Valid}
-            loading={store.step2Loading || store.step5Loading}
+            loading={store.step2Loading || store.step6Loading}
             weiduExePath={store.weiduExePath}
             setWeiduExePath={store.setWeiduExePath}
             validate={store.step2Validate}
@@ -107,7 +107,7 @@ const Landing: FC = () => {
         <Grid size={{ xs: 12, md: 6 }}>
           <Step3
             className={styles.step3}
-            disabled={!store.step2Valid || store.step5Loading}
+            disabled={!store.step2Valid || store.step6Loading}
             imageUrl="https://d.newsweek.com/en/full/2271421/german-shepherd-puppy.jpg"
             gameLanguage={store.gameLanguage as GameLanguage}
             weiduExePath={store.weiduExePath}
@@ -121,18 +121,18 @@ const Landing: FC = () => {
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Step4
+          <Step5
             className={styles.step4}
-            disabled={!store.step3Valid || store.step5Loading}
+            disabled={!store.step3Valid || store.step6Loading}
             imageUrl="https://i.pinimg.com/736x/1f/c4/b5/1fc4b52caa1829c75c0aed37cba79394.jpg"
             ownGame={store.ownGame}
             setOwnGame={store.setOwnGame}
           />
         </Grid>
         <Grid size={{ xs: 12 }}>
-          <Step5
-            disabled={!store.step4Valid}
-            loading={store.step5Loading}
+          <Step6
+            disabled={!store.step5Valid}
+            loading={store.step6Loading}
             gameName={store.gameName as GameName}
             gameLanguage={store.gameLanguage as GameLanguage}
             weiduExePath={store.weiduExePath}

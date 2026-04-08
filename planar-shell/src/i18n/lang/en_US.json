@@ -59,8 +59,14 @@
       }
     },
     "step4": {
+
+    },
+    "step5": {
       "ownGame": "I convert what I own.",
       "comment": "I do not infringe on copyrights - I stimulate sales of the original for free."
+    },
+    "step6": {
+
     }
   },
   "themes": {
