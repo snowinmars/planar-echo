@@ -1,15 +1,18 @@
 import { Typography, useTheme } from '@mui/material';
+import { useEffect, useState } from 'react';
+import clsx from 'clsx';
+
 import type { FC } from 'react';
 
 import styles from './Loader.module.scss';
-import clsx from 'clsx';
 
 const unify = (value: LoaderProps['value'], variant: LoaderProps['variant']): number => {
   switch (variant) {
     case 'plain': return value;
     case 'percent': {
       const max = 4294967295;
-      return Math.round(max * value / 100);
+      const percent = Math.round(max * value / 100);
+      return percent;
     }
     default: throw new Error(`Out of range variant ${variant}`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
   }
@@ -23,7 +26,15 @@ type LoaderProps = Readonly<{
 }>;
 const Loader: FC<LoaderProps> = ({ value, loading, variant, label }: LoaderProps) => {
   const theme = useTheme();
-  const chars = unify(value, variant).toString(2).padStart(32, '0').split('');
+  const [chars, setChars] = useState<string[]>([]);
+
+  useEffect(() => {
+    const chars = unify(value, variant)
+      .toString(2)
+      .padStart(32, '0')
+      .split('');
+    setChars(chars);
+  }, [value, variant]);
 
   // TODO [snow]: bad.
   // Redo with woff colr

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { Observable } from 'rxjs';
@@ -29,6 +30,11 @@ type ConverterProps = Readonly<{
   biff2json: () => Observable<void>;
 }>;
 const Converter: FC<ConverterProps> = (props: ConverterProps) => {
+  const loaders = useMemo(
+    () => [...props.progress.values()].filter(x => x.step.startsWith('parse')),
+    [props.progress], // TODO [snow]: should be bugged because of reference mutation in zustand; fix with reference change instead of mutation
+  );
+
   return (
     <div>
       <Button
@@ -47,7 +53,7 @@ const Converter: FC<ConverterProps> = (props: ConverterProps) => {
 
         <Grid size={{ xs: 6 }}>
           {
-            [...props.progress.values()].filter(x => x.step.startsWith('parse')).map(x => (
+            loaders.map(x => (
               <L key={x.step} item={x} />
             ))
           }
