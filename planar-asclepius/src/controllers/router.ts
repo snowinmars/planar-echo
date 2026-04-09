@@ -6,6 +6,7 @@ import {
   extendZodWithOpenApi,
 } from '@asteasolutions/zod-to-openapi';
 import registerValidateChitinKeyPath from './fs/validate/chitinKeyPath.js';
+import registerValidateGhostPath from './fs/validate/ghostPath.js';
 import registerValidateWeiduPath from './fs/validate/weiduPath.js';
 import registerPing from './ping/ping.js';
 import registerGhostDialogueDialogueIdSkeleton from './ghost/dialogue/dialogueId/skeleton.js';
@@ -23,6 +24,7 @@ const registry = new OpenAPIRegistry();
 const router = express.Router();
 
 registerValidateChitinKeyPath(registry, router);
+registerValidateGhostPath(registry, router);
 registerValidateWeiduPath(registry, router);
 registerPing(registry, router);
 registerGhostDialogueDialogueIdSkeleton(registry, router);

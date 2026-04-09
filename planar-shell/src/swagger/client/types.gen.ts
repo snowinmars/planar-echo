@@ -7,13 +7,13 @@ export type ClientOptions = {
 export type DialogueId = string;
 
 export const GameLanguage = {
+    RU_RU: 'ru_RU',
+    EN_US: 'en_US',
     CS_CZ: 'cs_CZ',
     DE_DE: 'de_DE',
-    EN_US: 'en_US',
     FR_FR: 'fr_FR',
     KO_KR: 'ko_KR',
-    PL_PL: 'pl_PL',
-    RU_RU: 'ru_RU'
+    PL_PL: 'pl_PL'
 } as const;
 
 export type GameLanguage = typeof GameLanguage[keyof typeof GameLanguage];
@@ -32,7 +32,7 @@ export type PostApiFsValidateChitinKeyPathData = {
     body: {
         weiduExePath: string;
         chitinKeyPath: string;
-        gameLanguage: 'cs_CZ' | 'de_DE' | 'en_US' | 'fr_FR' | 'ko_KR' | 'pl_PL' | 'ru_RU';
+        gameLanguage: 'ru_RU' | 'en_US' | 'cs_CZ' | 'de_DE' | 'fr_FR' | 'ko_KR' | 'pl_PL';
     };
     path?: never;
     query?: never;
@@ -65,6 +65,49 @@ export type PostApiFsValidateChitinKeyPathResponses = {
 };
 
 export type PostApiFsValidateChitinKeyPathResponse = PostApiFsValidateChitinKeyPathResponses[keyof PostApiFsValidateChitinKeyPathResponses];
+
+export type PostApiFsValidateGhostPathData = {
+    body: {
+        ghostPath: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/fs/validate/ghostPath';
+};
+
+export type PostApiFsValidateGhostPathErrors = {
+    /**
+     * Ghost directory not found
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND' | 'DIRECTORY_NOT_EMPTY';
+        };
+    };
+    /**
+     * Ghost directory not empty
+     */
+    406: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND' | 'DIRECTORY_NOT_EMPTY';
+        };
+    };
+};
+
+export type PostApiFsValidateGhostPathError = PostApiFsValidateGhostPathErrors[keyof PostApiFsValidateGhostPathErrors];
+
+export type PostApiFsValidateGhostPathResponses = {
+    /**
+     * Ghost is valid
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type PostApiFsValidateGhostPathResponse = PostApiFsValidateGhostPathResponses[keyof PostApiFsValidateGhostPathResponses];
 
 export type PostApiFsValidateWeiduPathData = {
     body: {

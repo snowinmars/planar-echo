@@ -2,7 +2,7 @@
 
 import { client } from './client.gen.js';
 import type { Client, Options as Options2, TDataShape } from './client/index.js';
-import type { GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostDialogueByDialogueIdByGameLanguageData, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses } from './types.gen.js';
+import type { GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateGhostPathData, PostApiFsValidateGhostPathErrors, PostApiFsValidateGhostPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostDialogueByDialogueIdByGameLanguageData, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses } from './types.gen.js';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -24,6 +24,19 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 export const postApiFsValidateChitinKeyPath = <ThrowOnError extends boolean = false>(options: Options<PostApiFsValidateChitinKeyPathData, ThrowOnError>) => (options.client ?? client).post<PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateChitinKeyPathErrors, ThrowOnError>({
     responseType: 'json',
     url: '/api/fs/validate/chitinKeyPath',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Validates ghost output access
+ */
+export const postApiFsValidateGhostPath = <ThrowOnError extends boolean = false>(options: Options<PostApiFsValidateGhostPathData, ThrowOnError>) => (options.client ?? client).post<PostApiFsValidateGhostPathResponses, PostApiFsValidateGhostPathErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/fs/validate/ghostPath',
     ...options,
     headers: {
         'Content-Type': 'application/json',

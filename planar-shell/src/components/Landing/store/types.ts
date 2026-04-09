@@ -11,7 +11,14 @@ import type { StateCreator } from 'zustand';
 export type ZustandSetType<T> = Parameters<StateCreator<T>>[0];
 export type ZustandGetType<T> = Parameters<StateCreator<T>>[1];
 
-export type LandingState = LandingStateStep0 & LandingStateStep1 & LandingStateStep2 & LandingStateStep3 & LandingStateStep5 & LandingStateStep6;
+export type LandingState
+  = & LandingStateStep0
+    & LandingStateStep1
+    & LandingStateStep2
+    & LandingStateStep3
+    & LandingStateStep4
+    & LandingStateStep5
+    & LandingStateStep6;
 
 export type LandingStateStep0 = Readonly<{
   serverUrl: string;
@@ -56,6 +63,18 @@ export type LandingStateStep3 = Readonly<{
   step3ResultType: Maybe<'success' | 'error'>;
   step3Validate: () => Promise<void>;
   step3Destroy: () => void;
+}>;
+
+export type LandingStateStep4 = Readonly<{
+  ghostPath: string;
+  setGhostPath: (ghostPath: string) => void;
+  step4Valid: boolean;
+  step4Loading: boolean;
+  step4Comment: string;
+  step4CommentArgs: Record<string, string>;
+  step4ResultType: Maybe<'success' | 'error'>;
+  step4Validate: () => Promise<void>;
+  step4Destroy: () => void;
 }>;
 
 export type LandingStateStep5 = Readonly<{

@@ -11,6 +11,7 @@ import Step0 from './steps/Step0/Step0';
 import Step1 from './steps/Step1/Step1';
 import Step2 from './steps/Step2/Step2';
 import Step3 from './steps/Step3/Step3';
+import Step4 from './steps/Step4/Step4';
 import Step5 from './steps/Step5/Step5';
 import Step6 from './steps/Step6/Step6';
 
@@ -121,9 +122,23 @@ const Landing: FC = () => {
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Step5
+          <Step4
             className={styles.step4}
             disabled={!store.step3Valid || store.step6Loading}
+            imageUrl="https://i.pinimg.com/736x/ca/68/6b/ca686bcdd3fd9c917638e578b5e44a69.jpg"
+            ghostPath={store.ghostPath}
+            setGhostPath={store.setGhostPath}
+            loading={store.step4Loading}
+            comment={store.step4Comment}
+            commentArgs={store.step4CommentArgs}
+            resultType={store.step4ResultType}
+            validate={store.step4Validate}
+          />
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Step5
+            className={styles.step4}
+            disabled={!store.step4Valid || store.step6Loading}
             imageUrl="https://i.pinimg.com/736x/1f/c4/b5/1fc4b52caa1829c75c0aed37cba79394.jpg"
             ownGame={store.ownGame}
             setOwnGame={store.setOwnGame}

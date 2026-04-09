@@ -9,13 +9,13 @@ export const dialogueIdSchema = {
 export const gameLanguageSchema = {
     type: 'string',
     enum: [
+        'ru_RU',
+        'en_US',
         'cs_CZ',
         'de_DE',
-        'en_US',
         'fr_FR',
         'ko_KR',
-        'pl_PL',
-        'ru_RU'
+        'pl_PL'
     ],
-    example: 'cs_CZ'
+    example: 'ru_RU'
 } as const;

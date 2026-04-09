@@ -59,7 +59,16 @@
       }
     },
     "step4": {
-
+      "ghostPath": "Output directory path",
+      "comments": {
+        "default": "Output directory path",
+        "success": "Fine",
+        "loading": "Checking...",
+        "connection": "Check connection",
+        "DIRECTORY_NOT_FOUND": "Directory not found",
+        "DIRECTORY_NOT_EMPTY": "Directory is not empty",
+        "unknown": "Error, see F12"
+      }
     },
     "step5": {
       "ownGame": "I convert what I own.",
