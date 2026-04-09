@@ -33,7 +33,7 @@ const Comment: FC<CommentProps> = ({ comment, commentArgs, resultType }) => {
       className={styles.comment}
       color={colorize(resultType)}
     >
-      {t('landing.step4.default')}
+      {t('landing.step4.comments.default')}
     </Typography>
   );
 };

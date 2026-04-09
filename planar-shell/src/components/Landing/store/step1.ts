@@ -11,6 +11,7 @@ export const useLandingStoreStep1: StateCreator<LandingState, [], [], LandingSta
   return {
     gameLanguage,
     gameName,
+    step1Loading: false,
     step1Valid: !!gameLanguage && !!gameName,
 
     setGameLanguage: (gameLanguage: GameLanguage | '') => {

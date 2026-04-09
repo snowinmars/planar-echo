@@ -69,10 +69,10 @@ const Landing: FC = () => {
         <Grid size={{ xs: 12, md: 6 }}>
           <Step0
             className={styles.step0}
-            disabled={store.step0Loading}
+            disabled={store.step0Loading || store.step6Loading}
+            loading={store.step0Loading || store.step6Loading}
             serverUrl={store.serverUrl}
             setServerUrl={store.setServerUrl}
-            loading={store.step0Loading}
             comment={store.step0Comment}
             commentArgs={store.step0CommentArgs}
             resultType={store.step0ResultType}
@@ -83,7 +83,8 @@ const Landing: FC = () => {
         <Grid size={{ xs: 12, md: 6 }}>
           <Step1
             className={styles.step1}
-            disabled={store.step6Loading}
+            disabled={!store.step0Valid || store.step6Loading}
+            loading={store.step1Loading || store.step6Loading}
             gameLanguage={store.gameLanguage}
             gameName={store.gameName}
             setGameLanguage={store.setGameLanguage}
@@ -94,7 +95,7 @@ const Landing: FC = () => {
         <Grid size={{ xs: 12, md: 6 }}>
           <Step2
             className={styles.step2}
-            disabled={!store.step1Valid}
+            disabled={!store.step1Valid || store.step2Loading || store.step6Loading}
             loading={store.step2Loading || store.step6Loading}
             weiduExePath={store.weiduExePath}
             setWeiduExePath={store.setWeiduExePath}
@@ -108,40 +109,41 @@ const Landing: FC = () => {
         <Grid size={{ xs: 12, md: 6 }}>
           <Step3
             className={styles.step3}
-            disabled={!store.step2Valid || store.step6Loading}
-            imageUrl="https://d.newsweek.com/en/full/2271421/german-shepherd-puppy.jpg"
+            disabled={!store.step2Valid || store.step3Loading || store.step6Loading}
+            loading={store.step3Loading || store.step6Loading}
             gameLanguage={store.gameLanguage as GameLanguage}
             weiduExePath={store.weiduExePath}
             chitinKeyPath={store.chitinKeyPath}
             setChitinKeyPath={store.setChitinKeyPath}
-            loading={store.step3Loading}
             comment={store.step3Comment}
             commentArgs={store.step3CommentArgs}
             resultType={store.step3ResultType}
             validate={store.step3Validate}
+            imageUrl="https://d.newsweek.com/en/full/2271421/german-shepherd-puppy.jpg"
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <Step4
             className={styles.step4}
-            disabled={!store.step3Valid || store.step6Loading}
-            imageUrl="https://i.pinimg.com/736x/ca/68/6b/ca686bcdd3fd9c917638e578b5e44a69.jpg"
+            disabled={!store.step3Valid || store.step4Loading || store.step6Loading}
+            loading={store.step4Loading || store.step6Loading}
             ghostPath={store.ghostPath}
             setGhostPath={store.setGhostPath}
-            loading={store.step4Loading}
             comment={store.step4Comment}
             commentArgs={store.step4CommentArgs}
             resultType={store.step4ResultType}
             validate={store.step4Validate}
+            imageUrl="https://i.pinimg.com/736x/ca/68/6b/ca686bcdd3fd9c917638e578b5e44a69.jpg"
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <Step5
             className={styles.step4}
             disabled={!store.step4Valid || store.step6Loading}
-            imageUrl="https://i.pinimg.com/736x/1f/c4/b5/1fc4b52caa1829c75c0aed37cba79394.jpg"
+            loading={store.step5Loading || store.step6Loading}
             ownGame={store.ownGame}
             setOwnGame={store.setOwnGame}
+            imageUrl="https://i.pinimg.com/736x/1f/c4/b5/1fc4b52caa1829c75c0aed37cba79394.jpg"
           />
         </Grid>
         <Grid size={{ xs: 12 }}>

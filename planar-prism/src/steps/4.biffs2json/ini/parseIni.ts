@@ -8,7 +8,6 @@ import { reportProgress } from '@/shared/report.js';
 
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Pathes } from '@/steps/1.createPathes/index.js';
-import type { LogPercent } from '@/shared/types.js';
 import type { Maybe } from '@planar/shared';
 import type { Ini, Signature, Versions } from './types.js';
 import type { Ids } from '../ids/index.js';
@@ -17,7 +16,6 @@ const parseIni = (
   pathes: Pathes,
   decompiledItems: DecompiledBiff[],
   ids: Map<string, Ids>,
-  percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<Ini> => iterate<DecompiledBiff, Ini>(
   decompiledItems,
   async (decompiledItem, i) => {
@@ -46,7 +44,6 @@ const parseIni = (
 
     return raw;
   },
-  percentCallback,
 );
 
 export default parseIni;

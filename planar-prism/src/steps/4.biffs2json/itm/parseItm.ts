@@ -11,7 +11,6 @@ import createMeta from '../meta.js';
 import type { Maybe } from '@planar/shared';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Pathes } from '@/steps/1.createPathes/index.js';
-import type { LogPercent } from '@/shared/types.js';
 import { reportProgress } from '@/shared/report.js';
 import type { Ids } from '../ids/index.js';
 import type { ItmV10, ItmV11, ItmV20, Signature, Versions } from './types.js';
@@ -30,7 +29,6 @@ const parseItm = (
   pathes: Pathes,
   decompiledItems: DecompiledBiff[],
   ids: Map<string, Ids>,
-  percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<Itm> => iterate<DecompiledBiff, Itm>(
   decompiledItems,
   async (decompiledItem, i) => {
@@ -103,7 +101,6 @@ const parseItm = (
       default:throw new Error('Should not happens');
     }
   },
-  percentCallback,
 );
 
 export default parseItm;

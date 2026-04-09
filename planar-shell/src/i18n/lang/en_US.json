@@ -16,7 +16,7 @@
     "step0": {
       "serverUrl": "Planar server url",
       "comments": {
-        "default": "See. README.md"
+        "default": "See README.md"
       }
     },
     "step1": {

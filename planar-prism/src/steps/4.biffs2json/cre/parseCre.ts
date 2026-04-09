@@ -10,7 +10,6 @@ import parseCreaturesV10FromBuffer from './v10/parseCreaturesV10FromBuffer.js';
 import type { Maybe } from '@planar/shared';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Pathes } from '@/steps/1.createPathes/index.js';
-import type { LogPercent } from '@/shared/types.js';
 import type { Ids } from '../ids/index.js';
 import type { Tlk } from '../tlk/index.js';
 import type {
@@ -29,7 +28,6 @@ const parseCre = (
   decompiledItems: DecompiledBiff[],
   tlk: Tlk,
   ids: Map<string, Ids>,
-  percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<Creature> => iterate<DecompiledBiff, Creature>(
   decompiledItems,
   async (decompiledItem, i) => {
@@ -87,7 +85,6 @@ const parseCre = (
       default: throw new Error('Should not happen');
     }
   },
-  percentCallback,
 );
 
 export default parseCre;

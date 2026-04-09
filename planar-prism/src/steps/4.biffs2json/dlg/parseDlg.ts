@@ -9,7 +9,6 @@ import createMeta from '../meta.js';
 
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Pathes } from '@/steps/1.createPathes/index.js';
-import type { LogPercent } from '@/shared/types.js';
 import type { Maybe } from '@planar/shared';
 import type { Tlk } from '../tlk/index.js';
 import type { RawDlg, Signature, Versions } from './types.js';
@@ -20,7 +19,6 @@ const parseDlg = (
   decompiledItems: DecompiledBiff[],
   tlk: Tlk,
   ids: Map<string, Ids>,
-  percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<RawDlg> => iterate<DecompiledBiff, RawDlg>(
   decompiledItems,
   async (decompiledItem, i) => {
@@ -57,7 +55,6 @@ const parseDlg = (
 
     return dlg;
   },
-  percentCallback,
 );
 
 export default parseDlg;

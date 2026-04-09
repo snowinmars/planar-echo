@@ -1,4 +1,5 @@
 import { timer, takeUntil, buffer, merge, Subject } from 'rxjs';
+import logger from './logger.js';
 
 type Progress = Readonly<{
   value: number;
@@ -17,12 +18,13 @@ const dispose$ = new Subject<void>();
 type CreateReportProps<T> = Readonly<{
   map: (x: T[]) => T[];
   send: (x: T) => void;
+  log: (x: T) => void;
 }>;
 type CreteReportResult<T> = Readonly<{
   report: (item: T) => void;
   unsubscribe: () => void;
 }>;
-const createReport = <T>({ map, send }: CreateReportProps<T>): CreteReportResult<T> => {
+const createReport = <T>({ map, send, log }: CreateReportProps<T>): CreteReportResult<T> => {
   const report$ = new Subject<T>();
   const autoFlush$ = timer(0, 250).pipe(takeUntil(dispose$));
   const flushTrigger$ = merge(autoFlush$, dispose$);
@@ -36,6 +38,7 @@ const createReport = <T>({ map, send }: CreateReportProps<T>): CreteReportResult
   });
   const report = (item: T): void => {
     const isIpc = !!process.send;
+    log(item);
     if (isIpc) report$.next(item);
   };
   return {
@@ -47,21 +50,25 @@ const createReport = <T>({ map, send }: CreateReportProps<T>): CreteReportResult
 const reportErrorResult = createReport<string>({
   map: x => x,
   send: x => ({ type: 'error', data: x }),
+  log: x => logger.error(x),
 });
 
 const reportProgressResult = createReport<Progress>({
   map: arr => latestBy(arr, x => x.step),
   send: x => ({ type: 'progress', data: x }),
+  log: x => logger.debug(`${x.value}% : '${x.step}'`),
 });
 
 const reportProgressSeqResult = createReport<Progress>({
   map: arr => latestBy(arr, x => x.step),
   send: x => ({ type: 'progressSeq', data: x }),
+  log: x => logger.debug(`${x.value} : '${x.step}'`),
 });
 
 const reportCompleteResult = createReport<void>({
   map: x => x,
   send: () => ({ type: 'complete' }),
+  log: () => logger.debug(`Complete`),
 });
 
 export const reportError = reportErrorResult.report;

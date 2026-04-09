@@ -10,6 +10,8 @@ export default async ({
 }: Command): Promise<Result> => {
   const weiduExe = normalize(weiduExePath);
 
+  // TODO [snow]: if user enter chitin.key instead of weidu.exe, it ignores it. Should I validate it?
+
   const weiduExeExists = await fileExists(weiduExe);
   if (!weiduExeExists) return {
     ok: false,

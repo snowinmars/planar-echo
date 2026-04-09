@@ -30,10 +30,7 @@ type Step6Props = Readonly<{
   biff2json: () => Observable<void>;
 }>;
 const Step6: FC<Step6Props> = (props: Step6Props) => {
-  const loaders = useMemo(
-    () => [...props.progress.values()].filter(x => x.step.startsWith('parse')),
-    [props.progress], // TODO [snow]: should be bugged because of reference mutation in zustand; fix with reference change instead of mutation
-  );
+  const loaders = [...props.progress.values()].filter(x => x.step.startsWith('parse'));
 
   return (
     <div>

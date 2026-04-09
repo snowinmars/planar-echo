@@ -7,6 +7,7 @@ import getNativeLangNames from '@/shared/getNativeLangNames';
 import clsx from 'clsx';
 import Content from './children/Content/Content';
 import Comment from './children/Comment/Comment';
+import StepLoader from '../../children/StepLoader/StepLoader';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
@@ -17,6 +18,7 @@ import styles from './Step1.module.scss';
 type Step1Props = WithClassName & Readonly<{
   disabled: boolean;
   imageUrl: string;
+  loading: LandingStateStep1['step1Loading'];
   gameName: LandingStateStep1['gameName'];
   gameLanguage: LandingStateStep1['gameLanguage'];
   setGameName: LandingStateStep1['setGameName'];
@@ -37,6 +39,8 @@ const Step1: FC<Step1Props> = (props) => {
         alt="Choose language"
       />
       <CardContent className={styles.cardContent}>
+        <StepLoader show={props.loading} />
+
         <Content
           disabled={props.disabled}
           gameName={props.gameName}

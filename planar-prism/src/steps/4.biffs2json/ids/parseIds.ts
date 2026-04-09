@@ -8,13 +8,11 @@ import parseIdsV1FromBuffer from './v1/parseIdsV1FromBuffer.js';
 import type { Maybe } from '@planar/shared';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Pathes } from '@/steps/1.createPathes/index.js';
-import type { LogPercent } from '@/shared/types.js';
 import type { Ids } from './types.js';
 
 const parseIds = (
   pathes: Pathes,
   decompiledItems: DecompiledBiff[],
-  percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<Ids> => iterate<DecompiledBiff, Ids>(
   decompiledItems,
   async (decompiledItem, i) => {
@@ -34,7 +32,6 @@ const parseIds = (
 
     return raw;
   },
-  percentCallback,
 );
 
 export default parseIds;

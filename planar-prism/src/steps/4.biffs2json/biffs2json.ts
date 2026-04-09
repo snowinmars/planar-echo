@@ -7,7 +7,6 @@ import { parseDlg } from './dlg/index.js';
 import { parseEffV10, parseEffV20 } from './eff/index.js';
 import { parseItm } from './itm/index.js';
 
-import type { LogPercent } from '@/shared/types.js';
 import type { Pathes } from '../1.createPathes/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../3.decompileBiffs/index.js';
 import type { Ids } from './ids/index.js';
@@ -23,10 +22,6 @@ type Creature = CreatureV10 | CreatureV12 | CreatureV22 | CreatureV90;
 type Itm = ItmV10 | ItmV11 | ItmV20;
 type Effect = EffectV10 | EffectV20;
 
-const logPercent: LogPercent = (x, r) => {
-  logger.debug(`Done ${x}% in '${r}'`);
-};
-
 const biffs2json = async (
   decompiledBiffs: Map<DecompiledBiffType, DecompiledBiff[]>,
   pathes: Pathes,
@@ -39,7 +34,7 @@ const biffs2json = async (
 
   logger.info(`Converting ids to json...`);
   const ids = new Map<string, Ids>();
-  const idsIterator = parseIds(pathes, decompiledBiffs.get('ids')!, logPercent);
+  const idsIterator = parseIds(pathes, decompiledBiffs.get('ids')!);
   for await (const id of idsIterator) {
     ids.set(id.resourceName, id);
     await pathes.output.saveJson.ids(id.resourceName, id);
@@ -49,7 +44,7 @@ const biffs2json = async (
 
   logger.info(`Converting ini to json...`);
   const inis = new Map<string, Ini>();
-  const iniIterator = parseIni(pathes, decompiledBiffs.get('ini')!, ids, logPercent);
+  const iniIterator = parseIni(pathes, decompiledBiffs.get('ini')!, ids);
   for await (const ini of iniIterator) {
     if (!ini) continue;
     inis.set(ini.resourceName, ini);
@@ -60,7 +55,7 @@ const biffs2json = async (
 
   logger.info(`Converting cre to json...`);
   const cres: Creature[] = [];
-  const cresIterator = parseCre(pathes, decompiledBiffs.get('cre')!, tlk, ids, logPercent);
+  const cresIterator = parseCre(pathes, decompiledBiffs.get('cre')!, tlk, ids);
   for await (const cre of cresIterator) {
     if (!cre) continue;
     cres.push(cre);
@@ -71,7 +66,7 @@ const biffs2json = async (
 
   logger.info(`Converting dlg to json...`);
   const dlgs: RawDlg[] = [];
-  const dlgIterator = parseDlg(pathes, decompiledBiffs.get('dlg')!, tlk, ids, logPercent);
+  const dlgIterator = parseDlg(pathes, decompiledBiffs.get('dlg')!, tlk, ids);
   for await (const dlg of dlgIterator) {
     dlgs.push(dlg);
     await pathes.output.saveJson.dialogues(dlg.resourceName, dlg);
@@ -81,8 +76,8 @@ const biffs2json = async (
 
   logger.info(`Converting eff to json...`);
   const effs: Effect[] = [];
-  // const effIterator = parseEffV10(pathes, decompiledBiffs.get('eff')!, ids, logPercent);
-  const effIterator = parseEffV20(pathes, decompiledBiffs.get('eff')!, ids, logPercent);
+  // const effIterator = parseEffV10(pathes, decompiledBiffs.get('eff')!, ids);
+  const effIterator = parseEffV20(pathes, decompiledBiffs.get('eff')!, ids);
   for await (const eff of effIterator) {
     effs.push(eff);
     await pathes.output.saveJson.effects(eff.resourceName, eff);
@@ -92,7 +87,7 @@ const biffs2json = async (
 
   logger.info(`Converting itm to json...`);
   const itms: Itm[] = [];
-  const itmIterator = parseItm(pathes, decompiledBiffs.get('itm')!, ids, logPercent);
+  const itmIterator = parseItm(pathes, decompiledBiffs.get('itm')!, ids);
   for await (const itm of itmIterator) {
     itms.push(itm);
     await pathes.output.saveJson.items(itm.resourceName, itm);

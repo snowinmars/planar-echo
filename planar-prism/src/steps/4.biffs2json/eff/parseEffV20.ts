@@ -10,7 +10,6 @@ import createMeta from '../meta.js';
 import type { Maybe } from '@planar/shared';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Pathes } from '@/steps/1.createPathes/index.js';
-import type { LogPercent } from '@/shared/types.js';
 import type { Signature, Versions } from './types.js';
 import type { EffectV20 } from './v20.types/effectV20.js';
 import type { Ids } from '../ids/index.js';
@@ -23,7 +22,6 @@ const parseEffV10 = (
   pathes: Pathes,
   decompiledItems: DecompiledBiff[],
   ids: Map<string, Ids>,
-  percentCallback: Maybe<LogPercent> = nothing(),
 ): AsyncIterableIterator<EffectV20> => iterate<DecompiledBiff, EffectV20>(
   decompiledItems,
   async (decompiledItem, i) => {
@@ -60,7 +58,6 @@ const parseEffV10 = (
 
     return effect;
   },
-  percentCallback,
 );
 
 export default parseEffV10;

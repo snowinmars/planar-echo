@@ -33,6 +33,7 @@ export type LandingStateStep0 = Readonly<{
 }>;
 
 export type LandingStateStep1 = Readonly<{
+  step1Loading: boolean;
   gameLanguage: GameLanguage | '';
   setGameLanguage: (gameLanguage: GameLanguage | '') => void;
   gameName: GameName | '';
@@ -78,6 +79,7 @@ export type LandingStateStep4 = Readonly<{
 }>;
 
 export type LandingStateStep5 = Readonly<{
+  step5Loading: boolean;
   ownGame: boolean;
   setOwnGame: (x: boolean) => void;
   step5Valid: boolean;

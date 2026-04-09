@@ -12,6 +12,8 @@ export default async ({
   const weiduExe = normalize(weiduExePath);
   const chitinKey = normalize(chitinKeyPath);
 
+  // TODO [snow]: if user enter chitin.key instead of weidu.exe, it ignores it. Should I validate it?
+
   const chitinKeyExists = await fileExists(chitinKey);
   if (!chitinKeyExists) return {
     ok: false,
