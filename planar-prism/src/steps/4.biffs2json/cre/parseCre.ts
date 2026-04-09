@@ -6,7 +6,6 @@ import { createReader } from '@/pipes/readers.js';
 import { reportProgress } from '@/shared/report.js';
 import createMeta from '../meta.js';
 import parseCreaturesV10FromBuffer from './v10/parseCreaturesV10FromBuffer.js';
-import patchWithTranslation from './v10/patches/patchTranslation.js';
 
 import type { Maybe } from '@planar/shared';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
@@ -55,8 +54,7 @@ const parseCre = (
 
     switch (meta.version) {
       case 'v1.0': {
-        const raw = parseCreaturesV10FromBuffer(reader, meta);
-        const translated = patchWithTranslation(raw, tlk);
+        const cre = parseCreaturesV10FromBuffer(reader, meta);
 
         const percent = Math.round((i + 1) * 100 / decompiledItems.length);
         reportProgress({
@@ -68,7 +66,7 @@ const parseCre = (
           },
         });
 
-        return translated;
+        return cre;
       }
       case 'v1.1': {
         return null as unknown as Creature;

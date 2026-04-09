@@ -1,2 +1,2 @@
-export type { RawDlg, Dlg } from './types.js';
+export type { RawDlg } from './types.js';
 export { default as parseDlg } from './parseDlg.js';

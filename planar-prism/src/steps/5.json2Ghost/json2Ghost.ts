@@ -1,7 +1,13 @@
 import type { Pathes } from '../1.createPathes/types.js';
+import type { Tlk } from '../4.biffs2json/tlk/index.js';
 import type { AllJsons } from '../4.biffs2json/types.js';
+import patchCres from './cre/v10/patch.js';
+import patchDlgs from './dlg/v10/patch.js';
 
 const json2Ghost = async (allJsons: AllJsons, pathes: Pathes): Promise<void> => {
+  const ghostCres = patchCres(allJsons.cres, allJsons.tlk);
+  const ghostDlgs = patchDlgs(allJsons.dlgs, allJsons.tlk);
+
   // const zeroPatchedNpdDialogues = zeroPatch(all.npcDialogues);
   // const x = await buildDialogueSkeletons(zeroPatchedNpdDialogues, logPercent);
   // const y = await translateDialogues(zeroPatchedNpdDialogues, all.creatures, 'ru_RU', logPercent);

@@ -1,20 +1,16 @@
 import { nothing } from '@planar/shared';
-
-import type { RawDlg, Dlg } from '../../types.js';
-import type { DlgState } from '../../v1.types/2.states.js';
-import type { RawResponse, DlgResponse } from '../../v1.types/3.response.js';
-import type { RawFunction } from '../../v1.types/4.function.js';
+import type { GhostDlg, GhostDlgResponse, GhostDlgState, TlkedDlg, TlkedResponse, TlkedState } from './types.js';
 
 type NestResponseProps = Readonly<{
-  response: RawResponse;
-  responsesTriggers: Map<number, RawFunction>;
-  responsesActions: Map<number, RawFunction>;
+  response: TlkedDlg['responses'][number];
+  responsesTriggers: TlkedDlg['responsesTriggers'];
+  responsesActions: TlkedDlg['responsesActions'];
 }>;
 const nestResponse = ({
   response,
   responsesTriggers,
   responsesActions,
-}: NestResponseProps): DlgResponse => {
+}: NestResponseProps): GhostDlgResponse => {
   const hasTrigger = response.triggerIndex && response.triggerIndex >= 0;
   const trigger = hasTrigger ? responsesTriggers.get(response.triggerIndex) : nothing();
 
@@ -36,11 +32,11 @@ const nestResponse = ({
 };
 
 type NestStateProps = Readonly<{
-  state: RawDlg['states'][number];
-  responses: RawDlg['responses'];
-  stateTriggers: RawDlg['stateTriggers'];
-  responsesTriggers: RawDlg['responsesTriggers'];
-  responsesActions: RawDlg['responsesActions'];
+  state: TlkedDlg['states'][number];
+  responses: TlkedDlg['responses'];
+  stateTriggers: TlkedDlg['stateTriggers'];
+  responsesTriggers: TlkedDlg['responsesTriggers'];
+  responsesActions: TlkedDlg['responsesActions'];
 }>;
 const nestState = ({
   state,
@@ -48,10 +44,10 @@ const nestState = ({
   stateTriggers,
   responsesTriggers,
   responsesActions,
-}: NestStateProps): DlgState => {
+}: NestStateProps): GhostDlgState => {
   const _responses = responses
     .slice(state.firstResponseIndex, state.firstResponseIndex + state.responsesCount)
-    .map(r => nestResponse({
+    .map((r: TlkedResponse) => nestResponse({
       response: r,
       responsesTriggers,
       responsesActions,
@@ -65,15 +61,13 @@ const nestState = ({
     trigger,
     action: nothing(), // sets later in zero patch
     responses: _responses,
-    origins: state.stateOrigins,
-    weightStates: state.weightStates,
     textTlk: state.textTlk,
   };
 };
 
-export const nestDialogue = (dialogue: RawDlg): Dlg => {
+export const nestDialogue = (dialogue: TlkedDlg): GhostDlg => {
   const nestedStates = dialogue.states
-    .map(state => nestState({
+    .map((state: TlkedState) => nestState({
       state: state,
       responses: dialogue.responses,
       stateTriggers: dialogue.stateTriggers,

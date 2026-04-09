@@ -1,6 +1,6 @@
 import type { BufferReader } from '@/pipes/readers.js';
 import type { Meta } from '../../../types.js';
-import type { RawHeader } from '../../v1.types/1.header.js';
+import { offsetMap, type RawHeader } from '../../v1.types/1.header.js';
 import type { Signature, Versions } from '../../types.js';
 
 const parseHeader = (reader: BufferReader, meta: Meta<Signature, Versions>): RawHeader => {
@@ -17,7 +17,7 @@ const parseHeader = (reader: BufferReader, meta: Meta<Signature, Versions>): Raw
   const responseTriggersCount   = reader.uint();
   const actionsOffset           = reader.uint();
   const actionsCount            = reader.uint();
-  const threatResponse          = reader.uint(); // TODO [snow]: to enum
+  const threatResponse          = reader.map.uint(offsetMap.threatResponse.parseFlags); // TODO [snow]: to enum
   /* eslint-enable */
 
   return {

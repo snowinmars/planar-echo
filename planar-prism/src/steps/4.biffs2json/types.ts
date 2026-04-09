@@ -2,7 +2,7 @@ import type { Ids } from './ids/index.js';
 import type { Ini } from './ini/index.js';
 import type { Tlk } from './tlk/index.js';
 import type { CreatureV10, CreatureV12, CreatureV22, CreatureV90 } from './cre/types.js';
-import type { Dlg } from './dlg/types.js';
+import type { RawDlg } from './dlg/index.js';
 import type { EffectV10 } from './eff/v10.types/effectV10.js';
 import type { EffectV20 } from './eff/v20.types/effectV20.js';
 import type { ItmV10, ItmV11, ItmV20 } from './itm/types.js';
@@ -37,7 +37,7 @@ export type AllJsons = Readonly<{
   ids: Map<string, Ids>;
   inis: Map<string, Ini>;
   cres: Creature[];
-  dlgs: Dlg[];
+  dlgs: RawDlg[];
   effs: Effect[];
   itms: Itm[];
 }>;

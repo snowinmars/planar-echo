@@ -1,6 +1,6 @@
 import { extend } from '@/pipes/offsetMap.js';
 import type { Maybe } from '@planar/shared';
-import type { Item } from '../../tlk/v1.types/2.item.js';
+import type { Signature, Versions } from '../types.js';
 
 /* createGenerator().register().flags('creatureFlagsV10',{
  *   byte1:['show longname in tooltip','no corpse','keep corpse','original class was fighter','original class was mage','original class was cleric','original class was thief','original class was druid',],
@@ -466,12 +466,10 @@ export const offsetMap = {
   alignment: extend(alignmentV10),
 };
 export type CreatureHeaderV10 = Readonly<{
-  signature: 'cre';
-  version: 'v1.0';
+  signature: Signature;
+  version: Versions;
   longNameRef: number;
-  longNameTlk: Maybe<Item>;
   shortNameRef: number;
-  shortNameTlk: Maybe<Item>;
   creatureFlags: CreatureFlagsV10[];
   xpGainedForKilling: number;
   creaturePowerLevelOrXpOfCreature: number;

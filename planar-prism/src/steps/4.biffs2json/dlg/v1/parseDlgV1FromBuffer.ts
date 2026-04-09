@@ -28,7 +28,6 @@ const parseIdsV1FromBuffer = (reader: BufferReader, meta: Meta<Signature, Versio
     stateTriggers,
     responsesTriggers,
     responsesActions,
-    stateIndicesOrderedByWeight: [], // may be overrided in the attachWeights patch
   };
 };
 

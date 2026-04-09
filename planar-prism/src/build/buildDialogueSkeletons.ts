@@ -2,13 +2,11 @@ import createWriter from '@/shared/writer.js';
 import { just } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type { DlgResponse } from '@/steps/4.biffs2json/dlg/v1.types/3.response.js';
-import type { DlgState } from '@/steps/4.biffs2json/dlg/v1.types/2.states.js';
-import type { Dlg } from '@/steps/4.biffs2json/dlg/types.js';
 import type { NpcDialogueEcho } from './buildDialogueSkeletonsTypes.js';
+import type { GhostDlg, GhostDlgResponse, GhostDlgState } from '@/steps/5.json2Ghost/dlg/v10/types.js';
 
-const isResponseDesctructor = (response: DlgResponse) => !response.nextDialog;
-const isResponseExtern = (response: DlgResponse, resourceName: string) => `${just(response.nextDialog)}.dlg` !== resourceName;
+const isResponseDesctructor = (response: GhostDlgResponse) => !response.nextDialog;
+const isResponseExtern = (response: GhostDlgResponse, resourceName: string) => `${just(response.nextDialog)}.dlg` !== resourceName;
 
 const formState = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`;
 const formResponse = (npcLowercaseId: string, stateIndex: number, responseIndex: number): string => `${formState(npcLowercaseId, stateIndex)}_response${responseIndex}`;
@@ -22,7 +20,7 @@ const formAction = (actionText: string, offset: number): string => {
   return actionText.replaceAll('\n', ';\n' + x);
 };
 
-const formLabelArgsProps = (state: DlgState, weight: number): Maybe<string> => {
+const formLabelArgsProps = (state: GhostDlgState, weight: number): Maybe<string> => {
   const isCtor = weight !== -1;
   const hasAction = !!state.action;
   if (!isCtor && !hasAction) return null;
@@ -48,7 +46,7 @@ const formLabelArgsProps = (state: DlgState, weight: number): Maybe<string> => {
   return writer.done();
 };
 
-const formResponseActionArgsProps = (response: DlgResponse): string => {
+const formResponseActionArgsProps = (response: GhostDlgResponse): string => {
   const hasAction = !!response.action;
   if (!hasAction) throw new Error(`Why do you want to formResponseActionArgsProps for response '${response.index}', that has no action?`);
 
@@ -60,7 +58,7 @@ const formResponseActionArgsProps = (response: DlgResponse): string => {
     .done();
 };
 
-const buildDialogueSkeleton = (npcDialogue: Dlg): string => {
+const buildDialogueSkeleton = (npcDialogue: GhostDlg): string => {
   const npcLowercaseId = npcDialogue.resourceName.split('.')[0]!;
   const npcUppercaseId = npcLowercaseId[0]!.toUpperCase() + npcLowercaseId.slice(1);
 
@@ -136,7 +134,7 @@ const buildDialogueSkeleton = (npcDialogue: Dlg): string => {
 };
 
 const buildDialogueSkeletons = (
-  npcDialogues: Dlg[],
+  npcDialogues: GhostDlg[],
   percentCallback: ((percent: number, resource: string) => void) | null = null,
 ): NpcDialogueEcho[] => {
   const npcDialogueEchoes: NpcDialogueEcho[] = [];

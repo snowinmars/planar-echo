@@ -1,13 +1,11 @@
+import type { GhostDlg, GhostDlgState } from '@/steps/5.json2Ghost/dlg/v10/types.js';
 import createWriter from '../../../shared/writer.js';
-
-import type { DlgState } from '../../../steps/4.biffs2json/dlg/v1.types/2.states.js';
-import type { Dlg } from '../../../steps/4.biffs2json/dlg/types.js';
 
 const morte1 = 'dmorte1.dlg';
 
-const patchMorte1 = (npcDialogue: Dlg): Dlg => {
+const patchMorte1 = (npcDialogue: GhostDlg): GhostDlg => {
   const morte1_state0 = npcDialogue.states.find(x => x.index === 0)!;
-  const new_morte1_state0: DlgState = {
+  const new_morte1_state0: GhostDlgState = {
     ...morte1_state0,
     action: createWriter()
       .writeLine(`l.talkMorte();`, 6)
@@ -29,7 +27,7 @@ const patchMorte1 = (npcDialogue: Dlg): Dlg => {
   };
 };
 
-const zeroPatch = (npcDialogues: Dlg[]): Dlg[] => {
+const zeroPatch = (npcDialogues: GhostDlg[]): GhostDlg[] => {
   const morte1Index = npcDialogues.findIndex(x => x.resourceName === morte1);
   const newMorte1 = patchMorte1(npcDialogues[morte1Index]!);
 

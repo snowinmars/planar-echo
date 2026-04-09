@@ -21,10 +21,6 @@ const parse = (reader: BufferReader, index: number, meta: Meta<Signature, Versio
     firstResponseIndex,
     responsesCount,
     triggerIndex,
-    // following properties may be overrided in the patches after this step
-    textTlk: nothing(),
-    stateOrigins: [],
-    weightStates: [],
   };
 };
 

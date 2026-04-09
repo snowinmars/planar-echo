@@ -4,10 +4,3 @@ export type RawFunction = Readonly<{
   length: number;
   text: string;
 }>;
-
-export type DlgFunction = Readonly<{
-  index: number;
-  offset: number;
-  length: number;
-  text: string;
-}>;

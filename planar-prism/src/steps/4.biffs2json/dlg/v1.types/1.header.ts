@@ -1,5 +1,5 @@
 import { extend } from '@/pipes/offsetMap.js';
-import type { Maybe } from '@planar/shared';
+import type { Signature, Versions } from '../types.js';
 
 /* createGenerator().register().flags('threatResponseV10',{
  *   byte1:['enemy','escapearea','nothing'],
@@ -23,8 +23,8 @@ export const offsetMap = {
 };
 
 export type RawHeader = Readonly<{
-  signature: string;
-  version: string;
+  signature: Signature;
+  version: Versions;
   statesCount: number;
   statesOffset: number;
   responsesCount: number;
@@ -35,21 +35,5 @@ export type RawHeader = Readonly<{
   responseTriggersCount: number;
   actionsOffset: number;
   actionsCount: number;
-  threatResponse: number;
-}>;
-
-export type DlgHeader = Readonly<{
-  signature: string;
-  version: string;
-  statesCount: number;
-  statesOffset: number;
-  responsesCount: number;
-  responsesOffset: number;
-  stateTriggersOffset: number;
-  stateTriggersCount: number;
-  responsesTriggersOffset: number;
-  responseTriggersCount: number;
-  actionsOffset: number;
-  actionsCount: number;
-  threatResponse: number;
+  threatResponse: ThreatResponseV10[];
 }>;

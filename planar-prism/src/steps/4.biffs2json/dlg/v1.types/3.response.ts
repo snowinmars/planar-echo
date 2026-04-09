@@ -1,7 +1,5 @@
 import { extend } from '@/pipes/offsetMap.js';
 import type { Maybe } from '@planar/shared';
-import type { Item } from '../../tlk/v1.types/2.item.js';
-import type { DlgFunction } from './4.function.js';
 
 /* createGenerator().register().flags('flagsV10',{
  *   byte1:['has associated text','has trigger','has action','terminates dialog','has journal entry','interrupt','add unsolved quest journal entry','add journal note'],
@@ -44,19 +42,4 @@ export type RawResponse = Readonly<{
   actionIndex: Maybe<number>;
   nextDialog: Maybe<string>;
   nextDialogState: Maybe<number>;
-  textTlk: Maybe<Item>;
-  journalTlk: Maybe<Item>;
-}>;
-
-export type DlgResponse = Readonly<{
-  index: number;
-  flags: FlagsV10[];
-  textRef: Maybe<number>;
-  journalRef: Maybe<number>;
-  trigger: Maybe<DlgFunction>;
-  action: Maybe<DlgFunction>;
-  nextDialog: Maybe<string>;
-  nextDialogState: Maybe<number>;
-  textTlk: Maybe<Item>;
-  journalTlk: Maybe<Item>;
 }>;

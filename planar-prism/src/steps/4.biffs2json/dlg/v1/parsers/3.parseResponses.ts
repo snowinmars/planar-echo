@@ -40,9 +40,6 @@ const parse = (reader: BufferReader, index: number, meta: Meta<Signature, Versio
     actionIndex,
     nextDialog,
     nextDialogState,
-    // following properties may be overrided in the patches after this step
-    textTlk: nothing(),
-    journalTlk: nothing(),
   };
 };
 
