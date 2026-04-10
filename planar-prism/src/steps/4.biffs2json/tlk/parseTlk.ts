@@ -19,7 +19,7 @@ const parseTlk = async (resourceName: Pathes['tlkPath']): Promise<Tlk> => {
 
   reportProgress({
     value: 1,
-    step: 'parseTlk',
+    step: 'tlk_raw2json',
     params: {
       version: version,
       resourceName,
@@ -50,7 +50,7 @@ const parseTlk = async (resourceName: Pathes['tlkPath']): Promise<Tlk> => {
 
   reportProgress({
     value: 100,
-    step: 'parseTlk',
+    step: 'tlk_raw2json',
     params: {
       version: version,
       resourceName,

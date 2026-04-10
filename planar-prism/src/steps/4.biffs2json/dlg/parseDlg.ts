@@ -46,7 +46,7 @@ const parseDlg = (
     const percent = Math.round((i + 1) * 100 / decompiledItems.length);
     reportProgress({
       value: percent,
-      step: 'parseDlg',
+      step: 'dlg_raw2json',
       params: {
         version: meta.version,
         resourceName,

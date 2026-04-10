@@ -57,7 +57,7 @@ const parseCre = (
         const percent = Math.round((i + 1) * 100 / decompiledItems.length);
         reportProgress({
           value: percent,
-          step: 'parseCre',
+          step: 'cre_raw2json',
           params: {
             version: meta.version,
             resourceName,

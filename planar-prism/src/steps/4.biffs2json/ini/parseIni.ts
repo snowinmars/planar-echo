@@ -35,7 +35,7 @@ const parseIni = (
     const percent = Math.round((i + 1) * 100 / decompiledItems.length);
     reportProgress({
       value: percent,
-      step: 'parseIni',
+      step: 'ini_raw2json',
       params: {
         version: 'V1.0',
         resourceName,

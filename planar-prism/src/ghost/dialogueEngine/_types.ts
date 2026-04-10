@@ -1,7 +1,7 @@
-import { Maybe, GameLanguage } from '@planar/shared';
-import { LabelId, NpcId, Sound, Sprite } from './enums';
+import type { LabelId, NpcId, Sound, Sprite } from './_enums.js';
 
 export const createSayId = (labelId: LabelId, i: number) => `${labelId}_${i}`;
+export type DevGameLanguage = GameLanguage | 'dev';
 
 export type EngineInstructionPlaySound = Readonly<{
   id: 'playSound';
@@ -40,8 +40,8 @@ export type UntranslatedNpcDialogue<T> = Readonly<{
 export type UntranslatedLabel<T> = Readonly<{
   labelId: LabelId;
   args: Maybe<ArgsProps<T>>;
-  says: Map<GameLanguage, UntranslatedSay<T>[]>;
-  responses: Map<GameLanguage, UntranslatedResponse<T>[]>;
+  says: Map<DevGameLanguage, UntranslatedSay<T>[]>;
+  responses: Map<DevGameLanguage, UntranslatedResponse<T>[]>;
   jump: Maybe<UntranslatedJump<T>>;
 }>
 ;
@@ -70,8 +70,8 @@ export type NpcDialogue<T> = Readonly<{
 export type Label<T> = Readonly<{
   labelId: LabelId;
   args: Maybe<ArgsProps<T>>;
-  says: Map<GameLanguage, Say<T>[]>;
-  responses: Map<GameLanguage, Response<T>[]>;
+  says: Map<DevGameLanguage, Say<T>[]>;
+  responses: Map<DevGameLanguage, Response<T>[]>;
   jump: Maybe<Jump<T>>;
 }>
 ;
@@ -94,3 +94,24 @@ export type Jump<T> = Readonly<{
   args: Maybe<ArgsProps<T>>;
 }>
 ;
+
+///
+
+export type GameLanguage
+  = | 'cs_CZ'
+    | 'de_DE'
+    | 'en_US'
+    | 'fr_FR'
+    | 'ko_KR'
+    | 'pl_PL'
+    | 'ru_RU'
+;
+
+export type Nothing = null | undefined | void;
+export type Maybe<T> = NonNullable<T> | Nothing;
+export const just = <T>(maybe: Maybe<T>): T => {
+  if (maybe || maybe === 0 || maybe === '') return maybe;
+  throw new Error('Null reference exception');
+};
+export const maybe = <T>(value: T): Maybe<T> => value ?? null;
+export const nothing = (): Nothing => undefined;

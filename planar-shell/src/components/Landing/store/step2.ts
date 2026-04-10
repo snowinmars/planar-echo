@@ -19,7 +19,7 @@ const translateErrorState = (error: FormErrorStateProps): string => {
   }
 };
 
-const validate = async (set: ZustandSetType<LandingStateStep2>, get: ZustandGetType<LandingStateStep2>): Promise<void> => {
+const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep2>, get: ZustandGetType<LandingStateStep2>): Promise<void> => {
   const { weiduExePath } = get();
 
   if (!weiduExePath) {
@@ -44,6 +44,7 @@ const validate = async (set: ZustandSetType<LandingStateStep2>, get: ZustandGetT
   try {
     const { data, error } = await postApiFsValidateWeiduPath({
       client,
+      baseURL: serverUrl,
       body: { weiduExePath },
     });
 
@@ -92,7 +93,8 @@ export const useLandingStoreStep2: StateCreator<LandingState, [], [], LandingSta
   const subscription = validate$
     .pipe(debounce(() => interval(1000)))
     .subscribe(() => {
-      validate(set, get)
+      const { serverUrl } = get();
+      validate(serverUrl, set, get)
         .then(() => {
           const { step2Valid } = get();
           return updateStep3Validation(step2Valid, set, get);
@@ -122,7 +124,10 @@ export const useLandingStoreStep2: StateCreator<LandingState, [], [], LandingSta
     step2CommentArgs: {},
     step2ResultType: nothing(),
 
-    step2Validate: () => validate(set, get),
+    step2Validate: () => {
+      const { serverUrl } = get();
+      return validate(serverUrl, set, get);
+    },
     step2Destroy: () => {
       subscription.unsubscribe();
       validate$.complete();

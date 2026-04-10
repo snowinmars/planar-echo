@@ -24,7 +24,7 @@ const parseIds = (
     const percent = Math.round((i + 1) * 100 / decompiledItems.length);
     reportProgress({
       value: percent,
-      step: 'parseIds',
+      step: 'ids_raw2json',
       params: {
         resourceName,
       },

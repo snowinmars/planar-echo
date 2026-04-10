@@ -31,10 +31,10 @@ export const entryExists = async (entryPath: Maybe<string>): Promise<boolean> =>
   }
 };
 
-export const saveToFile = async (path: string, item: unknown): Promise<void> => {
-  await writeFile(path, jsonStringify(item), { encoding: 'utf8' });
+export const saveToFile = async (path: string, item: unknown, asIs = false): Promise<void> => {
+  await writeFile(path, asIs ? item as string : jsonStringify(item), { encoding: 'utf8' });
 };
-export const loadFromFile = async <T>(path: string): Promise<T> => {
+export const loadFromFile = async <T>(path: string, asIs = false): Promise<T> => {
   const json = await readFile(path, { encoding: 'utf8' });
-  return jsonParse(json);
+  return asIs ? json as T : jsonParse(json);
 };

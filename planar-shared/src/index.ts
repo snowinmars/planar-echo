@@ -3,6 +3,7 @@ export { gameLanguages } from './gameLanguage.js';
 export { jsonStringify, jsonParse } from './json.js';
 export { just, maybe, nothing } from './maybe.js';
 export { objectEntries, objectKeys, objectValues } from './objects.js';
+export { progressSteps } from './prismIndexStartMessage.js';
 
 export type { GameName } from './gameName.js';
 export type { GameLanguage } from './gameLanguage.js';

@@ -42,7 +42,7 @@ const parseEffV10 = (
     const percent = Math.round((i + 1) * 100 / decompiledItems.length);
     reportProgress({
       value: percent,
-      step: 'parseEffV10',
+      step: 'effV10_raw2json',
       params: {
         version: meta.version,
         resourceName,

@@ -17,16 +17,21 @@ export type PrismIndexStartMessage = Readonly<{
   type: 'start';
   data: PrismIndexProps;
 }>;
-export type ProgressStep
-  = | 'decompileBiffs' // value 0
-    | 'parseCre' // value:%; params: {version, resourceName}
-    | 'parseDlg' // value:%; params: {version, resourceName}
-    | 'parseEffV10' // value:%; params: {version, resourceName}
-    | 'parseEffV20' // value:%; params: {version, resourceName}
-    | 'parseIds' // value:%; params: {resourceName}
-    | 'parseIni' // value:%; params: {version, resourceName}
-    | 'parseItm' // value:%; params: {version, resourceName}
- ;
+export const progressSteps = [
+  'decompileBiffs', // value 0
+  'ids_raw2json', // value: number in percent; params: {resourceName: string}
+  'cre_raw2json', // here and below reportProgress params is : value: number in percent; params: {version: string, resourceName: string}
+  'dlg_raw2json',
+  'effV10_raw2json',
+  'effV20_raw2json',
+  'ini_raw2json',
+  'itm_raw2json',
+  'tlk_raw2json',
+  'cre_json2ghost',
+  'dlg_json2ghost',
+] as const;
+export type ProgressStep = typeof progressSteps[number];
+
 export type PrismIndexProgressMessage = Readonly<{
   type: 'progress';
   data: Readonly<{

@@ -1,5 +1,5 @@
 import type { RawDlg } from '@/steps/4.biffs2json/dlg/index.js';
-import type { WeightedDlg } from './types.js';
+import type { WeightedDlg } from './1.attachWeights.types.ts';
 
 const attachWeights = (dialogue: RawDlg): WeightedDlg => {
   const stateIndicesOrderedByWeight = dialogue.states

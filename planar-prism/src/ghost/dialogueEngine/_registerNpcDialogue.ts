@@ -1,16 +1,18 @@
-import { just } from '@planar/shared';
-import { createSayId } from './types';
+// import { just } from '@planar/shared';
+import { createSayId, just } from './_types.js';
 
-import type { Maybe, GameLanguage } from '@planar/shared';
-import type { LabelId, ResponseId } from './enums';
+// import type { Maybe, GameLanguage } from '@planar/shared';
+import type { LabelId, ResponseId } from './_enums.js';
 import type {
+  Maybe,
+  GameLanguage,
   ArgsProps,
   UntranslatedNpcDialogue,
   UntranslatedLabel,
   UntranslatedSay,
   UntranslatedResponse,
   UntranslatedJump,
-} from './types';
+} from './_types.js';
 
 type LabelFunction<T> = (labelId: LabelId, args?: Maybe<ArgsProps<T>>) => Readonly<{ say: SayFunction<T> }>;
 type SayFunction<T> = (args: Maybe<ArgsProps<T>>) => Readonly<{ say: SayFunction<T>; response: ResponseFunction<T>; jump: JumpFunction<T> }>;

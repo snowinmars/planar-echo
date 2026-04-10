@@ -1,5 +1,6 @@
-import { nothing } from '@planar/shared';
+import { nothing, progressSteps } from '@planar/shared';
 import { Observable, Subject } from 'rxjs';
+import urlJoin from 'url-join';
 
 import type { LandingState, LandingStateStep6 } from './types';
 import type { StateCreator } from 'zustand';
@@ -15,21 +16,13 @@ import type {
 
 type WebSocketMessage = PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
 
-const getStartingSteps = () => new Map<ProgressStep, PrismIndexProgressMessage['data']>(([
-  'decompileBiffs', // value 0
-  'parseTlk', // value:%, params: {version, resourceName}
-  'parseCre', // value:%; params: {version, resourceName}
-  'parseDlg', // value:%; params: {version, resourceName}
-  // 'parseEffV10', // value:%; params: {version, resourceName}
-  'parseEffV20', // value:%; params: {version, resourceName}
-  'parseIds', // value:%; params: {resourceName}
-  'parseIni', // value:%; params: {version, resourceName}
-  'parseItm', // value:%; params: {version, resourceName}
-] as ProgressStep[]).map(x => [x, { value: 0, step: x }]));
+const getStartingSteps = () => new Map<ProgressStep, PrismIndexProgressMessage['data']>(progressSteps.map(x => [x, { value: 0, step: x }]));
 
 export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingStateStep6> = (set, get) => {
   const createWs = (): WebSocket => {
-    const ws = new WebSocket('ws://localhost:3003/api/prism/index');
+    const { serverUrl } = get();
+    const wsUrl = serverUrl.replace('http://', 'ws://').replace('https://', 'wss://');
+    const ws = new WebSocket(urlJoin(wsUrl, '/api/prism/index'));
 
     const updateProgress = (step: ProgressStep, value: number) => {
       const { progress } = get();
@@ -100,6 +93,7 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
           gameLanguage,
           weiduExePath,
           chitinKeyPath,
+          ghostPath,
         } = get();
 
         const startMsg: PrismIndexStartMessage = {
@@ -109,7 +103,7 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
             gameLanguage: gameLanguage as GameLanguage,
             weiduExe: weiduExePath,
             chitinKey: chitinKeyPath,
-            ghost: 'E:/prg/snowinmars/planar-echo/planar-ghost',
+            ghost: ghostPath,
           },
         };
 

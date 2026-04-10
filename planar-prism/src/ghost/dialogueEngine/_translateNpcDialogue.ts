@@ -1,16 +1,18 @@
-import { just } from '@planar/shared';
-import { createSayId } from './types';
+// import { just } from '@planar/shared';
+import { createSayId, just } from './_types.js';
 
-import type { Maybe, GameLanguage } from '@planar/shared';
-import type { LabelId, NpcId, ResponseId } from './enums';
+// import type { Maybe, GameLanguage } from '@planar/shared';
+import type { LabelId, NpcId, ResponseId } from './_enums.js';
 import type {
+  Maybe,
+  GameLanguage,
   NpcDialogue,
   Label,
   Say,
   Response,
   UntranslatedNpcDialogue,
   UntranslatedLabel,
-} from './types';
+} from './_types.js';
 
 type LabelFunction<T> = (labelId: LabelId) => Readonly<{ say: SayFunction<T> }>;
 type SayFunction<T> = (who: NpcId, what: string) => Readonly<{ say: SayFunction<T>; response: ResponseFunction<T> }>;
@@ -31,7 +33,7 @@ const throwIfInvalidUntranslatedLabel = <T>(unstranslatedLabel: UntranslatedLabe
   if (!untranslatedResponses) throw new Error(`Cannot find dev responses for unstranslated label ${unstranslatedLabel.labelId}`);
 };
 
-const translateNpcDialogue = <T>(untranslatedNpcDialogue: UntranslatedNpcDialogue<T>, lang: Lang): { label: LabelFunction<T> } => {
+const translateNpcDialogue = <T>(untranslatedNpcDialogue: UntranslatedNpcDialogue<T>, language: GameLanguage): { label: LabelFunction<T> } => {
   let _unstranslatedLabel: Maybe<UntranslatedLabel<T>> = null;
   let _label: Maybe<Label<T>> = null;
   const npcDialogue: NpcDialogue<T> = {
@@ -56,8 +58,8 @@ const translateNpcDialogue = <T>(untranslatedNpcDialogue: UntranslatedNpcDialogu
       jump: _unstranslatedLabel.jump,
     };
 
-    _label.says.set(lang, []);
-    _label.responses.set(lang, []);
+    _label.says.set(language, []);
+    _label.responses.set(language, []);
 
     return {
       say,
@@ -66,8 +68,8 @@ const translateNpcDialogue = <T>(untranslatedNpcDialogue: UntranslatedNpcDialogu
 
   const say: SayFunction<T> = (who: NpcId, what: string) => {
     const untranslatedSays = _unstranslatedLabel!.says.get('dev')!;
-    const untranslatedSay = untranslatedSays[0];
-    const says = _label!.says.get(lang)!;
+    const untranslatedSay = untranslatedSays[0]!;
+    const says = _label!.says.get(language)!;
 
     const isFirstSay = says.length === 0;
     says.push({
@@ -88,7 +90,7 @@ const translateNpcDialogue = <T>(untranslatedNpcDialogue: UntranslatedNpcDialogu
     const untranslatedResponse = untranslatedResponses.find(x => x.responseId === responseId)!;
     if (!untranslatedResponse) throw new Error(`Response ${responseId} does not exist on label ${_unstranslatedLabel!.labelId}`);
 
-    _label!.responses.get(lang)!.push({
+    _label!.responses.get(language)!.push({
       responseId,
       args: untranslatedResponse.args,
       jumpTo: untranslatedResponse.jumpTo,

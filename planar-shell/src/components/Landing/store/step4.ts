@@ -19,7 +19,7 @@ const translateErrorState = (error: FormErrorStateProps): string => {
   }
 };
 
-const validate = async (set: ZustandSetType<LandingStateStep4>, get: ZustandGetType<LandingStateStep4>) => {
+const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep4>, get: ZustandGetType<LandingStateStep4>) => {
   const { ghostPath } = get();
 
   if (!ghostPath) {
@@ -44,6 +44,7 @@ const validate = async (set: ZustandSetType<LandingStateStep4>, get: ZustandGetT
   try {
     const { error } = await postApiFsValidateGhostPath({
       client,
+      baseURL: serverUrl,
       body: { ghostPath },
     });
 
@@ -82,7 +83,8 @@ export const useLandingStoreStep4: StateCreator<LandingState, [], [], LandingSta
   const subscription = validate$
     .pipe(debounce(() => interval(1000)))
     .subscribe(() => {
-      validate(set, get).catch(e => console.error(e));
+      const { serverUrl } = get();
+      validate(serverUrl, set, get).catch(e => console.error(e));
     });
 
   const ghostPath = planarLocalStorage.get<string>('ghostPath', '')!;
@@ -103,7 +105,8 @@ export const useLandingStoreStep4: StateCreator<LandingState, [], [], LandingSta
     step4ResultType: nothing(),
 
     step4Validate: () => {
-      return validate(set, get);
+      const { serverUrl } = get();
+      return validate(serverUrl, set, get);
     },
     step4Destroy: () => {
       subscription.unsubscribe();

@@ -1,4 +1,4 @@
-import { nothing } from '@planar/shared';
+import { nothing, type Maybe } from '@planar/shared';
 import { offsetMap } from '../../v1.types/3.response.js';
 
 import type { BufferReader } from '@/pipes/readers.js';
@@ -11,25 +11,24 @@ const normalizeRef = (value: number, emptyInt: number): number => value === empt
 const parse = (reader: BufferReader, index: number, meta: Meta<Signature, Versions>): RawResponse => {
   const flags = reader.map.uint(offsetMap.flags.parseFlags);
 
-  const textRef = flags.includes('has associated text')
-    ? normalizeRef(reader.uint(), meta.emptyInt)
-    : nothing();
+  let textRef: Maybe<number> = normalizeRef(reader.uint(), meta.emptyInt);
+  if (!flags.includes('has associated text')) textRef = nothing();
 
-  const journalRef = flags.includes('has journal entry')
-    ? normalizeRef(reader.uint(), meta.emptyInt)
-    : nothing();
+  let journalRef: Maybe<number> = normalizeRef(reader.uint(), meta.emptyInt);
+  if (!flags.includes('has journal entry')) journalRef = nothing();
 
-  const triggerIndex = flags.includes('has trigger')
-    ? normalizeRef(reader.uint(), meta.emptyInt)
-    : nothing();
+  let triggerIndex: Maybe<number> = normalizeRef(reader.uint(), meta.emptyInt);
+  if (!flags.includes('has trigger')) triggerIndex = nothing();
 
-  const actionIndex = flags.includes('has action')
-    ? reader.uint()
-    : nothing();
+  let actionIndex: Maybe<number> = normalizeRef(reader.uint(), meta.emptyInt);
+  if (!flags.includes('has action')) actionIndex = nothing();
 
-  const [nextDialog, nextDialogState] = flags.includes('terminates dialog')
-    ? [nothing(), nothing()]
-    : [reader.string(8), reader.uint()];
+  let nextDialog: Maybe<string> = reader.string(8);
+  let nextDialogState: Maybe<number> = reader.uint();
+  if (flags.includes('terminates dialog')) {
+    nextDialog = nothing();
+    nextDialogState = nothing();
+  }
 
   return {
     index,

@@ -1,9 +1,10 @@
 import { timer, takeUntil, buffer, merge, Subject } from 'rxjs';
 import logger from './logger.js';
+import type { ProgressStep } from '@planar/shared';
 
 type Progress = Readonly<{
   value: number;
-  step: string;
+  step: ProgressStep;
   params?: Record<string, string> | undefined;
 }>;
 

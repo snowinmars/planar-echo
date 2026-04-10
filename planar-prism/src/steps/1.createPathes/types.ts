@@ -1,6 +1,7 @@
 import type { GameName, GameLanguage } from '@planar/shared';
 
 type OutDir = Readonly<{
+  root: string;
   dialogues: string;
   ids: string;
   inis: string;
@@ -8,7 +9,7 @@ type OutDir = Readonly<{
   effects: string;
   items: string;
 }>;
-type SaveFunction = (resourceName: string, entry: unknown) => Promise<void>;
+type SaveFunction = (resourceName: string, entry: unknown, asIs?: boolean) => Promise<void>;
 type OutSave = Readonly<{
   dialogues: SaveFunction;
   ids: SaveFunction;

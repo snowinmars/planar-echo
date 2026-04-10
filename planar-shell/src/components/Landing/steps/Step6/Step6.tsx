@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { Observable } from 'rxjs';
@@ -30,7 +29,8 @@ type Step6Props = Readonly<{
   biff2json: () => Observable<void>;
 }>;
 const Step6: FC<Step6Props> = (props: Step6Props) => {
-  const loaders = [...props.progress.values()].filter(x => x.step.startsWith('parse'));
+  const raw2jsonLoaders = [...props.progress.values()].filter(x => x.step.endsWith('raw2json')).filter(x => x.step !== 'effV10_raw2json'); // effv10 has no usage in frontend
+  const json2ghostLoaders = [...props.progress.values()].filter(x => x.step.endsWith('json2ghost'));
 
   return (
     <div>
@@ -50,7 +50,15 @@ const Step6: FC<Step6Props> = (props: Step6Props) => {
 
         <Grid size={{ xs: 6 }}>
           {
-            loaders.map(x => (
+            raw2jsonLoaders.map(x => (
+              <L key={x.step} item={x} />
+            ))
+          }
+        </Grid>
+
+        <Grid size={{ xs: 6 }}>
+          {
+            json2ghostLoaders.map(x => (
               <L key={x.step} item={x} />
             ))
           }

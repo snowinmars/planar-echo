@@ -18,7 +18,7 @@ const translateErrorState = (error: FormErrorStateProps): string => {
   }
 };
 
-const validate = async (gameLanguage: GameLanguage, weiduExePath: string, set: ZustandSetType<LandingStateStep3>, get: ZustandGetType<LandingStateStep3>) => {
+const validate = async (serverUrl: string, gameLanguage: GameLanguage, weiduExePath: string, set: ZustandSetType<LandingStateStep3>, get: ZustandGetType<LandingStateStep3>) => {
   const { chitinKeyPath } = get();
 
   if (!chitinKeyPath || !gameLanguage || !weiduExePath) {
@@ -43,6 +43,7 @@ const validate = async (gameLanguage: GameLanguage, weiduExePath: string, set: Z
   try {
     const { data, error } = await postApiFsValidateChitinKeyPath({
       client,
+      baseURL: serverUrl,
       body: { weiduExePath, gameLanguage, chitinKeyPath },
     });
 
@@ -81,8 +82,8 @@ export const useLandingStoreStep3: StateCreator<LandingState, [], [], LandingSta
   const subscription = validate$
     .pipe(debounce(() => interval(1000)))
     .subscribe(() => {
-      const { gameLanguage, weiduExePath } = get();
-      validate(gameLanguage as GameLanguage, weiduExePath, set, get).catch(e => console.error(e));
+      const { serverUrl, gameLanguage, weiduExePath } = get();
+      validate(serverUrl, gameLanguage as GameLanguage, weiduExePath, set, get).catch(e => console.error(e));
     });
 
   const chitinKeyPath = planarLocalStorage.get<string>('chitinKeyPath', '')!;
@@ -103,8 +104,8 @@ export const useLandingStoreStep3: StateCreator<LandingState, [], [], LandingSta
     step3ResultType: nothing(),
 
     step3Validate: () => {
-      const { gameLanguage, weiduExePath } = get();
-      return validate(gameLanguage as GameLanguage, weiduExePath, set, get);
+      const { serverUrl, gameLanguage, weiduExePath } = get();
+      return validate(serverUrl, gameLanguage as GameLanguage, weiduExePath, set, get);
     },
     step3Destroy: () => {
       subscription.unsubscribe();
