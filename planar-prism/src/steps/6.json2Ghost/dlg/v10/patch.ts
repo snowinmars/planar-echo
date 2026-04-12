@@ -6,12 +6,12 @@ import splitTranslation from './3.splitTranslation.js';
 import nestDialogue from './4.nestDialogue.js';
 import buildDialogueSkeletons from './5.buildDialogueSkeletons.js';
 import translateDialogue from './6.translateDialogue.js';
-import buildGhostLogicTypes from './7.buildGhostLogicTypes.js';
 
 import type { GameLanguage } from '@planar/shared';
 import type { Tlk } from '@/steps/4.biffs2json/tlk/index.js';
 import type { RawDlg } from '@/steps/4.biffs2json/dlg/index.js';
 import type { GhostCreatureV10, GhostCreatureV12, GhostCreatureV22, GhostCreatureV90, GhostDlg } from '../../types.js';
+import type { DiscoverNext } from '@/discoverer.types.js';
 
 type GhostCreature = GhostCreatureV10 | GhostCreatureV12 | GhostCreatureV22 | GhostCreatureV90;
 
@@ -19,7 +19,13 @@ const pickCre = (cres: Map<string, GhostCreature>, dlgResourceName: string): str
   return 'morte';
 };
 
-const patchDlgs = (dlgs: RawDlg[], cres: Map<string, GhostCreature>, tlk: Tlk, language: GameLanguage): AsyncIterableIterator<GhostDlg> => iterate<RawDlg, GhostDlg>(
+const patchDlgs = (
+  dlgs: RawDlg[],
+  cres: Map<string, GhostCreature>,
+  tlk: Tlk,
+  language: GameLanguage,
+  discover: DiscoverNext,
+): AsyncIterableIterator<GhostDlg> => iterate<RawDlg, GhostDlg>(
   dlgs,
   (dlg, i) => {
     switch (dlg.header.version) {
@@ -31,13 +37,12 @@ const patchDlgs = (dlgs: RawDlg[], cres: Map<string, GhostCreature>, tlk: Tlk, l
 
         const npcId = pickCre(cres, dlg.resourceName);
 
-        const ghostSkeleton = buildDialogueSkeletons(nested);
+        const ghostSkeleton = buildDialogueSkeletons(nested, discover);
         const ghostSkeletonTranslation = translateDialogue({
           dlg: nested,
           npcId,
           language,
         });
-        const ghostTypes = buildGhostLogicTypes(nested);
 
         const percent = Math.round((i + 1) * 100 / dlgs.length);
         reportProgress({
@@ -53,7 +58,6 @@ const patchDlgs = (dlgs: RawDlg[], cres: Map<string, GhostCreature>, tlk: Tlk, l
           resourceName: dlg.resourceName,
           skeleton: ghostSkeleton,
           translations: new Map<GameLanguage, string>([['ru_RU', ghostSkeletonTranslation]]),
-          types: ghostTypes,
         });
       }
       default: throw new Error(`Out of range: '${dlg.header.version}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions

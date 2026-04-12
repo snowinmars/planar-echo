@@ -33,5 +33,4 @@ export type GhostDlg = Readonly<{
   resourceName: string;
   skeleton: string;
   translations: Map<GameLanguage, string>;
-  types: string;
 }>;

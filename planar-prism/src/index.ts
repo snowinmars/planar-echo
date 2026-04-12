@@ -1,7 +1,6 @@
 import { confirm } from './node-ask/index.js';
 import logger from './shared/logger.js';
 import { disposeReports, reportComplete, reportError } from './shared/report.js';
-import { copyFile } from 'fs/promises';
 
 // import convertTwoda from './pipes/convertTwoda/convertTwoda.js';
 // import convertAre from './pipes/convertAre/convertAre.js';
@@ -34,8 +33,7 @@ import { biffs2json } from '@/steps/4.biffs2json/index.js';
 import json2Ghost from '@/steps/6.json2Ghost/index.js';
 
 import type { PrismIndexStartMessage } from '@planar/shared';
-import { join } from 'path';
-import discoverJson from './steps/5.discoverJson/index.js';
+import discoverer from './discoverer.js';
 
 // type Creature = CreatureV10 | CreatureV12 | CreatureV22 | CreatureV90;
 // type Effect = EffectV10 | EffectV20;
@@ -59,13 +57,9 @@ const main = async (props: PrismIndexStartMessage['data']) => {
   const decompiledBiffs = await decompileBiffs(pathes);
 
   const allJsons = await biffs2json(decompiledBiffs, pathes);
-  const discovered = await discoverJson(allJsons, pathes);
-  const allGhosts = await json2Ghost(allJsons, pathes);
-
-  // await copyFile('./src/ghost/dialogueEngine/_enums.ts', join(pathes.output.ghost.dialogues, '_enums.ts'));
-  await copyFile('./src/ghost/dialogueEngine/_registerNpcDialogue.ts', join(pathes.output.ghost.dialogues, '_registerNpcDialogue.ts'));
-  await copyFile('./src/ghost/dialogueEngine/_translateNpcDialogue.ts', join(pathes.output.ghost.dialogues, '_translateNpcDialogue.ts'));
-  await copyFile('./src/ghost/dialogueEngine/_types.ts', join(pathes.output.ghost.dialogues, '_types.ts'));
+  const [discover, done] = discoverer();
+  const allGhosts = await json2Ghost(allJsons, pathes, discover);
+  const discovered = done();
 
   // // await convertTwoda(pathes, all.decompiledItems.get('twoda')!);
   // // await convertAre (pathes, all.decompiledItems.get('are')!);

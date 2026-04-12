@@ -7,7 +7,7 @@ import type { GhostCreatureV10, GhostCreatureV12, GhostCreatureV22, GhostCreatur
 
 type GhostCreature = GhostCreatureV10 | GhostCreatureV12 | GhostCreatureV22 | GhostCreatureV90;
 
-const formState = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`;
+const formState = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`.replace(`'`, `\\'`);
 const formResponse = (npcLowercaseId: string, responseIndex: number): string => `${npcLowercaseId}_response${responseIndex}`;
 
 const escape = (x: string): string => {
@@ -25,7 +25,7 @@ const translateDialogue = ({
   npcId,
   language,
 }: TranslateDialogueProps): string => {
-  const npcLowercaseId = dlg.resourceName.split('.')[0]!;
+  const npcLowercaseId = dlg.resourceName.split('.')[0]!.replace(`'`, ``);
   // const npcUppercaseId = npcLowercaseId[0]!.toUpperCase() + npcLowercaseId.slice(1);
 
   const writer = createWriter();
@@ -56,6 +56,8 @@ const translateDialogue = ({
   }
 
   writer.writeLine('.done();', 2);
+  writer.br();
+  writer.writeLine(`export default ${npcLowercaseId}Dialogue`);
 
   return writer.done();
 };

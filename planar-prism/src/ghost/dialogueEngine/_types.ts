@@ -1,19 +1,24 @@
-import type { LabelId, NpcId, Sound, Sprite } from './_enums.js';
+import type {
+  StateId,
+  WhoId,
+  SoundId,
+  SpriteId,
+} from './enums.js';
 
-export const createSayId = (labelId: LabelId, i: number) => `${labelId}_${i}`;
+export const createSayId = (stateId: StateId, i: number) => `${stateId}_${i}`;
 export type DevGameLanguage = GameLanguage | 'dev';
 
 export type EngineInstructionPlaySound = Readonly<{
   id: 'playSound';
   args: {
-    sound: Sound;
+    sound: SoundId;
   };
 }>
 ;
 export type EngineInstructionRedraw = Readonly<{
   id: 'redraw';
   args: {
-    sprite: Sprite;
+    sprite: SpriteId;
   };
 }>
 ;
@@ -33,12 +38,12 @@ export type ArgsProps<T> = Readonly<{
 ;
 
 export type UntranslatedNpcDialogue<T> = Readonly<{
-  tree: Map<LabelId, UntranslatedLabel<T>>;
-  constructorsWeights: Map<LabelId, number>;
+  tree: Map<StateId, UntranslatedLabel<T>>;
+  constructorsWeights: Map<StateId, number>;
 }>
 ;
 export type UntranslatedLabel<T> = Readonly<{
-  labelId: LabelId;
+  stateId: StateId;
   args: Maybe<ArgsProps<T>>;
   says: Map<DevGameLanguage, UntranslatedSay<T>[]>;
   responses: Map<DevGameLanguage, UntranslatedResponse<T>[]>;
@@ -52,23 +57,23 @@ export type UntranslatedSay<T> = Readonly<{
 ;
 export type UntranslatedResponse<T> = Readonly<{
   responseId: string;
-  jumpTo: LabelId;
+  jumpTo: StateId;
   args: Maybe<ArgsProps<T>>;
 }>
 ;
 export type UntranslatedJump<T> = Readonly<{
-  jumpTo: LabelId;
+  jumpTo: StateId;
   args: Maybe<ArgsProps<T>>;
 }>
 ;
 
 export type NpcDialogue<T> = Readonly<{
-  tree: Map<LabelId, Label<T>>;
-  constructorsWeights: Map<LabelId, number>;
+  tree: Map<StateId, Label<T>>;
+  constructorsWeights: Map<StateId, number>;
 }>
 ;
 export type Label<T> = Readonly<{
-  labelId: LabelId;
+  stateId: StateId;
   args: Maybe<ArgsProps<T>>;
   says: Map<DevGameLanguage, Say<T>[]>;
   responses: Map<DevGameLanguage, Response<T>[]>;
@@ -77,25 +82,28 @@ export type Label<T> = Readonly<{
 ;
 export type Say<T> = Readonly<{
   sayId: string;
-  who: NpcId;
+  whoId: WhoId;
   what: string;
   args: Maybe<ArgsProps<T>>;
 }>
 ;
 export type Response<T> = Readonly<{
   responseId: string;
-  jumpTo: LabelId;
+  jumpTo: StateId;
   what: string;
   args: Maybe<ArgsProps<T>>;
 }>
 ;
 export type Jump<T> = Readonly<{
-  jumpTo: LabelId;
+  jumpTo: StateId;
   args: Maybe<ArgsProps<T>>;
 }>
 ;
 
-///
+/* this files copies as is to the ghost directory,
+ * and I do not want the ghost directory to be npm package for now,
+ * so I manually insert dependencies in this block
+ */
 
 export type GameLanguage
   = | 'cs_CZ'

@@ -30,7 +30,14 @@ export default defineConfig(
     rules: {
       '@stylistic/max-statements-per-line': ['error', { max: 1, ignoredNodes: ['BreakStatement', 'IfStatement', 'SwitchStatement', 'ThrowStatement'] }],
       '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/no-unsafe-assignment': 'off'
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_+$",
+          "varsIgnorePattern": "^_+$",
+        }
+      ]
       // 'sort-imports': ['error', {
       //   ignoreCase: true,
       //   ignoreDeclarationSort: false,

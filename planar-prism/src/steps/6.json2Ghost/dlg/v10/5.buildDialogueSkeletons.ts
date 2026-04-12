@@ -4,49 +4,55 @@ import ie2ts from './ie2ts/index.js';
 
 import type { Maybe } from '@planar/shared';
 import type { NestedDlg, NestedDlgResponse, NestedDlgState } from './4.nestDialogue.types.js';
+import type { DiscoverNext } from '@/discoverer.types.js';
 
 const isResponseDesctructor = (response: NestedDlgResponse) => !response.nextDialog;
 const isResponseExtern = (response: NestedDlgResponse, resourceName: string) => response.nextDialog && `${response.nextDialog}.dlg` !== resourceName;
 
-const formStateId = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`;
+const formStateId = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`.replace(`'`, `\\'`);
 const formResponseId = (npcLowercaseId: string, responseIndex: number): string => `${npcLowercaseId}_response${responseIndex}`;
 
-// const wrapWithQuotes = (str: string, v: string): string => str.replaceAll(RegExp(`([(,])${v}([,)])`, 'g'), `$1'${v}'$2`);
-// const fixSyntax = (str: string): string => {
-//   let x = str
-//     .replaceAll(`'`, `\\'`)
-//     .replaceAll(`"`, `'`);
-//   x = wrapWithQuotes(x, 'protagonist');
-//   x = wrapWithQuotes(x, 'myself');
-//   x = wrapWithQuotes(x, 'portal_cursor_visible');
-//   x = wrapWithQuotes(x, 'portal_enabled');
-//   x = wrapWithQuotes(x, 'two_ai_seconds');
-//   x = wrapWithQuotes(x, 'default');
-//   x = x
-//     .replaceAll(/([(,])(lawful|chaotic|neutral)_(good|evil|neutral)([,)])/g, `$1'$2_$3'$4`)
-//     .replaceAll(/,(anim_[a-z0-9]*?)([^a-z0-9])/g, `,'$1'$2`);
-//   return x;
-// };
+// from: [ 'A', 'B', 'l.or(2)', 'C', 'D', 'E', 'l.or(2)', 'F', 'G', 'H' ]
+// to  : [ 'A', 'B', '( C || D )'       , 'E', '( F || G )'       , 'H' ]
+const collapseOperatorOr = (parts: string[], spaces: string): string[] => {
+  if (parts.length <= 2) return parts;
 
-const formTrigger = (triggerText: string, offset: number): string => {
+  const result: string[] = [];
+  for (let i = 0; i < parts.length; i++) {
+    const hasOr = parts[i]!.startsWith('l.or(');
+    if (!hasOr) {
+      result.push(parts[i]!);
+      continue;
+    };
+    const or = parts[i]!;
+    const orCount = parseInt(/or\((\d+)\)/.exec(or)![1]!);
+    const ored = parts.slice(i + 1, i + 1 + orCount);
+    result.push(`(\n  ${spaces}` + ored.join(` ||\n  ${spaces}`) + `\n${spaces})`);
+    i += orCount;
+  }
+  return result;
+};
+
+const formTrigger = (triggerText: string, offset: number, npcLowercaseId: string, discover: DiscoverNext): string => {
   const spaces = ' '.repeat(offset);
   // const fixed = fixSyntax(triggerText);
   const parts = triggerText.split('\n');
-  const tsLikeSyntax = parts.map(x => x.startsWith('!') ? '!l.' + x.slice(1) : 'l.' + x).join(` &&\n${spaces}`);
+  const tsLikeParts = parts.map(x => x.startsWith('!') ? '!l.' + x.slice(1) : 'l.' + x).map(x => ie2ts(x, npcLowercaseId, discover));
+  const tsLikeSyntax = collapseOperatorOr(tsLikeParts, spaces).join(` &&\n${spaces}`);
 
-  return ie2ts(tsLikeSyntax);
+  return tsLikeSyntax;
 };
 
-const formAction = (actionText: string, offset: number): string => {
+const formAction = (actionText: string, offset: number, npcLowercaseId: string, discover: DiscoverNext): string => {
   const spaces = ' '.repeat(offset);
   // const fixed = fixSyntax(actionText);
   const parts = actionText.split('\n');
-  const tsLikeSyntax = parts.map(x => x.startsWith('!') ? '!l.' + x.slice(1) : 'l.' + x).join(`;\n${spaces}`);
+  const tsLikeSyntax = parts.map(x => x.startsWith('!') ? '!l.' + x.slice(1) : 'l.' + x).map(x => ie2ts(x, npcLowercaseId, discover)).join(`;\n${spaces}`);
 
-  return ie2ts(tsLikeSyntax);
+  return tsLikeSyntax;
 };
 
-const formLabelArgsProps = (state: NestedDlgState, weight: number): Maybe<string> => {
+const formLabelArgsProps = (state: NestedDlgState, weight: number, npcLowercaseId: string, discover: DiscoverNext): Maybe<string> => {
   const isCtor = weight !== -1;
   const hasAction = !!state.action;
   if (!isCtor && !hasAction) return nothing();
@@ -58,7 +64,7 @@ const formLabelArgsProps = (state: NestedDlgState, weight: number): Maybe<string
     if (hasTrigger) {
       writer.writeLine(`weight: ${weight},`, 4)
         .writeLine(`onlyIf: (l) => { // trigger index ${state.trigger.index}`, 4)
-        .writeLine(`return ${formTrigger(state.trigger.text, 13)};`, 6)
+        .writeLine(`return ${formTrigger(state.trigger.text, 13, npcLowercaseId, discover)};`, 6)
         .writeLine('},', 4);
     }
     else {
@@ -82,16 +88,20 @@ type FormStateProps = Readonly<{
   stateId: string;
   stateIndicesOrderedByWeight: number[];
   state: NestedDlgState;
+  npcLowercaseId: string;
+  discover: DiscoverNext;
 }>;
 const formStateLabel = ({
   stateId,
   stateIndicesOrderedByWeight,
   state,
+  npcLowercaseId,
+  discover,
 }: FormStateProps): string => {
   const writer = createWriter();
 
   const weight = stateIndicesOrderedByWeight.indexOf(state.index);
-  const labelArgsProps = formLabelArgsProps(state, weight);
+  const labelArgsProps = formLabelArgsProps(state, weight, npcLowercaseId, discover);
   const hasLabelArgsProps = !!labelArgsProps;
   if (hasLabelArgsProps) {
     writer.writeLine(`.label('${stateId}', {`, 2);
@@ -105,7 +115,7 @@ const formStateLabel = ({
   return writer.done();
 };
 
-const formResponseActionArgsProps = (response: NestedDlgResponse): Maybe<string> => {
+const formResponseActionArgsProps = (response: NestedDlgResponse, npcLowercaseId: string, discover: DiscoverNext): Maybe<string> => {
   const hasAction = !!response.action;
   const hasTrigger = !!response.trigger;
   const hasJournal = !!response.journalTlk;
@@ -115,14 +125,17 @@ const formResponseActionArgsProps = (response: NestedDlgResponse): Maybe<string>
 
   if (hasAction || hasJournal) {
     writer.writeLine('onEnter: (l) => {', 4);
-    if (hasAction) writer.writeLine(`${formAction(response.action.text, 6)};`, 6);
-    if (hasJournal) writer.writeLine(`l.journal('${response.journalId!}');`, 6);
+    if (hasAction) writer.writeLine(`${formAction(response.action.text, 6, npcLowercaseId, discover)};`, 6);
+    if (hasJournal) {
+      writer.writeLine(`l.setJournal('${response.journalId!}');`, 6);
+      discover({ type: 'journal', name: just(response.journalId).toString() });
+    }
     writer.writeLine('},', 4);
   }
 
   if (hasTrigger) writer
     .writeLine('onlyIf: (l) => {', 4)
-    .writeLine(`return ${formTrigger(response.trigger.text, 6)};`, 6)
+    .writeLine(`return ${formTrigger(response.trigger.text, 6, npcLowercaseId, discover)};`, 6)
     .writeLine('},', 4);
 
   return writer.done();
@@ -134,6 +147,7 @@ type FormResponseProps = Readonly<{
   targetState: string;
   resourceName: string;
   npcLowercaseId: string;
+  discover: DiscoverNext;
 }>;
 
 const formResponse = ({
@@ -142,9 +156,10 @@ const formResponse = ({
   targetState,
   resourceName,
   npcLowercaseId,
+  discover,
 }: FormResponseProps): string => {
   const writer = createWriter();
-  const responseActionArgsProps = formResponseActionArgsProps(response);
+  const responseActionArgsProps = formResponseActionArgsProps(response, npcLowercaseId, discover);
   const isDestructor = isResponseDesctructor(response);
   const isExtern = isResponseExtern(response, resourceName);
 
@@ -171,31 +186,34 @@ const formResponse = ({
   return writer.done();
 };
 
-const buildDialogueSkeleton = (dlg: NestedDlg): string => {
-  const npcLowercaseId = dlg.resourceName.split('.')[0]!;
-  const npcUppercaseId = npcLowercaseId[0]!.toUpperCase() + npcLowercaseId.slice(1);
+const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string => {
+  const npcLowercaseId = dlg.resourceName.split('.')[0]!.replace(`'`, ``);
 
   const writer = createWriter();
   writer.writeLine(`import registerNpcDialogue from './_registerNpcDialogue.js';`);
-  writer.writeLine(`import type { ${npcUppercaseId}Logic } from './${dlg.resourceName}.types.js';`);
+  writer.writeLine(`import type { DialogueLogic } from './_dialogueLogic.js';`);
   writer.br();
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${dlg.resourceName}`);
   writer.writeLine(' */');
-  writer.writeLine(`const ${npcLowercaseId}DialogueSkeleton = registerNpcDialogue<${npcUppercaseId}Logic>()`);
+  writer.writeLine(`const ${npcLowercaseId}DialogueSkeleton = registerNpcDialogue<DialogueLogic>()`);
 
   for (const state of dlg.states) {
     const stateId = formStateId(npcLowercaseId, state.index);
+    discover({ type: 'state', name: stateId });
     writer.write(formStateLabel({
       stateId,
       stateIndicesOrderedByWeight: dlg.stateIndicesOrderedByWeight,
       state,
+      npcLowercaseId,
+      discover,
     }));
 
     writer.writeLine('.say()', 2);
 
     for (const response of state.responses) {
       const responseId = formResponseId(npcLowercaseId, response.index);
+      discover({ type: 'response', name: responseId });
       const targetState = response.flags.includes('terminates dialog')
         ? 'terminate dialogue'
         : formStateId(just(response.nextDialog), just(response.nextDialogState));
@@ -206,6 +224,7 @@ const buildDialogueSkeleton = (dlg: NestedDlg): string => {
         targetState,
         resourceName: dlg.resourceName,
         npcLowercaseId,
+        discover,
       }));
     }
 
@@ -213,6 +232,8 @@ const buildDialogueSkeleton = (dlg: NestedDlg): string => {
   }
 
   writer.writeLine('.done();');
+  writer.br();
+  writer.writeLine(`export default ${npcLowercaseId}DialogueSkeleton`);
 
   return writer.done();
 };
