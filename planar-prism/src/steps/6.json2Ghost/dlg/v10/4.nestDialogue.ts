@@ -40,6 +40,7 @@ const nestResponse = ({
     nextDialog: response.nextDialog,
     nextDialogState: response.nextDialogState,
     textTlk: response.textTlk,
+    journalId: response.journalRef,
     journalTlk: response.journalTlk,
     trigger,
     action,

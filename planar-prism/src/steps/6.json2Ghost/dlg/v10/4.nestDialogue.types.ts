@@ -22,6 +22,7 @@ export type NestedDlgResponse = Readonly<{
   nextDialog: Maybe<string>;
   nextDialogState: Maybe<number>;
   textTlk: Maybe<string>;
+  journalId: Maybe<number>;
   journalTlk: Maybe<string>;
 }>;
 

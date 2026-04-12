@@ -28,10 +28,17 @@ const discoverJson = async (allJsons: AllJsons, pathes: Pathes): Promise<Discove
     });
   }).flat();
 
+  const journals = allJsons.dlgs.map((dlg) => {
+    return dlg.responses.map((response) => {
+      return response.journalRef;
+    }).filter(x => x) as number[];
+  }).flat();
+
   const discovered: Discovered = {
     npcs,
     states,
     responses,
+    journals,
   };
 
   await saveDiscovered(discovered, pathes);

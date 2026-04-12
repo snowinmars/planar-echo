@@ -108,20 +108,21 @@ const formStateLabel = ({
 const formResponseActionArgsProps = (response: NestedDlgResponse): Maybe<string> => {
   const hasAction = !!response.action;
   const hasTrigger = !!response.trigger;
-  if (!hasAction && !hasTrigger) return nothing();
+  const hasJournal = !!response.journalTlk;
+  if (!hasAction && !hasTrigger && !hasJournal) return nothing();
 
   const writer = createWriter();
 
-  if (hasAction) writer
-    .writeLine('onEnter: (l) => {', 4)
-    .write(formAction(response.action.text, 6), 6)
-    .writeLine(';')
-    .writeLine('},', 4);
+  if (hasAction || hasJournal) {
+    writer.writeLine('onEnter: (l) => {', 4);
+    if (hasAction) writer.writeLine(`${formAction(response.action.text, 6)};`, 6);
+    if (hasJournal) writer.writeLine(`l.journal('${response.journalId!}');`, 6);
+    writer.writeLine('},', 4);
+  }
 
   if (hasTrigger) writer
     .writeLine('onlyIf: (l) => {', 4)
-    .write(`return ${formAction(response.trigger.text, 6)}`, 6)
-    .writeLine(';')
+    .writeLine(`return ${formAction(response.trigger.text, 6)};`, 6)
     .writeLine('},', 4);
 
   return writer.done();
