@@ -122,7 +122,7 @@ const formResponseActionArgsProps = (response: NestedDlgResponse): Maybe<string>
 
   if (hasTrigger) writer
     .writeLine('onlyIf: (l) => {', 4)
-    .writeLine(`return ${formAction(response.trigger.text, 6)};`, 6)
+    .writeLine(`return ${formTrigger(response.trigger.text, 6)};`, 6)
     .writeLine('},', 4);
 
   return writer.done();
@@ -179,6 +179,9 @@ const buildDialogueSkeleton = (dlg: NestedDlg): string => {
   writer.writeLine(`import registerNpcDialogue from './_registerNpcDialogue.js';`);
   writer.writeLine(`import type { ${npcUppercaseId}Logic } from './${dlg.resourceName}.types.js';`);
   writer.br();
+  writer.writeLine('/**');
+  writer.writeLine(` * Original source: ${dlg.resourceName}`);
+  writer.writeLine(' */');
   writer.writeLine(`const ${npcLowercaseId}DialogueSkeleton = registerNpcDialogue<${npcUppercaseId}Logic>()`);
 
   for (const state of dlg.states) {

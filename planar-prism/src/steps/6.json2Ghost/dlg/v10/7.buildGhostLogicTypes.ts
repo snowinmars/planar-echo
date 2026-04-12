@@ -6,6 +6,9 @@ const buildGhostLogicTypes = (dlg: NestedDlg): string => {
   const npcUppercaseId = npcLowercaseId[0]!.toUpperCase() + npcLowercaseId.slice(1);
 
   const writer = createWriter();
+  writer.writeLine('/**');
+  writer.writeLine(` * Original source: ${dlg.resourceName}`);
+  writer.writeLine(' */');
   writer.writeLine(`export type ${npcUppercaseId}Logic = Readonly<{`);
   writer.br();
   writer.writeLine('}>;');

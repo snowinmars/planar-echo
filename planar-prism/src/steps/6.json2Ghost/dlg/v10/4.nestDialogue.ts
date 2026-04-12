@@ -1,4 +1,4 @@
-import { nothing } from '@planar/shared';
+import { nothing, isNothing } from '@planar/shared';
 
 import type { SplittedState, SplittedDlg } from './3.splitTranslation.types.js';
 import type { TlkedResponse } from './2.patchTranslation.types.js';
@@ -8,18 +8,18 @@ const formTrigger = ({
   response,
   responsesTriggers,
 }: Omit<NestResponseProps, 'responsesActions'>) => {
-  const hasTrigger = response.triggerIndex && response.triggerIndex >= 0;
+  const hasTrigger = !isNothing(response.triggerIndex) && response.triggerIndex! >= 0;
   if (!hasTrigger) return nothing();
-  const trigger = responsesTriggers.get(response.triggerIndex)!;
+  const trigger = responsesTriggers.get(response.triggerIndex!)!;
   return { index: trigger.index, text: trigger.text };
 };
 const formAction = ({
   response,
   responsesActions,
 }: Omit<NestResponseProps, 'responsesTriggers'>) => {
-  const hasTrigger = response.actionIndex && response.actionIndex >= 0;
+  const hasTrigger = !isNothing(response.actionIndex) && response.actionIndex! >= 0;
   if (!hasTrigger) return nothing();
-  const trigger = responsesActions.get(response.actionIndex)!;
+  const trigger = responsesActions.get(response.actionIndex!)!;
   return { index: trigger.index, text: trigger.text };
 };
 
@@ -76,20 +76,20 @@ const nestState = ({
   };
 };
 
-export const nestDialogue = (dialogue: SplittedDlg): NestedDlg => {
-  const nestedStates = dialogue.states
+export const nestDialogue = (dlg: SplittedDlg): NestedDlg => {
+  const nestedStates = dlg.states
     .map((state: SplittedState) => nestState({
       state: state,
-      responses: dialogue.responses,
-      stateTriggers: dialogue.stateTriggers,
-      responsesTriggers: dialogue.responsesTriggers,
-      responsesActions: dialogue.responsesActions,
+      responses: dlg.responses,
+      stateTriggers: dlg.stateTriggers,
+      responsesTriggers: dlg.responsesTriggers,
+      responsesActions: dlg.responsesActions,
     }));
 
   return {
-    resourceName: dialogue.resourceName,
-    header: dialogue.header,
-    stateIndicesOrderedByWeight: dialogue.stateIndicesOrderedByWeight,
+    resourceName: dlg.resourceName,
+    header: dlg.header,
+    stateIndicesOrderedByWeight: dlg.stateIndicesOrderedByWeight,
     states: nestedStates,
   };
 };

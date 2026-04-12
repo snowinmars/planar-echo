@@ -32,6 +32,9 @@ const translateDialogue = ({
   writer.writeLine(`import translateNpcDialogue from './_translateNpcDialogue.js';`);
   writer.writeLine(`import type { UntranslatedNpcDialogue } from './_types.js';`);
   writer.br();
+  writer.writeLine('/**');
+  writer.writeLine(` * Original source: ${dlg.resourceName}`);
+  writer.writeLine(' */');
   writer.writeLine(`const ${npcLowercaseId}Dialogue = <T>(${npcLowercaseId}DialogueSkeleton: UntranslatedNpcDialogue<T>) => translateNpcDialogue(${npcLowercaseId}DialogueSkeleton, '${language}')`);
 
   for (const state of dlg.states) {

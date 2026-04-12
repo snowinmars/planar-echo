@@ -4,7 +4,7 @@ import saveDiscovered from './saveDiscovered.js';
 import type { Discovered } from './types.js';
 
 const formStateId = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`;
-const formResponseId = (npcLowercaseId: string, responseIndex: number): string => `${npcLowercaseId}_response${responseIndex}`;
+const formResponseId = (npcLowercaseId: string, responseIndex: number): string => `${npcLowercaseId}_response${responseIndex}`.replaceAll(`'`, `\\'`);
 
 const discoverJson = async (allJsons: AllJsons, pathes: Pathes): Promise<Discovered> => {
   const npcs = allJsons.cres.map((cre) => {

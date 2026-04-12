@@ -1,7 +1,7 @@
 export { gameNames } from './gameName.js';
 export { gameLanguages } from './gameLanguage.js';
 export { jsonStringify, jsonParse } from './json.js';
-export { just, maybe, nothing } from './maybe.js';
+export { just, maybe, nothing, isNothing } from './maybe.js';
 export { objectEntries, objectKeys, objectValues } from './objects.js';
 export { progressSteps } from './prismIndexStartMessage.js';
 
