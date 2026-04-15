@@ -1,9 +1,6 @@
-import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import StoreCollector from '@/engine/store/StoreCollector';
-import Loading from '@/components/Loading';
-import RouterComponent from '@/components/Router';
 import {
   CountStoreContextProvider,
   initialCountStore,
@@ -11,88 +8,24 @@ import {
 import '@/i18n/index';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeContextProvider } from './theme/context';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
-import { Link as RouterLink } from 'react-router';
-import Github from './svg/github';
-import EmailIcon from '@mui/icons-material/Email';
-import Telegram from '@/svg/telegram';
 
-import type { FC } from 'react';
 import type { AllStoresProps } from '@/engine/store/StoreCollector';
 
 import './index.scss';
-import styles from './index.module.scss';
+import { RouterProvider } from 'react-router-dom';
+import router from '@/components/Router';
 
 const storeConfigs: AllStoresProps[] = [
   { provider: CountStoreContextProvider, initialData: initialCountStore },
 ];
 
-const Footer: FC = () => (
-  <footer className={styles.footer}>
-    <Link
-      className={styles.license}
-      href="https://github.com/snowinmars/planar-echo/blob/master/LICENSE"
-      target="_blank"
-      rel="noopener"
-    >
-      GNU/GPLv3
-    </Link>
-
-    <Link
-      href="mailto:snowinmars@yandex.ru"
-      target="_blank"
-      rel="noopener"
-    >
-      <EmailIcon className={styles.email} />
-    </Link>
-    <Link
-      href="https://t.me/snowinmars"
-      target="_blank"
-      rel="noopener"
-    >
-      <Telegram className={styles.telegram} />
-    </Link>
-    <Link
-      href="https://github.com/snowinmars/planar-echo/"
-      target="_blank"
-      rel="noopener"
-    >
-      <Github className={styles.github} />
-    </Link>
-  </footer>
-);
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
     <StoreCollector stores={storeConfigs}>
       <ThemeContextProvider>
-        <BrowserRouter>
-          <Suspense fallback={<Loading />}>
-            <CssBaseline />
-
-            <AppBar position="static">
-              <Toolbar>
-                <Link component={RouterLink} to="/" sx={{ flexGrow: 1 }}>
-                  Planar echo
-                </Link>
-                <ThemeSwitcher />
-                <LanguageSwitcher />
-              </Toolbar>
-            </AppBar>
-
-            <Container>
-              <RouterComponent />
-            </Container>
-
-            <Footer />
-          </Suspense>
-        </BrowserRouter>
+        <CssBaseline />
+        <RouterProvider router={router} />
       </ThemeContextProvider>
     </StoreCollector>
-  </React.StrictMode>,
+  </StrictMode>,
 );

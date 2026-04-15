@@ -1,17 +1,30 @@
-import { lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
-
-import type { FC } from 'react';
+import { FC, lazy, PropsWithChildren, Suspense } from 'react';
+import { createBrowserRouter, useLocation } from 'react-router-dom';
+import Layout from '../Layout/Layout';
+import Loading from '../Loading';
 
 const Landing = lazy(() => import('@/components/Landing'));
 const Details = lazy(() => import('@/components/Details'));
+const Convert = lazy(() => import('@/components/Convert'));
 
-const RouterComponent: FC = () => {
-  return (
-    <Routes>
-      <Route path="/details" element={<Details />} />
-      <Route path="/" element={<Landing />} />
-    </Routes>
-  );
+// https://github.com/remix-run/react-router/issues/12474#issuecomment-2538281149
+const HelloDevs: FC<PropsWithChildren> = ({ children }) => {
+  const location = useLocation();
+  return <Suspense fallback={<Loading />} key={location.key}>{children}</Suspense>;
 };
-export default RouterComponent;
+
+const router = createBrowserRouter([{
+  path: '/',
+  element: <Layout />,
+  children: [{
+    path: '/',
+    element: <HelloDevs><Landing /></HelloDevs>,
+  }, {
+    path: '/details',
+    element: <HelloDevs><Details /></HelloDevs>,
+  }, {
+    path: '/convert',
+    element: <HelloDevs><Convert /></HelloDevs>,
+  }],
+}]);
+export default router;

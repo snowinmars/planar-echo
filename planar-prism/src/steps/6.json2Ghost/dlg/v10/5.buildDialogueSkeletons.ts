@@ -233,7 +233,7 @@ const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string =
 
   writer.writeLine('.done();');
   writer.br();
-  writer.writeLine(`export default ${npcLowercaseId}DialogueSkeleton`);
+  writer.writeLine(`export default ${npcLowercaseId}DialogueSkeleton;`);
 
   return writer.done();
 };

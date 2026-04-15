@@ -8,7 +8,7 @@ export default async ({
   gameLanguage,
   ghostDir,
 }: Command): Promise<Result> => {
-  const translatedDialoguePath = join(ghostDir, 'ghost', 'dialogues', `${dialogueId}Dialogue_${gameLanguage}.ghost`);
+  const translatedDialoguePath = join(ghostDir, 'ghost', 'dialogues', 'dist', `${dialogueId}.dlg.${gameLanguage}.js`);
   const found = await fileExists(translatedDialoguePath);
   if (!found) {
     return {
@@ -24,6 +24,6 @@ export default async ({
   const content = await readFile(translatedDialoguePath, { encoding: 'utf-8' });
   return {
     ok: true,
-    data: { content },
+    data: { content: `/*${translatedDialoguePath}*/\n${content}` },
   };
 };

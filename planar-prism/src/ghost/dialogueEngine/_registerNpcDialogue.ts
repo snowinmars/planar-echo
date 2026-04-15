@@ -33,7 +33,7 @@ const registerNpcDialogue = <T>(): { label: LabelFunction<T> } => {
     if (alreadyRegistrated) throw new Error(`Label ${stateId} already registrated.`);
 
     const hasCondition = !!args?.onlyIf;
-    const hasWeight = !!args?.weight;
+    const hasWeight = args?.weight || args?.weight === 0;
     const hasOnlyWeight = !hasCondition && hasWeight;
     const hasOnlyCondition = hasCondition && !hasWeight;
     if (hasOnlyWeight || hasOnlyCondition) throw new Error(`To register label ${stateId} as a constructor with weight, add a onlyIf condition and optional weight to the label args`);

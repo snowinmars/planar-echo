@@ -8,7 +8,7 @@ export default async ({
   dialogueId,
   ghostDir,
 }: Command): Promise<Result> => {
-  const dialogueSkeletonPath = join(ghostDir, 'ghost', 'dialogues', `${dialogueId}DialogueSkeleton.ghost`);
+  const dialogueSkeletonPath = join(ghostDir, 'ghost', 'dialogues', 'dist', `${dialogueId}.dlg.js`);
   const found = await fileExists(dialogueSkeletonPath);
   if (!found) {
     return {
@@ -24,6 +24,6 @@ export default async ({
   const content = await readFile(dialogueSkeletonPath, { encoding: 'utf-8' });
   return {
     ok: true,
-    data: { content },
+    data: { content: `/*${dialogueSkeletonPath}*/\n${content}` },
   };
 }; ;

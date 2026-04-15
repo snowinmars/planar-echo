@@ -1,0 +1,123 @@
+import { useTranslation } from 'react-i18next';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Step0 from './steps/Step0/Step0';
+import Step1 from './steps/Step1/Step1';
+import Step2 from './steps/Step2/Step2';
+import Step3 from './steps/Step3/Step3';
+import Step4 from './steps/Step4/Step4';
+import Step5 from './steps/Step5/Step5';
+import Step6 from './steps/Step6/Step6';
+import { useLandingStore } from './store/store';
+
+import type { GameLanguage, GameName } from '@planar/shared';
+import type { FC } from 'react';
+
+import styles from './Convert.module.scss';
+
+const Convert: FC = () => {
+  const { t } = useTranslation();
+  const store = useLandingStore();
+
+  return (
+    <Grid container spacing="1em">
+      <Grid size={{ xs: 12 }}>
+        <Typography variant="h4">{t('landing.intro.convert')}</Typography>
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Step0
+          className={styles.step0}
+          disabled={store.step0Loading || store.step6Loading}
+          loading={store.step0Loading || store.step6Loading}
+          serverUrl={store.serverUrl}
+          setServerUrl={store.setServerUrl}
+          comment={store.step0Comment}
+          commentArgs={store.step0CommentArgs}
+          resultType={store.step0ResultType}
+          validate={store.step0Validate}
+          imageUrl="https://avatars.mds.yandex.net/i?id=517fdbf2c25f94655d3f31341743d81b_l-8425660-images-thumbs&n=13"
+        />
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Step1
+          className={styles.step1}
+          disabled={!store.step0Valid || store.step6Loading}
+          loading={store.step1Loading || store.step6Loading}
+          gameLanguage={store.gameLanguage}
+          gameName={store.gameName}
+          setGameLanguage={store.setGameLanguage}
+          setGameName={store.setGameName}
+          imageUrl="https://avatars.mds.yandex.net/i?id=9a25abd98c06cce5c0e76311489d05156710b535-8316229-images-thumbs&n=13"
+        />
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Step2
+          className={styles.step2}
+          disabled={!store.step1Valid || store.step2Loading || store.step6Loading}
+          loading={store.step2Loading || store.step6Loading}
+          weiduExePath={store.weiduExePath}
+          setWeiduExePath={store.setWeiduExePath}
+          validate={store.step2Validate}
+          comment={store.step2Comment}
+          commentArgs={store.step2CommentArgs}
+          resultType={store.step2ResultType}
+          imageUrl="https://i.pinimg.com/736x/87/1f/a9/871fa959ce4ec0caa904a9d8b3f5ec26.jpg"
+        />
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Step3
+          className={styles.step3}
+          disabled={!store.step2Valid || store.step3Loading || store.step6Loading}
+          loading={store.step3Loading || store.step6Loading}
+          gameLanguage={store.gameLanguage as GameLanguage}
+          weiduExePath={store.weiduExePath}
+          chitinKeyPath={store.chitinKeyPath}
+          setChitinKeyPath={store.setChitinKeyPath}
+          comment={store.step3Comment}
+          commentArgs={store.step3CommentArgs}
+          resultType={store.step3ResultType}
+          validate={store.step3Validate}
+          imageUrl="https://d.newsweek.com/en/full/2271421/german-shepherd-puppy.jpg"
+        />
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Step4
+          className={styles.step4}
+          disabled={!store.step3Valid || store.step4Loading || store.step6Loading}
+          loading={store.step4Loading || store.step6Loading}
+          ghostPath={store.ghostPath}
+          setGhostPath={store.setGhostPath}
+          comment={store.step4Comment}
+          commentArgs={store.step4CommentArgs}
+          resultType={store.step4ResultType}
+          validate={store.step4Validate}
+          imageUrl="https://i.pinimg.com/736x/ca/68/6b/ca686bcdd3fd9c917638e578b5e44a69.jpg"
+        />
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Step5
+          className={styles.step4}
+          disabled={!store.step4Valid || store.step6Loading}
+          loading={store.step5Loading || store.step6Loading}
+          ownGame={store.ownGame}
+          setOwnGame={store.setOwnGame}
+          imageUrl="https://i.pinimg.com/736x/1f/c4/b5/1fc4b52caa1829c75c0aed37cba79394.jpg"
+        />
+      </Grid>
+      <Grid size={{ xs: 12 }}>
+        <Step6
+          disabled={!store.step5Valid}
+          loading={store.step6Loading}
+          gameName={store.gameName as GameName}
+          gameLanguage={store.gameLanguage as GameLanguage}
+          weiduExePath={store.weiduExePath}
+          chitinKeyPath={store.chitinKeyPath}
+          progress={store.progress}
+          biff2json={store.biff2json}
+        />
+      </Grid>
+    </Grid>
+  );
+};
+
+export default Convert;

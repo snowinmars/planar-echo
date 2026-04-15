@@ -11,7 +11,9 @@
       "5": "Requirements: node.js and original game files you own."
     },
     "runnerGuard": {
-      "tryToRun": "Check local game files"
+      "tryToRun": "Run",
+      "or": "or",
+      "convert": "Convert"
     },
     "step0": {
       "serverUrl": "Planar server url",

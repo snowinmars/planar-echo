@@ -57,7 +57,7 @@ const translateDialogue = ({
 
   writer.writeLine('.done();', 2);
   writer.br();
-  writer.writeLine(`export default ${npcLowercaseId}Dialogue`);
+  writer.writeLine(`export default ${npcLowercaseId}Dialogue;`);
 
   return writer.done();
 };

@@ -13,7 +13,7 @@
   "scripts": {
     "copy": "cpy src/ghost/dialogueEngine/_*.ts ../planar-ghost/ghost/dialogues",
     "compile": "tsc && tsc-alias",
-    "compile-ghost": "npx esbuild ../planar-ghost/ghost/dialogues/*.ts --outdir=../planar-ghost/ghost/dialogues/dist --platform=node --target=node16 --bundle=false --minify --charset=utf8",
+    "compile-ghost": "npx esbuild ../planar-ghost/ghost/dialogues/*.ts --outdir=../planar-ghost/ghost/dialogues/dist --platform=node --target=node16 --bundle=true --minify --charset=utf8 --format=iife --global-name=ghost --banner:js=\"\\\"use strict\\\";\" --footer:js=\"ghost.default\"",
     "start": "yarn compile && node dist/index.js && yarn copy",
     "lint": "eslint",
     "test": "node dist/test.js"
