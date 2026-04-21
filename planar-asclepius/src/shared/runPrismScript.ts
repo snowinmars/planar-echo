@@ -2,8 +2,9 @@ import { fork } from 'child_process';
 import { join } from 'path';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { prismDir } from '../shared/folders.js';
+import { prismDir } from './folders.js';
 
+import type { ChildProcess } from 'child_process';
 import type {
   PrismIndexStartMessage,
   PrismIndexProgressMessage,
@@ -16,21 +17,21 @@ type Response = PrismIndexStartMessage['data'] | PrismIndexProgressMessage['data
 
 const runPrismScript = <T>(commandName: string, data: T): Observable<Response> => {
   const destroy$ = new Subject<void>();
-
-  const commandCwd = join(prismDir, 'dist');
-  const scriptPath = join(commandCwd, commandName);
-
-  const child = fork(scriptPath, {
-    cwd: commandCwd,
-    stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
-  });
-
-  child.stdout?.pipe(process.stdout);
-  child.stderr?.pipe(process.stderr);
-
-  child.send({ type: 'start', data });
-
+  let child: ChildProcess;
   return new Observable<Response>((subscriber) => {
+    const commandCwd = join(prismDir, 'dist'); // TODO [snow]: use dir from args
+    const scriptPath = join(commandCwd, commandName);
+
+    child = fork(scriptPath, {
+      cwd: commandCwd,
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+    });
+
+    child.stdout?.pipe(process.stdout);
+    child.stderr?.pipe(process.stderr);
+
+    child.send({ type: 'start', data });
+
     child.on('message', (msg: Message) => {
       if (msg.type === 'progress') return subscriber.next(msg.data);
       if (msg.type === 'complete') return subscriber.complete();
@@ -52,7 +53,9 @@ const runPrismScript = <T>(commandName: string, data: T): Observable<Response> =
   }).pipe(
     takeUntil(destroy$),
     finalize(() => {
-      if (!child.killed) child.kill();
+      if (child) {
+        if (!child.killed) child.kill();
+      }
     }),
   );
 };

@@ -13,7 +13,7 @@ import type { AllStoresProps } from '@/engine/store/StoreCollector';
 
 import './index.scss';
 import { RouterProvider } from 'react-router-dom';
-import router from '@/components/Router';
+import router from '@/router';
 
 const storeConfigs: AllStoresProps[] = [
   { provider: CountStoreContextProvider, initialData: initialCountStore },

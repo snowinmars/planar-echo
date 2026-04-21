@@ -18,8 +18,10 @@ export type PrismIndexStartMessage = Readonly<{
   data: PrismIndexProps;
 }>;
 export const progressSteps = [
+  'compilePrism', // value 0
   'decompileBiffs', // value 0
   'ids_raw2json', // value: number in percent; params: {resourceName: string}
+  'dlg_json2ghost_compilation', // value: number in percent
   'cre_raw2json', // here and below reportProgress params is : value: number in percent; params: {version: string, resourceName: string}
   'dlg_raw2json',
   'effV10_raw2json',

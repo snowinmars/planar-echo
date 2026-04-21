@@ -38,6 +38,7 @@ const createReport = <T>({ map, send, log }: CreateReportProps<T>): CreteReportR
     }
   });
   const report = (item: T): void => {
+    if (!item) throw new Error('Do not send empty items using ipc');
     const isIpc = !!process.send;
     log(item);
     if (isIpc) report$.next(item);
@@ -66,10 +67,10 @@ const reportProgressSeqResult = createReport<Progress>({
   log: x => logger.debug(`${x.value} : '${x.step}'`),
 });
 
-const reportCompleteResult = createReport<void>({
+const reportCompleteResult = createReport<string>({
   map: x => x,
-  send: () => ({ type: 'complete' }),
-  log: () => logger.debug(`Complete`),
+  send: x => ({ type: 'complete', data: x }),
+  log: x => logger.debug(`Complete`, x),
 });
 
 export const reportError = reportErrorResult.report;

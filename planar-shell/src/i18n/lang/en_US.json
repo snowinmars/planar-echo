@@ -77,8 +77,33 @@
       "comment": "I do not infringe on copyrights - I stimulate sales of the original for free."
     },
     "step6": {
-
+      "start": "I have space on hdd and want to start",
+      "decompileBiffs": "Decompiling .biff archives",
+      "ids_raw2json": ".ids to json",
+      "dlg_json2ghost_compilation": "Compiling ghost dialogues",
+      "cre_raw2json": ".cre to json",
+      "dlg_raw2json": ".dlg to json",
+      "effV10_raw2json": ".eff v1.0 to json",
+      "effV20_raw2json": ".eff v2.0 to json",
+      "ini_raw2json": ".ini to json",
+      "itm_raw2json": ".itm to json",
+      "tlk_raw2json": ".tlk to json",
+      "cre_json2ghost": ".cre json to ghost",
+      "dlg_json2ghost": ".dlg json to ghost"
     }
+  },
+  "settings": {
+    "gameInterfaceSettings": "Game interface settings",
+    "dialogueRenderer": "Dialogue view",
+    "pstee": "As original",
+    "narrat": "Narrat-like",
+    "renpy": "RenPy-like",
+    "mobile": "Mobile",
+    "theme": "Color theme",
+    "language": "Interface language",
+    "dialogueMarks": "Marks in dialogues",
+    "dialogueMarks_markDisposers": "Mark exits",
+    "dialogueMarks_markExterns": "Mark externs (dev)"
   },
   "themes": {
     "light": "Light",

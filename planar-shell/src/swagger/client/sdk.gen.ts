@@ -2,7 +2,7 @@
 
 import { client } from './client.gen.js';
 import type { Client, Options as Options2, TDataShape } from './client/index.js';
-import type { GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateGhostPathData, PostApiFsValidateGhostPathErrors, PostApiFsValidateGhostPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostDialogueByDialogueIdByGameLanguageData, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses } from './types.gen.js';
+import type { GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateGhostPathData, PostApiFsValidateGhostPathErrors, PostApiFsValidateGhostPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostDialogueByDialogueIdByGameLanguageData, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses, PostApiGhostDialogueData, PostApiGhostDialogueErrors, PostApiGhostDialogueResponses } from './types.gen.js';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -85,6 +85,19 @@ export const postApiGhostDialogueByDialogueIdSkeleton = <ThrowOnError extends bo
 export const postApiGhostDialogueByDialogueIdByGameLanguage = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDialogueByDialogueIdByGameLanguageData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, ThrowOnError>({
     responseType: 'json',
     url: '/api/ghost/dialogue/{dialogueId}/{gameLanguage}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get available dialogues in ghost format
+ */
+export const postApiGhostDialogue = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDialogueData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDialogueResponses, PostApiGhostDialogueErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/dialogue',
     ...options,
     headers: {
         'Content-Type': 'application/json',

@@ -62,8 +62,7 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
   };
 
   const progress$ = new Subject<void>();
-  const observable = progress$
-    .pipe();
+  const observable = progress$.asObservable();
 
   return {
     step6Loading: false,

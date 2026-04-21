@@ -34,5 +34,6 @@ export type Pathes = Readonly<{
     saveJson: OutSave;
     ghost: OutDir;
     saveGhost: OutSave;
+    sharedEnums: string;
   }>;
 }>;

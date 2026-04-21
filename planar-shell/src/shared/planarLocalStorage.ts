@@ -1,4 +1,4 @@
-import { maybe, nothing } from '@planar/shared';
+import { isNothing, maybe, nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
 
@@ -6,9 +6,12 @@ const NAMESPACE = 'planar-echo' as const;
 const buildKey = (key: string): string => `${NAMESPACE}-${key}`;
 
 export const planarLocalStorage = {
-  get: <T = string>(key: string, either?: Maybe<T>): Maybe<T> => {
+  get: <T = string>(key: string, either: Maybe<T> = nothing()): Maybe<T> => {
     const value = localStorage.getItem(buildKey(key));
-    if (!value) return either ?? nothing();
+    if (!value) {
+      if (isNothing(either)) return nothing();
+      return either;
+    }
     return maybe(JSON.parse(value) as T);
   },
 

@@ -31,13 +31,13 @@ import { validate } from '@/steps/2.validate/index.js';
 import { decompileBiffs } from '@/steps/3.decompileBiffs/index.js';
 import { biffs2json } from '@/steps/4.biffs2json/index.js';
 import json2Ghost from '@/steps/6.json2Ghost/index.js';
+import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
 
 import type { PrismIndexStartMessage } from '@planar/shared';
 import discoverer from './discoverer.js';
 
-// type Creature = CreatureV10 | CreatureV12 | CreatureV22 | CreatureV90;
-// type Effect = EffectV10 | EffectV20;
-// type Item = ItemV10 | ItemV11 | ItemV20;
+const isIpc = !!process.send;
+console.warn(isIpc ? 'Run ipc mode' : 'Run cli mode');
 
 const main = async (props: PrismIndexStartMessage['data']) => {
   logger.info('Starting...');
@@ -59,38 +59,11 @@ const main = async (props: PrismIndexStartMessage['data']) => {
   const allJsons = await biffs2json(decompiledBiffs, pathes);
   const [discover, done] = discoverer();
   const allGhosts = await json2Ghost(allJsons, pathes, discover);
-  const discovered = done();
+  await saveDiscovered(done(), pathes);
 
-  // // await convertTwoda(pathes, all.decompiledItems.get('twoda')!);
-  // // await convertAre (pathes, all.decompiledItems.get('are')!);
-  // // await convertBam (pathes, all.decompiledItems.get('bam')!);
-  // // await convertBcs (pathes, all.decompiledItems.get('bcs')!);
-  // // await convertBmp (pathes, all.decompiledItems.get('bmp')!);
-  // // await convertChu (pathes, all.decompiledItems.get('chu')!);
-  // // await convertGlsl (pathes, all.decompiledItems.get('glsl')!);
-  // // await convertLua (pathes, all.decompiledItems.get('lua')!);
-  // // await convertMenu (pathes, all.decompiledItems.get('menu')!);
-  // // await convertMos (pathes, all.decompiledItems.get('mos')!);
-  // // await convertPvrz (pathes, all.decompiledItems.get('pvrz')!);
-  // // await convertPro (pathes, all.decompiledItems.get('pro')!);
-  // // await convertQsp (pathes, all.decompiledItems.get('qsp')!);
-  // // await convertSpl (pathes, all.decompiledItems.get('spl')!);
-  // // await convertSrc (pathes, all.decompiledItems.get('src')!);
-  // // await convertSto (pathes, all.decompiledItems.get('sto')!);
-  // // await convertTis (pathes, all.decompiledItems.get('tis')!);
-  // // await convertTtf (pathes, all.decompiledItems.get('ttf')!);
-  // // await convertVvc (pathes, all.decompiledItems.get('vvc')!);
-  // // await convertWav (pathes, all.decompiledItems.get('wav')!);
-  // // await convertWbm (pathes, all.decompiledItems.get('wbm')!);
-  // // await convertWed (pathes, all.decompiledItems.get('wed')!);
-  // // await convertWmp (pathes, all.decompiledItems.get('wmp')!);
-
-  reportComplete();
+  reportComplete('success');
   disposeReports();
 };
-
-const isIpc = !!process.send;
-console.warn(isIpc ? 'Run ipc mode' : 'Run cli mode');
 
 if (isIpc) {
   process.on('message', (msg: PrismIndexStartMessage) => {

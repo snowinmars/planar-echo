@@ -11,6 +11,7 @@ import registerValidateWeiduPath from './fs/validate/weiduPath.js';
 import registerPing from './ping/ping.js';
 import registerGhostDialogueDialogueIdSkeleton from './ghost/dialogue/dialogueId/skeleton.js';
 import registerGhostDialogueDialogueIdLanguage from './ghost/dialogue/dialogueId/language.js';
+import registerGhostDialogueList from './ghost/dialogue/list.js';
 
 extendZodWithOpenApi(z);
 const registry = new OpenAPIRegistry();
@@ -29,6 +30,7 @@ registerValidateWeiduPath(registry, router);
 registerPing(registry, router);
 registerGhostDialogueDialogueIdSkeleton(registry, router);
 registerGhostDialogueDialogueIdLanguage(registry, router);
+registerGhostDialogueList(registry, router);
 
 const getOpenApiDocumentation = (registry: OpenAPIRegistry) => {
   const generator = new OpenApiGeneratorV3(registry.definitions);

@@ -37,6 +37,9 @@ const createPathes = async (props: CreatePathesProps): Promise<Pathes> => {
   const ghostCreatures = normalize(join(ghostRoot , 'creatures'));
   const ghostEffects   = normalize(join(ghostRoot , 'effects'));
 
+  // TODO [snow]: I do not like this path, but where should it lead to?..
+  const sharedEnums    = normalize(join(outputPath, '..', 'planar-shared', 'src', 'dialogueEngine', 'enums'));
+
   const pathes: Pathes = {
     weiduExe  : weiduExe,
     gameFolder: gameFolder,
@@ -83,6 +86,7 @@ const createPathes = async (props: CreatePathesProps): Promise<Pathes> => {
         creatures: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostCreatures, resourceName), entry, asIs),
         effects  : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostEffects  , resourceName), entry, asIs),
       },
+      sharedEnums,
     },
   /* eslint-enable */
   };

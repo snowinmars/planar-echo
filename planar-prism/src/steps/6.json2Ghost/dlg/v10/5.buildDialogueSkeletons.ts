@@ -35,7 +35,6 @@ const collapseOperatorOr = (parts: string[], spaces: string): string[] => {
 
 const formTrigger = (triggerText: string, offset: number, npcLowercaseId: string, discover: DiscoverNext): string => {
   const spaces = ' '.repeat(offset);
-  // const fixed = fixSyntax(triggerText);
   const parts = triggerText.split('\n');
   const tsLikeParts = parts.map(x => x.startsWith('!') ? '!l.' + x.slice(1) : 'l.' + x).map(x => ie2ts(x, npcLowercaseId, discover));
   const tsLikeSyntax = collapseOperatorOr(tsLikeParts, spaces).join(` &&\n${spaces}`);
@@ -45,7 +44,6 @@ const formTrigger = (triggerText: string, offset: number, npcLowercaseId: string
 
 const formAction = (actionText: string, offset: number, npcLowercaseId: string, discover: DiscoverNext): string => {
   const spaces = ' '.repeat(offset);
-  // const fixed = fixSyntax(actionText);
   const parts = actionText.split('\n');
   const tsLikeSyntax = parts.map(x => x.startsWith('!') ? '!l.' + x.slice(1) : 'l.' + x).map(x => ie2ts(x, npcLowercaseId, discover)).join(`;\n${spaces}`);
 
@@ -62,23 +60,23 @@ const formLabelArgsProps = (state: NestedDlgState, weight: number, npcLowercaseI
   if (isCtor) {
     const hasTrigger = !!state.trigger;
     if (hasTrigger) {
-      writer.writeLine(`weight: ${weight},`, 4)
-        .writeLine(`onlyIf: (l) => { // trigger index ${state.trigger.index}`, 4)
-        .writeLine(`return ${formTrigger(state.trigger.text, 13, npcLowercaseId, discover)};`, 6)
-        .writeLine('},', 4);
+      writer.writeLine(`weight: ${weight},`, 6)
+        .writeLine(`onlyIf: (l) => { // trigger index ${state.trigger.index}`, 6)
+        .writeLine(`return ${formTrigger(state.trigger.text, 13, npcLowercaseId, discover)};`, 8)
+        .writeLine('},', 6);
     }
     else {
-      writer.writeLine(`weight: ${weight},`, 4)
-        .writeLine(`onlyIf: (l) => { // trigger index unknown`, 4)
-        .writeLine('return true;', 6)
-        .writeLine('},', 4);
+      writer.writeLine(`weight: ${weight},`, 6)
+        .writeLine(`onlyIf: (l) => { // trigger index unknown`, 6)
+        .writeLine('return true;', 8)
+        .writeLine('},', 6);
     }
   }
 
   if (hasAction) {
-    writer.writeLine('onEnter: (l) => {', 4);
+    writer.writeLine('onEnter: (l) => {', 6);
     writer.write(state.action);
-    writer.writeLine('},', 4);
+    writer.writeLine('},', 6);
   }
 
   return writer.done();
@@ -99,17 +97,18 @@ const formStateLabel = ({
   discover,
 }: FormStateProps): string => {
   const writer = createWriter();
+  writer.writeLine('dialogue', 2);
 
   const weight = stateIndicesOrderedByWeight.indexOf(state.index);
   const labelArgsProps = formLabelArgsProps(state, weight, npcLowercaseId, discover);
   const hasLabelArgsProps = !!labelArgsProps;
   if (hasLabelArgsProps) {
-    writer.writeLine(`.label('${stateId}', {`, 2);
+    writer.writeLine(`.label('${stateId}', {`, 4);
     writer.write(just(labelArgsProps));
-    writer.writeLine('})', 2);
+    writer.writeLine('})', 4);
   }
   else {
-    writer.writeLine(`.label('${stateId}')`, 2);
+    writer.writeLine(`.label('${stateId}')`, 4);
   }
 
   return writer.done();
@@ -124,19 +123,19 @@ const formResponseActionArgsProps = (response: NestedDlgResponse, npcLowercaseId
   const writer = createWriter();
 
   if (hasAction || hasJournal) {
-    writer.writeLine('onEnter: (l) => {', 4);
-    if (hasAction) writer.writeLine(`${formAction(response.action.text, 6, npcLowercaseId, discover)};`, 6);
+    writer.writeLine('onEnter: (l) => {', 6);
+    if (hasAction) writer.writeLine(`${formAction(response.action.text, 8, npcLowercaseId, discover)};`, 8);
     if (hasJournal) {
-      writer.writeLine(`l.setJournal('${response.journalId!}');`, 6);
+      writer.writeLine(`l.setJournal('${response.journalId!}');`, 8);
       discover({ type: 'journal', name: just(response.journalId).toString() });
     }
-    writer.writeLine('},', 4);
+    writer.writeLine('},', 6);
   }
 
   if (hasTrigger) writer
-    .writeLine('onlyIf: (l) => {', 4)
-    .writeLine(`return ${formTrigger(response.trigger.text, 6, npcLowercaseId, discover)};`, 6)
-    .writeLine('},', 4);
+    .writeLine('onlyIf: (l) => {', 6)
+    .writeLine(`return ${formTrigger(response.trigger.text, 8, npcLowercaseId, discover)};`, 8)
+    .writeLine('},', 6);
 
   return writer.done();
 };
@@ -166,20 +165,20 @@ const formResponse = ({
   const hasReponseArgsProps = !!responseActionArgsProps;
   if (hasReponseArgsProps) {
     /* eslint-disable @stylistic/no-multi-spaces */
-    if (isDestructor)  writer.writeLine(`.response('${responseId}', '${npcLowercaseId}_desctuctor', {`, 2);
-    else if (isExtern) writer.writeLine(`.response('${responseId}', '${targetState}', { // extern`, 2);
-    else               writer.writeLine(`.response('${responseId}', '${targetState}', {`, 2);
+    if (isDestructor)  writer.writeLine(`.response('${responseId}', '${npcLowercaseId}_destructor', {`, 4);
+    else if (isExtern) writer.writeLine(`.response('${responseId}', '${targetState}', { // extern`, 4);
+    else               writer.writeLine(`.response('${responseId}', '${targetState}', {`, 4);
     /* eslint-enable */
 
     writer.write(just(responseActionArgsProps));
 
-    writer.writeLine('})', 2);
+    writer.writeLine('})', 4);
   }
   else {
     /* eslint-disable @stylistic/no-multi-spaces */
-    if (isDestructor)  writer.writeLine(`.response('${responseId}', '${npcLowercaseId}_desctuctor')`, 2);
-    else if (isExtern) writer.writeLine(`.response('${responseId}', '${targetState}') // extern`, 2);
-    else               writer.writeLine(`.response('${responseId}', '${targetState}')`, 2);
+    if (isDestructor)  writer.writeLine(`.response('${responseId}', '${npcLowercaseId}_destructor')`, 4);
+    else if (isExtern) writer.writeLine(`.response('${responseId}', '${targetState}') // extern`, 4);
+    else               writer.writeLine(`.response('${responseId}', '${targetState}')`, 4);
     /* eslint-enable */
   }
 
@@ -190,13 +189,15 @@ const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string =
   const npcLowercaseId = dlg.resourceName.split('.')[0]!.replace(`'`, ``);
 
   const writer = createWriter();
-  writer.writeLine(`import registerNpcDialogue from './_registerNpcDialogue.js';`);
-  writer.writeLine(`import type { DialogueLogic } from './_dialogueLogic.js';`);
+  writer.writeLine(`import { registerNpcDialogue } from '@planar/shared';`);
+  writer.writeLine(`import type { DialogueLogic } from '@planar/shared';`);
   writer.br();
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${dlg.resourceName}`);
   writer.writeLine(' */');
-  writer.writeLine(`const ${npcLowercaseId}DialogueSkeleton = registerNpcDialogue<DialogueLogic>()`);
+  writer.writeLine(`const ${npcLowercaseId}DialogueSkeleton = (dialogueLogic: DialogueLogic) => {`);
+  writer.writeLine(`const dialogue = registerNpcDialogue<DialogueLogic>(dialogueLogic);`, 2);
+  writer.br();
 
   for (const state of dlg.states) {
     const stateId = formStateId(npcLowercaseId, state.index);
@@ -209,7 +210,7 @@ const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string =
       discover,
     }));
 
-    writer.writeLine('.say()', 2);
+    writer.writeLine('.say()', 4);
 
     for (const response of state.responses) {
       const responseId = formResponseId(npcLowercaseId, response.index);
@@ -228,11 +229,12 @@ const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string =
       }));
     }
 
+    writer.writeLine('.flush()', 4);
     writer.br();
   }
 
-  writer.writeLine('.done();');
-  writer.br();
+  writer.writeLine('return dialogue.expose();', 2);
+  writer.writeLine('};');
   writer.writeLine(`export default ${npcLowercaseId}DialogueSkeleton;`);
 
   return writer.done();

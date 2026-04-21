@@ -77,8 +77,33 @@
       "comment": "Я не нарушаю авторские права - я бесплатно стимулирую продажи оригинала."
     },
     "step6": {
-
+      "start": "Места на диске достаточно, я хочу начать",
+      "decompileBiffs": "Декомпиляция .biff архивов",
+      "ids_raw2json": ".ids в json",
+      "dlg_json2ghost_compilation": "Компиляция ghost диалогов",
+      "cre_raw2json": ".cre в json",
+      "dlg_raw2json": ".dlg в json",
+      "effV10_raw2json": ".eff v1.0 в json",
+      "effV20_raw2json": ".eff v2.0 в json",
+      "ini_raw2json": ".ini в json",
+      "itm_raw2json": ".itm в json",
+      "tlk_raw2json": ".tlk в json",
+      "cre_json2ghost": ".cre json в ghost",
+      "dlg_json2ghost": ".dlg json в ghost"
     }
+  },
+  "settings": {
+    "gameInterfaceSettings": "Настройки интерфейса игры",
+    "dialogueRenderer": "Вид диалога",
+    "pstee": "Как в оригинале",
+    "narrat": "Как в Narrat",
+    "renpy": "Как в RenPy",
+    "mobile": "Мобильный",
+    "theme": "Цветовая тема",
+    "language": "Язык интерфейса",
+    "dialogueMarks": "Метки в диалогах",
+    "dialogueMarks_markDisposers": "Отмечать завершающие реплики",
+    "dialogueMarks_markExterns": "Отмечать extern (dev)"
   },
   "themes": {
     "light": "Светлая",
