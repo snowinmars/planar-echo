@@ -80,6 +80,16 @@
 
     }
   },
+  "settings": {
+    "gameInterfaceSettings": "Game interface settings",
+    "dialogueRenderer": "Dialogue view",
+    "pstee": "As original",
+    "narrat": "Narrat-like",
+    "renpy": "RenPy-like",
+    "mobile": "Mobile",
+    "theme": "Color theme",
+    "language": "Interface language"
+  },
   "themes": {
     "light": "Light",
     "dark": "Dark"

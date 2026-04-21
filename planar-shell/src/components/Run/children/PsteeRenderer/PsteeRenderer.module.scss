@@ -1,0 +1,28 @@
+.say {
+  display: flex;
+  align-items: baseline;
+  color: #9ba290;
+}
+
+.sayDivider {
+  margin: 0 0.5em;
+}
+
+.responses {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.response {
+  display: flex;
+  align-items: flex-start;
+
+  color: #ff2e21;
+  text-transform: none;
+  text-align: left;
+}
+
+.responseDivider {
+  margin-right: 0.5em;
+}

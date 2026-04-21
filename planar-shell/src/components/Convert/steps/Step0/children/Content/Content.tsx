@@ -25,6 +25,7 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
 
       <TextField
         className={styles.input}
+        disabled={props.loading}
         value={props.serverUrl}
         onChange={e => props.setServerUrl(e.target.value)}
         fullWidth

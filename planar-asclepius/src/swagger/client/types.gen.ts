@@ -255,3 +255,36 @@ export type PostApiGhostDialogueByDialogueIdByGameLanguageResponses = {
 };
 
 export type PostApiGhostDialogueByDialogueIdByGameLanguageResponse = PostApiGhostDialogueByDialogueIdByGameLanguageResponses[keyof PostApiGhostDialogueByDialogueIdByGameLanguageResponses];
+
+export type PostApiGhostDialogueData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/dialogue';
+};
+
+export type PostApiGhostDialogueErrors = {
+    /**
+     * Available dialogues are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostDialogueError = PostApiGhostDialogueErrors[keyof PostApiGhostDialogueErrors];
+
+export type PostApiGhostDialogueResponses = {
+    /**
+     * Available dialogues in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostDialogueResponse = PostApiGhostDialogueResponses[keyof PostApiGhostDialogueResponses];

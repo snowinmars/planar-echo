@@ -1,6 +1,32 @@
 import type { Maybe } from '@planar/shared';
 
-export const allCategories = ['who', 'state', 'response', 'sprite', 'sound', 'variable', 'key', 'item', 'scene', 'alignment', 'location', 'portal', 'journal', 'class', 'animation', 'script', 'door', 'movie', 'timeMeasure', 'spell', 'slot', 'trigger', 'env'] as const;
+export const allCategories = [
+  'alignment',
+  'animation',
+  'class',
+  'door',
+  'env',
+  'item',
+  'journal',
+  'key',
+  'location',
+  'movie',
+  'portal',
+  'response',
+  'scene',
+  'script',
+  'scriptLevel',
+  'slot',
+  'sound',
+  'spell',
+  'sprite',
+  'stat',
+  'state',
+  'timeMeasure',
+  'trigger',
+  'variable',
+  'who',
+] as const;
 export type StoreDiscoveredType = (typeof allCategories)[number];
 export type DiscoveredEventType = Exclude<StoreDiscoveredType, 'env'>; // env registrates from variable event type
 export type Store = Map<StoreDiscoveredType, Set<string>>;

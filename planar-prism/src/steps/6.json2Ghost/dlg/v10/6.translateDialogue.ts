@@ -29,34 +29,38 @@ const translateDialogue = ({
   // const npcUppercaseId = npcLowercaseId[0]!.toUpperCase() + npcLowercaseId.slice(1);
 
   const writer = createWriter();
-  writer.writeLine(`import translateNpcDialogue from './_translateNpcDialogue.js';`);
-  writer.writeLine(`import type { UntranslatedNpcDialogue } from './_types.js';`);
+  writer.writeLine(`import { translateNpcDialogue } from '@planar/shared';`);
+  writer.writeLine(`import type { UntranslatedNpcDialogue } from '@planar/shared';`);
   writer.br();
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${dlg.resourceName}`);
   writer.writeLine(' */');
-  writer.writeLine(`const ${npcLowercaseId}Dialogue = <T>(${npcLowercaseId}DialogueSkeleton: UntranslatedNpcDialogue<T>) => translateNpcDialogue(${npcLowercaseId}DialogueSkeleton, '${language}')`);
+  writer.writeLine(`const ${npcLowercaseId}Dialogue = (${npcLowercaseId}DialogueSkeleton: UntranslatedNpcDialogue) => {`);
+  writer.writeLine(`const dialogue = translateNpcDialogue(${npcLowercaseId}DialogueSkeleton, '${language}');`, 2);
+  writer.br();
 
   for (const state of dlg.states) {
     const stateId = formState(npcLowercaseId, state.index);
 
-    writer.writeLine(`.label('${stateId}')`, 2);
-    writer.writeLine(`.say('${npcId}', ${escape(just(state.textTlk))})`, 2);
+    writer.writeLine('dialogue', 2);
+    writer.writeLine(`.label('${stateId}')`, 4);
+    writer.writeLine(`.say('${npcId}', ${escape(just(state.textTlk))})`, 4);
 
     for (const response of state.responses) {
       const responseId = formResponse(npcLowercaseId, response.index);
       // sometimes there are empty responses, like bannah.dgl > response 0
       // i just skip them right now
       // TODO [snow]: do something about it.
-      if (response.textTlk) writer.writeLine(`.response('${responseId}', ${escape(response.textTlk)})`, 2);
-      else writer.writeLine(`.response('${responseId}', '...')`, 2);
+      if (response.textTlk) writer.writeLine(`.response('${responseId}', ${escape(response.textTlk)})`, 4);
+      else writer.writeLine(`.response('${responseId}', '...')`, 4);
     }
 
+    writer.writeLine('.flush()', 4);
     writer.br();
   }
 
-  writer.writeLine('.done();', 2);
-  writer.br();
+  writer.writeLine('return dialogue.expose();', 2);
+  writer.writeLine('};');
   writer.writeLine(`export default ${npcLowercaseId}Dialogue;`);
 
   return writer.done();

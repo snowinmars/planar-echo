@@ -80,6 +80,16 @@
 
     }
   },
+  "settings": {
+    "gameInterfaceSettings": "Настройки интерфейса игры",
+    "dialogueRenderer": "Вид диалога",
+    "pstee": "Как в оригинале",
+    "narrat": "Как в Narrat",
+    "renpy": "Как в RenPy",
+    "mobile": "Мобильный",
+    "theme": "Цветовая тема",
+    "language": "Язык интерфейса"
+  },
   "themes": {
     "light": "Светлая",
     "dark": "Тёмная"

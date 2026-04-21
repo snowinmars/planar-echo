@@ -5,6 +5,7 @@ type Ie2tsItem = Readonly<{
   onMatch: (matches: string[]) => string;
 }>;
 
+const dropQuotes = (x: string): string => x.replaceAll(`"`, '').replaceAll(`'`, `\\'`).trim();
 const nativeTimeToNumber = (x: string): number => {
   switch (x) {
     case 'zero': return 0;
@@ -28,189 +29,223 @@ const nativeTimeToNumber = (x: string): number => {
 };
 
 const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
-  const notMe = (whoId: string) => whoId === 'myself' ? myself : whoId;
+  const notMe = (whoId: string): string => {
+    if (whoId === 'myself') return myself;
+    if (whoId === '[pc]') whoId = 'protagonist';
+    return dropQuotes(whoId);
+  };
 
   return [{
-    regex: /(!)?l\.inparty\("(.*?)"\)/,
+    regex: /(!)?l\.inparty\((.*?)\)/,
     onMatch: ([line, not, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `${not ? '!' : ''}l.isNpcInParty('${whoId}')`; // InParty("variable")
+      return `${not ? '!' : ''}l.isNpcInParty('${who}')`; // InParty("variable")
     },
   }, {
-    regex: /(!)?l\.nearbydialog\("(.*?)"\)/,
+    regex: /(!)?l\.nearbydialog\((.*?)\)/,
     onMatch: ([line, not, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `${not ? '!' : ''}l.isNearbyDialog('${whoId}')`; // NearbyDialog("variable")
+      return `${not ? '!' : ''}l.isNearbyDialog('${who}')`; // NearbyDialog("variable")
     },
   }, {
-    regex: /moraledec\("(.*?)",(\d+)\)/,
+    regex: /moraledec\((.*?),(\d+)\)/,
     onMatch: ([line, whoId, amount]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.changeMorale({whoId: '${whoId}', amount: -${amount}})`; // MoraleDec("variable",1)
+      return `l.changeMorale({whoId: '${who}', amount: -${amount}})`; // MoraleDec("variable",1)
     },
   }, {
-    regex: /moraleinc\("(.*?)",(\d+)\)/,
+    regex: /moraleinc\((.*?),(\d+)\)/,
     onMatch: ([line, whoId, amount]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.changeMorale({whoId: '${whoId}', amount: ${amount}})`;
+      return `l.changeMorale({whoId: '${who}', amount: ${amount}})`;
     }, // MoraleInc("variable",1)
   }, {
-    regex: /incrementglobal\("(.*?)","(.*?)",([-\d]+)\)/,
-    onMatch: ([line, variable, env, amount]) => {
-      if (!variable) throw new Error(`Wrong line syntax: cannot find 'variable' in '${line}'`);
-      if (!env) throw new Error(`Wrong line syntax: cannot find 'env' in '${line}'`);
+    regex: /incrementglobal\((.*?),(.*?),([-\d]+)\)/,
+    onMatch: ([line, variableId, envId, amount]) => {
+      if (!variableId) throw new Error(`Wrong line syntax: cannot find 'variableId' in '${line}'`);
+      if (!envId) throw new Error(`Wrong line syntax: cannot find 'envId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
+      const variable = dropQuotes(variableId);
+      const env = dropQuotes(envId);
       discover({ type: 'variable', name: variable, env: env });
 
-      return `l.increment({variable: '${variable}', env: '${env}', amount: ${amount}})`; // IncrementGlobal("variable","global",1)
+      return `l.increment({variableId: '${variable}', envId: '${env}', amount: ${amount}})`; // IncrementGlobal("variable","global",1)
     },
   }, {
-    regex: /incrementglobalonceex\("(.*?)","(.*?)",([-\d]+)\)/,
-    onMatch: ([line, key, variable, amount]) => {
-      if (!key) throw new Error(`Wrong line syntax: cannot find 'key' in '${line}'`);
-      if (!variable) throw new Error(`Wrong line syntax: cannot find 'variable' in '${line}'`);
+    regex: /incrementglobalonceex\((.*?),(.*?),([-\d]+)\)/,
+    onMatch: ([line, keyId, variableId, amount]) => {
+      if (!keyId) throw new Error(`Wrong line syntax: cannot find 'keyId' in '${line}'`);
+      if (!variableId) throw new Error(`Wrong line syntax: cannot find 'variableId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
+      const key = dropQuotes(keyId);
+      const variable = dropQuotes(variableId);
       discover({ type: 'key', name: key, extendValueSpectreWith: 0 });
       discover({ type: 'variable', name: variable });
 
-      return `l.increment({key: '${key}', variable: '${variable}', amount: ${amount}})`; // IncrementGlobal("variable","global",1)
+      return `l.increment({key: '${key}', variableId: '${variable}', amount: ${amount}})`; // IncrementGlobal("variable","global",1)
     },
   }, {
-    regex: /(!)?dead\("(.*?)"\)/,
+    regex: /(!)?dead\((.*?)\)/,
     onMatch: ([line, not, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `${not ? '!' : ''}l.isNpcDead('${whoId}')`; // Dead("variable")
+      return `${not ? '!' : ''}l.isNpcDead('${who}')`; // Dead("variable")
     },
   }, {
-    regex: /giveitemcreate\("(.*?)",(.*?),(\d+),(\d+),(\d+)\)/,
-    onMatch: ([line, itemId, whoId, amount, identified, slot]) => {
+    regex: /giveitemcreate\((.*?),(.*?),(\d+),(\d+),(\d+)\)/,
+    onMatch: ([line, itemId, whoId, amount, identified, slotId]) => {
       if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
       if (!identified) throw new Error(`Wrong line syntax: cannot find 'identified' in '${line}'`);
-      if (!slot) throw new Error(`Wrong line syntax: cannot find 'slot' in '${line}'`);
-      discover({ type: 'item', name: itemId });
-      discover({ type: 'who', name: whoId });
+      if (!slotId) throw new Error(`Wrong line syntax: cannot find 'slotId' in '${line}'`);
+      const item = dropQuotes(itemId);
+      const who = notMe(whoId);
+      const slot = dropQuotes(slotId);
+      discover({ type: 'item', name: item });
+      discover({ type: 'who', name: who });
+      discover({ type: 'slot', name: slot });
 
-      return `l.createItem({itemId: '${itemId}', whoId: '${whoId}', amount: ${amount}, identified: ${identified === '1' ? true : false}, slot: ${slot} })`; // GiveItemCreate("variable",Protagonist,1,0,0)
+      return `l.createItem({itemId: '${item}', whoId: '${who}', amount: ${amount}, identified: ${identified === '1' ? true : false}, slotId: '${slot}' })`; // GiveItemCreate("variable",Protagonist,1,0,0)
     },
   }, {
-    regex: /createitem\("(.*?)",(\d+),(\d+),(\d+)\)/,
-    onMatch: ([line, itemId, amount, identified, slot]) => {
+    regex: /createitem\((.*?),(\d+),(\d+),(\d+)\)/,
+    onMatch: ([line, itemId, amount, identified, slotId]) => {
       if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
       if (!identified) throw new Error(`Wrong line syntax: cannot find 'identified' in '${line}'`);
-      if (!slot) throw new Error(`Wrong line syntax: cannot find 'slot' in '${line}'`);
-      discover({ type: 'item', name: itemId });
+      if (!slotId) throw new Error(`Wrong line syntax: cannot find 'slotId' in '${line}'`);
+      const item = dropQuotes(itemId);
+      const slot = dropQuotes(slotId);
+      discover({ type: 'item', name: item });
+      discover({ type: 'slot', name: slot });
 
-      return `l.createItem({itemId: '${itemId}', amount: ${amount}, identified: ${identified === '1' ? true : false}, slot: ${slot} })`; // GiveItemCreate("variable",Protagonist,1,0,0)
+      return `l.createItem({itemId: '${item}', amount: ${amount}, identified: ${identified === '1' ? true : false}, slotId: '${slot}' })`; // GiveItemCreate("variable",Protagonist,1,0,0)
     },
   }, {
-    regex: /(give|take)item\("(.*?)",(.*?)\)/,
+    regex: /(give|take)item\((.*?),(.*?)\)/,
     onMatch: ([line, op, itemId, whoId]) => {
       if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'item', name: itemId });
-      discover({ type: 'who', name: whoId });
+      const item = dropQuotes(itemId);
+      const who = notMe(whoId);
+      discover({ type: 'item', name: item });
+      discover({ type: 'who', name: who });
 
-      return `l.${op}Item({itemId: '${itemId}', whoId: '${whoId}' })`; // GiveItem("variable",Protagonist) / TakeItem("variable",Protagonist)
+      return `l.${op}Item({itemId: '${item}', whoId: '${who}' })`; // GiveItem("variable",Protagonist) / TakeItem("variable",Protagonist)
     },
   }, {
-    regex: /takepartyitemnum\("(.*?)",(\d+)\)/,
+    regex: /takepartyitemnum\((.*?),(\d+)\)/,
     onMatch: ([line, itemId, amount]) => {
       if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'item', name: itemId });
+      const item = dropQuotes(itemId);
+      discover({ type: 'item', name: item });
 
-      return `l.takePartyItems({itemId: '${itemId}', amount: ${amount}})`; // TakePartyItemNum("variable",1)
+      return `l.takePartyItems({itemId: '${item}', amount: ${amount}})`; // TakePartyItemNum("variable",1)
     },
   }, {
-    regex: /(!)?hasitem\("(.*?)",(.*?)\)/,
+    regex: /(!)?hasitem\((.*?),(.*?)\)/,
     onMatch: ([line, not, itemId, whoId]) => {
       if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      whoId = notMe(whoId);
-      discover({ type: 'item', name: itemId });
-      discover({ type: 'who', name: whoId });
+      const item = dropQuotes(itemId);
+      const who = notMe(whoId);
+      discover({ type: 'item', name: item });
+      discover({ type: 'who', name: who });
 
-      return `${not ? '!' : ''}l.hasItem({itemId: '${itemId}', whoId: '${whoId}' })`; // HasItem("variable",Myself)
+      return `${not ? '!' : ''}l.hasItem({itemId: '${item}', whoId: '${who}' })`; // HasItem("variable",Myself)
     },
   }, {
-    regex: /(!)?partyhasitem\("(.*?)"\)/,
+    regex: /(!)?partyhasitem\((.*?)\)/,
     onMatch: ([line, not, itemId]) => {
       if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
-      discover({ type: 'item', name: itemId });
+      const item = dropQuotes(itemId);
+      discover({ type: 'item', name: item });
       discover({ type: 'who', name: 'party' });
 
-      return `${not ? '!' : ''}l.hasItem({itemId: '${itemId}', whoId: 'party' })`; // PartyHasItem("variable")
+      return `${not ? '!' : ''}l.hasItem({itemId: '${item}', whoId: 'party' })`; // PartyHasItem("variable")
     },
   }, {
-    regex: /destroypartyitem\("(.*?)",(true|false)\)/,
+    regex: /destroypartyitem\((.*?),(true|false)\)/,
     onMatch: ([line, itemId, all]) => {
       if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
-      discover({ type: 'item', name: itemId });
+      const item = dropQuotes(itemId);
+      discover({ type: 'item', name: item });
       discover({ type: 'who', name: 'party' });
 
-      return `l.destroyItem({itemId: '${itemId}', whoId: 'party', all: ${all === 'true' ? true : false} })`; // DestroyPartyItem("variable",TRUE)
+      return `l.destroyItem({itemId: '${item}', whoId: 'party', all: ${all === 'true' ? true : false} })`; // DestroyPartyItem("variable",TRUE)
     },
   }, {
-    regex: /destroyitemobject\("(.*?)",(.*),(true|false)\)/,
+    regex: /destroyitemobject\((.*?),(.*),(true|false)\)/,
     onMatch: ([line, itemId, whoId, all]) => {
       if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'item', name: itemId });
-      discover({ type: 'who', name: whoId });
+      const item = dropQuotes(itemId);
+      const who = notMe(whoId);
+      discover({ type: 'item', name: item });
+      discover({ type: 'who', name: who });
 
-      return `l.destroyItem({itemId: '${itemId}', whoId: '${whoId}', all: ${all === 'true' ? true : false} })`; // DestroyItemObject("variable",Protagonist,TRUE)
+      return `l.destroyItem({itemId: '${item}', whoId: '${who}', all: ${all === 'true' ? true : false} })`; // DestroyItemObject("variable",Protagonist,TRUE)
     },
   }, {
-    regex: /(!)?(set)?global(gt|lt)?\("(.*?)","(.*?)",([-\d]+)\)/,
-    onMatch: ([line, not, set, op, variable, env, amount]) => {
-      if (!variable) throw new Error(`Wrong line syntax: cannot find 'variable' in '${line}'`);
-      if (!env) throw new Error(`Wrong line syntax: cannot find 'env' in '${line}'`);
+    regex: /(!)?(set)?global(gt|lt)?\((.*?),(.*?),([-\d]+)\)/,
+    onMatch: ([line, not, set, op, variableId, envId, amount]) => {
+      if (!variableId) throw new Error(`Wrong line syntax: cannot find 'variableId' in '${line}'`);
+      if (!envId) throw new Error(`Wrong line syntax: cannot find 'envId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
+      const variable = dropQuotes(variableId);
+      const env = dropQuotes(envId);
       discover({ type: 'variable', name: variable, env: env, extendValueSpectreWith: amount });
 
-      if (set) return `l.setValue({variable: '${variable}', env: '${env}', amount: ${amount}})`; // SetGlobal("variable","global",1)'
+      if (set) return `l.setValue({variableId: '${variable}', envId: '${env}', amount: ${amount}})`; // SetGlobal("variable","global",1)'
 
       if (!op) {
-        if (not) return `l.getValue({variable: '${variable}', env: '${env}'}) !== ${amount}`; // !Global("variable","global",1)'
-        return `l.getValue({variable: '${variable}', env: '${env}'}) === ${amount}`; // Global("variable","global",1)
+        if (not) return `l.getValue({variableId: '${variable}', envId: '${env}'}) !== ${amount}`; // !Global("variable","global",1)'
+        return `l.getValue({variableId: '${variable}', envId: '${env}'}) === ${amount}`; // Global("variable","global",1)
       }
 
       if (not) switch (op) {
-        case 'gt': return `l.getValue({variable: '${variable}', env: '${env}'}) <= ${amount}`; // !GlobalGT("variable","global",1)
-        case 'lt': return `l.getValue({variable: '${variable}', env: '${env}'}) >= ${amount}`; // !GlobalLT("variable","global",1)
+        case 'gt': return `l.getValue({variableId: '${variable}', envId: '${env}'}) <= ${amount}`; // !GlobalGT("variable","global",1)
+        case 'lt': return `l.getValue({variableId: '${variable}', envId: '${env}'}) >= ${amount}`; // !GlobalLT("variable","global",1)
         default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
       }
       switch (op) {
-        case 'gt': return `l.getValue({variable: '${variable}', env: '${env}'}) > ${amount}`; // GlobalGT("variable","global",1)
-        case 'lt': return `l.getValue({variable: '${variable}', env: '${env}'}) < ${amount}`; // GlobalLT("variable","global",1)
+        case 'gt': return `l.getValue({variableId: '${variable}', envId: '${env}'}) > ${amount}`; // GlobalGT("variable","global",1)
+        case 'lt': return `l.getValue({variableId: '${variable}', envId: '${env}'}) < ${amount}`; // GlobalLT("variable","global",1)
         default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
       }
     },
   }, {
     regex: /checkstat(gt|lt)?\((.*?),(\d+),(.*?)\)/,
-    onMatch: ([line, op, whoId, amount, stat]) => {
+    onMatch: ([line, op, whoId, amount, statId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      if (!statId) throw new Error(`Wrong line syntax: cannot find 'statId' in '${line}'`);
+      const who = notMe(whoId);
+      const stat = dropQuotes(statId);
+      discover({ type: 'who', name: who });
+      discover({ type: 'stat', name: stat });
 
-      if (!op) return `l.getNpcStat({whoId: '${whoId}', stat: '${stat}'}) === ${amount}`;
+      if (!op) return `l.getNpcStat({whoId: '${who}', statId: '${stat}'}) === ${amount}`;
       switch (op) {
-        case 'gt': return `l.getNpcStat({whoId: '${whoId}', stat: '${stat}'}) > ${amount}`; // CheckStatGt(Protagonist,13,DEX)
-        case 'lt': return `l.getNpcStat({whoId: '${whoId}', stat: '${stat}'}) < ${amount}`; // CheckStatLt(Protagonist,13,DEX)
+        case 'gt': return `l.getNpcStat({whoId: '${who}', statId: '${stat}'}) > ${amount}`; // CheckStatGt(Protagonist,13,DEX)
+        case 'lt': return `l.getNpcStat({whoId: '${who}', statId: '${stat}'}) < ${amount}`; // CheckStatLt(Protagonist,13,DEX)
         default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
       }
     },
@@ -219,45 +254,48 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     onMatch: ([line, whoId, targetId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!targetId) throw new Error(`Wrong line syntax: cannot find 'targetId' in '${line}'`);
-      whoId = notMe(whoId);
-      targetId = targetId.replaceAll(`"`, '');
-      discover({ type: 'who', name: whoId });
-      discover({ type: 'who', name: targetId });
+      const who = notMe(whoId);
+      const target = notMe(targetId);
+      discover({ type: 'who', name: who });
+      discover({ type: 'who', name: target });
 
-      return `l.attack({targetId: '${targetId}', whoId: '${whoId}', force: true})`; // ForceAttack(Protagonist,Myself) / ForceAttack("Annah",Myself)
+      return `l.attack({targetId: '${target}', whoId: '${who}', force: true})`; // ForceAttack(Protagonist,Myself) / ForceAttack("Annah",Myself)
     },
   }, {
     regex: /attack\((.*?)\)/,
     onMatch: ([line, targetId]) => {
       if (!targetId) throw new Error(`Wrong line syntax: cannot find 'targetId' in '${line}'`);
-      targetId = targetId.replaceAll(`"`, '');
-      discover({ type: 'who', name: targetId });
+      const target = notMe(targetId);
+      discover({ type: 'who', name: target });
 
-      return `l.attack({targetId: '${targetId}', whoId: '${myself}'})`; // Attack(Protagonist) / Attack("Annah")
+      return `l.attack({targetId: '${target}', whoId: '${myself}'})`; // Attack(Protagonist) / Attack("Annah")
     },
   }, {
-    regex: /startcutscene\("(.*?)"\)/,
-    onMatch: ([line, scene]) => {
-      if (!scene) throw new Error(`Wrong line syntax: cannot find 'scene' in '${line}'`);
+    regex: /startcutscene\((.*?)\)/,
+    onMatch: ([line, sceneId]) => {
+      if (!sceneId) throw new Error(`Wrong line syntax: cannot find 'sceneId' in '${line}'`);
+      const scene = dropQuotes(sceneId);
       discover({ type: 'scene', name: scene });
 
-      return `l.startCutScene({scene: '${scene}', checkConditions: false})`; // StartCutScene("bdcut17b")
+      return `l.startCutScene({sceneId: '${scene}', checkConditions: false})`; // StartCutScene("bdcut17b")
     },
   }, {
-    regex: /startcutsceneex\("(.*?)",(true|false)\)/,
-    onMatch: ([line, scene, checkConditions]) => {
-      if (!scene) throw new Error(`Wrong line syntax: cannot find 'scene' in '${line}'`);
+    regex: /startcutsceneex\((.*?),(true|false)\)/,
+    onMatch: ([line, sceneId, checkConditions]) => {
+      if (!sceneId) throw new Error(`Wrong line syntax: cannot find 'sceneId' in '${line}'`);
+      const scene = dropQuotes(sceneId);
       discover({ type: 'scene', name: scene });
 
-      return `l.startCutScene({scene: '${scene}', checkConditions: ${checkConditions === 'true' ? true : false}})`; // StartCutSceneEx("bdcut17b",TRUE)
+      return `l.startCutScene({sceneId: '${scene}', checkConditions: ${checkConditions === 'true' ? true : false}})`; // StartCutSceneEx("bdcut17b",TRUE)
     },
   }, {
     regex: /fullheal(?:ex)\((.*?)\)/,
     onMatch: ([line, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.fullHeal('${whoId}')`; // FullHeal(Protagonist)
+      return `l.fullHeal('${who}')`; // FullHeal(Protagonist)
     },
   }, {
     regex: /addexperienceparty\((\d+)\)/,
@@ -272,9 +310,10 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     onMatch: ([line, whoId, amount]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.addExp({amount: ${amount}, whoId: '${whoId}'})`; // GiveExperience(Protagonist,750)
+      return `l.addExp({amount: ${amount}, whoId: '${who}'})`; // GiveExperience(Protagonist,750)
     },
   }, {
     regex: /(take|destroy|give)?partygold(gt|lt|global)?\((\d+)\)/,
@@ -304,26 +343,30 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       return `l.changeGold({amount: ${amount}, operation: 'give', force: true})`; // GiveGoldForce(1)
     },
   }, {
-    regex: /playsound(notranged)?\("(.*?)"\)/,
-    onMatch: ([line, op, sound]) => {
-      if (!sound) throw new Error(`Wrong line syntax: cannot find 'sound' in '${line}'`);
+    regex: /playsound(notranged)?\((.*?)\)/,
+    onMatch: ([line, op, soundId]) => {
+      if (!soundId) throw new Error(`Wrong line syntax: cannot find 'soundId' in '${line}'`);
+      const sound = dropQuotes(soundId);
       discover({ type: 'sound', name: sound });
 
-      return `l.playSound({sound: '${sound}', notRanged: ${op ? true : false}})`; // PlaySoundNotRanged("sptr_01")
+      return `l.playSound({soundId: '${sound}', notRanged: ${op ? true : false}})`; // PlaySoundNotRanged("sptr_01")
     },
   }, {
     regex: /permanentstatchange\((.*?),(.*?),(.*?),(\d+)\)/,
-    onMatch: ([line, whoId, stat, op, amount]) => {
+    onMatch: ([line, whoId, statId, op, amount]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      if (!stat) throw new Error(`Wrong line syntax: cannot find 'stat' in '${line}'`);
+      if (!statId) throw new Error(`Wrong line syntax: cannot find 'statId' in '${line}'`);
       if (!op) throw new Error(`Wrong line syntax: cannot find 'op' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      const stat = dropQuotes(statId);
+      discover({ type: 'who', name: who });
+      discover({ type: 'stat', name: stat });
 
       switch (op) {
-        case 'raise': return `l.changeNpcStat({whoId: '${whoId}', stat: '${stat}', amount: ${amount}})`; // PermanentStatChange(Protagonist,Pickpocket,RAISE,1)
-        case 'lower': return `l.changeNpcStat({whoId: '${whoId}', stat: '${stat}', amount: -${amount}})`; // PermanentStatChange(Protagonist,ArmorClass,LOWER,1)
-        case 'set': return `l.setNpcStat('${whoId}', '${stat}', ${amount})`; // PermanentStatChange("Vhail",DEX,SET,25)
+        case 'raise': return `l.changeNpcStat({whoId: '${whoId}', statId: '${stat}', amount: ${amount}})`; // PermanentStatChange(Protagonist,Pickpocket,RAISE,1)
+        case 'lower': return `l.changeNpcStat({whoId: '${whoId}', statId: '${stat}', amount: -${amount}})`; // PermanentStatChange(Protagonist,ArmorClass,LOWER,1)
+        case 'set': return `l.setNpcStat({whoId: '${whoId}', statId: '${stat}', amount: ${amount}})`; // PermanentStatChange("Vhail",DEX,SET,25)
         default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
       }
     },
@@ -346,35 +389,40 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       return `l.getTimesTalkedToNpc() === ${amount}`; // NumTimesTalkedTo(0)
     },
   }, {
-    regex: /(!)?exists\("(.*?)"\)/,
+    regex: /(!)?exists\((.*?)\)/,
     onMatch: ([line, not, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `${not ? '!' : ''}l.exists('${whoId}')`; // Exists("trans")
+      return `${not ? '!' : ''}l.exists('${who}')`; // Exists("trans")
     },
   }, {
-    regex: /transformpartyitem\("(.*?)","(.*?)",(\d+),(\d+),(\d+)\)/,
+    regex: /transformpartyitem\((.*?),(.*?),(\d+),(\d+),(\d+)\)/,
     onMatch: ([line, fromItemId, toItemId, charge1, charge2, charge3]) => {
       if (!fromItemId) throw new Error(`Wrong line syntax: cannot find 'fromItemId' in '${line}'`);
       if (!toItemId) throw new Error(`Wrong line syntax: cannot find 'toItemId' in '${line}'`);
       if (!charge1) throw new Error(`Wrong line syntax: cannot find 'charge1' in '${line}'`);
       if (!charge2) throw new Error(`Wrong line syntax: cannot find 'charge2' in '${line}'`);
       if (!charge3) throw new Error(`Wrong line syntax: cannot find 'charge3' in '${line}'`);
-      discover({ type: 'item', name: fromItemId });
-      discover({ type: 'item', name: toItemId });
+      const fromItem = dropQuotes(fromItemId);
+      const toItem = dropQuotes(toItemId);
+      discover({ type: 'item', name: fromItem });
+      discover({ type: 'item', name: toItem });
 
-      return `l.transformItem({fromItemId: '${fromItemId}', toItemId: '${toItemId}', charge1: ${charge1}, charge2: ${charge2}, charge3: ${charge3}, targetId: 'party' })`; // TransformPartyItem("tankard","tankardf",1,0,0)
+      return `l.transformItem({fromItemId: '${fromItem}', toItemId: '${toItem}', charge1: ${charge1}, charge2: ${charge2}, charge3: ${charge3}, targetId: 'party' })`; // TransformPartyItem("tankard","tankardf",1,0,0)
     },
   }, {
     regex: /(!)?alignment\((.*?),(.*?)\)/,
-    onMatch: ([line, not, whoId, alignment]) => {
+    onMatch: ([line, not, whoId, alignmentId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      if (!alignment) throw new Error(`Wrong line syntax: cannot find 'alignment' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      if (!alignmentId) throw new Error(`Wrong line syntax: cannot find 'alignmentId' in '${line}'`);
+      const who = notMe(whoId);
+      const alignment = dropQuotes(alignmentId);
+      discover({ type: 'who', name: who });
       discover({ type: 'alignment', name: alignment });
 
-      return not ? `l.getAlignment('${whoId}') !== '${alignment}'` : `l.getAlignment('${whoId}') === '${alignment}'`; // Alignment(protagonist,lawful_good)
+      return not ? `l.getAlignment('${who}') !== '${alignment}'` : `l.getAlignment('${who}') === '${alignment}'`; // Alignment(protagonist,lawful_good)
     },
   }, {
     regex: /generatemodronmaze\(\)/,
@@ -390,25 +438,29 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       }
     },
   }, {
-    regex: /setportalcursor\("(.*?)",(.*?),(true|false)\)/,
-    onMatch: ([line, location, portal, reset]) => {
-      if (!location) throw new Error(`Wrong line syntax: cannot find 'location' in '${line}'`);
-      if (!portal) throw new Error(`Wrong line syntax: cannot find 'portal' in '${line}'`);
+    regex: /setportalcursor\((.*?),(.*?),(true|false)\)/,
+    onMatch: ([line, locationId, portalId, reset]) => {
+      if (!locationId) throw new Error(`Wrong line syntax: cannot find 'locationId' in '${line}'`);
+      if (!portalId) throw new Error(`Wrong line syntax: cannot find 'portalId' in '${line}'`);
       if (!reset) throw new Error(`Wrong line syntax: cannot find 'reset' in '${line}'`);
+      const location = dropQuotes(locationId);
+      const portal = dropQuotes(portalId);
       discover({ type: 'location', name: location });
       discover({ type: 'portal', name: portal });
 
-      return `l.setPortalCursor({location: '${location}', portal: '${portal}', reset: ${reset}})`; // SetPortalCursor(\"fort_port\",portal_cursor_visible,true)
+      return `l.setPortalCursor({locationId: '${location}', portalId: '${portal}', reset: ${reset}})`; // SetPortalCursor(\"fort_port\",portal_cursor_visible,true)
     },
   }, {
-    regex: /startstore\("(.*?)",(.*?)\)/,
+    regex: /startstore\((.*?),(.*?)\)/,
     onMatch: ([line, shopWhoId, customerWhoId]) => {
       if (!shopWhoId) throw new Error(`Wrong line syntax: cannot find 'shopWhoId' in '${line}'`);
       if (!customerWhoId) throw new Error(`Wrong line syntax: cannot find 'customerWhoId' in '${line}'`);
-      discover({ type: 'who', name: shopWhoId });
-      discover({ type: 'who', name: customerWhoId });
+      const shopWho = notMe(shopWhoId);
+      const customerWho = notMe(customerWhoId);
+      discover({ type: 'who', name: shopWho });
+      discover({ type: 'who', name: customerWho });
 
-      return `l.trade({shop: '${shopWhoId}', customer: '${customerWhoId}'})`; // startstore("fell",protagonist)
+      return `l.trade({shopId: '${shopWho}', customerId: '${customerWho}'})`; // startstore("fell",protagonist)
     },
   }, {
     regex: /(true|false)\(\)/,
@@ -418,49 +470,57 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     onMatch: () => `l.escapeArea()`, // EscapeArea()
   }, {
     regex: /class\((.*?),(.*?)\)/,
-    onMatch: ([line, whoId, clas]) => {
+    onMatch: ([line, whoId, classId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      if (!clas) throw new Error(`Wrong line syntax: cannot find 'clas' in '${line}'`);
-      whoId = notMe(whoId);
-      discover({ type: 'who', name: whoId });
+      if (!classId) throw new Error(`Wrong line syntax: cannot find 'classId' in '${line}'`);
+      const who = notMe(whoId);
+      const clas = dropQuotes(classId);
+      discover({ type: 'who', name: who });
       discover({ type: 'class', name: clas });
 
-      return `l.getClass('${whoId}') === '${clas}'`; // Class(Myself, MAGE);
+      return `l.getClass('${who}') === '${clas}'`; // Class(Myself, MAGE);
     },
   }, {
     regex: /setnamelessclass\((.*?)\)/,
-    onMatch: ([line, clas]) => {
-      if (!clas) throw new Error(`Wrong line syntax: cannot find 'clas' in '${line}'`);
+    onMatch: ([line, classId]) => {
+      if (!classId) throw new Error(`Wrong line syntax: cannot find 'classId' in '${line}'`);
+      const clas = dropQuotes(classId);
       discover({ type: 'class', name: clas });
 
       return `l.setNamelessClass('${clas}')`; // SetNamelessClass(THIEF)
     },
   }, {
     regex: /setanimstate\((.*?),(.*?)\)/,
-    onMatch: ([line, whoId, animation]) => {
+    onMatch: ([line, whoId, animationId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      if (!animation) throw new Error(`Wrong line syntax: cannot find 'animation' in '${line}'`);
-      whoId = notMe(whoId);
-      discover({ type: 'who', name: whoId });
+      if (!animationId) throw new Error(`Wrong line syntax: cannot find 'animationId' in '${line}'`);
+      const who = notMe(whoId);
+      const animation = dropQuotes(animationId);
+      discover({ type: 'who', name: who });
       discover({ type: 'animation', name: animation });
 
-      return `l.setAnimation({whoId: '${whoId}', animation: '${animation}'})`; // SetAnimState(Myself,anim_mimeattack2)
+      return `l.setAnimation({whoId: '${who}', animationId: '${animation}'})`; // SetAnimState(Myself,anim_mimeattack2)
     },
   }, {
     regex: /floatrebus\((.*?)\)/,
     onMatch: ([line, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      whoId = notMe(whoId);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.showFloatingRebusAbove('${whoId}')`; // FloatRebus(Myself)
+      return `l.showFloatingRebusAbove('${who}')`; // FloatRebus(Myself)
     },
   }, {
     regex: /destroyself\(\)/,
     onMatch: () => `l.destroySelf()`,
   }, {
     regex: /deactivate\((.*?)\)/,
-    onMatch: ([_, whoId]) => `l.deactivate('${whoId}')`,
+    onMatch: ([line, whoId]) => {
+      if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
+      return `l.deactivate('${who}')`;
+    },
   }, {
     regex: /fade(to|from)color\(\[(\d+)\.(\d+)\],(\d+)\)/,
     onMatch: ([line, op, x, y, unknown]) => {
@@ -474,21 +534,22 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     regex: /kill\((.*?)\)/,
     onMatch: ([line, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      whoId = notMe(whoId);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.kill('${whoId}')`;
+      return `l.kill('${who}')`;
     },
   }, {
-    regex: /sinisterpoof\("(.*?)",\[(\d+)\.(\d+)\],(\d+)\)/,
-    onMatch: ([line, animation, x, y, blendingMode]) => {
-      if (!animation) throw new Error(`Wrong line syntax: cannot find 'animation' in '${line}'`);
+    regex: /sinisterpoof\((.*?),\[(\d+)\.(\d+)\],(\d+)\)/,
+    onMatch: ([line, animationId, x, y, blendingMode]) => {
+      if (!animationId) throw new Error(`Wrong line syntax: cannot find 'animationId' in '${line}'`);
       if (!x) throw new Error(`Wrong line syntax: cannot find 'x' in '${line}'`);
       if (!y) throw new Error(`Wrong line syntax: cannot find 'y' in '${line}'`);
       if (!blendingMode) throw new Error(`Wrong line syntax: cannot find 'blendingMode' in '${line}'`);
+      const animation = dropQuotes(animationId);
       discover({ type: 'animation', name: animation });
 
-      return `l.playAnimation({animation: '${animation}', x: ${x}, y: ${y}, blendingMode: ${blendingMode}})`;
+      return `l.playAnimation({animationId: '${animation}', x: ${x}, y: ${y}, blendingMode: ${blendingMode}})`;
     },
   }, {
     regex: /restpartyex\((\d+),(\d+),(true|false)\)/,
@@ -503,54 +564,64 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     regex: /restparty\(\)/,
     onMatch: () => `l.rest({gold: 0, hpBonus: 0, disableMoving: false})`,
   }, {
-    regex: /teleportparty\("(.*?)",\[(\d+?)\.(\d+?)\],(\d+?)\)/,
-    onMatch: ([line, location, x, y, face]) => {
-      if (!location) throw new Error(`Wrong line syntax: cannot find 'location' in '${line}'`);
+    regex: /teleportparty\((.*?),\[(\d+?)\.(\d+?)\],(\d+?)\)/,
+    onMatch: ([line, locationId, x, y, face]) => {
+      if (!locationId) throw new Error(`Wrong line syntax: cannot find 'locationId' in '${line}'`);
       if (!x) throw new Error(`Wrong line syntax: cannot find 'x' in '${line}'`);
       if (!y) throw new Error(`Wrong line syntax: cannot find 'y' in '${line}'`);
       if (!face) throw new Error(`Wrong line syntax: cannot find 'face' in '${line}'`);
+      const location = dropQuotes(locationId);
       discover({ type: 'location', name: location });
 
-      return `l.teleportParty({location: '${location}', x: ${x}, y: ${y}, face: ${face}})`;
+      return `l.teleportParty({locationId: '${location}', x: ${x}, y: ${y}, face: ${face}})`;
     },
   }, {
-    regex: /changeaiscript\("(.*?)",(.*?)\)/,
-    onMatch: ([line, script, level]) => {
-      if (!level) throw new Error(`Wrong line syntax: cannot find 'level' in '${line}'`);
+    regex: /changeaiscript\((.*?),(.*?)\)/,
+    onMatch: ([line, scriptId, levelId]) => {
+      // script may be empty in case: ChangeAiScript("",General)
+      if (!scriptId) throw new Error(`Wrong line syntax: cannot find 'scriptId' in '${line}'`);
+      if (!levelId) throw new Error(`Wrong line syntax: cannot find 'levelId' in '${line}'`);
+      const script = dropQuotes(scriptId);
+      const level = dropQuotes(levelId);
       if (script) discover({ type: 'script', name: script });
+      discover({ type: 'scriptLevel', name: level });
       discover({ type: 'who', name: myself });
 
-      return script ? `l.changeScript({whoId: '${myself}', script: '${script}', 'level': '${level}'})` : `l.disableScript({whoId: '${myself}', 'level': '${level}'})`;
+      return script ? `l.changeScript({whoId: '${myself}', scriptId: '${script}', 'scriptLevelId': '${level}'})` : `l.disableScript({whoId: '${myself}', 'scriptLevelId': '${level}'})`;
     },
   }, {
     regex: /joinparty(ex)?\((true|false)?\)/,
     onMatch: ([_, op, joinGroup]) => {
-      return `l.joinParty({again: ${op ? true : false}, joinGroup: ${joinGroup ? true : false}})`;
+      discover({ type: 'who', name: myself });
+      return `l.joinParty({whoId: '${myself}', again: ${op ? true : false}, joinGroup: ${joinGroup ? true : false}})`;
     },
   }, {
-    regex: /setdoorlocked\("(.*?)",(true|false)\)/,
-    onMatch: ([line, door, isLocked]) => {
-      if (!door) throw new Error(`Wrong line syntax: cannot find 'door' in '${line}'`);
+    regex: /setdoorlocked\((.*?),(true|false)\)/,
+    onMatch: ([line, doorId, isLocked]) => {
+      if (!doorId) throw new Error(`Wrong line syntax: cannot find 'doorId' in '${line}'`);
       if (!isLocked) throw new Error(`Wrong line syntax: cannot find 'isLocked' in '${line}'`);
+      const door = dropQuotes(doorId);
       discover({ type: 'door', name: door });
 
-      return `l.turnKeyInDoor({door: '${door}', isLocked: ${isLocked}})`;
+      return `l.turnKeyInDoor({doorId: '${door}', isLocked: ${isLocked}})`;
     },
   }, {
-    regex: /opendoor\("(.*?)"\)/,
-    onMatch: ([line, door]) => {
-      if (!door) throw new Error(`Wrong line syntax: cannot find 'door' in '${line}'`);
+    regex: /opendoor\((.*?)\)/,
+    onMatch: ([line, doorId]) => {
+      if (!doorId) throw new Error(`Wrong line syntax: cannot find 'doorId' in '${line}'`);
+      const door = dropQuotes(doorId);
       discover({ type: 'door', name: door });
 
       return `l.openDoor('${door}')`;
     },
   }, {
-    regex: /lastpersontalkedto\("(.*?)"\)/,
+    regex: /lastpersontalkedto\((.*?)\)/,
     onMatch: ([line, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.getLastNpcTalkedTo() === '${whoId}'`;
+      return `l.getLastNpcTalkedTo() === '${who}'`;
     },
   }, {
     regex: /leaveparty\(\)/,
@@ -559,12 +630,13 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     regex: /startcutscenemode\(\)/,
     onMatch: () => `l.startCutsceneMode()`,
   }, {
-    regex: /startmovie\("(.*?)"\)/,
+    regex: /startmovie\((.*?)\)/,
     onMatch: ([line, movieId]) => {
       if (!movieId) throw new Error(`Wrong line syntax: cannot find 'movieId' in '${line}'`);
-      discover({ type: 'movie', name: movieId });
+      const movie = dropQuotes(movieId);
+      discover({ type: 'movie', name: movie });
 
-      return `l.startMovie('${movieId}')`;
+      return `l.startMovie('${movie}')`;
     },
   }, {
     regex: /runawayfrom(?:ex)\((.*?),(?:(\d+)|(.*?)_ai_(.*?)),?(true|false)?\)/,
@@ -573,36 +645,43 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       if (!timeSec && !timeNative && !nativeMeasure) throw new Error(`Wrong line syntax: cannot find 'timeSec/timeNative/nativeMeasure' in '${line}'`);
       if (timeNative && !nativeMeasure) throw new Error(`Wrong line syntax: cannot find 'nativeMeasure' for 'timeNative' in '${line}'`);
       if (!timeNative && nativeMeasure) throw new Error(`Wrong line syntax: cannot find 'timeNative' for 'nativeMeasure' in '${line}'`);
-      if (whoId === '[pc]') whoId = 'protagonist';
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
       if (timeSec) {
         discover({ type: 'timeMeasure', name: 'sec' });
-        return `l.runAway({whoId: '${whoId}', time: ${timeSec}, timeMeasure: 'sec', noAttack: ${noAttack === 'true' ? true : false}})`;
+        return `l.runAway({whoId: '${who}', time: ${timeSec}, timeMeasureId: 'sec', noAttack: ${noAttack === 'true' ? true : false}})`;
       }
 
       discover({ type: 'timeMeasure', name: nativeMeasure! });
-      return `l.runAway({whoId: '${whoId}', time: ${nativeTimeToNumber(timeNative!)}, timeMeasure: '${nativeMeasure}', noAttack: ${noAttack === 'true' ? true : false}})`;
+      return `l.runAway({whoId: '${who}', time: ${nativeTimeToNumber(timeNative!)}, timeMeasureId: '${nativeMeasure}', noAttack: ${noAttack === 'true' ? true : false}})`;
     },
   }, {
     regex: /clearactions\((.*?)\)/,
     onMatch: ([line, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.clearActions('${whoId}')`;
+      return `l.clearActions('${who}')`;
     },
   }, {
     regex: /randomnum\((\d+),(\d+)\)/,
-    onMatch: ([_, range, match]) => `l.roll(${range}) === ${match}`,
+    onMatch: ([line, range, match]) => {
+      if (!range) throw new Error(`Wrong line syntax: cannot find 'range' in '${line}'`);
+      if (!match) throw new Error(`Wrong line syntax: cannot find 'match' in '${line}'`);
+      return `l.roll(${range}) === ${match}`;
+    },
   }, {
     regex: /applyspell\((.*?),(.*?)\)/,
     onMatch: ([line, whoId, spellId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!spellId) throw new Error(`Wrong line syntax: cannot find 'spellId' in '${line}'`);
-      discover({ type: 'who', name: whoId });
-      discover({ type: 'spell', name: spellId });
-      return `l.applySpell({whoId: '${whoId}', spellId: '${spellId}'})`; // ApplySpell(Protagonist,special_remove_sensory_touch)
+      const who = notMe(whoId);
+      const spell = dropQuotes(spellId);
+      discover({ type: 'who', name: who });
+      discover({ type: 'spell', name: spell });
+      return `l.applySpell({whoId: '${who}', spellId: '${spell}'})`; // ApplySpell(Protagonist,special_remove_sensory_touch)
     },
   }, {
     regex: /damage\((.*?),(.*?),(\d+)\)/,
@@ -610,12 +689,13 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!op) throw new Error(`Wrong line syntax: cannot find 'op' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
       switch (op) {
-        case 'lower': return `l.damageBy({whoId: '${whoId}', amount: ${amount}})`; // Damage(Protagonist,LOWER,15)
-        case 'raise': return `l.damageBy({whoId: '${whoId}', amount: -${amount}})`; // Damage(Protagonist,RAISE,15)
-        case 'set': return `l.damageTo({whoId: '${whoId}', amount: ${amount}})`; // Damage(Protagonist,SET,15)
+        case 'lower': return `l.damageBy({whoId: '${who}', amount: ${amount}})`; // Damage(Protagonist,LOWER,15)
+        case 'raise': return `l.damageBy({whoId: '${who}', amount: -${amount}})`; // Damage(Protagonist,RAISE,15)
+        case 'set': return `l.damageTo({whoId: '${who}', amount: ${amount}})`; // Damage(Protagonist,SET,15)
         default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
       }
     },
@@ -625,11 +705,12 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       if (!op) return `l.getHp('${whoId}') === ${amount}`;
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
       switch (op) {
-        case 'gt': return `l.getHp('${whoId}') > ${amount}`;
-        case 'lt': return `l.getHp('${whoId}') < ${amount}`;
+        case 'gt': return `l.getHp('${who}') > ${amount}`;
+        case 'lt': return `l.getHp('${who}') < ${amount}`;
         default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
       }
     },
@@ -639,46 +720,52 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!slotId) throw new Error(`Wrong line syntax: cannot find 'slotId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'who', name: whoId });
-      discover({ type: 'slot', name: slotId });
+      const who = notMe(whoId);
+      const slot = dropQuotes(slotId);
+      discover({ type: 'who', name: who });
+      discover({ type: 'slot', name: slot });
 
-      return `l.changeWeaponProficiency({whoId: '${whoId}', slotId: '${slotId}', amount: ${amount}})`; // IncrementProficiency(protagonist,fist,1)
+      return `l.changeWeaponProficiency({whoId: '${who}', slotId: '${slot}', amount: ${amount}})`; // IncrementProficiency(protagonist,fist,1)
     },
   }, {
     regex: /incrementextraproficiency\((.*?),(\d+)\)/,
     onMatch: ([line, whoId, amount]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      discover({ type: 'who', name: whoId });
+      const who = notMe(whoId);
+      discover({ type: 'who', name: who });
 
-      return `l.changeExtraProficiency({whoId: '${whoId}', amount: ${amount}})`; // IncrementExtraProficiency(protagonist,1);
+      return `l.changeExtraProficiency({whoId: '${who}', amount: ${amount}})`; // IncrementExtraProficiency(protagonist,1);
     },
   }, {
     regex: /createcreatureatfeet\((.*?)\)/,
     onMatch: ([line, creatureWhoId]) => {
       if (!creatureWhoId) throw new Error(`Wrong line syntax: cannot find 'creatureWhoId' in '${line}'`);
-      discover({ type: 'who', name: creatureWhoId });
+      const creatureWho = notMe(creatureWhoId);
+      discover({ type: 'who', name: creatureWho });
       discover({ type: 'who', name: myself });
 
-      return `l.createCreatureNearTo({creatureWhoId: '${creatureWhoId}', nearToWhoId: '${myself}'})`;
+      return `l.createCreatureNearTo({creatureWhoId: '${creatureWho}', nearToWhoId: '${myself}'})`;
     },
   }, {
-    regex: /creatureinarea\("(.*?)"\)/,
-    onMatch: ([line, location]) => {
-      if (!location) throw new Error(`Wrong line syntax: cannot find 'location' in '${line}'`);
+    regex: /creatureinarea\((.*?)\)/,
+    onMatch: ([line, locationId]) => {
+      if (!locationId) throw new Error(`Wrong line syntax: cannot find 'locationId' in '${line}'`);
+      const location = dropQuotes(locationId);
       discover({ type: 'location', name: location });
       discover({ type: 'who', name: myself });
 
       return `l.creatureInLocation({creatureWhoId: '${myself}', location: '${location}'})`; // CreatureInArea("AR0108")
     },
   }, {
-    regex: /triggeractivation\("(.*?)",(true|false)\)/,
+    regex: /triggeractivation\((.*?),(true|false)\)/,
     onMatch: ([line, triggerId, active]) => {
       if (!triggerId) throw new Error(`Wrong line syntax: cannot find 'triggerId' in '${line}'`);
       if (!active) throw new Error(`Wrong line syntax: cannot find 'active' in '${line}'`);
-      discover({ type: 'trigger', name: triggerId });
+      const trigger = dropQuotes(triggerId);
+      discover({ type: 'trigger', name: trigger });
 
-      return `l.changeTrigger({triggerId: '${triggerId}', active: ${active}})`;
+      return `l.changeTrigger({triggerId: '${trigger}', active: ${active}})`;
     },
   }];
 };
