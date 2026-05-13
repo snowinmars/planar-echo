@@ -11,7 +11,8 @@
       "5": "Requirements: node.js and original game files you own."
     },
     "runnerGuard": {
-      "tryToRun": "Run",
+      "tryToRun": "Run from",
+      "ghostPath": "Game folder",
       "or": "or",
       "convert": "Convert"
     },
@@ -92,18 +93,34 @@
       "dlg_json2ghost": ".dlg json to ghost"
     }
   },
+  "run": {
+    "dialoguesLabel": "Dialogue ({{amount}} in total)",
+    "statesLabel": "State ({{amount}}) in total"
+  },
   "settings": {
     "gameInterfaceSettings": "Game interface settings",
-    "dialogueRenderer": "Dialogue view",
-    "pstee": "As original",
-    "narrat": "Narrat-like",
-    "renpy": "RenPy-like",
-    "mobile": "Mobile",
-    "theme": "Color theme",
-    "language": "Interface language",
-    "dialogueMarks": "Marks in dialogues",
-    "dialogueMarks_markDisposers": "Mark exits",
-    "dialogueMarks_markExterns": "Mark externs (dev)"
+    "dialogueRenderer": {
+      "title": "Dialogue view",
+      "pstee": "As original",
+      "pstee-two-columns": "As original, but in two columns",
+      "narrat": "Narrat-like",
+      "mobile": "Mobile"
+    },
+    "theme": {
+      "title": "Color theme"
+    },
+    "language": {
+      "title": "Interface language"
+    },
+    "dialogueMarks":{
+      "title": "Marks in dialogues",
+      "markDisposers": "Mark exits",
+      "markExterns": "Mark externs (dev)"
+    },
+    "localData": {
+      "clearLocalStorage": "Clear local storage",
+      "clearIndexedDb": "Clear indexedDb"
+    }
   },
   "themes": {
     "light": "Light",

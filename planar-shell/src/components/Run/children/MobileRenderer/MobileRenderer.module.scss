@@ -1,7 +1,19 @@
+.narrat {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.says {
+  display: flex;
+  width: 40%;
+}
+
 .say {
   display: flex;
   align-items: baseline;
   color: #9ba290;
+  margin-top: auto;
 }
 
 .sayDivider {
@@ -10,12 +22,14 @@
 
 .responses {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 40%;
+  height: 70vh;
 
-  max-height: 10em;
   overflow-y: auto;
+  margin-left: auto;
 }
 
 .response {
@@ -27,13 +41,6 @@
   text-align: left;
 
   justify-content: flex-start;
-}
-
-.oneColumnResponse {
-  width: 100%;
-}
-.twoColumnResponse {
-  width: 50%;
 }
 
 .responseDivider {

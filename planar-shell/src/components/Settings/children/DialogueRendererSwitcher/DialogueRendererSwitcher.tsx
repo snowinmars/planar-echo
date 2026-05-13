@@ -17,7 +17,7 @@ export const DialogueRendererSwitcher: FC<WithClassName> = ({ className }) => {
   const [renderer, setRenderer] = useState<string>(() => {
     const dialogueRenderer = planarLocalStorage.get('dialogueRenderer');
     if (dialogueRenderer) return dialogueRenderer;
-    const defaultDialogueRenderer = 'pstee';
+    const defaultDialogueRenderer = 'pstee-two-columns';
     planarLocalStorage.set('dialogueRenderer', defaultDialogueRenderer);
     return defaultDialogueRenderer;
   });
@@ -27,17 +27,19 @@ export const DialogueRendererSwitcher: FC<WithClassName> = ({ className }) => {
       className={className}
       fullWidth
     >
-      <InputLabel>{t('settings.dialogueRenderer')}</InputLabel>
+      <InputLabel>{t('settings.dialogueRenderer.title')}</InputLabel>
       <Select
         value={renderer}
         onChange={(e) => {
-          setRenderer(e.target.value);
+          const value = e.target.value;
+          setRenderer(value);
+          planarLocalStorage.set('dialogueRenderer', value);
         }}
       >
         {
-          ['pstee', 'narrat', 'renpy', 'mobile'].map(renderer => (
+          ['pstee', 'pstee-two-columns', 'narrat', 'mobile'].map(renderer => (
             <MenuItem key={renderer} value={renderer}>
-              <Typography>{t(`settings.${renderer}`)}</Typography>
+              <Typography>{t(`settings.dialogueRenderer.${renderer}`)}</Typography>
             </MenuItem>
           ))
         }

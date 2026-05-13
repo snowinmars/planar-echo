@@ -11,7 +11,8 @@
       "5": "Требования: node.js и приобретённая оригинальная игра."
     },
     "runnerGuard": {
-      "tryToRun": "Запустить",
+      "tryToRun": "Запустить из",
+      "ghostPath": "Каталог с игрой",
       "or": "или",
       "convert": "Сконвертировать"
     },
@@ -92,18 +93,34 @@
       "dlg_json2ghost": ".dlg json в ghost"
     }
   },
+  "run": {
+    "dialoguesLabel": "Диалог (всего {{amount}})",
+    "statesLabel": "Метка (всего {{amount}})"
+  },
   "settings": {
     "gameInterfaceSettings": "Настройки интерфейса игры",
-    "dialogueRenderer": "Вид диалога",
-    "pstee": "Как в оригинале",
-    "narrat": "Как в Narrat",
-    "renpy": "Как в RenPy",
-    "mobile": "Мобильный",
-    "theme": "Цветовая тема",
-    "language": "Язык интерфейса",
-    "dialogueMarks": "Метки в диалогах",
-    "dialogueMarks_markDisposers": "Отмечать завершающие реплики",
-    "dialogueMarks_markExterns": "Отмечать extern (dev)"
+    "dialogueRenderer": {
+      "title": "Вид диалога",
+      "pstee": "Как в оригинале",
+      "pstee-two-columns": "Как в оригинале, но в две колонки",
+      "narrat": "Как в Narrat",
+      "mobile": "Мобильный"
+    },
+    "theme": {
+      "title": "Цветовая тема"
+    },
+    "language": {
+      "title": "Язык интерфейса"
+    },
+    "dialogueMarks": {
+      "title": "Метки в диалогах",
+      "markDisposers": "Отмечать завершающие реплики",
+      "markExterns": "Отмечать extern (dev)"
+    },
+    "localData": {
+      "clearLocalStorage": "Очистить local storage",
+      "clearIndexedDb": "Очистить indexedDb"
+    }
   },
   "themes": {
     "light": "Светлая",

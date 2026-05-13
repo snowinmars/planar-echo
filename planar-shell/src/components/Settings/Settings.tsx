@@ -6,6 +6,7 @@ import ThemeSwitcher from './children/ThemeSwitcher';
 import LanguageSwitcher from './children/LanguageSwitcher';
 import DialogueRendererSwitcher from './children/DialogueRendererSwitcher';
 import DialogueMarks from './children/DialogueMarks';
+import LocalData from './children/LocalData';
 
 import type { FC } from 'react';
 
@@ -38,6 +39,9 @@ const Settings: FC = () => {
         </Grid>
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
           <DialogueMarks />
+        </Grid>
+        <Grid size={{ md: 3, sm: 6, xs: 12 }}>
+          <LocalData />
         </Grid>
       </Grid>
     </div>

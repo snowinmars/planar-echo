@@ -1,3 +1,16 @@
+.narrat {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  max-width: 30%;
+  margin-left: auto;
+}
+
+.says {
+  margin-top: auto;
+}
+
 .say {
   display: flex;
   align-items: baseline;
@@ -10,11 +23,11 @@
 
 .responses {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
-  max-height: 10em;
+  height: 10em;
   overflow-y: auto;
 }
 
@@ -27,13 +40,6 @@
   text-align: left;
 
   justify-content: flex-start;
-}
-
-.oneColumnResponse {
-  width: 100%;
-}
-.twoColumnResponse {
-  width: 50%;
 }
 
 .responseDivider {

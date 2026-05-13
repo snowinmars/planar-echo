@@ -1,4 +1,4 @@
-import { nothing } from '@planar/shared';
+import { DB_NAME, nothing } from '@planar/shared';
 import { openDB } from 'idb';
 
 import type { Maybe } from '@planar/shared';
@@ -11,7 +11,6 @@ export type CachedDialogue = Readonly<{
   lastTouched: number;
 }>;
 
-const DB_NAME = 'planar-echo';
 const STORE_NAME = 'dialogues';
 let dbPromise: Promise<IDBPDatabase> | null = null;
 

@@ -17,7 +17,7 @@ export const DialogueMarks: FC = () => {
 
   return (
     <div>
-      <Typography>{t('settings.dialogueMarks')}</Typography>
+      <Typography>{t('settings.dialogueMarks.title')}</Typography>
 
       <FormGroup>
         <FormControlLabel
@@ -30,7 +30,7 @@ export const DialogueMarks: FC = () => {
               }}
             />
           )}
-          label={t('settings.dialogueMarks_markDisposers')}
+          label={t('settings.dialogueMarks.markDisposers')}
         />
         <FormControlLabel
           control={(
@@ -42,7 +42,7 @@ export const DialogueMarks: FC = () => {
               }}
             />
           )}
-          label={t('settings.dialogueMarks_markExterns')}
+          label={t('settings.dialogueMarks.markExterns')}
         />
       </FormGroup>
     </div>

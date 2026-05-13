@@ -41,12 +41,12 @@ export const ThemeSwitcher: FC<WithClassName> = ({ className }) => {
       className={clsx(className, styles.root)}
       fullWidth
     >
-      <InputLabel>{t('settings.theme')}</InputLabel>
+      <InputLabel>{t('settings.theme.title')}</InputLabel>
       <Select
         value={theme}
         onChange={e => setTheme(e.target.value)}
         displayEmpty
-        label={t('settings.theme')}
+        label={t('settings.theme.title')}
         renderValue={() => <IconWrapper theme={theme} />}
       >
         {

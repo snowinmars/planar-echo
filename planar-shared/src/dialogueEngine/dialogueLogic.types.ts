@@ -10,7 +10,7 @@ import type { WhoId } from './enums/who.ts';
 import type { SceneId } from './enums/scene.ts';
 import type { SoundId } from './enums/sound.ts';
 import type { StatId } from './enums/stat.ts';
-import type { VariableId } from './enums/variable.ts';
+import type { NumberVariableId, BooleanVariableId } from './enums/variable.ts';
 import type { ScriptId } from './enums/script.ts';
 import type { MovieId } from './enums/movie.ts';
 import type { TimeMeasureId } from './enums/timeMeasure.ts';
@@ -22,9 +22,9 @@ import type { AnimationId } from './enums/animation.js';
 import type { ScriptLevelId } from './enums/scriptLevel.js';
 
 export type DialogueLogic = Readonly<{
-  getValue: (args: Readonly<{ variableId: VariableId; envId?: Maybe<EnvId> }>) => number;
-  setValue: (args: Readonly<{ variableId: VariableId; envId?: Maybe<EnvId>; amount: number }>) => number;
-  increment: (args: Readonly<{ variableId: VariableId; envId?: Maybe<EnvId>; key?: Maybe<VariableId>; amount: number }>) => number;
+  getValue: (args: Readonly<{ variableId: NumberVariableId | BooleanVariableId; envId?: Maybe<EnvId> }>) => number;
+  setValue: (args: Readonly<{ variableId: NumberVariableId | BooleanVariableId; envId?: Maybe<EnvId>; amount: number }>) => number;
+  increment: (args: Readonly<{ variableId: NumberVariableId; envId?: Maybe<EnvId>; key?: Maybe<BooleanVariableId>; amount: number }>) => number;
   setJournal: (journalId: JournalId) => void;
   isNpcInParty: (whoId: WhoId) => boolean;
   isNearbyDialog: (whoId: WhoId) => boolean;

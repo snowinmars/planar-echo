@@ -1,6 +1,5 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router';
 import { Outlet } from 'react-router-dom';
@@ -36,9 +35,11 @@ const Layout: FC = () => {
         </Toolbar>
       </AppBar>
 
-      <Container className={styles.container}>
+      <div
+        className={styles.container}
+      >
         <Outlet />
-      </Container>
+      </div>
 
       <Footer />
     </>

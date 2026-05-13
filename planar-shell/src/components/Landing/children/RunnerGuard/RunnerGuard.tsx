@@ -1,66 +1,62 @@
 import Button from '@mui/material/Button';
 import { Link as RouterLink } from 'react-router';
-import { client } from '@/swagger/client/client.gen';
 import { useTranslation } from 'react-i18next';
-import { postApiFsValidateGhostPath } from '@/swagger/client';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import { useState } from 'react';
+import planarLocalStorage from '@/shared/planarLocalStorage';
 
-import { useEffect, useState, type FC } from 'react';
+import type { FC } from 'react';
 
 import styles from './RunnerGuard.module.scss';
-import { Typography } from '@mui/material';
-import planarLocalStorage from '@/shared/planarLocalStorage';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
 
 const RunnerGuard: FC = () => {
   const { t } = useTranslation();
 
-  const [canRun, setCanRun] = useState(false);
-
-  useEffect(() => {
-    const ghostPath = planarLocalStorage.get('ghostPath');
-    const serverUrl = planarLocalStorage.get('serverUrl');
-    if (!serverUrl || !ghostPath) {
-      setCanRun(false);
-      return;
-    }
-
-    postApiFsValidateGhostPath({
-      client,
-      baseURL: serverUrl,
-      body: { ghostPath },
-    })
-      .then(({ error }) => {
-        // I suggest, that I can run game from non empty output directory
-        if (error && error.error && error.error.code === 'DIRECTORY_NOT_EMPTY') {
-          setCanRun(true);
-        }
-        else {
-          console.error(error);
-          setCanRun(false);
-        }
-      }).catch((e) => {
-        console.error(e);
-        setCanRun(false);
-      });
-  }, []);
+  const [ghostPath, setGhostPath] = useState<string>(() => planarLocalStorage.get('ghostPath', '')!);
 
   return (
     <div className={styles.guard}>
-      <Button
-        disabled={!canRun}
-        component={RouterLink}
-        to="/run"
-      >
-        {t('landing.runnerGuard.tryToRun')}
-      </Button>
-      <Typography>
-        {t('landing.runnerGuard.or')}
-      </Typography>
       <Button
         component={RouterLink}
         to="/convert"
       >
         {t('landing.runnerGuard.convert')}
       </Button>
+      <Typography>
+        {t('landing.runnerGuard.or')}
+      </Typography>
+      <TextField
+        className={styles.ghostPath}
+        value={ghostPath}
+        onChange={(e) => {
+          const value = e.target.value;
+          setGhostPath(value);
+          planarLocalStorage.set('ghostPath', value);
+        }}
+        size="small"
+        variant="standard"
+        placeholder={t('landing.runnerGuard.ghostPath')}
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconButton
+                  className={styles.run}
+                  component={RouterLink}
+                  to="/run"
+                  edge="start"
+                  size="small"
+                >
+                  {t('landing.runnerGuard.tryToRun')}
+                </IconButton>
+              </InputAdornment>
+            ),
+          },
+        }}
+      />
     </div>
   );
 };

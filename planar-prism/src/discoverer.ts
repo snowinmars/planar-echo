@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
 import { allCategories } from './discoverer.types.js';
 
-import type { Maybe } from '@planar/shared';
+import { isNothing, just, type Maybe } from '@planar/shared';
 import type {
   Discovered,
   DiscoveredEvent,
@@ -25,23 +25,37 @@ const register = (store: Store, type: DiscoveredEventType, name: string, env?: M
   if (type === 'variable' && env) store.get('env')!.add(env);
 };
 
-const storeToDiscovered = (store: Store): Discovered => {
+const storeToDiscovered = (store: Store, variableSpectres: Map<string, Set<string | number>>): Discovered => {
   const entries: [StoreDiscoveredType, string[]][] = allCategories.map(type => [
     type,
     [...store.get(type)!.values()],
   ]);
-  return new Map(entries);
+  return {
+    variables: new Map(entries),
+    spectres: variableSpectres,
+  };
 };
 
 const discoverer = (): DiscovererResult => {
   const event$ = new Subject<DiscoveredEvent>();
   const store = createStore();
-  const subscription = event$.subscribe(({ type, name, env }) => register(store, type, name, env));
+  const variableSpectres = new Map<string, Set<string | number>>();
+
+  const subscription = event$.subscribe(({ type, name, env, extendValueSpectreWith }) => {
+    register(store, type, name, env);
+
+    if (type === 'variable' && !isNothing(extendValueSpectreWith)) {
+      if (!variableSpectres.has(name)) {
+        variableSpectres.set(name, new Set());
+      }
+      variableSpectres.get(name)!.add(just(extendValueSpectreWith));
+    }
+  });
   const discover = (event: DiscoveredEvent): void => event$.next(event);
   const done = (): Discovered => {
     subscription.unsubscribe();
     event$.complete();
-    return storeToDiscovered(store);
+    return storeToDiscovered(store, variableSpectres);
   };
   return [discover, done];
 };

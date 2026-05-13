@@ -8,10 +8,10 @@ import planarLocalStorage from '@/shared/planarLocalStorage';
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
 
-import styles from './PsteeRenderer.module.scss';
+import styles from './MobileRenderer.module.scss';
 import clsx from 'clsx';
 
-const PsteeRenderer: FC<WithClassName> = ({ className }) => {
+const MobileRenderer: FC<WithClassName> = ({ className }) => {
   const {
     loading,
     tree,
@@ -33,11 +33,10 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
   if (!tree || !currentStateId) return null;
 
   const state = getSaysResponses(tree, gameLanguage, currentStateId);
-  const useTwoColumns = planarLocalStorage.get<string>('dialogueRenderer') === 'pstee-two-columns';
 
   return (
-    <div className={className}>
-      <div>
+    <div className={clsx(styles.narrat, className)}>
+      <div className={styles.says}>
         {
           state.says.map(say => (
             <div
@@ -65,7 +64,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
               return (
                 <Button
                   key={response.responseId}
-                  className={clsx(styles.response, useTwoColumns ? styles.twoColumnResponse : styles.oneColumnResponse)}
+                  className={styles.response}
                   disabled={loading}
                   onClick={() => {
                     disposeDialogue();
@@ -88,7 +87,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
               return (
                 <Button
                   key={response.responseId}
-                  className={clsx(styles.response, useTwoColumns ? styles.twoColumnResponse : styles.oneColumnResponse)}
+                  className={styles.response}
                   disabled={loading}
                   onClick={() => {
                     setDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
@@ -107,7 +106,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
             return (
               <Button
                 key={response.responseId}
-                className={clsx(styles.response, useTwoColumns ? styles.twoColumnResponse : styles.oneColumnResponse)}
+                className={styles.response}
                 disabled={loading}
                 onClick={() => {
                   setCurrentStateId(response.jumpTo);
@@ -125,4 +124,4 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
   );
 };
 
-export default PsteeRenderer;
+export default MobileRenderer;

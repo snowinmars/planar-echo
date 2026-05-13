@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -7,6 +7,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { isNothing, StateId } from '@planar/shared';
 import { useDialogueStore } from '../../store/dialogueStore';
 import { getStateIds } from '../../store/helpers';
+import { useTranslation } from 'react-i18next';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
@@ -14,6 +15,8 @@ import type { WithClassName } from '@/types/fcWithClassName';
 import styles from './Picker.module.scss';
 
 const Dialogues: FC<WithClassName> = ({ className }) => {
+  const { t } = useTranslation();
+
   const {
     loading,
     dialogues,
@@ -37,7 +40,6 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
       }}
       loading={loading}
       disabled={loading}
-      loadingText="Dialogues loading"
       slotProps={{
         listbox: {
           component: VirtualizedListbox,
@@ -46,7 +48,7 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
       renderInput={params => (
         <TextField
           {...params}
-          label="Dialogue id"
+          label={t('run.dialoguesLabel', { amount: dialogues.length })}
           slotProps={{
             input: {
               ...params.InputProps,
@@ -64,30 +66,38 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
 };
 
 const States: FC<WithClassName> = ({ className }) => {
+  const { t } = useTranslation();
+
   const {
     tree,
     loading,
+    currentDialogueId,
     currentStateId,
     setCurrentStateId,
   } = useDialogueStore(useShallow(state => ({
     tree: state.tree,
     loading: state.loading,
+    currentDialogueId: state.currentDialogueId,
     currentStateId: state.currentStateId,
     setCurrentStateId: state.setCurrentStateId,
   })));
 
+  const [stateIds, setStateIds] = useState<StateId[]>([]);
+  useEffect(() => {
+    setStateIds(getStateIds(tree));
+  }, [tree]);
+
   return (
     <Autocomplete
       className={className}
-      options={getStateIds(tree)}
+      options={stateIds}
       value={currentStateId ?? ''}
       onChange={(_, stateId) => {
         if (!stateId) throw new Error('State id cannot be empty here');
         setCurrentStateId(stateId as StateId);
       }}
       loading={loading}
-      disabled={loading}
-      loadingText="States loading"
+      disabled={loading || !currentDialogueId}
       slotProps={{
         listbox: {
           component: VirtualizedListbox,
@@ -96,7 +106,7 @@ const States: FC<WithClassName> = ({ className }) => {
       renderInput={params => (
         <TextField
           {...params}
-          label="State id"
+          label={t('run.statesLabel', { amount: stateIds.length })}
           slotProps={{
             input: {
               ...params.InputProps,

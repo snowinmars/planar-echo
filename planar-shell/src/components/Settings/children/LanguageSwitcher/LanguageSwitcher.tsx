@@ -36,7 +36,7 @@ export const LanguageSwitcher: FC<WithClassName> = ({ className }) => {
       className={className}
       fullWidth
     >
-      <InputLabel>{t('settings.language')}</InputLabel>
+      <InputLabel>{t('settings.language.title')}</InputLabel>
       <Select
         value={i18n.language}
         onChange={(e) => {

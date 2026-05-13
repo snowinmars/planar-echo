@@ -81,7 +81,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
       const variable = dropQuotes(variableId);
       const env = dropQuotes(envId);
-      discover({ type: 'variable', name: variable, env: env });
+      discover({ type: 'variable', name: variable, env: env, extendValueSpectreWith: parseInt(amount) });
 
       return `l.increment({variableId: '${variable}', envId: '${env}', amount: ${amount}})`; // IncrementGlobal("variable","global",1)
     },
@@ -94,7 +94,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       const key = dropQuotes(keyId);
       const variable = dropQuotes(variableId);
       discover({ type: 'key', name: key, extendValueSpectreWith: 0 });
-      discover({ type: 'variable', name: variable });
+      discover({ type: 'variable', name: variable, extendValueSpectreWith: parseInt(amount) });
 
       return `l.increment({key: '${key}', variableId: '${variable}', amount: ${amount}})`; // IncrementGlobal("variable","global",1)
     },
@@ -212,7 +212,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
       const variable = dropQuotes(variableId);
       const env = dropQuotes(envId);
-      discover({ type: 'variable', name: variable, env: env, extendValueSpectreWith: amount });
+      discover({ type: 'variable', name: variable, env: env, extendValueSpectreWith: parseInt(amount) });
 
       if (set) return `l.setValue({variableId: '${variable}', envId: '${env}', amount: ${amount}})`; // SetGlobal("variable","global",1)'
 

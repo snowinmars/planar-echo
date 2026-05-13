@@ -1,3 +1,4 @@
+export { DB_NAME } from './db.js';
 export { gameNames } from './gameName.js';
 export { gameLanguages } from './gameLanguage.js';
 export { jsonStringify, jsonParse } from './json.js';
@@ -40,7 +41,7 @@ export type { StateId } from './dialogueEngine/enums/state.ts';
 export type { StatId } from './dialogueEngine/enums/stat.ts';
 export type { TimeMeasureId } from './dialogueEngine/enums/timeMeasure.js';
 export type { TriggerId } from './dialogueEngine/enums/trigger.ts';
-export type { VariableId } from './dialogueEngine/enums/variable.ts';
+export type { NumberVariableId, BooleanVariableId } from './dialogueEngine/enums/variable.ts';
 export type { WhoId } from './dialogueEngine/enums/who.ts';
 export type {
   DevGameLanguage,

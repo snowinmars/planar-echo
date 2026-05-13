@@ -132,8 +132,8 @@ export const useDialogueStore = create<DialogueStore>((set, get) => ({
       let translation: Translation;
 
       if (dbDialogue) {
-        skeleton = (eval(dbDialogue.skeleton));
-        translation = (eval(dbDialogue.translation));
+        skeleton = ((0, eval)(dbDialogue.skeleton));
+        translation = ((0, eval)(dbDialogue.translation));
       }
       else {
         const {
@@ -144,8 +144,8 @@ export const useDialogueStore = create<DialogueStore>((set, get) => ({
         const skeletonContent = await getSkeleton(serverUrl, ghostPath, currentDialogueId);
         const translationContent = await getTranslation(serverUrl, ghostPath, currentDialogueId, gameLanguage);
         await setDialogue(currentDialogueId, skeletonContent, translationContent);
-        skeleton = (eval(skeletonContent));
-        translation = (eval(translationContent));
+        skeleton = ((0, eval)(skeletonContent));
+        translation = ((0, eval)(translationContent));
       }
 
       const l = createDialogueLogic();
