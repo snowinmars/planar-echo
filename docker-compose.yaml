@@ -1,0 +1,10 @@
+services:
+  planar-echo:
+    image: snowinmars/planar-echo
+    hostname: planar-echo
+    container_name: planar-echo
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3003:3003
