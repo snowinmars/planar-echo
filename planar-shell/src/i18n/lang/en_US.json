@@ -19,7 +19,7 @@
     "step0": {
       "serverUrl": "Planar server url",
       "comments": {
-        "default": "See README.md"
+        "default": "planar-asclepius"
       }
     },
     "step1": {
@@ -99,6 +99,12 @@
   },
   "settings": {
     "gameInterfaceSettings": "Game interface settings",
+    "backendUrl": {
+      "title": "Server url",
+      "pinging": "Checking",
+      "pingSucceed": "Ok",
+      "pingFailed": "Wrong"
+    },
     "dialogueRenderer": {
       "title": "Dialogue view",
       "pstee": "As original",

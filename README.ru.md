@@ -116,3 +116,12 @@ yarn --cwd ./planar-shell start
 # он будет работать на захардкоженном URL http://localhost:3003
 yarn --cwd ./planar-asclepius start
 ```
+
+
+### Как перегенерировать swagger клиент из planar-asclepius в planar-shell
+
+1. `yarn --cwd ./planar-asclepius start`
+1. Открыть `http://localhost:3003/api/swagger/`
+1. Скопировать содержимое в `./planar-asclepius/src/swagger/swagger.json`
+1. Остановить planar-asclepius
+1. `yarn --cwd ./planar-asclepius gen`

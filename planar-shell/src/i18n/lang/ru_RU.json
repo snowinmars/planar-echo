@@ -17,9 +17,9 @@
       "convert": "Сконвертировать"
     },
     "step0": {
-      "serverUrl": "Url сервера planar",
+      "serverUrl": "Адрес сервера",
       "comments": {
-        "default": "См. README.md"
+        "default": "planar-asclepius"
       }
     },
     "step1": {
@@ -99,6 +99,12 @@
   },
   "settings": {
     "gameInterfaceSettings": "Настройки интерфейса игры",
+    "backendUrl": {
+      "title": "Адрес сервера",
+      "pinging": "Проверяю",
+      "pingSucceed": "Норм",
+      "pingFailed": "Не норм"
+    },
     "dialogueRenderer": {
       "title": "Вид диалога",
       "pstee": "Как в оригинале",

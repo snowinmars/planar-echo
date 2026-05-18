@@ -163,9 +163,9 @@ export type GetApiPingData = {
 
 export type GetApiPingResponses = {
     /**
-     * Pong
+     * pong asclepius
      */
-    200: 'pong';
+    200: 'pong asclepius';
 };
 
 export type GetApiPingResponse = GetApiPingResponses[keyof GetApiPingResponses];

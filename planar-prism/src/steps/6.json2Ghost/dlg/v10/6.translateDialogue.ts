@@ -3,9 +3,6 @@ import { just } from '@planar/shared';
 
 import type { NestedDlg } from './4.nestDialogue.types.js';
 import type { GameLanguage } from '@planar/shared';
-import type { GhostCreatureV10, GhostCreatureV12, GhostCreatureV22, GhostCreatureV90 } from '../../types.js';
-
-type GhostCreature = GhostCreatureV10 | GhostCreatureV12 | GhostCreatureV22 | GhostCreatureV90;
 
 const formState = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`.replace(`'`, `\\'`);
 const formResponse = (npcLowercaseId: string, responseIndex: number): string => `${npcLowercaseId}_response${responseIndex}`;
@@ -55,7 +52,7 @@ const translateDialogue = ({
       else writer.writeLine(`.response('${responseId}', '...')`, 4);
     }
 
-    writer.writeLine('.flush()', 4);
+    writer.writeLine('.flush();', 4);
     writer.br();
   }
 

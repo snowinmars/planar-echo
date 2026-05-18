@@ -1,6 +1,6 @@
 import type { Maybe } from '@planar/shared';
 
-type Writer = Readonly<{
+export type Writer = Readonly<{
   write: (x: string, offset?: Maybe<number>) => Writer;
   br: () => Writer;
   writeLine: (x: string, offset?: Maybe<number>) => Writer;

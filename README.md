@@ -116,3 +116,12 @@ yarn --cwd ./planar-shell start
 # in will run on hardcoded url http://localhost:3003
 yarn --cwd ./planar-asclepius start
 ```
+
+
+### How to regenerate swagger client from planar-asclepius to planar-shell
+
+1. `yarn --cwd ./planar-asclepius start`
+1. Open `http://localhost:3003/api/swagger/`
+1. Copy its content to `./planar-asclepius/src/swagger/swagger.json`
+1. Stop planar-asclepius
+1. `yarn --cwd ./planar-asclepius gen`

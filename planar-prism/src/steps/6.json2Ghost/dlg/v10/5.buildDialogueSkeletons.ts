@@ -229,7 +229,7 @@ const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string =
       }));
     }
 
-    writer.writeLine('.flush()', 4);
+    writer.writeLine('.flush();', 4);
     writer.br();
   }
 

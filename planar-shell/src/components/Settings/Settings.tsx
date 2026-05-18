@@ -7,6 +7,7 @@ import LanguageSwitcher from './children/LanguageSwitcher';
 import DialogueRendererSwitcher from './children/DialogueRendererSwitcher';
 import DialogueMarks from './children/DialogueMarks';
 import LocalData from './children/LocalData';
+import BackendUrl from './children/BackendUrl';
 
 import type { FC } from 'react';
 
@@ -23,6 +24,9 @@ const Settings: FC = () => {
         </Grid>
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
           <LanguageSwitcher />
+        </Grid>
+        <Grid size={{ md: 3, sm: 6, xs: 12 }}>
+          <BackendUrl />
         </Grid>
 
         <Grid size={{ xs: 12 }}>
