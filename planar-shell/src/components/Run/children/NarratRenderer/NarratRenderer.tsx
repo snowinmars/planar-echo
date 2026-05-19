@@ -43,6 +43,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
               className={styles.say}
               key={say.sayId}
             >
+              {/*
               <Typography
                 className={styles.who}
                 variant="h6"
@@ -50,6 +51,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
                 {say.whoId}
               </Typography>
               <span className={styles.sayDivider}>:</span>
+              */}
               <Typography>{say.what}</Typography>
             </div>
           ))
@@ -70,7 +72,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
                     disposeDialogue();
                   }}
                 >
-                  <Typography>{i}</Typography>
+                  <Typography>{i + 1}</Typography>
                   <span className={styles.responseDivider}>.</span>
                   <Typography>
                     {response.what}
@@ -93,7 +95,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
                     setDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
                   }}
                 >
-                  <Typography>{i}</Typography>
+                  <Typography>{i + 1}</Typography>
                   <span className={styles.responseDivider}>.</span>
                   <Typography>
                     {response.what}
@@ -112,7 +114,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
                   setCurrentStateId(response.jumpTo);
                 }}
               >
-                <Typography>{i}</Typography>
+                <Typography>{i + 1}</Typography>
                 <span className={styles.responseDivider}>.</span>
                 <Typography>{response.what}</Typography>
               </Button>

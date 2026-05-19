@@ -1,0 +1,6 @@
+require:
+  - tsx/esm
+spec:
+  - src/**/*.spec.ts
+recursive: true
+timeout: 5000

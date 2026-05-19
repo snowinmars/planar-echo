@@ -9,7 +9,7 @@ import {
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { UntranslatedNpcDialogue } from '@planar/shared';
-import type { Maybe, NpcDialogue, StateId } from '@planar/shared';
+import type { Maybe, TranslatedNpcDialogue, StateId } from '@planar/shared';
 import type { GameLanguage } from '@/swagger/client';
 import { chooseStartingStateId, isDestructor } from './helpers';
 import { getDialogue, setDialogue } from './dialogueDb';
@@ -32,7 +32,7 @@ export const getSkeleton = async (serverUrl: string, ghostPath: string, dialogue
   }
 };
 
-type Translation = (untranslatedNpcDialogue: UntranslatedNpcDialogue) => NpcDialogue;
+type Translation = (untranslatedNpcDialogue: UntranslatedNpcDialogue) => TranslatedNpcDialogue;
 export const getTranslation = async (serverUrl: string, ghostPath: string, dialogueId: string, gameLanguage: GameLanguage): Promise<string> => {
   const translationResponse = await postApiGhostDialogueByDialogueIdByGameLanguage({
     client,
@@ -56,7 +56,7 @@ export type DialogueStore = {
   loading: boolean;
 
   dialogues: string[];
-  tree: Maybe<NpcDialogue>;
+  tree: Maybe<TranslatedNpcDialogue>;
   currentDialogueId: Maybe<string>;
   setCurrentDialogueId: (dialogueId: string) => void;
 

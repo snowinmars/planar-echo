@@ -12,6 +12,9 @@ import registerPing from './ping/ping.js';
 import registerGhostDialogueDialogueIdSkeleton from './ghost/dialogue/dialogueId/skeleton.js';
 import registerGhostDialogueDialogueIdLanguage from './ghost/dialogue/dialogueId/language.js';
 import registerGhostDialogueList from './ghost/dialogue/list.js';
+import registerGhostCreatureCreatureIdSkeleton from './ghost/creature/creatureId/skeleton.js';
+import registerGhostCreatureCreatureIdLanguage from './ghost/creature/creatureId/language.js';
+import registerGhostCreatureList from './ghost/creature/list.js';
 
 extendZodWithOpenApi(z);
 const registry = new OpenAPIRegistry();
@@ -31,6 +34,9 @@ registerPing(registry, router);
 registerGhostDialogueDialogueIdSkeleton(registry, router);
 registerGhostDialogueDialogueIdLanguage(registry, router);
 registerGhostDialogueList(registry, router);
+registerGhostCreatureCreatureIdSkeleton(registry, router);
+registerGhostCreatureCreatureIdLanguage(registry, router);
+registerGhostCreatureList(registry, router);
 
 const getOpenApiDocumentation = (registry: OpenAPIRegistry) => {
   const generator = new OpenApiGeneratorV3(registry.definitions);

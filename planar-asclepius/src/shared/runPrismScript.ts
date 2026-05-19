@@ -12,13 +12,13 @@ import type {
   PrismIndexErrorMessage,
 } from '@planar/shared';
 
-type Message = PrismIndexStartMessage | PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
-type Response = PrismIndexStartMessage['data'] | PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
+type PrismIndexMessage = PrismIndexStartMessage | PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
+type PrismIndexResponse = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
-const runPrismScript = <T>(commandName: string, data: T): Observable<Response> => {
+const runPrismScript = <T>(commandName: string, data: T): Observable<PrismIndexResponse> => {
   const destroy$ = new Subject<void>();
   let child: ChildProcess;
-  return new Observable<Response>((subscriber) => {
+  return new Observable<PrismIndexResponse>((subscriber) => {
     const commandCwd = join(prismDir, 'dist'); // TODO [snow]: use dir from args
     const scriptPath = join(commandCwd, commandName);
 
@@ -32,7 +32,7 @@ const runPrismScript = <T>(commandName: string, data: T): Observable<Response> =
 
     child.send({ type: 'start', data });
 
-    child.on('message', (msg: Message) => {
+    child.on('message', (msg: PrismIndexMessage) => {
       if (msg.type === 'progress') return subscriber.next(msg.data);
       if (msg.type === 'complete') return subscriber.complete();
       if (msg.type === 'error') return subscriber.error(msg.data);

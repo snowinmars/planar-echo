@@ -11,16 +11,16 @@ import type {
   UntranslatedLabel,
 } from './registerNpcDialogue.types.js';
 import type {
-  NpcDialogue,
-  Label,
-  Say,
-  Response,
+  TranslatedNpcDialogue,
+  TranslatedLabel,
+  TranslatedSay,
+  TranslatedResponse,
 } from './translateNpcDialogue.types.js';
 
 type LabelFunction = (stateId: StateId) => Readonly<{ say: SayFunction }>;
 type SayFunction = (whoId: WhoId, what: string) => Readonly<{ say: SayFunction; response: ResponseFunction }>;
 type ResponseFunction = (responseId: ResponseId, what: string) => Readonly<{ response: ResponseFunction; flush: FlushFunction }>;
-type FlushFunction = () => NpcDialogue;
+type FlushFunction = () => TranslatedNpcDialogue;
 
 const throwIfInvalidUntranslatedLabel = (unstranslatedLabel: UntranslatedLabel, stateId: StateId): void => {
   if (!unstranslatedLabel) throw new Error(`Label ${stateId} was not registrated.`);
@@ -36,12 +36,12 @@ const throwIfInvalidUntranslatedLabel = (unstranslatedLabel: UntranslatedLabel, 
   if (!untranslatedResponses) throw new Error(`Cannot find dev responses for unstranslated label ${unstranslatedLabel.stateId}`);
 };
 
-export const translateNpcDialogue = (untranslatedNpcDialogue: UntranslatedNpcDialogue, language: GameLanguage): { label: LabelFunction; expose: () => NpcDialogue } => {
+export const translateNpcDialogue = (untranslatedNpcDialogue: UntranslatedNpcDialogue, language: GameLanguage): { label: LabelFunction; expose: () => TranslatedNpcDialogue } => {
   let _unstranslatedLabel: Maybe<UntranslatedLabel> = nothing();
-  let _label: Maybe<Label> = nothing();
+  let _label: Maybe<TranslatedLabel> = nothing();
   let exposed = false;
-  const npcDialogue: NpcDialogue = {
-    tree: new Map<StateId, Label>(),
+  const npcDialogue: TranslatedNpcDialogue = {
+    tree: new Map<StateId, TranslatedLabel>(),
     constructorsWeights: untranslatedNpcDialogue.constructorsWeights,
   };
 
@@ -59,8 +59,8 @@ export const translateNpcDialogue = (untranslatedNpcDialogue: UntranslatedNpcDia
     _label = {
       stateId: _unstranslatedLabel.stateId,
       args: _unstranslatedLabel.args,
-      says: new Map<GameLanguage, Say[]>(),
-      responses: new Map<GameLanguage, Response[]>(),
+      says: new Map<GameLanguage, TranslatedSay[]>(),
+      responses: new Map<GameLanguage, TranslatedResponse[]>(),
       jump: _unstranslatedLabel.jump,
     };
 

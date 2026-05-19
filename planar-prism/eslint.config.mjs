@@ -37,7 +37,7 @@ export default defineConfig(
           "argsIgnorePattern": "^_+$",
           "varsIgnorePattern": "^_+$",
         }
-      ]
+      ],
       // 'sort-imports': ['error', {
       //   ignoreCase: true,
       //   ignoreDeclarationSort: false,
@@ -64,6 +64,6 @@ export default defineConfig(
       //     },
       //   },
       // ],
-    },
-  },
+    }
+  }
 );

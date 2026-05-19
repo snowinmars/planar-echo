@@ -19,6 +19,7 @@ export type {
   PrismIndexProgressMessage,
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
+  PrismIndexReadyMessage,
 } from './prismIndexStartMessage.js';
 export type { SafeError } from './safeError.js';
 export type { DialogueLogic } from './dialogueEngine/dialogueLogic.types.js';
@@ -58,9 +59,11 @@ export type {
   UntranslatedJump,
 } from './dialogueEngine/registerNpcDialogue.types.js';
 export type {
-  NpcDialogue,
-  Label,
-  Say,
-  Response,
-  Jump,
+  TranslatedNpcDialogue,
+  TranslatedLabel,
+  TranslatedSay,
+  TranslatedResponse,
+  TranslatedJump,
 } from './dialogueEngine/translateNpcDialogue.types.js';
+export type { UntranslatedCreature } from './creatureEngine/untranslatedCreature.types.js';
+export type { TranslatedCreature } from './creatureEngine/translatedCreature.types.js';

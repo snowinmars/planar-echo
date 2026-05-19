@@ -1,9 +1,9 @@
 import { client } from '@/swagger/client/client.gen';
 import { postApiGhostDialogueByDialogueIdByGameLanguage } from '@/swagger/client';
 
-import type { GameLanguage, NpcDialogue, UntranslatedNpcDialogue } from '@planar/shared';
+import type { GameLanguage, TranslatedNpcDialogue, UntranslatedNpcDialogue } from '@planar/shared';
 
-type Translation = (untranslatedNpcDialogue: UntranslatedNpcDialogue) => NpcDialogue;
+type Translation = (untranslatedNpcDialogue: UntranslatedNpcDialogue) => TranslatedNpcDialogue;
 export const getTranslation = async (serverUrl: string, ghostPath: string, dialogueId: string, gameLanguage: GameLanguage): Promise<Translation> => {
   const translationResponse = await postApiGhostDialogueByDialogueIdByGameLanguage({
     client,

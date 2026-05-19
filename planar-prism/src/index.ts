@@ -30,7 +30,7 @@ import { createPathes } from '@/steps/1.createPathes/index.js';
 import { validate } from '@/steps/2.validate/index.js';
 import { decompileBiffs } from '@/steps/3.decompileBiffs/index.js';
 import { biffs2json } from '@/steps/4.biffs2json/index.js';
-import json2Ghost from '@/steps/6.json2Ghost/index.js';
+import { json2Ghost } from '@/steps/5.json2Ghost/index.js';
 import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
 
 import type { PrismIndexStartMessage } from '@planar/shared';

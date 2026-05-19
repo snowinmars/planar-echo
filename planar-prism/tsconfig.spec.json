@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "verbatimModuleSyntax": false,
+    "noUncheckedSideEffectImports": false,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["mocha", "jest", "node", "jasmine"],
+    "outDir": "./dist-spec"
+  },
+  "include": ["./src/**/*.spec.ts"]
+}

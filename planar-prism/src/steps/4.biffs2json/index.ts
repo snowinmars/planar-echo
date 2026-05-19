@@ -1,2 +1,2 @@
-export type { AllJsons } from './types.js';
-export { default as biffs2json } from './biffs2json.js';
+export type { AllPsteeJsons } from './types.js';
+export { biffs2json } from './biffs2json.js';

@@ -4,34 +4,34 @@ import type { StateId } from './enums/state.js';
 import type { WhoId } from './enums/who.js';
 import type { ArgsProps, DevGameLanguage } from './registerNpcDialogue.types.js';
 
-export type NpcDialogue = Readonly<{
-  tree: Map<StateId, Label>;
+export type TranslatedNpcDialogue = Readonly<{
+  tree: Map<StateId, TranslatedLabel>;
   constructorsWeights: Map<StateId, number>;
 }>
 ;
-export type Label = Readonly<{
+export type TranslatedLabel = Readonly<{
   stateId: StateId;
   args: Maybe<ArgsProps>;
-  says: Map<DevGameLanguage, Say[]>;
-  responses: Map<DevGameLanguage, Response[]>;
-  jump: Maybe<Jump>;
+  says: Map<DevGameLanguage, TranslatedSay[]>;
+  responses: Map<DevGameLanguage, TranslatedResponse[]>;
+  jump: Maybe<TranslatedJump>;
 }>
 ;
-export type Say = Readonly<{
+export type TranslatedSay = Readonly<{
   sayId: string; // TODO [snow]: to SayId
   whoId: WhoId;
   what: string;
   args: Maybe<ArgsProps>;
 }>
 ;
-export type Response = Readonly<{
+export type TranslatedResponse = Readonly<{
   responseId: ResponseId;
   jumpTo: StateId;
   what: string;
   args: Maybe<ArgsProps>;
 }>
 ;
-export type Jump = Readonly<{
+export type TranslatedJump = Readonly<{
   jumpTo: StateId;
   args: Maybe<ArgsProps>;
 }>

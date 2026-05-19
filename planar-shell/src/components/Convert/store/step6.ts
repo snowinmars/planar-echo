@@ -12,9 +12,10 @@ import type {
   PrismIndexProgressMessage,
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
+  PrismIndexReadyMessage,
 } from '@planar/shared';
 
-type WebSocketMessage = PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
+type WebSocketMessage = PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage | PrismIndexReadyMessage;
 
 const getStartingSteps = () => new Map<ProgressStep, PrismIndexProgressMessage['data']>(progressSteps.map(x => [x, { value: 0, step: x }]));
 
@@ -52,6 +53,9 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
         }
         case 'error': {
           console.error('PrismIndex error:', message.data);
+          break;
+        }
+        case 'ready': {
           break;
         }
         default: console.warn('Unknown message type:', message);

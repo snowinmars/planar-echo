@@ -31,6 +31,7 @@ export const progressSteps = [
   'tlk_raw2json',
   'cre_json2ghost',
   'dlg_json2ghost',
+  'itm_json2ghost',
 ] as const;
 export type ProgressStep = typeof progressSteps[number];
 
@@ -48,4 +49,7 @@ export type PrismIndexCompleteMessage = Readonly<{
 export type PrismIndexErrorMessage = Readonly<{
   type: 'error';
   data: string;
+}>;
+export type PrismIndexReadyMessage = Readonly<{
+  type: 'ready';
 }>;

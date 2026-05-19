@@ -1,12 +1,12 @@
-import { join } from 'path';
 import runPrismScript from '@/shared/runPrismScript.js';
 import { concat, Observable } from 'rxjs';
 import { exec } from 'child_process';
 import { prismDir } from '../../shared/folders.js';
-import { from } from 'rxjs';
 
 import type { WebSocket } from 'ws';
-import type { PrismIndexProgressMessage, PrismIndexStartMessage, ProgressStep } from '@planar/shared';
+import type { PrismIndexCompleteMessage, PrismIndexErrorMessage, PrismIndexProgressMessage, PrismIndexStartMessage, ProgressStep } from '@planar/shared';
+
+type PrismIndexResponseData = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
 export const runYarnCommand = (command: string, step: ProgressStep): Observable<PrismIndexProgressMessage['data']> => {
   return new Observable((subscriber) => {
@@ -39,11 +39,9 @@ export const runYarnCommand = (command: string, step: ProgressStep): Observable<
   });
 };
 
-const run = (data: PrismIndexStartMessage['data']) => {
+const run = (data: PrismIndexStartMessage['data']): Observable<PrismIndexResponseData> => {
   const obs0 = runYarnCommand(`yarn --cwd ${prismDir} compile`, 'compilePrism'); // TODO [snow]: use dir from args
-
   const obs1 = runPrismScript('index.js', data);
-
   const obs2 = runYarnCommand(`yarn --cwd ${prismDir} compile-ghost`, 'dlg_json2ghost_compilation'); // TODO [snow]: use dir from args
 
   return concat(obs0, obs1, obs2);
@@ -53,16 +51,19 @@ const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
   return run(data)
     .subscribe({
       next: (data) => {
+        const d = data as PrismIndexProgressMessage['data']; // TODO [snow]: errors will go to error callback, but typing here is broken
         if (ws.readyState === 1) {
-          ws.send(JSON.stringify({ type: 'progress', data }));
+          const message: PrismIndexProgressMessage = { type: 'progress', data: d };
+          ws.send(JSON.stringify(message));
         }
         else {
           console.warn(`Cannot send next websocket message because its state it ${ws.readyState}`);
         }
       },
-      error: (err: { toString: (() => void) | undefined }) => {
+      error: (err: PrismIndexErrorMessage['data']) => {
         if (ws.readyState === 1) {
-          ws.send(JSON.stringify({ type: 'error', err: err.toString ? err.toString() : err }));
+          const message: PrismIndexErrorMessage = { type: 'error', data: err.toString ? err.toString() : err };
+          ws.send(JSON.stringify(message));
         }
         else {
           console.warn(`Cannot send error websocket message because its state it ${ws.readyState}`);
@@ -70,7 +71,8 @@ const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
       },
       complete: () => {
         if (ws.readyState === 1) {
-          ws.send(JSON.stringify({ type: 'complete' }));
+          const message: PrismIndexCompleteMessage = { type: 'complete' };
+          ws.send(JSON.stringify(message));
         }
         else {
           console.warn(`Cannot send complete websocket message because its state it ${ws.readyState}`);

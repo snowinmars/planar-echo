@@ -1,22 +1,22 @@
 import type {
   GameLanguage,
-  NpcDialogue,
-  Say,
+  TranslatedNpcDialogue,
+  TranslatedSay,
   StateId,
-  Response,
+  TranslatedResponse,
   ResponseId,
   Maybe,
 } from '@planar/shared';
 import { nothing } from '@planar/shared';
 
-export const getStateIds = (tree: Maybe<NpcDialogue>): StateId[] => {
+export const getStateIds = (tree: Maybe<TranslatedNpcDialogue>): StateId[] => {
   if (!tree) return [];
   return [...tree.tree.keys()];
 };
 
-export const getSaysResponses = (tree: NpcDialogue, gameLanguage: GameLanguage, currentStateId: StateId): Readonly<{
-  says: Say[];
-  responses: Response[];
+export const getSaysResponses = (tree: TranslatedNpcDialogue, gameLanguage: GameLanguage, currentStateId: StateId): Readonly<{
+  says: TranslatedSay[];
+  responses: TranslatedResponse[];
 }> => {
   const state = tree.tree.get(currentStateId)!;
   const says = state.says.get(gameLanguage)!;
@@ -39,7 +39,7 @@ export const getExternDialogueId = (responseId: ResponseId, targetStateId: State
 
 export const isDestructor = (stateId: StateId) => stateId.endsWith('destructor');
 
-export const chooseStartingStateId = (tree: NpcDialogue): StateId => {
+export const chooseStartingStateId = (tree: TranslatedNpcDialogue): StateId => {
   for (const [stateId] of tree.constructorsWeights) { // [stateId, weight]
     const s = tree.tree.get(stateId)!;
     if (s.args?.onlyIf?.()) return stateId;
