@@ -8,3 +8,6 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 3003:3003
+    # volumes: # this is your problem now
+    #   - D:\Games\Steam\steamapps\common\Project P\:/app/game/
+    #   - D:\Games\weidu\:/app/weidu/

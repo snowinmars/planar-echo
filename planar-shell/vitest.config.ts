@@ -3,18 +3,18 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
 export default defineConfig({
-    plugins: [react()],
-    test: {
-        globals: true,
-        environment: 'jsdom',
-        setupFiles: './src/test/setup.ts',
-        css: true,
-    },
-    resolve: {
-        alias: {
-            '@': resolve(__dirname, 'src'),
-            '@/components': resolve(__dirname, 'src/components'),
-            '@/engine': resolve(__dirname, 'src/engine'),
-        }
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+    css: true,
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      '@/components': resolve(__dirname, 'src/components'),
+      '@/engine': resolve(__dirname, 'src/engine'),
     }
+  }
 })

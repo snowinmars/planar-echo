@@ -1,10 +1,12 @@
 # planar-echo
 
-[\[Russian\]](README.ru.md) \[English\]
+[\[Русский\]](README.ru.md) \[English\]
 
 Tool to run Infinity Engine games in a browser.
 
 Uses your original game files locally.
+
+![Current state example](./_dev/promo.png)
 
 
 ## Legal

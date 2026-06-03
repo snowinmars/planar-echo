@@ -5,7 +5,7 @@ import Github from '@/svg/github';
 
 import type { FC } from 'react';
 
-import styles from './footer.module.scss';
+import styles from './Footer.module.scss';
 
 const Footer: FC = () => (
   <footer className={styles.footer}>

@@ -6827,7 +6827,6 @@ export type ResponseId
     | 'dchad_response7'
     | 'dchad_response8'
     | 'dchad_response9'
-    | 'dcheats_response0'
     | 'dchekka_response0'
     | 'dchekka_response1'
     | 'dchekka_response10'

@@ -2563,7 +2563,6 @@ export type StateId
     | 'dchad_state7'
     | 'dchad_state8'
     | 'dchad_state9'
-    | 'dcheats_state0'
     | 'dchekka_state0'
     | 'dchekka_state1'
     | 'dchekka_state2'
