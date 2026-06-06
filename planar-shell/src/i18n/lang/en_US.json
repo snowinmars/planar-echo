@@ -26,15 +26,10 @@
       "gameName": "Game",
       "gameLanguage": "Game language",
       "gameNames": {
-        "bg1": "Baldur's Gate",
         "bg1ee": "Baldur's Gate: Enhanced Edition",
-        "bg2": "Baldur's Gate II",
         "bg2ee": "Baldur's Gate II: Enhanced Edition",
-        "iwd": "Icewind Dale",
         "iwdee": "Icewind Dale: Enhanced Edition",
         "iwd2": "Icewind Dale II",
-        "iwd2ee": "Icewind Dale II: Enhanced Edition",
-        "pst": "Planescape: Torment",
         "pstee": "Planescape: Torment: Enhanced Edition"
       }
     },

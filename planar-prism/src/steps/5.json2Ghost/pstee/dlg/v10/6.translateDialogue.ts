@@ -41,7 +41,7 @@ const translateDialogue = ({
 
     writer.writeLine('dialogue', 2);
     writer.writeLine(`.label('${stateId}')`, 4);
-    writer.writeLine(`.say('${npcId}', ${escape(just(state.textTlk))})`, 4);
+    writer.writeLine(`.say('${npcId.replaceAll(`'`, '\\\'')}', ${escape(just(state.textTlk))})`, 4);
 
     for (const response of state.responses) {
       const responseId = formResponse(npcLowercaseId, response.index);

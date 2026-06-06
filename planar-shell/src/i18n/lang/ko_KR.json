@@ -1,1 +1,130 @@
-{}
+{
+  "landing": {
+    "intro": {
+      "techdemo": "기술 데모 빌드",
+      "details": "자세히 보기",
+      "convert": "형태 재구성",
+      "1": "안녕하세요.",
+      "2": "이것은 planar-echo입니다: Infinity Engine 게임을 현대적인 형태로 재구성하는 오픈소스 도구입니다.",
+      "3": "간단히 말하면.",
+      "4": "Planar echo는 독점 게임 데이터를 개방형 포맷으로 재구성하여 Linux, Android, Web, Windows에서 네이티브로 실행되는 커스텀 엔진을 가능하게 합니다.",
+      "5": "요구 사항: node.js 및 본인이 소유한 원본 게임 파일."
+    },
+    "runnerGuard": {
+      "tryToRun": "실행 위치",
+      "ghostPath": "게임 폴더",
+      "or": "또는",
+      "convert": "변환"
+    },
+    "step0": {
+      "serverUrl": "Planar 서버 URL",
+      "comments": {
+        "default": "planar-asclepius"
+      }
+    },
+    "step1": {
+      "gameName": "게임",
+      "gameLanguage": "게임 언어",
+      "gameNames": {
+        "bg1ee": "Baldur's Gate: Enhanced Edition",
+        "bg2ee": "Baldur's Gate II: Enhanced Edition",
+        "iwdee": "Icewind Dale: Enhanced Edition",
+        "iwd2": "Icewind Dale II",
+        "pstee": "Planescape: Torment: Enhanced Edition"
+      }
+    },
+    "step2": {
+      "weiduExePath": "weidu.exe 경로",
+      "comments": {
+        "default": "weidu 다운로드",
+        "weiduExeVersion": "발견된 weidu.exe 버전: {{version}}",
+        "loading": "확인 중...",
+        "connection": "연결 확인",
+        "FILE_NOT_FOUND": "weidu.exe 파일을 찾을 수 없음",
+        "WEIDU_ERROR": "Weidu 오류",
+        "unknown": "오류, F12 확인"
+      }
+    },
+    "step3": {
+      "chitinKeyPath": "CHITIN.KEY 경로",
+      "comments": {
+        "default": "CHITIN.KEY란?",
+        "biffsCount": "발견된 소스: {{biffsCount}}",
+        "loading": "확인 중...",
+        "connection": "연결 확인",
+        "FILE_NOT_FOUND": "CHITIN.KEY 파일을 찾을 수 없음",
+        "unknown": "오류, F12 확인"
+      }
+    },
+    "step4": {
+      "ghostPath": "출력 디렉터리 경로",
+      "comments": {
+        "default": "출력 디렉터리 경로",
+        "success": "양호",
+        "loading": "확인 중...",
+        "connection": "연결 확인",
+        "DIRECTORY_NOT_FOUND": "디렉터리를 찾을 수 없음",
+        "DIRECTORY_NOT_EMPTY": "디렉터리가 비어 있지 않음",
+        "unknown": "오류, F12 확인"
+      }
+    },
+    "step5": {
+      "ownGame": "내가 소유한 것을 변환합니다.",
+      "comment": "저작권을 침해하지 않습니다 - 원본 판매를 무료로 촉진합니다."
+    },
+    "step6": {
+      "start": "하드 디스크 공간이 충분하며 시작하겠습니다",
+      "decompileBiffs": ".biff 아카이브 디컴파일",
+      "ids_raw2json": ".ids → json",
+      "dlg_json2ghost_compilation": "고스트 대화 컴파일",
+      "cre_raw2json": ".cre → json",
+      "dlg_raw2json": ".dlg → json",
+      "effV10_raw2json": ".eff v1.0 → json",
+      "effV20_raw2json": ".eff v2.0 → json",
+      "ini_raw2json": ".ini → json",
+      "itm_raw2json": ".itm → json",
+      "tlk_raw2json": ".tlk → json",
+      "cre_json2ghost": ".cre json → 고스트",
+      "dlg_json2ghost": ".dlg json → 고스트"
+    }
+  },
+  "run": {
+    "dialoguesLabel": "대화 (총 {{amount}}개)",
+    "statesLabel": "상태 (총 {{amount}}개)"
+  },
+  "settings": {
+    "gameInterfaceSettings": "게임 인터페이스 설정",
+    "backendUrl": {
+      "title": "서버 URL",
+      "pinging": "확인 중",
+      "pingSucceed": "정상",
+      "pingFailed": "오류"
+    },
+    "dialogueRenderer": {
+      "title": "대화 보기 방식",
+      "pstee": "원본처럼",
+      "pstee-two-columns": "원본처럼, 두 열로",
+      "narrat": "Narrat 스타일",
+      "mobile": "모바일"
+    },
+    "theme": {
+      "title": "색상 테마"
+    },
+    "language": {
+      "title": "인터페이스 언어"
+    },
+    "dialogueMarks": {
+      "title": "대화 내 마커",
+      "markDisposers": "종료 발화 표시",
+      "markExterns": "외부(개발용) 표시"
+    },
+    "localData": {
+      "clearLocalStorage": "로컬 스토리지 지우기",
+      "clearIndexedDb": "IndexedDb 지우기"
+    }
+  },
+  "themes": {
+    "light": "라이트",
+    "dark": "다크"
+  }
+}

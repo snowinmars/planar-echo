@@ -1,1 +1,130 @@
-{}
+{
+  "landing": {
+    "intro": {
+      "techdemo": "Démo technique",
+      "details": "En savoir plus",
+      "convert": "Reformater",
+      "1": "Bonjour.",
+      "2": "Ceci est planar-echo : un outil open source pour redonner une forme moderne aux jeux Infinity Engine.",
+      "3": "En bref.",
+      "4": "Planar echo reconstruit les données propriétaires du jeu dans un format ouvert, permettant ainsi un moteur personnalisé qui fonctionne nativement sur Linux, Android, Web et Windows.",
+      "5": "Prérequis : node.js et les fichiers de jeu originaux que vous possédez."
+    },
+    "runnerGuard": {
+      "tryToRun": "Lancer depuis",
+      "ghostPath": "Dossier du jeu",
+      "or": "ou",
+      "convert": "Convertir"
+    },
+    "step0": {
+      "serverUrl": "URL du serveur Planar",
+      "comments": {
+        "default": "planar-asclepius"
+      }
+    },
+    "step1": {
+      "gameName": "Jeu",
+      "gameLanguage": "Langue du jeu",
+      "gameNames": {
+        "bg1ee": "Baldur's Gate: Enhanced Edition",
+        "bg2ee": "Baldur's Gate II: Enhanced Edition",
+        "iwdee": "Icewind Dale: Enhanced Edition",
+        "iwd2": "Icewind Dale II",
+        "pstee": "Planescape: Torment: Enhanced Edition"
+      }
+    },
+    "step2": {
+      "weiduExePath": "Chemin vers weidu.exe",
+      "comments": {
+        "default": "Télécharger weidu",
+        "weiduExeVersion": "Version trouvée de weidu.exe : {{version}}",
+        "loading": "Vérification...",
+        "connection": "Vérifiez la connexion",
+        "FILE_NOT_FOUND": "Fichier weidu.exe introuvable",
+        "WEIDU_ERROR": "Erreur weidu",
+        "unknown": "Erreur, voir F12"
+      }
+    },
+    "step3": {
+      "chitinKeyPath": "Chemin vers CHITIN.KEY",
+      "comments": {
+        "default": "Qu'est-ce que CHITIN.KEY ?",
+        "biffsCount": "Sources trouvées : {{biffsCount}}",
+        "loading": "Vérification...",
+        "connection": "Vérifiez la connexion",
+        "FILE_NOT_FOUND": "Fichier CHITIN.KEY introuvable",
+        "unknown": "Erreur, voir F12"
+      }
+    },
+    "step4": {
+      "ghostPath": "Chemin du dossier de sortie",
+      "comments": {
+        "default": "Chemin du dossier de sortie",
+        "success": "Ok",
+        "loading": "Vérification...",
+        "connection": "Vérifiez la connexion",
+        "DIRECTORY_NOT_FOUND": "Dossier introuvable",
+        "DIRECTORY_NOT_EMPTY": "Le dossier n'est pas vide",
+        "unknown": "Erreur, voir F12"
+      }
+    },
+    "step5": {
+      "ownGame": "Je convertis ce qui m'appartient.",
+      "comment": "Je ne viole pas les droits d'auteur - je stimule gratuitement les ventes de l'original."
+    },
+    "step6": {
+      "start": "J'ai de l'espace disque et je veux commencer",
+      "decompileBiffs": "Décompilation des archives .biff",
+      "ids_raw2json": ".ids vers json",
+      "dlg_json2ghost_compilation": "Compilation des dialogues ghost",
+      "cre_raw2json": ".cre vers json",
+      "dlg_raw2json": ".dlg vers json",
+      "effV10_raw2json": ".eff v1.0 vers json",
+      "effV20_raw2json": ".eff v2.0 vers json",
+      "ini_raw2json": ".ini vers json",
+      "itm_raw2json": ".itm vers json",
+      "tlk_raw2json": ".tlk vers json",
+      "cre_json2ghost": ".cre json vers ghost",
+      "dlg_json2ghost": ".dlg json vers ghost"
+    }
+  },
+  "run": {
+    "dialoguesLabel": "Dialogue ({{amount}} au total)",
+    "statesLabel": "État ({{amount}} au total)"
+  },
+  "settings": {
+    "gameInterfaceSettings": "Paramètres de l'interface du jeu",
+    "backendUrl": {
+      "title": "URL du serveur",
+      "pinging": "Vérification",
+      "pingSucceed": "Ok",
+      "pingFailed": "Invalide"
+    },
+    "dialogueRenderer": {
+      "title": "Affichage du dialogue",
+      "pstee": "Comme dans l'original",
+      "pstee-two-columns": "Comme dans l'original, mais sur deux colonnes",
+      "narrat": "Style Narrat",
+      "mobile": "Mobile"
+    },
+    "theme": {
+      "title": "Thème de couleurs"
+    },
+    "language": {
+      "title": "Langue de l'interface"
+    },
+    "dialogueMarks": {
+      "title": "Marques dans les dialogues",
+      "markDisposers": "Marquer les répliques de sortie",
+      "markExterns": "Marquer les externes (dev)"
+    },
+    "localData": {
+      "clearLocalStorage": "Effacer le local storage",
+      "clearIndexedDb": "Effacer indexedDb"
+    }
+  },
+  "themes": {
+    "light": "Clair",
+    "dark": "Sombre"
+  }
+}

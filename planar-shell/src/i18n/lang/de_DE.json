@@ -1,1 +1,130 @@
-{}
+{
+  "landing": {
+    "intro": {
+      "techdemo": "Technologie-Demo",
+      "details": "Mehr erfahren",
+      "convert": "Form umgestalten",
+      "1": "Hallo.",
+      "2": "Das ist planar-echo: ein Open-Source-Tool, um Infinity-Engine-Spiele in eine moderne Form zu bringen.",
+      "3": "Kurze Zusammenfassung.",
+      "4": "Planar echo wandelt proprietäre Spieledaten in ein offenes Format um und ermöglicht so eine eigene Engine, die nativ unter Linux, Android, Web und Windows läuft.",
+      "5": "Voraussetzungen: node.js und eigene Original-Spieldateien."
+    },
+    "runnerGuard": {
+      "tryToRun": "Starten aus",
+      "ghostPath": "Spielordner",
+      "or": "oder",
+      "convert": "Konvertieren"
+    },
+    "step0": {
+      "serverUrl": "Planar-Server-URL",
+      "comments": {
+        "default": "planar-asclepius"
+      }
+    },
+    "step1": {
+      "gameName": "Spiel",
+      "gameLanguage": "Spielsprache",
+      "gameNames": {
+        "bg1ee": "Baldur's Gate: Enhanced Edition",
+        "bg2ee": "Baldur's Gate II: Enhanced Edition",
+        "iwdee": "Icewind Dale: Enhanced Edition",
+        "iwd2": "Icewind Dale II",
+        "pstee": "Planescape: Torment: Enhanced Edition"
+      }
+    },
+    "step2": {
+      "weiduExePath": "Pfad zu weidu.exe",
+      "comments": {
+        "default": "weidu herunterladen",
+        "weiduExeVersion": "Gefundene Version von weidu.exe: {{version}}",
+        "loading": "Prüfe...",
+        "connection": "Verbindung prüfen",
+        "FILE_NOT_FOUND": "Datei weidu.exe nicht gefunden",
+        "WEIDU_ERROR": "Weidu-Fehler",
+        "unknown": "Fehler, siehe F12"
+      }
+    },
+    "step3": {
+      "chitinKeyPath": "Pfad zu CHITIN.KEY",
+      "comments": {
+        "default": "Was ist CHITIN.KEY?",
+        "biffsCount": "Gefundene Quellen: {{biffsCount}}",
+        "loading": "Prüfe...",
+        "connection": "Verbindung prüfen",
+        "FILE_NOT_FOUND": "Datei CHITIN.KEY nicht gefunden",
+        "unknown": "Fehler, siehe F12"
+      }
+    },
+    "step4": {
+      "ghostPath": "Pfad zum Ausgabeverzeichnis",
+      "comments": {
+        "default": "Pfad zum Ausgabeverzeichnis",
+        "success": "In Ordnung",
+        "loading": "Prüfe...",
+        "connection": "Verbindung prüfen",
+        "DIRECTORY_NOT_FOUND": "Verzeichnis nicht gefunden",
+        "DIRECTORY_NOT_EMPTY": "Verzeichnis ist nicht leer",
+        "unknown": "Fehler, siehe F12"
+      }
+    },
+    "step5": {
+      "ownGame": "Ich konvertiere, was mir gehört.",
+      "comment": "Ich verletze keine Urheberrechte - ich fördere kostenlos den Verkauf des Originals."
+    },
+    "step6": {
+      "start": "Ich habe Platz auf der Festplatte und möchte starten",
+      "decompileBiffs": "Dekompilieren von .biff-Archiven",
+      "ids_raw2json": ".ids nach json",
+      "dlg_json2ghost_compilation": "Kompilieren von Ghost-Dialogen",
+      "cre_raw2json": ".cre nach json",
+      "dlg_raw2json": ".dlg nach json",
+      "effV10_raw2json": ".eff v1.0 nach json",
+      "effV20_raw2json": ".eff v2.0 nach json",
+      "ini_raw2json": ".ini nach json",
+      "itm_raw2json": ".itm nach json",
+      "tlk_raw2json": ".tlk nach json",
+      "cre_json2ghost": ".cre json zu Ghost",
+      "dlg_json2ghost": ".dlg json zu Ghost"
+    }
+  },
+  "run": {
+    "dialoguesLabel": "Dialog (insgesamt {{amount}})",
+    "statesLabel": "Zustand (insgesamt {{amount}})"
+  },
+  "settings": {
+    "gameInterfaceSettings": "Spieloberflächen-Einstellungen",
+    "backendUrl": {
+      "title": "Server-URL",
+      "pinging": "Prüfe",
+      "pingSucceed": "OK",
+      "pingFailed": "Fehlerhaft"
+    },
+    "dialogueRenderer": {
+      "title": "Dialogansicht",
+      "pstee": "Wie im Original",
+      "pstee-two-columns": "Wie im Original, aber zweispaltig",
+      "narrat": "Narrat-ähnlich",
+      "mobile": "Mobil"
+    },
+    "theme": {
+      "title": "Farbschema"
+    },
+    "language": {
+      "title": "Oberflächensprache"
+    },
+    "dialogueMarks": {
+      "title": "Markierungen in Dialogen",
+      "markDisposers": "Abschlusszeilen markieren",
+      "markExterns": "Externe markieren (Entwickler)"
+    },
+    "localData": {
+      "clearLocalStorage": "Local Storage leeren",
+      "clearIndexedDb": "IndexedDb leeren"
+    }
+  },
+  "themes": {
+    "light": "Hell",
+    "dark": "Dunkel"
+  }
+}

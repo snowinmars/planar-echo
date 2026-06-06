@@ -8,5 +8,23 @@
 }
 
 .iconTitle {
-  margin-left: auto;
+  display: flex;
+  align-items: flex-end;
+
+  margin: 0 1em;
+  width: 100%;
+}
+
+.flagIcon {
+  width: 1.33em;
+  height: 1.33em;
+}
+
+.langWithFlag {
+  display: flex;
+  width: 100%;
+
+  &>* {
+    margin: 0 0.5em;
+  }
 }

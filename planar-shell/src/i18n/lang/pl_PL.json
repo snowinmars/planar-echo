@@ -1,1 +1,130 @@
-{}
+{
+  "landing": {
+    "intro": {
+      "techdemo": "Wersja demonstracyjna",
+      "details": "Czytaj więcej",
+      "convert": "Przekształć formę",
+      "1": "Cześć.",
+      "2": "To jest planar-echo: narzędzie open source do przekształcania gier na Infinity Engine w nowoczesną formę.",
+      "3": "Krótko mówiąc.",
+      "4": "Planar echo rekonstruuje zastrzeżone dane gry do otwartego formatu, umożliwiając działanie na własnym silniku natywnie na Linuxie, Androidzie, Webie i Windows.",
+      "5": "Wymagania: node.js i oryginalne pliki gry, które posiadasz."
+    },
+    "runnerGuard": {
+      "tryToRun": "Uruchom z",
+      "ghostPath": "Folder gry",
+      "or": "lub",
+      "convert": "Konwertuj"
+    },
+    "step0": {
+      "serverUrl": "Adres URL serwera Planar",
+      "comments": {
+        "default": "planar-asclepius"
+      }
+    },
+    "step1": {
+      "gameName": "Gra",
+      "gameLanguage": "Język gry",
+      "gameNames": {
+        "bg1ee": "Baldur's Gate: Enhanced Edition",
+        "bg2ee": "Baldur's Gate II: Enhanced Edition",
+        "iwdee": "Icewind Dale: Enhanced Edition",
+        "iwd2": "Icewind Dale II",
+        "pstee": "Planescape: Torment: Enhanced Edition"
+      }
+    },
+    "step2": {
+      "weiduExePath": "Ścieżka do weidu.exe",
+      "comments": {
+        "default": "Pobierz weidu",
+        "weiduExeVersion": "Znaleziona wersja weidu.exe: {{version}}",
+        "loading": "Sprawdzanie...",
+        "connection": "Sprawdź połączenie",
+        "FILE_NOT_FOUND": "Nie znaleziono pliku weidu.exe",
+        "WEIDU_ERROR": "Błąd weidu",
+        "unknown": "Błąd, patrz F12"
+      }
+    },
+    "step3": {
+      "chitinKeyPath": "Ścieżka do CHITIN.KEY",
+      "comments": {
+        "default": "Co to jest CHITIN.KEY?",
+        "biffsCount": "Znaleziono źródeł: {{biffsCount}}",
+        "loading": "Sprawdzanie...",
+        "connection": "Sprawdź połączenie",
+        "FILE_NOT_FOUND": "Nie znaleziono pliku CHITIN.KEY",
+        "unknown": "Błąd, patrz F12"
+      }
+    },
+    "step4": {
+      "ghostPath": "Ścieżka do katalogu wyjściowego",
+      "comments": {
+        "default": "Ścieżka do katalogu wyjściowego",
+        "success": "OK",
+        "loading": "Sprawdzanie...",
+        "connection": "Sprawdź połączenie",
+        "DIRECTORY_NOT_FOUND": "Nie znaleziono katalogu",
+        "DIRECTORY_NOT_EMPTY": "Katalog nie jest pusty",
+        "unknown": "Błąd, patrz F12"
+      }
+    },
+    "step5": {
+      "ownGame": "Konwertuję to, co posiadam.",
+      "comment": "Nie naruszam praw autorskich - bezpłatnie stymuluję sprzedaż oryginału."
+    },
+    "step6": {
+      "start": "Mam miejsce na dysku i chcę zacząć",
+      "decompileBiffs": "Dekompilacja archiwów .biff",
+      "ids_raw2json": ".ids → json",
+      "dlg_json2ghost_compilation": "Kompilacja dialogów ghost",
+      "cre_raw2json": ".cre → json",
+      "dlg_raw2json": ".dlg → json",
+      "effV10_raw2json": ".eff v1.0 → json",
+      "effV20_raw2json": ".eff v2.0 → json",
+      "ini_raw2json": ".ini → json",
+      "itm_raw2json": ".itm → json",
+      "tlk_raw2json": ".tlk → json",
+      "cre_json2ghost": ".cre json → ghost",
+      "dlg_json2ghost": ".dlg json → ghost"
+    }
+  },
+  "run": {
+    "dialoguesLabel": "Dialog (łącznie {{amount}})",
+    "statesLabel": "Stan (łącznie {{amount}})"
+  },
+  "settings": {
+    "gameInterfaceSettings": "Ustawienia interfejsu gry",
+    "backendUrl": {
+      "title": "URL serwera",
+      "pinging": "Sprawdzanie",
+      "pingSucceed": "OK",
+      "pingFailed": "Nieprawidłowy"
+    },
+    "dialogueRenderer": {
+      "title": "Widok dialogu",
+      "pstee": "Jak w oryginale",
+      "pstee-two-columns": "Jak w oryginale, ale w dwóch kolumnach",
+      "narrat": "Podobny do Narrat",
+      "mobile": "Mobilny"
+    },
+    "theme": {
+      "title": "Motyw kolorystyczny"
+    },
+    "language": {
+      "title": "Język interfejsu"
+    },
+    "dialogueMarks": {
+      "title": "Znaczniki w dialogach",
+      "markDisposers": "Oznaczaj zakończenia wątków",
+      "markExterns": "Oznaczaj zewnętrzne (dla deweloperów)"
+    },
+    "localData": {
+      "clearLocalStorage": "Wyczyść local storage",
+      "clearIndexedDb": "Wyczyść indexedDb"
+    }
+  },
+  "themes": {
+    "light": "Jasny",
+    "dark": "Ciemny"
+  }
+}

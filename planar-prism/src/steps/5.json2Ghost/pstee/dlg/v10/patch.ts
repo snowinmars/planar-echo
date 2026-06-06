@@ -55,7 +55,7 @@ export const patchDlgs = (
         return Promise.resolve({
           resourceName: dlg.resourceName,
           skeleton: ghostSkeleton,
-          translations: new Map<GameLanguage, string>([['ru_RU', ghostSkeletonTranslation]]),
+          translations: new Map<GameLanguage, string>([[language, ghostSkeletonTranslation]]),
         });
       }
       default: throw new Error(`Out of range: '${dlg.header.version}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions

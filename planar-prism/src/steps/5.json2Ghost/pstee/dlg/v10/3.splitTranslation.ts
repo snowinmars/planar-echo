@@ -7,7 +7,14 @@ import { nothing, type GameLanguage } from '@planar/shared';
 
 const getSplitter = (dlg: TlkedDlg, language: GameLanguage): Splitter => {
   switch (dlg.resourceName) {
-    case 'dmorte1.dlg': return splitDmorte1Dlg(language);
+    case 'dmorte1.dlg': {
+      if (language === 'ru_RU') return splitDmorte1Dlg(language);
+      return x => ({
+        ...x,
+        action: nothing(),
+        textTlkSplits: [],
+      });
+    }
     default: return x => ({
       ...x,
       action: nothing(),

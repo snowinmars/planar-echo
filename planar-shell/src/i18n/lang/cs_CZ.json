@@ -1,1 +1,130 @@
-{}
+{
+  "landing": {
+    "intro": {
+      "techdemo": "Technologická ukázka",
+      "details": "Více informací",
+      "convert": "Přetvořit formu",
+      "1": "Ahoj.",
+      "2": "Toto je planar-echo: open-source nástroj pro převedení her na Infinity Engine do moderní podoby.",
+      "3": "Stručně řečeno.",
+      "4": "Planar echo převádí proprietární herní data do otevřeného formátu, čímž umožňuje spouštění ve vlastním enginu nativně na Linuxu, Androidu, Webu a Windows.",
+      "5": "Požadavky: node.js a vlastnictví původních herních souborů."
+    },
+    "runnerGuard": {
+      "tryToRun": "Spustit z",
+      "ghostPath": "Složka hry",
+      "or": "nebo",
+      "convert": "Převést"
+    },
+    "step0": {
+      "serverUrl": "URL serveru Planar",
+      "comments": {
+        "default": "planar-asclepius"
+      }
+    },
+    "step1": {
+      "gameName": "Hra",
+      "gameLanguage": "Jazyk hry",
+      "gameNames": {
+        "bg1ee": "Baldur's Gate: Enhanced Edition",
+        "bg2ee": "Baldur's Gate II: Enhanced Edition",
+        "iwdee": "Icewind Dale: Enhanced Edition",
+        "iwd2": "Icewind Dale II",
+        "pstee": "Planescape: Torment: Enhanced Edition"
+      }
+    },
+    "step2": {
+      "weiduExePath": "Cesta k weidu.exe",
+      "comments": {
+        "default": "Stáhnout weidu",
+        "weiduExeVersion": "Nalezena verze weidu.exe: {{version}}",
+        "loading": "Kontrola...",
+        "connection": "Zkontrolujte připojení",
+        "FILE_NOT_FOUND": "Soubor weidu.exe nebyl nalezen",
+        "WEIDU_ERROR": "Chyba weidu",
+        "unknown": "Chyba, viz F12"
+      }
+    },
+    "step3": {
+      "chitinKeyPath": "Cesta k CHITIN.KEY",
+      "comments": {
+        "default": "Co je CHITIN.KEY?",
+        "biffsCount": "Nalezeno zdrojů: {{biffsCount}}",
+        "loading": "Kontrola...",
+        "connection": "Zkontrolujte připojení",
+        "FILE_NOT_FOUND": "Soubor CHITIN.KEY nebyl nalezen",
+        "unknown": "Chyba, viz F12"
+      }
+    },
+    "step4": {
+      "ghostPath": "Cesta k výstupní složce",
+      "comments": {
+        "default": "Cesta k výstupní složce",
+        "success": "V pořádku",
+        "loading": "Kontrola...",
+        "connection": "Zkontrolujte připojení",
+        "DIRECTORY_NOT_FOUND": "Složka nebyla nalezena",
+        "DIRECTORY_NOT_EMPTY": "Složka není prázdná",
+        "unknown": "Chyba, viz F12"
+      }
+    },
+    "step5": {
+      "ownGame": "Převádím to, co vlastním.",
+      "comment": "Neporušuji autorská práva - bezplatně podporuji prodej originálu."
+    },
+    "step6": {
+      "start": "Mám místo na disku a chci začít",
+      "decompileBiffs": "Dekompilace .biff archivů",
+      "ids_raw2json": ".ids do json",
+      "dlg_json2ghost_compilation": "Kompilace ghost dialogů",
+      "cre_raw2json": ".cre do json",
+      "dlg_raw2json": ".dlg do json",
+      "effV10_raw2json": ".eff v1.0 do json",
+      "effV20_raw2json": ".eff v2.0 do json",
+      "ini_raw2json": ".ini do json",
+      "itm_raw2json": ".itm do json",
+      "tlk_raw2json": ".tlk do json",
+      "cre_json2ghost": ".cre json do ghost",
+      "dlg_json2ghost": ".dlg json do ghost"
+    }
+  },
+  "run": {
+    "dialoguesLabel": "Dialog (celkem {{amount}})",
+    "statesLabel": "Stav (celkem {{amount}})"
+  },
+  "settings": {
+    "gameInterfaceSettings": "Nastavení herního rozhraní",
+    "backendUrl": {
+      "title": "URL serveru",
+      "pinging": "Kontrola",
+      "pingSucceed": "OK",
+      "pingFailed": "Chyba"
+    },
+    "dialogueRenderer": {
+      "title": "Zobrazení dialogu",
+      "pstee": "Jako v originálu",
+      "pstee-two-columns": "Jako v originálu, ale ve dvou sloupcích",
+      "narrat": "Podobné Narrat",
+      "mobile": "Mobilní"
+    },
+    "theme": {
+      "title": "Barevný motiv"
+    },
+    "language": {
+      "title": "Jazyk rozhraní"
+    },
+    "dialogueMarks": {
+      "title": "Značky v dialozích",
+      "markDisposers": "Označit ukončovací repliky",
+      "markExterns": "Označit externí (pro vývojáře)"
+    },
+    "localData": {
+      "clearLocalStorage": "Vymazat local storage",
+      "clearIndexedDb": "Vymazat indexedDb"
+    }
+  },
+  "themes": {
+    "light": "Světlý",
+    "dark": "Tmavý"
+  }
+}

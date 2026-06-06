@@ -3,6 +3,7 @@ import splitRuDmorte1Dlg from './ru/dmorte1Dlg.js';
 import type { GameLanguage } from '@planar/shared';
 import type { Splitter } from '../types.js';
 
+// TODO [snow]: rewrite this dummy
 const splitDmorte1Dlg = (language: GameLanguage): Splitter => {
   switch (language) {
     case 'ru_RU': return splitRuDmorte1Dlg;

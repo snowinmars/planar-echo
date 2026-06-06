@@ -16,13 +16,7 @@ export const biffs2json = async (
     case 'bg1ee':
     case 'bg2ee':
     case 'iwdee':
-    case 'iwd2ee':
-      throw new Error(`${pathes.gameName} is unsupported by now, you can be the one who change it`);
-    case 'bg1':
-    case 'bg2':
-    case 'iwd':
     case 'iwd2':
-    case 'pst':
-      throw new Error(`${pathes.gameName} will not be supported, because there are EE version of the same game`);
+      throw new Error(`${pathes.gameName} is unsupported by now, you can be the one who change it`);
   }
 };
