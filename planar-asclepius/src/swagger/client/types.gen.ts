@@ -18,15 +18,22 @@ export const GameLanguage = {
 
 export type GameLanguage = typeof GameLanguage[keyof typeof GameLanguage];
 
+export type CreatureId = string;
+
 /**
  * Skeleton dialogue id
  */
 export type DialogueId2 = DialogueId & unknown;
 
 /**
- * Skeleton dialogue language
+ * Skeleton creature language
  */
 export type GameLanguage2 = GameLanguage;
+
+/**
+ * Skeleton creature id
+ */
+export type CreatureId2 = CreatureId;
 
 export type PostApiFsValidateChitinKeyPathData = {
     body: {
@@ -221,7 +228,7 @@ export type PostApiGhostDialogueByDialogueIdByGameLanguageData = {
          */
         dialogueId: DialogueId & unknown;
         /**
-         * Skeleton dialogue language
+         * Skeleton creature language
          */
         gameLanguage: GameLanguage;
     };
@@ -288,3 +295,122 @@ export type PostApiGhostDialogueResponses = {
 };
 
 export type PostApiGhostDialogueResponse = PostApiGhostDialogueResponses[keyof PostApiGhostDialogueResponses];
+
+export type PostApiGhostCreatureByCreatureIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Skeleton creature id
+         */
+        creatureId: CreatureId;
+    };
+    query?: never;
+    url: '/api/ghost/creature/{creatureId}/skeleton';
+};
+
+export type PostApiGhostCreatureByCreatureIdSkeletonErrors = {
+    /**
+     * Creature skeleton is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostCreatureByCreatureIdSkeletonError = PostApiGhostCreatureByCreatureIdSkeletonErrors[keyof PostApiGhostCreatureByCreatureIdSkeletonErrors];
+
+export type PostApiGhostCreatureByCreatureIdSkeletonResponses = {
+    /**
+     * Creature skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostCreatureByCreatureIdSkeletonResponse = PostApiGhostCreatureByCreatureIdSkeletonResponses[keyof PostApiGhostCreatureByCreatureIdSkeletonResponses];
+
+export type PostApiGhostCreatureByCreatureIdByGameLanguageData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Skeleton creature id
+         */
+        creatureId: CreatureId;
+        /**
+         * Skeleton creature language
+         */
+        gameLanguage: GameLanguage;
+    };
+    query?: never;
+    url: '/api/ghost/creature/{creatureId}/{gameLanguage}';
+};
+
+export type PostApiGhostCreatureByCreatureIdByGameLanguageErrors = {
+    /**
+     * Creature translation is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostCreatureByCreatureIdByGameLanguageError = PostApiGhostCreatureByCreatureIdByGameLanguageErrors[keyof PostApiGhostCreatureByCreatureIdByGameLanguageErrors];
+
+export type PostApiGhostCreatureByCreatureIdByGameLanguageResponses = {
+    /**
+     * Creature translation content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostCreatureByCreatureIdByGameLanguageResponse = PostApiGhostCreatureByCreatureIdByGameLanguageResponses[keyof PostApiGhostCreatureByCreatureIdByGameLanguageResponses];
+
+export type PostApiGhostCreatureData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/creature';
+};
+
+export type PostApiGhostCreatureErrors = {
+    /**
+     * Available creatures are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostCreatureError = PostApiGhostCreatureErrors[keyof PostApiGhostCreatureErrors];
+
+export type PostApiGhostCreatureResponses = {
+    /**
+     * Available creatures in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostCreatureResponse = PostApiGhostCreatureResponses[keyof PostApiGhostCreatureResponses];

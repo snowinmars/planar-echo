@@ -2,7 +2,7 @@
 
 import { client } from './client.gen.js';
 import type { Client, Options as Options2, TDataShape } from './client/index.js';
-import type { GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateGhostPathData, PostApiFsValidateGhostPathErrors, PostApiFsValidateGhostPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostDialogueByDialogueIdByGameLanguageData, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses, PostApiGhostDialogueData, PostApiGhostDialogueErrors, PostApiGhostDialogueResponses } from './types.gen.js';
+import type { GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateGhostPathData, PostApiFsValidateGhostPathErrors, PostApiFsValidateGhostPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostCreatureByCreatureIdByGameLanguageData, PostApiGhostCreatureByCreatureIdByGameLanguageErrors, PostApiGhostCreatureByCreatureIdByGameLanguageResponses, PostApiGhostCreatureByCreatureIdSkeletonData, PostApiGhostCreatureByCreatureIdSkeletonErrors, PostApiGhostCreatureByCreatureIdSkeletonResponses, PostApiGhostCreatureData, PostApiGhostCreatureErrors, PostApiGhostCreatureResponses, PostApiGhostDialogueByDialogueIdByGameLanguageData, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses, PostApiGhostDialogueData, PostApiGhostDialogueErrors, PostApiGhostDialogueResponses } from './types.gen.js';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -98,6 +98,45 @@ export const postApiGhostDialogueByDialogueIdByGameLanguage = <ThrowOnError exte
 export const postApiGhostDialogue = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDialogueData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDialogueResponses, PostApiGhostDialogueErrors, ThrowOnError>({
     responseType: 'json',
     url: '/api/ghost/dialogue',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get skeleton of the creature in ghost format
+ */
+export const postApiGhostCreatureByCreatureIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreatureByCreatureIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreatureByCreatureIdSkeletonResponses, PostApiGhostCreatureByCreatureIdSkeletonErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/creature/{creatureId}/skeleton',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get translation of the creature in ghost format
+ */
+export const postApiGhostCreatureByCreatureIdByGameLanguage = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreatureByCreatureIdByGameLanguageData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreatureByCreatureIdByGameLanguageResponses, PostApiGhostCreatureByCreatureIdByGameLanguageErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/creature/{creatureId}/{gameLanguage}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get available creatures in ghost format
+ */
+export const postApiGhostCreature = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreatureData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreatureResponses, PostApiGhostCreatureErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/creature',
     ...options,
     headers: {
         'Content-Type': 'application/json',

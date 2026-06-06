@@ -19,3 +19,9 @@ export const gameLanguageSchema = {
     ],
     example: 'ru_RU'
 } as const;
+
+export const creatureIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'morte'
+} as const;
