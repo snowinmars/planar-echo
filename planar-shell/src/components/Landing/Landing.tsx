@@ -6,10 +6,15 @@ import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router';
 import RunnerGuard from './children/RunnerGuard/RunnerGuard';
 
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
+import planarLocalStorage from '@/shared/planarLocalStorage';
 
 const Landing: FC = () => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    planarLocalStorage.remove(planarLocalStorage.currentWidget);
+  }, []);
 
   return (
     <>

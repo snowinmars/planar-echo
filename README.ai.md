@@ -63,7 +63,7 @@ Sequential steps:
 
 **Modes**
 
-- **CLI**: `yarn start` → compile + `node dist/index.js`; interactive confirm unless dev flags; hardcoded defaults in `index.ts` when not IPC.
+- **CLI**: `yarn start` → build + `node dist/index.js`; interactive confirm unless dev flags; hardcoded defaults in `index.ts` when not IPC.
 - **IPC**: child of Asclepius; `process.on('message')` handles `{ type: 'start', data }`; silent, no confirm; progress via `process.send`.
 
 **Progress reporting** (`planar-prism/src/shared/report.ts`): RxJS `buffer` flushed every **250ms**; dedupe latest per `ProgressStep` from `@planar/shared` (`prismIndexStartMessage.ts`).
@@ -84,7 +84,7 @@ Install pattern: `yarn --cwd planar-shared start` then `yarn add file:../planar-
 ### Ghost (`planar-ghost/**`)
 
 - **Not a single text DSL**: intermediate **JSON** or **JS** on disk; shipped runtime is **bundled JS** under `planar-ghost/ghost/{creatures,dialogues,items}/dist`.
-- **compile-ghost** (`planar-prism/package.json`): esbuild bundles `../planar-ghost/ghost/**/*.ts` with `@planar/shared` alias.
+- **build-ghost** (`planar-prism/package.json`): esbuild bundles `../planar-ghost/ghost/**/*.ts` with `@planar/shared` alias.
 - Asclepius serves bundles: `app.use('/ghost', express.static(join(ghostDir, 'dist')))`.
 
 ---
@@ -104,9 +104,9 @@ Install pattern: `yarn --cwd planar-shared start` then `yarn add file:../planar-
 
 **Prism index orchestration** (`wsController/prism/runIndex.ts`):
 
-1. `yarn --cwd planar-prism compile` (step `compilePrism`)
+1. `yarn --cwd planar-prism build` (step `buildPrism`)
 2. `fork(prism/dist/index.js)` with IPC `{ type: 'start', data }` — stdout/stderr piped to Asclepius process
-3. `yarn --cwd planar-prism compile-ghost` (step `dlg_json2ghost_compilation`)
+3. `yarn --cwd planar-prism build-ghost` (step `dlg_json2ghost_compilation`)
 
 Client messages: JSON `start` with same fields as `PrismIndexStartMessage['data']`; server sends `ready`, then `progress` | `error` | `complete`.
 
@@ -127,7 +127,7 @@ Client messages: JSON `start` with same fields as `PrismIndexStartMessage['data'
 ## End-to-end data flow
 
 1. User configures **WeiDU path**, **CHITIN.KEY / game folder**, **ghost output folder**, language, game in Shell (localStorage + REST validation).
-2. User starts conversion → Shell **WebSocket** `start` → Asclepius compiles Prism, **forks** `index.js`, runs **compile-ghost**.
+2. User starts conversion → Shell **WebSocket** `start` → Asclepius builds Prism, **forks** `index.js`, runs **build-ghost**.
 3. Prism: WeiDU extract → parse → write JSON + Ghost TS → IPC progress → Asclepius → WS → Shell UI.
 4. User opens **Run** → Shell fetches Ghost dialogue/creature via **REST** → renders with shared dialogue logic.
 

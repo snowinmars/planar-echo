@@ -40,9 +40,9 @@ export const runYarnCommand = (command: string, step: ProgressStep): Observable<
 };
 
 const run = (data: PrismIndexStartMessage['data']): Observable<PrismIndexResponseData> => {
-  const obs0 = runYarnCommand(`yarn --cwd ${prismDir} compile`, 'compilePrism'); // TODO [snow]: use dir from args
+  const obs0 = runYarnCommand(`yarn --cwd ${prismDir} build`, 'buildPrism'); // TODO [snow]: use dir from args
   const obs1 = runPrismScript('index.js', data);
-  const obs2 = runYarnCommand(`yarn --cwd ${prismDir} compile-ghost`, 'dlg_json2ghost_compilation'); // TODO [snow]: use dir from args
+  const obs2 = runYarnCommand(`yarn --cwd ${prismDir} build-ghost`, 'dlg_json2ghost_build'); // TODO [snow]: use dir from args
 
   return concat(obs0, obs1, obs2);
 };

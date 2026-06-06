@@ -73,7 +73,7 @@ const Step6: FC<Step6Props> = (props: Step6Props) => {
         </Grid>
 
         <Grid size={{ xs: 12 }}>
-          <L item={props.progress.get('dlg_json2ghost_compilation')!} />
+          <L item={props.progress.get('dlg_json2ghost_build')!} />
         </Grid>
       </Grid>
     </div>

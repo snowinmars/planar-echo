@@ -1,9 +1,9 @@
-.picker {
+.widget {
   display: flex;
-  justify-content: space-between;
 }
 
 .dialoguePicker,
 .statePicker {
   width: 15em;
+  margin: 0 1em;
 }

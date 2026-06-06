@@ -44,13 +44,13 @@ const RunnerGuard: FC = () => {
             startAdornment: (
               <InputAdornment position="start">
                 <IconButton
-                  className={styles.run}
+                  className={styles.dialogue}
                   component={RouterLink}
-                  to="/run"
+                  to="/dialogue"
                   edge="start"
                   size="small"
                 >
-                  {t('landing.runnerGuard.tryToRun')}
+                  {t('landing.runnerGuard.dialogue')}
                 </IconButton>
               </InputAdornment>
             ),

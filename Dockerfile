@@ -36,13 +36,13 @@ RUN yarn --cwd ./planar-shell/     add file:../planar-shared/ --force
 
 RUN yarn --cwd ./planar-asclepius/ build
 RUN yarn --cwd ./planar-asclepius/ gen
-RUN yarn --cwd ./planar-prism/     compile
+RUN yarn --cwd ./planar-prism/     build
 RUN yarn --cwd ./planar-shell/     build
 
 # this may look like a nonsence, but.
 # A user may want to convert game without docker, so it have something in the ghost folder
 # and serve it through the docker, so it would be a good idea to refresh the data
-RUN yarn --cwd ./planar-prism/     compile-ghost
+RUN yarn --cwd ./planar-prism/     build-ghost
 
 
 

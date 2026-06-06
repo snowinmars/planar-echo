@@ -1,33 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import VirtualizedListbox from './VirtualizedListbox';
-import { useShallow } from 'zustand/react/shallow';
+import VirtualizedListbox from '@/components/runners/Dialogue/children/Picker/VirtualizedListbox';
+import { dialogueViewState } from '@/shared/widgets/dialogueViewState';
+import { getStateIds } from '@/components/runners/Dialogue/store/helpers';
 import { isNothing, StateId } from '@planar/shared';
-import { useDialogueStore } from '../../store/dialogueStore';
-import { getStateIds } from '../../store/helpers';
 import { useTranslation } from 'react-i18next';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
 
-import styles from './Picker.module.scss';
+import styles from './DialogueWidget.module.scss';
+
+const useDialogueView = () => useSyncExternalStore(
+  dialogueViewState.subscribe,
+  dialogueViewState.getSnapshot,
+);
 
 const Dialogues: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
-
   const {
     loading,
     dialogues,
     currentDialogueId,
-    setDialogue,
-  } = useDialogueStore(useShallow(state => ({
-    loading: state.loading,
-    dialogues: state.dialogues,
-    currentDialogueId: state.currentDialogueId,
-    setDialogue: state.setDialogue,
-  })));
+  } = useDialogueView();
+  const actions = dialogueViewState.getActions();
 
   return (
     <Autocomplete
@@ -36,10 +34,10 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
       value={currentDialogueId}
       onChange={(_, dialogueId) => {
         if (isNothing(dialogueId)) throw new Error('Dialogue id cannot be empty here');
-        setDialogue(dialogueId!).catch(e => console.error(e));
+        actions?.setDialogue(dialogueId!).catch(e => console.error(e));
       }}
       loading={loading}
-      disabled={loading}
+      disabled={loading || !actions}
       slotProps={{
         listbox: {
           component: VirtualizedListbox,
@@ -49,6 +47,8 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
         <TextField
           {...params}
           label={t('run.dialoguesLabel', { amount: dialogues.length })}
+          variant="standard"
+          size="small"
           slotProps={{
             input: {
               ...params.InputProps,
@@ -67,20 +67,13 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
 
 const States: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
-
   const {
     tree,
     loading,
     currentDialogueId,
     currentStateId,
-    setCurrentStateId,
-  } = useDialogueStore(useShallow(state => ({
-    tree: state.tree,
-    loading: state.loading,
-    currentDialogueId: state.currentDialogueId,
-    currentStateId: state.currentStateId,
-    setCurrentStateId: state.setCurrentStateId,
-  })));
+  } = useDialogueView();
+  const actions = dialogueViewState.getActions();
 
   const [stateIds, setStateIds] = useState<StateId[]>([]);
   useEffect(() => {
@@ -94,10 +87,10 @@ const States: FC<WithClassName> = ({ className }) => {
       value={currentStateId ?? ''}
       onChange={(_, stateId) => {
         if (!stateId) throw new Error('State id cannot be empty here');
-        setCurrentStateId(stateId as StateId);
+        actions?.setCurrentStateId(stateId as StateId);
       }}
       loading={loading}
-      disabled={loading || !currentDialogueId}
+      disabled={loading || !currentDialogueId || !actions}
       slotProps={{
         listbox: {
           component: VirtualizedListbox,
@@ -107,6 +100,8 @@ const States: FC<WithClassName> = ({ className }) => {
         <TextField
           {...params}
           label={t('run.statesLabel', { amount: stateIds.length })}
+          variant="standard"
+          size="small"
           slotProps={{
             input: {
               ...params.InputProps,
@@ -123,20 +118,13 @@ const States: FC<WithClassName> = ({ className }) => {
   );
 };
 
-const Picker: FC = () => {
-  const loadDialogues = useDialogueStore(state => state.loadDialogues);
-
-  useEffect(() => {
-    loadDialogues()
-      .catch(e => console.error(e));
-  }, []);
-
+const DialogueWidget: FC = () => {
   return (
-    <div className={styles.picker}>
+    <div className={styles.widget}>
       <Dialogues className={styles.dialoguePicker} />
       <States className={styles.statePicker} />
     </div>
   );
 };
 
-export default Picker;
+export default DialogueWidget;

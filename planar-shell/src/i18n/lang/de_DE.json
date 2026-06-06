@@ -11,7 +11,7 @@
       "5": "Voraussetzungen: node.js und eigene Original-Spieldateien."
     },
     "runnerGuard": {
-      "tryToRun": "Starten aus",
+      "dialogue": "Dialog von",
       "ghostPath": "Spielordner",
       "or": "oder",
       "convert": "Konvertieren"
@@ -85,7 +85,8 @@
       "itm_raw2json": ".itm nach json",
       "tlk_raw2json": ".tlk nach json",
       "cre_json2ghost": ".cre json zu Ghost",
-      "dlg_json2ghost": ".dlg json zu Ghost"
+      "dlg_json2ghost": ".dlg json zu Ghost",
+      "itm_json2ghost": ".itm json zu Ghost"
     }
   },
   "run": {

@@ -11,7 +11,7 @@
       "5": "Wymagania: node.js i oryginalne pliki gry, które posiadasz."
     },
     "runnerGuard": {
-      "tryToRun": "Uruchom z",
+      "dialogue": "Dialog z",
       "ghostPath": "Folder gry",
       "or": "lub",
       "convert": "Konwertuj"
@@ -85,7 +85,8 @@
       "itm_raw2json": ".itm → json",
       "tlk_raw2json": ".tlk → json",
       "cre_json2ghost": ".cre json → ghost",
-      "dlg_json2ghost": ".dlg json → ghost"
+      "dlg_json2ghost": ".dlg json → ghost",
+      "itm_json2ghost": ".itm json → ghost"
     }
   },
   "run": {

@@ -11,7 +11,7 @@
       "5": "Требования: node.js и приобретённая оригинальная игра."
     },
     "runnerGuard": {
-      "tryToRun": "Запустить из",
+      "dialogue": "Диалог из",
       "ghostPath": "Каталог с игрой",
       "or": "или",
       "convert": "Сконвертировать"
@@ -85,7 +85,8 @@
       "itm_raw2json": ".itm в json",
       "tlk_raw2json": ".tlk в json",
       "cre_json2ghost": ".cre json в ghost",
-      "dlg_json2ghost": ".dlg json в ghost"
+      "dlg_json2ghost": ".dlg json в ghost",
+      "itm_json2ghost": ".itm json в ghost"
     }
   },
   "run": {

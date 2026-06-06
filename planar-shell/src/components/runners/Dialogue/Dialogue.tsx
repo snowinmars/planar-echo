@@ -1,28 +1,29 @@
-import Picker from './children/Picker/Picker';
 import { lazy, useEffect } from 'react';
-import { useDialogueStore } from './store/dialogueStore';
+import { useDialogueViewBridge } from './useDialogueViewBridge';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { FC } from 'react';
 
-import styles from './Run.module.scss';
+import styles from './Dialogue.module.scss';
+import { Widget } from '@/shared/widget';
+import { Maybe } from '@planar/shared';
 
 const PsteeRenderer = lazy(() => import('./children/PsteeRenderer'));
 const NarratRenderer = lazy(() => import('./children/NarratRenderer'));
 const MobileRenderer = lazy(() => import('./children/MobileRenderer'));
 
-const Run: FC = () => {
-  const tree = useDialogueStore(x => x.tree);
+const Dialogue: FC = () => {
+  useDialogueViewBridge();
 
   useEffect(() => {
-    console.log(tree);
-  }, [tree]);
+    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'dialogue');
+    return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
+  }, []);
 
   const renderer = planarLocalStorage.get<string>('dialogueRenderer', 'pstee-two-columns');
 
   return (
-    <div className={styles.run}>
-      <Picker />
+    <div className={styles.dialogue}>
       {
         (renderer === 'pstee' || renderer === 'pstee-two-columns') && <PsteeRenderer className={styles.renderer} />
       }
@@ -36,4 +37,4 @@ const Run: FC = () => {
   );
 };
 
-export default Run;
+export default Dialogue;

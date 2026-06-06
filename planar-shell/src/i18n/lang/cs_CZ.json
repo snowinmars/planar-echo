@@ -11,7 +11,7 @@
       "5": "Požadavky: node.js a vlastnictví původních herních souborů."
     },
     "runnerGuard": {
-      "tryToRun": "Spustit z",
+      "dialogue": "Dialog od",
       "ghostPath": "Složka hry",
       "or": "nebo",
       "convert": "Převést"
@@ -85,7 +85,8 @@
       "itm_raw2json": ".itm do json",
       "tlk_raw2json": ".tlk do json",
       "cre_json2ghost": ".cre json do ghost",
-      "dlg_json2ghost": ".dlg json do ghost"
+      "dlg_json2ghost": ".dlg json do ghost",
+      "itm_json2ghost": ".itm json do ghost"
     }
   },
   "run": {

@@ -11,12 +11,12 @@
   "description": "Typescript pipe to transform officially bought InfinityEngine binaries (f.e., Planescape:Torment) to json and ghost",
   "author": "snowinmars",
   "scripts": {
-    "compile": "tsc && tsc-alias",
-    "compile-ghost": "yarn compile-ghost-creatures && yarn compile-ghost-dialogues && yarn compile-ghost-items",
-    "compile-ghost-creatures": "npx esbuild ../planar-ghost/ghost/creatures/*.ts --outdir=../planar-ghost/ghost/creatures/dist --alias:@planar/shared=./node_modules/@planar/shared --platform=node --target=node16 --bundle=true --minify --charset=utf8 --format=iife --global-name=ghost --banner:js=\"\\\"use strict\\\";\" --footer:js=\"ghost.default\"",
-    "compile-ghost-dialogues": "npx esbuild ../planar-ghost/ghost/dialogues/*.ts --outdir=../planar-ghost/ghost/dialogues/dist --alias:@planar/shared=./node_modules/@planar/shared --platform=node --target=node16 --bundle=true --minify --charset=utf8 --format=iife --global-name=ghost --banner:js=\"\\\"use strict\\\";\" --footer:js=\"ghost.default\"",
-    "compile-ghost-items": "npx esbuild ../planar-ghost/ghost/items/*.ts --outdir=../planar-ghost/ghost/items/dist --alias:@planar/shared=./node_modules/@planar/shared --platform=node --target=node16 --bundle=true --minify --charset=utf8 --format=iife --global-name=ghost --banner:js=\"\\\"use strict\\\";\" --footer:js=\"ghost.default\"",
-    "start": "yarn compile && node dist/index.js",
+    "build": "tsc && tsc-alias",
+    "build-ghost": "yarn build-ghost-creatures && yarn build-ghost-dialogues && yarn build-ghost-items",
+    "build-ghost-creatures": "npx esbuild ../planar-ghost/ghost/creatures/*.ts --outdir=../planar-ghost/ghost/creatures/dist --alias:@planar/shared=./node_modules/@planar/shared --platform=node --target=node16 --bundle=true --minify --charset=utf8 --format=iife --global-name=ghost --banner:js=\"\\\"use strict\\\";\" --footer:js=\"ghost.default\"",
+    "build-ghost-dialogues": "npx esbuild ../planar-ghost/ghost/dialogues/*.ts --outdir=../planar-ghost/ghost/dialogues/dist --alias:@planar/shared=./node_modules/@planar/shared --platform=node --target=node16 --bundle=true --minify --charset=utf8 --format=iife --global-name=ghost --banner:js=\"\\\"use strict\\\";\" --footer:js=\"ghost.default\"",
+    "build-ghost-items": "npx esbuild ../planar-ghost/ghost/items/*.ts --outdir=../planar-ghost/ghost/items/dist --alias:@planar/shared=./node_modules/@planar/shared --platform=node --target=node16 --bundle=true --minify --charset=utf8 --format=iife --global-name=ghost --banner:js=\"\\\"use strict\\\";\" --footer:js=\"ghost.default\"",
+    "start": "yarn build && node dist/index.js",
     "lint": "eslint",
     "test": "mocha"
   },

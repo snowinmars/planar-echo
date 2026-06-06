@@ -11,7 +11,7 @@
       "5": "요구 사항: node.js 및 본인이 소유한 원본 게임 파일."
     },
     "runnerGuard": {
-      "tryToRun": "실행 위치",
+      "dialogue": "대화 상자 실행",
       "ghostPath": "게임 폴더",
       "or": "또는",
       "convert": "변환"
@@ -85,7 +85,8 @@
       "itm_raw2json": ".itm → json",
       "tlk_raw2json": ".tlk → json",
       "cre_json2ghost": ".cre json → 고스트",
-      "dlg_json2ghost": ".dlg json → 고스트"
+      "dlg_json2ghost": ".dlg json → 고스트",
+      "itm_json2ghost": ".itm json → 고스트"
     }
   },
   "run": {
