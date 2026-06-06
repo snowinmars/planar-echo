@@ -8,7 +8,7 @@ const emptyState: DialogueViewState = {
   loading: false,
   dialogues: [],
   tree: nothing(),
-  currentDialogueId: nothing(),
+  currentDialogueId: '',
   currentStateId: nothing(),
 };
 

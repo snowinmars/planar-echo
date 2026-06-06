@@ -76,8 +76,8 @@ const MobileRenderer: FC<WithClassName> = ({ className }) => {
                   <span className={styles.responseDivider}>.</span>
                   <Typography>
                     {response.what}
-                    <Typography className={styles.disposers}>{markDisposers && `✕`}</Typography>
                   </Typography>
+                  <Typography className={styles.disposers}>{markDisposers && `✕`}</Typography>
                 </Button>
               );
             }
@@ -99,8 +99,8 @@ const MobileRenderer: FC<WithClassName> = ({ className }) => {
                   <span className={styles.responseDivider}>.</span>
                   <Typography>
                     {response.what}
-                    <Typography className={styles.externs}>{markExterns && `→ ${externDialogueId}`}</Typography>
                   </Typography>
+                  <Typography className={styles.externs}>{markExterns && `→ ${externDialogueId}`}</Typography>
                 </Button>
               );
             }
