@@ -11,7 +11,7 @@
   "description": "Shared code for planar-echo projects",
   "author": "snowinmars",
   "scripts": {
-    "start": "tsc && tsc-alias",
+    "build": "tsc && tsc-alias",
     "lint": "eslint"
   },
   "devDependencies": {

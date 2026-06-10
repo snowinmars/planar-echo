@@ -29,7 +29,7 @@ COPY --from=package /app/ .
 RUN mkdir -p ./planar-ghost/
 COPY . .
 
-RUN yarn --cwd ./planar-shared/    start
+RUN yarn --cwd ./planar-shared/    build
 RUN yarn --cwd ./planar-asclepius/ add file:../planar-shared/ --force
 RUN yarn --cwd ./planar-prism/     add file:../planar-shared/ --force
 RUN yarn --cwd ./planar-shell/     add file:../planar-shared/ --force

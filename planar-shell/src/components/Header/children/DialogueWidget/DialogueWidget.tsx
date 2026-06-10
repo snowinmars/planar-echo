@@ -2,8 +2,8 @@ import { useEffect, useState, useSyncExternalStore } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import VirtualizedListbox from '@/components/runners/Dialogue/children/Picker/VirtualizedListbox';
-import { dialogueViewState } from '@/shared/widgets/dialogueViewState';
+import VirtualizedListbox from '@/shared/VirtualizedListbox';
+import { dialogueWidgetState } from '@/shared/widgets';
 import { getStateIds } from '@/components/runners/Dialogue/store/helpers';
 import { isNothing, StateId } from '@planar/shared';
 import { useTranslation } from 'react-i18next';
@@ -13,9 +13,9 @@ import type { WithClassName } from '@/types/fcWithClassName';
 
 import styles from './DialogueWidget.module.scss';
 
-const useDialogueView = () => useSyncExternalStore(
-  dialogueViewState.subscribe,
-  dialogueViewState.getSnapshot,
+const useDialogueWidget = () => useSyncExternalStore(
+  dialogueWidgetState.subscribe,
+  dialogueWidgetState.getSnapshot,
 );
 
 const Dialogues: FC<WithClassName> = ({ className }) => {
@@ -24,8 +24,8 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
     loading,
     dialogues,
     currentDialogueId,
-  } = useDialogueView();
-  const actions = dialogueViewState.getActions();
+  } = useDialogueWidget();
+  const actions = dialogueWidgetState.getActions();
 
   return (
     <Autocomplete
@@ -34,7 +34,7 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
       value={currentDialogueId}
       onChange={(_, dialogueId) => {
         if (isNothing(dialogueId)) throw new Error('Dialogue id cannot be empty here');
-        actions?.setDialogue(dialogueId!).catch(e => console.error(e));
+        actions?.loadDialogue(dialogueId!).catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}
@@ -72,8 +72,8 @@ const States: FC<WithClassName> = ({ className }) => {
     loading,
     currentDialogueId,
     currentStateId,
-  } = useDialogueView();
-  const actions = dialogueViewState.getActions();
+  } = useDialogueWidget();
+  const actions = dialogueWidgetState.getActions();
 
   const [stateIds, setStateIds] = useState<StateId[]>([]);
   useEffect(() => {

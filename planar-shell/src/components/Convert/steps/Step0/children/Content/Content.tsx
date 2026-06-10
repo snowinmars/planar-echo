@@ -1,9 +1,9 @@
-import TextField from '@mui/material/TextField';
-import StepLoading from '../../../../StepLoader/StepLoader';
-import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
 import ReplayIcon from '@mui/icons-material/Replay';
 import Paper from '@mui/material/Paper';
+import StepLoading from '../../../../StepLoader';
 
 import type { FC } from 'react';
 import type { LandingStateStep0 } from '@/components/Convert/store/types';

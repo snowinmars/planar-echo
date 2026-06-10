@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import getNativeLangNames from '@/shared/getNativeLangNames';
-import clsx from 'clsx';
 import Content from './children/Content/Content';
 import Comment from './children/Comment/Comment';
-import StepLoader from '../../StepLoader/StepLoader';
+import StepLoader from '../../StepLoader';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';

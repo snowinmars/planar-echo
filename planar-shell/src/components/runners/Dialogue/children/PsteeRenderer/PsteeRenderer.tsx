@@ -18,7 +18,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
     gameLanguage,
     currentStateId,
     setCurrentStateId,
-    setDialogue,
+    loadDialogue,
     disposeDialogue,
   } = useDialogueStore(useShallow(state => ({
     loading: state.loading,
@@ -26,7 +26,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
     gameLanguage: state.gameLanguage,
     currentStateId: state.currentStateId,
     setCurrentStateId: state.setCurrentStateId,
-    setDialogue: state.setDialogue,
+    loadDialogue: state.loadDialogue,
     disposeDialogue: state.disposeDialogue,
   })));
 
@@ -93,7 +93,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
                   className={clsx(styles.response, useTwoColumns ? styles.twoColumnResponse : styles.oneColumnResponse)}
                   disabled={loading}
                   onClick={() => {
-                    setDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
+                    loadDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
                   }}
                 >
                   <Typography>{i + 1}</Typography>

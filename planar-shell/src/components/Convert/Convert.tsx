@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Step0 from './steps/Step0/Step0';
-import Step1 from './steps/Step1/Step1';
-import Step2 from './steps/Step2/Step2';
-import Step3 from './steps/Step3/Step3';
-import Step4 from './steps/Step4/Step4';
-import Step5 from './steps/Step5/Step5';
-import Step6 from './steps/Step6/Step6';
-import { useLandingStore } from './store/store';
+import Step0 from './steps/Step0';
+import Step1 from './steps/Step1';
+import Step2 from './steps/Step2';
+import Step3 from './steps/Step3';
+import Step4 from './steps/Step4';
+import Step5 from './steps/Step5';
+import Step6 from './steps/Step6';
+import { useLandingStore } from './store';
 
 import type { GameLanguage, GameName } from '@planar/shared';
 import type { FC } from 'react';

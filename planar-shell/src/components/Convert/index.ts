@@ -1,3 +1,1 @@
-import Convert from './Convert';
-
-export default Convert;
+export { default } from './Convert';

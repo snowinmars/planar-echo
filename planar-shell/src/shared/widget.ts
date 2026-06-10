@@ -1,2 +1,3 @@
 export type Widget
-  = | 'dialogue';
+  = | 'dialogue'
+    | 'creature';

@@ -18,7 +18,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
     gameLanguage,
     currentStateId,
     setCurrentStateId,
-    setDialogue,
+    loadDialogue,
     disposeDialogue,
   } = useDialogueStore(useShallow(state => ({
     loading: state.loading,
@@ -26,7 +26,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
     gameLanguage: state.gameLanguage,
     currentStateId: state.currentStateId,
     setCurrentStateId: state.setCurrentStateId,
-    setDialogue: state.setDialogue,
+    loadDialogue: state.loadDialogue,
     disposeDialogue: state.disposeDialogue,
   })));
 
@@ -92,7 +92,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
                   className={styles.response}
                   disabled={loading}
                   onClick={() => {
-                    setDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
+                    loadDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
                   }}
                 >
                   <Typography>{i + 1}</Typography>

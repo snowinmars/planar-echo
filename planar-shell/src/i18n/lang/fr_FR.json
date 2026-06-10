@@ -12,6 +12,7 @@
     },
     "runnerGuard": {
       "dialogue": "Le dialogue depuis",
+      "creature": "Créature depuis",
       "ghostPath": "Dossier du jeu",
       "or": "ou",
       "convert": "Convertir"
@@ -87,12 +88,52 @@
       "cre_json2ghost": ".cre json vers ghost",
       "dlg_json2ghost": ".dlg json vers ghost",
       "itm_json2ghost": ".itm json vers ghost"
-
     }
   },
   "run": {
     "dialoguesLabel": "Dialogue ({{amount}} au total)",
-    "statesLabel": "État ({{amount}} au total)"
+    "creaturesLabel": "Créature ({{amount}} au total)",
+    "statesLabel": "État ({{amount}} au total)",
+    "creature": {
+      "talk": "Parlons-en",
+      "nameTlk": "Nom",
+      "tooltipTlk": "Info-bulle",
+      "hp": "Points de vie",
+      "characteristics": "Caractéristiques",
+      "strength": "Force",
+      "intelligence": "Intelligence",
+      "wisdom": "Sagesse",
+      "dexterity": "Dextérité",
+      "constitution": "Constitution",
+      "charisma": "Charisme",
+      "sex": "Sexe",
+      "race": "Race",
+      "theClass": "Classe",
+      "gender": "Genre",
+      "fightCharacteristics": "Caractéristiques de combat",
+      "naturalAc": "Classe d'armure naturelle",
+      "effectiveAc": "Classe d'armure effective",
+      "thac0": "THAC0",
+      "numberOfAttacksPerRound": "Nombre d'attaques par round",
+      "secondaryAbilities": "Capacités secondaires",
+      "hideInShadows": "Se cacher dans l'ombre",
+      "detectIllusion": "Détection des illusions",
+      "setTraps": "Poser un piège",
+      "lore": "Connaissance",
+      "lockpicking": "Crochetage",
+      "moveSilently": "Déplacement silencieux",
+      "findOrDisarmTraps": "Trouver ou désamorcer les pièges",
+      "pickPockets": "Vol à la tire",
+      "other": "Autre",
+      "soundsTitle": "Titre du son",
+      "colourIndex": "Indice de couleur",
+      "acModifier": "Modificateur de CA",
+      "saveVersus": "Jet de sauvegarde contre",
+      "resistances": "Résistances",
+      "proficiencies": "Compétences",
+      "scripts": "Scripts",
+      "techInfo": "Infos techniques"
+    }
   },
   "settings": {
     "gameInterfaceSettings": "Paramètres de l'interface du jeu",

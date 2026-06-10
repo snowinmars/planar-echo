@@ -8,6 +8,8 @@ export { progressSteps } from './prismIndexStartMessage.js';
 export { createDialogueLogic } from './dialogueEngine/dialogueLogic.js';
 export { registerNpcDialogue } from './dialogueEngine/registerNpcDialogue.js';
 export { translateNpcDialogue } from './dialogueEngine/translateNpcDialogue.js';
+export { dialogueToCreature } from './resourceMappers/dialogueToCreature.js';
+export { creatureToDialogues } from './resourceMappers/creatureToDialogues.js';
 
 export type { GameName } from './gameName.js';
 export type { GameLanguage } from './gameLanguage.js';

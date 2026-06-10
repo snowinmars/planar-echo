@@ -17,12 +17,12 @@ const translateCreature = (cre: GhostCreature): string => {
   const npcLowercaseId = createNpcLowercaseId(cre.resourceName);
 
   const writer = createWriter();
-  writer.writeLine(`import type { UntranslatedCreature, GhostCreature } from '@planar/shared';`);
+  writer.writeLine(`import type { UntranslatedCreature, TranslatedCreature } from '@planar/shared';`);
   writer.br();
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${cre.resourceName}`);
   writer.writeLine(' */');
-  writer.writeLine(`const ${npcLowercaseId}Creature = (${npcLowercaseId}CreatureSkeleton: UntranslatedCreature): GhostCreature => {`);
+  writer.writeLine(`const ${npcLowercaseId}Creature = (${npcLowercaseId}CreatureSkeleton: UntranslatedCreature): TranslatedCreature => {`);
   writer.writeLine(`return {`, 2);
   writer.writeLine(`...${npcLowercaseId}CreatureSkeleton,`, 4);
   writer.writeLine(`nameTlk: '${escapeSingleQuote(cre.header.nameTlk)}',`, 4);

@@ -1,8 +1,10 @@
-import { FC } from 'react';
-import styles from './Home.module.scss';
 import { useCountStoreCount } from '@/engine/store/count';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+
+import type { FC } from 'react';
+
+import styles from './Home.module.scss';
 
 const Home: FC = () => {
   const {

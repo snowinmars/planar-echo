@@ -9,7 +9,7 @@ type CreatePathesProps = PrismIndexStartMessage['data'] & Readonly<{
   recreate?: Maybe<boolean>;
 }>;
 
-const createPathes = async (props: CreatePathesProps): Promise<Pathes> => {
+export const createPathes = async (props: CreatePathesProps): Promise<Pathes> => {
   /* eslint-disable @stylistic/no-multi-spaces,@stylistic/comma-spacing,@stylistic/key-spacing */
   const weiduExe       = normalize(props.weiduExe);
   const chitinKeyPath  = normalize(props.chitinKey);
@@ -110,5 +110,3 @@ const createPathes = async (props: CreatePathesProps): Promise<Pathes> => {
 
   return pathes;
 };
-
-export default createPathes;

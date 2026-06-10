@@ -77,7 +77,7 @@ Sequential steps:
 - **dialogueEngine**: `registerNpcDialogue`, `translateNpcDialogue`, `createDialogueLogic` — used by Shell and Ghost bundles.
 - **Node-only**: `@planar/shared/node` (`fileExists`, etc.) for Asclepius/Prism.
 
-Install pattern: `yarn --cwd planar-shared start` then `yarn add file:../planar-shared --force` in other packages (see `README.md`, `_dev/reinstall-shared.*`).
+Install pattern: `yarn --cwd planar-shared build` then `yarn add file:../planar-shared --force` in other packages (see `README.md`, `_dev/reinstall-shared.*`).
 
 ---
 

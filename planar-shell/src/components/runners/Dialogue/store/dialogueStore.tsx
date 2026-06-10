@@ -1,55 +1,15 @@
 import { create } from 'zustand';
-import { createDialogueLogic, nothing } from '@planar/shared';
+import { nothing } from '@planar/shared';
 import { client } from '@/swagger/client/client.gen';
-import {
-  postApiGhostDialogueByDialogueIdSkeleton,
-  postApiGhostDialogueByDialogueIdByGameLanguage,
-  postApiGhostDialogue,
-} from '@/swagger/client';
+import { postApiGhostDialogue } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { chooseStartingStateId, isDestructor } from './helpers';
+import { loadTranslatedDialogue } from './dialogueApi';
 
-import type { UntranslatedNpcDialogue } from '@planar/shared';
 import type { Maybe, TranslatedNpcDialogue, StateId } from '@planar/shared';
 import type { GameLanguage } from '@/swagger/client';
-import { chooseStartingStateId, isDestructor } from './helpers';
-import { getDialogue, setDialogue } from './dialogueDb';
 
-type Skeleton = <T>(dialogueLogic: T) => UntranslatedNpcDialogue;
-export const getSkeleton = async (serverUrl: string, ghostPath: string, dialogueId: string): Promise<string> => {
-  const skeletonResponse = await postApiGhostDialogueByDialogueIdSkeleton({
-    client,
-    baseURL: serverUrl,
-    body: { ghostDir: ghostPath },
-    path: { dialogueId: dialogueId },
-  });
-
-  if (skeletonResponse.error) {
-    console.error(skeletonResponse.error);
-    throw new Error(skeletonResponse.error.error.message);
-  }
-  else {
-    return skeletonResponse.data.data.content;
-  }
-};
-
-type Translation = (untranslatedNpcDialogue: UntranslatedNpcDialogue) => TranslatedNpcDialogue;
-export const getTranslation = async (serverUrl: string, ghostPath: string, dialogueId: string, gameLanguage: GameLanguage): Promise<string> => {
-  const translationResponse = await postApiGhostDialogueByDialogueIdByGameLanguage({
-    client,
-    baseURL: serverUrl,
-    body: { ghostDir: ghostPath },
-    path: { dialogueId, gameLanguage },
-  });
-  if (translationResponse.error) {
-    console.error(translationResponse.error);
-    throw new Error(translationResponse.error.error.message);
-  }
-  else {
-    return translationResponse.data.data.content;
-  }
-};
-
-export type DialogueStore = {
+export type DialogueStore = Readonly<{
   serverUrl: string;
   ghostPath: string;
   gameLanguage: GameLanguage;
@@ -64,9 +24,9 @@ export type DialogueStore = {
   setCurrentStateId: (targetStateId: StateId) => void;
 
   loadDialogues: () => Promise<void>;
-  setDialogue: (dialogueId: string, targetState?: Maybe<StateId>) => Promise<void>;
+  loadDialogue: (dialogueId: string, targetState?: Maybe<StateId>) => Promise<void>;
   disposeDialogue: () => void;
-};
+}>;
 
 export const useDialogueStore = create<DialogueStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
@@ -121,40 +81,27 @@ export const useDialogueStore = create<DialogueStore>((set, get) => ({
     }
   },
 
-  setDialogue: async (currentDialogueId: string, initialStateId?: Maybe<StateId>): Promise<void> => {
+  loadDialogue: async (dialogueId: string, initialStateId?: Maybe<StateId>): Promise<void> => {
     set({
       loading: true,
     });
 
     try {
-      const dbDialogue = await getDialogue(currentDialogueId);
-      let skeleton: Skeleton;
-      let translation: Translation;
-
-      if (dbDialogue) {
-        skeleton = ((0, eval)(dbDialogue.skeleton));
-        translation = ((0, eval)(dbDialogue.translation));
-      }
-      else {
-        const {
-          serverUrl,
-          ghostPath,
-          gameLanguage,
-        } = get();
-        const skeletonContent = await getSkeleton(serverUrl, ghostPath, currentDialogueId);
-        const translationContent = await getTranslation(serverUrl, ghostPath, currentDialogueId, gameLanguage);
-        await setDialogue(currentDialogueId, skeletonContent, translationContent);
-        skeleton = ((0, eval)(skeletonContent));
-        translation = ((0, eval)(translationContent));
-      }
-
-      const l = createDialogueLogic();
-      const s = skeleton(l);
-      const t = translation(s);
+      const {
+        serverUrl,
+        ghostPath,
+        gameLanguage,
+      } = get();
+      const t = await loadTranslatedDialogue({
+        serverUrl,
+        ghostPath,
+        gameLanguage,
+        dialogueId,
+      });
 
       set({
         tree: t,
-        currentDialogueId: currentDialogueId,
+        currentDialogueId: dialogueId,
         currentStateId: initialStateId ?? chooseStartingStateId(t),
       });
     }
@@ -167,9 +114,11 @@ export const useDialogueStore = create<DialogueStore>((set, get) => ({
       });
     }
     finally {
-      set({ loading: false });
+      set({
+        loading: false,
+      });
     }
   },
 
-  disposeDialogue: () => set({ tree: null, currentStateId: null, currentDialogueId: null }),
+  disposeDialogue: () => set({ tree: nothing(), currentStateId: nothing(), currentDialogueId: nothing() }),
 }));

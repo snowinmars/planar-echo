@@ -8,7 +8,7 @@ export default async ({
   gameLanguage,
   ghostDir,
 }: Command): Promise<Result> => {
-  const translatedCreaturePath = join(ghostDir, 'ghost', 'creatures', 'dist', `${creatureId}.cre.${gameLanguage}.js`);
+  const translatedCreaturePath = join(ghostDir, 'ghost', 'creatures', 'dist', `${creatureId}.${gameLanguage}.js`);
   const found = await fileExists(translatedCreaturePath);
   if (!found) {
     return {

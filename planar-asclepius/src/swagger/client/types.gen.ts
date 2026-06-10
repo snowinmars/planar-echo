@@ -21,7 +21,7 @@ export type GameLanguage = typeof GameLanguage[keyof typeof GameLanguage];
 export type CreatureId = string;
 
 /**
- * Skeleton dialogue id
+ * Dialogue resource name
  */
 export type DialogueId2 = DialogueId & unknown;
 
@@ -31,9 +31,9 @@ export type DialogueId2 = DialogueId & unknown;
 export type GameLanguage2 = GameLanguage;
 
 /**
- * Skeleton creature id
+ * Creature resource name
  */
-export type CreatureId2 = CreatureId;
+export type CreatureId2 = CreatureId & unknown;
 
 export type PostApiFsValidateChitinKeyPathData = {
     body: {
@@ -183,7 +183,7 @@ export type PostApiGhostDialogueByDialogueIdSkeletonData = {
     };
     path: {
         /**
-         * Skeleton dialogue id
+         * Dialogue resource name
          */
         dialogueId: DialogueId & unknown;
     };
@@ -224,7 +224,7 @@ export type PostApiGhostDialogueByDialogueIdByGameLanguageData = {
     };
     path: {
         /**
-         * Skeleton dialogue id
+         * Dialogue resource name
          */
         dialogueId: DialogueId & unknown;
         /**
@@ -302,9 +302,9 @@ export type PostApiGhostCreatureByCreatureIdSkeletonData = {
     };
     path: {
         /**
-         * Skeleton creature id
+         * Creature resource name
          */
-        creatureId: CreatureId;
+        creatureId: CreatureId & unknown;
     };
     query?: never;
     url: '/api/ghost/creature/{creatureId}/skeleton';
@@ -343,9 +343,9 @@ export type PostApiGhostCreatureByCreatureIdByGameLanguageData = {
     };
     path: {
         /**
-         * Skeleton creature id
+         * Creature resource name
          */
-        creatureId: CreatureId;
+        creatureId: CreatureId & unknown;
         /**
          * Skeleton creature language
          */
@@ -414,3 +414,73 @@ export type PostApiGhostCreatureResponses = {
 };
 
 export type PostApiGhostCreatureResponse = PostApiGhostCreatureResponses[keyof PostApiGhostCreatureResponses];
+
+export type GetApiMapCreatureToDialoguesByCreatureIdData = {
+    body?: never;
+    path: {
+        /**
+         * Creature resource name
+         */
+        creatureId: CreatureId & unknown;
+    };
+    query?: never;
+    url: '/api/map/creatureToDialogues/{creatureId}';
+};
+
+export type GetApiMapCreatureToDialoguesByCreatureIdErrors = {
+    /**
+     * Dialogues resource names were not found for this creature
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIALOGUES_NOT_FOUND';
+        };
+    };
+};
+
+export type GetApiMapCreatureToDialoguesByCreatureIdError = GetApiMapCreatureToDialoguesByCreatureIdErrors[keyof GetApiMapCreatureToDialoguesByCreatureIdErrors];
+
+export type GetApiMapCreatureToDialoguesByCreatureIdResponses = {
+    /**
+     * Dialogues resource names
+     */
+    200: Array<string>;
+};
+
+export type GetApiMapCreatureToDialoguesByCreatureIdResponse = GetApiMapCreatureToDialoguesByCreatureIdResponses[keyof GetApiMapCreatureToDialoguesByCreatureIdResponses];
+
+export type GetApiMapDialogueToCreatureByDialogueIdData = {
+    body?: never;
+    path: {
+        /**
+         * Dialogue resource name
+         */
+        dialogueId: DialogueId & unknown;
+    };
+    query?: never;
+    url: '/api/map/dialogueToCreature/{dialogueId}';
+};
+
+export type GetApiMapDialogueToCreatureByDialogueIdErrors = {
+    /**
+     * Creature resource name were not found for this dialogue
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'CREATURE_NOT_FOUND';
+        };
+    };
+};
+
+export type GetApiMapDialogueToCreatureByDialogueIdError = GetApiMapDialogueToCreatureByDialogueIdErrors[keyof GetApiMapDialogueToCreatureByDialogueIdErrors];
+
+export type GetApiMapDialogueToCreatureByDialogueIdResponses = {
+    /**
+     * Creature resource name
+     */
+    200: string;
+};
+
+export type GetApiMapDialogueToCreatureByDialogueIdResponse = GetApiMapDialogueToCreatureByDialogueIdResponses[keyof GetApiMapDialogueToCreatureByDialogueIdResponses];

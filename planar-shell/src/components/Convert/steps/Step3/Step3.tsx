@@ -1,8 +1,8 @@
+import { clsx } from 'clsx';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import { clsx } from 'clsx';
-import StepLoader from '../../StepLoader/StepLoader';
+import StepLoader from '../../StepLoader';
 import Comment from './children/Comment/Comment';
 import Content from './children/Content/Content';
 

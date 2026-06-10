@@ -14,7 +14,7 @@ const binariesAreOk = async (chitinKeyPath: string): Promise<boolean> => {
   return true;
 };
 
-const validate = async (pathes: Pathes): Promise<void> => {
+export const validate = async (pathes: Pathes): Promise<void> => {
   let weiduValidationResult: WeiduValidateResult = 'cannot';
   const isWeiduOk = await weiduIsOk(pathes.weiduExe);
   if (isWeiduOk) weiduValidationResult = 'ok';
@@ -30,5 +30,3 @@ const validate = async (pathes: Pathes): Promise<void> => {
 
   throwIfInvalid(pathes, validationResult);
 };
-
-export default validate;

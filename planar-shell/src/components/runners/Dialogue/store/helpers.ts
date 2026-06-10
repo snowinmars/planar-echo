@@ -33,16 +33,28 @@ export const getExternDialogueId = (responseId: ResponseId, targetStateId: State
   const targetDiralogueId = targetStateId.split('_')[0];
 
   const isExtern = sourceDialogueId !== targetDiralogueId;
-  if (isExtern) return targetDiralogueId;
+  if (isExtern) return `${targetDiralogueId}.dlg`;
   return nothing();
 };
 
 export const isDestructor = (stateId: StateId) => stateId.endsWith('destructor');
 
-export const chooseStartingStateId = (tree: TranslatedNpcDialogue): StateId => {
-  for (const [stateId] of tree.constructorsWeights) { // [stateId, weight]
-    const s = tree.tree.get(stateId)!;
-    if (s.args?.onlyIf?.()) return stateId;
+const constructorStateIdsByWeight = (tree: TranslatedNpcDialogue): StateId[] => (
+  [...tree.constructorsWeights.entries()]
+    .sort(([, weightA], [, weightB]) => weightA - weightB)
+    .map(([stateId]) => stateId)
+);
+
+export const pickMatchingConstructorStateId = (tree: TranslatedNpcDialogue): Maybe<StateId> => {
+  for (const stateId of constructorStateIdsByWeight(tree)) {
+    const label = tree.tree.get(stateId);
+    if (label?.args?.onlyIf?.()) return stateId;
   }
+  return nothing();
+};
+
+export const chooseStartingStateId = (tree: TranslatedNpcDialogue): StateId => {
+  const matched = pickMatchingConstructorStateId(tree);
+  if (matched) return matched;
   return tree.tree.keys().next().value!;
 };

@@ -50,7 +50,7 @@ export const registerNpcDialogue = <T>(dialogueLogic: T): { label: LabelFunction
     if (alreadyRegistrated) throw new Error(`Label ${stateId} already registrated.`);
 
     const hasCondition = !!args?.onlyIf;
-    const hasWeight = args?.weight || args?.weight === 0;
+    const hasWeight = !!args?.weight || args?.weight === 0;
     const hasOnlyWeight = !hasCondition && hasWeight;
     const hasOnlyCondition = hasCondition && !hasWeight;
     if (hasOnlyWeight || hasOnlyCondition) throw new Error(`To register label ${stateId} as a constructor with weight, add a onlyIf condition and optional weight to the label args`);
@@ -140,7 +140,7 @@ export const registerNpcDialogue = <T>(dialogueLogic: T): { label: LabelFunction
     });
 
     const hasCondition = !!l.args?.onlyIf;
-    const hasWeight = !!l.args?.weight;
+    const hasWeight = !!l.args?.weight || l.args?.weight === 0;
     const weighted = hasCondition && hasWeight;
     if (weighted) npcDialogue.constructorsWeights.set(l.stateId, l.args.weight);
 

@@ -1,6 +1,6 @@
 import type { Maybe, StateId, TranslatedNpcDialogue } from '@planar/shared';
 
-export type DialogueViewState = {
+export type DialogueWidgetState = {
   loading: boolean;
   dialogues: string[];
   tree: Maybe<TranslatedNpcDialogue>;
@@ -8,8 +8,8 @@ export type DialogueViewState = {
   currentStateId: Maybe<StateId>;
 };
 
-export type DialogueViewActions = {
+export type DialogueWidgetActions = {
   loadDialogues: () => Promise<void>;
-  setDialogue: (dialogueId: string, targetState?: Maybe<StateId>) => Promise<void>;
+  loadDialogue: (dialogueId: string, targetState?: Maybe<StateId>) => Promise<void>;
   setCurrentStateId: (targetStateId: StateId) => void;
 };

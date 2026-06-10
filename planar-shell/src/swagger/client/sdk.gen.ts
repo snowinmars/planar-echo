@@ -2,7 +2,7 @@
 
 import { client } from './client.gen.js';
 import type { Client, Options as Options2, TDataShape } from './client/index.js';
-import type { GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateGhostPathData, PostApiFsValidateGhostPathErrors, PostApiFsValidateGhostPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostCreatureByCreatureIdByGameLanguageData, PostApiGhostCreatureByCreatureIdByGameLanguageErrors, PostApiGhostCreatureByCreatureIdByGameLanguageResponses, PostApiGhostCreatureByCreatureIdSkeletonData, PostApiGhostCreatureByCreatureIdSkeletonErrors, PostApiGhostCreatureByCreatureIdSkeletonResponses, PostApiGhostCreatureData, PostApiGhostCreatureErrors, PostApiGhostCreatureResponses, PostApiGhostDialogueByDialogueIdByGameLanguageData, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses, PostApiGhostDialogueData, PostApiGhostDialogueErrors, PostApiGhostDialogueResponses } from './types.gen.js';
+import type { GetApiMapCreatureToDialoguesByCreatureIdData, GetApiMapCreatureToDialoguesByCreatureIdErrors, GetApiMapCreatureToDialoguesByCreatureIdResponses, GetApiMapDialogueToCreatureByDialogueIdData, GetApiMapDialogueToCreatureByDialogueIdErrors, GetApiMapDialogueToCreatureByDialogueIdResponses, GetApiPingData, GetApiPingResponses, PostApiFsValidateChitinKeyPathData, PostApiFsValidateChitinKeyPathErrors, PostApiFsValidateChitinKeyPathResponses, PostApiFsValidateGhostPathData, PostApiFsValidateGhostPathErrors, PostApiFsValidateGhostPathResponses, PostApiFsValidateWeiduPathData, PostApiFsValidateWeiduPathErrors, PostApiFsValidateWeiduPathResponses, PostApiGhostCreatureByCreatureIdByGameLanguageData, PostApiGhostCreatureByCreatureIdByGameLanguageErrors, PostApiGhostCreatureByCreatureIdByGameLanguageResponses, PostApiGhostCreatureByCreatureIdSkeletonData, PostApiGhostCreatureByCreatureIdSkeletonErrors, PostApiGhostCreatureByCreatureIdSkeletonResponses, PostApiGhostCreatureData, PostApiGhostCreatureErrors, PostApiGhostCreatureResponses, PostApiGhostDialogueByDialogueIdByGameLanguageData, PostApiGhostDialogueByDialogueIdByGameLanguageErrors, PostApiGhostDialogueByDialogueIdByGameLanguageResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses, PostApiGhostDialogueData, PostApiGhostDialogueErrors, PostApiGhostDialogueResponses } from './types.gen.js';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -142,4 +142,22 @@ export const postApiGhostCreature = <ThrowOnError extends boolean = false>(optio
         'Content-Type': 'application/json',
         ...options.headers
     }
+});
+
+/**
+ * Get dialogues resource names for creature
+ */
+export const getApiMapCreatureToDialoguesByCreatureId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapCreatureToDialoguesByCreatureIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapCreatureToDialoguesByCreatureIdResponses, GetApiMapCreatureToDialoguesByCreatureIdErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/map/creatureToDialogues/{creatureId}',
+    ...options
+});
+
+/**
+ * Get creature resource name for dialogue
+ */
+export const getApiMapDialogueToCreatureByDialogueId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapDialogueToCreatureByDialogueIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapDialogueToCreatureByDialogueIdResponses, GetApiMapDialogueToCreatureByDialogueIdErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/map/dialogueToCreature/{dialogueId}',
+    ...options
 });

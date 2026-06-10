@@ -1,10 +1,10 @@
+import clsx from 'clsx';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import clsx from 'clsx';
 import Content from './children/Content/Content';
 import Comment from './children/Comment/Comment';
-import StepLoader from '../../StepLoader/StepLoader';
+import StepLoader from '../../StepLoader';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';

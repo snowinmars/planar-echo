@@ -12,10 +12,49 @@ import styles from './RunnerGuard.module.scss';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 
-const RunnerGuard: FC = () => {
+type ButtonInsideTextFieldProps = Readonly<{
+  id: string;
+}>;
+const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id }: ButtonInsideTextFieldProps) => {
   const { t } = useTranslation();
 
   const [ghostPath, setGhostPath] = useState<string>(() => planarLocalStorage.get('ghostPath', '')!);
+
+  return (
+    <TextField
+      className={styles.ghostPath}
+      value={ghostPath}
+      onChange={(e) => {
+        const value = e.target.value;
+        setGhostPath(value);
+        planarLocalStorage.set('ghostPath', value);
+      }}
+      size="small"
+      variant="standard"
+      placeholder={t('landing.runnerGuard.ghostPath')}
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton
+                className={styles.button}
+                component={RouterLink}
+                to={`/${id}`}
+                edge="start"
+                size="small"
+              >
+                {t(`landing.runnerGuard.${id}`)}
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
+      }}
+    />
+  );
+};
+
+const RunnerGuard: FC = () => {
+  const { t } = useTranslation();
 
   return (
     <div className={styles.guard}>
@@ -28,35 +67,8 @@ const RunnerGuard: FC = () => {
       <Typography>
         {t('landing.runnerGuard.or')}
       </Typography>
-      <TextField
-        className={styles.ghostPath}
-        value={ghostPath}
-        onChange={(e) => {
-          const value = e.target.value;
-          setGhostPath(value);
-          planarLocalStorage.set('ghostPath', value);
-        }}
-        size="small"
-        variant="standard"
-        placeholder={t('landing.runnerGuard.ghostPath')}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <IconButton
-                  className={styles.dialogue}
-                  component={RouterLink}
-                  to="/dialogue"
-                  edge="start"
-                  size="small"
-                >
-                  {t('landing.runnerGuard.dialogue')}
-                </IconButton>
-              </InputAdornment>
-            ),
-          },
-        }}
-      />
+      <ButtonInsideTextField id="dialogue" />
+      <ButtonInsideTextField id="creature" />
     </div>
   );
 };

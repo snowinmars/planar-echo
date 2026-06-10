@@ -8,7 +8,7 @@ export default async ({
   creatureId,
   ghostDir,
 }: Command): Promise<Result> => {
-  const creatureSkeletonPath = join(ghostDir, 'ghost', 'creatures', 'dist', `${creatureId}.cre.js`);
+  const creatureSkeletonPath = join(ghostDir, 'ghost', 'creatures', 'dist', `${creatureId}.js`);
   const found = await fileExists(creatureSkeletonPath);
   if (!found) {
     return {

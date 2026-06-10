@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
+import { clsx } from 'clsx';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { clsx } from 'clsx';
 import Ussr from '@/svg/ussr';
-import StepLoader from '../../StepLoader/StepLoader';
+import StepLoader from '../../StepLoader';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';

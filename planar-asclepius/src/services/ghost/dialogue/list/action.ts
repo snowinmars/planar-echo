@@ -5,7 +5,7 @@ import { fileExists } from '@planar/shared/node';
 import type { Command, Result } from './types.js';
 
 const skeletonExtention = '.dlg.js';
-const skeletonExtensionLength = skeletonExtention.length;
+const jsExtensionLength = '.js'.length;
 export default async ({ ghostDir, partialName }: Command): Promise<Result> => {
   const ghostPath = join(ghostDir, 'ghost', 'dialogues', 'dist');
   const found = await fileExists(ghostPath);
@@ -29,7 +29,7 @@ export default async ({ ghostDir, partialName }: Command): Promise<Result> => {
       const matchFilter = partialName ? x.name.includes(partialName) : true;
       return x.isFile() && !isEngine && isSkeleton && matchFilter;
     })
-    .map(x => x.name.slice(0, -skeletonExtensionLength));
+    .map(x => x.name.slice(0, -jsExtensionLength));
 
   return {
     ok: true,

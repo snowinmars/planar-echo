@@ -8,7 +8,7 @@ export default async ({
   gameLanguage,
   ghostDir,
 }: Command): Promise<Result> => {
-  const translatedDialoguePath = join(ghostDir, 'ghost', 'dialogues', 'dist', `${dialogueId}.dlg.${gameLanguage}.js`);
+  const translatedDialoguePath = join(ghostDir, 'ghost', 'dialogues', 'dist', `${dialogueId}.${gameLanguage}.js`);
   const found = await fileExists(translatedDialoguePath);
   if (!found) {
     return {

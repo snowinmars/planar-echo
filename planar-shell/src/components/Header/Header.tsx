@@ -6,14 +6,16 @@ import { Link as RouterLink } from 'react-router';
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TranslationSvg from '@/svg/translation';
-import DialogueWidget from './children/DialogueWidget/DialogueWidget';
-import { useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { FC } from 'react';
 import type { Maybe } from '@planar/shared';
 
 import styles from './Header.module.scss';
+
+const DialogueWidget = lazy(() => import('./children/DialogueWidget/DialogueWidget'));
+const CreatureWidget = lazy(() => import('./children/CreatureWidget/CreatureWidget'));
 
 const Header: FC = () => {
   const [currentWidget, setCurrentWidget] = useState<Maybe<string>>(() => planarLocalStorage.get(planarLocalStorage.currentWidget, '')!);
@@ -35,6 +37,7 @@ const Header: FC = () => {
 
           <Grid size={{ xs: 9.5 }}>
             { currentWidget === 'dialogue' && <DialogueWidget />}
+            { currentWidget === 'creature' && <CreatureWidget />}
           </Grid>
 
           <Grid size={{ xs: 0.5 }}>

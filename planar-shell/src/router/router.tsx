@@ -7,7 +7,8 @@ const Landing = lazy(() => import('@/components/Landing'));
 const Details = lazy(() => import('@/components/Details'));
 const Convert = lazy(() => import('@/components/Convert'));
 const Settings = lazy(() => import('@/components/Settings'));
-const Dialogue = lazy(() => import('@/components/runners/Dialogue').then(x => ({ default: x.Dialogue })));
+const Dialogue = lazy(() => import('@/components/runners/Dialogue'));
+const Creature = lazy(() => import('@/components/runners/Creature'));
 
 // https://github.com/remix-run/react-router/issues/12474#issuecomment-2538281149
 const HelloDevs: FC<PropsWithChildren> = ({ children }) => {
@@ -30,6 +31,9 @@ const router = createBrowserRouter([{
   }, {
     path: '/dialogue',
     element: <HelloDevs><Dialogue /></HelloDevs>,
+  }, {
+    path: '/creature',
+    element: <HelloDevs><Creature /></HelloDevs>,
   }, {
     path: '/settings',
     element: <HelloDevs><Settings /></HelloDevs>,
