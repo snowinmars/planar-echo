@@ -16,7 +16,7 @@ export const parseItm = (
   decompiledItems,
   async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
-    const buffer = await readFile(join(pathes.output.decimpiledBiff.root, resourceName));
+    const buffer = await readFile(join(pathes.ghostDir.decimpiledBiff.root, resourceName));
 
     const reader = createReader(buffer);
 

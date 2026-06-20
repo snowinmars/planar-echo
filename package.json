@@ -1,0 +1,24 @@
+{
+  "name": "planar-echo",
+  "license": "GPL-3.0-or-later",
+  "workspaces": [
+    "planar-shared",
+    "planar-prism",
+    "planar-asclepius",
+    "planar-shell"
+  ],
+  "scripts": {
+    "build": "yarn gen && yarn workspaces foreach -Apt run build",
+    "gen": "yarn workspace @planar/asclepius gen",
+    "test": "yarn workspace @planar/prism test && yarn workspace @planar/shell test",
+    "start": "yarn workspaces foreach -Api --include @planar/asclepius --include @planar/shell run start",
+    "start:asclepius": "yarn workspace @planar/asclepius start",
+    "start:shell": "yarn workspace @planar/shell start",
+    "start:prism": "yarn workspace @planar/prism start",
+    "lint": "yarn workspaces foreach -A run lint"
+  },
+  "packageManager": "yarn@4.16.0",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

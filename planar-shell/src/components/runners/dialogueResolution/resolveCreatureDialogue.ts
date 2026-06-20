@@ -12,14 +12,14 @@ export type ResolvedCreatureDialogue = Readonly<{
 export type ResolveCreatureDialogueParams = Readonly<{
   creatureId: string;
   serverUrl: string;
-  ghostPath: string;
+  ghostDir: string;
   gameLanguage: GameLanguage;
 }>;
 
 export const resolveCreatureDialogue = async ({
   creatureId,
   serverUrl,
-  ghostPath,
+  ghostDir,
   gameLanguage,
 }: ResolveCreatureDialogueParams): Promise<ResolvedCreatureDialogue> => {
   const dialogueIds = await getCurrentDialogues(serverUrl, creatureId);
@@ -28,7 +28,7 @@ export const resolveCreatureDialogue = async ({
     const tree = await loadTranslatedDialogue({
       dialogueId,
       serverUrl,
-      ghostPath,
+      ghostDir,
       gameLanguage,
     });
     const stateId = pickMatchingConstructorStateId(tree);

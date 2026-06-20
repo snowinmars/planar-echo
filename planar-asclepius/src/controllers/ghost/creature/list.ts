@@ -7,7 +7,7 @@ import action from '@/services/ghost/creature/list/action.js';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 
 const body = z.object({
-  ghostDir: z.string().min(1, 'Ghost folder path is required'),
+  ghostDir: z.string().min(1, 'Ghost directory path is required'),
   partialName: z.string().optional(),
 });
 const responseOk = z.array(z.string());

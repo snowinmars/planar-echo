@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=renpy
 
 ### Renpy ###
-# Don't track content of these folders #
+# Don't track content of these directories #
 ########################################
 cache/
 saves/

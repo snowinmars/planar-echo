@@ -1,4 +1,7 @@
 {
+  "layout": {
+    "error": "Erreur d'initialisation, voir F12"
+  },
   "landing": {
     "intro": {
       "techdemo": "Démo technique",
@@ -13,7 +16,7 @@
     "runnerGuard": {
       "dialogue": "Le dialogue depuis",
       "creature": "Créature depuis",
-      "ghostPath": "Dossier du jeu",
+      "ghostDir": "Dossier du jeu",
       "or": "ou",
       "convert": "Convertir"
     },
@@ -35,7 +38,7 @@
       }
     },
     "step2": {
-      "weiduExePath": "Chemin vers weidu.exe",
+      "weiduExeDir": "Chemin vers weidu.exe",
       "comments": {
         "default": "Télécharger weidu",
         "weiduExeVersion": "Version trouvée de weidu.exe : {{version}}",
@@ -47,7 +50,7 @@
       }
     },
     "step3": {
-      "chitinKeyPath": "Chemin vers CHITIN.KEY",
+      "chitinKeyFile": "Chemin vers CHITIN.KEY",
       "comments": {
         "default": "Qu'est-ce que CHITIN.KEY ?",
         "biffsCount": "Sources trouvées : {{biffsCount}}",
@@ -58,7 +61,7 @@
       }
     },
     "step4": {
-      "ghostPath": "Chemin du dossier de sortie",
+      "ghostDir": "Chemin du dossier de sortie",
       "comments": {
         "default": "Chemin du dossier de sortie",
         "success": "Ok",
@@ -77,7 +80,7 @@
       "start": "J'ai de l'espace disque et je veux commencer",
       "decompileBiffs": "Décompilation des archives .biff",
       "ids_raw2json": ".ids vers json",
-      "dlg_json2ghost_compilation": "Compilation des dialogues ghost",
+      "dlg_json2ghost_build": "Compilation des dialogues ghost",
       "cre_raw2json": ".cre vers json",
       "dlg_raw2json": ".dlg vers json",
       "effV10_raw2json": ".eff v1.0 vers json",
@@ -137,11 +140,33 @@
   },
   "settings": {
     "gameInterfaceSettings": "Paramètres de l'interface du jeu",
+    "serverSettings": "Paramètres du serveur",
     "backendUrl": {
       "title": "URL du serveur",
       "pinging": "Vérification",
       "pingSucceed": "Ok",
       "pingFailed": "Invalide"
+    },
+    "ghostDir": {
+      "title": "Répertoire planar-ghost",
+      "loading": "Chargement...",
+      "saving": "Vérification...",
+      "saved": "Enregistré",
+      "failed": "Erreur, appuyez sur F12"
+    },
+    "prismDir": {
+      "title": "Répertoire planar-prism",
+      "loading": "Chargement...",
+      "saving": "Vérification...",
+      "saved": "Enregistré",
+      "failed": "Erreur, appuyez sur F12"
+    },
+    "shellDir": {
+      "title": "Répertoire planar-shell",
+      "loading": "Chargement...",
+      "saving": "Vérification...",
+      "saved": "Enregistré",
+      "failed": "Erreur, appuyez sur F12"
     },
     "dialogueRenderer": {
       "title": "Affichage du dialogue",

@@ -99,7 +99,7 @@ const saveDiscovered = async (discovered: Discovered, pathes: Pathes): Promise<v
   for (const category of allCategories) {
     const items = discovered.variables.get(category)!;
     const ts = category === 'variable' ? serializeVariables(items.sort(), discovered.spectres) : serialize(category, items.sort());
-    const targetFile = join(pathes.output.sharedEnums, `${category}.ts`);
+    const targetFile = join(pathes.ghostDir.sharedEnums, `${category}.ts`);
     await saveToFile(targetFile, ts, true);
   }
 };

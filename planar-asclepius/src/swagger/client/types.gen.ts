@@ -21,7 +21,7 @@ export type GameLanguage = typeof GameLanguage[keyof typeof GameLanguage];
 export type CreatureId = string;
 
 /**
- * Dialogue resource name
+ * Dialogue id
  */
 export type DialogueId2 = DialogueId & unknown;
 
@@ -31,24 +31,24 @@ export type DialogueId2 = DialogueId & unknown;
 export type GameLanguage2 = GameLanguage;
 
 /**
- * Creature resource name
+ * Creature id
  */
 export type CreatureId2 = CreatureId & unknown;
 
-export type PostApiFsValidateChitinKeyPathData = {
+export type PostApiFsValidateChitinKeyFileData = {
     body: {
-        weiduExePath: string;
-        chitinKeyPath: string;
+        weiduExeDir: string;
+        chitinKeyFile: string;
         gameLanguage: 'ru_RU' | 'en_US' | 'cs_CZ' | 'de_DE' | 'fr_FR' | 'ko_KR' | 'pl_PL';
     };
     path?: never;
     query?: never;
-    url: '/api/fs/validate/chitinKeyPath';
+    url: '/api/fs/validate/chitinKeyFile';
 };
 
-export type PostApiFsValidateChitinKeyPathErrors = {
+export type PostApiFsValidateChitinKeyFileErrors = {
     /**
-     * Game folder is not found by this path
+     * Game directory is not found by this path
      */
     404: {
         error: {
@@ -58,11 +58,11 @@ export type PostApiFsValidateChitinKeyPathErrors = {
     };
 };
 
-export type PostApiFsValidateChitinKeyPathError = PostApiFsValidateChitinKeyPathErrors[keyof PostApiFsValidateChitinKeyPathErrors];
+export type PostApiFsValidateChitinKeyFileError = PostApiFsValidateChitinKeyFileErrors[keyof PostApiFsValidateChitinKeyFileErrors];
 
-export type PostApiFsValidateChitinKeyPathResponses = {
+export type PostApiFsValidateChitinKeyFileResponses = {
     /**
-     * How many biffs are found by weidu in the game folder
+     * How many biffs are found by weidu in the game directory
      */
     200: {
         data: {
@@ -71,18 +71,18 @@ export type PostApiFsValidateChitinKeyPathResponses = {
     };
 };
 
-export type PostApiFsValidateChitinKeyPathResponse = PostApiFsValidateChitinKeyPathResponses[keyof PostApiFsValidateChitinKeyPathResponses];
+export type PostApiFsValidateChitinKeyFileResponse = PostApiFsValidateChitinKeyFileResponses[keyof PostApiFsValidateChitinKeyFileResponses];
 
-export type PostApiFsValidateGhostPathData = {
+export type PostApiFsValidateGhostDirData = {
     body: {
-        ghostPath: string;
+        ghostDir: string;
     };
     path?: never;
     query?: never;
-    url: '/api/fs/validate/ghostPath';
+    url: '/api/fs/validate/ghostDir';
 };
 
-export type PostApiFsValidateGhostPathErrors = {
+export type PostApiFsValidateGhostDirErrors = {
     /**
      * Ghost directory not found
      */
@@ -103,9 +103,9 @@ export type PostApiFsValidateGhostPathErrors = {
     };
 };
 
-export type PostApiFsValidateGhostPathError = PostApiFsValidateGhostPathErrors[keyof PostApiFsValidateGhostPathErrors];
+export type PostApiFsValidateGhostDirError = PostApiFsValidateGhostDirErrors[keyof PostApiFsValidateGhostDirErrors];
 
-export type PostApiFsValidateGhostPathResponses = {
+export type PostApiFsValidateGhostDirResponses = {
     /**
      * Ghost is valid
      */
@@ -114,18 +114,18 @@ export type PostApiFsValidateGhostPathResponses = {
     };
 };
 
-export type PostApiFsValidateGhostPathResponse = PostApiFsValidateGhostPathResponses[keyof PostApiFsValidateGhostPathResponses];
+export type PostApiFsValidateGhostDirResponse = PostApiFsValidateGhostDirResponses[keyof PostApiFsValidateGhostDirResponses];
 
-export type PostApiFsValidateWeiduPathData = {
+export type PostApiFsValidateWeiduExeDirData = {
     body: {
-        weiduExePath: string;
+        weiduExeDir: string;
     };
     path?: never;
     query?: never;
-    url: '/api/fs/validate/weiduPath';
+    url: '/api/fs/validate/weiduExeDir';
 };
 
-export type PostApiFsValidateWeiduPathErrors = {
+export type PostApiFsValidateWeiduExeDirErrors = {
     /**
      * Weidu error
      */
@@ -146,9 +146,9 @@ export type PostApiFsValidateWeiduPathErrors = {
     };
 };
 
-export type PostApiFsValidateWeiduPathError = PostApiFsValidateWeiduPathErrors[keyof PostApiFsValidateWeiduPathErrors];
+export type PostApiFsValidateWeiduExeDirError = PostApiFsValidateWeiduExeDirErrors[keyof PostApiFsValidateWeiduExeDirErrors];
 
-export type PostApiFsValidateWeiduPathResponses = {
+export type PostApiFsValidateWeiduExeDirResponses = {
     /**
      * Weidu.exe version
      */
@@ -159,7 +159,139 @@ export type PostApiFsValidateWeiduPathResponses = {
     };
 };
 
-export type PostApiFsValidateWeiduPathResponse = PostApiFsValidateWeiduPathResponses[keyof PostApiFsValidateWeiduPathResponses];
+export type PostApiFsValidateWeiduExeDirResponse = PostApiFsValidateWeiduExeDirResponses[keyof PostApiFsValidateWeiduExeDirResponses];
+
+export type GetApiFsGhostDirByFilePathData = {
+    body?: never;
+    path: {
+        /**
+         * Relative path to the file relative to ghost directory, can include lower slashes
+         */
+        filePath: string;
+    };
+    query?: never;
+    url: '/api/fs/ghostDir/{filePath}';
+};
+
+export type GetApiFsGhostDirByFilePathErrors = {
+    /**
+     * Forbidden relative path in the ghost directory
+     */
+    403: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'DIRECTORY_TRAVERSE';
+        };
+    };
+    /**
+     * No such file in the ghost directory
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'DIRECTORY_TRAVERSE';
+        };
+    };
+};
+
+export type GetApiFsGhostDirByFilePathError = GetApiFsGhostDirByFilePathErrors[keyof GetApiFsGhostDirByFilePathErrors];
+
+export type GetApiFsGhostDirByFilePathResponses = {
+    /**
+     * File content from ghost directory
+     */
+    200: string;
+};
+
+export type GetApiFsGhostDirByFilePathResponse = GetApiFsGhostDirByFilePathResponses[keyof GetApiFsGhostDirByFilePathResponses];
+
+export type GetApiFsPrismDirByFilePathData = {
+    body?: never;
+    path: {
+        /**
+         * Relative path to the file relative to prism directory, can include lower slashes
+         */
+        filePath: string;
+    };
+    query?: never;
+    url: '/api/fs/prismDir/{filePath}';
+};
+
+export type GetApiFsPrismDirByFilePathErrors = {
+    /**
+     * Forbidden relative path in the prism directory
+     */
+    403: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'DIRECTORY_TRAVERSE';
+        };
+    };
+    /**
+     * No such file in the prism directory
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'DIRECTORY_TRAVERSE';
+        };
+    };
+};
+
+export type GetApiFsPrismDirByFilePathError = GetApiFsPrismDirByFilePathErrors[keyof GetApiFsPrismDirByFilePathErrors];
+
+export type GetApiFsPrismDirByFilePathResponses = {
+    /**
+     * File content from prism directory
+     */
+    200: string;
+};
+
+export type GetApiFsPrismDirByFilePathResponse = GetApiFsPrismDirByFilePathResponses[keyof GetApiFsPrismDirByFilePathResponses];
+
+export type GetApiFsShellDirByFilePathData = {
+    body?: never;
+    path?: {
+        /**
+         * Relative path to the file relative to shell directory, can include lower slashes
+         */
+        filePath?: string;
+    };
+    query?: never;
+    url: '/api/fs/shellDir/{filePath}';
+};
+
+export type GetApiFsShellDirByFilePathErrors = {
+    /**
+     * Forbidden relative path in the shell directory
+     */
+    403: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'DIRECTORY_TRAVERSE';
+        };
+    };
+    /**
+     * No such file in the shell directory
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'DIRECTORY_TRAVERSE';
+        };
+    };
+};
+
+export type GetApiFsShellDirByFilePathError = GetApiFsShellDirByFilePathErrors[keyof GetApiFsShellDirByFilePathErrors];
+
+export type GetApiFsShellDirByFilePathResponses = {
+    /**
+     * File content from shell directory
+     */
+    200: string;
+};
+
+export type GetApiFsShellDirByFilePathResponse = GetApiFsShellDirByFilePathResponses[keyof GetApiFsShellDirByFilePathResponses];
 
 export type GetApiPingData = {
     body?: never;
@@ -183,7 +315,7 @@ export type PostApiGhostDialogueByDialogueIdSkeletonData = {
     };
     path: {
         /**
-         * Dialogue resource name
+         * Dialogue id
          */
         dialogueId: DialogueId & unknown;
     };
@@ -224,7 +356,7 @@ export type PostApiGhostDialogueByDialogueIdByGameLanguageData = {
     };
     path: {
         /**
-         * Dialogue resource name
+         * Dialogue id
          */
         dialogueId: DialogueId & unknown;
         /**
@@ -302,7 +434,7 @@ export type PostApiGhostCreatureByCreatureIdSkeletonData = {
     };
     path: {
         /**
-         * Creature resource name
+         * Creature id
          */
         creatureId: CreatureId & unknown;
     };
@@ -343,7 +475,7 @@ export type PostApiGhostCreatureByCreatureIdByGameLanguageData = {
     };
     path: {
         /**
-         * Creature resource name
+         * Creature id
          */
         creatureId: CreatureId & unknown;
         /**
@@ -419,7 +551,7 @@ export type GetApiMapCreatureToDialoguesByCreatureIdData = {
     body?: never;
     path: {
         /**
-         * Creature resource name
+         * Creature id
          */
         creatureId: CreatureId & unknown;
     };
@@ -429,7 +561,7 @@ export type GetApiMapCreatureToDialoguesByCreatureIdData = {
 
 export type GetApiMapCreatureToDialoguesByCreatureIdErrors = {
     /**
-     * Dialogues resource names were not found for this creature
+     * Dialogues ids were not found for the creature id
      */
     404: {
         error: {
@@ -443,7 +575,7 @@ export type GetApiMapCreatureToDialoguesByCreatureIdError = GetApiMapCreatureToD
 
 export type GetApiMapCreatureToDialoguesByCreatureIdResponses = {
     /**
-     * Dialogues resource names
+     * Dialogues ids
      */
     200: Array<string>;
 };
@@ -454,7 +586,7 @@ export type GetApiMapDialogueToCreatureByDialogueIdData = {
     body?: never;
     path: {
         /**
-         * Dialogue resource name
+         * Dialogue id
          */
         dialogueId: DialogueId & unknown;
     };
@@ -464,7 +596,7 @@ export type GetApiMapDialogueToCreatureByDialogueIdData = {
 
 export type GetApiMapDialogueToCreatureByDialogueIdErrors = {
     /**
-     * Creature resource name were not found for this dialogue
+     * Creature id were not found for this dialogue id
      */
     404: {
         error: {
@@ -478,9 +610,165 @@ export type GetApiMapDialogueToCreatureByDialogueIdError = GetApiMapDialogueToCr
 
 export type GetApiMapDialogueToCreatureByDialogueIdResponses = {
     /**
-     * Creature resource name
+     * Creature id
      */
     200: string;
 };
 
 export type GetApiMapDialogueToCreatureByDialogueIdResponse = GetApiMapDialogueToCreatureByDialogueIdResponses[keyof GetApiMapDialogueToCreatureByDialogueIdResponses];
+
+export type GetApiSettingsGhostDirData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/settings/ghostDir';
+};
+
+export type GetApiSettingsGhostDirResponses = {
+    /**
+     * Current ghost directory path settings
+     */
+    200: {
+        ghostDir: string;
+    };
+};
+
+export type GetApiSettingsGhostDirResponse = GetApiSettingsGhostDirResponses[keyof GetApiSettingsGhostDirResponses];
+
+export type PostApiSettingsGhostDirData = {
+    body: {
+        ghostDir: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/settings/ghostDir';
+};
+
+export type PostApiSettingsGhostDirErrors = {
+    /**
+     * No such directory for ghost directory
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiSettingsGhostDirError = PostApiSettingsGhostDirErrors[keyof PostApiSettingsGhostDirErrors];
+
+export type PostApiSettingsGhostDirResponses = {
+    /**
+     * Current ghost directory path settings
+     */
+    200: {
+        ghostDir: string;
+    };
+};
+
+export type PostApiSettingsGhostDirResponse = PostApiSettingsGhostDirResponses[keyof PostApiSettingsGhostDirResponses];
+
+export type GetApiSettingsPrismDirData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/settings/prismDir';
+};
+
+export type GetApiSettingsPrismDirResponses = {
+    /**
+     * Current prism directory path settings
+     */
+    200: {
+        prismDir: string;
+    };
+};
+
+export type GetApiSettingsPrismDirResponse = GetApiSettingsPrismDirResponses[keyof GetApiSettingsPrismDirResponses];
+
+export type PostApiSettingsPrismDirData = {
+    body: {
+        prismDir: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/settings/prismDir';
+};
+
+export type PostApiSettingsPrismDirErrors = {
+    /**
+     * No such directory for prism directory
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiSettingsPrismDirError = PostApiSettingsPrismDirErrors[keyof PostApiSettingsPrismDirErrors];
+
+export type PostApiSettingsPrismDirResponses = {
+    /**
+     * Current prism directory path settings
+     */
+    200: {
+        prismDir: string;
+    };
+};
+
+export type PostApiSettingsPrismDirResponse = PostApiSettingsPrismDirResponses[keyof PostApiSettingsPrismDirResponses];
+
+export type GetApiSettingsShellDirData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/settings/shellDir';
+};
+
+export type GetApiSettingsShellDirResponses = {
+    /**
+     * Current shell directory path settings
+     */
+    200: {
+        shellDir: string;
+    };
+};
+
+export type GetApiSettingsShellDirResponse = GetApiSettingsShellDirResponses[keyof GetApiSettingsShellDirResponses];
+
+export type PostApiSettingsShellDirData = {
+    body: {
+        shellDir: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/settings/shellDir';
+};
+
+export type PostApiSettingsShellDirErrors = {
+    /**
+     * No such directory for shell directory
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiSettingsShellDirError = PostApiSettingsShellDirErrors[keyof PostApiSettingsShellDirErrors];
+
+export type PostApiSettingsShellDirResponses = {
+    /**
+     * Current shell directory path settings
+     */
+    200: {
+        shellDir: string;
+    };
+};
+
+export type PostApiSettingsShellDirResponse = PostApiSettingsShellDirResponses[keyof PostApiSettingsShellDirResponses];

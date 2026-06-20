@@ -40,7 +40,7 @@ export default defineConfig(({ mode }): UserConfig => {
       },
     },
     optimizeDeps: {
-      include: ['planar-shared'],
+      include: ['@planar/shared'],
       esbuildOptions: {
         format: 'esm',
       },

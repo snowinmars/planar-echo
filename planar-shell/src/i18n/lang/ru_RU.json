@@ -1,4 +1,7 @@
 {
+  "layout": {
+    "error": "Ошибка инициализации, см. F12"
+  },
   "landing": {
     "intro": {
       "techdemo": "Технодемка",
@@ -13,7 +16,7 @@
     "runnerGuard": {
       "dialogue": "Диалог из",
       "creature": "Существо из",
-      "ghostPath": "Каталог с игрой",
+      "ghostDir": "Каталог с игрой",
       "or": "или",
       "convert": "Сконвертировать"
     },
@@ -35,7 +38,7 @@
       }
     },
     "step2": {
-      "weiduExePath": "Путь к weidu.exe",
+      "weiduExeDir": "Путь к weidu.exe",
       "comments": {
         "default": "Скачать weidu",
         "weiduExeVersion": "Найдена версия weidu.exe: {{version}}",
@@ -47,7 +50,7 @@
       }
     },
     "step3": {
-      "chitinKeyPath": "Путь к CHITIN.KEY",
+      "chitinKeyFile": "Путь к CHITIN.KEY",
       "comments": {
         "default": "Что такое CHITIN.KEY?",
         "biffsCount": "Найдено исходников: {{biffsCount}}",
@@ -58,7 +61,7 @@
       }
     },
     "step4": {
-      "ghostPath": "Путь к директории для результата",
+      "ghostDir": "Путь к директории для результата",
       "comments": {
         "default": "Пустая директория для результата",
         "success": "Подходит",
@@ -77,7 +80,7 @@
       "start": "Места на диске достаточно, я хочу начать",
       "decompileBiffs": "Декомпиляция .biff архивов",
       "ids_raw2json": ".ids в json",
-      "dlg_json2ghost_compilation": "Компиляция ghost диалогов",
+      "dlg_json2ghost_build": "Компиляция ghost диалогов",
       "cre_raw2json": ".cre в json",
       "dlg_raw2json": ".dlg в json",
       "effV10_raw2json": ".eff v1.0 в json",
@@ -137,11 +140,33 @@
   },
   "settings": {
     "gameInterfaceSettings": "Настройки интерфейса игры",
+    "serverSettings": "Настройки сервера",
     "backendUrl": {
       "title": "Адрес сервера",
       "pinging": "Проверяю",
       "pingSucceed": "Норм",
       "pingFailed": "Не норм"
+    },
+    "ghostDir": {
+      "title": "Директория planar-ghost",
+      "loading": "Загружаю...",
+      "saving": "Проверяю...",
+      "saved": "Сохранено",
+      "failed": "Ошибка, см. F12"
+    },
+    "prismDir": {
+      "title": "Директория planar-prism",
+      "loading": "Загружаю...",
+      "saving": "Проверяю...",
+      "saved": "Сохранено",
+      "failed": "Ошибка, см. F12"
+    },
+    "shellDir": {
+      "title": "Директория planar-shell",
+      "loading": "Загружаю...",
+      "saving": "Проверяю...",
+      "saved": "Сохранено",
+      "failed": "Ошибка, см. F12"
     },
     "dialogueRenderer": {
       "title": "Вид диалога",

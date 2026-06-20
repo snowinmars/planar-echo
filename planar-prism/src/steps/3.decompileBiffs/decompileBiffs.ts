@@ -10,9 +10,9 @@ import type {
 } from './types.js';
 
 export const decompileBiffs = async (pathes: Pathes): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
-  const cacheJson = pathes.output.decimpiledBiff.cacheJson;
-  const output = pathes.output.decimpiledBiff.root;
-  const gameFolder = pathes.gameFolder;
+  const cacheJson = pathes.ghostDir.decimpiledBiff.cacheJson;
+  const ghostDir = pathes.ghostDir.decimpiledBiff.root;
+  const gameDir = pathes.gameDir;
 
   reportProgress({
     value: 1,
@@ -31,7 +31,7 @@ export const decompileBiffs = async (pathes: Pathes): Promise<Map<DecompiledBiff
     return loadFromFile(cacheJson);
   }
   else {
-    logger.info(`Decompiling biffs archives from '${gameFolder}' to '${output}'; might take a while`);
+    logger.info(`Decompiling biffs archives from '${gameDir}' to '${ghostDir}'; might take a while`);
 
     const decompiledBiffs = await decompileAndParseBiffs(pathes);
     await saveToFile(cacheJson, decompiledBiffs);
@@ -41,7 +41,7 @@ export const decompileBiffs = async (pathes: Pathes): Promise<Map<DecompiledBiff
       step: 'decompileBiffs',
     });
 
-    logger.info(`Decompiled biff archives from '${gameFolder}' to '${output}' with cache at ${cacheJson}`);
+    logger.info(`Decompiled biff archives from '${gameDir}' to '${ghostDir}' with cache at ${cacheJson}`);
 
     return decompiledBiffs;
   }

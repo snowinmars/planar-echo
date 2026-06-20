@@ -13,7 +13,7 @@ This is an open‑source game engine reconstruction project. The goal is to tran
 | Component     | Role                                                                                                                                                                                                                                            |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Prism**     | Node.js CLI tool (TypeScript) that parses proprietary binary `.biff` files into JSON and can transform that JSON into a custom “ghost” syntax (the open text js format). Runs independently (`yarn start`) or as an IPC child (`process.fork`). |
-| **Ghost**     | The output artifact produced by Prism, and also the name of the format. It is the semantic equivalent of original game data, but in an open, human‑readable format. Served by Asclepius as a static files folder.                               |
+| **Ghost**     | The output artifact produced by Prism, and also the name of the format. It is the semantic equivalent of original game data, but in an open, human‑readable format. Served by Asclepius as a static files directory.                               |
 | **Shell**     | React + Zustand + MUI frontend. Visualises ghost data (runs the game itself) and provides a UI for users to configure and initiate the parsing pipeline. Connects to Asclepius via REST and WebSocket APIs.                                     |
 | **Asclepius** | Node.js server that serves the Shell frontend, serves Ghost files, and orchestrates Prism execution. Spawns Prism as a fork process, receives progress events via IPC, and relays them to the Shell through WebSocket.                          |
 
@@ -44,9 +44,9 @@ This is an open‑source game engine reconstruction project. The goal is to tran
 
 ## Detailed Technical Reference
 
-### Paths & Folder Structure (Asclepius)
+### Paths & directory structure (Asclepius)
 
-Asclepius resolves paths relative to itself: `../../../planar-ghost`, `../../../planar-shell`, `../../../planar-prism` (`planar-asclepius/src/shared/folders.ts`). Missing dirs → exit code 17.
+Asclepius resolves sibling packages via `require.resolve('<package>/package.json')` (`planar-asclepius/src/shared/monorepoPaths.ts`). Prism is forked via `require.resolve('@planar/prism/dist/index.js')`. Missing dirs → exit code 17.
 
 ---
 
@@ -77,7 +77,7 @@ Sequential steps:
 - **dialogueEngine**: `registerNpcDialogue`, `translateNpcDialogue`, `createDialogueLogic` — used by Shell and Ghost bundles.
 - **Node-only**: `@planar/shared/node` (`fileExists`, etc.) for Asclepius/Prism.
 
-Install pattern: `yarn --cwd planar-shared build` then `yarn add file:../planar-shared --force` in other packages (see `README.md`, `_dev/reinstall-shared.*`).
+Install pattern: declare `"@planar/shared": "workspace:*"` in consuming packages; run `yarn install` at the monorepo root, then `yarn build` (builds shared → prism/asclepius, runs `yarn gen`, then shell).
 
 ---
 
@@ -94,7 +94,7 @@ Install pattern: `yarn --cwd planar-shared build` then `yarn add file:../planar-
 - **Port**: `process.env.PORT` or **3003**.
 - **Static**: Shell production build at `/`; SPA fallback for non-API routes.
 - **REST** (`controllers/router.ts`):
-  - `POST /api/fs/validate/chitinKeyPath`, `POST /api/fs/validate/ghostPath`, `POST /api/fs/validate/weiduPath`
+  - `POST /api/fs/validate/chitinKeyFile`, `POST /api/fs/validate/ghostDir`, `POST /api/fs/validate/weiduExeDir`
   - `GET /api/ping`
   - `GET /api/ghost/dialogue`, `GET /api/ghost/dialogue/{dialogueId}/skeleton`, `/api/ghost/dialogue/{dialogueId}/{gameLanguage}`
   - `GET /api/ghost/creature`, `GET /api/ghost/creature/{creatureId}/skeleton`, `GET /api/ghost/creature/{creatureId}/{gameLanguage}`
@@ -104,9 +104,9 @@ Install pattern: `yarn --cwd planar-shared build` then `yarn add file:../planar-
 
 **Prism index orchestration** (`wsController/prism/runIndex.ts`):
 
-1. `yarn --cwd planar-prism build` (step `buildPrism`)
+1. `yarn workspace @planar/prism build` (step `buildPrism`)
 2. `fork(prism/dist/index.js)` with IPC `{ type: 'start', data }` — stdout/stderr piped to Asclepius process
-3. `yarn --cwd planar-prism build-ghost` (step `dlg_json2ghost_compilation`)
+3. `yarn workspace @planar/prism build-ghost` (step `dlg_json2ghost_compilation`)
 
 Client messages: JSON `start` with same fields as `PrismIndexStartMessage['data']`; server sends `ready`, then `progress` | `error` | `complete`.
 
@@ -126,7 +126,7 @@ Client messages: JSON `start` with same fields as `PrismIndexStartMessage['data'
 
 ## End-to-end data flow
 
-1. User configures **WeiDU path**, **CHITIN.KEY / game folder**, **ghost output folder**, language, game in Shell (localStorage + REST validation).
+1. User configures **WeiDU path**, **CHITIN.KEY / game directory**, **ghost output directory**, language, game in Shell (localStorage + REST validation).
 2. User starts conversion → Shell **WebSocket** `start` → Asclepius builds Prism, **forks** `index.js`, runs **build-ghost**.
 3. Prism: WeiDU extract → parse → write JSON + Ghost TS → IPC progress → Asclepius → WS → Shell UI.
 4. User opens **Run** → Shell fetches Ghost dialogue/creature via **REST** → renders with shared dialogue logic.

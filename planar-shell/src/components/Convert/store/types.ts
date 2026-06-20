@@ -43,8 +43,8 @@ export type LandingStateStep1 = Readonly<{
 }>;
 
 export type LandingStateStep2 = Readonly<{
-  weiduExePath: string;
-  setWeiduExePath: (weiduExePath: string) => void;
+  weiduExeDir: string;
+  setWeiduExeDir: (weiduExeDir: string) => void;
   step2Valid: boolean;
   step2Loading: boolean;
   step2Comment: string;
@@ -55,8 +55,8 @@ export type LandingStateStep2 = Readonly<{
 }>;
 
 export type LandingStateStep3 = Readonly<{
-  chitinKeyPath: string;
-  setChitinKeyPath: (chitinKeyPath: string) => void;
+  chitinKeyFile: string;
+  setChitinKeyFile: (chitinKeyFile: string) => void;
   step3Valid: boolean;
   step3Loading: boolean;
   step3Comment: string;
@@ -67,8 +67,8 @@ export type LandingStateStep3 = Readonly<{
 }>;
 
 export type LandingStateStep4 = Readonly<{
-  ghostPath: string;
-  setGhostPath: (ghostPath: string) => void;
+  ghostDir: string;
+  setGhostDir: (ghostDir: string) => void;
   step4Valid: boolean;
   step4Loading: boolean;
   step4Comment: string;

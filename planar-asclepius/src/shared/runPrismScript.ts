@@ -1,8 +1,7 @@
 import { fork } from 'child_process';
-import { join } from 'path';
+import { dirname, join } from 'path';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { prismDir } from './folders.js';
 
 import type { ChildProcess } from 'child_process';
 import type {
@@ -15,14 +14,14 @@ import type {
 type PrismIndexMessage = PrismIndexStartMessage | PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
 type PrismIndexResponse = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
-const runPrismScript = <T>(commandName: string, data: T): Observable<PrismIndexResponse> => {
+const runPrismScript = <T>(prismDir: string, commandName: string, data: T): Observable<PrismIndexResponse> => {
   const destroy$ = new Subject<void>();
   let child: ChildProcess;
   return new Observable<PrismIndexResponse>((subscriber) => {
-    const commandCwd = join(prismDir, 'dist'); // TODO [snow]: use dir from args
-    const scriptPath = join(commandCwd, commandName);
+    const scriptDir = join(prismDir, commandName);
+    const commandCwd = dirname(scriptDir);
 
-    child = fork(scriptPath, {
+    child = fork(scriptDir, {
       cwd: commandCwd,
       stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
     });

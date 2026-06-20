@@ -42,27 +42,31 @@ const createPrismIndexWsEndpoint = (server: Server<typeof IncomingMessage, typeo
         const startMessage = msg;
 
         if (!startMessage.data) {
-          console.warn('data is empty');
+          console.warn('data cannot be empty');
           return;
         }
-        if (!startMessage.data.weiduExe) {
-          console.warn('data.weiduExe is empty');
+        if (!startMessage.data.weiduExeDir) {
+          console.warn('data.weiduExeDir cannot be empty');
           return;
         }
-        if (!startMessage.data.chitinKey) {
-          console.warn('data.chitinKey is empty');
+        if (!startMessage.data.chitinKeyFile) {
+          console.warn('data.chitinKeyFile cannot be empty');
           return;
         }
-        if (!startMessage.data.ghost) {
-          console.warn('data.ghost is empty');
+        if (!startMessage.data.ghostDir) {
+          console.warn('data.ghostDir cannot be empty');
+          return;
+        }
+        if (!startMessage.data.prismDir) {
+          console.warn('data.prismDir cannot be empty');
           return;
         }
         if (!startMessage.data.gameLanguage) {
-          console.warn('data.gameLanguage is empty');
+          console.warn('data.gameLanguage cannot be empty');
           return;
         }
         if (!startMessage.data.gameName) {
-          console.warn('data.gameName is empty');
+          console.warn('data.gameName cannot be empty');
           return;
         }
 

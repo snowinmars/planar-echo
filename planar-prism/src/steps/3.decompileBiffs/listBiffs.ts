@@ -14,7 +14,7 @@ const parseBiff = (line: string): Maybe<Biff> => {
   const sizeBytes = parseInt(matches[2]!.trim());
   return { resourceName, sizeBytes };
 };
-const getListBiffsCommand = ({ weiduExe, gameFolder, gameLanguage }: ListBiffsProps): string => `"${weiduExe}" --game "${gameFolder}" --list-biffs --use-lang ${gameLanguage}`;
+const getListBiffsCommand = ({ weiduExeDir, gameDir, gameLanguage }: ListBiffsProps): string => `"${weiduExeDir}" --game "${gameDir}" --list-biffs --use-lang ${gameLanguage}`;
 const listBiffs = async (props: ListBiffsProps): Promise<Biff[]> => execConsole<Biff>(getListBiffsCommand(props), parseBiff);
 
 export default listBiffs;

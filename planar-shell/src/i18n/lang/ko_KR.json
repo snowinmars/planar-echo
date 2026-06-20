@@ -1,4 +1,7 @@
 {
+  "layout": {
+    "error": "초기화 오류, F12 참조"
+  },
   "landing": {
     "intro": {
       "techdemo": "기술 데모 빌드",
@@ -13,7 +16,7 @@
     "runnerGuard": {
       "dialogue": "대화 상자 실행",
       "creature": "생물",
-      "ghostPath": "게임 폴더",
+      "ghostDir": "게임 폴더",
       "or": "또는",
       "convert": "변환"
     },
@@ -35,7 +38,7 @@
       }
     },
     "step2": {
-      "weiduExePath": "weidu.exe 경로",
+      "weiduExeDir": "weidu.exe 경로",
       "comments": {
         "default": "weidu 다운로드",
         "weiduExeVersion": "발견된 weidu.exe 버전: {{version}}",
@@ -47,7 +50,7 @@
       }
     },
     "step3": {
-      "chitinKeyPath": "CHITIN.KEY 경로",
+      "chitinKeyFile": "CHITIN.KEY 경로",
       "comments": {
         "default": "CHITIN.KEY란?",
         "biffsCount": "발견된 소스: {{biffsCount}}",
@@ -58,7 +61,7 @@
       }
     },
     "step4": {
-      "ghostPath": "출력 디렉터리 경로",
+      "ghostDir": "출력 디렉터리 경로",
       "comments": {
         "default": "출력 디렉터리 경로",
         "success": "양호",
@@ -77,7 +80,7 @@
       "start": "하드 디스크 공간이 충분하며 시작하겠습니다",
       "decompileBiffs": ".biff 아카이브 디컴파일",
       "ids_raw2json": ".ids → json",
-      "dlg_json2ghost_compilation": "고스트 대화 컴파일",
+      "dlg_json2ghost_build": "고스트 대화 컴파일",
       "cre_raw2json": ".cre → json",
       "dlg_raw2json": ".dlg → json",
       "effV10_raw2json": ".eff v1.0 → json",
@@ -137,11 +140,33 @@
   },
   "settings": {
     "gameInterfaceSettings": "게임 인터페이스 설정",
+    "serverSettings": "서버 설정",
     "backendUrl": {
       "title": "서버 URL",
       "pinging": "확인 중",
       "pingSucceed": "정상",
       "pingFailed": "오류"
+    },
+    "ghostDir": {
+      "title": "디렉토리 planar-ghost",
+      "loading": "로딩 중...",
+      "saving": "확인 중...",
+      "saved": "저장됨",
+      "failed": "오류 발생 시 F12 키를 누르세요"
+    },
+    "prismDir": {
+      "title": "디렉토리 planar-prism",
+      "loading": "로딩 중...",
+      "saving": "확인 중...",
+      "saved": "저장됨",
+      "failed": "오류 발생 시 F12 키를 누르세요"
+    },
+    "shellDir": {
+      "title": "디렉토리 planar-shell",
+      "loading": "로딩 중...",
+      "saving": "확인 중...",
+      "saved": "저장됨",
+      "failed": "오류 발생 시 F12 키를 누르세요"
     },
     "dialogueRenderer": {
       "title": "대화 보기 방식",

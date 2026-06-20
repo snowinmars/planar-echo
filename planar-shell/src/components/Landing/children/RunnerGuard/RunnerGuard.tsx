@@ -18,20 +18,20 @@ type ButtonInsideTextFieldProps = Readonly<{
 const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id }: ButtonInsideTextFieldProps) => {
   const { t } = useTranslation();
 
-  const [ghostPath, setGhostPath] = useState<string>(() => planarLocalStorage.get('ghostPath', '')!);
+  const [ghostDir, setGhostDir] = useState<string>(() => planarLocalStorage.get('ghostDir', '')!);
 
   return (
     <TextField
-      className={styles.ghostPath}
-      value={ghostPath}
+      className={styles.ghostDir}
+      value={ghostDir}
       onChange={(e) => {
         const value = e.target.value;
-        setGhostPath(value);
-        planarLocalStorage.set('ghostPath', value);
+        setGhostDir(value);
+        planarLocalStorage.set('ghostDir', value);
       }}
       size="small"
       variant="standard"
-      placeholder={t('landing.runnerGuard.ghostPath')}
+      placeholder={t('landing.runnerGuard.ghostDir')}
       slotProps={{
         input: {
           startAdornment: (

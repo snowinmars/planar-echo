@@ -1,12 +1,12 @@
-export type WeiduValidateResult
+export type WeiduExeDirValidateResult
   = | 'ok'
     | 'cannot'
 ;
-export type GameFolderValidateResult
+export type GameDirValidateResult
   = | 'ok'
     | 'cannot'
 ;
 export type ValidationResult = Readonly<{
-  weidu: WeiduValidateResult;
-  gameFolder: GameFolderValidateResult;
+  weiduExeDir: WeiduExeDirValidateResult;
+  gameDir: GameDirValidateResult;
 }>;

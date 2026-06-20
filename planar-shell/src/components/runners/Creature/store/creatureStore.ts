@@ -10,7 +10,7 @@ import type { GameLanguage } from '@/swagger/client';
 
 export type CreatureStore = Readonly<{
   serverUrl: string;
-  ghostPath: string;
+  ghostDir: string;
   gameLanguage: GameLanguage;
   loading: boolean;
 
@@ -25,7 +25,7 @@ export type CreatureStore = Readonly<{
 
 export const useCreatureStore = create<CreatureStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostPath: planarLocalStorage.get('ghostPath')!,
+  ghostDir: planarLocalStorage.get('ghostDir')!,
   gameLanguage: planarLocalStorage.get<GameLanguage>('gameLanguage')!,
   loading: false,
 
@@ -39,11 +39,11 @@ export const useCreatureStore = create<CreatureStore>((set, get) => ({
     });
 
     try {
-      const { serverUrl, ghostPath } = get();
+      const { serverUrl, ghostDir } = get();
       const { error, data } = await postApiGhostCreature({
         client,
         baseURL: serverUrl,
-        body: { ghostDir: ghostPath }, // may use server filter here, but nah
+        body: { ghostDir: ghostDir }, // may use server filter here, but nah
       });
 
       if (error) {
@@ -76,12 +76,12 @@ export const useCreatureStore = create<CreatureStore>((set, get) => ({
     try {
       const {
         serverUrl,
-        ghostPath,
+        ghostDir,
         gameLanguage,
       } = get();
       const t = await loadTranslatedCreature({
         serverUrl,
-        ghostPath,
+        ghostDir,
         gameLanguage,
         creatureId,
       });

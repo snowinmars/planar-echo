@@ -1,13 +1,16 @@
 import fs from 'fs/promises';
-import path from 'path';
+import { dirname, join } from 'path';
+import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
 
 const copyClient = async () => {
-  const src = path.join(__dirname, '../swagger');
-  const dest = path.join(__dirname, '../../../planar-shell/src/swagger');
+  const src = join(__dirname, '../swagger');
+  const shellRoot = dirname(require.resolve('@planar/shell/package.json'));
+  const dest = join(shellRoot, 'src/swagger');
 
   await fs.rm(dest, { recursive: true, force: true });
   await fs.cp(src, dest, { recursive: true });

@@ -1,14 +1,14 @@
 import { GameLanguage, nothing } from '@planar/shared';
 import { client } from '@/swagger/client/client.gen';
-import { postApiFsValidateChitinKeyPath } from '@/swagger/client';
+import { postApiFsValidateChitinKeyFile } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { LandingState, LandingStateStep3, ZustandGetType, ZustandSetType } from './types';
 import type { StateCreator } from 'zustand';
-import type { PostApiFsValidateChitinKeyPathErrors } from '@/swagger/client';
+import type { PostApiFsValidateChitinKeyFileErrors } from '@/swagger/client';
 import { debounce, interval, Subject } from 'rxjs';
 
-type FormErrorStateProps = PostApiFsValidateChitinKeyPathErrors[404];
+type FormErrorStateProps = PostApiFsValidateChitinKeyFileErrors[404];
 const translateErrorState = (error: FormErrorStateProps): string => {
   const isConnectionIssue = !error.error;
   if (isConnectionIssue) return 'landing.step3.comments.connection';
@@ -18,10 +18,10 @@ const translateErrorState = (error: FormErrorStateProps): string => {
   }
 };
 
-const validate = async (serverUrl: string, gameLanguage: GameLanguage, weiduExePath: string, set: ZustandSetType<LandingStateStep3>, get: ZustandGetType<LandingStateStep3>) => {
-  const { chitinKeyPath } = get();
+const validate = async (serverUrl: string, gameLanguage: GameLanguage, weiduExeDir: string, set: ZustandSetType<LandingStateStep3>, get: ZustandGetType<LandingStateStep3>) => {
+  const { chitinKeyFile } = get();
 
-  if (!chitinKeyPath || !gameLanguage || !weiduExePath) {
+  if (!chitinKeyFile || !gameLanguage || !weiduExeDir) {
     set({
       step3Loading: false,
       step3Comment: '',
@@ -41,10 +41,10 @@ const validate = async (serverUrl: string, gameLanguage: GameLanguage, weiduExeP
   });
 
   try {
-    const { data, error } = await postApiFsValidateChitinKeyPath({
+    const { data, error } = await postApiFsValidateChitinKeyFile({
       client,
       baseURL: serverUrl,
-      body: { weiduExePath, gameLanguage, chitinKeyPath },
+      body: { weiduExeDir, gameLanguage, chitinKeyFile },
     });
 
     set({ step3Loading: false });
@@ -82,18 +82,18 @@ export const useLandingStoreStep3: StateCreator<LandingState, [], [], LandingSta
   const subscription = validate$
     .pipe(debounce(() => interval(1000)))
     .subscribe(() => {
-      const { serverUrl, gameLanguage, weiduExePath } = get();
-      validate(serverUrl, gameLanguage as GameLanguage, weiduExePath, set, get).catch(e => console.error(e));
+      const { serverUrl, gameLanguage, weiduExeDir } = get();
+      validate(serverUrl, gameLanguage as GameLanguage, weiduExeDir, set, get).catch(e => console.error(e));
     });
 
-  const chitinKeyPath = planarLocalStorage.get<string>('chitinKeyPath', '')!;
+  const chitinKeyFile = planarLocalStorage.get<string>('chitinKeyFile', '')!;
   validate$.next();
 
   return {
-    chitinKeyPath,
-    setChitinKeyPath: (chitinKeyPath: string): void => {
-      set({ chitinKeyPath });
-      planarLocalStorage.set('chitinKeyPath', chitinKeyPath);
+    chitinKeyFile,
+    setChitinKeyFile: (chitinKeyFile: string): void => {
+      set({ chitinKeyFile });
+      planarLocalStorage.set('chitinKeyFile', chitinKeyFile);
       validate$.next();
     },
 
@@ -104,8 +104,8 @@ export const useLandingStoreStep3: StateCreator<LandingState, [], [], LandingSta
     step3ResultType: nothing(),
 
     step3Validate: () => {
-      const { serverUrl, gameLanguage, weiduExePath } = get();
-      return validate(serverUrl, gameLanguage as GameLanguage, weiduExePath, set, get);
+      const { serverUrl, gameLanguage, weiduExeDir } = get();
+      return validate(serverUrl, gameLanguage as GameLanguage, weiduExeDir, set, get);
     },
     step3Destroy: () => {
       subscription.unsubscribe();

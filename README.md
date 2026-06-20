@@ -97,33 +97,32 @@ It serves both backend and frontend using reverse proxy.
 Issues and PRs on [GitHub](https://github.com/snowinmars/planar-echo/).
 
 ```bash
-# install all packages except planar-shared
-yarn --cwd ./planar-asclepius
-yarn --cwd ./planar-prism
-yarn --cwd ./planar-shared
-yarn --cwd ./planar-shell
+# install dependencies for all workspaces (from repo root)
+yarn install
 
-# install planar-shared package
-yarn --cwd ./planar-shared build
-yarn --cwd ./planar-asclepius add file:../planar-shared --force
-yarn --cwd ./planar-prism     add file:../planar-shared --force
-yarn --cwd ./planar-shell     add file:../planar-shared --force
+# build all packages (shared → prism/asclepius → gen OpenAPI client → shell)
+yarn build
+
+# start both frontend and backend
+yarn start
+
+# or
 
 # in one terminal start frontend
 # in will run on hardcoded url http://localhost:3000
 # it will use hardcoded backend url http://localhost:3003
-yarn --cwd ./planar-shell start
+yarn start:shell
 
 # in other terminal start backend
 # in will run on hardcoded url http://localhost:3003
-yarn --cwd ./planar-asclepius start
+yarn start:asclepius
 ```
 
 
 ### How to regenerate swagger client from planar-asclepius to planar-shell
 
-1. `yarn --cwd ./planar-asclepius start`
+1. `yarn start:asclepius`
 1. Open `http://localhost:3003/api/swagger/`
 1. Copy its content to `./planar-asclepius/src/swagger/swagger.json`
 1. Stop planar-asclepius
-1. `yarn --cwd ./planar-asclepius gen`
+1. `yarn workspace @planar/asclepius gen`

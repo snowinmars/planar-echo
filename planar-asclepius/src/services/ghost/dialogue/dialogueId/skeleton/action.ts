@@ -8,22 +8,22 @@ export default async ({
   dialogueId,
   ghostDir,
 }: Command): Promise<Result> => {
-  const dialogueSkeletonPath = join(ghostDir, 'ghost', 'dialogues', 'dist', `${dialogueId}.js`);
-  const found = await fileExists(dialogueSkeletonPath);
+  const dialogueSkeletonDir = join(ghostDir, 'ghost', 'dialogues', 'dist', `${dialogueId}.js`);
+  const found = await fileExists(dialogueSkeletonDir);
   if (!found) {
     return {
       ok: false,
       error: {
         code: 'FILE_NOT_FOUND',
         status: 404,
-        message: `Skeleton '${dialogueId}' is not found at '${dialogueSkeletonPath}'`,
+        message: `Skeleton '${dialogueId}' is not found at '${dialogueSkeletonDir}'`,
       },
     };
   };
 
-  const content = await readFile(dialogueSkeletonPath, { encoding: 'utf-8' });
+  const content = await readFile(dialogueSkeletonDir, { encoding: 'utf-8' });
   return {
     ok: true,
-    data: { content: `/*${dialogueSkeletonPath}*/\n${content}` },
+    data: { content: `/*${dialogueSkeletonDir}*/\n${content}` },
   };
 }; ;

@@ -1,14 +1,14 @@
 import { nothing } from '@planar/shared';
 import { client } from '@/swagger/client/client.gen';
-import { postApiFsValidateWeiduPath } from '@/swagger/client';
+import { postApiFsValidateWeiduExeDir } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { LandingState, LandingStateStep2, LandingStateStep3, ZustandGetType, ZustandSetType } from './types';
 import type { StateCreator } from 'zustand';
-import type { PostApiFsValidateWeiduPathErrors } from '@/swagger/client';
+import type { PostApiFsValidateWeiduExeDirErrors } from '@/swagger/client';
 import { debounce, interval, Subject } from 'rxjs';
 
-type FormErrorStateProps = PostApiFsValidateWeiduPathErrors[400 | 404];
+type FormErrorStateProps = PostApiFsValidateWeiduExeDirErrors[400 | 404];
 const translateErrorState = (error: FormErrorStateProps): string => {
   const isConnectionIssue = !error.error;
   if (isConnectionIssue) return 'landing.step2.comments.connection';
@@ -20,9 +20,9 @@ const translateErrorState = (error: FormErrorStateProps): string => {
 };
 
 const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep2>, get: ZustandGetType<LandingStateStep2>): Promise<void> => {
-  const { weiduExePath } = get();
+  const { weiduExeDir } = get();
 
-  if (!weiduExePath) {
+  if (!weiduExeDir) {
     set({
       step2Loading: false,
       step2Comment: '',
@@ -42,10 +42,10 @@ const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep2
   });
 
   try {
-    const { data, error } = await postApiFsValidateWeiduPath({
+    const { data, error } = await postApiFsValidateWeiduExeDir({
       client,
       baseURL: serverUrl,
-      body: { weiduExePath },
+      body: { weiduExeDir },
     });
 
     set({ step2Loading: false });
@@ -107,14 +107,14 @@ export const useLandingStoreStep2: StateCreator<LandingState, [], [], LandingSta
         .catch(e => console.error(e));
     });
 
-  const weiduExePath = planarLocalStorage.get<string>('weiduExePath', '')!;
+  const weiduExeDir = planarLocalStorage.get<string>('weiduExeDir', '')!;
   validate$.next();
 
   return {
-    weiduExePath,
-    setWeiduExePath: (weiduExePath: string): void => {
-      set({ weiduExePath });
-      planarLocalStorage.set('weiduExePath', weiduExePath);
+    weiduExeDir,
+    setWeiduExeDir: (weiduExeDir: string): void => {
+      set({ weiduExeDir });
+      planarLocalStorage.set('weiduExeDir', weiduExeDir);
       validate$.next();
     },
 

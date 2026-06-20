@@ -20,8 +20,8 @@ export const json2GhostPstee = async (
   const cresIterator = patchCres(allJsons.cres, allJsons.tlk, discover);
   for await (const cre of cresIterator) {
     cres.set(cre.resourceName, cre);
-    await pathes.output.saveGhost.creatures(`${cre.resourceName.replaceAll(`'`, '')}.ts`, cre.skeleton, true);
-    for (const [language, translation] of cre.translations) await pathes.output.saveGhost.creatures(`${cre.resourceName.replaceAll(`'`, '')}.${language}.ts`, translation, true);
+    await pathes.ghostDir.saveGhost.creatures(`${cre.resourceName.replaceAll(`'`, '')}.ts`, cre.skeleton, true);
+    for (const [language, translation] of cre.translations) await pathes.ghostDir.saveGhost.creatures(`${cre.resourceName.replaceAll(`'`, '')}.${language}.ts`, translation, true);
   }
 
   logger.info(`Converting itms json to ghost...`);
@@ -29,8 +29,8 @@ export const json2GhostPstee = async (
   const itmsIterator = patchItms(allJsons.itms, allJsons.tlk, pathes.gameLanguage, discover);
   for await (const dlg of itmsIterator) {
     itms.set(dlg.resourceName, dlg);
-    await pathes.output.saveGhost.items(`${dlg.resourceName.replaceAll(`'`, '')}.ts`, dlg.skeleton, true);
-    for (const [language, translation] of dlg.translations) await pathes.output.saveGhost.items(`${dlg.resourceName.replaceAll(`'`, '')}.${language}.ts`, translation, true);
+    await pathes.ghostDir.saveGhost.items(`${dlg.resourceName.replaceAll(`'`, '')}.ts`, dlg.skeleton, true);
+    for (const [language, translation] of dlg.translations) await pathes.ghostDir.saveGhost.items(`${dlg.resourceName.replaceAll(`'`, '')}.${language}.ts`, translation, true);
   }
 
   logger.info(`Converting dlgs json to ghost...`);
@@ -39,7 +39,7 @@ export const json2GhostPstee = async (
   const dlgsIterator = patchDlgs(allJsons.dlgs, creMap, allJsons.tlk, pathes.gameLanguage, discover);
   for await (const dlg of dlgsIterator) {
     dlgs.set(dlg.resourceName, dlg);
-    await pathes.output.saveGhost.dialogues(`${dlg.resourceName.replaceAll(`'`, '')}.ts`, dlg.skeleton, true);
-    for (const [language, translation] of dlg.translations) await pathes.output.saveGhost.dialogues(`${dlg.resourceName.replaceAll(`'`, '')}.${language}.ts`, translation, true);
+    await pathes.ghostDir.saveGhost.dialogues(`${dlg.resourceName.replaceAll(`'`, '')}.ts`, dlg.skeleton, true);
+    for (const [language, translation] of dlg.translations) await pathes.ghostDir.saveGhost.dialogues(`${dlg.resourceName.replaceAll(`'`, '')}.${language}.ts`, translation, true);
   }
 };

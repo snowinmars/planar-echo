@@ -15,8 +15,8 @@ import styles from './Step4.module.scss';
 type Step4Props = WithClassName & Readonly<{
   disabled: boolean;
   imageUrl: string;
-  ghostPath: LandingStateStep4['ghostPath'];
-  setGhostPath: LandingStateStep4['setGhostPath'];
+  ghostDir: LandingStateStep4['ghostDir'];
+  setGhostDir: LandingStateStep4['setGhostDir'];
   loading: LandingStateStep4['step4Loading'];
   comment: LandingStateStep4['step4Comment'];
   commentArgs: LandingStateStep4['step4CommentArgs'];
@@ -31,15 +31,15 @@ const Step4: FC<Step4Props> = (props: Step4Props) => {
         component="img"
         height="140"
         image={props.imageUrl}
-        alt="Choose output path"
+        alt="Choose ghost (output) directory path"
       />
       <CardContent className={styles.cardContent}>
         <StepLoader show={props.loading} />
 
         <Content
           disabled={props.disabled}
-          ghostPath={props.ghostPath}
-          setGhostPath={props.setGhostPath}
+          ghostDir={props.ghostDir}
+          setGhostDir={props.setGhostDir}
           loading={props.loading}
           validate={props.validate}
         />

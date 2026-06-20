@@ -29,8 +29,8 @@ type Step6Props = Readonly<{
   loading: LandingStateStep6['step6Loading'];
   gameName: LandingStateStep1['gameName'];
   gameLanguage: LandingStateStep1['gameLanguage'];
-  weiduExePath: LandingStateStep2['weiduExePath'];
-  chitinKeyPath: LandingStateStep3['chitinKeyPath'];
+  weiduExeDir: LandingStateStep2['weiduExeDir'];
+  chitinKeyFile: LandingStateStep3['chitinKeyFile'];
   progress: LandingStateStep6['progress'];
   biff2json: () => Observable<void>;
 }>;

@@ -1,31 +1,31 @@
 import type { Pathes } from '@/steps/1.createPathes/index.js';
 import throwIfInvalid from './throwIfInvaliid.js';
 import type {
-  GameFolderValidateResult,
+  GameDirValidateResult,
   ValidationResult,
-  WeiduValidateResult,
+  WeiduExeDirValidateResult,
 } from './types.js';
 
-const weiduIsOk = async (weiduExePath: string): Promise<boolean> => {
+const weiduIsOk = async (weiduExeDir: string): Promise<boolean> => {
   return true;
 };
 
-const binariesAreOk = async (chitinKeyPath: string): Promise<boolean> => {
+const binariesAreOk = async (chitinKeyFile: string): Promise<boolean> => {
   return true;
 };
 
 export const validate = async (pathes: Pathes): Promise<void> => {
-  let weiduValidationResult: WeiduValidateResult = 'cannot';
-  const isWeiduOk = await weiduIsOk(pathes.weiduExe);
-  if (isWeiduOk) weiduValidationResult = 'ok';
+  let weiduExeDirValidationResult: WeiduExeDirValidateResult = 'cannot';
+  const isWeiduOk = await weiduIsOk(pathes.weiduExeDir);
+  if (isWeiduOk) weiduExeDirValidationResult = 'ok';
 
-  let gameFolderValidateResult: GameFolderValidateResult = 'cannot';
-  const areBinariesOk = await binariesAreOk(pathes.gameFolder);
-  if (areBinariesOk) gameFolderValidateResult = 'ok';
+  let gameDirValidateResult: GameDirValidateResult = 'cannot';
+  const areBinariesOk = await binariesAreOk(pathes.gameDir);
+  if (areBinariesOk) gameDirValidateResult = 'ok';
 
   const validationResult: ValidationResult = {
-    weidu: weiduValidationResult,
-    gameFolder: gameFolderValidateResult,
+    weiduExeDir: weiduExeDirValidationResult,
+    gameDir: gameDirValidateResult,
   };
 
   throwIfInvalid(pathes, validationResult);

@@ -55,8 +55,8 @@ const Convert: FC = () => {
           className={styles.step2}
           disabled={!store.step1Valid || store.step2Loading || store.step6Loading}
           loading={store.step2Loading || store.step6Loading}
-          weiduExePath={store.weiduExePath}
-          setWeiduExePath={store.setWeiduExePath}
+          weiduExeDir={store.weiduExeDir}
+          setWeiduExeDir={store.setWeiduExeDir}
           validate={store.step2Validate}
           comment={store.step2Comment}
           commentArgs={store.step2CommentArgs}
@@ -69,10 +69,10 @@ const Convert: FC = () => {
           className={styles.step3}
           disabled={!store.step2Valid || store.step3Loading || store.step6Loading}
           loading={store.step3Loading || store.step6Loading}
-          gameLanguage={store.gameLanguage as GameLanguage}
-          weiduExePath={store.weiduExePath}
-          chitinKeyPath={store.chitinKeyPath}
-          setChitinKeyPath={store.setChitinKeyPath}
+          gameLanguage={store.gameLanguage}
+          weiduExeDir={store.weiduExeDir}
+          chitinKeyFile={store.chitinKeyFile}
+          setChitinKeyFile={store.setChitinKeyFile}
           comment={store.step3Comment}
           commentArgs={store.step3CommentArgs}
           resultType={store.step3ResultType}
@@ -85,8 +85,8 @@ const Convert: FC = () => {
           className={styles.step4}
           disabled={!store.step3Valid || store.step4Loading || store.step6Loading}
           loading={store.step4Loading || store.step6Loading}
-          ghostPath={store.ghostPath}
-          setGhostPath={store.setGhostPath}
+          ghostDir={store.ghostDir}
+          setGhostDir={store.setGhostDir}
           comment={store.step4Comment}
           commentArgs={store.step4CommentArgs}
           resultType={store.step4ResultType}
@@ -108,10 +108,10 @@ const Convert: FC = () => {
         <Step6
           disabled={!store.step5Valid}
           loading={store.step6Loading}
-          gameName={store.gameName as GameName}
-          gameLanguage={store.gameLanguage as GameLanguage}
-          weiduExePath={store.weiduExePath}
-          chitinKeyPath={store.chitinKeyPath}
+          gameName={store.gameName}
+          gameLanguage={store.gameLanguage}
+          weiduExeDir={store.weiduExeDir}
+          chitinKeyFile={store.chitinKeyFile}
           progress={store.progress}
           biff2json={store.biff2json}
         />

@@ -19,12 +19,13 @@ type OutSave = Readonly<{
   items: SaveFunction;
 }>;
 export type Pathes = Readonly<{
-  weiduExe: string;
-  gameFolder: string;
-  tlkPath: string;
+  weiduExeDir: string;
+  prismDir: string;
+  gameDir: string;
+  tlkDir: string;
   gameName: GameName;
   gameLanguage: GameLanguage;
-  output: Readonly<{
+  ghostDir: Readonly<{
     root: string;
     decimpiledBiff: Readonly<{
       root: string;

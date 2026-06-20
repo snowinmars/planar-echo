@@ -11,8 +11,8 @@ import styles from './Content.module.scss';
 
 type ContentProps = Readonly<{
   disabled: boolean;
-  weiduExePath: LandingStateStep2['weiduExePath'];
-  setWeiduExePath: LandingStateStep2['setWeiduExePath'];
+  weiduExeDir: LandingStateStep2['weiduExeDir'];
+  setWeiduExeDir: LandingStateStep2['setWeiduExeDir'];
   loading: LandingStateStep2['step2Loading'];
   validate: LandingStateStep2['step2Validate'];
 }>;
@@ -23,23 +23,23 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
     <Paper className={styles.inputWrapper}>
       <TextField
         className={styles.input}
-        value={props.weiduExePath}
+        value={props.weiduExeDir}
         onChange={(e) => {
           const value = e.target.value;
-          props.setWeiduExePath(value);
+          props.setWeiduExeDir(value);
         }}
         disabled={props.loading || props.disabled}
         fullWidth
-        label={t('landing.step2.weiduExePath')}
+        label={t('landing.step2.weiduExeDir')}
         placeholder="D:\Games\weidu\weidu.exe"
       />
 
       <IconButton
         className={styles.inputReload}
         aria-label="replay"
-        disabled={!props.weiduExePath || props.loading || props.disabled}
+        disabled={!props.weiduExeDir || props.loading || props.disabled}
         onClick={() => {
-          if (props.weiduExePath) props.validate().catch(e => console.error(e));
+          if (props.weiduExeDir) props.validate().catch(e => console.error(e));
         }}
       >
         <ReplayIcon />

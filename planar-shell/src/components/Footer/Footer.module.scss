@@ -7,6 +7,12 @@
 
   .license {
     margin: 0 1em;
+
+    &:hover {
+      transform: scale(1.1) rotate(5deg);
+      transition: transform 0.2s ease;
+      animation: combo 0.2s ease;
+    }
   }
 
   .github,

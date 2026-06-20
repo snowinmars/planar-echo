@@ -15,8 +15,8 @@ import styles from './Step2.module.scss';
 type Step2Props = WithClassName & Readonly<{
   disabled: boolean;
   imageUrl: string;
-  weiduExePath: LandingStateStep2['weiduExePath'];
-  setWeiduExePath: LandingStateStep2['setWeiduExePath'];
+  weiduExeDir: LandingStateStep2['weiduExeDir'];
+  setWeiduExeDir: LandingStateStep2['setWeiduExeDir'];
   loading: LandingStateStep2['step2Loading'];
   comment: LandingStateStep2['step2Comment'];
   commentArgs: LandingStateStep2['step2CommentArgs'];
@@ -31,15 +31,15 @@ const Step2: FC<Step2Props> = (props) => {
         component="img"
         height="140"
         image={props.imageUrl}
-        alt="Choose weidu.exe path"
+        alt="Choose weidu.exe file path"
       />
       <CardContent className={styles.cardContent}>
         <StepLoader show={props.loading} />
 
         <Content
           disabled={props.disabled}
-          weiduExePath={props.weiduExePath}
-          setWeiduExePath={props.setWeiduExePath}
+          weiduExeDir={props.weiduExeDir}
+          setWeiduExeDir={props.setWeiduExeDir}
           loading={props.loading}
           validate={props.validate}
         />

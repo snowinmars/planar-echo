@@ -6,9 +6,10 @@ import type { Maybe } from './index.js';
  * Props to file prism index.js
  */
 type PrismIndexProps = Readonly<{
-  weiduExe: string;
-  chitinKey: string;
-  ghost: string;
+  weiduExeDir: string;
+  chitinKeyFile: string;
+  prismDir: string;
+  ghostDir: string;
   gameLanguage: GameLanguage;
   gameName: GameName;
 }>;

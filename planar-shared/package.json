@@ -1,7 +1,6 @@
 {
   "name": "@planar/shared",
   "type": "module",
-  "private": false,
   "license": "GPL-3.0-or-later",
   "repository": {
     "type": "git",
@@ -14,14 +13,16 @@
     "build": "tsc && tsc-alias",
     "lint": "eslint"
   },
+  "_devD": {
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0"
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^25.5.0",
     "@typescript-eslint/parser": "^8.57.1",
     "eslint": "^10.1.0",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import": "^2.32.0",
     "tsc": "^2.0.4",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.9.3",
@@ -42,6 +43,6 @@
       "import": "./dist/node.js",
       "types": "./dist/node.d.ts",
       "default": "./dist/node.js"
-   }
+    }
   }
 }

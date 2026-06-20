@@ -45,7 +45,7 @@ const main = async (props: PrismIndexStartMessage['data']) => {
   const devSilent = false;
   const silent = isIpc ? true : devSilent;
 
-  const recreateOutput = silent ? true : await confirm('Recreate output folder?');
+  const recreateOutput = silent ? true : await confirm('Recreate output directory?');
 
   const pathes = await createPathes({
     ...props,
@@ -78,9 +78,10 @@ if (isIpc) {
 }
 else {
   main({
-    weiduExe: 'D:/Games/weidu/weidu.exe',
-    chitinKey: 'D:/Games/Steam/steamapps/common/Project P/CHITIN.KEY',
-    ghost: 'E:/prg/snowinmars/planar-echo/planar-ghost',
+    weiduExeDir: 'D:/Games/weidu/weidu.exe',
+    chitinKeyFile: 'D:/Games/Steam/steamapps/common/Project P/CHITIN.KEY',
+    ghostDir: 'E:/prg/snowinmars/planar-echo/planar-ghost',
+    prismDir: 'E:/prg/snowinmars/planar-echo/planar-prism/dist',
     gameLanguage: 'ru_RU',
     gameName: 'pstee',
   }).catch(e => console.error(e));

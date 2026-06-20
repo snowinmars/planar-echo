@@ -9,11 +9,11 @@ import { getDbCreature, setDbCreature } from '@/shared/indexedDb';
 import type { GameLanguage, TranslatedCreature, UntranslatedCreature } from '@planar/shared';
 
 type Skeleton = () => UntranslatedCreature;
-export const getSkeleton = async (serverUrl: string, ghostPath: string, creatureId: string): Promise<string> => {
+export const getSkeleton = async (serverUrl: string, ghostDir: string, creatureId: string): Promise<string> => {
   const skeletonResponse = await postApiGhostCreatureByCreatureIdSkeleton({
     client,
     baseURL: serverUrl,
-    body: { ghostDir: ghostPath },
+    body: { ghostDir: ghostDir },
     path: { creatureId },
   });
 
@@ -27,11 +27,11 @@ export const getSkeleton = async (serverUrl: string, ghostPath: string, creature
 };
 
 type Translation = (untranslatedNpcDialogue: UntranslatedCreature) => TranslatedCreature;
-export const getTranslation = async (serverUrl: string, ghostPath: string, creatureId: string, gameLanguage: GameLanguage): Promise<string> => {
+export const getTranslation = async (serverUrl: string, ghostDir: string, creatureId: string, gameLanguage: GameLanguage): Promise<string> => {
   const translationResponse = await postApiGhostCreatureByCreatureIdByGameLanguage({
     client,
     baseURL: serverUrl,
-    body: { ghostDir: ghostPath },
+    body: { ghostDir: ghostDir },
     path: { creatureId, gameLanguage },
   });
   if (translationResponse.error) {
@@ -46,13 +46,13 @@ export const getTranslation = async (serverUrl: string, ghostPath: string, creat
 export type LoadTranslatedCreatureProps = Readonly<{
   creatureId: string;
   serverUrl: string;
-  ghostPath: string;
+  ghostDir: string;
   gameLanguage: GameLanguage;
 }>;
 export const loadTranslatedCreature = async ({
   creatureId,
   serverUrl,
-  ghostPath,
+  ghostDir,
   gameLanguage,
 }: LoadTranslatedCreatureProps,
 ): Promise<TranslatedCreature> => {
@@ -65,8 +65,8 @@ export const loadTranslatedCreature = async ({
     translation = ((0, eval)(dbCreature.translation));
   }
   else {
-    const skeletonContent = await getSkeleton(serverUrl, ghostPath, creatureId);
-    const translationContent = await getTranslation(serverUrl, ghostPath, creatureId, gameLanguage);
+    const skeletonContent = await getSkeleton(serverUrl, ghostDir, creatureId);
+    const translationContent = await getTranslation(serverUrl, ghostDir, creatureId, gameLanguage);
     await setDbCreature(creatureId, skeletonContent, translationContent);
     skeleton = ((0, eval)(skeletonContent));
     translation = ((0, eval)(translationContent));

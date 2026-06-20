@@ -1,6 +1,7 @@
-import { nothing, progressSteps } from '@planar/shared';
+import { just, nothing, progressSteps } from '@planar/shared';
 import { Observable, Subject } from 'rxjs';
 import urlJoin from 'url-join';
+import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { LandingState, LandingStateStep6 } from './types';
 import type { StateCreator } from 'zustand';
@@ -92,21 +93,24 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
 
       ws.onopen = () => {
         const {
-          gameName,
+          weiduExeDir,
+          chitinKeyFile,
+          ghostDir,
           gameLanguage,
-          weiduExePath,
-          chitinKeyPath,
-          ghostPath,
+          gameName,
         } = get();
+
+        const prismDir = just(planarLocalStorage.get('prismDir'));
 
         const startMsg: PrismIndexStartMessage = {
           type: 'start',
           data: {
-            gameName: gameName as GameName,
+            weiduExeDir,
+            chitinKeyFile,
+            ghostDir,
+            prismDir,
             gameLanguage: gameLanguage as GameLanguage,
-            weiduExe: weiduExePath,
-            chitinKey: chitinKeyPath,
-            ghost: ghostPath,
+            gameName: gameName as GameName,
           },
         };
 

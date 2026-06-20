@@ -1,14 +1,13 @@
 import runPrismScript from '@/shared/runPrismScript.js';
 import { concat, Observable } from 'rxjs';
 import { exec } from 'child_process';
-import { prismDir } from '../../shared/folders.js';
 
 import type { WebSocket } from 'ws';
 import type { PrismIndexCompleteMessage, PrismIndexErrorMessage, PrismIndexProgressMessage, PrismIndexStartMessage, ProgressStep } from '@planar/shared';
 
 type PrismIndexResponseData = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
-export const runYarnCommand = (command: string, step: ProgressStep): Observable<PrismIndexProgressMessage['data']> => {
+export const runCommand = (command: string, step: ProgressStep): Observable<PrismIndexProgressMessage['data']> => {
   return new Observable((subscriber) => {
     const message: PrismIndexProgressMessage['data'] = {
       value: 1,
@@ -40,9 +39,11 @@ export const runYarnCommand = (command: string, step: ProgressStep): Observable<
 };
 
 const run = (data: PrismIndexStartMessage['data']): Observable<PrismIndexResponseData> => {
-  const obs0 = runYarnCommand(`yarn --cwd ${prismDir} build`, 'buildPrism'); // TODO [snow]: use dir from args
-  const obs1 = runPrismScript('index.js', data);
-  const obs2 = runYarnCommand(`yarn --cwd ${prismDir} build-ghost`, 'dlg_json2ghost_build'); // TODO [snow]: use dir from args
+  // TODO [snow]: these lines are now the only lines that requires yarn as a runtime dependency
+  // It is possible to run these commands through pure node. Do it
+  const obs0 = runCommand(`yarn workspace @planar/prism build`, 'buildPrism'); // TODO [snow]: use dir from args
+  const obs1 = runPrismScript(data.prismDir, 'index.js', data);
+  const obs2 = runCommand(`yarn workspace @planar/prism build-ghost`, 'dlg_json2ghost_build'); // TODO [snow]: use dir from args
 
   return concat(obs0, obs1, obs2);
 };

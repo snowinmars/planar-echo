@@ -1,4 +1,7 @@
 {
+  "layout": {
+    "error": "Initialization error, see F12"
+  },
   "landing": {
     "intro": {
       "techdemo": "Tech demo build",
@@ -13,7 +16,7 @@
     "runnerGuard": {
       "dialogue": "Dialogue from",
       "creature": "Creature from",
-      "ghostPath": "Game folder",
+      "ghostDir": "Game directory",
       "or": "or",
       "convert": "Convert"
     },
@@ -35,7 +38,7 @@
       }
     },
     "step2": {
-      "weiduExePath": "Path to weidu.exe",
+      "weiduExeDir": "Path to weidu.exe",
       "comments": {
         "default": "Download weidu",
         "weiduExeVersion": "Found verion of weidu.exe: {{version}}",
@@ -47,7 +50,7 @@
       }
     },
     "step3": {
-      "chitinKeyPath": "Path to CHITIN.KEY",
+      "chitinKeyFile": "Path to CHITIN.KEY",
       "comments": {
         "default": "What is CHITIN.KEY?",
         "biffsCount": "Found sources: {{biffsCount}}",
@@ -58,7 +61,7 @@
       }
     },
     "step4": {
-      "ghostPath": "Output directory path",
+      "ghostDir": "Output directory path",
       "comments": {
         "default": "Output directory path",
         "success": "Fine",
@@ -77,7 +80,7 @@
       "start": "I have space on hdd and want to start",
       "decompileBiffs": "Decompiling .biff archives",
       "ids_raw2json": ".ids to json",
-      "dlg_json2ghost_compilation": "Compiling ghost dialogues",
+      "dlg_json2ghost_build": "Compiling ghost dialogues",
       "cre_raw2json": ".cre to json",
       "dlg_raw2json": ".dlg to json",
       "effV10_raw2json": ".eff v1.0 to json",
@@ -137,11 +140,33 @@
   },
   "settings": {
     "gameInterfaceSettings": "Game interface settings",
+    "serverSettings": "Server settings",
     "backendUrl": {
       "title": "Server url",
       "pinging": "Checking",
       "pingSucceed": "Ok",
       "pingFailed": "Wrong"
+    },
+    "ghostDir": {
+      "title": "planar-ghost directory",
+      "loading": "Loading...",
+      "saving": "Checking...",
+      "saved": "Saved",
+      "failed": "Error, see F12"
+    },
+    "prismDir": {
+      "title": "planar-prism directory",
+      "loading": "Loading...",
+      "saving": "Checking...",
+      "saved": "Saved",
+      "failed": "Error, see F12"
+    },
+    "shellDir": {
+      "title": "planar-shell directory",
+      "loading": "Loading...",
+      "saving": "Checking...",
+      "saved": "Saved",
+      "failed": "Error, see F12"
     },
     "dialogueRenderer": {
       "title": "Dialogue view",

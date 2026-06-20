@@ -39,7 +39,7 @@ const registerGameLanguageParam = (registry: OpenAPIRegistry): ZodEnum<ZodGameLa
 };
 
 const body = z.object({
-  ghostDir: z.string().min(1, 'Ghost folder path is required'),
+  ghostDir: z.string().min(1, 'Ghost directory path is required'),
 });
 const responseOk = z.object({
   data: z.object({

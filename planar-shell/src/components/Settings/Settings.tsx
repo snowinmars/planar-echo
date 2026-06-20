@@ -8,6 +8,9 @@ import DialogueRendererSwitcher from './children/DialogueRendererSwitcher';
 import DialogueMarks from './children/DialogueMarks';
 import LocalData from './children/LocalData';
 import BackendUrl from './children/BackendUrl';
+import ShellDir from './children/ShellDir/ShellDir';
+import GhostDir from './children/GhostDir/GhostDir';
+import PrismDir from './children/PrismDir/PrismDir';
 
 import type { FC } from 'react';
 
@@ -25,8 +28,27 @@ const Settings: FC = () => {
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
           <LanguageSwitcher />
         </Grid>
-        <Grid size={{ md: 3, sm: 6, xs: 12 }}>
+
+        <Grid size={{ xs: 12 }}>
+          <Divider />
+        </Grid>
+
+        <Grid size={{ xs: 12 }}>
+          <Typography variant="h6">
+            {t('settings.serverSettings')}
+          </Typography>
+        </Grid>
+        <Grid size={{ md: 4, sm: 6, xs: 12 }}>
           <BackendUrl />
+        </Grid>
+        <Grid size={{ md: 4, sm: 6, xs: 12 }}>
+          <GhostDir />
+        </Grid>
+        <Grid size={{ md: 4, sm: 6, xs: 12 }}>
+          <PrismDir />
+        </Grid>
+        <Grid size={{ md: 4, sm: 6, xs: 12 }}>
+          <ShellDir />
         </Grid>
 
         <Grid size={{ xs: 12 }}>

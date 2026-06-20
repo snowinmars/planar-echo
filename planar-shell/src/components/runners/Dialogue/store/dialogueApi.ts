@@ -10,11 +10,11 @@ import type { GameLanguage } from '@/swagger/client';
 import type { TranslatedNpcDialogue, UntranslatedNpcDialogue } from '@planar/shared';
 
 type Skeleton = <T>(dialogueLogic: T) => UntranslatedNpcDialogue;
-export const getSkeleton = async (serverUrl: string, ghostPath: string, dialogueId: string): Promise<string> => {
+export const getSkeleton = async (serverUrl: string, ghostDir: string, dialogueId: string): Promise<string> => {
   const skeletonResponse = await postApiGhostDialogueByDialogueIdSkeleton({
     client,
     baseURL: serverUrl,
-    body: { ghostDir: ghostPath },
+    body: { ghostDir },
     path: { dialogueId },
   });
 
@@ -28,11 +28,11 @@ export const getSkeleton = async (serverUrl: string, ghostPath: string, dialogue
 };
 
 type Translation = (untranslatedNpcDialogue: UntranslatedNpcDialogue) => TranslatedNpcDialogue;
-export const getTranslation = async (serverUrl: string, ghostPath: string, dialogueId: string, gameLanguage: GameLanguage): Promise<string> => {
+export const getTranslation = async (serverUrl: string, ghostDir: string, dialogueId: string, gameLanguage: GameLanguage): Promise<string> => {
   const translationResponse = await postApiGhostDialogueByDialogueIdByGameLanguage({
     client,
     baseURL: serverUrl,
-    body: { ghostDir: ghostPath },
+    body: { ghostDir: ghostDir },
     path: { dialogueId, gameLanguage },
   });
 
@@ -48,13 +48,13 @@ export const getTranslation = async (serverUrl: string, ghostPath: string, dialo
 export type LoadTranslatedDialogueProps = Readonly<{
   dialogueId: string;
   serverUrl: string;
-  ghostPath: string;
+  ghostDir: string;
   gameLanguage: GameLanguage;
 }>;
 export const loadTranslatedDialogue = async ({
   dialogueId,
   serverUrl,
-  ghostPath,
+  ghostDir,
   gameLanguage,
 }: LoadTranslatedDialogueProps,
 ): Promise<TranslatedNpcDialogue> => {
@@ -67,8 +67,8 @@ export const loadTranslatedDialogue = async ({
     translation = ((0, eval)(dbDialogue.translation));
   }
   else {
-    const skeletonContent = await getSkeleton(serverUrl, ghostPath, dialogueId);
-    const translationContent = await getTranslation(serverUrl, ghostPath, dialogueId, gameLanguage);
+    const skeletonContent = await getSkeleton(serverUrl, ghostDir, dialogueId);
+    const translationContent = await getTranslation(serverUrl, ghostDir, dialogueId, gameLanguage);
     await setDbDialogue(dialogueId, skeletonContent, translationContent);
     skeleton = ((0, eval)(skeletonContent));
     translation = ((0, eval)(translationContent));

@@ -5,13 +5,13 @@ import TextField from '@mui/material/TextField';
 import { getApiPing } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 import { nothing } from '@planar/shared';
+import { isAxiosError } from 'axios';
 
 import styles from './BackendUrl.module.scss';
 
 import type { FC } from 'react';
 import type { BaseTextFieldProps } from '@mui/material/TextField';
 import type { Maybe } from '@planar/shared';
-import { isAxiosError } from 'axios';
 
 const ANIMATION_TIME_MS = 3000;
 
@@ -43,7 +43,7 @@ const statusToHelperText = (status: Status): string => {
 export const BackendUrl: FC = () => {
   const { t } = useTranslation();
 
-  const [serverUrl, setServerUrl] = useState<string>(() => planarLocalStorage.get('serverUrl', '')!);
+  const [serverUrl, setServerUrl] = useState<string>(() => planarLocalStorage.get('serverUrl', 'TODO [snow]: bind with real server url')!);
   const [status, setStatus] = useState<Status>('nothing');
   const [color, setColor] = useState(() => statusToColor(status));
   const [helperText, setHelperText] = useState<string>(() => statusToHelperText(status));

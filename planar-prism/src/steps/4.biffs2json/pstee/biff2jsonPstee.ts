@@ -34,8 +34,8 @@ const biffs2jsonPstee = async (
   pathes: Pathes,
 ): Promise<AllPsteeJsons> => {
   logger.info(`Converting tlk to json...`);
-  const tlk = await parseTlk(pathes.tlkPath);
-  await pathes.output.saveJson.dialogues('dialog.tlk', tlk);
+  const tlk = await parseTlk(pathes.tlkDir);
+  await pathes.ghostDir.saveJson.dialogues('dialog.tlk', tlk);
 
   ///
 
@@ -44,7 +44,7 @@ const biffs2jsonPstee = async (
   const idsIterator = parseIds(pathes, decompiledBiffs.get('ids')!);
   for await (const id of idsIterator) {
     ids.set(id.resourceName, id);
-    await pathes.output.saveJson.ids(id.resourceName, id);
+    await pathes.ghostDir.saveJson.ids(id.resourceName, id);
   }
 
   for (const mustHaveId of mustHaveIds) if (!ids.has(mustHaveId)) throw new Error(`Pstee sources has '${mustHaveId}' file, but you did not pass it`);
@@ -57,7 +57,7 @@ const biffs2jsonPstee = async (
   for await (const ini of iniIterator) {
     if (!ini) continue;
     inis.set(ini.resourceName, ini);
-    await pathes.output.saveJson.inis(ini.resourceName, ini);
+    await pathes.ghostDir.saveJson.inis(ini.resourceName, ini);
   }
 
   ///
@@ -68,7 +68,7 @@ const biffs2jsonPstee = async (
   for await (const cre of cresIterator) {
     if (!cre) continue;
     cres.push(cre);
-    await pathes.output.saveJson.creatures(cre.resourceName, cre);
+    await pathes.ghostDir.saveJson.creatures(cre.resourceName, cre);
   }
 
   ///
@@ -92,7 +92,7 @@ const biffs2jsonPstee = async (
   const dlgIterator = parseDlg(pathes, decompiledBiffs.get('dlg')!.filter(x => !emptyDialogues.includes(x.resourceName)));
   for await (const dlg of dlgIterator) {
     dlgs.push(dlg);
-    await pathes.output.saveJson.dialogues(dlg.resourceName, dlg);
+    await pathes.ghostDir.saveJson.dialogues(dlg.resourceName, dlg);
   }
 
   ///
@@ -103,7 +103,7 @@ const biffs2jsonPstee = async (
   const effIterator = parseEffV20(pathes, decompiledBiffs.get('eff')!);
   for await (const eff of effIterator) {
     effs.push(eff);
-    await pathes.output.saveJson.effects(eff.resourceName, eff);
+    await pathes.ghostDir.saveJson.effects(eff.resourceName, eff);
   }
 
   ///
@@ -113,7 +113,7 @@ const biffs2jsonPstee = async (
   const itmIterator = parseItm(pathes, decompiledBiffs.get('itm')!);
   for await (const itm of itmIterator) {
     itms.push(itm);
-    await pathes.output.saveJson.items(itm.resourceName, itm);
+    await pathes.ghostDir.saveJson.items(itm.resourceName, itm);
   }
 
   return {

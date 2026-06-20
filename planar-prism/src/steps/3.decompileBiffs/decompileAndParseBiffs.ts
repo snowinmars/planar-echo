@@ -69,9 +69,9 @@ const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => 
 
   return { resourceName, fromBiffResourceName, type };
 };
-const getDecompileBiffsCommand = ({ weiduExe, gameFolder, output, gameLanguage }: DecompileBiffsProps, biffs: Biff[]): string => {
+const getDecompileBiffsCommand = ({ weiduExeDir, gameDir, ghostDir, gameLanguage }: DecompileBiffsProps, biffs: Biff[]): string => {
   const biffNames = biffs.map(b => `${b.resourceName}`).join(' ');
-  return `"${weiduExe}" --game "${gameFolder}" --use-lang ${gameLanguage} --out "${output.decimpiledBiff.root}" --biff-get "[${biffNames}]"`;
+  return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decimpiledBiff.root}" --biff-get "[${biffNames}]"`;
 };
 const decompileAndParseBiffs = async (props: DecompileBiffsProps): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
   const biffs: Biff[] = await listBiffs(props);

@@ -14,12 +14,12 @@ export const useCreatureTalk = (): Readonly<{
   const {
     currentCreatureId,
     serverUrl,
-    ghostPath,
+    ghostDir,
     gameLanguage,
   } = useCreatureStore(useShallow(state => ({
     currentCreatureId: state.currentCreatureId,
     serverUrl: state.serverUrl,
-    ghostPath: state.ghostPath,
+    ghostDir: state.ghostDir,
     gameLanguage: state.gameLanguage,
   })));
 
@@ -30,7 +30,7 @@ export const useCreatureTalk = (): Readonly<{
     try {
       const { dialogueId, stateId } = await resolveCreatureDialogue({
         serverUrl,
-        ghostPath,
+        ghostDir,
         gameLanguage,
         creatureId: currentCreatureId,
       });
@@ -49,7 +49,7 @@ export const useCreatureTalk = (): Readonly<{
     finally {
       setTalking(false);
     }
-  }, [currentCreatureId, talking, serverUrl, ghostPath, gameLanguage, navigate]);
+  }, [currentCreatureId, talking, serverUrl, ghostDir, gameLanguage, navigate]);
 
   return { startTalk, talking };
 };

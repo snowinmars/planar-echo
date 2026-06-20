@@ -13,11 +13,11 @@ import styles from './Content.module.scss';
 type ContentProps = Readonly<{
   disabled: boolean;
   gameLanguage: LandingStateStep1['gameLanguage'];
-  weiduExePath: LandingStateStep2['weiduExePath'];
-  chitinKeyPath: LandingStateStep3['chitinKeyPath'];
-  setChitinKeyPath: LandingStateStep3['setChitinKeyPath'];
+  weiduExeDir: LandingStateStep2['weiduExeDir'];
+  chitinKeyFile: LandingStateStep3['chitinKeyFile'];
+  setChitinKeyFile: LandingStateStep3['setChitinKeyFile'];
   loading: boolean;
-  validate: (weiduExePath: string, gameLanguage: GameLanguage) => Promise<void>;
+  validate: (weiduExeDir: string, gameLanguage: GameLanguage) => Promise<void>;
 }>;
 const Content: FC<ContentProps> = (props: ContentProps) => {
   const { t } = useTranslation();
@@ -26,23 +26,23 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
     <Paper className={styles.inputWrapper}>
       <TextField
         className={styles.input}
-        value={props.chitinKeyPath}
+        value={props.chitinKeyFile}
         onChange={(e) => {
           const value = e.target.value;
-          props.setChitinKeyPath(value);
+          props.setChitinKeyFile(value);
         }}
         disabled={props.loading || props.disabled}
         fullWidth
-        label={t('landing.step3.chitinKeyPath')}
-        placeholder="{game folder}\CHITIN.KEY"
+        label={t('landing.step3.chitinKeyFile')}
+        placeholder="{game directory}\CHITIN.KEY"
       />
 
       <IconButton
         className={styles.inputReload}
         aria-label="replay"
-        disabled={!props.chitinKeyPath || props.loading || props.disabled}
+        disabled={!props.chitinKeyFile || props.loading || props.disabled}
         onClick={() => {
-          if (props.chitinKeyPath && !props.disabled) props.validate(props.weiduExePath, props.gameLanguage as GameLanguage).catch(e => console.error(e));
+          if (props.chitinKeyFile && !props.disabled) props.validate(props.weiduExeDir, props.gameLanguage as GameLanguage).catch(e => console.error(e));
         }}
       >
         <ReplayIcon />

@@ -16,9 +16,9 @@ type Step3Props = WithClassName & Readonly<{
   disabled: boolean;
   imageUrl: string;
   gameLanguage: LandingStateStep1['gameLanguage'];
-  weiduExePath: LandingStateStep2['weiduExePath'];
-  chitinKeyPath: LandingStateStep3['chitinKeyPath'];
-  setChitinKeyPath: LandingStateStep3['setChitinKeyPath'];
+  weiduExeDir: LandingStateStep2['weiduExeDir'];
+  chitinKeyFile: LandingStateStep3['chitinKeyFile'];
+  setChitinKeyFile: LandingStateStep3['setChitinKeyFile'];
   loading: LandingStateStep3['step3Loading'];
   comment: LandingStateStep3['step3Comment'];
   commentArgs: LandingStateStep3['step3CommentArgs'];
@@ -33,7 +33,7 @@ const Step3: FC<Step3Props> = (props: Step3Props) => {
         component="img"
         height="140"
         image={props.imageUrl}
-        alt="Choose chitin.key path"
+        alt="Choose chitin.key file path"
       />
       <CardContent className={styles.cardContent}>
         <StepLoader show={props.loading} />
@@ -41,9 +41,9 @@ const Step3: FC<Step3Props> = (props: Step3Props) => {
         <Content
           disabled={props.disabled}
           gameLanguage={props.gameLanguage}
-          weiduExePath={props.weiduExePath}
-          chitinKeyPath={props.chitinKeyPath}
-          setChitinKeyPath={props.setChitinKeyPath}
+          weiduExeDir={props.weiduExeDir}
+          chitinKeyFile={props.chitinKeyFile}
+          setChitinKeyFile={props.setChitinKeyFile}
           loading={props.loading}
           validate={props.validate}
         />

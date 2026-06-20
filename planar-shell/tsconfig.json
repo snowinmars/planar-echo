@@ -4,6 +4,7 @@
     "outDir": "./dist",
     "target": "ES2020",
     "useDefineForClassFields": true,
+    "types": ["node"],
     "lib": [
       "ES2020",
       "DOM",

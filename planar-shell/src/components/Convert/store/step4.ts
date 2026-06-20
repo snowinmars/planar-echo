@@ -1,14 +1,14 @@
 import { nothing } from '@planar/shared';
 import { client } from '@/swagger/client/client.gen';
-import { postApiFsValidateGhostPath } from '@/swagger/client';
+import { postApiFsValidateGhostDir } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { LandingState, LandingStateStep4, ZustandGetType, ZustandSetType } from './types';
 import type { StateCreator } from 'zustand';
-import type { PostApiFsValidateGhostPathErrors } from '@/swagger/client';
+import type { PostApiFsValidateGhostDirErrors } from '@/swagger/client';
 import { debounce, interval, Subject } from 'rxjs';
 
-type FormErrorStateProps = PostApiFsValidateGhostPathErrors[404 | 406];
+type FormErrorStateProps = PostApiFsValidateGhostDirErrors[404 | 406];
 const translateErrorState = (error: FormErrorStateProps): string => {
   const isConnectionIssue = !error.error;
   if (isConnectionIssue) return 'landing.step4.comments.connection';
@@ -20,9 +20,9 @@ const translateErrorState = (error: FormErrorStateProps): string => {
 };
 
 const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep4>, get: ZustandGetType<LandingStateStep4>) => {
-  const { ghostPath } = get();
+  const { ghostDir } = get();
 
-  if (!ghostPath) {
+  if (!ghostDir) {
     set({
       step4Loading: false,
       step4Comment: '',
@@ -42,10 +42,10 @@ const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep4
   });
 
   try {
-    const { error } = await postApiFsValidateGhostPath({
+    const { error } = await postApiFsValidateGhostDir({
       client,
       baseURL: serverUrl,
-      body: { ghostPath },
+      body: { ghostDir },
     });
 
     set({ step4Loading: false });
@@ -87,14 +87,14 @@ export const useLandingStoreStep4: StateCreator<LandingState, [], [], LandingSta
       validate(serverUrl, set, get).catch(e => console.error(e));
     });
 
-  const ghostPath = planarLocalStorage.get<string>('ghostPath', '')!;
+  const ghostDir = planarLocalStorage.get<string>('ghostDir', '')!;
   validate$.next();
 
   return {
-    ghostPath,
-    setGhostPath: (ghostPath: string): void => {
-      set({ ghostPath });
-      planarLocalStorage.set('ghostPath', ghostPath);
+    ghostDir,
+    setGhostDir: (ghostDir: string): void => {
+      set({ ghostDir });
+      planarLocalStorage.set('ghostDir', ghostDir);
       validate$.next();
     },
 

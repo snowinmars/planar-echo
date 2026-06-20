@@ -9,12 +9,12 @@ import type {
   CreateAxiosDefaults,
 } from 'axios';
 
-import type { Auth } from '../core/auth.gen.js';
+import type { Auth } from '../core/auth.gen';
 import type {
   ServerSentEventsOptions,
   ServerSentEventsResult,
-} from '../core/serverSentEvents.gen.js';
-import type { Client as CoreClient, Config as CoreConfig } from '../core/types.gen.js';
+} from '../core/serverSentEvents.gen';
+import type { Client as CoreClient, Config as CoreConfig } from '../core/types.gen';
 
 export interface Config<T extends ClientOptions = ClientOptions>
   extends Omit<CreateAxiosDefaults, 'auth' | 'baseURL' | 'headers' | 'method'>, CoreConfig {

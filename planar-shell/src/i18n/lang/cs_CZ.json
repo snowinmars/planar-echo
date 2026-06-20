@@ -1,4 +1,7 @@
 {
+  "layout": {
+    "error": "Chyba inicializace, viz F12"
+  },
   "landing": {
     "intro": {
       "techdemo": "Technologická ukázka",
@@ -13,7 +16,7 @@
     "runnerGuard": {
       "dialogue": "Dialog od",
       "creature": "Stvoření od",
-      "ghostPath": "Složka hry",
+      "ghostDir": "Složka hry",
       "or": "nebo",
       "convert": "Převést"
     },
@@ -35,7 +38,7 @@
       }
     },
     "step2": {
-      "weiduExePath": "Cesta k weidu.exe",
+      "weiduExeDir": "Cesta k weidu.exe",
       "comments": {
         "default": "Stáhnout weidu",
         "weiduExeVersion": "Nalezena verze weidu.exe: {{version}}",
@@ -47,7 +50,7 @@
       }
     },
     "step3": {
-      "chitinKeyPath": "Cesta k CHITIN.KEY",
+      "chitinKeyFile": "Cesta k CHITIN.KEY",
       "comments": {
         "default": "Co je CHITIN.KEY?",
         "biffsCount": "Nalezeno zdrojů: {{biffsCount}}",
@@ -58,7 +61,7 @@
       }
     },
     "step4": {
-      "ghostPath": "Cesta k výstupní složce",
+      "ghostDir": "Cesta k výstupní složce",
       "comments": {
         "default": "Cesta k výstupní složce",
         "success": "V pořádku",
@@ -77,7 +80,7 @@
       "start": "Mám místo na disku a chci začít",
       "decompileBiffs": "Dekompilace .biff archivů",
       "ids_raw2json": ".ids do json",
-      "dlg_json2ghost_compilation": "Kompilace ghost dialogů",
+      "dlg_json2ghost_build": "Kompilace ghost dialogů",
       "cre_raw2json": ".cre do json",
       "dlg_raw2json": ".dlg do json",
       "effV10_raw2json": ".eff v1.0 do json",
@@ -137,11 +140,33 @@
   },
   "settings": {
     "gameInterfaceSettings": "Nastavení herního rozhraní",
+    "serverSettings": "Nastavení serveru",
     "backendUrl": {
       "title": "URL serveru",
       "pinging": "Kontrola",
       "pingSucceed": "OK",
       "pingFailed": "Chyba"
+    },
+    "ghostDir": {
+      "title": "Adresář planar-ghost",
+      "loading": "Načítání...",
+      "saving": "Kontrola...",
+      "saved": "Uloženo",
+      "failed": "Chyba, viz F12"
+    },
+    "prismDir": {
+      "title": "Adresář planar-prism",
+      "loading": "Načítání...",
+      "saving": "Kontrola...",
+      "saved": "Uloženo",
+      "failed": "Chyba, viz F12"
+    },
+    "shellDir": {
+      "title": "Adresář planar-shell",
+      "loading": "Načítání...",
+      "saving": "Kontrola...",
+      "saved": "Uloženo",
+      "failed": "Chyba, viz F12"
     },
     "dialogueRenderer": {
       "title": "Zobrazení dialogu",

@@ -8,22 +8,22 @@ export default async ({
   gameLanguage,
   ghostDir,
 }: Command): Promise<Result> => {
-  const translatedCreaturePath = join(ghostDir, 'ghost', 'creatures', 'dist', `${creatureId}.${gameLanguage}.js`);
-  const found = await fileExists(translatedCreaturePath);
+  const translatedCreatureDir = join(ghostDir, 'ghost', 'creatures', 'dist', `${creatureId}.${gameLanguage}.js`);
+  const found = await fileExists(translatedCreatureDir);
   if (!found) {
     return {
       ok: false,
       error: {
         code: 'FILE_NOT_FOUND',
         status: 404,
-        message: `Skeleton translation '${creatureId}' is not found at '${translatedCreaturePath}'`,
+        message: `Skeleton translation '${creatureId}' is not found at '${translatedCreatureDir}'`,
       },
     };
   };
 
-  const content = await readFile(translatedCreaturePath, { encoding: 'utf-8' });
+  const content = await readFile(translatedCreatureDir, { encoding: 'utf-8' });
   return {
     ok: true,
-    data: { content: `/*${translatedCreaturePath}*/\n${content}` },
+    data: { content: `/*${translatedCreatureDir}*/\n${content}` },
   };
 };

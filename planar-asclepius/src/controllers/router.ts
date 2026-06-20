@@ -5,9 +5,12 @@ import {
   OpenAPIRegistry,
   extendZodWithOpenApi,
 } from '@asteasolutions/zod-to-openapi';
-import registerValidateChitinKeyPath from './fs/validate/chitinKeyPath.js';
-import registerValidateGhostPath from './fs/validate/ghostPath.js';
-import registerValidateWeiduPath from './fs/validate/weiduPath.js';
+import registerValidateChitinKeyFile from './fs/validate/chitinKeyFile.js';
+import registerFsValidateGhostDir from './fs/validate/ghostDir.js';
+import registerFsValidateWeiduExeDir from './fs/validate/weiduExeDir.js';
+import registerFsGhostDir from './fs/ghostDir.js';
+import registerFsPrismDir from './fs/prismDir.js';
+import registerFsShellDir from './fs/shellDir.js';
 import registerPing from './ping/ping.js';
 import registerGhostDialogueDialogueIdSkeleton from './ghost/dialogue/dialogueId/skeleton.js';
 import registerGhostDialogueDialogueIdLanguage from './ghost/dialogue/dialogueId/language.js';
@@ -17,6 +20,12 @@ import registerGhostCreatureCreatureIdLanguage from './ghost/creature/creatureId
 import registerGhostCreatureList from './ghost/creature/list.js';
 import registerCreatureToDialogues from './map/creatureToDialogues.js';
 import registerDialogueToCreature from './map/dialogueToCreature.js';
+import registerSettingsGetGhost from './settings/getGhostDir.js';
+import registerSettingsGetPrism from './settings/getPrismDir.js';
+import registerSettingsGetShell from './settings/getShellDir.js';
+import registerSettingsSetGhost from './settings/setGhostDir.js';
+import registerSettingsSetPrism from './settings/setPrismDir.js';
+import registerSettingsSetShell from './settings/setShellDir.js';
 
 extendZodWithOpenApi(z);
 const registry = new OpenAPIRegistry();
@@ -29,9 +38,12 @@ const registry = new OpenAPIRegistry();
  */
 const router = express.Router();
 
-registerValidateChitinKeyPath(registry, router);
-registerValidateGhostPath(registry, router);
-registerValidateWeiduPath(registry, router);
+registerValidateChitinKeyFile(registry, router);
+registerFsValidateGhostDir(registry, router);
+registerFsValidateWeiduExeDir(registry, router);
+registerFsGhostDir(registry, router);
+registerFsPrismDir(registry, router);
+registerFsShellDir(registry, router);
 registerPing(registry, router);
 registerGhostDialogueDialogueIdSkeleton(registry, router);
 registerGhostDialogueDialogueIdLanguage(registry, router);
@@ -41,6 +53,12 @@ registerGhostCreatureCreatureIdLanguage(registry, router);
 registerGhostCreatureList(registry, router);
 registerCreatureToDialogues(registry, router);
 registerDialogueToCreature(registry, router);
+registerSettingsGetGhost(registry, router);
+registerSettingsGetPrism(registry, router);
+registerSettingsGetShell(registry, router);
+registerSettingsSetGhost(registry, router);
+registerSettingsSetPrism(registry, router);
+registerSettingsSetShell(registry, router);
 
 const getOpenApiDocumentation = (registry: OpenAPIRegistry) => {
   const generator = new OpenApiGeneratorV3(registry.definitions);

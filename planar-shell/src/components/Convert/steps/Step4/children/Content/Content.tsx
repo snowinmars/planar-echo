@@ -11,10 +11,10 @@ import styles from './Content.module.scss';
 
 type ContentProps = Readonly<{
   disabled: boolean;
-  ghostPath: LandingStateStep4['ghostPath'];
-  setGhostPath: LandingStateStep4['setGhostPath'];
+  ghostDir: LandingStateStep4['ghostDir'];
+  setGhostDir: LandingStateStep4['setGhostDir'];
   loading: boolean;
-  validate: (ghostPath: string) => Promise<void>;
+  validate: (ghostDir: string) => Promise<void>;
 }>;
 const Content: FC<ContentProps> = (props: ContentProps) => {
   const { t } = useTranslation();
@@ -23,23 +23,23 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
     <Paper className={styles.inputWrapper}>
       <TextField
         className={styles.input}
-        value={props.ghostPath}
+        value={props.ghostDir}
         onChange={(e) => {
           const value = e.target.value;
-          props.setGhostPath(value);
+          props.setGhostDir(value);
         }}
         disabled={props.loading || props.disabled}
         fullWidth
-        label={t('landing.step4.ghostPath')}
-        placeholder="Empty output folder"
+        label={t('landing.step4.ghostDir')}
+        placeholder="Empty output directory"
       />
 
       <IconButton
         className={styles.inputReload}
         aria-label="replay"
-        disabled={!props.ghostPath || props.loading || props.disabled}
+        disabled={!props.ghostDir || props.loading || props.disabled}
         onClick={() => {
-          if (props.ghostPath && !props.disabled) props.validate(props.ghostPath).catch(e => console.error(e));
+          if (props.ghostDir && !props.disabled) props.validate(props.ghostDir).catch(e => console.error(e));
         }}
       >
         <ReplayIcon />

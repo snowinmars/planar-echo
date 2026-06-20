@@ -11,7 +11,7 @@ import type { GameLanguage } from '@/swagger/client';
 
 export type DialogueStore = Readonly<{
   serverUrl: string;
-  ghostPath: string;
+  ghostDir: string;
   gameLanguage: GameLanguage;
   loading: boolean;
 
@@ -30,7 +30,7 @@ export type DialogueStore = Readonly<{
 
 export const useDialogueStore = create<DialogueStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostPath: planarLocalStorage.get('ghostPath')!,
+  ghostDir: planarLocalStorage.get('ghostDir')!,
   gameLanguage: planarLocalStorage.get<GameLanguage>('gameLanguage')!,
   loading: false,
 
@@ -52,11 +52,11 @@ export const useDialogueStore = create<DialogueStore>((set, get) => ({
     });
 
     try {
-      const { serverUrl, ghostPath } = get();
+      const { serverUrl, ghostDir } = get();
       const { error, data } = await postApiGhostDialogue({
         client,
         baseURL: serverUrl,
-        body: { ghostDir: ghostPath }, // may use server filter here, but nah
+        body: { ghostDir: ghostDir }, // may use server filter here, but nah
       });
 
       if (error) {
@@ -89,12 +89,12 @@ export const useDialogueStore = create<DialogueStore>((set, get) => ({
     try {
       const {
         serverUrl,
-        ghostPath,
+        ghostDir,
         gameLanguage,
       } = get();
       const t = await loadTranslatedDialogue({
         serverUrl,
-        ghostPath,
+        ghostDir,
         gameLanguage,
         dialogueId,
       });
