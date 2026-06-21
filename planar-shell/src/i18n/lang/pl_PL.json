@@ -16,6 +16,7 @@
     "runnerGuard": {
       "dialogue": "Dialog z",
       "creature": "Istota z",
+      "item": "Przedmiot z",
       "ghostDir": "Folder gry",
       "or": "lub",
       "convert": "Konwertuj"
@@ -96,6 +97,7 @@
   "run": {
     "dialoguesLabel": "Dialog (łącznie {{amount}})",
     "creaturesLabel": "Istota (łącznie {{amount}})",
+    "itemsLabel": "Przedmiot (łącznie {{amount}})",
     "statesLabel": "Stan (łącznie {{amount}})",
     "creature": {
       "talk": "Porozmawiajmy",
@@ -136,6 +138,15 @@
       "proficiencies": "Biegłości",
       "scripts": "Skrypty",
       "techInfo": "Informacje techniczne"
+    },
+    "item": {
+      "talk": "Mówić",
+      "unidentifiedDescriptionTlk": "Niezidentyfikowany opis",
+      "identifiedDescriptionTlk": "Zidentyfikowany opis",
+      "properties": "Właściwości",
+      "abilities": "Zdolność przedmiotu",
+      "abilitiesEffects": "Efekt umiejętności",
+      "effects": "Efekt przedmiotu"
     }
   },
   "settings": {

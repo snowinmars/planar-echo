@@ -16,6 +16,7 @@
     "runnerGuard": {
       "dialogue": "대화 상자 실행",
       "creature": "생물",
+      "item": "품목",
       "ghostDir": "게임 폴더",
       "or": "또는",
       "convert": "변환"
@@ -96,6 +97,7 @@
   "run": {
     "dialoguesLabel": "대화 (총 {{amount}}개)",
     "creaturesLabel": "생물 (총 {{amount}})",
+    "itemsLabel": "품목 (총 {{amount}})",
     "statesLabel": "상태 (총 {{amount}}개)",
     "creature": {
       "talk": "이야기해 봅시다",
@@ -136,6 +138,15 @@
       "proficiencies": "숙련",
       "scripts": "스크립트",
       "techInfo": "기술 정보"
+    },
+    "item": {
+      "talk": "말하다",
+      "unidentifiedDescriptionTlk": "설명 불명확",
+      "identifiedDescriptionTlk": "식별된 설명",
+      "properties": "속성",
+      "abilities": "아이템 능력",
+      "abilitiesEffects": "능력 효과",
+      "effects": "아이템 효과"
     }
   },
   "settings": {

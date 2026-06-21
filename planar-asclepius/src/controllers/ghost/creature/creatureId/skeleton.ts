@@ -8,14 +8,14 @@ import type { Router } from 'express';
 
 const registerCreatureIdParam = (registry: OpenAPIRegistry): ZodString => {
   return registry.registerParameter(
-    'creatureId',
+    'creature_creatureId_skeleton',
     z.string().min(1, 'Skeleton creature id is required').openapi({
       param: {
         name: 'creatureId',
         in: 'path',
         description: 'Skeleton creature id',
       },
-      example: 'morte',
+      example: 'morte.cre',
     }),
   );
 };

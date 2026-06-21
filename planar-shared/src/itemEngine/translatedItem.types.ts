@@ -1,8 +1,8 @@
 import type { UntranslatedItem } from './untranslatedItem.types.js';
 
-export type TranslatedCreature = UntranslatedItem & Readonly<{
-  unidentifiedNameRef: number;
-  identifiedNameRef: number;
-  unidentifiedDescriptionRef: number;
-  identifiedDescriptionRef: number;
+export type TranslatedItem = UntranslatedItem & Readonly<{
+  unidentifiedNameTlk: string;
+  identifiedNameTlk: string;
+  unidentifiedDescriptionTlk: string;
+  identifiedDescriptionTlk: string;
 }>;

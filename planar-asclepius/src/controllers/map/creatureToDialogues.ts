@@ -8,7 +8,7 @@ import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 
 const registerCreatureIdParam = (registry: OpenAPIRegistry): ZodString => {
   return registry.registerParameter(
-    'creatureId',
+    'creatureToDialogues_creatureId',
     z.string().min(1, 'Creature id is required').openapi({
       param: {
         name: 'creatureId',

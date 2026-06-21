@@ -10,6 +10,7 @@
   "scripts": {
     "build": "yarn gen && yarn workspaces foreach -Apt run build",
     "gen": "yarn workspace @planar/asclepius gen",
+    "clean": "yarn workspaces foreach -Apt run clean",
     "test": "yarn workspace @planar/prism test && yarn workspace @planar/shell test",
     "start": "yarn workspaces foreach -Api --include @planar/asclepius --include @planar/shell run start",
     "start:asclepius": "yarn workspace @planar/asclepius start",

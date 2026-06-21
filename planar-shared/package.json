@@ -11,6 +11,7 @@
   "author": "snowinmars",
   "scripts": {
     "build": "tsc && tsc-alias",
+    "clean": "node src/dev/clean.js",
     "lint": "eslint"
   },
   "_devD": {

@@ -16,6 +16,7 @@
     "runnerGuard": {
       "dialogue": "Диалог из",
       "creature": "Существо из",
+      "item": "Предмет из",
       "ghostDir": "Каталог с игрой",
       "or": "или",
       "convert": "Сконвертировать"
@@ -96,6 +97,7 @@
   "run": {
     "dialoguesLabel": "Диалог (всего {{amount}})",
     "creaturesLabel": "Существо (всего {{amount}})",
+    "itemsLabel": "Предмет (всего {{amount}})",
     "statesLabel": "Метка (всего {{amount}})",
     "creature": {
       "talk": "Поговорить",
@@ -136,6 +138,15 @@
       "proficiencies": "Специализации",
       "scripts": "Скрипты",
       "techInfo": "Техническая информация"
+    },
+    "item": {
+      "talk": "Поговорить",
+      "unidentifiedDescriptionTlk": "Описание до опознания",
+      "identifiedDescriptionTlk": "Описание после опознания",
+      "properties": "Свойства",
+      "abilities": "Абилка предмета",
+      "abilitiesEffects": "Эффект абилки",
+      "effects": "Эффект премета"
     }
   },
   "settings": {

@@ -16,6 +16,7 @@
     "runnerGuard": {
       "dialogue": "Le dialogue depuis",
       "creature": "Créature depuis",
+      "item": "Objet depuis",
       "ghostDir": "Dossier du jeu",
       "or": "ou",
       "convert": "Convertir"
@@ -96,6 +97,7 @@
   "run": {
     "dialoguesLabel": "Dialogue ({{amount}} au total)",
     "creaturesLabel": "Créature ({{amount}} au total)",
+    "itemsLabel": "Objets ({{amount}} au total)",
     "statesLabel": "État ({{amount}} au total)",
     "creature": {
       "talk": "Parlons-en",
@@ -136,6 +138,15 @@
       "proficiencies": "Compétences",
       "scripts": "Scripts",
       "techInfo": "Infos techniques"
+    },
+    "item": {
+      "talk": "Parler",
+      "unidentifiedDescriptionTlk": "Description non identifiée",
+      "identifiedDescriptionTlk": "Description identifiée",
+      "properties": "Propriétés",
+      "abilities": "Capacité de l'objet",
+      "abilitiesEffects": "Effet de capacité",
+      "effects": "Effet de l'objet"
     }
   },
   "settings": {

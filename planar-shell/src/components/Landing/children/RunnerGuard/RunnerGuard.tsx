@@ -69,6 +69,7 @@ const RunnerGuard: FC = () => {
       </Typography>
       <ButtonInsideTextField id="dialogue" />
       <ButtonInsideTextField id="creature" />
+      <ButtonInsideTextField id="item" />
     </div>
   );
 };

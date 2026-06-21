@@ -12,6 +12,7 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "build": "tsc && tsc-alias",
+    "clean": "node src/dev/clean.js",
     "serve": "node dist/index.js",
     "gen": "yarn _gen && yarn push-client",
     "_gen": "openapi-ts -f ./openapi-ts.config.ts",

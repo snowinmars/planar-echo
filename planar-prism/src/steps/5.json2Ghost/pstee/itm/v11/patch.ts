@@ -20,8 +20,8 @@ export const patchItms = (
   (cre, i) => {
     const tlked = patchWithTranslation(cre, tlk);
 
-    const ghostCreatureSkeleton = buildItemSkeleton(tlked, discover);
-    const ghostCreatureTranslation = translateItem(tlked);
+    const ghostItemSkeleton = buildItemSkeleton(tlked, discover);
+    const ghostItemTranslation = translateItem(tlked);
 
     const percent = Math.round((i + 1) * 100 / cres.length);
     reportProgress({
@@ -35,9 +35,9 @@ export const patchItms = (
 
     return Promise.resolve({
       resourceName: cre.resourceName,
-      skeleton: ghostCreatureSkeleton,
-      translations: new Map<GameLanguage, string>([['ru_RU', ghostCreatureTranslation]]),
-      ghostCreature: tlked,
+      skeleton: ghostItemSkeleton,
+      translations: new Map<GameLanguage, string>([['ru_RU', ghostItemTranslation]]),
+      ghostItem: tlked,
     });
   },
 );

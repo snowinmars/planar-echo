@@ -15,12 +15,12 @@ export const translateItem = (itm: GhostItemV10): string => {
   const npcLowercaseId = createNpcLowercaseId(itm.resourceName);
 
   const writer = createWriter();
-  writer.writeLine(`import type { UntranslatedItem, GhostItem } from '@planar/shared';`);
+  writer.writeLine(`import type { UntranslatedItem, TranslatedItem } from '@planar/shared';`);
   writer.br();
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${itm.resourceName}`);
   writer.writeLine(' */');
-  writer.writeLine(`const ${npcLowercaseId}Item = (${npcLowercaseId}ItemSkeleton: UntranslatedItem): GhostItem => {`);
+  writer.writeLine(`const ${npcLowercaseId}Item = (${npcLowercaseId}ItemSkeleton: UntranslatedItem): TranslatedItem => {`);
   writer.writeLine(`return {`, 2);
   writer.writeLine(`...${npcLowercaseId}ItemSkeleton,`, 4);
 

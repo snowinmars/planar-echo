@@ -12,14 +12,14 @@ type ZodGameLanguages = Record<GameLanguage, GameLanguage>;
 
 const registerDialogueIdParam = (registry: OpenAPIRegistry): ZodString => {
   return registry.registerParameter(
-    'dialogueId',
+    'dialogue_dialogueId_gameLanguage',
     z.string().min(1, 'Skeleton dialogue id is required').openapi({
       param: {
         name: 'dialogueId',
         in: 'path',
         description: 'Skeleton dialogue id',
       },
-      example: 'dmorte',
+      example: 'dmorte1.dlg',
     }),
   );
 };

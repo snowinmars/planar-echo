@@ -8,7 +8,7 @@ import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 
 const registerDialogueIdParam = (registry: OpenAPIRegistry): ZodString => {
   return registry.registerParameter(
-    'dialogueId',
+    'dialogueToCreature_dialogueId',
     z.string().min(1, 'Dialogue id is required').openapi({
       param: {
         name: 'dialogueId',
@@ -20,7 +20,7 @@ const registerDialogueIdParam = (registry: OpenAPIRegistry): ZodString => {
   );
 };
 
-const responseOk = z.string();
+const responseOk = z.array(z.string());
 const responseError = z.object({
   error: z.object({
     message: z.string(),

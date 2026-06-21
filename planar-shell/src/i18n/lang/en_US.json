@@ -16,6 +16,7 @@
     "runnerGuard": {
       "dialogue": "Dialogue from",
       "creature": "Creature from",
+      "item": "Item from",
       "ghostDir": "Game directory",
       "or": "or",
       "convert": "Convert"
@@ -96,6 +97,7 @@
   "run": {
     "dialoguesLabel": "Dialogue ({{amount}} in total)",
     "creaturesLabel": "Creatures ({{amount}} in total)",
+    "itemsLabel": "Items ({{amount}} in total)",
     "statesLabel": "State ({{amount}}) in total",
     "creature": {
       "talk": "Talk",
@@ -136,6 +138,15 @@
       "proficiencies": "Proficiencies",
       "scripts": "Scripts",
       "techInfo": "Tech info"
+    },
+    "item": {
+      "talk": "Talk",
+      "unidentifiedDescriptionTlk": "Unidentified description",
+      "identifiedDescriptionTlk": "Identified description",
+      "properties": "Properties",
+      "abilities": "Item ability",
+      "abilitiesEffects": "Ability effect",
+      "effects": "Item effect"
     }
   },
   "settings": {

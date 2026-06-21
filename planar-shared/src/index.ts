@@ -8,12 +8,15 @@ export { progressSteps } from './prismIndexStartMessage.js';
 export { createDialogueLogic } from './dialogueEngine/dialogueLogic.js';
 export { registerNpcDialogue } from './dialogueEngine/registerNpcDialogue.js';
 export { translateNpcDialogue } from './dialogueEngine/translateNpcDialogue.js';
-export { dialogueToCreature } from './resourceMappers/dialogueToCreature.js';
-export { creatureToDialogues } from './resourceMappers/creatureToDialogues.js';
+export { dialogueToCreatures, creatureToDialogues } from './resourceMappers/creatureDialogue.js';
+export { dialogueToItems, itemToDialogues } from './resourceMappers/itemToDialogues.js';
 
 export type { GameName } from './gameName.js';
 export type { GameLanguage } from './gameLanguage.js';
-export type { Nothing, Maybe } from './maybe.js';
+export type {
+  Nothing,
+  Maybe,
+} from './maybe.js';
 export type { PartialWriteable } from './partialWriteable.js';
 export type {
   ProgressStep,
@@ -44,7 +47,10 @@ export type { StateId } from './dialogueEngine/enums/state.ts';
 export type { StatId } from './dialogueEngine/enums/stat.ts';
 export type { TimeMeasureId } from './dialogueEngine/enums/timeMeasure.js';
 export type { TriggerId } from './dialogueEngine/enums/trigger.ts';
-export type { NumberVariableId, BooleanVariableId } from './dialogueEngine/enums/variable.ts';
+export type {
+  NumberVariableId,
+  BooleanVariableId,
+} from './dialogueEngine/enums/variable.ts';
 export type { WhoId } from './dialogueEngine/enums/who.ts';
 export type {
   DevGameLanguage,
@@ -69,3 +75,9 @@ export type {
 } from './dialogueEngine/translateNpcDialogue.types.js';
 export type { UntranslatedCreature } from './creatureEngine/untranslatedCreature.types.js';
 export type { TranslatedCreature } from './creatureEngine/translatedCreature.types.js';
+export type {
+  UntranslatedItem,
+  UntranslatedAbility,
+  UntranslatedEffect,
+} from './itemEngine/untranslatedItem.types.js';
+export type { TranslatedItem } from './itemEngine/translatedItem.types.js';

@@ -3,7 +3,7 @@ export type Command = Readonly<{
 }>;
 
 export type Result
-  = | { ok: true; data: string }
+  = | { ok: true; data: string[] }
     | { ok: false; error: ValidationError };
 
 export type ValidationError

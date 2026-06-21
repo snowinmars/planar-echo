@@ -4,7 +4,9 @@ export type ClientOptions = {
     baseURL: 'http://localhost:3003' | (string & {});
 };
 
-export type DialogueId = string;
+export type DialogueDialogueIdSkeleton = string;
+
+export type DialogueDialogueIdGameLanguage = string;
 
 export const GameLanguage = {
     RU_RU: 'ru_RU',
@@ -18,22 +20,76 @@ export const GameLanguage = {
 
 export type GameLanguage = typeof GameLanguage[keyof typeof GameLanguage];
 
-export type CreatureId = string;
+export type CreatureCreatureIdSkeleton = string;
+
+export type CreatureCreatureIdGameLanguage = string;
+
+export type ItemItemIdSkeleton = string;
+
+export type ItemItemIdGameLanguage = string;
+
+export type CreatureToDialoguesCreatureId = string;
+
+export type DialogueToCreatureDialogueId = string;
+
+export type ItemToDialoguesItemId = string;
+
+export type DialogueToItemDialogueId = string;
 
 /**
- * Dialogue id
+ * Skeleton dialogue id
  */
-export type DialogueId2 = DialogueId & unknown;
+export type DialogueDialogueIdSkeleton2 = DialogueDialogueIdSkeleton;
 
 /**
- * Skeleton creature language
+ * Skeleton dialogue id
+ */
+export type DialogueDialogueIdGameLanguage2 = DialogueDialogueIdGameLanguage;
+
+/**
+ * Skeleton item language
  */
 export type GameLanguage2 = GameLanguage;
 
 /**
+ * Skeleton creature id
+ */
+export type CreatureCreatureIdSkeleton2 = CreatureCreatureIdSkeleton;
+
+/**
+ * Skeleton creature id
+ */
+export type CreatureCreatureIdGameLanguage2 = CreatureCreatureIdGameLanguage;
+
+/**
+ * Skeleton item id
+ */
+export type ItemItemIdSkeleton2 = ItemItemIdSkeleton;
+
+/**
+ * Skeleton item id
+ */
+export type ItemItemIdGameLanguage2 = ItemItemIdGameLanguage;
+
+/**
  * Creature id
  */
-export type CreatureId2 = CreatureId & unknown;
+export type CreatureToDialoguesCreatureId2 = CreatureToDialoguesCreatureId;
+
+/**
+ * Dialogue id
+ */
+export type DialogueToCreatureDialogueId2 = DialogueToCreatureDialogueId;
+
+/**
+ * Item id
+ */
+export type ItemToDialoguesItemId2 = ItemToDialoguesItemId;
+
+/**
+ * Dialogue id
+ */
+export type DialogueToItemDialogueId2 = DialogueToItemDialogueId;
 
 export type PostApiFsValidateChitinKeyFileData = {
     body: {
@@ -315,9 +371,9 @@ export type PostApiGhostDialogueByDialogueIdSkeletonData = {
     };
     path: {
         /**
-         * Dialogue id
+         * Skeleton dialogue id
          */
-        dialogueId: DialogueId & unknown;
+        dialogueId: DialogueDialogueIdSkeleton;
     };
     query?: never;
     url: '/api/ghost/dialogue/{dialogueId}/skeleton';
@@ -356,11 +412,11 @@ export type PostApiGhostDialogueByDialogueIdByGameLanguageData = {
     };
     path: {
         /**
-         * Dialogue id
+         * Skeleton dialogue id
          */
-        dialogueId: DialogueId & unknown;
+        dialogueId: DialogueDialogueIdGameLanguage;
         /**
-         * Skeleton creature language
+         * Skeleton item language
          */
         gameLanguage: GameLanguage;
     };
@@ -434,9 +490,9 @@ export type PostApiGhostCreatureByCreatureIdSkeletonData = {
     };
     path: {
         /**
-         * Creature id
+         * Skeleton creature id
          */
-        creatureId: CreatureId & unknown;
+        creatureId: CreatureCreatureIdSkeleton;
     };
     query?: never;
     url: '/api/ghost/creature/{creatureId}/skeleton';
@@ -475,11 +531,11 @@ export type PostApiGhostCreatureByCreatureIdByGameLanguageData = {
     };
     path: {
         /**
-         * Creature id
+         * Skeleton creature id
          */
-        creatureId: CreatureId & unknown;
+        creatureId: CreatureCreatureIdGameLanguage;
         /**
-         * Skeleton creature language
+         * Skeleton item language
          */
         gameLanguage: GameLanguage;
     };
@@ -547,13 +603,132 @@ export type PostApiGhostCreatureResponses = {
 
 export type PostApiGhostCreatureResponse = PostApiGhostCreatureResponses[keyof PostApiGhostCreatureResponses];
 
+export type PostApiGhostItemByItemIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Skeleton item id
+         */
+        itemId: ItemItemIdSkeleton;
+    };
+    query?: never;
+    url: '/api/ghost/item/{itemId}/skeleton';
+};
+
+export type PostApiGhostItemByItemIdSkeletonErrors = {
+    /**
+     * Item skeleton is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostItemByItemIdSkeletonError = PostApiGhostItemByItemIdSkeletonErrors[keyof PostApiGhostItemByItemIdSkeletonErrors];
+
+export type PostApiGhostItemByItemIdSkeletonResponses = {
+    /**
+     * Item skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostItemByItemIdSkeletonResponse = PostApiGhostItemByItemIdSkeletonResponses[keyof PostApiGhostItemByItemIdSkeletonResponses];
+
+export type PostApiGhostItemByItemIdByGameLanguageData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Skeleton item id
+         */
+        itemId: ItemItemIdGameLanguage;
+        /**
+         * Skeleton item language
+         */
+        gameLanguage: GameLanguage;
+    };
+    query?: never;
+    url: '/api/ghost/item/{itemId}/{gameLanguage}';
+};
+
+export type PostApiGhostItemByItemIdByGameLanguageErrors = {
+    /**
+     * Item translation is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostItemByItemIdByGameLanguageError = PostApiGhostItemByItemIdByGameLanguageErrors[keyof PostApiGhostItemByItemIdByGameLanguageErrors];
+
+export type PostApiGhostItemByItemIdByGameLanguageResponses = {
+    /**
+     * Item translation content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostItemByItemIdByGameLanguageResponse = PostApiGhostItemByItemIdByGameLanguageResponses[keyof PostApiGhostItemByItemIdByGameLanguageResponses];
+
+export type PostApiGhostItemData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/item';
+};
+
+export type PostApiGhostItemErrors = {
+    /**
+     * Available items are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostItemError = PostApiGhostItemErrors[keyof PostApiGhostItemErrors];
+
+export type PostApiGhostItemResponses = {
+    /**
+     * Available items in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostItemResponse = PostApiGhostItemResponses[keyof PostApiGhostItemResponses];
+
 export type GetApiMapCreatureToDialoguesByCreatureIdData = {
     body?: never;
     path: {
         /**
          * Creature id
          */
-        creatureId: CreatureId & unknown;
+        creatureId: CreatureToDialoguesCreatureId;
     };
     query?: never;
     url: '/api/map/creatureToDialogues/{creatureId}';
@@ -588,7 +763,7 @@ export type GetApiMapDialogueToCreatureByDialogueIdData = {
         /**
          * Dialogue id
          */
-        dialogueId: DialogueId & unknown;
+        dialogueId: DialogueToCreatureDialogueId;
     };
     query?: never;
     url: '/api/map/dialogueToCreature/{dialogueId}';
@@ -612,10 +787,80 @@ export type GetApiMapDialogueToCreatureByDialogueIdResponses = {
     /**
      * Creature id
      */
-    200: string;
+    200: Array<string>;
 };
 
 export type GetApiMapDialogueToCreatureByDialogueIdResponse = GetApiMapDialogueToCreatureByDialogueIdResponses[keyof GetApiMapDialogueToCreatureByDialogueIdResponses];
+
+export type GetApiMapItemToDialoguesByItemIdData = {
+    body?: never;
+    path: {
+        /**
+         * Item id
+         */
+        itemId: ItemToDialoguesItemId;
+    };
+    query?: never;
+    url: '/api/map/itemToDialogues/{itemId}';
+};
+
+export type GetApiMapItemToDialoguesByItemIdErrors = {
+    /**
+     * Dialogues ids were not found for the item id
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIALOGUES_NOT_FOUND';
+        };
+    };
+};
+
+export type GetApiMapItemToDialoguesByItemIdError = GetApiMapItemToDialoguesByItemIdErrors[keyof GetApiMapItemToDialoguesByItemIdErrors];
+
+export type GetApiMapItemToDialoguesByItemIdResponses = {
+    /**
+     * Dialogues ids
+     */
+    200: Array<string>;
+};
+
+export type GetApiMapItemToDialoguesByItemIdResponse = GetApiMapItemToDialoguesByItemIdResponses[keyof GetApiMapItemToDialoguesByItemIdResponses];
+
+export type GetApiMapDialogueToItemByDialogueIdData = {
+    body?: never;
+    path: {
+        /**
+         * Dialogue id
+         */
+        dialogueId: DialogueToItemDialogueId;
+    };
+    query?: never;
+    url: '/api/map/dialogueToItem/{dialogueId}';
+};
+
+export type GetApiMapDialogueToItemByDialogueIdErrors = {
+    /**
+     * Item id were not found for this dialogue id
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'ITEM_NOT_FOUND';
+        };
+    };
+};
+
+export type GetApiMapDialogueToItemByDialogueIdError = GetApiMapDialogueToItemByDialogueIdErrors[keyof GetApiMapDialogueToItemByDialogueIdErrors];
+
+export type GetApiMapDialogueToItemByDialogueIdResponses = {
+    /**
+     * Item id
+     */
+    200: Array<string>;
+};
+
+export type GetApiMapDialogueToItemByDialogueIdResponse = GetApiMapDialogueToItemByDialogueIdResponses[keyof GetApiMapDialogueToItemByDialogueIdResponses];
 
 export type GetApiSettingsGhostDirData = {
     body?: never;

@@ -146,4 +146,5 @@ export type GhostItem = Readonly<{
   resourceName: string;
   skeleton: string;
   translations: Map<GameLanguage, string>;
+  ghostItem: GhostItemV10;
 }>;

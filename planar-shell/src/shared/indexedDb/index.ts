@@ -1,4 +1,3 @@
-export { getDbCreature } from './creatures';
-export { setDbCreature } from './creatures';
-export { getDbDialogue } from './dialogues';
-export { setDbDialogue } from './dialogues';
+export { getDbCreature, setDbCreature } from './creatures';
+export { getDbDialogue, setDbDialogue } from './dialogues';
+export { getDbItem, setDbItem } from './items';

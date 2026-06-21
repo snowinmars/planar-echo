@@ -14,8 +14,9 @@ import type { Maybe } from '@planar/shared';
 
 import styles from './Header.module.scss';
 
-const DialogueWidget = lazy(() => import('./children/DialogueWidget/DialogueWidget'));
 const CreatureWidget = lazy(() => import('./children/CreatureWidget/CreatureWidget'));
+const DialogueWidget = lazy(() => import('./children/DialogueWidget/DialogueWidget'));
+const ItemWidget = lazy(() => import('./children/ItemWidget/ItemWidget'));
 
 const Header: FC = () => {
   const [currentWidget, setCurrentWidget] = useState<Maybe<string>>(() => planarLocalStorage.get(planarLocalStorage.currentWidget, '')!);
@@ -36,8 +37,9 @@ const Header: FC = () => {
           </Grid>
 
           <Grid size={{ xs: 9.5 }}>
-            { currentWidget === 'dialogue' && <DialogueWidget />}
             { currentWidget === 'creature' && <CreatureWidget />}
+            { currentWidget === 'dialogue' && <DialogueWidget />}
+            { currentWidget === 'item' && <ItemWidget />}
           </Grid>
 
           <Grid size={{ xs: 0.5 }}>

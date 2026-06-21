@@ -16,6 +16,7 @@
     "runnerGuard": {
       "dialogue": "Dialog od",
       "creature": "Stvoření od",
+      "item": "Položka od",
       "ghostDir": "Složka hry",
       "or": "nebo",
       "convert": "Převést"
@@ -96,6 +97,7 @@
   "run": {
     "dialoguesLabel": "Dialog (celkem {{amount}})",
     "creaturesLabel": "Stvoření (celkem {{amount}})",
+    "itemsLabel": "Položky (celkem {{amount}})",
     "statesLabel": "Stav (celkem {{amount}})",
     "creature": {
       "talk": "Pojďme si promluvit",
@@ -136,6 +138,15 @@
       "proficiencies": "Dovednosti",
       "scripts": "Skripty",
       "techInfo": "Technické informace"
+    },
+    "item": {
+      "talk": "Mluvit",
+      "unidentifiedDescriptionTlk": "Neidentifikovaný popis",
+      "identifiedDescriptionTlk": "Identifikovaný popis",
+      "properties": "Nemovitosti",
+      "abilities": "Schopnost předmětu",
+      "abilitiesEffects": "Efekt schopnosti",
+      "effects": "Efekt předmětu"
     }
   },
   "settings": {
