@@ -64,7 +64,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
         {
           state.responses
             .filter((response) => {
-              const alwaysRender = !response.args || !response.args.onlyIf;
+              const alwaysRender = !(response.args?.onlyIf);
               if (alwaysRender) return true;
 
               const shouldRender = response.args.onlyIf();

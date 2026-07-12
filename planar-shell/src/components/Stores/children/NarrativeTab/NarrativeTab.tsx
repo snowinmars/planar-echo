@@ -1,8 +1,10 @@
-import { useState, useMemo, FC, useEffect, useCallback } from 'react';
+import { useState, useMemo, FC, useEffect, useCallback, useSyncExternalStore, useRef } from 'react';
 import TextField from '@mui/material/TextField';
 import { Grid } from 'react-window';
 import { getZustandNarrative } from '@/engine/store/worldStores';
 import { triggerSave } from '@/engine/store/saveSubject';
+import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
+import { reloadStoresFromDb } from '@/components/runners/Dialogue/children/broadcast';
 
 import type { NumberVariableId, BooleanVariableId } from '@planar/shared';
 import type { CellComponentProps } from 'react-window';
@@ -38,10 +40,14 @@ const GridCell = ({
 
   const [value, setValue] = useState(() => item.value);
 
-  // maybe grid can reuse same objects
+  const prevItemRef = useRef(item);
+  // grid can reuse same objects
   useEffect(() => {
-    setValue(item.value);
-  }, [item.id]);
+    if (prevItemRef.current !== item) {
+      setValue(item.value);
+      prevItemRef.current = item;
+    }
+  });
 
   return (
     <div style={style} className={styles.row}>
@@ -66,31 +72,40 @@ const NarrativeTab: FC<NarrativeTabProps> = ({ onSave }: NarrativeTabProps) => {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('');
 
-  const store = getZustandNarrative();
+  const writeStore = getZustandNarrative()!;
+  const readState = useSyncExternalStore(
+    writeStore.subscribe,
+    writeStore.getState,
+  );
+
+  useEffect(() => {
+    const unsubscribe = listenWorldStoreBroadcast(() => {
+      reloadStoresFromDb().catch(console.error);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const keys = useMemo(() => {
-    const state = store!.getState();
-    const allKeys = Object.keys(state) as (NumberVariableId | BooleanVariableId)[];
+    const allKeys = Object.keys(readState) as (NumberVariableId | BooleanVariableId)[];
     if (!filter) return allKeys;
 
     const lowercaseFilter = filter.toLowerCase();
     return allKeys.filter(k => k.toLowerCase().includes(lowercaseFilter));
-  }, [filter, store]);
+  }, [filter, readState]);
 
   const onCellSave = useCallback((key: string, value: number) => {
-    store!.setState({ [key]: value });
+    writeStore.setState({ [key]: value });
     triggerSave();
     onSave();
-  }, [store]);
+  }, [writeStore]);
 
   const cells = useMemo(() => {
-    const state = store!.getState();
     return keys.map(key => ({
       id: key,
-      value: state[key],
+      value: readState[key],
       onSave: onCellSave,
     }));
-  }, [keys, store, onCellSave]);
+  }, [keys, readState, onCellSave]);
 
   const { containerRef, columnCount } = useGridColumns({
     columnWidth: COLUMN_WIDTH,

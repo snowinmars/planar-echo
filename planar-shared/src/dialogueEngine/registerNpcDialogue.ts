@@ -24,13 +24,8 @@ type FlushFunction = () => UntranslatedNpcDialogue;
 const injectLogic = <T>(args: Maybe<InternalArgsProps<T>>, dialogueLogic: T): ArgsProps => {
   return {
     weight: args?.weight,
-    onEnter: () => {
-      if (args?.onEnter) args.onEnter(dialogueLogic);
-    },
-    onlyIf: () => {
-      if (args?.onlyIf) return args.onlyIf(dialogueLogic);
-      return false;
-    },
+    onEnter: args?.onEnter ? () => args.onEnter!(dialogueLogic) : null,
+    onlyIf: args?.onlyIf ? () => args.onlyIf!(dialogueLogic) : null,
   };
 };
 

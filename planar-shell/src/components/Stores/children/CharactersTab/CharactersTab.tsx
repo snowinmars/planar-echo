@@ -1,4 +1,4 @@
-import { useState, useMemo, FC, useEffect, useCallback } from 'react';
+import { useState, useMemo, FC, useEffect, useCallback, useSyncExternalStore, useRef } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Grid } from 'react-window';
@@ -8,6 +8,8 @@ import { triggerSave } from '@/engine/store/saveSubject';
 import VirtualizedListbox from '@/shared/VirtualizedListbox';
 import { NumberField } from '../../NumberField';
 import { useGridColumns } from '@/hooks/useGridColumns';
+import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
+import { reloadStoresFromDb } from '@/components/runners/Dialogue/children/broadcast';
 
 import type { CharacterNarrativeProps } from '@/engine/constructors/types';
 import type { CellComponentProps } from 'react-window';
@@ -47,26 +49,30 @@ type CharacterItem = {
 type GridCellProps = CellComponentProps<Readonly<{
   cells: ReadonlyArray<CharacterItem>;
   columnCount: number;
-  selectedCharacter: string; }>>;
+}>>;
 const GridCell = ({
   columnIndex,
   rowIndex,
   style,
   cells,
   columnCount,
-  selectedCharacter,
 }: GridCellProps): ReactElement => {
   const flatIndex = rowIndex * columnCount + columnIndex;
   const item = cells[flatIndex];
-  const [value, setValue] = useState(() => item.value);
-
-  // maybe grid can reuse same objects
-  useEffect(() => {
-    setValue(item.value);
-  }, [item.id, selectedCharacter]);
 
   const outOfRange = !item || flatIndex >= cells.length;
   if (outOfRange) return <div style={style} className={styles.row} />;
+
+  const [value, setValue] = useState(() => item.value);
+
+  const prevItemRef = useRef(item);
+  // grid can reuse same objects
+  useEffect(() => {
+    if (prevItemRef.current !== item) {
+      setValue(item.value);
+      prevItemRef.current = item;
+    }
+  });
 
   if (typeof value === 'string') {
     return (
@@ -111,30 +117,37 @@ const CharactersTab: FC<CharactersTabProps> = ({ onSave }: CharactersTabProps) =
   const { t } = useTranslation();
   const [selectedCharacter, setSelectedCharacter] = useState<string | null>(null);
 
-  const store = getZustandCharacter();
+  const writeStore = getZustandCharacter()!;
+  const readState = useSyncExternalStore(writeStore.subscribe, writeStore.getState);
+
+  useEffect(() => {
+    const unsubscribe = listenWorldStoreBroadcast(() => {
+      reloadStoresFromDb().catch(console.error);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const characters = useMemo(() => {
-    if (!store) return [];
-    return Object.keys(store.getState());
-  }, [store]);
+    return Object.keys(readState);
+  }, [readState]);
 
   const characterProperties = useMemo(() => {
-    const anyCharacter = store!.getState()[characters[0]];
-    return Object.keys(anyCharacter) as Array<keyof CharacterNarrativeProps>;
-  }, [store, characters]);
+    if (!readState[characters[0]]) return [];
+    return Object.keys(readState[characters[0]]) as Array<keyof CharacterNarrativeProps>;
+  }, [readState, characters]);
 
   const onCellSave = useCallback((field: string, value: number | string) => {
     if (!selectedCharacter) return;
-    const current = store!.getState()[selectedCharacter];
+    const current = readState[selectedCharacter];
 
-    store!.setState({ [selectedCharacter]: { ...current, [field]: value } });
+    writeStore.setState({ [selectedCharacter]: { ...current, [field]: value } });
     triggerSave();
     onSave();
-  }, [store, selectedCharacter]);
+  }, [writeStore, selectedCharacter, readState]);
 
   const characterPropertyCells = useMemo(() => {
     if (!selectedCharacter) return [];
-    const character = store!.getState()[selectedCharacter];
+    const character = readState[selectedCharacter];
     if (!character) return [];
 
     return characterProperties.map(id => ({
@@ -142,7 +155,7 @@ const CharactersTab: FC<CharactersTabProps> = ({ onSave }: CharactersTabProps) =
       value: character[id],
       onSave: onCellSave,
     }));
-  }, [store, selectedCharacter, onCellSave, characterProperties]);
+  }, [readState, selectedCharacter, onCellSave, characterProperties]);
 
   const { containerRef, columnCount } = useGridColumns({
     columnWidth: COLUMN_WIDTH,

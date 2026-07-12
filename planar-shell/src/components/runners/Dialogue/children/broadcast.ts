@@ -4,9 +4,8 @@ import { getZustandNarrative, getZustandCharacter } from '@/engine/store/worldSt
 import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
 
 export const reloadStoresFromDb = async (): Promise<void> => {
-  const narrative = getZustandNarrative();
-  const character = getZustandCharacter();
-  if (!narrative || !character) return;
+  const narrative = getZustandNarrative()!;
+  const character = getZustandCharacter()!;
 
   const savedNarrative = await getDbNarrative();
   const savedCharacters = await getDbCharacters();
@@ -19,20 +18,17 @@ export const reloadStoresFromDb = async (): Promise<void> => {
   }
 };
 
-const noopSubscribe = () => () => {};
-const noopGetSnapshot = () => null;
-
 export const useWorldStores = (): void => {
-  const narrative = getZustandNarrative();
-  const character = getZustandCharacter();
+  const narrative = getZustandNarrative()!;
+  const character = getZustandCharacter()!;
 
   useSyncExternalStore(
-    narrative?.subscribe ?? noopSubscribe,
-    narrative ? () => narrative.getState() : noopGetSnapshot,
+    narrative.subscribe,
+    narrative.getState,
   );
   useSyncExternalStore(
-    character?.subscribe ?? noopSubscribe,
-    character ? () => character.getState() : noopGetSnapshot,
+    character.subscribe,
+    character.getState,
   );
 
   useEffect(() => {
