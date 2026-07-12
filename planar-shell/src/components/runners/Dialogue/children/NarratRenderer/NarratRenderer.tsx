@@ -4,6 +4,7 @@ import { useDialogueStore } from '../../store/dialogueStore';
 import { useShallow } from 'zustand/react/shallow';
 import { getExternDialogueId, getSaysResponses, isDestructor } from '../../store/helpers';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useWorldStores } from '../broadcast';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
@@ -12,6 +13,7 @@ import styles from './NarratRenderer.module.scss';
 import clsx from 'clsx';
 
 const NarratRenderer: FC<WithClassName> = ({ className }) => {
+  useWorldStores();
   const {
     loading,
     tree,
@@ -59,67 +61,78 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
       </div>
       <div className={styles.responses}>
         {
-          state.responses.map((response, i) => {
-            const destructor = isDestructor(response.jumpTo);
-            if (destructor) {
-              const markDisposers = planarLocalStorage.get<boolean>('dialogueMarks_markDisposers', true)!;
+          state.responses
+            .filter((response) => {
+              const alwaysRender = !response.args || !response.args.onlyIf;
+              if (alwaysRender) return true;
+
+              const shouldRender = response.args.onlyIf();
+              return shouldRender;
+            })
+            .map((response, i) => {
+              const destructor = isDestructor(response.jumpTo);
+              if (destructor) {
+                const markDisposers = planarLocalStorage.get<boolean> ('dialogueMarks_markDisposers', true)!;
+                return (
+                  <Button
+                    key={response.responseId}
+                    className={styles.response}
+                    disabled={loading}
+                    onClick={() => {
+                      response.args?.onEnter?.();
+                      disposeDialogue();
+                    }}
+                  >
+                    <Typography>{i + 1}</Typography>
+                    <span className={styles.responseDivider}>.</span>
+                    <Typography>
+                      {response.what}
+                    </Typography>
+                    <Typography className={styles.disposers}>{markDisposers && `✕`}</Typography>
+                  </Button>
+                );
+              }
+
+              const externDialogueId = getExternDialogueId(response.responseId, response.jumpTo);
+              const isExtern = !!externDialogueId;
+              if (isExtern) {
+                const markExterns = planarLocalStorage.get<boolean>('dialogueMarks_markExterns', false)!;
+                return (
+                  <Button
+                    key={response.responseId}
+                    className={styles.response}
+                    disabled={loading}
+                    onClick={() => {
+                      response.args?.onEnter?.();
+                      loadDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
+                    }}
+                  >
+                    <Typography>{i + 1}</Typography>
+                    <span className={styles.responseDivider}>.</span>
+                    <Typography>
+                      {response.what}
+                    </Typography>
+                    <Typography className={styles.externs}>{markExterns && `→ ${externDialogueId}`}</Typography>
+                  </Button>
+                );
+              }
+
               return (
                 <Button
                   key={response.responseId}
                   className={styles.response}
                   disabled={loading}
                   onClick={() => {
-                    disposeDialogue();
+                    response.args?.onEnter?.();
+                    setCurrentStateId(response.jumpTo);
                   }}
                 >
                   <Typography>{i + 1}</Typography>
                   <span className={styles.responseDivider}>.</span>
-                  <Typography>
-                    {response.what}
-                  </Typography>
-                  <Typography className={styles.disposers}>{markDisposers && `✕`}</Typography>
+                  <Typography>{response.what}</Typography>
                 </Button>
               );
-            }
-
-            const externDialogueId = getExternDialogueId(response.responseId, response.jumpTo);
-            const isExtern = !!externDialogueId;
-            if (isExtern) {
-              const markExterns = planarLocalStorage.get<boolean>('dialogueMarks_markExterns', false)!;
-              return (
-                <Button
-                  key={response.responseId}
-                  className={styles.response}
-                  disabled={loading}
-                  onClick={() => {
-                    loadDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
-                  }}
-                >
-                  <Typography>{i + 1}</Typography>
-                  <span className={styles.responseDivider}>.</span>
-                  <Typography>
-                    {response.what}
-                  </Typography>
-                  <Typography className={styles.externs}>{markExterns && `→ ${externDialogueId}`}</Typography>
-                </Button>
-              );
-            }
-
-            return (
-              <Button
-                key={response.responseId}
-                className={styles.response}
-                disabled={loading}
-                onClick={() => {
-                  setCurrentStateId(response.jumpTo);
-                }}
-              >
-                <Typography>{i + 1}</Typography>
-                <span className={styles.responseDivider}>.</span>
-                <Typography>{response.what}</Typography>
-              </Button>
-            );
-          })
+            })
         }
       </div>
     </div>
