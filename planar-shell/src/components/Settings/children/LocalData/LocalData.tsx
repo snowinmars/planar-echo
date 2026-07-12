@@ -2,8 +2,7 @@ import planarLocalStorage from '@/shared/planarLocalStorage';
 import Button from '@mui/material/Button';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { deleteDB } from 'idb';
-import { DB_NAME } from '@planar/shared';
+import { deleteDb } from '@/shared/indexedDb/db';
 
 const ANIMATION_TIME_MS = 3000;
 
@@ -34,7 +33,7 @@ export const LocalData: FC = () => {
         fullWidth
         color={localIndexedDb ? 'success' : 'warning'}
         onClick={() => {
-          deleteDB(DB_NAME)
+          deleteDb()
             .then(() => {
               setLocalIndexedDb(true);
 

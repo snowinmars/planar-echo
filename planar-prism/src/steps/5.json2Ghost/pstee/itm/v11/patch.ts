@@ -36,7 +36,7 @@ export const patchItms = (
     return Promise.resolve({
       resourceName: cre.resourceName,
       skeleton: ghostItemSkeleton,
-      translations: new Map<GameLanguage, string>([['ru_RU', ghostItemTranslation]]),
+      translations: new Map<GameLanguage, string>([[language, ghostItemTranslation]]),
       ghostItem: tlked,
     });
   },

@@ -1,6 +1,7 @@
 import { getCurrentDialogues } from '../Creature/store/creatureApi';
 import { loadTranslatedDialogue } from '../Dialogue/store/dialogueApi';
 import { pickMatchingConstructorStateId } from '../Dialogue/store/helpers';
+import { getZustandNarrative, getZustandCharacter } from '@/engine/store/worldStores';
 
 import type { GameLanguage, StateId } from '@planar/shared';
 
@@ -22,6 +23,13 @@ export const resolveCreatureDialogue = async ({
   ghostDir,
   gameLanguage,
 }: ResolveCreatureDialogueParams): Promise<ResolvedCreatureDialogue> => {
+  const narrative = getZustandNarrative();
+  const character = getZustandCharacter();
+
+  if (!narrative || !character) {
+    throw new Error('World stores were not initialized');
+  }
+
   const dialogueIds = await getCurrentDialogues(serverUrl, creatureId);
 
   for (const dialogueId of dialogueIds) {
@@ -30,6 +38,8 @@ export const resolveCreatureDialogue = async ({
       serverUrl,
       ghostDir,
       gameLanguage,
+      narrative,
+      character,
     });
     const stateId = pickMatchingConstructorStateId(tree);
     if (stateId) return { dialogueId, stateId };

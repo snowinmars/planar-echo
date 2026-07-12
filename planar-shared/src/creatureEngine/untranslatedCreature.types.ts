@@ -1,3 +1,5 @@
+import type { ClassId } from '@/dialogueEngine/enums/class.js';
+
 export type UntranslatedCreature = Readonly<{
   flags: string[];
   xpGainedForKilling: number;
@@ -94,7 +96,7 @@ export type UntranslatedCreature = Readonly<{
   charisma: number;
   morale: number;
   moraleBreak: number;
-  racialEnemy: number;
+  racialEnemy: string;
   moraleRecoveryTime: number;
   deity: string;
   mageType: string[];
@@ -106,7 +108,7 @@ export type UntranslatedCreature = Readonly<{
   allegiance: string;
   general: string;
   race: string;
-  theClass: string;
+  theClass: ClassId;
   specific: string;
   gender: string;
   objectSpecs: string[];

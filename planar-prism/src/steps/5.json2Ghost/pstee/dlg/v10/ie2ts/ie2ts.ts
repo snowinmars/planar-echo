@@ -96,7 +96,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       discover({ type: 'key', name: key, extendValueSpectreWith: 0 });
       discover({ type: 'variable', name: variable, extendValueSpectreWith: parseInt(amount) });
 
-      return `l.increment({key: '${key}', variableId: '${variable}', amount: ${amount}})`; // IncrementGlobal("variable","global",1)
+      return `l.increment({onceKey: '${key}', variableId: '${variable}', amount: ${amount}})`; // IncrementGlobal("variable","global",1)
     },
   }, {
     regex: /(!)?dead\((.*?)\)/,

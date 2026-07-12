@@ -29,7 +29,7 @@ const Header: FC = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Grid container spacing="1em" width="100%">
+        <Grid container spacing={1} sx={{ width: '100%' }}>
           <Grid size={{ xs: 1.5 }}>
             <Link component={RouterLink} to="/" sx={{ flexGrow: 1 }}>
               Planar echo
@@ -46,6 +46,7 @@ const Header: FC = () => {
             <IconButton
               component={RouterLink}
               to="/settings"
+              nativeButton={false}
             >
               <SettingsIcon />
             </IconButton>
@@ -55,6 +56,7 @@ const Header: FC = () => {
             <IconButton
               component={RouterLink}
               to="/settings"
+              nativeButton={false}
             >
               <TranslationSvg className={styles.languange} />
             </IconButton>

@@ -40,6 +40,7 @@ const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id }: ButtonIns
                 className={styles.button}
                 component={RouterLink}
                 to={`/${id}`}
+                nativeButton={false}
                 edge="start"
                 size="small"
               >
@@ -61,6 +62,7 @@ const RunnerGuard: FC = () => {
       <Button
         component={RouterLink}
         to="/convert"
+        nativeButton={false}
       >
         {t('landing.runnerGuard.convert')}
       </Button>
@@ -70,6 +72,13 @@ const RunnerGuard: FC = () => {
       <ButtonInsideTextField id="dialogue" />
       <ButtonInsideTextField id="creature" />
       <ButtonInsideTextField id="item" />
+      <Button
+        component={RouterLink}
+        to="/stores"
+        nativeButton={false}
+      >
+        {t('landing.runnerGuard.stores')}
+      </Button>
     </div>
   );
 };

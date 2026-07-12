@@ -19,7 +19,8 @@
       "item": "Предмет из",
       "ghostDir": "Каталог с игрой",
       "or": "или",
-      "convert": "Сконвертировать"
+      "convert": "Сконвертировать",
+      "stores": "Данные"
     },
     "step0": {
       "serverUrl": "Адрес сервера",
@@ -200,6 +201,29 @@
     "localData": {
       "clearLocalStorage": "Очистить local storage",
       "clearIndexedDb": "Очистить indexedDb"
+    }
+  },
+  "stores": {
+    "tabs": {
+      "title": "Данные",
+      "narrative": {
+        "title": "Повествовательные",
+        "search": "Всего {{amount}} переменных"
+      },
+      "characters": {
+        "title": "Персонажи",
+        "search": "Всего {{amount}} персонажей",
+        "namelessOne": "Безымянный",
+        "morte": "Морт",
+        "annah": "Анна",
+        "dakkon": "Даккон",
+        "grace": "Падшая Грация",
+        "nordom": "Нордом",
+        "ignus": "Игнус",
+        "vhailor": "Вейлор",
+        "deionarra": "Дейонарра",
+        "ravel": "Равель"
+      }
     }
   },
   "themes": {

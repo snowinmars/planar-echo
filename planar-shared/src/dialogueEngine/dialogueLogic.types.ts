@@ -24,13 +24,13 @@ import type { ScriptLevelId } from './enums/scriptLevel.js';
 export type DialogueLogic = Readonly<{
   getValue: (args: Readonly<{ variableId: NumberVariableId | BooleanVariableId; envId?: Maybe<EnvId> }>) => number;
   setValue: (args: Readonly<{ variableId: NumberVariableId | BooleanVariableId; envId?: Maybe<EnvId>; amount: number }>) => number;
-  increment: (args: Readonly<{ variableId: NumberVariableId; envId?: Maybe<EnvId>; key?: Maybe<BooleanVariableId>; amount: number }>) => number;
+  increment: (args: Readonly<{ variableId: NumberVariableId; envId?: Maybe<EnvId>; onceKey?: Maybe<BooleanVariableId>; amount: number }>) => number;
   setJournal: (journalId: JournalId) => void;
   isNpcInParty: (whoId: WhoId) => boolean;
   isNearbyDialog: (whoId: WhoId) => boolean;
   changeMorale: (args: Readonly<{ whoId: WhoId; amount: number }>) => void;
   isNpcDead: (whoId: WhoId) => boolean;
-  createItem: (args: Readonly<{ itemId: ItemId; whoId?: Maybe<WhoId>; amount: number; identified: boolean; SlotId: SlotId }>) => void;
+  createItem: (args: Readonly<{ itemId: ItemId; whoId?: Maybe<WhoId>; amount: number; identified: boolean; slotId: SlotId }>) => void;
   giveItem: (args: Readonly<{ itemId: ItemId; whoId: WhoId }>) => void;
   takeItem: (args: Readonly<{ itemId: ItemId; whoId: WhoId }>) => void;
   takePartyItems: (args: Readonly<{ itemId: ItemId; amount: number }>) => void;

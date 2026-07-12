@@ -19,7 +19,8 @@
       "item": "Položka od",
       "ghostDir": "Složka hry",
       "or": "nebo",
-      "convert": "Převést"
+      "convert": "Převést",
+      "stores": "Datová úložiště"
     },
     "step0": {
       "serverUrl": "URL serveru Planar",
@@ -200,6 +201,29 @@
     "localData": {
       "clearLocalStorage": "Vymazat local storage",
       "clearIndexedDb": "Vymazat indexedDb"
+    }
+  },
+  "stores": {
+    "tabs": {
+      "title": "Datová úložiště",
+      "narrative": {
+        "title": "Příběh",
+        "search": "Celkem {{amount}} proměnných"
+      },
+      "characters": {
+        "title": "Postavy",
+        "search": "Celkem {{amount}} postav",
+        "namelessOne": "Bezejmenný",
+        "morte": "Morte",
+        "annah": "Annah",
+        "dakkon": "Dak'kon",
+        "grace": "Fall-from-Grace",
+        "nordom": "Nordom",
+        "ignus": "Ignus",
+        "vhailor": "Vhailor",
+        "deionarra": "Deionarra",
+        "ravel": "Ravel"
+      }
     }
   },
   "themes": {

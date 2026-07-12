@@ -48,7 +48,7 @@ const discoverer = (): DiscovererResult => {
       if (!variableSpectres.has(name)) {
         variableSpectres.set(name, new Set());
       }
-      variableSpectres.get(name)!.add(just(extendValueSpectreWith));
+      variableSpectres.get(name)!.add(just<string | number>(extendValueSpectreWith));
     }
   });
   const discover = (event: DiscoveredEvent): void => event$.next(event);

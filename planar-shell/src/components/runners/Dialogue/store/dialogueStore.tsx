@@ -5,6 +5,7 @@ import { postApiGhostDialogue } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { chooseStartingStateId, isDestructor } from './helpers';
 import { loadTranslatedDialogue } from './dialogueApi';
+import { getZustandNarrative, getZustandCharacter } from '@/engine/store/worldStores';
 
 import type { Maybe, TranslatedNpcDialogue, StateId } from '@planar/shared';
 import type { GameLanguage } from '@/swagger/client';
@@ -92,11 +93,21 @@ export const useDialogueStore = create<DialogueStore>((set, get) => ({
         ghostDir,
         gameLanguage,
       } = get();
+
+      const narrative = getZustandNarrative();
+      const character = getZustandCharacter();
+
+      if (!narrative || !character) {
+        throw new Error('World stores were not initialized');
+      }
+
       const t = await loadTranslatedDialogue({
         serverUrl,
         ghostDir,
         gameLanguage,
         dialogueId,
+        narrative,
+        character,
       });
 
       set({

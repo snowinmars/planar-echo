@@ -5,11 +5,14 @@ export { jsonStringify, jsonParse } from './json.js';
 export { just, maybe, nothing, isNothing } from './maybe.js';
 export { objectEntries, objectKeys, objectValues } from './objects.js';
 export { progressSteps } from './prismIndexStartMessage.js';
-export { createDialogueLogic } from './dialogueEngine/dialogueLogic.js';
 export { registerNpcDialogue } from './dialogueEngine/registerNpcDialogue.js';
 export { translateNpcDialogue } from './dialogueEngine/translateNpcDialogue.js';
 export { dialogueToCreatures, creatureToDialogues } from './resourceMappers/creatureDialogue.js';
 export { dialogueToItems, itemToDialogues } from './resourceMappers/itemToDialogues.js';
+export {
+  initialBooleanStore,
+  initialNumberStore,
+} from './dialogueEngine/enums/variable.js';
 
 export type { GameName } from './gameName.js';
 export type { GameLanguage } from './gameLanguage.js';
@@ -28,30 +31,30 @@ export type {
 } from './prismIndexStartMessage.js';
 export type { SafeError } from './safeError.js';
 export type { DialogueLogic } from './dialogueEngine/dialogueLogic.types.js';
-export type { AlignmentId } from './dialogueEngine/enums/alignment.ts';
-export type { ClassId } from './dialogueEngine/enums/class.ts';
-export type { DoorId } from './dialogueEngine/enums/door.ts';
-export type { EnvId } from './dialogueEngine/enums/env.ts';
-export type { ItemId } from './dialogueEngine/enums/item.ts';
-export type { JournalId } from './dialogueEngine/enums/journal.ts';
-export type { LocationId } from './dialogueEngine/enums/location.ts';
-export type { MovieId } from './dialogueEngine/enums/movie.ts';
-export type { ResponseId } from './dialogueEngine/enums/response.ts';
-export type { SceneId } from './dialogueEngine/enums/scene.ts';
-export type { ScriptId } from './dialogueEngine/enums/script.ts';
-export type { SlotId } from './dialogueEngine/enums/slot.ts';
-export type { SoundId } from './dialogueEngine/enums/sound.ts';
-export type { SpellId } from './dialogueEngine/enums/spell.ts';
-export type { SpriteId } from './dialogueEngine/enums/sprite.ts';
-export type { StateId } from './dialogueEngine/enums/state.ts';
-export type { StatId } from './dialogueEngine/enums/stat.ts';
+export type { AlignmentId } from './dialogueEngine/enums/alignment.js';
+export type { ClassId } from './dialogueEngine/enums/class.js';
+export type { DoorId } from './dialogueEngine/enums/door.js';
+export type { EnvId } from './dialogueEngine/enums/env.js';
+export type { ItemId } from './dialogueEngine/enums/item.js';
+export type { JournalId } from './dialogueEngine/enums/journal.js';
+export type { LocationId } from './dialogueEngine/enums/location.js';
+export type { MovieId } from './dialogueEngine/enums/movie.js';
+export type { ResponseId } from './dialogueEngine/enums/response.js';
+export type { SceneId } from './dialogueEngine/enums/scene.js';
+export type { ScriptId } from './dialogueEngine/enums/script.js';
+export type { SlotId } from './dialogueEngine/enums/slot.js';
+export type { SoundId } from './dialogueEngine/enums/sound.js';
+export type { SpellId } from './dialogueEngine/enums/spell.js';
+export type { SpriteId } from './dialogueEngine/enums/sprite.js';
+export type { StateId } from './dialogueEngine/enums/state.js';
+export type { StatId } from './dialogueEngine/enums/stat.js';
 export type { TimeMeasureId } from './dialogueEngine/enums/timeMeasure.js';
-export type { TriggerId } from './dialogueEngine/enums/trigger.ts';
+export type { TriggerId } from './dialogueEngine/enums/trigger.js';
 export type {
   NumberVariableId,
   BooleanVariableId,
-} from './dialogueEngine/enums/variable.ts';
-export type { WhoId } from './dialogueEngine/enums/who.ts';
+} from './dialogueEngine/enums/variable.js';
+export type { WhoId } from './dialogueEngine/enums/who.js';
 export type {
   DevGameLanguage,
   EngineInstructionPlaySound,

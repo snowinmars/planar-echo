@@ -8,9 +8,10 @@ type GhostCreature = GhostCreatureV10 | GhostCreatureV11;
 
 const createNpcLowercaseId = (resourceName: string): string => {
   const candidate = resourceName.split('.')[0]!.replace(`'`, ``);
-  // @ts-expect-error : js is a meme, but efficient meme
-  const isDigit = candidate[0] > -1;
-  if (isDigit) return `_${candidate}`;
+  // const isDigit = candidate[0] > -1;
+  // if (isDigit) return `${candidate}`;
+  // some creatures ids starts with digits
+  // I discover proper characters, but write in ghost all with underscore prefix
   return candidate;
 };
 
@@ -25,7 +26,7 @@ const buildCreatureSkeletonV10 = (cre: GhostCreatureV10, discover: DiscoverNext)
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${cre.resourceName}`);
   writer.writeLine(' */');
-  writer.writeLine(`const ${npcLowercaseId}CreatureSkeleton = () => {`);
+  writer.writeLine(`const _${npcLowercaseId}CreatureSkeleton = () => {`);
   writer.writeLine(`const creature: UntranslatedCreature = {`, 2);
 
   writer.writeLine(`version: '${cre.header.version}',`, 4);
@@ -259,14 +260,25 @@ const buildCreatureSkeletonV10 = (cre: GhostCreatureV10, discover: DiscoverNext)
     4,
   );
   writer.writeLine(`overrideScriptRef: '${cre.header.overrideScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.overrideScriptRef });
+
   writer.writeLine(`classScriptRef: '${cre.header.classScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.classScriptRef });
+
   writer.writeLine(`raceScriptRef: '${cre.header.raceScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.raceScriptRef });
+
   writer.writeLine(`generalScriptRef: '${cre.header.generalScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.generalScriptRef });
+
   writer.writeLine(`defaultScriptRef: '${cre.header.defaultScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.defaultScriptRef });
+
   writer.writeLine(`allegiance: '${cre.header.allegiance}',`, 4);
   writer.writeLine(`general: '${cre.header.general}',`, 4);
   writer.writeLine(`race: '${cre.header.race}',`, 4);
   writer.writeLine(`theClass: '${cre.header.theClass}',`, 4);
+  discover({ type: 'class', name: cre.header.theClass });
   writer.writeLine(`specific: '${cre.header.specific}',`, 4);
   writer.writeLine(`gender: '${cre.header.gender}',`, 4);
   writer.writeLine(`objectSpec1: '${cre.header.objectSpec1}',`, 4);
@@ -275,9 +287,13 @@ const buildCreatureSkeletonV10 = (cre: GhostCreatureV10, discover: DiscoverNext)
   writer.writeLine(`objectSpec4: '${cre.header.objectSpec4}',`, 4);
   writer.writeLine(`objectSpec5: '${cre.header.objectSpec5}',`, 4);
   writer.writeLine(`alignment: '${cre.header.alignment}',`, 4);
+  discover({ type: 'alignment', name: cre.header.alignment });
   writer.writeLine(`globalIdentifier: ${cre.header.globalIdentifier},`, 4);
   writer.writeLine(`localIdentifier: ${cre.header.localIdentifier},`, 4);
-  if (cre.header.scriptName) writer.writeLine(`scriptName: '${cre.header.scriptName}',`, 4);
+  if (cre.header.scriptName) {
+    writer.writeLine(`scriptName: '${cre.header.scriptName}',`, 4);
+    discover({ type: 'script', name: cre.header.scriptName });
+  }
   writer.writeLine(`knownSpellsOffset: ${cre.header.knownSpellsOffset},`, 4);
   writer.writeLine(`knownSpellsCount: ${cre.header.knownSpellsCount},`, 4);
   writer.writeLine(`spellMemorizationInfoOffset: ${cre.header.spellMemorizationInfoOffset},`, 4);
@@ -294,7 +310,7 @@ const buildCreatureSkeletonV10 = (cre: GhostCreatureV10, discover: DiscoverNext)
   writer.writeLine('};', 2);
   writer.writeLine('return creature;', 2);
   writer.writeLine('};');
-  writer.writeLine(`export default ${npcLowercaseId}CreatureSkeleton;`);
+  writer.writeLine(`export default _${npcLowercaseId}CreatureSkeleton;`);
 
   return writer.done();
 };
@@ -310,7 +326,7 @@ const buildCreatureSkeletonV11 = (cre: GhostCreatureV11, discover: DiscoverNext)
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${cre.resourceName}`);
   writer.writeLine(' */');
-  writer.writeLine(`const ${npcLowercaseId}CreatureSkeleton = () => {`);
+  writer.writeLine(`const _${npcLowercaseId}CreatureSkeleton = () => {`);
   writer.writeLine(`const creature: UntranslatedCreature = {`, 2);
 
   writer.writeLine(`version: '${cre.header.version}',`, 4);
@@ -531,14 +547,25 @@ const buildCreatureSkeletonV11 = (cre: GhostCreatureV11, discover: DiscoverNext)
     'mageType',
     4,
   );
+
   writer.writeLine(`overrideScriptRef: '${cre.header.overrideScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.overrideScriptRef });
+
   writer.writeLine(`classScriptRef: '${cre.header.classScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.classScriptRef });
+
   writer.writeLine(`raceScriptRef: '${cre.header.raceScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.raceScriptRef });
+
   writer.writeLine(`generalScriptRef: '${cre.header.generalScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.generalScriptRef });
+
   writer.writeLine(`defaultScriptRef: '${cre.header.defaultScriptRef}',`, 4);
+  discover({ type: 'script', name: cre.header.defaultScriptRef });
+
   writer.writeLine(`overlaysOffset: '${cre.header.overlaysOffset}',`, 4);
   writer.writeLine(`overlaysSize: '${cre.header.overlaysSize}',`, 4);
-  writer.writeLine(`murderIncrementBy: '${cre.header.murderIncrementBy}',`, 4);
+  writer.writeLine(`murderIncrementBy: ${cre.header.murderIncrementBy},`, 4);
   writer.writeLine(`characterType: '${cre.header.characterType}',`, 4);
   writer.writeLine(`colorsCount: '${cre.header.colorsCount}',`, 4);
   writer.writeLine(`color1: '${cre.header.color1}',`, 4);
@@ -559,6 +586,7 @@ const buildCreatureSkeletonV11 = (cre: GhostCreatureV11, discover: DiscoverNext)
   writer.writeLine(`general: '${cre.header.general}',`, 4);
   writer.writeLine(`race: '${cre.header.race}',`, 4);
   writer.writeLine(`theClass: '${cre.header.theClass}',`, 4);
+  discover({ type: 'class', name: cre.header.theClass });
   writer.writeLine(`specific: '${cre.header.specific}',`, 4);
   writer.writeLine(`gender: '${cre.header.gender}',`, 4);
   writer.writeLine(`objectSpec1: '${cre.header.objectSpec1}',`, 4);
@@ -567,9 +595,13 @@ const buildCreatureSkeletonV11 = (cre: GhostCreatureV11, discover: DiscoverNext)
   writer.writeLine(`objectSpec4: '${cre.header.objectSpec4}',`, 4);
   writer.writeLine(`objectSpec5: '${cre.header.objectSpec5}',`, 4);
   writer.writeLine(`alignment: '${cre.header.alignment}',`, 4);
+  discover({ type: 'alignment', name: cre.header.alignment });
   writer.writeLine(`globalIdentifier: ${cre.header.globalIdentifier},`, 4);
   writer.writeLine(`localIdentifier: ${cre.header.localIdentifier},`, 4);
-  if (cre.header.scriptName) writer.writeLine(`scriptName: '${cre.header.scriptName}',`, 4);
+  if (cre.header.scriptName) {
+    writer.writeLine(`scriptName: '${cre.header.scriptName}',`, 4);
+    discover({ type: 'script', name: cre.header.scriptName });
+  }
   writer.writeLine(`knownSpellsOffset: ${cre.header.knownSpellsOffset},`, 4);
   writer.writeLine(`knownSpellsCount: ${cre.header.knownSpellsCount},`, 4);
   writer.writeLine(`spellMemorizationInfoOffset: ${cre.header.spellMemorizationInfoOffset},`, 4);
@@ -586,7 +618,7 @@ const buildCreatureSkeletonV11 = (cre: GhostCreatureV11, discover: DiscoverNext)
   writer.writeLine('};', 2);
   writer.writeLine('return creature;', 2);
   writer.writeLine('};');
-  writer.writeLine(`export default ${npcLowercaseId}CreatureSkeleton;`);
+  writer.writeLine(`export default _${npcLowercaseId}CreatureSkeleton;`);
 
   return writer.done();
 };

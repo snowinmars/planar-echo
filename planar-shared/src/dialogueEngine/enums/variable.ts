@@ -4,31 +4,39 @@ export type NumberVariableId
   = | '0110_cut_scene'
     | '1201_note'
     | '2devils'
+    | 'able'
     | 'absorb'
+    | 'acaste'
+    | 'adahn'
     | 'adyzoel'
     | 'aelwyn'
     | 'alpha'
     | 'anarchist_treasure'
     | 'angyar'
     | 'angyar_quest'
+    | 'annah'
     | 'annah_ar0400_cut_scene'
     | 'annah_discovers_pharod'
     | 'annah_talked_grace'
     | 'annah_talked_morte'
     | 'annah_training'
+    | 'aoskar'
     | 'appearance'
     | 'arlo_quest'
     | 'armoire'
+    | 'ashmantle'
     | 'asonje'
     | 'await'
     | 'await_deal_answer'
     | 'await_die_answer'
+    | 'baen'
     | 'baen_quest'
     | 'baria'
     | 'barsh_abishai'
     | 'bd_annah_morale'
     | 'bd_dakkon_morale'
     | 'bd_morte_morale'
+    | 'bei'
     | 'beta'
     | 'betray_vaxis'
     | 'book_advice'
@@ -46,13 +54,17 @@ export type NumberVariableId
     | 'chaotic_malmaner_1'
     | 'choke'
     | 'coaxmetal'
+    | 'codexi'
+    | 'coppereyes'
     | 'coppereyes_contract'
     | 'cr_vic'
+    | 'craddock'
     | 'craddock_quest'
     | 'creeden'
     | 'crier'
     | 'crier_answer'
     | 'crier_quest'
+    | 'crispy'
     | 'current_area'
     | 'curst_counter'
     | 'curst_key'
@@ -71,12 +83,14 @@ export type NumberVariableId
     | 'dakkon_teach'
     | 'death'
     | 'death_lecture'
+    | 'death_of_names'
     | 'deaths_adv'
     | 'deionarra'
     | 'deionarra_death_truth'
     | 'delta'
     | 'demonbox'
     | 'deva_plague'
+    | 'dhall'
     | 'dictionary_githzerai_achali'
     | 'dictionary_githzerai_katznii'
     | 'dictionary_githzerai_tcha'
@@ -107,9 +121,11 @@ export type NumberVariableId
     | 'ecco_rumor_5'
     | 'ecco_rumor_6'
     | 'ecco_speak'
+    | 'eivene'
     | 'eli'
     | 'elyce'
     | 'embalm_key_quest'
+    | 'emoric'
     | 'emoric_pharod'
     | 'epsilon'
     | 'evidence_papers'
@@ -123,6 +139,8 @@ export type NumberVariableId
     | 'fhjull_globe'
     | 'fhjull_stygian'
     | 'finam'
+    | 'finger'
+    | 'fleece'
     | 'forge'
     | 'fortress_annah'
     | 'fortress_dakkon'
@@ -166,6 +184,7 @@ export type NumberVariableId
     | 'grace_talked_morte'
     | 'grace_talked_nordom'
     | 'hail_mad'
+    | 'hargrimm'
     | 'hargrimm_talk'
     | 'hargrimm_trust'
     | 'have_eye'
@@ -177,6 +196,7 @@ export type NumberVariableId
     | 'ignus_teach'
     | 'ingress'
     | 'iron_nalls'
+    | 'jhelai'
     | 'join_anarchists'
     | 'join_chaosmen'
     | 'join_dustmen'
@@ -233,9 +253,11 @@ export type NumberVariableId
     | 'mao_warn'
     | 'marissa'
     | 'marrow'
+    | 'marta'
     | 'marta_store'
     | 'mausoleum_quest'
     | 'mazedifficulty'
+    | 'mebbeth'
     | 'mebbeth_art_answer'
     | 'mebbeth_quest'
     | 'mebbeth_teach'
@@ -247,7 +269,9 @@ export type NumberVariableId
     | 'mob_dead'
     | 'mochai'
     | 'montague'
+    | 'mooch'
     | 'mortai'
+    | 'morte'
     | 'morte_mimir'
     | 'morte_quip_regret_portal'
     | 'morte_stolen'
@@ -273,10 +297,14 @@ export type NumberVariableId
     | 'nordom_talked_annah'
     | 'nordom_talked_grace'
     | 'nordom_talked_morte'
+    | 'norochj'
+    | 'oinosian'
+    | 'ojo'
     | 'p_journal'
     | 'pabulum'
     | 'paid_das'
     | 'paid_ra'
+    | 'paranoid_incarnation'
     | 'party_ignus_rejoining_vo'
     | 'party_ignus_waiting_vo'
     | 'penn_out'
@@ -291,15 +319,18 @@ export type NumberVariableId
     | 'pk_quest'
     | 'plans_quest'
     | 'play_throne_movie'
+    | 'porphiron'
     | 'porphiron_necklace'
     | 'porphiron_quest'
     | 'porphiron_teach'
     | 'post_point'
     | 'pox'
     | 'pox_smuggle_xp'
+    | 'practical_incarnation'
     | 'pregnant_quest'
     | 'prisoner_movie'
     | 'quell'
+    | 'quentin'
     | 'qui_sai'
     | 'qui_sai_quest'
     | 'quint_item'
@@ -307,6 +338,8 @@ export type NumberVariableId
     | 'rat_quest'
     | 'ratbone'
     | 'ratwarren'
+    | 'rauk'
+    | 'ravel'
     | 'ravel_annah'
     | 'ravel_cut_scene'
     | 'ravel_dakkon'
@@ -331,6 +364,7 @@ export type NumberVariableId
     | 'release_dimtree'
     | 'revenge_v'
     | 'rings3'
+    | 'roberta'
     | 'rp_portal'
     | 'rubikon_direct'
     | 'rw'
@@ -352,6 +386,7 @@ export type NumberVariableId
     | 'sevtai_quest'
     | 'sharegrave'
     | 'sheryl_quest'
+    | 'silent_king'
     | 'slavers'
     | 'smuggle'
     | 'snuff_carl'
@@ -365,6 +400,8 @@ export type NumberVariableId
     | 'sold_rat'
     | 'specialist'
     | 'spirit_quest'
+    | 'splinter'
+    | 'stale_mary'
     | 'stolen_papers'
     | 'story_reekwind_self'
     | 'sybil_quest'
@@ -378,6 +415,7 @@ export type NumberVariableId
     | 'torment_fell'
     | 'translate_dabus'
     | 'tree_helpers'
+    | 'trias'
     | 'trias_sword'
     | 'trist_quest'
     | 'troco_calm'
@@ -385,6 +423,7 @@ export type NumberVariableId
     | 'uhir'
     | 'ulthera_quest'
     | 'uyo_paranoid'
+    | 'vaxis'
     | 'vaxis_zombie_disguise'
     | 'veil_quest'
     | 'veil_quest_qj'
@@ -392,6 +431,8 @@ export type NumberVariableId
     | 'vhailor_join'
     | 'vhailor_mercy_answer'
     | 'vhailor_teach'
+    | 'vivian'
+    | 'vlask'
     | 'vris_buy_03'
     | 'vristigor'
     | 'warehouse_clear'
@@ -399,6 +440,7 @@ export type NumberVariableId
     | 'waste_quisai'
     | 'water'
     | 'wife_of_angyar'
+    | 'wilder'
     | 'xachariah'
     | 'xachariah_ring'
     | 'xixi_back'
@@ -420,11 +462,8 @@ export type BooleanVariableId
     | '1501_undead_alert'
     | '42_secret'
     | '506_thread'
-    | 'able'
     | 'absorb_good_incarnation'
     | 'absorb_real_incarnation'
-    | 'acaste'
-    | 'adahn'
     | 'aethel_dead_kaputz'
     | 'agril_dead_kaputz'
     | 'alais_apology'
@@ -438,7 +477,6 @@ export type BooleanVariableId
     | 'alley_puzzle_2'
     | 'anazi_help'
     | 'angyar_betrays_pharod'
-    | 'annah'
     | 'annah_abishai_hive_quip_1'
     | 'annah_accuse'
     | 'annah_accuse_grace'
@@ -458,7 +496,6 @@ export type BooleanVariableId
     | 'annah_warning_fell'
     | 'annah_wilder_quip_1'
     | 'anskull_talk'
-    | 'aoskar'
     | 'ar0100_visited'
     | 'ar0101_visited'
     | 'ar0105_visited'
@@ -492,10 +529,8 @@ export type BooleanVariableId
     | 'ar3017_visited'
     | 'ash_suspicious'
     | 'ash_technique'
-    | 'ashmantle'
     | 'attack_aelwyn'
     | 'attack_nemelle'
-    | 'baen'
     | 'banged_harlot'
     | 'bbplot_secret_1'
     | 'bbplot_secret_2'
@@ -511,7 +546,6 @@ export type BooleanVariableId
     | 'bd_t1death'
     | 'bd_two_deaths'
     | 'bd_unityrings'
-    | 'bei'
     | 'belief_kill_vhailor'
     | 'benny'
     | 'berrog_dead_kaputz'
@@ -550,12 +584,8 @@ export type BooleanVariableId
     | 'clock_1'
     | 'coaxmetal_gives_cage'
     | 'coaxmetal_weapon'
-    | 'codexi'
     | 'confront_practical_incarnation'
-    | 'coppereyes'
     | 'corvus_zac'
-    | 'craddock'
-    | 'crispy'
     | 'crumple_dead_kaputz'
     | 'crystal_escape_answer'
     | 'crystal_name_answer'
@@ -591,7 +621,6 @@ export type BooleanVariableId
     | 'dakkon_word'
     | 'damsel_ambush'
     | 'dead_truce'
-    | 'death_of_names'
     | 'death_of_names_dhall'
     | 'death_of_names_quentin'
     | 'deio_wake_up'
@@ -604,7 +633,6 @@ export type BooleanVariableId
     | 'deionarra_ss_grace'
     | 'deran_questions'
     | 'devil_offer'
-    | 'dhall'
     | 'dictionary_githzerai_vilquar'
     | 'dimtree_zombie'
     | 'directed_ashmantle'
@@ -623,9 +651,7 @@ export type BooleanVariableId
     | 'dustman_ressurection'
     | 'dword'
     | 'ecco_note'
-    | 'eivene'
     | 'eivene_delivery'
-    | 'emoric'
     | 'emoric_contract'
     | 'emoric_sere'
     | 'engininmaze'
@@ -664,8 +690,6 @@ export type BooleanVariableId
     | 'fhjull_charity'
     | 'fiend_fhjull'
     | 'finams_father'
-    | 'finger'
-    | 'fleece'
     | 'fleece_technique'
     | 'foreign_language_version'
     | 'fortress_ignus_battle'
@@ -719,7 +743,6 @@ export type BooleanVariableId
     | 'gris_talk'
     | 'grosuk_dead_kaputz'
     | 'hamrys_mem'
-    | 'hargrimm'
     | 'hargrimm_clue'
     | 'hargrimm_rats'
     | 'harlot_annah_sex'
@@ -750,7 +773,6 @@ export type BooleanVariableId
     | 'inscr_8'
     | 'insult_bandm_1'
     | 'jasilya_dead_kaputz'
-    | 'jhelai'
     | 'jhelai_pay'
     | 'join_chaosmen_2'
     | 'journal'
@@ -897,10 +919,8 @@ export type BooleanVariableId
     | 'machine_3'
     | 'machine_4'
     | 'marrow_follow'
-    | 'marta'
     | 'marta_ring'
     | 'maze_journal'
-    | 'mebbeth'
     | 'mebbeth_dreams'
     | 'mebbeth_fail'
     | 'memory_caging_vhailor'
@@ -924,11 +944,9 @@ export type BooleanVariableId
     | 'modron_cube'
     | 'modron_id'
     | 'montague_problem'
-    | 'mooch'
     | 'mortai_blackmail'
     | 'mortai_contract'
     | 'mortai_fetch'
-    | 'morte'
     | 'morte_abishai_hive_quip_1'
     | 'morte_await_quip_1'
     | 'morte_dead'
@@ -974,17 +992,13 @@ export type BooleanVariableId
     | 'nordom_self_truth'
     | 'nordom_talked_vhail'
     | 'nordom_thief_order'
-    | 'norochj'
     | 'norochj_ad'
     | 'notalk'
     | 'ntoken_give'
-    | 'oinosian'
-    | 'ojo'
     | 'one'
     | 'open_door'
     | 'outland_portal'
     | 'page_taken'
-    | 'paranoid_incarnation'
     | 'pc_annah_open_locks'
     | 'pc_annah_pick_pockets'
     | 'pc_annah_stealth'
@@ -1001,12 +1015,10 @@ export type BooleanVariableId
     | 'pk_scraping'
     | 'player_dream'
     | 'pm_killed'
-    | 'porphiron'
     | 'portal_lens'
     | 'portal_open'
     | 'pox_smuggle'
     | 'pox_smuggle_movie'
-    | 'practical_incarnation'
     | 'prophecy'
     | 'pstone'
     | 'q1'
@@ -1015,13 +1027,10 @@ export type BooleanVariableId
     | 'q4'
     | 'quell_candy'
     | 'quell_spells'
-    | 'quentin'
     | 'quint_trade'
     | 'quisai_dead_kaputz'
     | 'rat_eater'
     | 'rat_guard'
-    | 'rauk'
-    | 'ravel'
     | 'ravel_curst_portal'
     | 'ravel_death_kiss'
     | 'ravel_hair'
@@ -1054,7 +1063,6 @@ export type BooleanVariableId
     | 'remove_drunk_harlot'
     | 'remove_fleece'
     | 'return_fhjull'
-    | 'roberta'
     | 'roberta_betrayed'
     | 'roll_1'
     | 'roll_2'
@@ -1096,7 +1104,6 @@ export type BooleanVariableId
     | 'shrakatlor'
     | 'shutup'
     | 'siege_tower_portal'
-    | 'silent_king'
     | 'skatch_dead_kaputz'
     | 'skeleton_chaotic'
     | 'skeleton_examine'
@@ -1110,9 +1117,7 @@ export type BooleanVariableId
     | 'spawn_ebb'
     | 'spawn_soego'
     | 'speak_with_dead'
-    | 'splinter'
     | 'sskull_talk'
-    | 'stale_mary'
     | 'story_mebbeth_ravel'
     | 'story_reekwind_alley'
     | 'story_reekwind_curse'
@@ -1142,7 +1147,6 @@ export type BooleanVariableId
     | 'tree_m'
     | 'tree_n'
     | 'tree_v'
-    | 'trias'
     | 'trias_defeated'
     | 'trias_redeem'
     | 'ul_1201'
@@ -1151,7 +1155,6 @@ export type BooleanVariableId
     | 'ur_1201'
     | 'vault_attack'
     | 'vault_gold'
-    | 'vaxis'
     | 'vaxis_exposed'
     | 'vaxis_exposes_soego'
     | 'vaxis_help'
@@ -1181,8 +1184,6 @@ export type BooleanVariableId
     | 'view_art_dbirds'
     | 'view_art_tomb'
     | 'visit_doubtful'
-    | 'vivian'
-    | 'vlask'
     | 'vris_buy_01'
     | 'vris_buy_02'
     | 'vris_buy_04'
@@ -1202,7 +1203,6 @@ export type BooleanVariableId
     | 'where_fhjull'
     | 'widiots'
     | 'widow_pissed'
-    | 'wilder'
     | 'wilder_journal'
     | 'wilder_tail'
     | 'woff1_dead_kaputz'
@@ -1231,35 +1231,43 @@ export type BooleanVariableId
     | 'zombie_chaotic'
 ;
 
-export const emptyNumberStore: Record<NumberVariableId, number> = {
+export const initialNumberStore: Record<NumberVariableId, number> = {
   '0110_cut_scene': 0,
   '1201_note': 0,
   '2devils': 0,
+  'able': 0,
   'absorb': 0,
+  'acaste': 0,
+  'adahn': 0,
   'adyzoel': 0,
   'aelwyn': 0,
   'alpha': 0,
   'anarchist_treasure': 0,
   'angyar': 0,
   'angyar_quest': 0,
+  'annah': 0,
   'annah_ar0400_cut_scene': 0,
   'annah_discovers_pharod': 0,
   'annah_talked_grace': 0,
   'annah_talked_morte': 0,
   'annah_training': 0,
+  'aoskar': 0,
   'appearance': 0,
   'arlo_quest': 0,
   'armoire': 0,
+  'ashmantle': 0,
   'asonje': 0,
   'await': 0,
   'await_deal_answer': 0,
   'await_die_answer': 0,
+  'baen': 0,
   'baen_quest': 0,
   'baria': 0,
   'barsh_abishai': 0,
   'bd_annah_morale': 0,
   'bd_dakkon_morale': 0,
   'bd_morte_morale': 0,
+  'bei': 0,
   'beta': 0,
   'betray_vaxis': 0,
   'book_advice': 0,
@@ -1277,13 +1285,17 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'chaotic_malmaner_1': 0,
   'choke': 0,
   'coaxmetal': 0,
+  'codexi': 0,
+  'coppereyes': 0,
   'coppereyes_contract': 0,
   'cr_vic': 0,
+  'craddock': 0,
   'craddock_quest': 0,
   'creeden': 0,
   'crier': 0,
   'crier_answer': 0,
   'crier_quest': 0,
+  'crispy': 0,
   'current_area': 0,
   'curst_counter': 0,
   'curst_key': 0,
@@ -1302,12 +1314,14 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'dakkon_teach': 0,
   'death': 0,
   'death_lecture': 0,
+  'death_of_names': 0,
   'deaths_adv': 0,
   'deionarra': 0,
   'deionarra_death_truth': 0,
   'delta': 0,
   'demonbox': 0,
   'deva_plague': 0,
+  'dhall': 0,
   'dictionary_githzerai_achali': 0,
   'dictionary_githzerai_katznii': 0,
   'dictionary_githzerai_tcha': 0,
@@ -1338,9 +1352,11 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'ecco_rumor_5': 0,
   'ecco_rumor_6': 0,
   'ecco_speak': 0,
+  'eivene': 0,
   'eli': 0,
   'elyce': 0,
   'embalm_key_quest': 0,
+  'emoric': 0,
   'emoric_pharod': 0,
   'epsilon': 0,
   'evidence_papers': 0,
@@ -1354,6 +1370,8 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'fhjull_globe': 0,
   'fhjull_stygian': 0,
   'finam': 0,
+  'finger': 0,
+  'fleece': 0,
   'forge': 0,
   'fortress_annah': 0,
   'fortress_dakkon': 0,
@@ -1397,6 +1415,7 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'grace_talked_morte': 0,
   'grace_talked_nordom': 0,
   'hail_mad': 0,
+  'hargrimm': 0,
   'hargrimm_talk': 0,
   'hargrimm_trust': 0,
   'have_eye': 0,
@@ -1408,6 +1427,7 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'ignus_teach': 0,
   'ingress': 0,
   'iron_nalls': 0,
+  'jhelai': 0,
   'join_anarchists': 0,
   'join_chaosmen': 0,
   'join_dustmen': 0,
@@ -1464,9 +1484,11 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'mao_warn': 0,
   'marissa': 0,
   'marrow': 0,
+  'marta': 0,
   'marta_store': 0,
   'mausoleum_quest': 0,
   'mazedifficulty': 0,
+  'mebbeth': 0,
   'mebbeth_art_answer': 0,
   'mebbeth_quest': 0,
   'mebbeth_teach': 0,
@@ -1478,7 +1500,9 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'mob_dead': 0,
   'mochai': 0,
   'montague': 0,
+  'mooch': 0,
   'mortai': 0,
+  'morte': 0,
   'morte_mimir': 0,
   'morte_quip_regret_portal': 0,
   'morte_stolen': 0,
@@ -1504,10 +1528,14 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'nordom_talked_annah': 0,
   'nordom_talked_grace': 0,
   'nordom_talked_morte': 0,
+  'norochj': 0,
+  'oinosian': 0,
+  'ojo': 0,
   'p_journal': 0,
   'pabulum': 0,
   'paid_das': 0,
   'paid_ra': 0,
+  'paranoid_incarnation': 0,
   'party_ignus_rejoining_vo': 0,
   'party_ignus_waiting_vo': 0,
   'penn_out': 0,
@@ -1522,15 +1550,18 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'pk_quest': 0,
   'plans_quest': 0,
   'play_throne_movie': 0,
+  'porphiron': 0,
   'porphiron_necklace': 0,
   'porphiron_quest': 0,
   'porphiron_teach': 0,
   'post_point': 0,
   'pox': 0,
   'pox_smuggle_xp': 0,
+  'practical_incarnation': 0,
   'pregnant_quest': 0,
   'prisoner_movie': 0,
   'quell': 0,
+  'quentin': 0,
   'qui_sai': 0,
   'qui_sai_quest': 0,
   'quint_item': 0,
@@ -1538,6 +1569,8 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'rat_quest': 0,
   'ratbone': 0,
   'ratwarren': 0,
+  'rauk': 0,
+  'ravel': 0,
   'ravel_annah': 0,
   'ravel_cut_scene': 0,
   'ravel_dakkon': 0,
@@ -1562,6 +1595,7 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'release_dimtree': 0,
   'revenge_v': 0,
   'rings3': 0,
+  'roberta': 0,
   'rp_portal': 0,
   'rubikon_direct': 0,
   'rw': 0,
@@ -1583,6 +1617,7 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'sevtai_quest': 0,
   'sharegrave': 0,
   'sheryl_quest': 0,
+  'silent_king': 0,
   'slavers': 0,
   'smuggle': 0,
   'snuff_carl': 0,
@@ -1596,6 +1631,8 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'sold_rat': 0,
   'specialist': 0,
   'spirit_quest': 0,
+  'splinter': 0,
+  'stale_mary': 0,
   'stolen_papers': 0,
   'story_reekwind_self': 0,
   'sybil_quest': 0,
@@ -1609,6 +1646,7 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'torment_fell': 0,
   'translate_dabus': 0,
   'tree_helpers': 0,
+  'trias': 0,
   'trias_sword': 0,
   'trist_quest': 0,
   'troco_calm': 0,
@@ -1616,6 +1654,7 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'uhir': 0,
   'ulthera_quest': 0,
   'uyo_paranoid': 0,
+  'vaxis': 0,
   'vaxis_zombie_disguise': 0,
   'veil_quest': 0,
   'veil_quest_qj': 0,
@@ -1623,6 +1662,8 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'vhailor_join': 0,
   'vhailor_mercy_answer': 0,
   'vhailor_teach': 0,
+  'vivian': 0,
+  'vlask': 0,
   'vris_buy_03': 0,
   'vristigor': 0,
   'warehouse_clear': 0,
@@ -1630,6 +1671,7 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'waste_quisai': 0,
   'water': 0,
   'wife_of_angyar': 0,
+  'wilder': 0,
   'xachariah': 0,
   'xachariah_ring': 0,
   'xixi_back': 0,
@@ -1639,825 +1681,783 @@ export const emptyNumberStore: Record<NumberVariableId, number> = {
   'zap': 0,
 };
 
-export const emptyBooleanStore: Record<BooleanVariableId, boolean> = {
-  '0202_dhall_face_player': false,
-  '0301_bad_angry': false,
-  '0301_good_angry': false,
-  '0508_wererat_alert': false,
-  '1101_spawn_cutscene': false,
-  '1200_cut_scene_2': false,
-  '1201_note_retrieved': false,
-  '1500_destroy_duplicate': false,
-  '1501_undead_alert': false,
-  '42_secret': false,
-  '506_thread': false,
-  'able': false,
-  'absorb_good_incarnation': false,
-  'absorb_real_incarnation': false,
-  'acaste': false,
-  'adahn': false,
-  'aethel_dead_kaputz': false,
-  'agril_dead_kaputz': false,
-  'alais_apology': false,
-  'alais_ed': false,
-  'alarm1': false,
-  'alarm2': false,
-  'alcove_portal': false,
-  'alley_dabus_sc': false,
-  'alley_face_sc': false,
-  'alley_puzzle_1': false,
-  'alley_puzzle_2': false,
-  'anazi_help': false,
-  'angyar_betrays_pharod': false,
-  'annah': false,
-  'annah_abishai_hive_quip_1': false,
-  'annah_accuse': false,
-  'annah_accuse_grace': false,
-  'annah_alley_geas': false,
-  'annah_answer': false,
-  'annah_death_scene': false,
-  'annah_githzerai_quip_1': false,
-  'annah_kissing': false,
-  'annah_looks': false,
-  'annah_open_locks': false,
-  'annah_pick_pockets': false,
-  'annah_prejudice_morale': false,
-  'annah_ravel_torment': false,
-  'annah_stealth': false,
-  'annah_traps': false,
-  'annah_tribute': false,
-  'annah_warning_fell': false,
-  'annah_wilder_quip_1': false,
-  'anskull_talk': false,
-  'aoskar': false,
-  'ar0100_visited': false,
-  'ar0101_visited': false,
-  'ar0105_visited': false,
-  'ar0200_visited': false,
-  'ar0205_visited': false,
-  'ar0300_visited': false,
-  'ar0301_visited': false,
-  'ar0302_visited': false,
-  'ar0400_visited': false,
-  'ar0401_visited': false,
-  'ar0402_visited': false,
-  'ar0403_visited': false,
-  'ar0404_visited': false,
-  'ar0405_visited': false,
-  'ar0500_visited': false,
-  'ar0508_visited': false,
-  'ar0600_visited': false,
-  'ar0601_visited': false,
-  'ar0605_visited': false,
-  'ar0610_secret_portal': false,
-  'ar0610_secret_portal_2': false,
-  'ar0610_visited': false,
-  'ar0700_visited': false,
-  'ar0800_visited': false,
-  'ar0900_visited': false,
-  'ar0902_visited': false,
-  'ar1000_visited': false,
-  'ar1400_visited': false,
-  'ar1500_visited': false,
-  'ar1900_visited': false,
-  'ar3017_visited': false,
-  'ash_suspicious': false,
-  'ash_technique': false,
-  'ashmantle': false,
-  'attack_aelwyn': false,
-  'attack_nemelle': false,
-  'baen': false,
-  'banged_harlot': false,
-  'bbplot_secret_1': false,
-  'bbplot_secret_2': false,
-  'bbplot_secret_3': false,
-  'bd1000_port_active': false,
-  'bd_absorb': false,
-  'bd_dakkon_faith': false,
-  'bd_heads_talk_once': false,
-  'bd_high_wiz_dtrans': false,
-  'bd_lothar_ravel_maze': false,
-  'bd_met_ravel_shapes': false,
-  'bd_mortestory': false,
-  'bd_t1death': false,
-  'bd_two_deaths': false,
-  'bd_unityrings': false,
-  'bei': false,
-  'belief_kill_vhailor': false,
-  'benny': false,
-  'berrog_dead_kaputz': false,
-  'bish_talked': false,
-  'boxleft': false,
-  'burgher_dead_kaputz': false,
-  'bv_enemy': false,
-  'byron_gave_exp': false,
-  'byron_gave_exp_2': false,
-  'byron_questions': false,
-  'call_mk': false,
-  'called_market_guards_1': false,
-  'called_market_guards_2': false,
-  'cd_int_1': false,
-  'cd_int_9': false,
-  'chad_talked': false,
-  'chant_change': false,
-  'chaotic_adyzoel_1': false,
-  'chaotic_coaxmetal_1': false,
-  'chaotic_craddock_1': false,
-  'chaotic_fhjull_1': false,
-  'chaotic_grace_1': false,
-  'chaotic_grace_2': false,
-  'chaotic_grace_3': false,
-  'chaotic_mebbeth_1': false,
-  'chaotic_morte_1': false,
-  'chaotic_poet_1': false,
-  'chaotic_quell_1': false,
-  'chaotic_rbone_7': false,
-  'chaotic_saros_1': false,
-  'chaotic_sevtai_1': false,
-  'chekka_dead_kaputz': false,
-  'choke_drunk_harlot': false,
-  'choke_dustman': false,
-  'choke_memory': false,
-  'clock_1': false,
-  'coaxmetal_gives_cage': false,
-  'coaxmetal_weapon': false,
-  'codexi': false,
-  'confront_practical_incarnation': false,
-  'coppereyes': false,
-  'corvus_zac': false,
-  'craddock': false,
-  'crispy': false,
-  'crumple_dead_kaputz': false,
-  'crystal_escape_answer': false,
-  'crystal_name_answer': false,
-  'current_lower_planes': false,
-  'curst_arrest': false,
-  'curst_portal': false,
-  'curst_rogue_paid': false,
-  'cw_able_morte': false,
-  'cw_able_nordom': false,
-  'cw_able_research': false,
-  'cw_caught_bird': false,
-  'cw_fortune': false,
-  'cw_got_splinter': false,
-  'cw_help_annah': false,
-  'cw_know_curse': false,
-  'cw_location': false,
-  'cw_notice_morte': false,
-  'cw_pk_split': false,
-  'cw_pp_eli': false,
-  'cw_pp_training': false,
-  'cw_sal_hint': false,
-  'cw_saw_tears': false,
-  'cw_scroll_trap': false,
-  'cw_statue_cursed': false,
-  'cw_thorn_ans': false,
-  'cw_vrischika_ghysis': false,
-  'dakkon_circle': false,
-  'dakkon_githzerai': false,
-  'dakkon_kiina_morale': false,
-  'dakkon_know_kiina': false,
-  'dakkon_old_companions': false,
-  'dakkon_slave': false,
-  'dakkon_word': false,
-  'damsel_ambush': false,
-  'dead_truce': false,
-  'death_of_names': false,
-  'death_of_names_dhall': false,
-  'death_of_names_quentin': false,
-  'deio_wake_up': false,
-  'deionarra_curse': false,
-  'deionarra_fate_quest': false,
-  'deionarra_forgives': false,
-  'deionarra_portal': false,
-  'deionarra_raise_dead': false,
-  'deionarra_sight': false,
-  'deionarra_ss_grace': false,
-  'deran_questions': false,
-  'devil_offer': false,
-  'dhall': false,
-  'dictionary_githzerai_vilquar': false,
-  'dimtree_zombie': false,
-  'directed_ashmantle': false,
-  'disciple': false,
-  'dn_appeal': false,
-  'dn_knife': false,
-  'dn_read_tomb': false,
-  'dn_reason': false,
-  'dn_riddler': false,
-  'dn_soego_killed': false,
-  'dn_surrender': false,
-  'doll_switch': false,
-  'doll_warning': false,
-  'dolora_go': false,
-  'drunk_harlot_technique': false,
-  'dustman_ressurection': false,
-  'dword': false,
-  'ecco_note': false,
-  'eivene': false,
-  'eivene_delivery': false,
-  'emoric': false,
-  'emoric_contract': false,
-  'emoric_sere': false,
-  'engininmaze': false,
-  'escape_mortuary': false,
-  'evil_actor_1': false,
-  'evil_aelwyn_1': false,
-  'evil_book_spoken': false,
-  'evil_coaxmetal_3': false,
-  'evil_coaxmetal_4': false,
-  'evil_craddock_1': false,
-  'evil_crier_1': false,
-  'evil_dakkon_3': false,
-  'evil_dolora_1': false,
-  'evil_elyce_1': false,
-  'evil_fhjull_1': false,
-  'evil_githzerai_1': false,
-  'evil_iannis_2': false,
-  'evil_iannis_3': false,
-  'evil_ingress_teeth_1': false,
-  'evil_mourns_2': false,
-  'evil_pillar_2': false,
-  'evil_porphiron_1': false,
-  'evil_puzskel': false,
-  'evil_ravel_4': false,
-  'evil_rchasr_1': false,
-  'evil_uhir_1': false,
-  'evil_vivian_1': false,
-  'evil_xander_1': false,
-  'evskull_talk': false,
-  'fell_arm': false,
-  'fell_dakkon_truth': false,
-  'fell_floor_trigger': false,
-  'fell_ravel_warning': false,
-  'fell_work': false,
-  'fhjull_art': false,
-  'fhjull_charity': false,
-  'fiend_fhjull': false,
-  'finams_father': false,
-  'finger': false,
-  'fleece': false,
-  'fleece_technique': false,
-  'foreign_language_version': false,
-  'fortress_ignus_battle': false,
-  'fortress_party_roof': false,
-  'fortress_vhailor_battle': false,
-  'foundry_open': false,
-  'freed_fortress_shadows': false,
-  'g_suspect_s': false,
-  'g_suspect_t': false,
-  'gamma': false,
-  'gate_open': false,
-  'gatehead_talk': false,
-  'gehreleth_dead': false,
-  'gem': false,
-  'ghead_exp': false,
-  'ghoul_attack': false,
-  'girl_talks_alot': false,
-  'globalknow_dustmen': false,
-  'globalknow_mimir': false,
-  'globalknow_painted_door': false,
-  'globalmorte_mimir': false,
-  'glyve_talk': false,
-  'goncalves_costume1': false,
-  'goncalves_costume2': false,
-  'good_coaxmetal_2': false,
-  'good_dakkon_1': false,
-  'good_dolora_1': false,
-  'good_elyce_1': false,
-  'good_fishwife_1': false,
-  'good_grace_1': false,
-  'good_grace_2': false,
-  'good_ingress_teeth_1': false,
-  'good_jhelai_1': false,
-  'good_mary_2': false,
-  'good_merch1_1': false,
-  'good_mourns_2': false,
-  'good_uhir_1': false,
-  'good_vaxis_3': false,
-  'grace_brothel_answer': false,
-  'grace_camp_follower_answer': false,
-  'grace_companion': false,
-  'grace_history': false,
-  'grace_name_answer': false,
-  'grace_prejudice_morale': false,
-  'grace_quest_answer': false,
-  'grace_ravel_answer': false,
-  'grace_silver_mimir': false,
-  'grace_smell_mimir': false,
-  'grace_talked_annah': false,
-  'grace_talked_dakkon': false,
-  'gris_talk': false,
-  'grosuk_dead_kaputz': false,
-  'hamrys_mem': false,
-  'hargrimm': false,
-  'hargrimm_clue': false,
-  'hargrimm_rats': false,
-  'harlot_annah_sex': false,
-  'harlot_grace_sex': false,
-  'harlot_reveals_pharod': false,
-  'hive_ot_a': false,
-  'hive_ot_annah': false,
-  'hive_ot_b': false,
-  'hive_ot_c': false,
-  'hive_ot_d': false,
-  'hive_ot_e': false,
-  'hive_ot_f': false,
-  'hive_ot_morte': false,
-  'ignus_calm_tale': false,
-  'ignus_coax': false,
-  'ignus_free': false,
-  'ignus_kill_nameless': false,
-  'ilquix_talkedtoasdemon': false,
-  'immortal_blade_death': false,
-  'ingress_teeth_installed': false,
-  'inscr_1': false,
-  'inscr_2': false,
-  'inscr_3': false,
-  'inscr_4': false,
-  'inscr_5': false,
-  'inscr_6': false,
-  'inscr_7': false,
-  'inscr_8': false,
-  'insult_bandm_1': false,
-  'jasilya_dead_kaputz': false,
-  'jhelai': false,
-  'jhelai_pay': false,
-  'join_chaosmen_2': false,
-  'journal': false,
-  'jrgvar01': false,
-  'juli_info': false,
-  'jumble_reekwind': false,
-  'kappa': false,
-  'kellera_met_dakkon': false,
-  'kesai_ask': false,
-  'kesai_eyes_flirt': false,
-  'kesai_flirt': false,
-  'kester_dead_kaputz': false,
-  'kidmorte_talk': false,
-  'kiina_speak': false,
-  'kill_githyanki_kaputz': false,
-  'kimasxi_train': false,
-  'know_abishai': false,
-  'know_acaste': false,
-  'know_adahn': false,
-  'know_ambush': false,
-  'know_an_pass': false,
-  'know_bandm': false,
-  'know_berrog': false,
-  'know_bldead': false,
-  'know_blg_grouped': false,
-  'know_blood_war': false,
-  'know_bronze_sphere': false,
-  'know_burt': false,
-  'know_byron': false,
-  'know_chaosmen': false,
-  'know_contract': false,
-  'know_copper_earring_secret': false,
-  'know_cube': false,
-  'know_cube_puzzle': false,
-  'know_curst_cure': false,
-  'know_dabus': false,
-  'know_dabus_speak': false,
-  'know_dakkon_blade': false,
-  'know_deionarra_sensate': false,
-  'know_deva_prison': false,
-  'know_dustman_bar': false,
-  'know_ebb': false,
-  'know_factions': false,
-  'know_finam_lang': false,
-  'know_fortress_location_forgot': false,
-  'know_gith': false,
-  'know_githyanki': false,
-  'know_githzerai_speak': false,
-  'know_goncalves_mage': false,
-  'know_grace_exslave': false,
-  'know_grace_sensates': false,
-  'know_grace_succubus': false,
-  'know_gris': false,
-  'know_gris_dead': false,
-  'know_gstash': false,
-  'know_hamrys': false,
-  'know_hamrys_father': false,
-  'know_hargrimm': false,
-  'know_head': false,
-  'know_hermit': false,
-  'know_hive': false,
-  'know_iannis_deionarra_death': false,
-  'know_iannis_fire': false,
-  'know_indeps': false,
-  'know_jink': false,
-  'know_keeper_mortality': false,
-  'know_killer': false,
-  'know_kim_kes': false,
-  'know_kyse': false,
-  'know_lady': false,
-  'know_lenny': false,
-  'know_lothar': false,
-  'know_lowden': false,
-  'know_mantuok': false,
-  'know_many': false,
-  'know_marissa_medusa': false,
-  'know_mechanus': false,
-  'know_merge': false,
-  'know_mimir': false,
-  'know_morte_lie': false,
-  'know_nameless_name': false,
-  'know_ojo': false,
-  'know_ojo_wall': false,
-  'know_penn': false,
-  'know_pharod_bodies': false,
-  'know_pillar': false,
-  'know_pillar_circumstances': false,
-  'know_plague': false,
-  'know_player_killer': false,
-  'know_ravel': false,
-  'know_rubikon': false,
-  'know_rule_of_3': false,
-  'know_salabesh_curse': false,
-  'know_sdb': false,
-  'know_sensates': false,
-  'know_shadow_player_connection': false,
-  'know_sigil': false,
-  'know_silent_king': false,
-  'know_soego_friend_death': false,
-  'know_soego_rats': false,
-  'know_source': false,
-  'know_stale_mary': false,
-  'know_styx_ice': false,
-  'know_sword': false,
-  'know_tek': false,
-  'know_tower_key': false,
-  'know_traces': false,
-  'know_transcendent_link': false,
-  'know_transcendent_prison': false,
-  'know_transcendent_weakness': false,
-  'know_vault': false,
-  'know_why_forget': false,
-  'know_xanthia_plan': false,
-  'know_xixi': false,
-  'know_yiminn': false,
-  'know_yves_grace': false,
-  'lawful_ash_1': false,
-  'lawful_coaxmetal_1': false,
-  'lawful_craddock_1': false,
-  'lawful_deionarra_1': false,
-  'lawful_fhjull_1': false,
-  'lawful_grace_1': false,
-  'lawful_grace_2': false,
-  'lawful_hargrimm_1': false,
-  'lawful_morte_1': false,
-  'lawful_pharod_3': false,
-  'lawful_rbone_1': false,
-  'lawful_riddling_1': false,
-  'lawful_soego_1': false,
-  'lawful_trias_1': false,
-  'lawful_vaxis_1': false,
-  'lawful_vaxis_3': false,
-  'lawful_vhailor_5': false,
-  'lawful_wife_of_angyar_1': false,
-  'leave_baator': false,
-  'lenny_gave_exp': false,
-  'll_1201': false,
-  'loop': false,
-  'lothar_portal': false,
-  'lr_1201': false,
-  'luis_student': false,
-  'machine_1': false,
-  'machine_2': false,
-  'machine_3': false,
-  'machine_4': false,
-  'marrow_follow': false,
-  'marta': false,
-  'marta_ring': false,
-  'maze_journal': false,
-  'mebbeth': false,
-  'mebbeth_dreams': false,
-  'mebbeth_fail': false,
-  'memory_caging_vhailor': false,
-  'memory_deionarra_longing': false,
-  'memory_dolora_1': false,
-  'memory_dolora_2': false,
-  'memory_dustman_contract': false,
-  'memory_dustman_contract_2': false,
-  'memory_ghysis': false,
-  'memory_ignus_taught': false,
-  'memory_morte_pillar': false,
-  'memory_nameless_legacy': false,
-  'memory_shraktlor': false,
-  'memory_vhailor': false,
-  'mention_catacombs': false,
-  'met_githyanki': false,
-  'met_modrons': false,
-  'met_soego2': false,
-  'mochai_dead_kaputz': false,
-  'mochai_norochj_pickpocket': false,
-  'modron_cube': false,
-  'modron_id': false,
-  'montague_problem': false,
-  'mooch': false,
-  'mortai_blackmail': false,
-  'mortai_contract': false,
-  'mortai_fetch': false,
-  'morte': false,
-  'morte_abishai_hive_quip_1': false,
-  'morte_await_quip_1': false,
-  'morte_dead': false,
-  'morte_deionarra_quip_1': false,
-  'morte_dn_warn': false,
-  'morte_dn_zom': false,
-  'morte_githzerai_quip_1': false,
-  'morte_harlot_quip_1': false,
-  'morte_morale_fortress_portal': false,
-  'morte_mortuary_walkthrough_1': false,
-  'morte_mortuary_walkthrough_2': false,
-  'morte_quip': false,
-  'morte_sdthug_quip_1': false,
-  'morte_skel_mort_quip': false,
-  'morte_skel_mort_quip2': false,
-  'morte_story': false,
-  'morte_talent': false,
-  'morte_tattoo_xp': false,
-  'morte_ucho': false,
-  'morte_vaxis_quip_1': false,
-  'morte_vaxis_quip_2': false,
-  'morte_warning': false,
-  'morte_wilder_quip_1': false,
-  'morte_zombie_female_bar_quip': false,
-  'mortuary_alert': false,
-  'mortuary_soego_killed': false,
-  'mourn': false,
-  'mourns_belief': false,
-  'murdered_fin': false,
-  'negotiate_kester': false,
-  'nenny_angry': false,
-  'no_anarchy': false,
-  'no_fhjull_spell': false,
-  'no_pin': false,
-  'nordom_bolt_03': false,
-  'nordom_bolt_06': false,
-  'nordom_bolt_07': false,
-  'nordom_charisma_order': false,
-  'nordom_fighter_order': false,
-  'nordom_mage_order': false,
-  'nordom_order': false,
-  'nordom_self': false,
-  'nordom_self_truth': false,
-  'nordom_talked_vhail': false,
-  'nordom_thief_order': false,
-  'norochj': false,
-  'norochj_ad': false,
-  'notalk': false,
-  'ntoken_give': false,
-  'oinosian': false,
-  'ojo': false,
-  'one': false,
-  'open_door': false,
-  'outland_portal': false,
-  'page_taken': false,
-  'paranoid_incarnation': false,
-  'pc_annah_open_locks': false,
-  'pc_annah_pick_pockets': false,
-  'pc_annah_stealth': false,
-  'pc_annah_traps': false,
-  'pc_was_sensate': false,
-  'pharod_annah_story': false,
-  'pharod_extortion': false,
-  'pharod_extortion_bodies': false,
-  'pharod_sphere_truth': false,
-  'pillar_morte': false,
-  'pillar_musk': false,
-  'pillar_pharod': false,
-  'pillar_warning': false,
-  'pk_scraping': false,
-  'player_dream': false,
-  'pm_killed': false,
-  'porphiron': false,
-  'portal_lens': false,
-  'portal_open': false,
-  'pox_smuggle': false,
-  'pox_smuggle_movie': false,
-  'practical_incarnation': false,
-  'prophecy': false,
-  'pstone': false,
-  'q1': false,
-  'q2': false,
-  'q3': false,
-  'q4': false,
-  'quell_candy': false,
-  'quell_spells': false,
-  'quentin': false,
-  'quint_trade': false,
-  'quisai_dead_kaputz': false,
-  'rat_eater': false,
-  'rat_guard': false,
-  'rauk': false,
-  'ravel': false,
-  'ravel_curst_portal': false,
-  'ravel_death_kiss': false,
-  'ravel_hair': false,
-  'ravel_marta': false,
-  'ravel_mebbeth': false,
-  'ravel_memory': false,
-  'ravel_ritual_1': false,
-  'ravel_ritual_2': false,
-  'ravel_ritual_3': false,
-  'ravel_ritual_4': false,
-  'ravel_ritual_5': false,
-  'ravel_tale_1': false,
-  'ravel_tale_2': false,
-  'ravel_tale_3': false,
-  'ravel_tale_4': false,
-  'ravel_trias': false,
-  'rb_name': false,
-  'rb_rats': false,
-  'rb_sorry': false,
-  'rc_contract': false,
-  'rc_expln': false,
-  'rc_pendant': false,
-  'rc_tale': false,
-  'rchaser2': false,
-  'recruit_sere': false,
-  'regret_experience': false,
-  'releaseb': false,
-  'releaseh': false,
-  'remove_ash': false,
-  'remove_drunk_harlot': false,
-  'remove_fleece': false,
-  'return_fhjull': false,
-  'roberta': false,
-  'roberta_betrayed': false,
-  'roll_1': false,
-  'roll_2': false,
-  'sandoz_dead_kaputz': false,
-  'sarossa_changeup': false,
-  'sarossa_saros_anger': false,
-  'scars': false,
-  'see_tovus': false,
-  'sell_grace': false,
-  'sensate_access': false,
-  'sensate_skull_memory': false,
-  'sensation01': false,
-  'sensation02': false,
-  'sensation03': false,
-  'sensation04': false,
-  'sensation05': false,
-  'sensation06': false,
-  'sensation07': false,
-  'sensation08': false,
-  'sensation09': false,
-  'sensation10': false,
-  'sensation11': false,
-  'sensation12': false,
-  'sensation13': false,
-  'sensation14': false,
-  'sensation15': false,
-  'sensation16': false,
-  'sensation17': false,
-  'sensation18': false,
-  'sensation19': false,
-  'sensation20': false,
-  'sensory_deionarra': false,
-  'sere_beliefs': false,
-  'shadow_key_mem': false,
-  'shake_ash': false,
-  'shil': false,
-  'shite': false,
-  'shore_memory': false,
-  'shrakatlor': false,
-  'shutup': false,
-  'siege_tower_portal': false,
-  'silent_king': false,
-  'skatch_dead_kaputz': false,
-  'skeleton_chaotic': false,
-  'skeleton_examine': false,
-  'skull_convo': false,
-  'slaver_gone': false,
-  'soego_adahn': false,
-  'soego_journal': false,
-  'soego_quest': false,
-  'soego_strangle': false,
-  'soego_told': false,
-  'spawn_ebb': false,
-  'spawn_soego': false,
-  'speak_with_dead': false,
-  'splinter': false,
-  'sskull_talk': false,
-  'stale_mary': false,
-  'story_mebbeth_ravel': false,
-  'story_reekwind_alley': false,
-  'story_reekwind_curse': false,
-  'story_reekwind_ignus': false,
-  'story_reekwind_pharod': false,
-  'strong_arm_vaxis': false,
-  'sybil_betrayed': false,
-  'talk_tek': false,
-  'talk_to_betrayer': false,
-  'talked_with_anamoli': false,
-  'tenement_alarm': false,
-  'to0610a_active': false,
-  'to0610b_active': false,
-  'to0700_active': false,
-  'took_throne': false,
-  'topple_985': false,
-  'trans_know_forget': false,
-  'trans_vanish': false,
-  'transcendent_final_speech': false,
-  'transcendent_ignus_confront': false,
-  'transcendent_nature_answer': false,
-  'transcendent_vhailor_confront': false,
-  'tree_a': false,
-  'tree_d': false,
-  'tree_g': false,
-  'tree_i': false,
-  'tree_m': false,
-  'tree_n': false,
-  'tree_v': false,
-  'trias': false,
-  'trias_defeated': false,
-  'trias_redeem': false,
-  'ul_1201': false,
-  'undead_alert': false,
-  'uportal_given': false,
-  'ur_1201': false,
-  'vault_attack': false,
-  'vault_gold': false,
-  'vaxis': false,
-  'vaxis_exposed': false,
-  'vaxis_exposes_soego': false,
-  'vaxis_help': false,
-  'vaxis_leave': false,
-  'vaxis_orders': false,
-  'vaxis_zombie_xp': false,
-  'vhail_talked_annah': false,
-  'vhail_talked_grace': false,
-  'vhailor_kill_nameless': false,
-  'vhailor_prejudice_annah': false,
-  'vhailor_prejudice_grace': false,
-  'vhailor_sight': false,
-  'view_art_01': false,
-  'view_art_02': false,
-  'view_art_03': false,
-  'view_art_04': false,
-  'view_art_05': false,
-  'view_art_06': false,
-  'view_art_07': false,
-  'view_art_08': false,
-  'view_art_09': false,
-  'view_art_10': false,
-  'view_art_11': false,
-  'view_art_12': false,
-  'view_art_13': false,
-  'view_art_14': false,
-  'view_art_dbirds': false,
-  'view_art_tomb': false,
-  'visit_doubtful': false,
-  'vivian': false,
-  'vlask': false,
-  'vris_buy_01': false,
-  'vris_buy_02': false,
-  'vris_buy_04': false,
-  'vris_buy_05': false,
-  'vris_buy_06': false,
-  'vris_buy_07': false,
-  'vris_buy_08': false,
-  'vris_buy_09': false,
-  'vris_buy_10': false,
-  'vris_buy_11': false,
-  'vris_buy_12': false,
-  'vris_buy_13': false,
-  'vris_buy_14': false,
-  'vris_vs_grace': false,
-  'way_of_stone': false,
-  'weskull_talk': false,
-  'where_fhjull': false,
-  'widiots': false,
-  'widow_pissed': false,
-  'wilder': false,
-  'wilder_journal': false,
-  'wilder_tail': false,
-  'woff1_dead_kaputz': false,
-  'xachariah_gutted': false,
-  'xachariah_name': false,
-  'xachariah_request': false,
-  'xanthia_rewarded': false,
-  'yellow_pp': false,
-  'yiminn_trap': false,
-  'yiminn_zerai': false,
-  'yves_shared': false,
-  'yves_story_01': false,
-  'yves_story_02': false,
-  'yves_story_03': false,
-  'yves_story_04': false,
-  'yves_story_05': false,
-  'yves_story_06': false,
-  'yves_story_07': false,
-  'yves_story_08': false,
-  'yves_story_09': false,
-  'yves_story_10': false,
-  'yves_story_11': false,
-  'yves_story_12': false,
-  'yves_story_13': false,
-  'zm782_dead_kaputz': false,
-  'zombie_chaotic': false,
+export const initialBooleanStore: Record<BooleanVariableId, number> = {
+  '0202_dhall_face_player': 0,
+  '0301_bad_angry': 0,
+  '0301_good_angry': 0,
+  '0508_wererat_alert': 0,
+  '1101_spawn_cutscene': 0,
+  '1200_cut_scene_2': 0,
+  '1201_note_retrieved': 0,
+  '1500_destroy_duplicate': 0,
+  '1501_undead_alert': 0,
+  '42_secret': 0,
+  '506_thread': 0,
+  'absorb_good_incarnation': 0,
+  'absorb_real_incarnation': 0,
+  'aethel_dead_kaputz': 0,
+  'agril_dead_kaputz': 0,
+  'alais_apology': 0,
+  'alais_ed': 0,
+  'alarm1': 0,
+  'alarm2': 0,
+  'alcove_portal': 0,
+  'alley_dabus_sc': 0,
+  'alley_face_sc': 0,
+  'alley_puzzle_1': 0,
+  'alley_puzzle_2': 0,
+  'anazi_help': 0,
+  'angyar_betrays_pharod': 0,
+  'annah_abishai_hive_quip_1': 0,
+  'annah_accuse': 0,
+  'annah_accuse_grace': 0,
+  'annah_alley_geas': 0,
+  'annah_answer': 0,
+  'annah_death_scene': 0,
+  'annah_githzerai_quip_1': 0,
+  'annah_kissing': 0,
+  'annah_looks': 0,
+  'annah_open_locks': 0,
+  'annah_pick_pockets': 0,
+  'annah_prejudice_morale': 0,
+  'annah_ravel_torment': 0,
+  'annah_stealth': 0,
+  'annah_traps': 0,
+  'annah_tribute': 0,
+  'annah_warning_fell': 0,
+  'annah_wilder_quip_1': 0,
+  'anskull_talk': 0,
+  'ar0100_visited': 0,
+  'ar0101_visited': 0,
+  'ar0105_visited': 0,
+  'ar0200_visited': 0,
+  'ar0205_visited': 0,
+  'ar0300_visited': 0,
+  'ar0301_visited': 0,
+  'ar0302_visited': 0,
+  'ar0400_visited': 0,
+  'ar0401_visited': 0,
+  'ar0402_visited': 0,
+  'ar0403_visited': 0,
+  'ar0404_visited': 0,
+  'ar0405_visited': 0,
+  'ar0500_visited': 0,
+  'ar0508_visited': 0,
+  'ar0600_visited': 0,
+  'ar0601_visited': 0,
+  'ar0605_visited': 0,
+  'ar0610_secret_portal': 0,
+  'ar0610_secret_portal_2': 0,
+  'ar0610_visited': 0,
+  'ar0700_visited': 0,
+  'ar0800_visited': 0,
+  'ar0900_visited': 0,
+  'ar0902_visited': 0,
+  'ar1000_visited': 0,
+  'ar1400_visited': 0,
+  'ar1500_visited': 0,
+  'ar1900_visited': 0,
+  'ar3017_visited': 0,
+  'ash_suspicious': 0,
+  'ash_technique': 0,
+  'attack_aelwyn': 0,
+  'attack_nemelle': 0,
+  'banged_harlot': 0,
+  'bbplot_secret_1': 0,
+  'bbplot_secret_2': 0,
+  'bbplot_secret_3': 0,
+  'bd1000_port_active': 0,
+  'bd_absorb': 0,
+  'bd_dakkon_faith': 0,
+  'bd_heads_talk_once': 0,
+  'bd_high_wiz_dtrans': 0,
+  'bd_lothar_ravel_maze': 0,
+  'bd_met_ravel_shapes': 0,
+  'bd_mortestory': 0,
+  'bd_t1death': 0,
+  'bd_two_deaths': 0,
+  'bd_unityrings': 0,
+  'belief_kill_vhailor': 0,
+  'benny': 0,
+  'berrog_dead_kaputz': 0,
+  'bish_talked': 0,
+  'boxleft': 0,
+  'burgher_dead_kaputz': 0,
+  'bv_enemy': 0,
+  'byron_gave_exp': 0,
+  'byron_gave_exp_2': 0,
+  'byron_questions': 0,
+  'call_mk': 0,
+  'called_market_guards_1': 0,
+  'called_market_guards_2': 0,
+  'cd_int_1': 0,
+  'cd_int_9': 0,
+  'chad_talked': 0,
+  'chant_change': 0,
+  'chaotic_adyzoel_1': 0,
+  'chaotic_coaxmetal_1': 0,
+  'chaotic_craddock_1': 0,
+  'chaotic_fhjull_1': 0,
+  'chaotic_grace_1': 0,
+  'chaotic_grace_2': 0,
+  'chaotic_grace_3': 0,
+  'chaotic_mebbeth_1': 0,
+  'chaotic_morte_1': 0,
+  'chaotic_poet_1': 0,
+  'chaotic_quell_1': 0,
+  'chaotic_rbone_7': 0,
+  'chaotic_saros_1': 0,
+  'chaotic_sevtai_1': 0,
+  'chekka_dead_kaputz': 0,
+  'choke_drunk_harlot': 0,
+  'choke_dustman': 0,
+  'choke_memory': 0,
+  'clock_1': 0,
+  'coaxmetal_gives_cage': 0,
+  'coaxmetal_weapon': 0,
+  'confront_practical_incarnation': 0,
+  'corvus_zac': 0,
+  'crumple_dead_kaputz': 0,
+  'crystal_escape_answer': 0,
+  'crystal_name_answer': 0,
+  'current_lower_planes': 0,
+  'curst_arrest': 0,
+  'curst_portal': 0,
+  'curst_rogue_paid': 0,
+  'cw_able_morte': 0,
+  'cw_able_nordom': 0,
+  'cw_able_research': 0,
+  'cw_caught_bird': 0,
+  'cw_fortune': 0,
+  'cw_got_splinter': 0,
+  'cw_help_annah': 0,
+  'cw_know_curse': 0,
+  'cw_location': 0,
+  'cw_notice_morte': 0,
+  'cw_pk_split': 0,
+  'cw_pp_eli': 0,
+  'cw_pp_training': 0,
+  'cw_sal_hint': 0,
+  'cw_saw_tears': 0,
+  'cw_scroll_trap': 0,
+  'cw_statue_cursed': 0,
+  'cw_thorn_ans': 0,
+  'cw_vrischika_ghysis': 0,
+  'dakkon_circle': 0,
+  'dakkon_githzerai': 0,
+  'dakkon_kiina_morale': 0,
+  'dakkon_know_kiina': 0,
+  'dakkon_old_companions': 0,
+  'dakkon_slave': 0,
+  'dakkon_word': 0,
+  'damsel_ambush': 0,
+  'dead_truce': 0,
+  'death_of_names_dhall': 0,
+  'death_of_names_quentin': 0,
+  'deio_wake_up': 0,
+  'deionarra_curse': 0,
+  'deionarra_fate_quest': 0,
+  'deionarra_forgives': 0,
+  'deionarra_portal': 0,
+  'deionarra_raise_dead': 0,
+  'deionarra_sight': 0,
+  'deionarra_ss_grace': 0,
+  'deran_questions': 0,
+  'devil_offer': 0,
+  'dictionary_githzerai_vilquar': 0,
+  'dimtree_zombie': 0,
+  'directed_ashmantle': 0,
+  'disciple': 0,
+  'dn_appeal': 0,
+  'dn_knife': 0,
+  'dn_read_tomb': 0,
+  'dn_reason': 0,
+  'dn_riddler': 0,
+  'dn_soego_killed': 0,
+  'dn_surrender': 0,
+  'doll_switch': 0,
+  'doll_warning': 0,
+  'dolora_go': 0,
+  'drunk_harlot_technique': 0,
+  'dustman_ressurection': 0,
+  'dword': 0,
+  'ecco_note': 0,
+  'eivene_delivery': 0,
+  'emoric_contract': 0,
+  'emoric_sere': 0,
+  'engininmaze': 0,
+  'escape_mortuary': 0,
+  'evil_actor_1': 0,
+  'evil_aelwyn_1': 0,
+  'evil_book_spoken': 0,
+  'evil_coaxmetal_3': 0,
+  'evil_coaxmetal_4': 0,
+  'evil_craddock_1': 0,
+  'evil_crier_1': 0,
+  'evil_dakkon_3': 0,
+  'evil_dolora_1': 0,
+  'evil_elyce_1': 0,
+  'evil_fhjull_1': 0,
+  'evil_githzerai_1': 0,
+  'evil_iannis_2': 0,
+  'evil_iannis_3': 0,
+  'evil_ingress_teeth_1': 0,
+  'evil_mourns_2': 0,
+  'evil_pillar_2': 0,
+  'evil_porphiron_1': 0,
+  'evil_puzskel': 0,
+  'evil_ravel_4': 0,
+  'evil_rchasr_1': 0,
+  'evil_uhir_1': 0,
+  'evil_vivian_1': 0,
+  'evil_xander_1': 0,
+  'evskull_talk': 0,
+  'fell_arm': 0,
+  'fell_dakkon_truth': 0,
+  'fell_floor_trigger': 0,
+  'fell_ravel_warning': 0,
+  'fell_work': 0,
+  'fhjull_art': 0,
+  'fhjull_charity': 0,
+  'fiend_fhjull': 0,
+  'finams_father': 0,
+  'fleece_technique': 0,
+  'foreign_language_version': 0,
+  'fortress_ignus_battle': 0,
+  'fortress_party_roof': 0,
+  'fortress_vhailor_battle': 0,
+  'foundry_open': 0,
+  'freed_fortress_shadows': 0,
+  'g_suspect_s': 0,
+  'g_suspect_t': 0,
+  'gamma': 0,
+  'gate_open': 0,
+  'gatehead_talk': 0,
+  'gehreleth_dead': 0,
+  'gem': 0,
+  'ghead_exp': 0,
+  'ghoul_attack': 0,
+  'girl_talks_alot': 0,
+  'globalknow_dustmen': 0,
+  'globalknow_mimir': 0,
+  'globalknow_painted_door': 0,
+  'globalmorte_mimir': 0,
+  'glyve_talk': 0,
+  'goncalves_costume1': 0,
+  'goncalves_costume2': 0,
+  'good_coaxmetal_2': 0,
+  'good_dakkon_1': 0,
+  'good_dolora_1': 0,
+  'good_elyce_1': 0,
+  'good_fishwife_1': 0,
+  'good_grace_1': 0,
+  'good_grace_2': 0,
+  'good_ingress_teeth_1': 0,
+  'good_jhelai_1': 0,
+  'good_mary_2': 0,
+  'good_merch1_1': 0,
+  'good_mourns_2': 0,
+  'good_uhir_1': 0,
+  'good_vaxis_3': 0,
+  'grace_brothel_answer': 0,
+  'grace_camp_follower_answer': 0,
+  'grace_companion': 0,
+  'grace_history': 0,
+  'grace_name_answer': 0,
+  'grace_prejudice_morale': 0,
+  'grace_quest_answer': 0,
+  'grace_ravel_answer': 0,
+  'grace_silver_mimir': 0,
+  'grace_smell_mimir': 0,
+  'grace_talked_annah': 0,
+  'grace_talked_dakkon': 0,
+  'gris_talk': 0,
+  'grosuk_dead_kaputz': 0,
+  'hamrys_mem': 0,
+  'hargrimm_clue': 0,
+  'hargrimm_rats': 0,
+  'harlot_annah_sex': 0,
+  'harlot_grace_sex': 0,
+  'harlot_reveals_pharod': 0,
+  'hive_ot_a': 0,
+  'hive_ot_annah': 0,
+  'hive_ot_b': 0,
+  'hive_ot_c': 0,
+  'hive_ot_d': 0,
+  'hive_ot_e': 0,
+  'hive_ot_f': 0,
+  'hive_ot_morte': 0,
+  'ignus_calm_tale': 0,
+  'ignus_coax': 0,
+  'ignus_free': 0,
+  'ignus_kill_nameless': 0,
+  'ilquix_talkedtoasdemon': 0,
+  'immortal_blade_death': 0,
+  'ingress_teeth_installed': 0,
+  'inscr_1': 0,
+  'inscr_2': 0,
+  'inscr_3': 0,
+  'inscr_4': 0,
+  'inscr_5': 0,
+  'inscr_6': 0,
+  'inscr_7': 0,
+  'inscr_8': 0,
+  'insult_bandm_1': 0,
+  'jasilya_dead_kaputz': 0,
+  'jhelai_pay': 0,
+  'join_chaosmen_2': 0,
+  'journal': 0,
+  'jrgvar01': 0,
+  'juli_info': 0,
+  'jumble_reekwind': 0,
+  'kappa': 0,
+  'kellera_met_dakkon': 0,
+  'kesai_ask': 0,
+  'kesai_eyes_flirt': 0,
+  'kesai_flirt': 0,
+  'kester_dead_kaputz': 0,
+  'kidmorte_talk': 0,
+  'kiina_speak': 0,
+  'kill_githyanki_kaputz': 0,
+  'kimasxi_train': 0,
+  'know_abishai': 0,
+  'know_acaste': 0,
+  'know_adahn': 0,
+  'know_ambush': 0,
+  'know_an_pass': 0,
+  'know_bandm': 0,
+  'know_berrog': 0,
+  'know_bldead': 0,
+  'know_blg_grouped': 0,
+  'know_blood_war': 0,
+  'know_bronze_sphere': 0,
+  'know_burt': 0,
+  'know_byron': 0,
+  'know_chaosmen': 0,
+  'know_contract': 0,
+  'know_copper_earring_secret': 0,
+  'know_cube': 0,
+  'know_cube_puzzle': 0,
+  'know_curst_cure': 0,
+  'know_dabus': 0,
+  'know_dabus_speak': 0,
+  'know_dakkon_blade': 0,
+  'know_deionarra_sensate': 0,
+  'know_deva_prison': 0,
+  'know_dustman_bar': 0,
+  'know_ebb': 0,
+  'know_factions': 0,
+  'know_finam_lang': 0,
+  'know_fortress_location_forgot': 0,
+  'know_gith': 0,
+  'know_githyanki': 0,
+  'know_githzerai_speak': 0,
+  'know_goncalves_mage': 0,
+  'know_grace_exslave': 0,
+  'know_grace_sensates': 0,
+  'know_grace_succubus': 0,
+  'know_gris': 0,
+  'know_gris_dead': 0,
+  'know_gstash': 0,
+  'know_hamrys': 0,
+  'know_hamrys_father': 0,
+  'know_hargrimm': 0,
+  'know_head': 0,
+  'know_hermit': 0,
+  'know_hive': 0,
+  'know_iannis_deionarra_death': 0,
+  'know_iannis_fire': 0,
+  'know_indeps': 0,
+  'know_jink': 0,
+  'know_keeper_mortality': 0,
+  'know_killer': 0,
+  'know_kim_kes': 0,
+  'know_kyse': 0,
+  'know_lady': 0,
+  'know_lenny': 0,
+  'know_lothar': 0,
+  'know_lowden': 0,
+  'know_mantuok': 0,
+  'know_many': 0,
+  'know_marissa_medusa': 0,
+  'know_mechanus': 0,
+  'know_merge': 0,
+  'know_mimir': 0,
+  'know_morte_lie': 0,
+  'know_nameless_name': 0,
+  'know_ojo': 0,
+  'know_ojo_wall': 0,
+  'know_penn': 0,
+  'know_pharod_bodies': 0,
+  'know_pillar': 0,
+  'know_pillar_circumstances': 0,
+  'know_plague': 0,
+  'know_player_killer': 0,
+  'know_ravel': 0,
+  'know_rubikon': 0,
+  'know_rule_of_3': 0,
+  'know_salabesh_curse': 0,
+  'know_sdb': 0,
+  'know_sensates': 0,
+  'know_shadow_player_connection': 0,
+  'know_sigil': 0,
+  'know_silent_king': 0,
+  'know_soego_friend_death': 0,
+  'know_soego_rats': 0,
+  'know_source': 0,
+  'know_stale_mary': 0,
+  'know_styx_ice': 0,
+  'know_sword': 0,
+  'know_tek': 0,
+  'know_tower_key': 0,
+  'know_traces': 0,
+  'know_transcendent_link': 0,
+  'know_transcendent_prison': 0,
+  'know_transcendent_weakness': 0,
+  'know_vault': 0,
+  'know_why_forget': 0,
+  'know_xanthia_plan': 0,
+  'know_xixi': 0,
+  'know_yiminn': 0,
+  'know_yves_grace': 0,
+  'lawful_ash_1': 0,
+  'lawful_coaxmetal_1': 0,
+  'lawful_craddock_1': 0,
+  'lawful_deionarra_1': 0,
+  'lawful_fhjull_1': 0,
+  'lawful_grace_1': 0,
+  'lawful_grace_2': 0,
+  'lawful_hargrimm_1': 0,
+  'lawful_morte_1': 0,
+  'lawful_pharod_3': 0,
+  'lawful_rbone_1': 0,
+  'lawful_riddling_1': 0,
+  'lawful_soego_1': 0,
+  'lawful_trias_1': 0,
+  'lawful_vaxis_1': 0,
+  'lawful_vaxis_3': 0,
+  'lawful_vhailor_5': 0,
+  'lawful_wife_of_angyar_1': 0,
+  'leave_baator': 0,
+  'lenny_gave_exp': 0,
+  'll_1201': 0,
+  'loop': 0,
+  'lothar_portal': 0,
+  'lr_1201': 0,
+  'luis_student': 0,
+  'machine_1': 0,
+  'machine_2': 0,
+  'machine_3': 0,
+  'machine_4': 0,
+  'marrow_follow': 0,
+  'marta_ring': 0,
+  'maze_journal': 0,
+  'mebbeth_dreams': 0,
+  'mebbeth_fail': 0,
+  'memory_caging_vhailor': 0,
+  'memory_deionarra_longing': 0,
+  'memory_dolora_1': 0,
+  'memory_dolora_2': 0,
+  'memory_dustman_contract': 0,
+  'memory_dustman_contract_2': 0,
+  'memory_ghysis': 0,
+  'memory_ignus_taught': 0,
+  'memory_morte_pillar': 0,
+  'memory_nameless_legacy': 0,
+  'memory_shraktlor': 0,
+  'memory_vhailor': 0,
+  'mention_catacombs': 0,
+  'met_githyanki': 0,
+  'met_modrons': 0,
+  'met_soego2': 0,
+  'mochai_dead_kaputz': 0,
+  'mochai_norochj_pickpocket': 0,
+  'modron_cube': 0,
+  'modron_id': 0,
+  'montague_problem': 0,
+  'mortai_blackmail': 0,
+  'mortai_contract': 0,
+  'mortai_fetch': 0,
+  'morte_abishai_hive_quip_1': 0,
+  'morte_await_quip_1': 0,
+  'morte_dead': 0,
+  'morte_deionarra_quip_1': 0,
+  'morte_dn_warn': 0,
+  'morte_dn_zom': 0,
+  'morte_githzerai_quip_1': 0,
+  'morte_harlot_quip_1': 0,
+  'morte_morale_fortress_portal': 0,
+  'morte_mortuary_walkthrough_1': 0,
+  'morte_mortuary_walkthrough_2': 0,
+  'morte_quip': 0,
+  'morte_sdthug_quip_1': 0,
+  'morte_skel_mort_quip': 0,
+  'morte_skel_mort_quip2': 0,
+  'morte_story': 0,
+  'morte_talent': 0,
+  'morte_tattoo_xp': 0,
+  'morte_ucho': 0,
+  'morte_vaxis_quip_1': 0,
+  'morte_vaxis_quip_2': 0,
+  'morte_warning': 0,
+  'morte_wilder_quip_1': 0,
+  'morte_zombie_female_bar_quip': 0,
+  'mortuary_alert': 0,
+  'mortuary_soego_killed': 0,
+  'mourn': 0,
+  'mourns_belief': 0,
+  'murdered_fin': 0,
+  'negotiate_kester': 0,
+  'nenny_angry': 0,
+  'no_anarchy': 0,
+  'no_fhjull_spell': 0,
+  'no_pin': 0,
+  'nordom_bolt_03': 0,
+  'nordom_bolt_06': 0,
+  'nordom_bolt_07': 0,
+  'nordom_charisma_order': 0,
+  'nordom_fighter_order': 0,
+  'nordom_mage_order': 0,
+  'nordom_order': 0,
+  'nordom_self': 0,
+  'nordom_self_truth': 0,
+  'nordom_talked_vhail': 0,
+  'nordom_thief_order': 0,
+  'norochj_ad': 0,
+  'notalk': 0,
+  'ntoken_give': 0,
+  'one': 0,
+  'open_door': 0,
+  'outland_portal': 0,
+  'page_taken': 0,
+  'pc_annah_open_locks': 0,
+  'pc_annah_pick_pockets': 0,
+  'pc_annah_stealth': 0,
+  'pc_annah_traps': 0,
+  'pc_was_sensate': 0,
+  'pharod_annah_story': 0,
+  'pharod_extortion': 0,
+  'pharod_extortion_bodies': 0,
+  'pharod_sphere_truth': 0,
+  'pillar_morte': 0,
+  'pillar_musk': 0,
+  'pillar_pharod': 0,
+  'pillar_warning': 0,
+  'pk_scraping': 0,
+  'player_dream': 0,
+  'pm_killed': 0,
+  'portal_lens': 0,
+  'portal_open': 0,
+  'pox_smuggle': 0,
+  'pox_smuggle_movie': 0,
+  'prophecy': 0,
+  'pstone': 0,
+  'q1': 0,
+  'q2': 0,
+  'q3': 0,
+  'q4': 0,
+  'quell_candy': 0,
+  'quell_spells': 0,
+  'quint_trade': 0,
+  'quisai_dead_kaputz': 0,
+  'rat_eater': 0,
+  'rat_guard': 0,
+  'ravel_curst_portal': 0,
+  'ravel_death_kiss': 0,
+  'ravel_hair': 0,
+  'ravel_marta': 0,
+  'ravel_mebbeth': 0,
+  'ravel_memory': 0,
+  'ravel_ritual_1': 0,
+  'ravel_ritual_2': 0,
+  'ravel_ritual_3': 0,
+  'ravel_ritual_4': 0,
+  'ravel_ritual_5': 0,
+  'ravel_tale_1': 0,
+  'ravel_tale_2': 0,
+  'ravel_tale_3': 0,
+  'ravel_tale_4': 0,
+  'ravel_trias': 0,
+  'rb_name': 0,
+  'rb_rats': 0,
+  'rb_sorry': 0,
+  'rc_contract': 0,
+  'rc_expln': 0,
+  'rc_pendant': 0,
+  'rc_tale': 0,
+  'rchaser2': 0,
+  'recruit_sere': 0,
+  'regret_experience': 0,
+  'releaseb': 0,
+  'releaseh': 0,
+  'remove_ash': 0,
+  'remove_drunk_harlot': 0,
+  'remove_fleece': 0,
+  'return_fhjull': 0,
+  'roberta_betrayed': 0,
+  'roll_1': 0,
+  'roll_2': 0,
+  'sandoz_dead_kaputz': 0,
+  'sarossa_changeup': 0,
+  'sarossa_saros_anger': 0,
+  'scars': 0,
+  'see_tovus': 0,
+  'sell_grace': 0,
+  'sensate_access': 0,
+  'sensate_skull_memory': 0,
+  'sensation01': 0,
+  'sensation02': 0,
+  'sensation03': 0,
+  'sensation04': 0,
+  'sensation05': 0,
+  'sensation06': 0,
+  'sensation07': 0,
+  'sensation08': 0,
+  'sensation09': 0,
+  'sensation10': 0,
+  'sensation11': 0,
+  'sensation12': 0,
+  'sensation13': 0,
+  'sensation14': 0,
+  'sensation15': 0,
+  'sensation16': 0,
+  'sensation17': 0,
+  'sensation18': 0,
+  'sensation19': 0,
+  'sensation20': 0,
+  'sensory_deionarra': 0,
+  'sere_beliefs': 0,
+  'shadow_key_mem': 0,
+  'shake_ash': 0,
+  'shil': 0,
+  'shite': 0,
+  'shore_memory': 0,
+  'shrakatlor': 0,
+  'shutup': 0,
+  'siege_tower_portal': 0,
+  'skatch_dead_kaputz': 0,
+  'skeleton_chaotic': 0,
+  'skeleton_examine': 0,
+  'skull_convo': 0,
+  'slaver_gone': 0,
+  'soego_adahn': 0,
+  'soego_journal': 0,
+  'soego_quest': 0,
+  'soego_strangle': 0,
+  'soego_told': 0,
+  'spawn_ebb': 0,
+  'spawn_soego': 0,
+  'speak_with_dead': 0,
+  'sskull_talk': 0,
+  'story_mebbeth_ravel': 0,
+  'story_reekwind_alley': 0,
+  'story_reekwind_curse': 0,
+  'story_reekwind_ignus': 0,
+  'story_reekwind_pharod': 0,
+  'strong_arm_vaxis': 0,
+  'sybil_betrayed': 0,
+  'talk_tek': 0,
+  'talk_to_betrayer': 0,
+  'talked_with_anamoli': 0,
+  'tenement_alarm': 0,
+  'to0610a_active': 0,
+  'to0610b_active': 0,
+  'to0700_active': 0,
+  'took_throne': 0,
+  'topple_985': 0,
+  'trans_know_forget': 0,
+  'trans_vanish': 0,
+  'transcendent_final_speech': 0,
+  'transcendent_ignus_confront': 0,
+  'transcendent_nature_answer': 0,
+  'transcendent_vhailor_confront': 0,
+  'tree_a': 0,
+  'tree_d': 0,
+  'tree_g': 0,
+  'tree_i': 0,
+  'tree_m': 0,
+  'tree_n': 0,
+  'tree_v': 0,
+  'trias_defeated': 0,
+  'trias_redeem': 0,
+  'ul_1201': 0,
+  'undead_alert': 0,
+  'uportal_given': 0,
+  'ur_1201': 0,
+  'vault_attack': 0,
+  'vault_gold': 0,
+  'vaxis_exposed': 0,
+  'vaxis_exposes_soego': 0,
+  'vaxis_help': 0,
+  'vaxis_leave': 0,
+  'vaxis_orders': 0,
+  'vaxis_zombie_xp': 0,
+  'vhail_talked_annah': 0,
+  'vhail_talked_grace': 0,
+  'vhailor_kill_nameless': 0,
+  'vhailor_prejudice_annah': 0,
+  'vhailor_prejudice_grace': 0,
+  'vhailor_sight': 0,
+  'view_art_01': 0,
+  'view_art_02': 0,
+  'view_art_03': 0,
+  'view_art_04': 0,
+  'view_art_05': 0,
+  'view_art_06': 0,
+  'view_art_07': 0,
+  'view_art_08': 0,
+  'view_art_09': 0,
+  'view_art_10': 0,
+  'view_art_11': 0,
+  'view_art_12': 0,
+  'view_art_13': 0,
+  'view_art_14': 0,
+  'view_art_dbirds': 0,
+  'view_art_tomb': 0,
+  'visit_doubtful': 0,
+  'vris_buy_01': 0,
+  'vris_buy_02': 0,
+  'vris_buy_04': 0,
+  'vris_buy_05': 0,
+  'vris_buy_06': 0,
+  'vris_buy_07': 0,
+  'vris_buy_08': 0,
+  'vris_buy_09': 0,
+  'vris_buy_10': 0,
+  'vris_buy_11': 0,
+  'vris_buy_12': 0,
+  'vris_buy_13': 0,
+  'vris_buy_14': 0,
+  'vris_vs_grace': 0,
+  'way_of_stone': 0,
+  'weskull_talk': 0,
+  'where_fhjull': 0,
+  'widiots': 0,
+  'widow_pissed': 0,
+  'wilder_journal': 0,
+  'wilder_tail': 0,
+  'woff1_dead_kaputz': 0,
+  'xachariah_gutted': 0,
+  'xachariah_name': 0,
+  'xachariah_request': 0,
+  'xanthia_rewarded': 0,
+  'yellow_pp': 0,
+  'yiminn_trap': 0,
+  'yiminn_zerai': 0,
+  'yves_shared': 0,
+  'yves_story_01': 0,
+  'yves_story_02': 0,
+  'yves_story_03': 0,
+  'yves_story_04': 0,
+  'yves_story_05': 0,
+  'yves_story_06': 0,
+  'yves_story_07': 0,
+  'yves_story_08': 0,
+  'yves_story_09': 0,
+  'yves_story_10': 0,
+  'yves_story_11': 0,
+  'yves_story_12': 0,
+  'yves_story_13': 0,
+  'zm782_dead_kaputz': 0,
+  'zombie_chaotic': 0,
 };

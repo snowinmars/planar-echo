@@ -10,6 +10,7 @@ const Settings = lazy(() => import('@/components/Settings'));
 const Dialogue = lazy(() => import('@/components/runners/Dialogue'));
 const Creature = lazy(() => import('@/components/runners/Creature'));
 const Item = lazy(() => import('@/components/runners/Item'));
+const Stores = lazy(() => import('@/components/Stores'));
 
 // https://github.com/remix-run/react-router/issues/12474#issuecomment-2538281149
 const HelloDevs: FC<PropsWithChildren> = ({ children }) => {
@@ -41,6 +42,9 @@ const router = createBrowserRouter([{
   }, {
     path: '/settings',
     element: <HelloDevs><Settings /></HelloDevs>,
+  }, {
+    path: '/stores',
+    element: <HelloDevs><Stores /></HelloDevs>,
   }],
 }]);
 export default router;

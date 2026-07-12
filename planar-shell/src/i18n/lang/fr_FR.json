@@ -19,7 +19,8 @@
       "item": "Objet depuis",
       "ghostDir": "Dossier du jeu",
       "or": "ou",
-      "convert": "Convertir"
+      "convert": "Convertir",
+      "stores": "Magasins de données"
     },
     "step0": {
       "serverUrl": "URL du serveur Planar",
@@ -200,6 +201,29 @@
     "localData": {
       "clearLocalStorage": "Effacer le local storage",
       "clearIndexedDb": "Effacer indexedDb"
+    }
+  },
+  "stores": {
+    "tabs": {
+      "title": "Magasins de données",
+      "narrative": {
+        "title": "Narratif",
+        "search": "{{amount}} variables au total"
+      },
+      "characters": {
+        "title": "Personnages",
+        "search": "{{amount}} personnages au total",
+        "namelessOne": "Sans-nom",
+        "morte": "Morte",
+        "annah": "Annah",
+        "dakkon": "Dak'kon",
+        "grace": "Tombée-en-Disgrâce",
+        "nordom": "Nordom",
+        "ignus": "Ignus",
+        "vhailor": "Vhailor",
+        "deionarra": "Deionarra",
+        "ravel": "Ravel"
+      }
     }
   },
   "themes": {

@@ -23,7 +23,7 @@ import type { GameLanguage } from '@planar/shared';
 
 const LangWithFlag: FC<NativeLang & WithClassName> = ({ code, name, className }: NativeLang & WithClassName) => {
   return (
-    <Grid container spacing="1em" width="100%">
+    <Grid container spacing={1} sx={{ width: '100%' }}>
       <Grid size={{ xs: 2 }}>
         { code === 'cs_CZ' && <FlagCz className={className} />}
         { code === 'de_DE' && <FlagDe className={className} />}

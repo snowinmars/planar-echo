@@ -24,7 +24,7 @@ export const json2GhostPstee = async (
 ): Promise<void> => {
   logger.info(`Converting cres json to ghost...`);
   const cres = new Map<string, GhostCreature>();
-  const cresIterator = patchCres(allJsons.cres, allJsons.tlk, discover);
+  const cresIterator = patchCres(allJsons.cres, allJsons.tlk, pathes.gameLanguage, discover);
   for await (const cre of cresIterator) {
     cres.set(cre.resourceName, cre);
     await pathes.ghostDir.saveGhost.creatures(`${cre.resourceName.replaceAll(`'`, '')}.ts`, cre.skeleton, true);

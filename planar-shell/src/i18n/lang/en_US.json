@@ -19,7 +19,8 @@
       "item": "Item from",
       "ghostDir": "Game directory",
       "or": "or",
-      "convert": "Convert"
+      "convert": "Convert",
+      "stores": "Stores"
     },
     "step0": {
       "serverUrl": "Planar server url",
@@ -200,6 +201,29 @@
     "localData": {
       "clearLocalStorage": "Clear local storage",
       "clearIndexedDb": "Clear indexedDb"
+    }
+  },
+  "stores": {
+    "tabs": {
+      "title": "Stores",
+      "narrative": {
+        "title": "Narrative",
+        "search": "Search accross {{amount}} variables"
+      },
+      "characters": {
+        "title": "Characters",
+        "search": "Search accross {{amount}} characters",
+        "namelessOne": "Nameless one",
+        "morte": "Morte",
+        "annah": "Annah",
+        "dakkon": "Dakkon",
+        "grace": "Grace",
+        "nordom": "Nordom",
+        "ignus": "Ignus",
+        "vhailor": "Vhailor",
+        "deionarra": "Deionarra",
+        "ravel": "Ravel"
+      }
     }
   },
   "themes": {

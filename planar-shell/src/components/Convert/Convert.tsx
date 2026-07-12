@@ -10,7 +10,6 @@ import Step5 from './steps/Step5';
 import Step6 from './steps/Step6';
 import { useLandingStore } from './store';
 
-import type { GameLanguage, GameName } from '@planar/shared';
 import type { FC } from 'react';
 
 import styles from './Convert.module.scss';

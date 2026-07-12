@@ -15,6 +15,7 @@ type Creature = CreatureV10 | CreatureV11;
 export const patchCres = (
   cres: Creature[],
   tlk: Tlk,
+  language: GameLanguage,
   discover: DiscoverNext,
 ): AsyncIterableIterator<GhostCreature> => iterate<Creature, GhostCreature>(
   cres,
@@ -37,7 +38,7 @@ export const patchCres = (
     return Promise.resolve({
       resourceName: cre.resourceName,
       skeleton: ghostCreatureSkeleton,
-      translations: new Map<GameLanguage, string>([['ru_RU', ghostCreatureTranslation]]),
+      translations: new Map<GameLanguage, string>([[language, ghostCreatureTranslation]]),
       ghostCreature: tlked,
     });
   },

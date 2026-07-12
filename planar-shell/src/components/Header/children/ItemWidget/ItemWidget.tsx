@@ -49,12 +49,10 @@ const Items: FC<WithClassName> = ({ className }) => {
           variant="standard"
           size="small"
           slotProps={{
+            ...params.slotProps,
             input: {
-              ...params.InputProps,
+              ...params.slotProps.input,
               endAdornment: loading ? <CircularProgress color="inherit" size="1em" /> : null,
-            },
-            inputLabel: {
-              ...params.InputLabelProps,
             },
           }}
         />

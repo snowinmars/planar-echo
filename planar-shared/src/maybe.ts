@@ -6,4 +6,4 @@ export const just = <T>(maybe: Maybe<T>): T => {
 };
 export const maybe = <T>(value: T): Maybe<T> => value ?? null;
 export const nothing = (): Nothing => undefined;
-export const isNothing = <T>(x: Maybe<T>): boolean => x === null || x === undefined;
+export const isNothing = <T>(x: Maybe<T>): x is Nothing => x === null || x === undefined;

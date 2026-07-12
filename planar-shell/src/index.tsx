@@ -8,6 +8,7 @@ import {
 import '@/i18n/index';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeContextProvider } from './theme/context';
+import { WorldStoreProvider } from '@/engine/store/WorldStoreProvider';
 
 import type { AllStoresProps } from '@/engine/store/StoreCollector';
 
@@ -24,7 +25,9 @@ createRoot(document.getElementById('root')!).render(
     <StoreCollector stores={storeConfigs}>
       <ThemeContextProvider>
         <CssBaseline />
-        <RouterProvider router={router} />
+        <WorldStoreProvider>
+          <RouterProvider router={router} />
+        </WorldStoreProvider>
       </ThemeContextProvider>
     </StoreCollector>
   </StrictMode>,

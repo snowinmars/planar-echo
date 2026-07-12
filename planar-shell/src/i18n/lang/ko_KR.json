@@ -19,7 +19,8 @@
       "item": "품목",
       "ghostDir": "게임 폴더",
       "or": "또는",
-      "convert": "변환"
+      "convert": "변환",
+      "stores": "데이터 저장소"
     },
     "step0": {
       "serverUrl": "Planar 서버 URL",
@@ -200,6 +201,29 @@
     "localData": {
       "clearLocalStorage": "로컬 스토리지 지우기",
       "clearIndexedDb": "IndexedDb 지우기"
+    }
+  },
+  "stores": {
+    "tabs": {
+      "title": "데이터 저장소",
+      "narrative": {
+        "title": "이야기",
+        "search": "총 {{amount}} 개의 변수"
+      },
+      "characters": {
+        "title": "캐릭터",
+        "search": "총 {{amount}} 명",
+        "namelessOne": "이름 없는 자",
+        "morte": "모트",
+        "annah": "안나",
+        "dakkon": "다콘",
+        "grace": "그레이스",
+        "nordom": "노돔",
+        "ignus": "이그너스",
+        "vhailor": "베일로",
+        "deionarra": "데이오나라",
+        "ravel": "래벌"
+      }
     }
   },
   "themes": {

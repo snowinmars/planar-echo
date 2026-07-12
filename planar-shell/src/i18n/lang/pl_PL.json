@@ -19,7 +19,8 @@
       "item": "Przedmiot z",
       "ghostDir": "Folder gry",
       "or": "lub",
-      "convert": "Konwertuj"
+      "convert": "Konwertuj",
+      "stores": "Magazyny danych"
     },
     "step0": {
       "serverUrl": "Adres URL serwera Planar",
@@ -200,6 +201,29 @@
     "localData": {
       "clearLocalStorage": "Wyczyść local storage",
       "clearIndexedDb": "Wyczyść indexedDb"
+    }
+  },
+  "stores": {
+    "tabs": {
+      "title": "Magazyny danych",
+      "narrative": {
+        "title": "Narracja",
+        "search": "Łącznie {{amount}} zmiennych"
+      },
+      "characters": {
+        "title": "Osoby",
+        "search": "Łącznie {{amount}} osób",
+        "namelessOne": "Bezimienny",
+        "morte": "Morte",
+        "annah": "Anna",
+        "dakkon": "Dak'kon",
+        "grace": "Nie-Sława",
+        "nordom": "Nordom",
+        "ignus": "Ignus",
+        "vhailor": "Vhailor",
+        "deionarra": "Deionarra",
+        "ravel": "Ravela"
+      }
     }
   },
   "themes": {

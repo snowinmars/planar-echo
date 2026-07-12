@@ -4,10 +4,12 @@ import {
   postApiGhostDialogueByDialogueIdByGameLanguage,
 } from '@/swagger/client';
 import { getDbDialogue, setDbDialogue } from '@/shared/indexedDb';
-import { createDialogueLogic } from '@planar/shared';
+import { createDialogueLogic } from '@/engine/dialogueLogic';
 
 import type { GameLanguage } from '@/swagger/client';
 import type { TranslatedNpcDialogue, UntranslatedNpcDialogue } from '@planar/shared';
+import type { ZustandNarrative } from '@/engine/store/narrativeStore';
+import type { ZustandCharacter } from '@/engine/store/characterStore';
 
 type Skeleton = <T>(dialogueLogic: T) => UntranslatedNpcDialogue;
 export const getSkeleton = async (serverUrl: string, ghostDir: string, dialogueId: string): Promise<string> => {
@@ -50,12 +52,16 @@ export type LoadTranslatedDialogueProps = Readonly<{
   serverUrl: string;
   ghostDir: string;
   gameLanguage: GameLanguage;
+  narrative: ZustandNarrative;
+  character: ZustandCharacter;
 }>;
 export const loadTranslatedDialogue = async ({
   dialogueId,
   serverUrl,
   ghostDir,
   gameLanguage,
+  narrative,
+  character,
 }: LoadTranslatedDialogueProps,
 ): Promise<TranslatedNpcDialogue> => {
   const dbDialogue = await getDbDialogue(dialogueId);
@@ -74,7 +80,7 @@ export const loadTranslatedDialogue = async ({
     translation = ((0, eval)(translationContent));
   }
 
-  const logic = createDialogueLogic();
+  const logic = createDialogueLogic({ narrative, character });
   const untranslated = skeleton(logic);
   const translated = translation(untranslated);
   return translated;

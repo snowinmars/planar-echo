@@ -19,7 +19,8 @@
       "item": "Stück von",
       "ghostDir": "Spielordner",
       "or": "oder",
-      "convert": "Konvertieren"
+      "convert": "Konvertieren",
+      "stores": "Datenspeicher"
     },
     "step0": {
       "serverUrl": "Planar-Server-URL",
@@ -200,6 +201,29 @@
     "localData": {
       "clearLocalStorage": "Local Storage leeren",
       "clearIndexedDb": "IndexedDb leeren"
+    }
+  },
+  "stores": {
+    "tabs": {
+      "title": "Datenspeicher",
+      "narrative": {
+        "title": "Erzählung",
+        "search": "Insgesamt {{amount}} Variablen"
+      },
+      "characters": {
+        "title": "Charaktere",
+        "search": "Insgesamt {{amount}} Zeichen",
+        "namelessOne": "Namenloser",
+        "morte": "Morte",
+        "annah": "Annah",
+        "dakkon": "Dak'kon",
+        "grace": "Grace, die Gefallene",
+        "nordom": "Nordom",
+        "ignus": "Ignus",
+        "vhailor": "Vhailor",
+        "deionarra": "Deionarra",
+        "ravel": "Ravel"
+      }
     }
   },
   "themes": {
