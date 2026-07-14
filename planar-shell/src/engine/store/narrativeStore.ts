@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { initialBooleanStore, initialNumberStore, initialKeysStore, isNothing, nothing } from '@planar/shared';
+import { isNothing } from '@planar/shared';
 import { triggerSave } from './saveSubject';
 
 import type { UseBoundStore, StoreApi } from 'zustand';
@@ -9,15 +9,7 @@ import type { EnvId, KeyId, VariableId } from '@planar/shared';
 export type DbNarrative = Record<NumberVariableId, number> & Record<BooleanVariableId, number> & Record<KeyId, number>;
 export type ZustandNarrative = UseBoundStore<StoreApi<DbNarrative>>;
 
-const createInitialDbNarrative = (): DbNarrative => ({
-  ...initialNumberStore,
-  ...initialBooleanStore,
-  ...initialKeysStore,
-});
-
-export const createZustandNarrative = (initialState: Maybe<DbNarrative> = nothing()): ZustandNarrative => create<DbNarrative>()(() => initialState
-  ? { ...initialState }
-  : { ...createInitialDbNarrative() });
+export const createZustandNarrative = (initialState: DbNarrative): ZustandNarrative => create<DbNarrative>()(() => initialState);
 
 export const getNarrativeActions = (store: ZustandNarrative) => {
   const getValue = ({ variableId }: { variableId: VariableId | KeyId; envId?: Maybe<EnvId> }): number => {

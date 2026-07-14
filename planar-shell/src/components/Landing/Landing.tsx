@@ -6,11 +6,12 @@ import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router';
 import RunnerGuard from './children/RunnerGuard/RunnerGuard';
 
-import { useEffect, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 const Landing: FC = () => {
   const { t } = useTranslation();
+  const [status] = useState(() => planarLocalStorage.get('storesStatus'));
 
   useEffect(() => {
     planarLocalStorage.remove(planarLocalStorage.currentWidget);
@@ -48,7 +49,7 @@ const Landing: FC = () => {
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
-          <RunnerGuard />
+          <RunnerGuard hasStores={status === 'ready'} />
         </Grid>
       </Grid>
     </>

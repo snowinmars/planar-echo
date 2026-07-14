@@ -36,6 +36,7 @@ export const createPathes = async (props: CreatePathesProps): Promise<Pathes> =>
   const ghostInis      = normalize(join(ghostRoot, 'inis'));
   const ghostCreatures = normalize(join(ghostRoot, 'creatures'));
   const ghostEffects   = normalize(join(ghostRoot, 'effects'));
+  const ghostStores    = normalize(join(ghostRoot, 'stores'));
 
   // TODO [snow]: I do not like this path, but where should it lead to?..
   const sharedEnums    = normalize(join(ghostDir, '..', 'planar-shared', 'src', 'dialogueEngine', 'enums'));
@@ -88,6 +89,7 @@ export const createPathes = async (props: CreatePathesProps): Promise<Pathes> =>
         effects  : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostEffects  , resourceName), entry, asIs),
       },
       sharedEnums,
+      stores: ghostStores,
     },
   /* eslint-enable */
   };
@@ -107,6 +109,7 @@ export const createPathes = async (props: CreatePathesProps): Promise<Pathes> =>
     pathes.ghostDir.ghost.inis,
     pathes.ghostDir.ghost.creatures,
     pathes.ghostDir.ghost.effects,
+    pathes.ghostDir.stores,
   ], props.recreate || false);
 
   return pathes;

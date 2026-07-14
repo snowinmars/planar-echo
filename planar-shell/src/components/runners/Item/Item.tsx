@@ -186,53 +186,759 @@ const Item: FC = () => {
               <T title="diceSidesOrMinimumLevel" value={x.diceSidesOrMinimumLevel} />
               <T title="savingThrowType" value={x.savingThrowType?.join(', ')} />
               <T title="savingThrowBonus" value={x.savingThrowBonus} />
-              <T title="acvalue" value={x.acvalue} />
-              <T title="amount" value={x.amount} />
-              <T title="amountSpellsToAdd" value={x.amountSpellsToAdd} />
-              <T title="attackType" value={x.attackType} />
-              <T title="berserkType" value={x.berserkType} />
-              <T title="bonusTo" value={x.bonusTo} />
-              <T title="castAtLevel" value={x.castAtLevel} />
-              <T title="color" value={x.color} />
-              <T title="condition" value={x.condition} />
-              <T title="cycleSpeed" value={x.cycleSpeed} />
-              <T title="damageType" value={x.damageType} />
-              <T title="descriptionNoteTlk" value={x.descriptionNoteTlk} />
-              <T title="direction" value={x.direction} />
-              <T title="effect" value={x.effect} />
-              <T title="embalmingType" value={x.embalmingType} />
-              <T title="fadeAmount" value={x.fadeAmount} />
-              <T title="flags" value={x.flags} />
-              <T title="hasteType" value={x.hasteType} />
-              <T title="healFlags" value={x.healFlags} />
-              <T title="hpAmount" value={x.hpAmount} />
-              <T title="icon" value={x.icon} />
-              <T title="idsTarget" value={x.idsTarget} />
-              <T title="idsValue" value={x.idsValue} />
-              <T title="imagesCount" value={x.imagesCount} />
-              <T title="invisibilityType" value={x.invisibilityType} />
-              <T title="location" value={x.location} />
-              <T title="maximumEnchantment" value={x.maximumEnchantment} />
-              <T title="method" value={x.method} />
-              <T title="mode" value={x.mode} />
-              <T title="modifierType" value={x.modifierType} />
-              <T title="panicType" value={x.panicType} />
-              <T title="particleEffect" value={x.particleEffect} />
-              <T title="playwhere" value={x.playwhere} />
-              <T title="poisonType" value={x.poisonType} />
-              <T title="projectile" value={x.projectile} />
-              <T title="regenerationType" value={x.regenerationType} />
-              <T title="resource" value={x.resource} />
-              <T title="sequence" value={x.sequence} />
-              <T title="spe" value={x.spe} />
-              <T title="spellLevels" value={x.spellLevels} />
-              <T title="statValue" value={x.statValue} />
-              <T title="strength" value={x.strength} />
-              <T title="stringRef" value={x.stringRef} />
-              <T title="stringTlk" value={x.stringTlk} />
-              <T title="value" value={x.value} />
-              <T title="visualEffect" value={x.visualEffect} />
-              <T title="weaponType" value={x.weaponType} />
+              {
+                x.opcode === 'acBonus' && (
+                  <>
+                    <T title="acvalue" value={x.acvalue} />
+                    <T title="bonusTo" value={x.bonusTo} />
+                    <T title="spe" value={x.spe} />
+                  </>
+                )
+              }
+              {x.opcode === 'modifyAttacksPerRound' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'berserk' && (
+                <>
+                  <T title="berserkType" value={x.berserkType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'charismaBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'setColor' && (
+                <>
+                  <T title="color" value={x.color} />
+                  <T title="location" value={x.location} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'setColorGlowPulse' && (
+                <>
+                  <T title="color" value={x.color} />
+                  <T title="location" value={x.location} />
+                  <T title="cycleSpeed" value={x.cycleSpeed} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'consitutionBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'curePoison' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'damage' && (
+                <>
+                  <T title="amount" value={x.amount} />
+                  <T title="mode" value={x.mode} />
+                  <T title="damageType" value={x.damageType} />
+                  <T title="flags" value={x.flags} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'dexterityBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'haste' && (
+                <>
+                  <T title="hasteType" value={x.hasteType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'currentHpBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="healFlags" value={x.healFlags} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'maximumHpBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="mode" value={x.mode} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'intelligenceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'invisibility' && (
+                <>
+                  <T title="invisibilityType" value={x.invisibilityType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'loreBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'luckBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'moraleBonus' && (
+                <>
+                  <T title="mode" value={x.mode} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'panic' && (
+                <>
+                  <T title="panicType" value={x.panicType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'poison' && (
+                <>
+                  <T title="amount" value={x.amount} />
+                  <T title="poisonType" value={x.poisonType} />
+                  <T title="icon" value={x.icon} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'acidResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'coldResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'electricityResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'fireResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'saveVsDeathBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'saveVsWandBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'saveVsPolymorphBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'saveVsBreathBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'saveVsSpellBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'silence' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'sparkle' && (
+                <>
+                  <T title="amount" value={x.amount} />
+                  <T title="particleEffect" value={x.particleEffect} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'bonusWizardSpell' && (
+                <>
+                  <T title="amountSpellsToAdd" value={x.amountSpellsToAdd} />
+                  <T title="spellLevels" value={x.spellLevels} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'strengthBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'stun' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'wisdomBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'baseThac0Bonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'moveSilentlyBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'bonusPriestSpell' && (
+                <>
+                  <T title="amountSpellsToAdd" value={x.amountSpellsToAdd} />
+                  <T title="spellLevels" value={x.spellLevels} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'blur' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'translucency' && (
+                <>
+                  <T title="fadeAmount" value={x.fadeAmount} />
+                  <T title="visualEffect" value={x.visualEffect} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'attackDamageBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'blindness' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'immunityToProjectile' && (
+                <>
+                  <T title="projectile" value={x.projectile} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'magicalFireResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'magicalColdResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'slashingResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'crushingResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'piercingResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'missileResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'openLockBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'findTrapBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'pickPocketBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'fatigueBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'intoxicationBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'exceptionalStrengthBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'regeneration' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="regenerationType" value={x.regenerationType} />
+                  <T title="icon" value={x.icon} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'immunityToEffect' && (
+                <>
+                  <T title="effect" value={x.effect} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'xpBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'removeGold' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'moraleBreak' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'paralyze' && (
+                <>
+                  <T title="idsValue" value={x.idsValue} />
+                  <T title="idsTarget" value={x.idsTarget} />
+                  <T title="effect" value={x.effect} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'immunityToWeapons' && (
+                <>
+                  <T title="maximumEnchantment" value={x.maximumEnchantment} />
+                  <T title="weaponType" value={x.weaponType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'confusion' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'setAnimationSequence' && (
+                <>
+                  <T title="sequence" value={x.sequence} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'castSpell' && (
+                <>
+                  <T title="castAtLevel" value={x.castAtLevel} />
+                  <T title="mode" value={x.mode} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'learnSpell' && (
+                <>
+                  resource: string;
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'castSpellAtPoint' && (
+                <>
+                  <T title="castAtLevel" value={x.castAtLevel} />
+                  <T title="mode" value={x.mode} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'mirrorImageEffect' && (
+                <>
+                  <T title="imagesCount" value={x.imagesCount} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'removeFear' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'magicResistanceBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'preventPortraitIcon' && (
+                <>
+                  <T title="icon" value={x.icon} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {
+                x.opcode === 'poisonResistanceBonus' && (
+                  <>
+                    <T title="value" value={x.value} />
+                    <T title="spe" value={x.spe} />
+                  </>
+                )
+              }
+
+              {x.opcode === 'playSound' && (
+                <>
+                  resource: string;
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'protectionmFromSpell' && (
+                <>
+                  stringTlk: string; resource: string;
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'minimumHp' && (
+                <>
+                  <T title="hpAmount" value={x.hpAmount} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'playVisualEffect' && (
+                <>
+                  <T title="playwhere" value={x.playwhere} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'disableDisplayString' && (
+                <>
+                  stringTlk: string;
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'shakeScreen' && (
+                <>
+                  <T title="strength" value={x.strength} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'thac0Bonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="modifierType" value={x.modifierType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'immunityToSpecificAnimation' && (
+                <>
+                  resource: string;
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'immunityToTurnUndead' && (
+                <>
+                  <T title="statValue" value={x.statValue} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'criticalHitBonus' && (
+                <>
+                  <T title="value" value={x.value} />
+                  <T title="condition" value={x.condition} />
+                  <T title="attackType" value={x.attackType} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'restrictItem' && (
+                <>
+                  <T title="idsTarget" value={x.idsTarget} />
+                  ; descriptionNoteTlk: string;
+                </>
+              )}
+
+              {x.opcode === 'flashScreen' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'soulExodus' && (
+                <>
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'playBamFile' && (
+                <>
+                  <T title="color" value={x.color} />
+                  <T title="method" value={x.method} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'embalm' && (
+                <>
+                  <T title="embalmingType" value={x.embalmingType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
+
+              {x.opcode === 'hitPointTransfer' && (
+                <>
+                  <T title="amount" value={x.amount} />
+                  <T title="direction" value={x.direction} />
+                  <T title="damageType" value={x.damageType} />
+                  <T title="spe" value={x.spe} />
+                  ;
+                </>
+              )}
             </AccordionDetails>
           </Accordion>
         ))

@@ -1,8 +1,6 @@
 import { create } from 'zustand';
-import { nothing, Maybe } from '@planar/shared';
 import { CharacterNarrativeProps } from '../constructors/types';
 import { triggerSave } from './saveSubject';
-import { CharacterStore, initialCharacterStore } from '../constructors/characterStore';
 
 import type { UseBoundStore, StoreApi } from 'zustand';
 import type { WhoId, StatId } from '@planar/shared';
@@ -10,13 +8,7 @@ import type { WhoId, StatId } from '@planar/shared';
 export type DbCharacter = Record<string, CharacterNarrativeProps>;
 export type ZustandCharacter = UseBoundStore<StoreApi<DbCharacter>>;
 
-const createInitialDbCharacter = (): CharacterStore => ({
-  ...initialCharacterStore,
-});
-
-export const createZustandCharacter = (initialState: Maybe<DbCharacter> = nothing()): ZustandCharacter => create<DbCharacter>()(() => initialState
-  ? { ...initialState }
-  : { ...createInitialDbCharacter() });
+export const createZustandCharacter = (initialState: DbCharacter): ZustandCharacter => create<DbCharacter>()(() => initialState);
 
 export const getCharacterActions = (store: ZustandCharacter) => ({
   getNpcStat: ({ whoId, statId }: { whoId: WhoId; statId: StatId }): number => {

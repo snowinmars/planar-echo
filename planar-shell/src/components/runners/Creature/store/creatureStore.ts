@@ -5,9 +5,14 @@ import { postApiGhostCreature } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { loadTranslatedCreature } from './creatureApi';
 
-import type { Maybe, TranslatedCreature } from '@planar/shared';
+import type {
+  Maybe,
+  TranslatedCreatureV10,
+  TranslatedCreatureV11,
+} from '@planar/shared';
 import type { GameLanguage } from '@/swagger/client';
 
+type TranslatedCreature = TranslatedCreatureV10 | TranslatedCreatureV11;
 export type CreatureStore = Readonly<{
   serverUrl: string;
   ghostDir: string;

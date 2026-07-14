@@ -10,13 +10,6 @@ export { translateNpcDialogue } from './dialogueEngine/translateNpcDialogue.js';
 export { dialogueToCreatures, creatureToDialogues } from './resourceMappers/creatureToDialogue.js';
 export { dialogueToCreatureOrItem } from './resourceMappers/dialogueToCreatureOrItem.js';
 export { dialogueToItems, itemToDialogues } from './resourceMappers/itemToDialogues.js';
-export {
-  initialBooleanStore,
-  initialNumberStore,
-} from './dialogueEngine/enums/variable.js';
-export {
-  initialKeysStore,
-} from './dialogueEngine/enums/key.js';
 
 export type { Direction } from './direction.js';
 export type { GameName } from './gameName.js';
@@ -39,6 +32,10 @@ export type { DialogueLogic } from './dialogueEngine/dialogueLogic.types.js';
 export type { AlignmentId } from './dialogueEngine/enums/alignment.js';
 export type { AnimationId } from './dialogueEngine/enums/animation.js';
 export type { ClassId } from './dialogueEngine/enums/class.js';
+export type {
+  CharacterStore,
+  CharacterNarrativeProps,
+} from './dialogueEngine/enums/character.js';
 export type { DisguiseId } from './dialogueEngine/enums/disguise.js';
 export type { DoorId } from './dialogueEngine/enums/door.js';
 export type { EnvId } from './dialogueEngine/enums/env.js';

@@ -6,8 +6,16 @@ import {
 } from '@/swagger/client';
 import { getDbCreature, setDbCreature } from '@/shared/indexedDb';
 
-import type { GameLanguage, TranslatedCreature, UntranslatedCreature } from '@planar/shared';
+import type {
+  GameLanguage,
+  TranslatedCreatureV10,
+  TranslatedCreatureV11,
+  UntranslatedCreatureV10,
+  UntranslatedCreatureV11,
+} from '@planar/shared';
 
+type TranslatedCreature = TranslatedCreatureV10 | TranslatedCreatureV11;
+type UntranslatedCreature = UntranslatedCreatureV10 | UntranslatedCreatureV11;
 type Skeleton = () => UntranslatedCreature;
 export const getSkeleton = async (serverUrl: string, ghostDir: string, creatureId: string): Promise<string> => {
   const skeletonResponse = await postApiGhostCreatureByCreatureIdSkeleton({

@@ -9,6 +9,8 @@ import Step4 from './steps/Step4';
 import Step5 from './steps/Step5';
 import Step6 from './steps/Step6';
 import { useLandingStore } from './store';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import type { FC } from 'react';
 
@@ -17,6 +19,11 @@ import styles from './Convert.module.scss';
 const Convert: FC = () => {
   const { t } = useTranslation();
   const store = useLandingStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (store.step6Valid) navigate('/')?.catch(e => console.error(e));
+  }, [store.step6Valid]);
 
   return (
     <Grid container spacing="1em">

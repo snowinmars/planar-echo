@@ -5,17 +5,19 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import type { FC } from 'react';
-
-import styles from './RunnerGuard.module.scss';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 
+import type { FC } from 'react';
+import type { Maybe } from '@planar/shared';
+
+import styles from './RunnerGuard.module.scss';
+
 type ButtonInsideTextFieldProps = Readonly<{
   id: string;
+  disabled?: Maybe<boolean>;
 }>;
-const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id }: ButtonInsideTextFieldProps) => {
+const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id, disabled }: ButtonInsideTextFieldProps) => {
   const { t } = useTranslation();
 
   const [ghostDir, setGhostDir] = useState<string>(() => planarLocalStorage.get('ghostDir', '')!);
@@ -32,6 +34,7 @@ const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id }: ButtonIns
       size="small"
       variant="standard"
       placeholder={t('landing.runnerGuard.ghostDir')}
+      disabled={disabled ?? false}
       slotProps={{
         input: {
           startAdornment: (
@@ -43,6 +46,7 @@ const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id }: ButtonIns
                 nativeButton={false}
                 edge="start"
                 size="small"
+                disabled={disabled ?? false}
               >
                 {t(`landing.runnerGuard.${id}`)}
               </IconButton>
@@ -54,7 +58,10 @@ const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id }: ButtonIns
   );
 };
 
-const RunnerGuard: FC = () => {
+type RunnerGuardProps = Readonly<{
+  hasStores: boolean;
+}>;
+const RunnerGuard: FC<RunnerGuardProps> = ({ hasStores }: RunnerGuardProps) => {
   const { t } = useTranslation();
 
   return (
@@ -69,13 +76,14 @@ const RunnerGuard: FC = () => {
       <Typography>
         {t('landing.runnerGuard.or')}
       </Typography>
-      <ButtonInsideTextField id="dialogue" />
-      <ButtonInsideTextField id="creature" />
-      <ButtonInsideTextField id="item" />
+      <ButtonInsideTextField id="dialogue" disabled={!hasStores} />
+      <ButtonInsideTextField id="creature" disabled={!hasStores} />
+      <ButtonInsideTextField id="item" disabled={!hasStores} />
       <Button
         component={RouterLink}
         to="/stores"
         nativeButton={false}
+        disabled={!hasStores}
       >
         {t('landing.runnerGuard.stores')}
       </Button>

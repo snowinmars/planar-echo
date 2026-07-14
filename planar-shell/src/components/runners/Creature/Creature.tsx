@@ -25,6 +25,7 @@ type TProps = Readonly<{
 }>;
 const T: FC<TProps> = ({ title, value }: TProps) => <TextField className={styles.p} disabled variant="standard" label={title} value={value} />;
 
+// TODO [snow]: extend with v11 props
 const Creature: FC = () => {
   const { t } = useTranslation();
   useCreatureWidgetBridge();
@@ -105,7 +106,9 @@ const Creature: FC = () => {
         </AccordionSummary>
         <AccordionDetails>
           <T title={t('run.creature.hideInShadows')} value={translatedCreature.hideInShadows} />
-          <T title={t('run.creature.detectIllusion')} value={translatedCreature.detectIllusion} />
+          {
+            translatedCreature.version === 'v1.0' && <T title={t('run.creature.detectIllusion')} value={translatedCreature.detectIllusion} />
+          }
           <T title={t('run.creature.setTraps')} value={translatedCreature.setTraps} />
           <T title={t('run.creature.lore')} value={translatedCreature.lore} />
           <T title={t('run.creature.lockpicking')} value={translatedCreature.lockpicking} />
@@ -131,9 +134,15 @@ const Creature: FC = () => {
           <T title="fatigue" value={translatedCreature.fatigue} />
           <T title="intoxication" value={translatedCreature.intoxication} />
           <T title="luck" value={translatedCreature.luck} />
-          <T title="availableInventorySlotsCount" value={translatedCreature.availableInventorySlotsCount} />
-          <T title="nightmareModeModifiersApplied" value={translatedCreature.nightmareModeModifiersApplied} />
-          <T title="translucency" value={translatedCreature.translucency} />
+          {
+            translatedCreature.version === 'v1.0' && (
+              <>
+                <T title="availableInventorySlotsCount" value={translatedCreature.availableInventorySlotsCount} />
+                <T title="nightmareModeModifiersApplied" value={translatedCreature.nightmareModeModifiersApplied} />
+                <T title="translucency" value={translatedCreature.translucency} />
+              </>
+            )
+          }
           <T title="murderIncrementBy" value={translatedCreature.murderIncrementBy} />
           <T title="turnUndeadLevel" value={translatedCreature.turnUndeadLevel} />
           <T title="tracking" value={translatedCreature.tracking} />
@@ -214,20 +223,26 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.proficiencies')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="largeSwordProficiency" value={translatedCreature.largeSwordProficiency} />
-          <T title="smallSwordProficiency" value={translatedCreature.smallSwordProficiency} />
           <T title="bowProficiency" value={translatedCreature.bowProficiency} />
-          <T title="spearProficiency" value={translatedCreature.spearProficiency} />
-          <T title="bluntProficiency" value={translatedCreature.bluntProficiency} />
-          <T title="spikedProficiency" value={translatedCreature.spikedProficiency} />
           <T title="axeProficiency" value={translatedCreature.axeProficiency} />
-          <T title="missileProficiency" value={translatedCreature.missileProficiency} />
-          <T title="unusedProficiency1" value={translatedCreature.unusedProficiency1} />
-          <T title="unusedProficiency2" value={translatedCreature.unusedProficiency2} />
-          <T title="unusedProficiency3" value={translatedCreature.unusedProficiency3} />
-          <T title="unusedProficiency4" value={translatedCreature.unusedProficiency4} />
-          <T title="unusedProficiency5" value={translatedCreature.unusedProficiency5} />
           <T title="unspentProficiencies" value={translatedCreature.unspentProficiencies} />
+          {
+            translatedCreature.version === 'v1.0' && (
+              <>
+                <T title="largeSwordProficiency" value={translatedCreature.largeSwordProficiency} />
+                <T title="smallSwordProficiency" value={translatedCreature.smallSwordProficiency} />
+                <T title="spearProficiency" value={translatedCreature.spearProficiency} />
+                <T title="bluntProficiency" value={translatedCreature.bluntProficiency} />
+                <T title="spikedProficiency" value={translatedCreature.spikedProficiency} />
+                <T title="missileProficiency" value={translatedCreature.missileProficiency} />
+                <T title="unusedProficiency1" value={translatedCreature.unusedProficiency1} />
+                <T title="unusedProficiency2" value={translatedCreature.unusedProficiency2} />
+                <T title="unusedProficiency3" value={translatedCreature.unusedProficiency3} />
+                <T title="unusedProficiency4" value={translatedCreature.unusedProficiency4} />
+                <T title="unusedProficiency5" value={translatedCreature.unusedProficiency5} />
+              </>
+            )
+          }
         </AccordionDetails>
       </Accordion>
 
