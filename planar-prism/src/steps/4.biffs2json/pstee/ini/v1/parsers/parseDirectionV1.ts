@@ -1,5 +1,4 @@
-import type { Maybe } from '@planar/shared';
-import type { Direction } from './parseDirectionV1.types.js';
+import type { Direction, Maybe } from '@planar/shared';
 
 export const parseDirectionV1 = (s: Maybe<string>): Direction => {
   if (!s) throw new Error(`Cannot parse Direction from nothing`);

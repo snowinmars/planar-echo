@@ -3,8 +3,9 @@ import attachWeights from './1.attachWeights.js';
 import patchTranslation from './2.patchTranslation.js';
 import splitTranslation from './3.splitTranslation.js';
 import nestDialogue from './4.nestDialogue.js';
-import buildDialogueSkeleton from './5.buildDialogueSkeleton.js';
-import translateDialogue from './6.translateDialogue.js';
+import extendWithEmptyResponses from './5.extendWithemptyResponses.js';
+import buildDialogueSkeleton from './6.buildDialogueSkeleton.js';
+import translateDialogue from './7.translateDialogue.js';
 import { pickCreatureOrItemToTalk } from './pickCre.js';
 import { reportProgress } from '@/shared/report.js';
 
@@ -13,7 +14,7 @@ import type {
   GhostCreatureV11,
   GhostItemV10,
 } from '../../../types.js';
-import type { GameLanguage } from '@planar/shared';
+import type { GameLanguage, WhoId } from '@planar/shared';
 import type { Tlk } from '@/steps/4.biffs2json/pstee/tlk/index.js';
 import type { RawDlg } from '@/steps/4.biffs2json/pstee/dlg/index.js';
 import type { DiscoverNext } from '@/discoverer.types.js';
@@ -37,14 +38,16 @@ export const patchDlgs = (
         const translated = patchTranslation(weighted, tlk);
         const splitted = splitTranslation(translated, language);
         const nested = nestDialogue(splitted);
+        const nestedExtendedWithEmptyResponses = extendWithEmptyResponses(nested);
 
         const creatureOrItem = pickCreatureOrItemToTalk(cres, items, dlg.resourceName);
-        const npcId = getNpcId(creatureOrItem);
+        const npc = getNpcIdAndName(creatureOrItem);
 
-        const ghostSkeleton = buildDialogueSkeleton(nested, discover);
+        const ghostSkeleton = buildDialogueSkeleton(nestedExtendedWithEmptyResponses, discover);
         const ghostSkeletonTranslation = translateDialogue({
-          dlg: nested,
-          npcId,
+          dlg: nestedExtendedWithEmptyResponses,
+          id: npc.id,
+          name: npc.name,
           language,
         });
 
@@ -68,8 +71,18 @@ export const patchDlgs = (
     }
   },
 );
-const getNpcId = (creatureOrItem: 'narrator' | GhostItemV10 | (GhostCreatureV10 | GhostCreatureV11)): string => {
-  if (creatureOrItem === 'narrator') return 'narrator';
-  if (creatureOrItem.header.signature === 'cre') return creatureOrItem.header.nameTlk;
-  return creatureOrItem.header.identifiedNameTlk;
+
+const getNpcIdAndName = (creatureOrItem: 'narrator' | GhostItemV10 | (GhostCreatureV10 | GhostCreatureV11)): Readonly<{ id: WhoId; name: string }> => {
+  if (creatureOrItem === 'narrator') return {
+    id: 'narrator',
+    name: '',
+  };
+  if (creatureOrItem.header.signature === 'cre') return {
+    id: creatureOrItem.resourceName.replaceAll('.cre', '') as WhoId, // seems to work
+    name: creatureOrItem.header.nameTlk,
+  };
+  return {
+    id: creatureOrItem.resourceName.replaceAll('.itm', '') as WhoId, // seems to work
+    name: creatureOrItem.header.identifiedNameTlk,
+  };
 };

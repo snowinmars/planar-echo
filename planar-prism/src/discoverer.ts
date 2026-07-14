@@ -1,7 +1,8 @@
 import { Subject } from 'rxjs';
 import { allCategories } from './discoverer.types.js';
+import { isNothing } from '@planar/shared';
 
-import { isNothing, just, type Maybe } from '@planar/shared';
+import type { Maybe } from '@planar/shared';
 import type {
   Discovered,
   DiscoveredEvent,
@@ -9,6 +10,7 @@ import type {
   DiscovererResult,
   Store,
   StoreDiscoveredType,
+  VariableInfo,
 } from './discoverer.types.js';
 
 const createStore = (): Store => {
@@ -22,40 +24,60 @@ const createStore = (): Store => {
 const register = (store: Store, type: DiscoveredEventType, name: string, env?: Maybe<string>): void => {
   if (!type) throw new Error(`Type '${type}' is out of range`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
   store.get(type)!.add(name);
-  if (type === 'variable' && env) store.get('env')!.add(env);
+  const addVariableEnv = type === 'variable' && env;
+  const addTimerEnv = type === 'timer' && env;
+  if (addVariableEnv) store.get('env')!.add(env);
+  if (addTimerEnv) store.get('env')!.add(env);
 };
 
-const storeToDiscovered = (store: Store, variableSpectres: Map<string, Set<string | number>>): Discovered => {
+const storeToDiscovered = (store: Store, variableInfos: Map<string, VariableInfo>): Discovered => {
   const entries: [StoreDiscoveredType, string[]][] = allCategories.map(type => [
     type,
     [...store.get(type)!.values()],
   ]);
   return {
     variables: new Map(entries),
-    spectres: variableSpectres,
+    variableInfos: variableInfos,
   };
 };
 
 const discoverer = (): DiscovererResult => {
   const event$ = new Subject<DiscoveredEvent>();
   const store = createStore();
-  const variableSpectres = new Map<string, Set<string | number>>();
+  const variableInfos = new Map<string, VariableInfo>();
 
-  const subscription = event$.subscribe(({ type, name, env, extendValueSpectreWith }) => {
+  const subscription = event$.subscribe(({ type, name, env, extendValueSpectreWith, forceType }) => {
     register(store, type, name, env);
 
-    if (type === 'variable' && !isNothing(extendValueSpectreWith)) {
-      if (!variableSpectres.has(name)) {
-        variableSpectres.set(name, new Set());
+    if (type === 'variable' || type === 'key') {
+      const variableInfo = variableInfos.get(name)!;
+
+      if (!variableInfos.has(name)) {
+        const newSpectre = isNothing(extendValueSpectreWith) ? new Set<string | number>() : new Set<string | number>([extendValueSpectreWith]);
+        variableInfos.set(name, {
+          spectre: newSpectre,
+          forceType,
+        });
       }
-      variableSpectres.get(name)!.add(just<string | number>(extendValueSpectreWith));
+      else {
+        const newSpectre = isNothing(extendValueSpectreWith) ? variableInfo.spectre : new Set<string | number>([...variableInfo.spectre, extendValueSpectreWith]);
+
+        const overrideForceType = variableInfo.forceType && forceType && variableInfo.forceType !== forceType;
+        if (overrideForceType) throw new Error(`Attempt to force type on variable '${name}' twice: '${variableInfo.forceType}' -> '${forceType}'`);
+        const newForceType = variableInfo.forceType ?? forceType;
+
+        variableInfos.set(name, {
+          spectre: newSpectre,
+          forceType: newForceType,
+        });
+      }
     }
   });
   const discover = (event: DiscoveredEvent): void => event$.next(event);
   const done = (): Discovered => {
     subscription.unsubscribe();
     event$.complete();
-    return storeToDiscovered(store, variableSpectres);
+    return storeToDiscovered(store, variableInfos);
   };
   return [discover, done];
 };

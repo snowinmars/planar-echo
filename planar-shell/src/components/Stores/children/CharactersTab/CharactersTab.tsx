@@ -209,7 +209,7 @@ const CharactersTab: FC<CharactersTabProps> = ({ onSave }: CharactersTabProps) =
             columnWidth={COLUMN_WIDTH}
             rowCount={rowCount}
             rowHeight={ROW_HEIGHT}
-            cellProps={{ cells: characterPropertyCells, columnCount, selectedCharacter }}
+            cellProps={{ cells: characterPropertyCells, columnCount }}
             overscanCount={5}
           />
         )}

@@ -14,12 +14,14 @@ const escape = (x: string): string => {
 
 type TranslateDialogueProps = Readonly<{
   dlg: NestedDlg;
-  npcId: string;
+  id: string;
+  name: string;
   language: GameLanguage;
 }>;
 const translateDialogue = ({
   dlg,
-  npcId,
+  id,
+  name,
   language,
 }: TranslateDialogueProps): string => {
   const npcLowercaseId = dlg.resourceName.split('.')[0]!.replace(`'`, ``);
@@ -41,7 +43,7 @@ const translateDialogue = ({
 
     writer.writeLine('dialogue', 2);
     writer.writeLine(`.label('${stateId}')`, 4);
-    writer.writeLine(`.say('${npcId.replaceAll(`'`, '\\\'')}', ${escape(just(state.textTlk))})`, 4);
+    writer.writeLine(`.say('${id.replaceAll(`'`, '\\\'')}', '${name.replaceAll(`'`, '\\\'')}', ${escape(just(state.textTlk))})`, 4);
 
     for (const response of state.responses) {
       const responseId = formResponse(npcLowercaseId, response.index);

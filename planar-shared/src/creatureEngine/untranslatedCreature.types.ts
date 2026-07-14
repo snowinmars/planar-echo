@@ -1,6 +1,7 @@
-import type { ClassId } from '@/dialogueEngine/enums/class.js';
+import type { ClassId } from '../dialogueEngine/enums/class.js';
+import type { Maybe } from '../maybe.js';
 
-export type UntranslatedCreature = Readonly<{
+type BaseUntranslatedCreature = Readonly<{
   flags: string[];
   xpGainedForKilling: number;
   powerLevelOrXp: number;
@@ -45,7 +46,6 @@ export type UntranslatedCreature = Readonly<{
   crushingResistance: number;
   piercingResistance: number;
   missileResistance: number;
-  detectIllusion: number;
   setTraps: number;
   lore: number;
   lockpicking: number;
@@ -55,26 +55,15 @@ export type UntranslatedCreature = Readonly<{
   fatigue: number;
   intoxication: number;
   luck: number;
-  largeSwordProficiency: number;
-  smallSwordProficiency: number;
   bowProficiency: number;
-  spearProficiency: number;
-  bluntProficiency: number;
-  spikedProficiency: number;
   axeProficiency: number;
-  missileProficiency: number;
-  unusedProficiency1: number;
-  unusedProficiency2: number;
-  unusedProficiency3: number;
-  unusedProficiency4: number;
-  unusedProficiency5: number;
   unspentProficiencies: number;
-  availableInventorySlotsCount: number;
-  nightmareModeModifiersApplied: number;
-  translucency: number;
   murderIncrementBy: number;
   turnUndeadLevel: number;
   tracking: number;
+  goodIncrementBy: Maybe<number>;
+  lawIncrementBy: Maybe<number>;
+  ladyIncrementBy: Maybe<number>;
   faction: number;
   team: number;
   species: string;
@@ -129,3 +118,51 @@ export type UntranslatedCreature = Readonly<{
   countOfEffects: number;
   dialogueRef: string;
 }>;
+
+type UntranslatedCreatureV10Extension = Readonly<{
+  version: 'v1.0';
+  detectIllusion: number;
+  largeSwordProficiency: number;
+  smallSwordProficiency: number;
+  spearProficiency: number;
+  bluntProficiency: number;
+  spikedProficiency: number;
+  missileProficiency: number;
+  unusedProficiency1: number;
+  unusedProficiency2: number;
+  unusedProficiency3: number;
+  unusedProficiency4: number;
+  unusedProficiency5: number;
+  availableInventorySlotsCount: number;
+  nightmareModeModifiersApplied: number;
+  translucency: number;
+}>;
+
+type UntranslatedCreatureV11Extension = Readonly<{
+  version: 'v1.1';
+  fistProficiency: number;
+  edgedWeaponProficiency: number;
+  hammerProficiency: number;
+  clubProficiency: number;
+  overlaysOffset: string;
+  overlaysSize: string;
+  characterType: string;
+  colorsCount: string;
+  color1: string;
+  color2: string;
+  color3: string;
+  color4: string;
+  color5: string;
+  color6: string;
+  color7: string;
+  color1Placement: string;
+  color2Placement: string;
+  color3Placement: string;
+  color4Placement: string;
+  color5Placement: string;
+  color6Placement: string;
+  color7Placement: string;
+}>;
+
+export type UntranslatedCreatureV10 = BaseUntranslatedCreature & UntranslatedCreatureV10Extension;
+export type UntranslatedCreatureV11 = BaseUntranslatedCreature & UntranslatedCreatureV11Extension;

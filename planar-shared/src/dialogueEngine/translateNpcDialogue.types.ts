@@ -1,4 +1,5 @@
 import type { Maybe } from '../maybe.js';
+import type { ItemId } from './enums/item.js';
 import type { ResponseId } from './enums/response.js';
 import type { StateId } from './enums/state.js';
 import type { WhoId } from './enums/who.js';
@@ -19,7 +20,8 @@ export type TranslatedLabel = Readonly<{
 ;
 export type TranslatedSay = Readonly<{
   sayId: string; // TODO [snow]: to SayId
-  whoId: WhoId;
+  whoIdOrItemId: WhoId | ItemId;
+  localizedName: string;
   what: string;
   args: Maybe<ArgsProps>;
 }>

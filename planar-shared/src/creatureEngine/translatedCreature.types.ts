@@ -1,8 +1,6 @@
-import type { UntranslatedCreature } from './untranslatedCreature.types.js';
+import type { UntranslatedCreatureV10, UntranslatedCreatureV11 } from './untranslatedCreature.types.js';
 
-export type TranslatedCreature = UntranslatedCreature & Readonly<{
-  nameTlk: string; // TODO [snow]: why does not compilation fail, if this type mismatch?
-  tooltipTlk: string;
+type Sound = Readonly<{
   initialMeetingSoundTlk: string;
   moraleSoundTlk: string;
   happySoundTlk: string;
@@ -103,4 +101,13 @@ export type TranslatedCreature = UntranslatedCreature & Readonly<{
   sound23Tlk: string;
   sound24Tlk: string;
   sound25Tlk: string;
+}>;
+
+export type TranslatedCreatureV10 = Sound & UntranslatedCreatureV10 & Readonly<{
+  nameTlk: string;
+  tooltipTlk: string;
+}>;
+export type TranslatedCreatureV11 = Sound & UntranslatedCreatureV11 & Readonly<{
+  nameTlk: string;
+  tooltipTlk: string;
 }>;

@@ -326,6 +326,7 @@ export type ScriptId
     | 'vthug1'
     | 'wangyar'
     | 'wernet'
+    | 'xander'
     | 'yellow-fingers'
     | 'yves'
     | 'z569'

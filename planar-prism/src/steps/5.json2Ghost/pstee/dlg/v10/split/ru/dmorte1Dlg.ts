@@ -11,13 +11,13 @@ const splitRuDmorte1Dlg: Splitter = (state: TlkedState): SplittedState => {
       ...state,
       textTlkSplits: [5],
       action: createWriter()
-        .writeLine(`l.talkMorte();`, 6)
-        .writeLine(`return {`, 6)
-        .writeLine(`id: 'playSound',`, 8)
-        .writeLine(`args: {`, 8)
-        .writeLine(`sound: 'morte1_state0',`, 10)
-        .writeLine(`},`, 8)
-        .writeLine(`};`, 6)
+        .writeLine(`l.talk('morte');`, 8)
+        .writeLine(`return {`, 8)
+        .writeLine(`id: 'playSound',`, 10)
+        .writeLine(`args: {`, 10)
+        .writeLine(`sound: 'morte1_state0',`, 12)
+        .writeLine(`},`, 10)
+        .writeLine(`};`, 8)
         .done(),
     };
     default: return {

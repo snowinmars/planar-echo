@@ -11,7 +11,8 @@
   "author": "snowinmars",
   "scripts": {
     "build": "tsc && tsc-alias",
-    "build-ghost": "yarn build-ghost-creatures && yarn build-ghost-dialogues && yarn build-ghost-items",
+    "build-ghost": "yarn typecheck-ghost && yarn build-ghost-creatures && yarn build-ghost-dialogues && yarn build-ghost-items",
+    "typecheck-ghost": "node ../node_modules/typescript/bin/tsc --noEmit --project tsconfig.ghost.json",
     "build-ghost-creatures": "node ./src/dev/build-ghost-subdirectory.cjs creatures",
     "build-ghost-dialogues": "node ./src/dev/build-ghost-subdirectory.cjs dialogues",
     "build-ghost-items": "node ./src/dev/build-ghost-subdirectory.cjs items",

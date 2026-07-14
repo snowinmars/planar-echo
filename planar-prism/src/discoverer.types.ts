@@ -4,14 +4,18 @@ export const allCategories = [
   'alignment',
   'animation',
   'class',
+  'disguise',
   'door',
   'env',
   'item',
   'journal',
+  'journalType',
   'key',
   'location',
+  'message',
   'movie',
   'portal',
+  'proficiency',
   'response',
   'scene',
   'script',
@@ -19,10 +23,10 @@ export const allCategories = [
   'slot',
   'sound',
   'spell',
-  'sprite',
   'stat',
   'state',
   'timeMeasure',
+  'timer',
   'trigger',
   'variable',
   'who',
@@ -32,13 +36,19 @@ export type DiscoveredEventType = Exclude<StoreDiscoveredType, 'env'>; // env re
 export type Store = Map<StoreDiscoveredType, Set<string>>;
 export type Discovered = {
   variables: Map<StoreDiscoveredType, string[]>;
-  spectres: Map<string, Set<string | number>>;
+  variableInfos: Map<string, VariableInfo>;
 };
+type SpecteValue = string | number;
 export type DiscoveredEvent = Readonly<{
   type: DiscoveredEventType;
   name: string;
   env?: Maybe<string>;
-  extendValueSpectreWith?: Maybe<(string | number)>;
+  extendValueSpectreWith?: Maybe<SpecteValue>;
+  forceType?: VariableInfo['forceType'];
 }>;
 export type DiscoverNext = (value: DiscoveredEvent) => void;
 export type DiscovererResult = [DiscoverNext, () => Discovered];
+export type VariableInfo = Readonly<{
+  spectre: Set<SpecteValue>;
+  forceType?: Maybe<'number' | 'boolean' | 'string'>;
+}>;

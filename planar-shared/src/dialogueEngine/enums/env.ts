@@ -8,6 +8,7 @@ export type EnvId
     | 'ar0200'
     | 'ar0201'
     | 'ar0202'
+    | 'ar0208'
     | 'ar0300'
     | 'ar0301'
     | 'ar0400'

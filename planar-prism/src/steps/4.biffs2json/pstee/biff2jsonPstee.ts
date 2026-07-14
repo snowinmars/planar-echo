@@ -87,7 +87,6 @@ const biffs2jsonPstee = async (
     'over01.dlg',
     'over02.dlg',
     'over03.dlg',
-    'dalmidil.dlg',
   ];
   const dlgIterator = parseDlg(pathes, decompiledBiffs.get('dlg')!.filter(x => !emptyDialogues.includes(x.resourceName)));
   for await (const dlg of dlgIterator) {

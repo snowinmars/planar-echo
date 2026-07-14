@@ -378,6 +378,7 @@ export type ItemId
     | 'm2pteeth'
     | 'm3cteeth'
     | 'm3pteeth'
+    | 'm_gaze'
     | 'mace'
     | 'mage4'
     | 'magguard'

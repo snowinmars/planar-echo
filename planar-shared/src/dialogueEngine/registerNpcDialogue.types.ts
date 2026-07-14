@@ -1,8 +1,7 @@
 import type { GameLanguage } from '../gameLanguage.js';
 import type { Maybe } from '../maybe.js';
 import type { StateId } from './enums/state.js';
-import type { SoundId } from './enums/sound.js';
-import type { SpriteId } from './enums/sprite.js';
+// import type { SoundId } from './enums/sound.js';
 import type { ResponseId } from './enums/response.js';
 
 export type DevGameLanguage = GameLanguage | 'dev';
@@ -10,20 +9,12 @@ export type DevGameLanguage = GameLanguage | 'dev';
 export type EngineInstructionPlaySound = Readonly<{
   id: 'playSound';
   args: {
-    sound: SoundId;
+    sound: string; // TODO [snow]: entype as SoundId
   };
-}>
-;
-export type EngineInstructionRedraw = Readonly<{
-  id: 'redraw';
-  args: {
-    sprite: SpriteId;
-  };
-}>
-;
+}>;
+
 export type EngineInstruction
   = | EngineInstructionPlaySound
-    | EngineInstructionRedraw
 ;
 export type InternalConditionCallback<T> = (logic: T) => boolean;
 export type InternalActionCallback<T> = (logic: T) => Maybe<EngineInstruction>;

@@ -66,16 +66,16 @@ const buildDialogueItemMap = (itemDialoguesMap: Map<string, Set<string>>): Map<s
 
 const dialogueItemMap = buildDialogueItemMap(itemDialoguesMap);
 
-export const itemToDialogues = (itemId: string): string[] => {
+export const itemToDialogues = (itemId: string, throwOnNothing = true): string[] => {
   const dialogues = itemDialoguesMap.get(itemId);
-  if (!dialogues) throw new Error(`Cannot find items for dialogue '${itemId}'`);
-
-  return [...dialogues.values()];
+  if (dialogues) return [...dialogues.values()];
+  if (throwOnNothing) throw new Error(`Cannot find items for dialogue '${itemId}'`);
+  return [];
 };
 
-export const dialogueToItems = (dialogueId: string): string[] => {
+export const dialogueToItems = (dialogueId: string, throwOnNothing = true): string[] => {
   const items = dialogueItemMap.get(dialogueId);
-  if (!items) throw new Error(`Cannot find dialogues for item '${dialogueId}'`);
-
-  return [...items.values()];
+  if (items) return [...items.values()];
+  if (throwOnNothing) throw new Error(`Cannot find dialogues for item '${dialogueId}'`);
+  return [];
 };

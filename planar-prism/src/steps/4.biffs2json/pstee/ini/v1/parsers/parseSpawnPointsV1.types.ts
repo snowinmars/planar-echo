@@ -1,4 +1,4 @@
-import type { Direction } from './parseDirectionV1.types.js';
+import type { Direction } from '@planar/shared';
 
 export type CreatureIniSpawnPoint = Readonly<{
   x: number;

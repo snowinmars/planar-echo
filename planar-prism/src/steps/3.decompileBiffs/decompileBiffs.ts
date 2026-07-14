@@ -33,7 +33,10 @@ export const decompileBiffs = async (pathes: Pathes): Promise<Map<DecompiledBiff
   else {
     logger.info(`Decompiling biffs archives from '${gameDir}' to '${ghostDir}'; might take a while`);
 
-    const decompiledBiffs = await decompileAndParseBiffs(pathes);
+    const decompiledBiffs = await decompileAndParseBiffs(pathes, x => reportProgress({
+      value: x,
+      step: 'decompileBiffs',
+    }));
     await saveToFile(cacheJson, decompiledBiffs);
 
     reportProgress({

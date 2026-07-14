@@ -9,7 +9,7 @@ import type { DiscoverNext } from '@/discoverer.types.js';
 const isResponseDesctructor = (response: NestedDlgResponse) => !response.nextDialog;
 const isResponseExtern = (response: NestedDlgResponse, resourceName: string) => response.nextDialog && `${response.nextDialog}.dlg` !== resourceName;
 
-const formStateId = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`.replace(`'`, `\\'`);
+const formStateId = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`;
 const formResponseId = (npcLowercaseId: string, responseIndex: number): string => `${npcLowercaseId}_response${responseIndex}`;
 
 // from: [ 'A', 'B', 'l.or(2)', 'C', 'D', 'E', 'l.or(2)', 'F', 'G', 'H' ]
@@ -98,6 +98,8 @@ const formStateLabel = ({
 }: FormStateProps): string => {
   const writer = createWriter();
   writer.writeLine('dialogue', 2);
+
+  discover({ type: 'state', name: `${npcLowercaseId}_destructor` });
 
   const weight = stateIndicesOrderedByWeight.indexOf(state.index);
   const labelArgsProps = formLabelArgsProps(state, weight, npcLowercaseId, discover);
@@ -217,7 +219,7 @@ const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string =
       discover({ type: 'response', name: responseId });
       const targetState = response.flags.includes('terminates dialog')
         ? 'terminate dialogue'
-        : formStateId(just(response.nextDialog), just(response.nextDialogState));
+        : formStateId(just(response.nextDialog).replace(`'`, ``), just(response.nextDialogState));
 
       writer.write(formResponse({
         response,

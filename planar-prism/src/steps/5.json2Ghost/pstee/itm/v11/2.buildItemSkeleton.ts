@@ -599,11 +599,11 @@ const buildItemSkeletonV11 = (itm: GhostItemV10, discover: DiscoverNext): string
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${itm.resourceName}`);
   writer.writeLine(' */');
-  writer.writeLine(`const ${npcLowercaseId}ItemSkeleton = () => {`);
+  writer.writeLine(`const _${npcLowercaseId}ItemSkeleton = () => {`);
   writer.writeLine(`const item: UntranslatedItem = {`, 2);
 
   writer.writeLine(`version: '${itm.header.version}',`, 4);
-  if (itm.header.dropSound) writer.writeLine(`dropSound: '${itm.header.dropSound}',`, 4);
+  writer.writeLine(`dropSound: '${itm.header.dropSound ?? null}',`, 4);
   writeFlags(
     writer,
     itm.header.flags,
@@ -681,7 +681,7 @@ const buildItemSkeletonV11 = (itm: GhostItemV10, discover: DiscoverNext): string
   writer.writeLine('};', 2);
   writer.writeLine('return item;', 2);
   writer.writeLine('};');
-  writer.writeLine(`export default ${npcLowercaseId}ItemSkeleton;`);
+  writer.writeLine(`export default _${npcLowercaseId}ItemSkeleton;`);
 
   return writer.done();
 };

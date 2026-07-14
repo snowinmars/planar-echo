@@ -1,18 +1,18 @@
 import { create } from 'zustand';
-import { initialBooleanStore, initialNumberStore, isNothing, nothing } from '@planar/shared';
+import { initialBooleanStore, initialNumberStore, initialKeysStore, isNothing, nothing } from '@planar/shared';
 import { triggerSave } from './saveSubject';
 
 import type { UseBoundStore, StoreApi } from 'zustand';
 import type { BooleanVariableId, NumberVariableId, Maybe } from '@planar/shared';
-import type { EnvId } from '@planar/shared';
+import type { EnvId, KeyId, VariableId } from '@planar/shared';
 
-export type DbNarrative = Record<NumberVariableId, number> & Record<BooleanVariableId, number>;
+export type DbNarrative = Record<NumberVariableId, number> & Record<BooleanVariableId, number> & Record<KeyId, number>;
 export type ZustandNarrative = UseBoundStore<StoreApi<DbNarrative>>;
-type VariableId = NumberVariableId | BooleanVariableId;
 
 const createInitialDbNarrative = (): DbNarrative => ({
   ...initialNumberStore,
   ...initialBooleanStore,
+  ...initialKeysStore,
 });
 
 export const createZustandNarrative = (initialState: Maybe<DbNarrative> = nothing()): ZustandNarrative => create<DbNarrative>()(() => initialState
@@ -20,7 +20,7 @@ export const createZustandNarrative = (initialState: Maybe<DbNarrative> = nothin
   : { ...createInitialDbNarrative() });
 
 export const getNarrativeActions = (store: ZustandNarrative) => {
-  const getValue = ({ variableId }: { variableId: VariableId; envId?: Maybe<EnvId> }): number => {
+  const getValue = ({ variableId }: { variableId: VariableId | KeyId; envId?: Maybe<EnvId> }): number => {
     // TODO [snow]: what to do with envId?
     return store.getState()[variableId];
   };
@@ -32,7 +32,7 @@ export const getNarrativeActions = (store: ZustandNarrative) => {
     return amount;
   };
 
-  const increment = ({ variableId, onceKey, amount }: { variableId: NumberVariableId; envId?: Maybe<EnvId>; onceKey?: Maybe<BooleanVariableId>; amount: number }): number => {
+  const increment = ({ variableId, onceKey, amount }: { variableId: NumberVariableId; envId?: Maybe<EnvId>; onceKey?: Maybe<KeyId>; amount: number }): number => {
     const actual = getValue({ variableId });
 
     const shouldHappensOnce = !isNothing(onceKey);

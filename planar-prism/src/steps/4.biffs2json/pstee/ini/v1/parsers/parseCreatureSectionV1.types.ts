@@ -1,4 +1,4 @@
-import type { Direction } from './parseDirectionV1.types.js';
+import type { Direction } from '@planar/shared';
 import type { CreatureIniPointSelect } from './parsePointSelectV1.types.js';
 import type { CreatureIniScopedVariable } from './parseScopedVariableV1.types.js';
 import type { CreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';

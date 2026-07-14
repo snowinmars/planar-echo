@@ -10,6 +10,7 @@ export type NumberVariableId
     | 'adahn'
     | 'adyzoel'
     | 'aelwyn'
+    | 'alais_apology'
     | 'alpha'
     | 'anarchist_treasure'
     | 'angyar'
@@ -31,8 +32,10 @@ export type NumberVariableId
     | 'await_die_answer'
     | 'baen'
     | 'baen_quest'
+    | 'banged_harlot'
     | 'baria'
     | 'barsh_abishai'
+    | 'bd_absorb'
     | 'bd_annah_morale'
     | 'bd_dakkon_morale'
     | 'bd_morte_morale'
@@ -53,6 +56,7 @@ export type NumberVariableId
     | 'chant'
     | 'chaotic_malmaner_1'
     | 'choke'
+    | 'choke_dustman'
     | 'coaxmetal'
     | 'codexi'
     | 'coppereyes'
@@ -129,6 +133,7 @@ export type NumberVariableId
     | 'emoric_pharod'
     | 'epsilon'
     | 'evidence_papers'
+    | 'evil_crier_1'
     | 'f_ass'
     | 'fedex'
     | 'fell'
@@ -166,12 +171,17 @@ export type NumberVariableId
     | 'ghysis'
     | 'giant_skeleton_enchant'
     | 'gilt_miss'
+    | 'girl_talks_alot'
     | 'giscorl'
     | 'githzerai'
     | 'global'
     | 'globaladahn'
     | 'globalgood'
+    | 'globalknow_dustmen'
+    | 'globalknow_mimir'
+    | 'globalknow_painted_door'
     | 'globallaw'
+    | 'globalmorte_mimir'
     | 'globalravel_flatter'
     | 'goncalves'
     | 'good'
@@ -181,6 +191,8 @@ export type NumberVariableId
     | 'grace_death_scene'
     | 'grace_name'
     | 'grace_quest'
+    | 'grace_talked_annah'
+    | 'grace_talked_dakkon'
     | 'grace_talked_morte'
     | 'grace_talked_nordom'
     | 'hail_mad'
@@ -335,6 +347,7 @@ export type NumberVariableId
     | 'qui_sai_quest'
     | 'quint_item'
     | 'quit_game'
+    | 'rat_eater'
     | 'rat_quest'
     | 'ratbone'
     | 'ratwarren'
@@ -365,6 +378,8 @@ export type NumberVariableId
     | 'revenge_v'
     | 'rings3'
     | 'roberta'
+    | 'roll_1'
+    | 'roll_2'
     | 'rp_portal'
     | 'rubikon_direct'
     | 'rw'
@@ -454,7 +469,9 @@ export type BooleanVariableId
   = | '0202_dhall_face_player'
     | '0301_bad_angry'
     | '0301_good_angry'
+    | '0301_status'
     | '0508_wererat_alert'
+    | '0600_status'
     | '1101_spawn_cutscene'
     | '1200_cut_scene_2'
     | '1201_note_retrieved'
@@ -466,7 +483,6 @@ export type BooleanVariableId
     | 'absorb_real_incarnation'
     | 'aethel_dead_kaputz'
     | 'agril_dead_kaputz'
-    | 'alais_apology'
     | 'alais_ed'
     | 'alarm1'
     | 'alarm2'
@@ -531,12 +547,10 @@ export type BooleanVariableId
     | 'ash_technique'
     | 'attack_aelwyn'
     | 'attack_nemelle'
-    | 'banged_harlot'
     | 'bbplot_secret_1'
     | 'bbplot_secret_2'
     | 'bbplot_secret_3'
     | 'bd1000_port_active'
-    | 'bd_absorb'
     | 'bd_dakkon_faith'
     | 'bd_heads_talk_once'
     | 'bd_high_wiz_dtrans'
@@ -550,6 +564,9 @@ export type BooleanVariableId
     | 'benny'
     | 'berrog_dead_kaputz'
     | 'bish_talked'
+    | 'bit10'
+    | 'bit3'
+    | 'bit4'
     | 'boxleft'
     | 'burgher_dead_kaputz'
     | 'bv_enemy'
@@ -579,7 +596,6 @@ export type BooleanVariableId
     | 'chaotic_sevtai_1'
     | 'chekka_dead_kaputz'
     | 'choke_drunk_harlot'
-    | 'choke_dustman'
     | 'choke_memory'
     | 'clock_1'
     | 'coaxmetal_gives_cage'
@@ -662,7 +678,6 @@ export type BooleanVariableId
     | 'evil_coaxmetal_3'
     | 'evil_coaxmetal_4'
     | 'evil_craddock_1'
-    | 'evil_crier_1'
     | 'evil_dakkon_3'
     | 'evil_dolora_1'
     | 'evil_elyce_1'
@@ -706,11 +721,6 @@ export type BooleanVariableId
     | 'gem'
     | 'ghead_exp'
     | 'ghoul_attack'
-    | 'girl_talks_alot'
-    | 'globalknow_dustmen'
-    | 'globalknow_mimir'
-    | 'globalknow_painted_door'
-    | 'globalmorte_mimir'
     | 'glyve_talk'
     | 'goncalves_costume1'
     | 'goncalves_costume2'
@@ -738,8 +748,6 @@ export type BooleanVariableId
     | 'grace_ravel_answer'
     | 'grace_silver_mimir'
     | 'grace_smell_mimir'
-    | 'grace_talked_annah'
-    | 'grace_talked_dakkon'
     | 'gris_talk'
     | 'grosuk_dead_kaputz'
     | 'hamrys_mem'
@@ -1029,7 +1037,6 @@ export type BooleanVariableId
     | 'quell_spells'
     | 'quint_trade'
     | 'quisai_dead_kaputz'
-    | 'rat_eater'
     | 'rat_guard'
     | 'ravel_curst_portal'
     | 'ravel_death_kiss'
@@ -1064,8 +1071,6 @@ export type BooleanVariableId
     | 'remove_fleece'
     | 'return_fhjull'
     | 'roberta_betrayed'
-    | 'roll_1'
-    | 'roll_2'
     | 'sandoz_dead_kaputz'
     | 'sarossa_changeup'
     | 'sarossa_saros_anger'
@@ -1230,6 +1235,7 @@ export type BooleanVariableId
     | 'zm782_dead_kaputz'
     | 'zombie_chaotic'
 ;
+export type VariableId = NumberVariableId | BooleanVariableId;
 
 export const initialNumberStore: Record<NumberVariableId, number> = {
   '0110_cut_scene': 0,
@@ -1241,6 +1247,7 @@ export const initialNumberStore: Record<NumberVariableId, number> = {
   'adahn': 0,
   'adyzoel': 0,
   'aelwyn': 0,
+  'alais_apology': 0,
   'alpha': 0,
   'anarchist_treasure': 0,
   'angyar': 0,
@@ -1262,8 +1269,10 @@ export const initialNumberStore: Record<NumberVariableId, number> = {
   'await_die_answer': 0,
   'baen': 0,
   'baen_quest': 0,
+  'banged_harlot': 0,
   'baria': 0,
   'barsh_abishai': 0,
+  'bd_absorb': 0,
   'bd_annah_morale': 0,
   'bd_dakkon_morale': 0,
   'bd_morte_morale': 0,
@@ -1284,6 +1293,7 @@ export const initialNumberStore: Record<NumberVariableId, number> = {
   'chant': 0,
   'chaotic_malmaner_1': 0,
   'choke': 0,
+  'choke_dustman': 0,
   'coaxmetal': 0,
   'codexi': 0,
   'coppereyes': 0,
@@ -1360,6 +1370,7 @@ export const initialNumberStore: Record<NumberVariableId, number> = {
   'emoric_pharod': 0,
   'epsilon': 0,
   'evidence_papers': 0,
+  'evil_crier_1': 0,
   'f_ass': 0,
   'fedex': 0,
   'fell': 0,
@@ -1397,12 +1408,17 @@ export const initialNumberStore: Record<NumberVariableId, number> = {
   'ghysis': 0,
   'giant_skeleton_enchant': 0,
   'gilt_miss': 0,
+  'girl_talks_alot': 0,
   'giscorl': 0,
   'githzerai': 0,
   'global': 0,
   'globaladahn': 0,
   'globalgood': 0,
+  'globalknow_dustmen': 0,
+  'globalknow_mimir': 0,
+  'globalknow_painted_door': 0,
   'globallaw': 0,
+  'globalmorte_mimir': 0,
   'globalravel_flatter': 0,
   'goncalves': 0,
   'good': 0,
@@ -1412,6 +1428,8 @@ export const initialNumberStore: Record<NumberVariableId, number> = {
   'grace_death_scene': 0,
   'grace_name': 0,
   'grace_quest': 0,
+  'grace_talked_annah': 0,
+  'grace_talked_dakkon': 0,
   'grace_talked_morte': 0,
   'grace_talked_nordom': 0,
   'hail_mad': 0,
@@ -1566,6 +1584,7 @@ export const initialNumberStore: Record<NumberVariableId, number> = {
   'qui_sai_quest': 0,
   'quint_item': 0,
   'quit_game': 0,
+  'rat_eater': 0,
   'rat_quest': 0,
   'ratbone': 0,
   'ratwarren': 0,
@@ -1596,6 +1615,8 @@ export const initialNumberStore: Record<NumberVariableId, number> = {
   'revenge_v': 0,
   'rings3': 0,
   'roberta': 0,
+  'roll_1': 0,
+  'roll_2': 0,
   'rp_portal': 0,
   'rubikon_direct': 0,
   'rw': 0,
@@ -1685,7 +1706,9 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   '0202_dhall_face_player': 0,
   '0301_bad_angry': 0,
   '0301_good_angry': 0,
+  '0301_status': 0,
   '0508_wererat_alert': 0,
+  '0600_status': 0,
   '1101_spawn_cutscene': 0,
   '1200_cut_scene_2': 0,
   '1201_note_retrieved': 0,
@@ -1697,7 +1720,6 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'absorb_real_incarnation': 0,
   'aethel_dead_kaputz': 0,
   'agril_dead_kaputz': 0,
-  'alais_apology': 0,
   'alais_ed': 0,
   'alarm1': 0,
   'alarm2': 0,
@@ -1762,12 +1784,10 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'ash_technique': 0,
   'attack_aelwyn': 0,
   'attack_nemelle': 0,
-  'banged_harlot': 0,
   'bbplot_secret_1': 0,
   'bbplot_secret_2': 0,
   'bbplot_secret_3': 0,
   'bd1000_port_active': 0,
-  'bd_absorb': 0,
   'bd_dakkon_faith': 0,
   'bd_heads_talk_once': 0,
   'bd_high_wiz_dtrans': 0,
@@ -1781,6 +1801,9 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'benny': 0,
   'berrog_dead_kaputz': 0,
   'bish_talked': 0,
+  'bit10': 0,
+  'bit3': 0,
+  'bit4': 0,
   'boxleft': 0,
   'burgher_dead_kaputz': 0,
   'bv_enemy': 0,
@@ -1810,7 +1833,6 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'chaotic_sevtai_1': 0,
   'chekka_dead_kaputz': 0,
   'choke_drunk_harlot': 0,
-  'choke_dustman': 0,
   'choke_memory': 0,
   'clock_1': 0,
   'coaxmetal_gives_cage': 0,
@@ -1893,7 +1915,6 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'evil_coaxmetal_3': 0,
   'evil_coaxmetal_4': 0,
   'evil_craddock_1': 0,
-  'evil_crier_1': 0,
   'evil_dakkon_3': 0,
   'evil_dolora_1': 0,
   'evil_elyce_1': 0,
@@ -1937,11 +1958,6 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'gem': 0,
   'ghead_exp': 0,
   'ghoul_attack': 0,
-  'girl_talks_alot': 0,
-  'globalknow_dustmen': 0,
-  'globalknow_mimir': 0,
-  'globalknow_painted_door': 0,
-  'globalmorte_mimir': 0,
   'glyve_talk': 0,
   'goncalves_costume1': 0,
   'goncalves_costume2': 0,
@@ -1969,8 +1985,6 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'grace_ravel_answer': 0,
   'grace_silver_mimir': 0,
   'grace_smell_mimir': 0,
-  'grace_talked_annah': 0,
-  'grace_talked_dakkon': 0,
   'gris_talk': 0,
   'grosuk_dead_kaputz': 0,
   'hamrys_mem': 0,
@@ -2260,7 +2274,6 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'quell_spells': 0,
   'quint_trade': 0,
   'quisai_dead_kaputz': 0,
-  'rat_eater': 0,
   'rat_guard': 0,
   'ravel_curst_portal': 0,
   'ravel_death_kiss': 0,
@@ -2295,8 +2308,6 @@ export const initialBooleanStore: Record<BooleanVariableId, number> = {
   'remove_fleece': 0,
   'return_fhjull': 0,
   'roberta_betrayed': 0,
-  'roll_1': 0,
-  'roll_2': 0,
   'sandoz_dead_kaputz': 0,
   'sarossa_changeup': 0,
   'sarossa_saros_anger': 0,

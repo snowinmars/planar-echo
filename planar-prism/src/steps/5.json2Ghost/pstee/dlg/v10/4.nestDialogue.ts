@@ -8,18 +8,18 @@ const formTrigger = ({
   response,
   responsesTriggers,
 }: Omit<NestResponseProps, 'responsesActions'>) => {
-  const hasTrigger = !isNothing(response.triggerIndex) && response.triggerIndex! >= 0;
+  const hasTrigger = !isNothing(response.triggerIndex) && response.triggerIndex >= 0;
   if (!hasTrigger) return nothing();
-  const trigger = responsesTriggers.get(response.triggerIndex!)!;
+  const trigger = responsesTriggers.get(response.triggerIndex)!;
   return { index: trigger.index, text: trigger.text };
 };
 const formAction = ({
   response,
   responsesActions,
 }: Omit<NestResponseProps, 'responsesTriggers'>) => {
-  const hasTrigger = !isNothing(response.actionIndex) && response.actionIndex! >= 0;
+  const hasTrigger = !isNothing(response.actionIndex) && response.actionIndex >= 0;
   if (!hasTrigger) return nothing();
-  const trigger = responsesActions.get(response.actionIndex!)!;
+  const trigger = responsesActions.get(response.actionIndex)!;
   return { index: trigger.index, text: trigger.text };
 };
 

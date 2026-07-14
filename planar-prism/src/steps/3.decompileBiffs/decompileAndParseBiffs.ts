@@ -6,7 +6,6 @@ import {
 } from 'path';
 import { nothing } from '@planar/shared';
 import execConsole from '@/shared/execConsole.js';
-import { reportProgressSeq } from '@/shared/report.js';
 import listBiffs from './listBiffs.js';
 
 import type { Maybe } from '@planar/shared';
@@ -56,7 +55,7 @@ const detectDecompiledItemType = (extension: string): DecompiledBiffType => {
 const decompileBiffsRegex = /\[(.*?)\] created from \[(.*?)\]/;
 const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => {
   const noMatches = line.startsWith('No matches for');
-  if (noMatches) throw new Error(line);
+  if (noMatches) console.warn(`It may be ok, but: ${line}`);
 
   const matches = decompileBiffsRegex.exec(line.toLowerCase());
   const isTechInfo = !matches || matches.length <= 1;
@@ -73,11 +72,19 @@ const getDecompileBiffsCommand = ({ weiduExeDir, gameDir, ghostDir, gameLanguage
   const biffNames = biffs.map(b => `${b.resourceName}`).join(' ');
   return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decimpiledBiff.root}" --biff-get "[${biffNames}]"`;
 };
-const decompileAndParseBiffs = async (props: DecompileBiffsProps): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
+const getDecompileOtherBiffsCommand = ({ weiduExeDir, gameDir, ghostDir, gameLanguage }: DecompileBiffsProps): string => {
+  return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decimpiledBiff.root}" --biff-get-rest "*"`;
+};
+const decompileAndParseBiffs = async (props: DecompileBiffsProps, reportProgress: (percent: number) => void): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
+  // for some reason, unarchiving takes two steps, afais.
   const biffs: Biff[] = await listBiffs(props);
+  reportProgress(3);// values that look cool in ui
   const items = await execConsole<DecompiledBiff>(getDecompileBiffsCommand(props, biffs), parseDecompiledItem);
+  reportProgress(43);
+  const otherItems = await execConsole<DecompiledBiff>(getDecompileOtherBiffsCommand(props), parseDecompiledItem);
+  reportProgress(74);
 
-  const unique = [...new Map(items.map(x => [x.resourceName, x])).values()];
+  const unique = [...new Map([...items, ...otherItems].map(x => [x.resourceName, x])).values()];
 
   return Map.groupBy(unique, x => x.type);
 };

@@ -15,6 +15,7 @@
     "start": "yarn workspaces foreach -Api --include @planar/asclepius --include @planar/shell run start",
     "build:asclepius": "yarn workspace @planar/asclepius build",
     "build:prism": "yarn workspace @planar/prism build",
+    "build:prism-ghost": "yarn workspace @planar/prism build-ghost",
     "build:shared": "yarn workspace @planar/shared build",
     "build:shell": "yarn workspace @planar/shell build",
     "start:asclepius": "yarn workspace @planar/asclepius start",

@@ -4,6 +4,7 @@ import { createSayId } from './common.js';
 import type { Maybe } from '../maybe.js';
 import type { GameLanguage } from '../gameLanguage.js';
 import type { StateId } from './enums/state.js';
+import type { ItemId } from './enums/item.js';
 import type { WhoId } from './enums/who.js';
 import type { ResponseId } from './enums/response.js';
 import type {
@@ -18,7 +19,7 @@ import type {
 } from './translateNpcDialogue.types.js';
 
 type LabelFunction = (stateId: StateId) => Readonly<{ say: SayFunction }>;
-type SayFunction = (whoId: WhoId, what: string) => Readonly<{ say: SayFunction; response: ResponseFunction }>;
+type SayFunction = (whoIdOrItemId: WhoId | ItemId, localizedName: string, what: string) => Readonly<{ say: SayFunction; response: ResponseFunction }>;
 type ResponseFunction = (responseId: ResponseId, what: string) => Readonly<{ response: ResponseFunction; flush: FlushFunction }>;
 type FlushFunction = () => TranslatedNpcDialogue;
 
@@ -72,7 +73,7 @@ export const translateNpcDialogue = (untranslatedNpcDialogue: UntranslatedNpcDia
     };
   };
 
-  const say: SayFunction = (whoId: WhoId, what: string) => {
+  const say: SayFunction = (whoIdOrItemId: WhoId | ItemId, localizedName: string, what: string) => {
     if (exposed) throw new Error(`Result dialogue was already exposed`);
 
     const untranslatedSays = _unstranslatedLabel!.says.get('dev')!;
@@ -83,7 +84,8 @@ export const translateNpcDialogue = (untranslatedNpcDialogue: UntranslatedNpcDia
     says.push({
       sayId: createSayId(_label!.stateId, says.length),
       args: isFirstSay ? untranslatedSay.args : nothing(),
-      whoId,
+      whoIdOrItemId,
+      localizedName,
       what,
     });
 

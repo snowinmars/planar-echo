@@ -2,6 +2,7 @@
 
 export type TimeMeasureId
   = | 'hour'
+    | 'instant'
     | 'sec'
     | 'seconds'
 ;
