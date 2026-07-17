@@ -6,17 +6,17 @@ import { reportProgress } from '@/shared/report.js';
 import { parseItmV10 } from './v10/index.js';
 
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
-import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { ItmV10 } from './types.js';
 
 export const parseItm = (
-  pathes: Pathes,
+  paths: Paths,
   decompiledItems: DecompiledBiff[],
 ): AsyncIterableIterator<ItmV10> => iterate<DecompiledBiff, ItmV10>(
   decompiledItems,
   async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
-    const buffer = await readFile(join(pathes.ghostDir.decompiledBiff.root, resourceName));
+    const buffer = await readFile(join(paths.ghostDir.decompiledBiff.root, resourceName));
 
     const reader = createReader(buffer);
 

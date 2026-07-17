@@ -18,7 +18,7 @@ type OutSave = Readonly<{
   effects: SaveFunction;
   items: SaveFunction;
 }>;
-export type Pathes = Readonly<{
+export type Paths = Readonly<{
   weiduExeDir: string;
   prismDir: string;
   gameDir: string;

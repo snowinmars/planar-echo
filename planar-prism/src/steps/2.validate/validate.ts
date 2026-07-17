@@ -1,4 +1,4 @@
-import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { Paths } from '@/steps/1.createPaths/index.js';
 import throwIfInvalid from './throwIfInvaliid.js';
 import type {
   GameDirValidateResult,
@@ -14,13 +14,13 @@ const binariesAreOk = async (chitinKeyFile: string): Promise<boolean> => {
   return true;
 };
 
-export const validate = async (pathes: Pathes): Promise<void> => {
+export const validate = async (paths: Paths): Promise<void> => {
   let weiduExeDirValidationResult: WeiduExeDirValidateResult = 'cannot';
-  const isWeiduOk = await weiduIsOk(pathes.weiduExeDir);
+  const isWeiduOk = await weiduIsOk(paths.weiduExeDir);
   if (isWeiduOk) weiduExeDirValidationResult = 'ok';
 
   let gameDirValidateResult: GameDirValidateResult = 'cannot';
-  const areBinariesOk = await binariesAreOk(pathes.gameDir);
+  const areBinariesOk = await binariesAreOk(paths.gameDir);
   if (areBinariesOk) gameDirValidateResult = 'ok';
 
   const validationResult: ValidationResult = {
@@ -28,5 +28,5 @@ export const validate = async (pathes: Pathes): Promise<void> => {
     gameDir: gameDirValidateResult,
   };
 
-  throwIfInvalid(pathes, validationResult);
+  throwIfInvalid(paths, validationResult);
 };

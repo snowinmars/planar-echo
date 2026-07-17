@@ -67,7 +67,7 @@
 
 Порядок шагов (`planar-prism/src/steps/`):
 
-1. `1.createPathes` - context for next operations: output dirs, `weiduExe`, `chitinKey`, `gameLanguage`, `gameName`
+1. `1.createPaths` - context for next operations: output dirs, `weiduExe`, `chitinKey`, `gameLanguage`, `gameName`
 2. `2.validate` - WeiDU и пути игры
 3. `3.decompileBiffs` - run WeiDU, use cache
 4. `4.biffs2json` - бинарники → JSON (`pstee/`: cre, dlg, eff, ini, itm, tlk, ids, …)
@@ -123,7 +123,7 @@
 ### planar-prism/src/
 
 - `index.ts` - CLI / IPC entry
-- `steps/1.createPathes` … `6.saveDiscovered`
+- `steps/1.createPaths` … `6.saveDiscovered`
 - `steps/4.biffs2json/pstee/` - `biff2jsonPstee.ts`, `cre/`, `dlg/`, `eff/`, `ids/`, `ini/`, `itm/`, `tlk/`
 - `steps/5.json2Ghost/pstee/` - `json2GhostPstee.ts`, `cre/`, `dlg/`, `itm/`
 - `shared/` - `report.ts`, `bufferReader.ts`, `writer.ts`

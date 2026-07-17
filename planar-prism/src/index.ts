@@ -26,7 +26,7 @@ import { disposeReports, reportComplete, reportError } from './shared/report.js'
 // import convertWed from './pipes/convertWed/convertWed.js';
 // import convertWmp from './pipes/convertWmp/convertWmp.js';
 
-import { createPathes } from '@/steps/1.createPathes/index.js';
+import { createPaths } from '@/steps/1.createPaths/index.js';
 import { validate } from '@/steps/2.validate/index.js';
 import { decompileBiffs } from '@/steps/3.decompileBiffs/index.js';
 import { biffs2json } from '@/steps/4.biffs2json/index.js';
@@ -47,19 +47,19 @@ const main = async (props: PrismIndexStartMessage['data']) => {
 
   const recreateOutput = silent ? true : await confirm('Recreate output directory?');
 
-  const pathes = await createPathes({
+  const paths = await createPaths({
     ...props,
     recreate: recreateOutput,
   });
 
-  await validate(pathes);
+  await validate(paths);
 
-  const decompiledBiffs = await decompileBiffs(pathes);
+  const decompiledBiffs = await decompileBiffs(paths);
 
-  const allJsons = await biffs2json(decompiledBiffs, pathes);
+  const allJsons = await biffs2json(decompiledBiffs, paths);
   const [discover, done] = discoverer();
-  const allGhosts = await json2Ghost(allJsons, pathes, discover);
-  await saveDiscovered(done(), pathes, allJsons);
+  const allGhosts = await json2Ghost(allJsons, paths, discover);
+  await saveDiscovered(done(), paths, allJsons);
 
   reportComplete('success');
   disposeReports();

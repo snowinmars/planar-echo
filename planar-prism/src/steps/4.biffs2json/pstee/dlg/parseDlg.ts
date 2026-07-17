@@ -6,18 +6,18 @@ import { reportProgress } from '@/shared/report.js';
 import { parseDlgV1 } from './v1/parseDlgV1.js';
 
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
-import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { RawDlg } from './types.js';
 
 export const parseDlg = (
-  pathes: Pathes,
+  paths: Paths,
   decompiledItems: DecompiledBiff[],
 ): AsyncIterableIterator<RawDlg> => iterate<DecompiledBiff, RawDlg>(
   decompiledItems,
   async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
 
-    const buffer = await readFile(join(pathes.ghostDir.decompiledBiff.root, resourceName));
+    const buffer = await readFile(join(paths.ghostDir.decompiledBiff.root, resourceName));
     const reader = createReader(buffer);
 
     const signature = reader.string(4);

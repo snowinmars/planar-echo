@@ -7,7 +7,7 @@ import { parseDlg } from './dlg/index.js';
 import { parseEffV20 } from './eff/index.js';
 import { parseItm } from './itm/index.js';
 
-import type { Pathes } from '../../1.createPathes/index.js';
+import type { Paths } from '../../1.createPaths/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../../3.decompileBiffs/index.js';
 import type { Ids } from './ids/index.js';
 import type { Ini } from './ini/index.js';
@@ -31,20 +31,20 @@ const mustHaveIds = [
 
 const biffs2jsonPstee = async (
   decompiledBiffs: Map<DecompiledBiffType, DecompiledBiff[]>,
-  pathes: Pathes,
+  paths: Paths,
 ): Promise<AllPsteeJsons> => {
   logger.info(`Converting tlk to json...`);
-  const tlk = await parseTlk(pathes.tlkDir);
-  await pathes.ghostDir.saveJson.dialogues('dialog.tlk', tlk);
+  const tlk = await parseTlk(paths.tlkDir);
+  await paths.ghostDir.saveJson.dialogues('dialog.tlk', tlk);
 
   ///
 
   logger.info(`Converting ids to json...`);
   const ids = new Map<string, Ids>();
-  const idsIterator = parseIds(pathes, decompiledBiffs.get('ids')!);
+  const idsIterator = parseIds(paths, decompiledBiffs.get('ids')!);
   for await (const id of idsIterator) {
     ids.set(id.resourceName, id);
-    await pathes.ghostDir.saveJson.ids(id.resourceName, id);
+    await paths.ghostDir.saveJson.ids(id.resourceName, id);
   }
 
   for (const mustHaveId of mustHaveIds) if (!ids.has(mustHaveId)) throw new Error(`Pstee sources has '${mustHaveId}' file, but you did not pass it`);
@@ -53,22 +53,22 @@ const biffs2jsonPstee = async (
 
   logger.info(`Converting ini to json...`);
   const inis = new Map<string, Ini>();
-  const iniIterator = parseIni(pathes, decompiledBiffs.get('ini')!);
+  const iniIterator = parseIni(paths, decompiledBiffs.get('ini')!);
   for await (const ini of iniIterator) {
     if (!ini) continue;
     inis.set(ini.resourceName, ini);
-    await pathes.ghostDir.saveJson.inis(ini.resourceName, ini);
+    await paths.ghostDir.saveJson.inis(ini.resourceName, ini);
   }
 
   ///
 
   logger.info(`Converting cre to json...`);
   const cres: Creature[] = [];
-  const cresIterator = parseCre(pathes, decompiledBiffs.get('cre')!, ids);
+  const cresIterator = parseCre(paths, decompiledBiffs.get('cre')!, ids);
   for await (const cre of cresIterator) {
     if (!cre) continue;
     cres.push(cre);
-    await pathes.ghostDir.saveJson.creatures(cre.resourceName, cre);
+    await paths.ghostDir.saveJson.creatures(cre.resourceName, cre);
   }
 
   ///
@@ -88,31 +88,31 @@ const biffs2jsonPstee = async (
     'over02.dlg',
     'over03.dlg',
   ];
-  const dlgIterator = parseDlg(pathes, decompiledBiffs.get('dlg')!.filter(x => !emptyDialogues.includes(x.resourceName)));
+  const dlgIterator = parseDlg(paths, decompiledBiffs.get('dlg')!.filter(x => !emptyDialogues.includes(x.resourceName)));
   for await (const dlg of dlgIterator) {
     dlgs.push(dlg);
-    await pathes.ghostDir.saveJson.dialogues(dlg.resourceName, dlg);
+    await paths.ghostDir.saveJson.dialogues(dlg.resourceName, dlg);
   }
 
   ///
 
   logger.info(`Converting eff to json...`);
   const effs: EffectV20[] = [];
-  // const effIterator = parseEffV10(pathes, decompiledBiffs.get('eff')!);
-  const effIterator = parseEffV20(pathes, decompiledBiffs.get('eff')!);
+  // const effIterator = parseEffV10(paths, decompiledBiffs.get('eff')!);
+  const effIterator = parseEffV20(paths, decompiledBiffs.get('eff')!);
   for await (const eff of effIterator) {
     effs.push(eff);
-    await pathes.ghostDir.saveJson.effects(eff.resourceName, eff);
+    await paths.ghostDir.saveJson.effects(eff.resourceName, eff);
   }
 
   ///
 
   logger.info(`Converting itm to json...`);
   const itms: ItmV10[] = [];
-  const itmIterator = parseItm(pathes, decompiledBiffs.get('itm')!);
+  const itmIterator = parseItm(paths, decompiledBiffs.get('itm')!);
   for await (const itm of itmIterator) {
     itms.push(itm);
-    await pathes.ghostDir.saveJson.items(itm.resourceName, itm);
+    await paths.ghostDir.saveJson.items(itm.resourceName, itm);
   }
 
   return {

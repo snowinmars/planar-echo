@@ -5,7 +5,7 @@ import { saveToFile } from '@/shared/customFs.js';
 import { nothing } from '@planar/shared';
 
 import type { Discovered, StoreDiscoveredType, VariableInfo } from '@/discoverer.types.js';
-import type { Pathes } from '../1.createPathes/index.js';
+import type { Paths } from '../1.createPaths/index.js';
 import type { CharacterNarrativeProps, ClassId, Maybe } from '@planar/shared';
 import type { AllPsteeJsons } from '../4.biffs2json/types.js';
 import type { CreatureV10, CreatureV11 } from '../4.biffs2json/pstee/cre/types.js';
@@ -463,23 +463,23 @@ const serialize = (category: StoreDiscoveredType, items: string[], discovered: D
   }
 };
 
-const saveDiscovered = async (discovered: Discovered, pathes: Pathes, allJsons: AllPsteeJsons): Promise<void> => {
+const saveDiscovered = async (discovered: Discovered, paths: Paths, allJsons: AllPsteeJsons): Promise<void> => {
   for (const category of allCategories) {
     const items = discovered.variables.get(category)!;
     const result = serialize(category, items, discovered);
-    const targetFile = join(pathes.ghostDir.sharedEnums, `${category}.ts`);
+    const targetFile = join(paths.ghostDir.sharedEnums, `${category}.ts`);
     await saveToFile(targetFile, result.types, true);
 
     if (result.stores) {
-      const storesFile = join(pathes.ghostDir.stores, `${category}.ts`);
+      const storesFile = join(paths.ghostDir.stores, `${category}.ts`);
       await saveToFile(storesFile, result.stores, true);
     }
   }
 
   // TODO [snow]: Что-то тут не то...
   const result = serializeCharacters(allJsons.cres);
-  const storeTargetFile = join(pathes.ghostDir.stores, 'character.ts');
-  const typesTargetFile = join(pathes.ghostDir.sharedEnums, `character.ts`);
+  const storeTargetFile = join(paths.ghostDir.stores, 'character.ts');
+  const typesTargetFile = join(paths.ghostDir.sharedEnums, `character.ts`);
   await saveToFile(typesTargetFile, result.types, true);
   await saveToFile(storeTargetFile, result.stores, true);
 };

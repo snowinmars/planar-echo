@@ -3,13 +3,13 @@ import { mkdirsIfNotExists, saveToFile } from '@/shared/customFs.js';
 
 import type { Maybe } from '@planar/shared';
 import type { PrismIndexStartMessage } from '@planar/shared';
-import type { Pathes } from './types.js';
+import type { Paths } from './types.js';
 
-type CreatePathesProps = PrismIndexStartMessage['data'] & Readonly<{
+type CreatePathsProps = PrismIndexStartMessage['data'] & Readonly<{
   recreate?: Maybe<boolean>;
 }>;
 
-export const createPathes = async (props: CreatePathesProps): Promise<Pathes> => {
+export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   /* eslint-disable @stylistic/no-multi-spaces,@stylistic/comma-spacing,@stylistic/key-spacing */
   const weiduExeDir    = normalize(props.weiduExeDir);
   const chitinKeyFile  = normalize(props.chitinKeyFile);
@@ -41,7 +41,7 @@ export const createPathes = async (props: CreatePathesProps): Promise<Pathes> =>
   // TODO [snow]: I do not like this path, but where should it lead to?..
   const sharedEnums    = normalize(join(ghostDir, '..', 'planar-shared', 'src', 'dialogueEngine', 'enums'));
 
-  const pathes: Pathes = {
+  const paths: Paths = {
     weiduExeDir  : weiduExeDir,
     prismDir  : prismDir,
     gameDir: gameDir,
@@ -95,22 +95,22 @@ export const createPathes = async (props: CreatePathesProps): Promise<Pathes> =>
   };
 
   await mkdirsIfNotExists([
-    pathes.ghostDir.root,
-    pathes.ghostDir.decompiledBiff.root,
-    pathes.ghostDir.json.dialogues,
-    pathes.ghostDir.json.items,
-    pathes.ghostDir.json.ids,
-    pathes.ghostDir.json.inis,
-    pathes.ghostDir.json.creatures,
-    pathes.ghostDir.json.effects,
-    pathes.ghostDir.ghost.dialogues,
-    pathes.ghostDir.ghost.items,
-    pathes.ghostDir.ghost.ids,
-    pathes.ghostDir.ghost.inis,
-    pathes.ghostDir.ghost.creatures,
-    pathes.ghostDir.ghost.effects,
-    pathes.ghostDir.stores,
+    paths.ghostDir.root,
+    paths.ghostDir.decompiledBiff.root,
+    paths.ghostDir.json.dialogues,
+    paths.ghostDir.json.items,
+    paths.ghostDir.json.ids,
+    paths.ghostDir.json.inis,
+    paths.ghostDir.json.creatures,
+    paths.ghostDir.json.effects,
+    paths.ghostDir.ghost.dialogues,
+    paths.ghostDir.ghost.items,
+    paths.ghostDir.ghost.ids,
+    paths.ghostDir.ghost.inis,
+    paths.ghostDir.ghost.creatures,
+    paths.ghostDir.ghost.effects,
+    paths.ghostDir.stores,
   ], props.recreate || false);
 
-  return pathes;
+  return paths;
 };

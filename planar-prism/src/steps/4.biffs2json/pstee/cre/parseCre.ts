@@ -6,7 +6,7 @@ import { reportProgress } from '@/shared/report.js';
 import { parseCreaturesV10 } from './v10/parseCreaturesV10.js';
 import { parseCreaturesV11 } from './v11/parseCreaturesV11.js';
 
-import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Ids } from '../ids/index.js';
 import type { CreatureV10, CreatureV11 } from './types.js';
@@ -14,7 +14,7 @@ import type { CreatureV10, CreatureV11 } from './types.js';
 type Creature = CreatureV10 | CreatureV11;
 
 export const parseCre = (
-  pathes: Pathes,
+  paths: Paths,
   decompiledItems: DecompiledBiff[],
   ids: Map<string, Ids>,
 ): AsyncIterableIterator<Creature> => iterate<DecompiledBiff, Creature>(
@@ -22,7 +22,7 @@ export const parseCre = (
   async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
 
-    const buffer = await readFile(join(pathes.ghostDir.decompiledBiff.root, resourceName));
+    const buffer = await readFile(join(paths.ghostDir.decompiledBiff.root, resourceName));
     const reader = createReader(buffer);
 
     const signature = reader.string(4);

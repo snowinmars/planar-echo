@@ -10,8 +10,8 @@ import {
 
 import type { Maybe } from '@planar/shared';
 
-export const mkdirsIfNotExists = async (entryPathes: string[], recreate = false): Promise<void> => {
-  for (const entryPath of entryPathes) await mkdirIfNotExists(entryPath, recreate);
+export const mkdirsIfNotExists = async (entryPaths: string[], recreate = false): Promise<void> => {
+  for (const entryPath of entryPaths) await mkdirIfNotExists(entryPath, recreate);
 };
 
 export const mkdirIfNotExists = async (entryPath: string, recreate = false): Promise<void> => {

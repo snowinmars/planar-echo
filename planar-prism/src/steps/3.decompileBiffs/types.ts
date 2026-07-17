@@ -1,12 +1,12 @@
-import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { Paths } from '@/steps/1.createPaths/index.js';
 
 export type ListBiffsProps = Readonly<{
-  weiduExeDir: Pathes['weiduExeDir'];
-  gameDir: Pathes['gameDir'];
-  gameLanguage: Pathes['gameLanguage'];
+  weiduExeDir: Paths['weiduExeDir'];
+  gameDir: Paths['gameDir'];
+  gameLanguage: Paths['gameLanguage'];
 }>;
 export type DecompileBiffsProps = ListBiffsProps & Readonly<{
-  ghostDir: Pathes['ghostDir'];
+  ghostDir: Paths['ghostDir'];
 }>;
 export type DecompiledBiffType
   = | '2da'

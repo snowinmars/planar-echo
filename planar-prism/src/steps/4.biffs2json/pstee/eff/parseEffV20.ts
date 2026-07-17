@@ -6,7 +6,7 @@ import { reportProgress } from '@/shared/report.js';
 import { parseEffectV20 } from './v20/parseEffectV20.js';
 
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
-import type { Pathes } from '@/steps/1.createPathes/index.js';
+import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { EffectV20 } from './v20/parseEffectV20.types.js';
 
 // There are no header for effV10, so
@@ -14,14 +14,14 @@ import type { EffectV20 } from './v20/parseEffectV20.types.js';
 // but the user can, so I export two parseEff function
 // Sad, but true
 export const parseEffV20 = (
-  pathes: Pathes,
+  paths: Paths,
   decompiledItems: DecompiledBiff[],
 ): AsyncIterableIterator<EffectV20> => iterate<DecompiledBiff, EffectV20>(
   decompiledItems,
   async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
 
-    const buffer = await readFile(join(pathes.ghostDir.decompiledBiff.root, resourceName));
+    const buffer = await readFile(join(paths.ghostDir.decompiledBiff.root, resourceName));
     const reader = createReader(buffer);
 
     const signature = reader.string(4);
