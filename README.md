@@ -2,125 +2,111 @@
 
 [\[Русский\]](README.ru.md) \[English\]
 
-Tool to run Infinity Engine games in a browser.
+Open-source tool to convert **Infinity Engine** game data files you already own into an open format and run them in a custom engine in the browser.
 
-Uses your original game files locally.
+Everything runs locally on your machine.
 
 ![Current state example](./_dev/promo.png)
 
+## Prerequisites
+
+- You **must own** the original game (legally purchased files).
+- [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) (Yarn 4, see root `packageManager`).
+- [WeiDU](https://github.com/WeiDU/weidu) installed locally (used by the conversion pipeline).
+
+No game assets are stored in this repository.
 
 ## Legal
 
-It is legal as long as you own the original game.
-
-Planar-echo requires you to own the game, otherwise it won't work. Everything runs locally: data never leaves your PC.
-
-Due to this, this tool is not piracy: planar-echo does not contain neither distribute copyrighted content.
-
-Think of planar-echo like an emulator.
-
+Using planar-echo is legal if you own the game. Data never leaves your PC. The project does not distribute copyrighted content, like an emulator.
 
 ## Status
 
-Tech demo.
-
-Planar-echo is under heavy development.
-
+Tech demo under active development.
 
 ### What works today
 
-- Supported games:
-  - Planescape: Torment (enchanted edition only)
-- Converting original game files to json
- - .cre
- - .dlg
- - .eff
- - .ids
- - .ini
- - .itm
- - .tlk
-- Russian and english localzations are fully supported
-- Render dialogues in browser, no logic behind
+- **Game:** Planescape: Torment Enhanced Edition only. Other Infinity Engine games are possible, but not in the nearest roadmap.
+- **Conversion** from original binaries to JSON and Ghost modules: `.cre`, `.dlg`, `.eff`, `.ids`, `.ini`, `.itm`, `.tlk`.
+- **Supports all available game data localizations:** Russian, English, Czech, German, French, Korean, Polish via original game data.
+- **Planar-echo site human-localizations:** Russian, English.
+- **Planar-echo site LLM-localizations:** Czech, German, French, Korean, Polish. If these are your native language, please, verify the [translation](planar-shell/src/i18n/lang/).
+- **In-browser viewing** of dialogues, creatures and items, binded together with game state logic variables via Ghost bundles served by the backend.
+- **Dialogue flow** uses shared `dialogueEngine` (`planar-shared`) and Shell `engine/dialogueLogic.ts` (not a full game simulation yet).
 
+### Close-range roadmap
 
-### Close range roadmap
+- Community validation for cs, de, fr, ko, pl UI locales.
+- Deeper scripting logic.
+- Pack JSON back to BIFF for modding workflows.
+- Ship `.sh` / `.exe` / `.apk` artifacts with preconverted content.
 
-- Cz, de, fr, ko, pl translations are possible - ask community to validate them
-- Implement logic for dialogues
-- Allow to pack jsons back to biff to boost modding community
-- Provide .sh/.exe/.apk artifacts with game content to run without reconverting again
+## Architecture (five parts)
 
+| Part                 | Role                                                                                       |
+| -------------------- | ------------------------------------------------------------------------------------------ |
+| **planar-prism**     | CLI: BIFF → JSON → Ghost TypeScript; runs standalone or as a forked child process.         |
+| **planar-ghost**     | Output format and on-disk artifacts (your machine); not an npm workspace package.          |
+| **planar-shell**     | React + Zustand + MUI UI: conversion wizard, settings, runners for dialogue/creature/item. |
+| **planar-asclepius** | Node server: serves Shell (production), Ghost files, REST + WebSocket; orchestrates Prism. |
+| **planar-shared**    | Shared types, IPC messages, dialogue engine, mappers.                                      |
 
-### Licensing note
+**Typical flow**
 
-Planar-echo contains of five parts:
+1. Configure WeiDU, game key/path, and ghost output directory in **Shell** (validated via **Asclepius** REST).
+2. Start conversion: Shell opens WebSocket `/api/prism/index`; Asclepius builds Prism, forks it, then runs `build-ghost`.
+3. Prism uses WeiDU, writes JSON/Ghost under your ghost directory; progress streams to the UI.
+4. Open `/dialogue`, `/creature`, or `/item` in Shell; data is loaded via REST `/api/ghost/*`.
 
-| Name             | Description   | License                               |
-|:-----------------|:--------------|:-------------------------------------|
-| planar-asclepius | backend        | licensed under the repository license |
-| planar-ghost     | build artifact | licensed under original game license <br /> not affected by the repository license |
-| planar-prism     | parser         | licensed under the repository license |
-| planar-shared    | shared package | licensed under the repository license |
-| planar-shell     | frontend       | licensed under the repository license |
+**Ports:** backend `http://localhost:3003`; frontend dev server `http://localhost:3000`.
 
+### Licensing
 
-## How it works (short version)
+Repository license is GPL-3.0-or-later.
 
-1. You provide original game
-2. You setup conversion flow in planar-shell UI using planar-asclepius server
-3. Planar-asclepius runs planar-prism to dismantle original game files to jsons and js files
-4. Planar-shell run js sources provided by planar-asclepius
+| Name             | Description             | License                                                |
+| :--------------- | :---------------------- | :----------------------------------------------------- |
+| planar-asclepius | Backend                 | Repository license                                     |
+| planar-prism     | Parser                  | Repository license                                     |
+| planar-shared    | Shared library          | Repository license                                     |
+| planar-shell     | Frontend                | Repository license                                     |
+| planar-ghost     | Built game data on disk | Original game license; not covered by the repo license |
 
+**Do not commit copyrighted game files or contents of your local `planar-ghost` output directory.**
 
 ## How to run
 
+### Docker
 
-### With docker
+```bash
+docker compose build
+docker compose up
+```
 
-1. You provide original game
-1. `docker compose build`
-1. `docker compose up`
-
-It serves both backend and frontend using reverse proxy.
+Open [http://localhost:3003](http://localhost:3003). Mount game and WeiDU paths via `docker-compose.yaml` volumes when you wire your environment.
 
 ### Without Docker
 
-1. You provide original game
-1. Install [nodejs](https://nodejs.org/)
-1. Install [yarn](https://yarnpkg.com/)
-1. Run `./start.sh` on linux or `./start.ps1` on windows
-1. Open `http://localhost:3003/`
+1. Install dependencies and build from the repo root:
 
+```bash
+yarn
+yarn build
+yarn start
+```
+
+Open [http://localhost:3000](http://localhost:3000) (UI talks to backend at `http://localhost:3003` by default).
 
 ## How to contribute
 
-Issues and PRs on [GitHub](https://github.com/snowinmars/planar-echo/).
+Issues and PRs: [GitHub](https://github.com/snowinmars/planar-echo/).
 
-```bash
-# install dependencies for all workspaces (from repo root)
-yarn install
+### Regenerate the Shell API client
 
-# build all packages (shared → prism/asclepius → gen OpenAPI client → shell)
-yarn build
+After changing REST routes or Zod schemas in **planar-asclepius**:
 
-# start both frontend and backend
-yarn start
-
-# or
-
-# in one terminal start frontend
-# in will run on hardcoded url http://localhost:3000
-# it will use hardcoded backend url http://localhost:3003
-yarn start:shell
-
-# in other terminal start backend
-# in will run on hardcoded url http://localhost:3003
-yarn start:asclepius
-```
-
-
-### How to regenerate swagger client from planar-asclepius to planar-shell
-
+1. `yarn`
+1. `yarn build:shared`
 1. `yarn start:asclepius`
 1. Open `http://localhost:3003/api/swagger/`
 1. Copy its content to `./planar-asclepius/src/swagger/swagger.json`

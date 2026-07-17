@@ -1,0 +1,18 @@
+---
+description: "mcp-workflow: детальный workflow для MCP (не заменяет .cursorrules)"
+globs: **/*
+alwaysApply: true
+---
+
+# Подробности вызова MCP
+
+## rag-code параметры
+- `search_code`: строго по JSON-схеме дескриптора
+- `hybrid_search`: только для точных совпадений имён/строк
+- `get_code_context`: когда есть якорь (файл, символ)
+
+## lean-ctx
+См. `.cursor/rules/lean-ctx.mdc`.
+
+## Исключения для Этапа A
+Не подменяй rag-code слепым grep, если цель — понять поведение по описанию.
