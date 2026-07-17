@@ -14,6 +14,8 @@
     "build": "tsc && tsc-alias",
     "clean": "node src/dev/clean.js",
     "serve": "node dist/index.js",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
     "gen": "yarn _gen && yarn push-client",
     "_gen": "openapi-ts -f ./openapi-ts.config.ts",
     "push-client": "node ./src/dev/copy-client.js"

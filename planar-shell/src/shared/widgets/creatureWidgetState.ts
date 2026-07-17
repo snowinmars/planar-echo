@@ -7,7 +7,7 @@ import type { CreatureWidgetActions, CreatureWidgetState } from './creatureWidge
 const emptyState: CreatureWidgetState = {
   loading: false,
   creatures: [],
-  currentCreatureId: '',
+  currentCreatureId: nothing(),
 };
 
 const state$ = new BehaviorSubject<CreatureWidgetState>(emptyState);

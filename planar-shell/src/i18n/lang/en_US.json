@@ -193,7 +193,7 @@
     "language": {
       "title": "Interface language"
     },
-    "dialogueMarks":{
+    "dialogueMarks": {
       "title": "Marks in dialogues",
       "markDisposers": "Mark exits",
       "markExterns": "Mark externs (dev)"

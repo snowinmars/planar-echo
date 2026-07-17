@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createZustandNarrative } from './narrativeStore';
 import { createZustandCharacter } from './characterStore';
 import { registerStores } from './saveSubject';
@@ -8,6 +8,8 @@ import planarLocalStorage from '@/shared/planarLocalStorage';
 import Loading from '@/components/Loading';
 import { useTranslation } from 'react-i18next';
 import { loadInitialStores } from './loadInitialStores';
+
+import type { ReactNode } from 'react';
 type StoreStatus = 'loading' | 'ready' | 'empty' | 'error';
 
 type WorldStoreProviderProps = Readonly<{
@@ -64,7 +66,7 @@ export const WorldStoreProvider = ({ children }: WorldStoreProviderProps): React
           .catch(e => console.error(e));
       }
     }
-    catch (e) {
+    catch (e: unknown) {
       console.error(e);
       setStatus('error');
       setError('The IndexedDB is unavailable. Please reload the page. If it does not work - restart browser.');

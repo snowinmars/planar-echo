@@ -42,7 +42,7 @@ export const registerNpcDialogue = <T>(dialogueLogic: T): { label: LabelFunction
     if (exposed) throw new Error(`Result dialogue was already exposed`);
 
     const alreadyRegistrated = npcDialogue.tree.get(stateId);
-    if (alreadyRegistrated) throw new Error(`Label ${stateId} already registrated.`);
+    if (alreadyRegistrated) throw new Error(`Label ${stateId} already registered.`);
 
     const hasCondition = !!args?.onlyIf;
     const hasWeight = !!args?.weight || args?.weight === 0;

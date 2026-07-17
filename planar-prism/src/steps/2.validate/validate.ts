@@ -1,5 +1,5 @@
 import type { Paths } from '@/steps/1.createPaths/index.js';
-import throwIfInvalid from './throwIfInvaliid.js';
+import throwIfInvalid from './throwIfInvalid.js';
 import type {
   GameDirValidateResult,
   ValidationResult,

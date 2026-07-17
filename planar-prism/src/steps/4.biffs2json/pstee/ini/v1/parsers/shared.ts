@@ -29,7 +29,7 @@ export const parseDecOrNothing = (s: Maybe<string>): Maybe<number> => {
   }
 };
 const returnStringOrThrow = (x: Maybe<string>, key: string, sectionName: string): string => {
-  if (!x) throw new Error(`${key} should not be optional for ini section ${sectionName}`); ;
+  if (!x) throw new Error(`${key} should not be optional for ini section ${sectionName}`);
   return x;
 };
 const returnStringOrNothing = (x: Maybe<string>): Maybe<string> => {

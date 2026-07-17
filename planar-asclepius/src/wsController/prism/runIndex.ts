@@ -1,9 +1,10 @@
 import runPrismScript from '@/shared/runPrismScript.js';
 import { concat, Observable } from 'rxjs';
 import { exec } from 'child_process';
+import { WebSocket } from 'ws';
 
-import type { WebSocket } from 'ws';
 import type { PrismIndexCompleteMessage, PrismIndexErrorMessage, PrismIndexProgressMessage, PrismIndexStartMessage, ProgressStep } from '@planar/shared';
+import logger from '@/shared/logger.js';
 
 type PrismIndexResponseData = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
@@ -53,30 +54,30 @@ const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
     .subscribe({
       next: (data) => {
         const d = data as PrismIndexProgressMessage['data']; // TODO [snow]: errors will go to error callback, but typing here is broken
-        if (ws.readyState === 1) {
+        if (ws.readyState === WebSocket.OPEN) {
           const message: PrismIndexProgressMessage = { type: 'progress', data: d };
           ws.send(JSON.stringify(message));
         }
         else {
-          console.warn(`Cannot send next websocket message because its state it ${ws.readyState}`);
+          logger.warn(`Cannot send next websocket message because its state it ${ws.readyState}`);
         }
       },
       error: (err: PrismIndexErrorMessage['data']) => {
-        if (ws.readyState === 1) {
+        if (ws.readyState === WebSocket.OPEN) {
           const message: PrismIndexErrorMessage = { type: 'error', data: err.toString ? err.toString() : err };
           ws.send(JSON.stringify(message));
         }
         else {
-          console.warn(`Cannot send error websocket message because its state it ${ws.readyState}`);
+          logger.warn(`Cannot send error websocket message because its state it ${ws.readyState}`);
         }
       },
       complete: () => {
-        if (ws.readyState === 1) {
-          const message: PrismIndexCompleteMessage = { type: 'complete' };
+        if (ws.readyState === WebSocket.OPEN) {
+          const message: PrismIndexCompleteMessage = { type: 'complete', data: '' };
           ws.send(JSON.stringify(message));
         }
         else {
-          console.warn(`Cannot send complete websocket message because its state it ${ws.readyState}`);
+          logger.warn(`Cannot send complete websocket message because its state it ${ws.readyState}`);
         }
       },
     });

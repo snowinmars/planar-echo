@@ -3,7 +3,7 @@ import type { GameName } from './gameName.js';
 import type { Maybe } from './index.js';
 
 /**
- * Props to file prism index.js
+ * Props to file prism index.js // TODO [snow]: write normal way, lol
  */
 type PrismIndexProps = Readonly<{
   weiduExeDir: string;
@@ -46,6 +46,7 @@ export type PrismIndexProgressMessage = Readonly<{
 }>;
 export type PrismIndexCompleteMessage = Readonly<{
   type: 'complete';
+  data: string;
 }>;
 export type PrismIndexErrorMessage = Readonly<{
   type: 'error';

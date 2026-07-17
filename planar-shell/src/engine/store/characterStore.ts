@@ -14,7 +14,7 @@ export const getCharacterActions = (store: ZustandCharacter) => ({
     let realWhoId = whoId;
     if (whoId === 'protagonist') realWhoId = 'nameless';
 
-    const character: CharacterNarrativeProps = store.getState()[realWhoId];
+    const character = store.getState()[realWhoId];
     if (!character) throw new Error(`Cannot find character '${whoId}'`);
     return character[statId];
   },
@@ -23,7 +23,7 @@ export const getCharacterActions = (store: ZustandCharacter) => ({
     let realWhoId = whoId;
     if (whoId === 'protagonist') realWhoId = 'nameless';
 
-    const character: CharacterNarrativeProps = store.getState()[realWhoId];
+    const character = store.getState()[realWhoId];
     if (!character) throw new Error(`Cannot find character '${whoId}'`);
     const current = character[statId];
     const next = current + amount;
@@ -36,7 +36,7 @@ export const getCharacterActions = (store: ZustandCharacter) => ({
     let realWhoId = whoId;
     if (whoId === 'protagonist') realWhoId = 'nameless';
 
-    const character: CharacterNarrativeProps = store.getState()[realWhoId];
+    const character = store.getState()[realWhoId];
     if (!character) throw new Error(`Cannot find character '${whoId}'`);
     store.setState({ [realWhoId]: { ...character, [statId]: amount } });
     triggerSave();

@@ -34,10 +34,10 @@ export const allCategories = [
 export type StoreDiscoveredType = (typeof allCategories)[number];
 export type DiscoveredEventType = Exclude<StoreDiscoveredType, 'env'>; // env registrates from variable event type
 export type Store = Map<StoreDiscoveredType, Set<string>>;
-export type Discovered = {
+export type Discovered = Readonly<{
   variables: Map<StoreDiscoveredType, string[]>;
   variableInfos: Map<string, VariableInfo>;
-};
+}>;
 type SpecteValue = string | number;
 export type DiscoveredEvent = Readonly<{
   type: DiscoveredEventType;

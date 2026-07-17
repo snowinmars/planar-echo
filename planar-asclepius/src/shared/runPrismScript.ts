@@ -41,7 +41,6 @@ const runPrismScript = <T>(prismDir: string, commandName: string, data: T): Obse
 
     child.on('exit', (code) => {
       if (code !== 0) subscriber.error(new Error(`Exit code ${code}`));
-      else subscriber.complete();
     });
 
     return () => {

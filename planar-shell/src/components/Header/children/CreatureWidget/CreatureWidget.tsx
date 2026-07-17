@@ -30,7 +30,7 @@ const Creatures: FC<WithClassName> = ({ className }) => {
     <Autocomplete
       className={className}
       options={creatures}
-      value={currentCreatureId}
+      value={currentCreatureId ?? ''}
       onChange={(_, creatureId) => {
         if (isNothing(creatureId)) throw new Error('Creature id cannot be empty here');
         actions?.loadCreature(creatureId).catch(e => console.error(e));

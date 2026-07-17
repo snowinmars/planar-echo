@@ -1,5 +1,5 @@
 import type { RawDlg } from '@/steps/4.biffs2json/pstee/dlg/index.js';
-import type { WeightedDlg } from './1.attachWeights.types.ts';
+import type { WeightedDlg } from './1.attachWeights.types.js';
 
 const attachWeights = (dialogue: RawDlg): WeightedDlg => {
   const stateIndicesOrderedByWeight = dialogue.states

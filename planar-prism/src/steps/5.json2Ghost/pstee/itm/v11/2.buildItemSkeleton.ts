@@ -5,7 +5,7 @@ import type { GhostItemV10 } from '../../../types.js';
 import type { DiscoverNext } from '@/discoverer.types.js';
 import type { Writer } from '@/shared/writer.js';
 import type { AbilityV10 } from '@/steps/4.biffs2json/pstee/itm/v10/2.parseAbilities.types.js';
-import type { EffectV10 } from '@/steps/4.biffs2json/pstee/itm/v10/3.parseEffects.types.ts';
+import type { EffectV10 } from '@/steps/4.biffs2json/pstee/itm/v10/3.parseEffects.types.js';
 
 const createLowercaseId = (resourceName: string): string => {
   const candidate = resourceName.split('.')[0]!.replace(`'`, ``);

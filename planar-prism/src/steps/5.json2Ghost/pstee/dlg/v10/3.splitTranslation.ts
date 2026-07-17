@@ -1,9 +1,10 @@
 import splitDmorte1Dlg from './split/dmorte1Dlg.js';
+import { nothing } from '@planar/shared';
 
 import type { TlkedDlg } from './2.patchTranslation.types.js';
 import type { SplittedDlg } from './3.splitTranslation.types.js';
 import type { Splitter } from './types.js';
-import { nothing, type GameLanguage } from '@planar/shared';
+import type { GameLanguage } from '@planar/shared';
 
 const getSplitter = (dlg: TlkedDlg, language: GameLanguage): Splitter => {
   switch (dlg.resourceName) {

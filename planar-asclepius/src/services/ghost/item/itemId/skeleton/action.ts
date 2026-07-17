@@ -26,4 +26,4 @@ export default async ({
     ok: true,
     data: { content: `/*${itemSkeletonDir}*/\n${content}` },
   };
-}; ;
+};

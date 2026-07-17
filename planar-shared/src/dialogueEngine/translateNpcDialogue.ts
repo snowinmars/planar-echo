@@ -24,7 +24,7 @@ type ResponseFunction = (responseId: ResponseId, what: string) => Readonly<{ res
 type FlushFunction = () => TranslatedNpcDialogue;
 
 const throwIfInvalidUntranslatedLabel = (unstranslatedLabel: UntranslatedLabel, stateId: StateId): void => {
-  if (!unstranslatedLabel) throw new Error(`Label ${stateId} was not registrated.`);
+  if (!unstranslatedLabel) throw new Error(`Label ${stateId} was not registered.`);
 
   const untranslatedSays = unstranslatedLabel.says.get('dev');
   if (!untranslatedSays) throw new Error(`Cannot find dev says for unstranslated label ${unstranslatedLabel.stateId}`);
@@ -78,6 +78,8 @@ export const translateNpcDialogue = (untranslatedNpcDialogue: UntranslatedNpcDia
 
     const untranslatedSays = _unstranslatedLabel!.says.get('dev')!;
     const untranslatedSay = untranslatedSays[0];
+    if (!untranslatedSay) throw new Error(`Cannot find untranslatedSay for whoIdOrItemId '${whoIdOrItemId}'`);
+
     const says = _label!.says.get(language)!;
 
     const isFirstSay = says.length === 0;

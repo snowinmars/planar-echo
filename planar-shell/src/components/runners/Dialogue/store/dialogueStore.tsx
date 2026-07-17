@@ -38,7 +38,7 @@ export const useDialogueStore = create<DialogueStore>((set, get) => ({
   dialogues: [],
   tree: nothing(),
 
-  currentDialogueId: '',
+  currentDialogueId: nothing(),
   setCurrentDialogueId: (dialogueId: string) => set({ currentDialogueId: dialogueId }),
 
   currentStateId: nothing(),

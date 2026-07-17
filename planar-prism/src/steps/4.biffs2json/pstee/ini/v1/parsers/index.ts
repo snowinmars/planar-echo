@@ -5,6 +5,6 @@ export { parseSpawnMainSectionV1 } from './parseSpawnMainSectionV1.js';
 export { parseGeneralSectionV1 } from './parseGeneralSectionV1.js';
 export { parseGroupSectionV1 } from './parseGroupSectionV1.js';
 export { parseCreatureSectionV1 } from './parseCreatureSectionV1.js';
-export { parseMonsterPlanescapeSectionV1 } from './parseMonsterPlanescapeIniSectionV1.js';
+export { parseMonsterPlanescapeIniSectionV1 } from './parseMonsterPlanescapeIniSectionV1.js';
 export { parseSoundsSectionV1 } from './parseSoundsSectionV1.js';
 export { parseNumberedSectionV1 } from './parseNumberedSectionV1.js';

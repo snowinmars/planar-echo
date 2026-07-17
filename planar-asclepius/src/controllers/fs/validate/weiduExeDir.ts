@@ -2,7 +2,7 @@ import { Router } from 'express';
 import validate from 'express-zod-safe';
 import { z } from 'zod';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
-import action from '@/services/fs/validate/weiduExeDir/actions.js';
+import action from '@/services/fs/validate/weiduExeDir/action.js';
 
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 
@@ -20,7 +20,7 @@ const responseError = z.object({
     code: z.enum(['FILE_NOT_FOUND', 'WEIDU_ERROR']),
   }),
 });
-const routeConfig: RouteConfig = {
+const routeConfig = (): RouteConfig => ({
   method: 'post',
   path: '/api/fs/validate/weiduExeDir',
   tags: ['fs'],
@@ -61,10 +61,10 @@ const routeConfig: RouteConfig = {
       },
     },
   },
-};
+});
 
 export default (registry: OpenAPIRegistry, router: Router): void => {
-  registry.registerPath(routeConfig);
+  registry.registerPath(routeConfig());
 
   router.post('/api/fs/validate/weiduExeDir',
     validate({ body }),

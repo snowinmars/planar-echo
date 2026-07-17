@@ -12,4 +12,4 @@ export const gameNames: Record<GameName, string> = {
   iwdee: 'landing.step1.gameNames.iwdee',
   iwd2: 'landing.step1.gameNames.iwd2',
   pstee: 'landing.step1.gameNames.pstee',
-} as const; ;
+} as const;

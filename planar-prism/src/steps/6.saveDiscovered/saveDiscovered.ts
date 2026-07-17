@@ -3,6 +3,7 @@ import createWriter from '@/shared/writer.js';
 import { join } from 'path';
 import { saveToFile } from '@/shared/customFs.js';
 import { nothing } from '@planar/shared';
+import logger from '@/shared/logger.js';
 
 import type { Discovered, StoreDiscoveredType, VariableInfo } from '@/discoverer.types.js';
 import type { Paths } from '../1.createPaths/index.js';
@@ -250,7 +251,7 @@ const detectVariableType = (variable: string, variableInfo: Maybe<VariableInfo>)
   const types = new Set([...variableInfo.spectre].map(v => typeof v));
   if (types.size > 1) {
     const x = [...types].join(', ');
-    throw new Error(`Variable '${variable}' cannot exists in several types: ${x}`);
+    throw new Error(`Variable '${variable}' cannot exist in several types: ${x}`);
   }
 
   if (variableInfo.forceType === 'string') return 'string';
@@ -290,7 +291,7 @@ const serializeVariables = (variables: string[], variableInfos: Map<string, Vari
   for (const variable of variables) {
     const variableInfo = variableInfos.get(variable);
     if (!variableInfo || !variableInfo?.spectre || variableInfo.spectre.size === 0) {
-      console.warn(`Why there is an empty spectre for variable '${variable}'?`);
+      logger.warn(`Why there is an empty spectre for variable '${variable}'?`);
     }
 
     const variableType = detectVariableType(variable, variableInfo);
@@ -342,7 +343,7 @@ const serializeKeys = (keys: string[], variableInfos: Map<string, VariableInfo>)
   for (const key of keys) {
     const variableInfo = variableInfos.get(key);
     if (!variableInfo || !variableInfo?.spectre || variableInfo.spectre.size === 0) {
-      console.warn(`Why there is an empty spectre for key '${key}'?`);
+      logger.warn(`Why there is an empty spectre for key '${key}'?`);
     }
 
     const variableType = detectVariableType(key, variableInfo);
@@ -447,10 +448,10 @@ const serializeType = (name: string, items: string[]) => {
   return writer.done();
 };
 
-type SerializeResult = {
+type SerializeResult = Readonly<{
   types: string;
   stores?: string;
-};
+}>;
 
 const serialize = (category: StoreDiscoveredType, items: string[], discovered: Discovered): SerializeResult => {
   switch (category) {

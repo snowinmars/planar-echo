@@ -20,7 +20,7 @@ export type CreatureStore = Readonly<{
   loading: boolean;
 
   creatures: string[];
-  currentCreatureId: string;
+  currentCreatureId: Maybe<string>;
   translatedCreature: Maybe<TranslatedCreature>;
 
   loadCreatures: () => Promise<void>;
@@ -35,7 +35,7 @@ export const useCreatureStore = create<CreatureStore>((set, get) => ({
   loading: false,
 
   creatures: [],
-  currentCreatureId: '',
+  currentCreatureId: nothing(),
   translatedCreature: nothing(),
 
   loadCreatures: async (): Promise<void> => {
@@ -99,7 +99,7 @@ export const useCreatureStore = create<CreatureStore>((set, get) => ({
     catch (e: unknown) {
       console.error(e);
       set({
-        currentCreatureId: '',
+        currentCreatureId: nothing(),
         translatedCreature: nothing(),
       });
     }
@@ -111,7 +111,7 @@ export const useCreatureStore = create<CreatureStore>((set, get) => ({
   },
 
   disposeCreature: () => set({
-    currentCreatureId: '',
+    currentCreatureId: nothing(),
     translatedCreature: nothing(),
   }),
 }));

@@ -46,4 +46,4 @@ export default async ({
   };
 
   return { ok: true, data: { biffsCount: biffs.length } };
-}; ;
+};

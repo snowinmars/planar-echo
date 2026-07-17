@@ -479,7 +479,7 @@ const buildDialogueCreatureMap = (creatureDialoguesMap: Map<string, Set<string>>
   const dialogueCreatureMap = new Map<string, Set<string>>();
   for (const creatureId of creatureDialoguesMap.keys()) {
     const dialoguesIds = creatureDialoguesMap.get(creatureId);
-    if (!dialoguesIds) throw new Error(`Cannot fing dialogues for creature '${creatureId}'`);
+    if (!dialoguesIds) throw new Error(`Cannot find dialogues for creature '${creatureId}'`);
     for (const dialogueId of dialoguesIds) {
       let existingCreaturesIds = dialogueCreatureMap.get(dialogueId);
 
@@ -497,13 +497,13 @@ const dialogueCreatureMap = buildDialogueCreatureMap(creatureDialoguesMap);
 export const creatureToDialogues = (creatureId: string, throwOnNothing = true): string[] => {
   const dialogues = creatureDialoguesMap.get(creatureId);
   if (dialogues) return [...dialogues.values()];
-  if (throwOnNothing) throw new Error(`Cannot find creatures for dialogue '${creatureId}'`);
+  if (throwOnNothing) throw new Error(`Cannot find dialogues for creature '${creatureId}'`);
   return [];
 };
 
 export const dialogueToCreatures = (dialogueId: string, throwOnNothing = true): string[] => {
   const creatures = dialogueCreatureMap.get(dialogueId);
   if (creatures) return [...creatures.values()];
-  if (throwOnNothing) throw new Error(`Cannot find dialogues for creature '${dialogueId}'`);
+  if (throwOnNothing) throw new Error(`Cannot find creatures for dialogue '${dialogueId}'`);
   return [];
 };

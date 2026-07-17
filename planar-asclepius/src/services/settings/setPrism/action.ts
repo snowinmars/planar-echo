@@ -11,7 +11,7 @@ export default async ({ prismDir }: Command): Promise<Result> => {
       error: {
         code: 'DIRECTORY_NOT_FOUND',
         status: 404,
-        message: `Ghost directory is not found by path '${prismDir}'`,
+        message: `Prism directory is not found by path '${prismDir}'`,
       },
     };
   };

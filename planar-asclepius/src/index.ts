@@ -2,20 +2,21 @@ import express from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import { createServer } from 'http';
-import swaggerSpec from './swagger/swagger.json' with { type: 'json' }; ;
+import swaggerSpec from './swagger/swagger.json' with { type: 'json' };
 import router from './controllers/router.js';
 import createWsRouter from './wsController/router.js';
 import ghostDirAction from '@/services/fs/ghostDir/action.js';
 import shellDirAction from '@/services/fs/shellDir/action.js';
 
 import type { JsonObject } from 'swagger-ui-express';
+import logger from './shared/logger.js';
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3003;
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:3000', // TODO [snow]: do not hardcode it
   credentials: false,
 }));
 
@@ -65,7 +66,7 @@ const server = createServer(app);
 createWsRouter(server);
 
 server.listen(PORT, () => {
-  console.log(`Asclepius is running http://localhost:${PORT}`);
-  console.log(`  Swagger at http://localhost:${PORT}/api/swagger/`);
-  console.log(`  Generated swagger.json at http://localhost:${PORT}/api/openApi/`);
+  logger.info(`Asclepius is running http://localhost:${PORT}`);
+  logger.info(`  Swagger at http://localhost:${PORT}/api/swagger/`);
+  logger.info(`  Generated swagger.json at http://localhost:${PORT}/api/openApi/`);
 });

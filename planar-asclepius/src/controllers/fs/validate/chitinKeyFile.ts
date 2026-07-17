@@ -24,7 +24,7 @@ const responseError = z.object({
     code: z.enum(['FILE_NOT_FOUND', 'NO_BIFFS']),
   }),
 });
-const routeConfig: RouteConfig = {
+const routeConfig = (): RouteConfig => ({
   method: 'post',
   path: '/api/fs/validate/chitinKeyFile',
   tags: ['fs'],
@@ -57,10 +57,10 @@ const routeConfig: RouteConfig = {
       },
     },
   },
-};
+});
 
 export default (registry: OpenAPIRegistry, router: Router): void => {
-  registry.registerPath(routeConfig);
+  registry.registerPath(routeConfig());
 
   router.post('/api/fs/validate/chitinKeyFile',
     validate({ body }),

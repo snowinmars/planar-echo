@@ -4,12 +4,12 @@ import { nothing } from '@planar/shared';
 import type { Maybe } from '@planar/shared';
 import type { StoreName } from './db';
 
-export type CachedTranslatedSkeletonItem = {
+export type CachedTranslatedSkeletonItem = Readonly<{
   id: string;
   skeleton: string;
   translation: string;
   lastTouched: number;
-};
+}>;
 
 export const getTranslatedSkeletonItem = async (storeName: StoreName, id: string): Promise<Maybe<CachedTranslatedSkeletonItem>> => {
   const db = await connect();
@@ -43,11 +43,11 @@ export const setTranslatedSkeletonItem = async (storeName: StoreName, id: string
   await tx.done;
 };
 
-export type WorldStateItem<T> = {
+export type WorldStateItem<T> = Readonly<{
   id: string;
   state: T;
   lastTouched: number;
-};
+}>;
 
 export const getWorldState = async <T>(storeName: StoreName, id: string): Promise<Maybe<WorldStateItem<T>>> => {
   const db = await connect();

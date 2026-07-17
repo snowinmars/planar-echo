@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -6,7 +7,7 @@ import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router';
 import RunnerGuard from './children/RunnerGuard/RunnerGuard';
 
-import { useEffect, useState, type FC } from 'react';
+import type { FC } from 'react';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 const Landing: FC = () => {

@@ -1,7 +1,6 @@
 import type { WithClassName } from '@/types/fcWithClassName';
 import type { FC, JSX } from 'react';
 
-// https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg
 const Telegram: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg
     className={className}

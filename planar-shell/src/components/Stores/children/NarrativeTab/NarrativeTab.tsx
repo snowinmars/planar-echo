@@ -15,11 +15,11 @@ import { useGridColumns } from '@/hooks/useGridColumns';
 
 import styles from './NarrativeTab.module.scss';
 
-type NarrativeItem = {
+type NarrativeItem = Readonly<{
   id: string;
   value: number;
   onSave: (key: string, value: number) => void;
-};
+}>;
 
 const ROW_HEIGHT = 48;
 const COLUMN_WIDTH = 200;

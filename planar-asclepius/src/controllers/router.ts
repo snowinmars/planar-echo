@@ -5,7 +5,7 @@ import {
   OpenAPIRegistry,
   extendZodWithOpenApi,
 } from '@asteasolutions/zod-to-openapi';
-import registerValidateChitinKeyFile from './fs/validate/chitinKeyFile.js';
+import registerFsValidateChitinKeyFile from './fs/validate/chitinKeyFile.js';
 import registerFsValidateGhostDir from './fs/validate/ghostDir.js';
 import registerFsValidateWeiduExeDir from './fs/validate/weiduExeDir.js';
 import registerFsGhostDir from './fs/ghostDir.js';
@@ -43,7 +43,7 @@ const registry = new OpenAPIRegistry();
  */
 const router = express.Router();
 
-registerValidateChitinKeyFile(registry, router);
+registerFsValidateChitinKeyFile(registry, router);
 registerFsValidateGhostDir(registry, router);
 registerFsValidateWeiduExeDir(registry, router);
 registerFsGhostDir(registry, router);

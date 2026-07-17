@@ -51,7 +51,7 @@ const buildDialogueItemMap = (itemDialoguesMap: Map<string, Set<string>>): Map<s
   const dialogueItemMap = new Map<string, Set<string>>();
   for (const itemId of itemDialoguesMap.keys()) {
     const dialoguesIds = itemDialoguesMap.get(itemId);
-    if (!dialoguesIds) throw new Error(`Cannot fing dialogues for item '${itemId}'`);
+    if (!dialoguesIds) throw new Error(`Cannot find dialogues for item '${itemId}'`);
     for (const dialogueId of dialoguesIds) {
       let existingItemsIds = dialogueItemMap.get(dialogueId);
 

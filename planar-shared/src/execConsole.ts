@@ -13,12 +13,14 @@ const splitCommand = (command: string): [string, string[]] => {
     args = command.split(' ').slice(1);
   }
 
+  if (!cmd) throw new Error(`Cannot understand command '${cmd}'`);
+
   return [cmd, args];
 };
 
 export const execConsole = async <T>(
   command: string,
-  map: (line: string) => Maybe<T>,
+  map: (line: string, i: number) => Maybe<T>,
   ignoreStdout = false,
 ): Promise<T[]> => {
   return new Promise((resolve, reject) => {
@@ -42,13 +44,17 @@ export const execConsole = async <T>(
         stdoutBuffer += data;
 
         let newlineIndex;
+        let i = 1;
         while ((newlineIndex = stdoutBuffer.indexOf('\n')) !== -1) {
           const line = stdoutBuffer.slice(0, newlineIndex).trim();
           stdoutBuffer = stdoutBuffer.slice(newlineIndex + 1);
 
           if (line) {
-            const mapped = map(line);
-            if (mapped) results.push(just(mapped));
+            const mapped = map(line, i);
+            if (mapped) {
+              results.push(just(mapped));
+              i++;
+            }
           }
         }
       });
@@ -61,7 +67,7 @@ export const execConsole = async <T>(
     proc.on('close', (code) => {
       if (code === 0) {
         if (!ignoreStdout && stdoutBuffer.trim()) {
-          const mapped = map(stdoutBuffer.trim());
+          const mapped = map(stdoutBuffer.trim(), 0);
           if (mapped) results.push(just(mapped));
         }
         resolve(results);

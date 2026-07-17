@@ -15,7 +15,7 @@ export type ItemStore = Readonly<{
   loading: boolean;
 
   items: string[];
-  currentItemId: string;
+  currentItemId: Maybe<string>;
   translatedItem: Maybe<TranslatedItem>;
 
   loadItems: () => Promise<void>;
@@ -30,7 +30,7 @@ export const useItemStore = create<ItemStore>((set, get) => ({
   loading: false,
 
   items: [],
-  currentItemId: '',
+  currentItemId: nothing(),
   translatedItem: nothing(),
 
   loadItems: async (): Promise<void> => {
@@ -94,7 +94,7 @@ export const useItemStore = create<ItemStore>((set, get) => ({
     catch (e: unknown) {
       console.error(e);
       set({
-        currentItemId: '',
+        currentItemId: nothing(),
         translatedItem: nothing(),
       });
     }
@@ -106,7 +106,7 @@ export const useItemStore = create<ItemStore>((set, get) => ({
   },
 
   disposeItem: () => set({
-    currentItemId: '',
+    currentItemId: nothing(),
     translatedItem: nothing(),
   }),
 }));

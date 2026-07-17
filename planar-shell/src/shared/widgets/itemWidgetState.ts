@@ -7,7 +7,7 @@ import type { ItemWidgetActions, ItemWidgetState } from './itemWidgetState.types
 const emptyState: ItemWidgetState = {
   loading: false,
   items: [],
-  currentItemId: '',
+  currentItemId: nothing(),
 };
 
 const state$ = new BehaviorSubject<ItemWidgetState>(emptyState);

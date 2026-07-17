@@ -37,7 +37,7 @@ import type { PrismIndexStartMessage } from '@planar/shared';
 import discoverer from './discoverer.js';
 
 const isIpc = !!process.send;
-console.warn(isIpc ? 'Run ipc mode' : 'Run cli mode');
+logger.warn(isIpc ? 'Run ipc mode' : 'Run cli mode');
 
 const main = async (props: PrismIndexStartMessage['data']) => {
   logger.info('Starting...');
@@ -68,9 +68,9 @@ const main = async (props: PrismIndexStartMessage['data']) => {
 if (isIpc) {
   process.on('message', (msg: PrismIndexStartMessage) => {
     if (msg.type === 'start') {
-      console.log(JSON.stringify(msg));
+      logger.debug(JSON.stringify(msg));
       main(msg.data).catch((e: unknown) => {
-        console.error(e);
+        logger.error(e);
         reportError(JSON.stringify(e));
       });
     }
@@ -84,5 +84,5 @@ else {
     prismDir: 'E:/prg/snowinmars/planar-echo/planar-prism/dist',
     gameLanguage: 'ru_RU',
     gameName: 'pstee',
-  }).catch(e => console.error(e));
+  }).catch(e => logger.error(e));
 }

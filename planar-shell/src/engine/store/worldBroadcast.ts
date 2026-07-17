@@ -1,8 +1,9 @@
 const PLANAR_WORLD_STORES_CHANNEL_NAME = 'planar-world-stores';
 
-export type WorldStoreBroadcast = {
-  type: 'reread';
-};
+type WorldStoreBroadcastType = 'reread';
+export type WorldStoreBroadcast = Readonly<{
+  type: WorldStoreBroadcastType;
+}>;
 
 let channel: BroadcastChannel | null = null;
 

@@ -32,7 +32,7 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
     <Autocomplete
       className={className}
       options={dialogues}
-      value={currentDialogueId}
+      value={currentDialogueId ?? ''}
       onChange={(_, dialogueId) => {
         if (isNothing(dialogueId)) throw new Error('Dialogue id cannot be empty here');
         actions?.loadDialogue(dialogueId!).catch(e => console.error(e));

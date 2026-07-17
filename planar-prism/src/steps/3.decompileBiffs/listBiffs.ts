@@ -1,12 +1,12 @@
-import execConsole from '@/shared/execConsole.js';
+import { execConsole } from '@planar/shared/node';
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
 import type { ListBiffsProps, Biff } from './types.js';
 
-const listBiffsregex = /\[(.*?)\]\s+(\d+) bytes.*/;
+const listBiffsRegex = /\[(.*?)\]\s+(\d+) bytes.*/;
 const parseBiff = (line: string): Maybe<Biff> => {
-  const matches = listBiffsregex.exec(line);
+  const matches = listBiffsRegex.exec(line);
   const isTechInfo = !matches || matches.length <= 1;
   if (isTechInfo) return nothing();
 

@@ -27,7 +27,7 @@ const nativeTimeToNumber = (x: string): number => {
     case 'thirteen': return 13;
     case 'fourteen': return 14;
     case 'fifteen': return 15;
-    default: throw new Error(`Native time '${x}' if out of range`);
+    default: throw new Error(`Native time '${x}' is out of range`);
   }
 };
 

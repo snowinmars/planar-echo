@@ -1,5 +1,6 @@
-import { dialogueToCreatures, dialogueToItems, nothing, type Maybe } from '@planar/shared';
+import { dialogueToCreatures, dialogueToItems, nothing } from '@planar/shared';
 
+import type { Maybe } from '@planar/shared';
 import type {
   GhostCreatureV10,
   GhostCreatureV11,

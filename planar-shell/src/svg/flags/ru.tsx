@@ -1,7 +1,7 @@
 import type { WithClassName } from '@/types/fcWithClassName';
 import type { FC, JSX } from 'react';
 
-const FlagDe: FC<WithClassName> = ({ className }): JSX.Element => (
+const FlagRu: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,4 @@ const FlagDe: FC<WithClassName> = ({ className }): JSX.Element => (
     <rect width="10" height="2" y="4" x="0" fill="#d52b1e" />
   </svg>
 );
-export default FlagDe;
+export default FlagRu;

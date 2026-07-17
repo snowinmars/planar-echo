@@ -4,7 +4,7 @@ import type { Maybe } from '@planar/shared';
 import type { Section } from '../../iniParser/iniParserTypes.js';
 import type { MonsterPlanescapeIniSection } from './parseMonsterPlanescapeIniSectionV1.types.js';
 
-export const parseMonsterPlanescapeSectionV1 = (section: Section): Maybe<MonsterPlanescapeIniSection> => {
+export const parseMonsterPlanescapeIniSectionV1 = (section: Section): Maybe<MonsterPlanescapeIniSection> => {
   if (section.name !== 'monster_planescape') throw new Error(`Expect section '${section.name}' to be 'monster_planescape' section`);
 
   /* eslint-disable @stylistic/no-multi-spaces */

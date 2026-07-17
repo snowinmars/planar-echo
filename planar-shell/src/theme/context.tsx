@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useMemo } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material';
-import lightTheme from './palletes/light';
-import darkTheme from './palletes/dark';
+import lightTheme from './palettes/light';
+import darkTheme from './palettes/dark';
 import storageManager from './storageManager';
 import localStorageKey from '@/shared/planarLocalStorage';
 

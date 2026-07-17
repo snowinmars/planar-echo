@@ -1,4 +1,4 @@
-import { useRef, createContext, useContext} from 'react';
+import { useRef, createContext, useContext } from 'react';
 
 import type { JSX } from 'react';
 import type { UseBoundStore, StoreApi } from 'zustand';

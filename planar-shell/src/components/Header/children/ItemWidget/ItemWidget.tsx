@@ -30,7 +30,7 @@ const Items: FC<WithClassName> = ({ className }) => {
     <Autocomplete
       className={className}
       options={items}
-      value={currentItemId}
+      value={currentItemId ?? ''}
       onChange={(_, itemId) => {
         if (isNothing(itemId)) throw new Error('Item id cannot be empty here');
         actions?.loadItem(itemId!).catch(e => console.error(e));

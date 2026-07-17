@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist",
+    "rootDir": "src",
+    "outDir": "dist",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "types": ["node"],
@@ -23,6 +23,8 @@
     "noUnusedParameters": true,
     "verbatimModuleSyntax": true,
     "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
 
     "paths": {
       "@/*": ["./src/*"]
@@ -33,9 +35,12 @@
     "vite-env.d.ts",
     "src/**/*.scss"
   ],
+  "exclude": [
+    "src/swagger"
+  ],
   "references": [
     {
-      "path": "./tsconfig.node.json"
+      "path": "tsconfig.node.json"
     }
   ]
 }

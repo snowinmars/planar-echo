@@ -2,7 +2,7 @@ import { Router } from 'express';
 import validate from 'express-zod-safe';
 import { z } from 'zod';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
-import action from '@/services/fs/validate/ghostDir/actions.js';
+import action from '@/services/fs/validate/ghostDir/action.js';
 
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 
@@ -16,7 +16,7 @@ const responseError = z.object({
     code: z.enum(['DIRECTORY_NOT_FOUND', 'DIRECTORY_NOT_EMPTY']),
   }),
 });
-const routeConfig: RouteConfig = {
+const routeConfig = (): RouteConfig => ({
   method: 'post',
   path: '/api/fs/validate/ghostDir',
   tags: ['fs'],
@@ -57,10 +57,10 @@ const routeConfig: RouteConfig = {
       },
     },
   },
-};
+});
 
 export default (registry: OpenAPIRegistry, router: Router): void => {
-  registry.registerPath(routeConfig);
+  registry.registerPath(routeConfig());
 
   router.post('/api/fs/validate/ghostDir',
     validate({ body }),

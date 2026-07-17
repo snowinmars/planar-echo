@@ -3,7 +3,7 @@ import type { StorageManager } from '@mui/material/styles';
 
 const storageManager: StorageManager = (options: {
   key: string;
-  storageWindow?: Window | null;
+  storageWindow?: Window | null | undefined;
 }) => {
   const storage = options.storageWindow?.localStorage ?? window.localStorage;
 
@@ -23,8 +23,8 @@ const storageManager: StorageManager = (options: {
       try {
         storage.setItem(options.key, JSON.stringify(value));
       }
-      catch (error) {
-        console.error('Failed to save to localStorage:', error);
+      catch (e: unknown) {
+        console.error('Failed to save to localStorage:', e);
       }
     },
 

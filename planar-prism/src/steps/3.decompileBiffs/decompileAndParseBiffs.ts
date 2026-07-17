@@ -5,7 +5,7 @@ import {
   extname,
 } from 'path';
 import { nothing } from '@planar/shared';
-import execConsole from '@/shared/execConsole.js';
+import { execConsole } from '@planar/shared/node';
 import listBiffs from './listBiffs.js';
 
 import type { Maybe } from '@planar/shared';
@@ -15,6 +15,7 @@ import type {
   DecompiledBiffType,
   DecompileBiffsProps,
 } from './types.js';
+import logger from '@/shared/logger.js';
 
 const detectDecompiledItemType = (extension: string): DecompiledBiffType => {
   switch (extension) {
@@ -55,7 +56,7 @@ const detectDecompiledItemType = (extension: string): DecompiledBiffType => {
 const decompileBiffsRegex = /\[(.*?)\] created from \[(.*?)\]/;
 const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => {
   const noMatches = line.startsWith('No matches for');
-  if (noMatches) console.warn(`It may be ok, but: ${line}`);
+  if (noMatches) logger.warn(`It may be ok, but: ${line}`);
 
   const matches = decompileBiffsRegex.exec(line.toLowerCase());
   const isTechInfo = !matches || matches.length <= 1;

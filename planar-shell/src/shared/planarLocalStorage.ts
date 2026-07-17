@@ -9,7 +9,7 @@ const buildKey = (key: string): string => `${NAMESPACE}-${key}`;
 
 const key$ = new Subject<string>();
 
-export const planarLocalStorage = {
+const planarLocalStorage = {
   get: <T = string>(key: string, either: Maybe<T> = nothing()): Maybe<T> => {
     const value = localStorage.getItem(buildKey(key));
     if (!value) return isNothing(either) ? nothing() : either;

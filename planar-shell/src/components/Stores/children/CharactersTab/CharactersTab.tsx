@@ -39,11 +39,11 @@ const QUICK_PICKS: QuickPick[] = [
 const ROW_HEIGHT = 48;
 const COLUMN_WIDTH = 200;
 
-type CharacterItem = {
+type CharacterItem = Readonly<{
   id: keyof CharacterNarrativeProps;
   value: number | string;
   onSave: (field: string, value: number | string) => void;
-};
+}>;
 
 type GridCellProps = CellComponentProps<Readonly<{
   cells: ReadonlyArray<CharacterItem>;
@@ -130,14 +130,18 @@ const CharactersTab: FC<CharactersTabProps> = ({ onSave }: CharactersTabProps) =
     return Object.keys(readState);
   }, [readState]);
 
+  const character = characters[0];
+  if (!character) throw new Error(`Should not happens, but cannot find charater`);
+
   const characterProperties = useMemo(() => {
-    if (!readState[characters[0]]) return [];
-    return Object.keys(readState[characters[0]]) as Array<keyof CharacterNarrativeProps>;
+    if (!readState[character]) return [];
+    return Object.keys(readState[character]) as Array<keyof CharacterNarrativeProps>;
   }, [readState, characters]);
 
   const onCellSave = useCallback((field: string, value: number | string) => {
     if (!selectedCharacter) return;
     const current = readState[selectedCharacter];
+    if (!current) throw new Error(`Should not happens, but cannot find charater`);
 
     writeStore.setState({ [selectedCharacter]: { ...current, [field]: value } });
     triggerSave();

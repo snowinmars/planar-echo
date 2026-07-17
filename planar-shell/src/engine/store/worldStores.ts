@@ -1,4 +1,6 @@
-import { nothing, type Maybe } from '@planar/shared';
+import { nothing } from '@planar/shared';
+
+import type { Maybe } from '@planar/shared';
 import type { ZustandNarrative } from './narrativeStore';
 import type { ZustandCharacter } from './characterStore';
 

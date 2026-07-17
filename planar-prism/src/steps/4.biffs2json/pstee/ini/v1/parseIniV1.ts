@@ -8,7 +8,7 @@ import {
   parseGeneralSectionV1,
   parseGroupSectionV1,
   parseCreatureSectionV1,
-  parseMonsterPlanescapeSectionV1,
+  parseMonsterPlanescapeIniSectionV1,
   parseSoundsSectionV1,
   parseNumberedSectionV1,
 } from './parsers/index.js';
@@ -73,7 +73,7 @@ export const parseIniV1 = ({
         continue;
       }
       case 'monster_planescape': {
-        monsterPlanescape = parseMonsterPlanescapeSectionV1(section);
+        monsterPlanescape = parseMonsterPlanescapeIniSectionV1(section);
         continue;
       }
       case 'sounds': {
