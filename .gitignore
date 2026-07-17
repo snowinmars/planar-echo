@@ -203,3 +203,10 @@ src/htmlcov/
 planar-ghost/decimpiledBiff
 planar-ghost/json
 planar-ghost/ghost
+
+##
+# https://habr.com/ru/articles/1029868/?ysclid=mrmldrvv8l218166405
+# https://github.com/doITmagic/rag-code-mcp + https://github.com/yvgude/lean-ctx + https://www.npmjs.com/package/@soflution/mcp-on-demand
+ai-tools
+.cursor/plans
+.mimocode/plans

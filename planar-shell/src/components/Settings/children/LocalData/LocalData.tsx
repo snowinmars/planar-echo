@@ -1,8 +1,10 @@
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import Button from '@mui/material/Button';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { deleteDb } from '@/shared/indexedDb/db';
+
+import type { FC } from 'react';
 
 const ANIMATION_TIME_MS = 3000;
 

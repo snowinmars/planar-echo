@@ -1,8 +1,7 @@
 import { getWorldState, setWorldState } from './crud';
 
 import type { WorldStateItem } from './crud';
-import type { Maybe } from '@planar/shared';
-import type { CharacterNarrativeProps } from '@/engine/constructors/types';
+import type { CharacterNarrativeProps, Maybe } from '@planar/shared';
 
 export type CharactersState = Record<string, CharacterNarrativeProps>;
 

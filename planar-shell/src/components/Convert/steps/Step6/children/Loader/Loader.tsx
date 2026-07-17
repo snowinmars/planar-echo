@@ -1,5 +1,6 @@
-import { Typography, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material';
 import clsx from 'clsx';
 
 import type { FC } from 'react';

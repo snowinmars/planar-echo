@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import Typography, { TypographyOwnProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Steam from '@/svg/steam';
 import Gog from '@/svg/gog';
 import clsx from 'clsx';
 
+import type { TypographyOwnProps } from '@mui/material/Typography';
 import type { LandingStateStep3 } from '@/components/Convert/store/types';
 import type { FC } from 'react';
 

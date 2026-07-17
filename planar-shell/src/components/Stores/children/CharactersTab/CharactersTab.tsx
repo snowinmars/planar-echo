@@ -1,4 +1,4 @@
-import { useState, useMemo, FC, useEffect, useCallback, useSyncExternalStore, useRef } from 'react';
+import { useState, useMemo, useEffect, useCallback, useSyncExternalStore, useRef } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Grid } from 'react-window';
@@ -10,15 +10,14 @@ import { NumberField } from '../../NumberField';
 import { useGridColumns } from '@/hooks/useGridColumns';
 import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
 import { reloadStoresFromDb } from '@/components/runners/Dialogue/children/broadcast';
+import { useTranslation } from 'react-i18next';
 
-import type { CharacterNarrativeProps } from '@/engine/constructors/types';
+import type { TFunction } from 'i18next';
+import type { CharacterNarrativeProps, WhoId } from '@planar/shared';
 import type { CellComponentProps } from 'react-window';
-import type { ReactElement } from 'react';
+import type { FC, ReactElement } from 'react';
 
 import styles from './CharactersTab.module.scss';
-import { WhoId } from '@planar/shared';
-import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
 
 type QuickPick = Readonly<{
   id: WhoId;

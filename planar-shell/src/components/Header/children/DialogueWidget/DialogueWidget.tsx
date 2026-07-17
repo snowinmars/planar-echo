@@ -5,10 +5,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import VirtualizedListbox from '@/shared/VirtualizedListbox';
 import { dialogueWidgetState } from '@/shared/widgets';
 import { getStateIds } from '@/components/runners/Dialogue/store/helpers';
-import { isNothing, StateId } from '@planar/shared';
+import { isNothing } from '@planar/shared';
 import { useTranslation } from 'react-i18next';
 
 import type { FC } from 'react';
+import type { StateId } from '@planar/shared';
 import type { WithClassName } from '@/types/fcWithClassName';
 
 import styles from './DialogueWidget.module.scss';

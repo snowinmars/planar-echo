@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import TranslationSvg from '@/svg/translation';
 import styles from './LanguageSwitcher.module.scss';
-import getNativeLangNames, { NativeLang } from '@/shared/getNativeLangNames';
+import getNativeLangNames from '@/shared/getNativeLangNames';
 import InputLabel from '@mui/material/InputLabel';
 import FlagCz from '@/svg/flags/cz';
 import FlagDe from '@/svg/flags/de';
@@ -17,6 +17,7 @@ import FlagKo from '@/svg/flags/ko';
 import FlagPl from '@/svg/flags/pl';
 import FlagRu from '@/svg/flags/ru';
 
+import type { NativeLang } from '@/shared/getNativeLangNames';
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
 import type { GameLanguage } from '@planar/shared';

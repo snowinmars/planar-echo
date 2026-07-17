@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import Typography, { TypographyOwnProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 
+import type { TypographyOwnProps } from '@mui/material/Typography';
 import type { FC } from 'react';
 import type { LandingStateStep3 } from '@/components/Convert/store/types';
 

@@ -1,4 +1,4 @@
-import { useState, useMemo, FC, useEffect, useCallback, useSyncExternalStore, useRef } from 'react';
+import { useState, useMemo, useEffect, useCallback, useSyncExternalStore, useRef } from 'react';
 import TextField from '@mui/material/TextField';
 import { Grid } from 'react-window';
 import { getZustandNarrative } from '@/engine/store/worldStores';
@@ -8,7 +8,7 @@ import { reloadStoresFromDb } from '@/components/runners/Dialogue/children/broad
 
 import type { NumberVariableId, BooleanVariableId } from '@planar/shared';
 import type { CellComponentProps } from 'react-window';
-import type { ReactElement } from 'react';
+import type { ReactElement, FC } from 'react';
 import { NumberField } from '../../NumberField';
 import { useTranslation } from 'react-i18next';
 import { useGridColumns } from '@/hooks/useGridColumns';

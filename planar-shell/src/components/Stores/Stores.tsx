@@ -1,4 +1,4 @@
-import { useState, FC, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -6,9 +6,11 @@ import NarrativeTab from './children/NarrativeTab';
 import CharactersTab from './children/CharactersTab';
 import { useTranslation } from 'react-i18next';
 import Divider from '@mui/material/Divider';
+import clsx from 'clsx';
+
+import type {FC } from 'react';
 
 import styles from './Stores.module.scss';
-import clsx from 'clsx';
 
 const ANIMATION_TIME_MS = 1000;
 

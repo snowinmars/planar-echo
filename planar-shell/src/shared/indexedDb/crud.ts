@@ -1,7 +1,8 @@
-import { connect, StoreName } from './db';
+import { connect } from './db';
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
+import type { StoreName } from './db';
 
 export type CachedTranslatedSkeletonItem = {
   id: string;

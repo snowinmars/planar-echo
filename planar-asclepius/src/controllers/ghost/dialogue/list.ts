@@ -18,7 +18,7 @@ const responseError = z.object({
   }),
 });
 const routeConfig = (): RouteConfig => ({
-  method: 'post',
+  method: 'post', // because I have to pass ghostDir
   path: '/api/ghost/dialogue',
   tags: ['ghostDialogue'],
   description: 'Get available dialogues in ghost format',

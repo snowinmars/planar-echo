@@ -1,5 +1,5 @@
-import { WithClassName } from '@/types/fcWithClassName';
-import { FC, JSX } from 'react';
+import type { WithClassName } from '@/types/fcWithClassName';
+import type { FC, JSX } from 'react';
 
 // https://weidu.org/favicon.ico
 const Weidu: FC<WithClassName> = ({ className }): JSX.Element => (

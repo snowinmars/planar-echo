@@ -1,4 +1,3 @@
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
 import type { FC } from 'react';

@@ -1,12 +1,13 @@
-import { GameLanguage, nothing } from '@planar/shared';
+import { nothing } from '@planar/shared';
 import { client } from '@/swagger/client/client.gen';
 import { postApiFsValidateChitinKeyFile } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { debounce, interval, Subject } from 'rxjs';
 
+import type { GameLanguage } from '@planar/shared';
 import type { LandingState, LandingStateStep3, ZustandGetType, ZustandSetType } from './types';
 import type { StateCreator } from 'zustand';
 import type { PostApiFsValidateChitinKeyFileErrors } from '@/swagger/client';
-import { debounce, interval, Subject } from 'rxjs';
 
 type FormErrorStateProps = PostApiFsValidateChitinKeyFileErrors[404];
 const translateErrorState = (error: FormErrorStateProps): string => {

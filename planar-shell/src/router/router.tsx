@@ -1,7 +1,9 @@
-import { FC, lazy, PropsWithChildren, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, useLocation } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
 import Loading from '@/components/Loading';
+
+import type { FC, PropsWithChildren } from 'react';
 
 const Landing = lazy(() => import('@/components/Landing'));
 const Details = lazy(() => import('@/components/Details'));

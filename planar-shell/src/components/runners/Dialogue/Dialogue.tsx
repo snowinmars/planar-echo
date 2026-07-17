@@ -1,10 +1,11 @@
 import { lazy, useEffect } from 'react';
-import { nothing, StateId, type Maybe } from '@planar/shared';
+import { nothing } from '@planar/shared';
 import { useDialogueWidgetBridge } from './useDialogueWidgetBridge';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { useSearchParams } from 'react-router';
 import { useDialogueStore } from './store/dialogueStore';
 
+import type { StateId, Maybe } from '@planar/shared';
 import type { FC } from 'react';
 import type { Widget } from '@/shared/widget';
 

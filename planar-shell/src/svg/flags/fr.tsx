@@ -1,5 +1,5 @@
-import { WithClassName } from '@/types/fcWithClassName';
-import { FC, JSX } from 'react';
+import type { WithClassName } from '@/types/fcWithClassName';
+import type { FC, JSX } from 'react';
 
 const FlagDe: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg

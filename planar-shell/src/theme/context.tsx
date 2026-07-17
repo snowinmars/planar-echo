@@ -2,9 +2,10 @@ import React, { createContext, useContext, useState, useMemo } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material';
 import lightTheme from './palletes/light';
 import darkTheme from './palletes/dark';
-import { ThemeMode } from './types';
 import storageManager from './storageManager';
 import localStorageKey from '@/shared/planarLocalStorage';
+
+import type { ThemeMode } from './types';
 
 type ThemeContextType = [ThemeMode, (theme: ThemeMode) => void];
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

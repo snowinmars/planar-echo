@@ -1,6 +1,8 @@
-import { openDB, IDBPDatabase } from 'idb';
+import { openDB } from 'idb';
 import { DB_NAME } from '@planar/shared';
 import { deleteDB } from 'idb';
+
+import type { IDBPDatabase } from 'idb';
 
 const storeNames = [
   'creatures',

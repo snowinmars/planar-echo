@@ -34,7 +34,7 @@ const responseError = z.object({
   }),
 });
 const routeConfig = (params: ZodObject): RouteConfig => ({
-  method: 'post',
+  method: 'post', // because I have to pass ghostDir
   path: '/api/ghost/dialogue/{dialogueId}/skeleton',
   tags: ['ghostDialogue'],
   description: 'Get skeleton of the dialogue in ghost format',
