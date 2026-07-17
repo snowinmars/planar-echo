@@ -18,8 +18,8 @@ export const createPathes = async (props: CreatePathesProps): Promise<Pathes> =>
   const gameDir        = normalize(dirname(chitinKeyFile));
   const tlkDir         = normalize(join(gameDir, 'lang', props.gameLanguage, 'dialog.tlk'));
 
-  const decimpiledBiffRoot      = normalize(join(ghostDir        , 'decimpiledBiff'));
-  const decimpiledBiffCacheJson = normalize(join(decimpiledBiffRoot, 'output.json'));
+  const decompiledBiffRoot      = normalize(join(ghostDir          , 'decompiledBiff'));
+  const decompiledBiffCacheJson = normalize(join(decompiledBiffRoot, 'output.json'));
 
   const jsonRoot       = normalize(join(ghostDir, 'json'));
   const jsonDialogues  = normalize(join(jsonRoot, 'dialogues'));
@@ -50,9 +50,9 @@ export const createPathes = async (props: CreatePathesProps): Promise<Pathes> =>
     gameLanguage: props.gameLanguage,
     ghostDir: {
       root: ghostDir,
-      decimpiledBiff: {
-        root     : decimpiledBiffRoot,
-        cacheJson: decimpiledBiffCacheJson,
+      decompiledBiff: {
+        root     : decompiledBiffRoot,
+        cacheJson: decompiledBiffCacheJson,
       },
       json: {
         root     : jsonRoot,
@@ -96,7 +96,7 @@ export const createPathes = async (props: CreatePathesProps): Promise<Pathes> =>
 
   await mkdirsIfNotExists([
     pathes.ghostDir.root,
-    pathes.ghostDir.decimpiledBiff.root,
+    pathes.ghostDir.decompiledBiff.root,
     pathes.ghostDir.json.dialogues,
     pathes.ghostDir.json.items,
     pathes.ghostDir.json.ids,

@@ -10,8 +10,8 @@ import type {
 } from './types.js';
 
 export const decompileBiffs = async (pathes: Pathes): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
-  const cacheJson = pathes.ghostDir.decimpiledBiff.cacheJson;
-  const ghostDir = pathes.ghostDir.decimpiledBiff.root;
+  const cacheJson = pathes.ghostDir.decompiledBiff.cacheJson;
+  const ghostDir = pathes.ghostDir.decompiledBiff.root;
   const gameDir = pathes.gameDir;
 
   reportProgress({

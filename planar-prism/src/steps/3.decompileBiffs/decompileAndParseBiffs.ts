@@ -70,10 +70,10 @@ const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => 
 };
 const getDecompileBiffsCommand = ({ weiduExeDir, gameDir, ghostDir, gameLanguage }: DecompileBiffsProps, biffs: Biff[]): string => {
   const biffNames = biffs.map(b => `${b.resourceName}`).join(' ');
-  return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decimpiledBiff.root}" --biff-get "[${biffNames}]"`;
+  return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decompiledBiff.root}" --biff-get "[${biffNames}]"`;
 };
 const getDecompileOtherBiffsCommand = ({ weiduExeDir, gameDir, ghostDir, gameLanguage }: DecompileBiffsProps): string => {
-  return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decimpiledBiff.root}" --biff-get-rest "*"`;
+  return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decompiledBiff.root}" --biff-get-rest "*"`;
 };
 const decompileAndParseBiffs = async (props: DecompileBiffsProps, reportProgress: (percent: number) => void): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
   // for some reason, unarchiving takes two steps, afais.

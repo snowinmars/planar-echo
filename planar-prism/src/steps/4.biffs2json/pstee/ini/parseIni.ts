@@ -15,7 +15,7 @@ export const parseIni = (
   decompiledItems,
   async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
-    const buffer = await readFile(join(pathes.ghostDir.decimpiledBiff.root, resourceName));
+    const buffer = await readFile(join(pathes.ghostDir.decompiledBiff.root, resourceName));
     const raw = parseIniV1({
       buffer,
       resourceName,

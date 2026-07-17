@@ -21,7 +21,7 @@ export const parseEffV20 = (
   async (decompiledItem, i) => {
     const resourceName = decompiledItem.resourceName;
 
-    const buffer = await readFile(join(pathes.ghostDir.decimpiledBiff.root, resourceName));
+    const buffer = await readFile(join(pathes.ghostDir.decompiledBiff.root, resourceName));
     const reader = createReader(buffer);
 
     const signature = reader.string(4);

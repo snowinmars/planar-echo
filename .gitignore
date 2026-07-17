@@ -200,7 +200,7 @@ dist
 src/sources/
 src/htmlcov/
 
-planar-ghost/decimpiledBiff
+planar-ghost/decompiledBiff
 planar-ghost/json
 planar-ghost/ghost
 
