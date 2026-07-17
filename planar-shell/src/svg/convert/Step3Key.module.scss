@@ -1,0 +1,23 @@
+.key {
+  animation: keyAnimation 7.3s ease-in-out infinite;
+  transform-origin: center center; // ось вращения по центру группы
+  transform-style: preserve-3d;    // чтобы дочерние элементы не сплющивались
+}
+
+@keyframes keyAnimation {
+  0% { transform: translate(3px, 0) rotateX(0deg);  }
+  25% { transform: translate(0, -3px); }
+  75% { transform: translate(0, 3px); }
+  95% { transform: translate(3px, 0) rotateX(0deg); }
+  100% { transform: translate(3px, 0) rotateX(360deg); }
+}
+
+.glow {
+  animation: glowAnimation var(--duration) ease-in-out infinite;
+}
+
+@keyframes glowAnimation {
+  0% { opacity: 0.2; stroke-width: 0.5; }
+  50% { opacity: 0.6; stroke-width: 1.5; }
+  100% { opacity: 0.2; stroke-width: 0.5; }
+}

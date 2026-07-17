@@ -1,0 +1,43 @@
+.lineL {
+  width: 6em;
+}
+
+.lineM {
+  width: 5em;
+}
+
+.lineS {
+  width: 4em;
+}
+
+.line {
+  animation: lineAnimation var(--duration) ease-in-out infinite;
+}
+
+@keyframes lineAnimation {
+  0% { opacity: 0.6; filter: grayscale(1); }
+  40% { opacity: 0.2; filter: grayscale(0); }
+  60% { opacity: 0.2; filter: grayscale(0); }
+  100% { opacity: 0.6; filter: grayscale(1); }
+}
+
+.lang {
+  animation: langAnimation var(--duration) linear infinite;
+}
+
+@keyframes langAnimation {
+  0% { transform: translate(0, -70px); opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translate(var(--bot), -10px); opacity: 0; }
+}
+
+.globe {
+  animation: globeAnimation 8.7s linear infinite;
+  transform-origin: 150px 100px;
+}
+
+@keyframes globeAnimation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -1,10 +1,10 @@
 import { clsx } from 'clsx';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import StepLoader from '../../StepLoader';
 import Comment from './children/Comment/Comment';
 import Content from './children/Content/Content';
+import Step4Folder from '@/svg/convert/Step4Folder';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
@@ -14,7 +14,7 @@ import styles from './Step4.module.scss';
 
 type Step4Props = WithClassName & Readonly<{
   disabled: boolean;
-  imageUrl: string;
+  valid: boolean;
   ghostDir: LandingStateStep4['ghostDir'];
   setGhostDir: LandingStateStep4['setGhostDir'];
   loading: LandingStateStep4['step4Loading'];
@@ -26,13 +26,16 @@ type Step4Props = WithClassName & Readonly<{
 const Step4: FC<Step4Props> = (props: Step4Props) => {
   return (
     <Card className={clsx(styles.card, props.className)}>
-      <CardMedia
-        className={clsx((props.loading || props.disabled) && styles.disabledImage)}
-        component="img"
-        height="140"
-        image={props.imageUrl}
-        alt="Choose ghost (output) directory path"
+
+      <Step4Folder className={
+        clsx(
+          styles.stepImage,
+          props.valid && styles.valid,
+          (props.loading || props.disabled) && styles.disabledImage,
+        )
+      }
       />
+
       <CardContent className={styles.cardContent}>
         <StepLoader show={props.loading} />
 

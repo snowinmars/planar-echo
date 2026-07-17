@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import getNativeLangNames from '@/shared/getNativeLangNames';
 import Content from './children/Content/Content';
 import Comment from './children/Comment/Comment';
 import StepLoader from '../../StepLoader';
+import Step1Game from '@/svg/convert/Step1Game';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
@@ -17,7 +17,7 @@ import styles from './Step1.module.scss';
 
 type Step1Props = WithClassName & Readonly<{
   disabled: boolean;
-  imageUrl: string;
+  valid: boolean;
   loading: LandingStateStep1['step1Loading'];
   gameName: LandingStateStep1['gameName'];
   gameLanguage: LandingStateStep1['gameLanguage'];
@@ -31,13 +31,16 @@ const Step1: FC<Step1Props> = (props) => {
 
   return (
     <Card className={clsx(styles.card, props.className)}>
-      <CardMedia
-        className={clsx(props.disabled && styles.disabledImage)}
-        component="img"
-        height="140"
-        image={props.imageUrl}
-        alt="Choose language"
+
+      <Step1Game className={
+        clsx(
+          styles.stepImage,
+          props.valid && styles.valid,
+          props.disabled && styles.disabledImage,
+        )
+      }
       />
+
       <CardContent className={styles.cardContent}>
         <StepLoader show={props.loading} />
 

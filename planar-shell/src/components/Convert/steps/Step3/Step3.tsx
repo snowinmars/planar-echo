@@ -1,10 +1,10 @@
 import { clsx } from 'clsx';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import StepLoader from '../../StepLoader';
 import Comment from './children/Comment/Comment';
 import Content from './children/Content/Content';
+import Step3Key from '@/svg/convert/Step3Key';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
@@ -14,7 +14,7 @@ import styles from './Step3.module.scss';
 
 type Step3Props = WithClassName & Readonly<{
   disabled: boolean;
-  imageUrl: string;
+  valid: boolean;
   gameLanguage: LandingStateStep1['gameLanguage'];
   weiduExeDir: LandingStateStep2['weiduExeDir'];
   chitinKeyFile: LandingStateStep3['chitinKeyFile'];
@@ -28,13 +28,16 @@ type Step3Props = WithClassName & Readonly<{
 const Step3: FC<Step3Props> = (props: Step3Props) => {
   return (
     <Card className={clsx(styles.card, props.className)}>
-      <CardMedia
-        className={clsx((props.loading || props.disabled) && styles.disabledImage)}
-        component="img"
-        height="140"
-        image={props.imageUrl}
-        alt="Choose chitin.key file path"
+
+      <Step3Key className={
+        clsx(
+          styles.stepImage,
+          props.valid && styles.valid,
+          (props.loading || props.disabled) && styles.disabledImage,
+        )
+      }
       />
+
       <CardContent className={styles.cardContent}>
         <StepLoader show={props.loading} />
 

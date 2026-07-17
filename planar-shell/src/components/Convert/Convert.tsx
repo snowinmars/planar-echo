@@ -34,6 +34,7 @@ const Convert: FC = () => {
         <Step0
           className={styles.step0}
           disabled={store.step0Loading || store.step6Loading}
+          valid={store.step0Valid}
           loading={store.step0Loading || store.step6Loading}
           serverUrl={store.serverUrl}
           setServerUrl={store.setServerUrl}
@@ -41,25 +42,25 @@ const Convert: FC = () => {
           commentArgs={store.step0CommentArgs}
           resultType={store.step0ResultType}
           validate={store.step0Validate}
-          imageUrl="https://avatars.mds.yandex.net/i?id=517fdbf2c25f94655d3f31341743d81b_l-8425660-images-thumbs&n=13"
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
         <Step1
           className={styles.step1}
           disabled={!store.step0Valid || store.step6Loading}
+          valid={store.step1Valid}
           loading={store.step1Loading || store.step6Loading}
           gameLanguage={store.gameLanguage}
           gameName={store.gameName}
           setGameLanguage={store.setGameLanguage}
           setGameName={store.setGameName}
-          imageUrl="https://avatars.mds.yandex.net/i?id=9a25abd98c06cce5c0e76311489d05156710b535-8316229-images-thumbs&n=13"
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
         <Step2
           className={styles.step2}
           disabled={!store.step1Valid || store.step2Loading || store.step6Loading}
+          valid={store.step2Valid}
           loading={store.step2Loading || store.step6Loading}
           weiduExeDir={store.weiduExeDir}
           setWeiduExeDir={store.setWeiduExeDir}
@@ -67,13 +68,13 @@ const Convert: FC = () => {
           comment={store.step2Comment}
           commentArgs={store.step2CommentArgs}
           resultType={store.step2ResultType}
-          imageUrl="https://i.pinimg.com/736x/87/1f/a9/871fa959ce4ec0caa904a9d8b3f5ec26.jpg"
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
         <Step3
           className={styles.step3}
           disabled={!store.step2Valid || store.step3Loading || store.step6Loading}
+          valid={store.step3Valid}
           loading={store.step3Loading || store.step6Loading}
           gameLanguage={store.gameLanguage}
           weiduExeDir={store.weiduExeDir}
@@ -83,13 +84,13 @@ const Convert: FC = () => {
           commentArgs={store.step3CommentArgs}
           resultType={store.step3ResultType}
           validate={store.step3Validate}
-          imageUrl="https://d.newsweek.com/en/full/2271421/german-shepherd-puppy.jpg"
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
         <Step4
           className={styles.step4}
           disabled={!store.step3Valid || store.step4Loading || store.step6Loading}
+          valid={store.step4Valid}
           loading={store.step4Loading || store.step6Loading}
           ghostDir={store.ghostDir}
           setGhostDir={store.setGhostDir}
@@ -97,17 +98,16 @@ const Convert: FC = () => {
           commentArgs={store.step4CommentArgs}
           resultType={store.step4ResultType}
           validate={store.step4Validate}
-          imageUrl="https://i.pinimg.com/736x/ca/68/6b/ca686bcdd3fd9c917638e578b5e44a69.jpg"
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
         <Step5
-          className={styles.step4}
-          disabled={!store.step4Valid || store.step6Loading}
+          className={styles.step5}
+          disabled={!store.step3Valid || !store.step4Valid || store.step6Loading} // because step4 is ghost folder, and it sets from server
+          valid={store.step5Valid}
           loading={store.step5Loading || store.step6Loading}
           ownGame={store.ownGame}
           setOwnGame={store.setOwnGame}
-          imageUrl="https://i.pinimg.com/736x/1f/c4/b5/1fc4b52caa1829c75c0aed37cba79394.jpg"
         />
       </Grid>
       <Grid size={{ xs: 12 }}>

@@ -1,10 +1,10 @@
 import { clsx } from 'clsx';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import StepLoader from '../../StepLoader';
 import Comment from './children/Comment/Comment';
 import Content from './children/Content/Content';
+import Step2WeiDU from '@/svg/convert/Step2WeiDU';
 
 import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
@@ -14,7 +14,7 @@ import styles from './Step2.module.scss';
 
 type Step2Props = WithClassName & Readonly<{
   disabled: boolean;
-  imageUrl: string;
+  valid: boolean;
   weiduExeDir: LandingStateStep2['weiduExeDir'];
   setWeiduExeDir: LandingStateStep2['setWeiduExeDir'];
   loading: LandingStateStep2['step2Loading'];
@@ -26,12 +26,13 @@ type Step2Props = WithClassName & Readonly<{
 const Step2: FC<Step2Props> = (props) => {
   return (
     <Card className={clsx(styles.card, props.className)}>
-      <CardMedia
-        className={clsx((props.disabled || props.loading) && styles.disabledImage)}
-        component="img"
-        height="140"
-        image={props.imageUrl}
-        alt="Choose weidu.exe file path"
+      <Step2WeiDU className={
+        clsx(
+          styles.stepImage,
+          props.valid && styles.valid,
+          (props.disabled || props.loading) && styles.disabledImage,
+        )
+      }
       />
       <CardContent className={styles.cardContent}>
         <StepLoader show={props.loading} />

@@ -1,0 +1,31 @@
+.biggerGear {
+  animation: biggerGearAnimation 6s linear infinite;
+  transform-origin: 80px 70px;
+}
+
+@keyframes biggerGearAnimation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.smallerGear {
+  animation: smallerGearAnimation 4s linear infinite;
+  transform-origin: 130px 55px;
+}
+
+@keyframes smallerGearAnimation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+.spark {
+  animation: sparkAnimation var(--duration) ease-in-out infinite;
+}
+
+@keyframes sparkAnimation {
+  0% { opacity: 0; transform: translateY(0); }
+  30% { opacity: 1; }
+  50% { transform: translateY(-5px); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(0); }
+}

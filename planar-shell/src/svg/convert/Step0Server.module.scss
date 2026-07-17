@@ -1,0 +1,55 @@
+.led {
+  animation: ledAnimation var(--duration) linear infinite;
+}
+
+@keyframes ledAnimation {
+  0% {
+    opacity: 1;
+  }
+  94% {
+    opacity: 1;
+    animation-timing-function: step-end;
+  }
+  95% {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+    animation-timing-function: step-end;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.staticNode {
+  animation: staticNodeAnimation var(--duration) linear infinite;
+}
+
+@keyframes staticNodeAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.movingNode {
+  animation: movingNodeAnimation var(--duration) linear infinite;
+}
+
+@keyframes movingNodeAnimation {
+  0% {
+    transform: translate(20px, 50px);
+  }
+  100% {
+    transform: translate(70px, 50px);
+  }
+}
+
+
+
