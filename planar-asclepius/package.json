@@ -16,8 +16,9 @@
     "serve": "node dist/index.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
-    "gen": "yarn _gen && yarn push-client",
-    "_gen": "openapi-ts -f ./openapi-ts.config.ts",
+    "gen": "yarn openapi && yarn add-ts-nocheck && yarn push-client",
+    "openapi": "openapi-ts -f ./openapi-ts.config.ts",
+    "add-ts-nocheck": "node ./src/dev/addTsNoCheck.js",
     "push-client": "node ./src/dev/copy-client.js"
   },
   "dependencies": {
