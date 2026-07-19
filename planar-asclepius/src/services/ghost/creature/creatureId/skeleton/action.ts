@@ -8,22 +8,22 @@ export default async ({
   creatureId,
   ghostDir,
 }: Command): Promise<Result> => {
-  const creatureSkeletonDir = join(ghostDir, 'ghost', 'creatures', 'dist', `${creatureId}.js`);
-  const found = await fileExists(creatureSkeletonDir);
+  const creatureSkeletonFile = join(ghostDir, 'ghost', 'creatures', 'dist', `${creatureId}.js`);
+  const found = await fileExists(creatureSkeletonFile);
   if (!found) {
     return {
       ok: false,
       error: {
         code: 'FILE_NOT_FOUND',
         status: 404,
-        message: `Skeleton '${creatureId}' is not found at '${creatureSkeletonDir}'`,
+        message: `Skeleton '${creatureId}' is not found at '${creatureSkeletonFile}'`,
       },
     };
   };
 
-  const content = await readFile(creatureSkeletonDir, { encoding: 'utf-8' });
+  const content = await readFile(creatureSkeletonFile, { encoding: 'utf-8' });
   return {
     ok: true,
-    data: { content: `/*${creatureSkeletonDir}*/\n${content}` },
+    data: { content: `/*${creatureSkeletonFile}*/\n${content}` },
   };
 };

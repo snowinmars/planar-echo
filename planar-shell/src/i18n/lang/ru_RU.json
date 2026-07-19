@@ -23,9 +23,9 @@
       "stores": "Данные"
     },
     "step0": {
-      "serverUrl": "Адрес сервера",
+      "serverUrl": "Адрес сервера planar-asclepius",
       "comments": {
-        "default": "planar-asclepius"
+        "default": ""
       }
     },
     "step1": {

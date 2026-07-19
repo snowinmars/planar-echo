@@ -23,9 +23,9 @@
       "stores": "Datová úložiště"
     },
     "step0": {
-      "serverUrl": "URL serveru Planar",
+      "serverUrl": "URL serveru planar-asclepius",
       "comments": {
-        "default": "planar-asclepius"
+        "default": ""
       }
     },
     "step1": {

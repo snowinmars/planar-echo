@@ -23,9 +23,9 @@
       "stores": "데이터 저장소"
     },
     "step0": {
-      "serverUrl": "Planar 서버 URL",
+      "serverUrl": "planar-asclepius 서버 URL",
       "comments": {
-        "default": "planar-asclepius"
+        "default": ""
       }
     },
     "step1": {

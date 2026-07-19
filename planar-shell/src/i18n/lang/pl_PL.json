@@ -23,9 +23,9 @@
       "stores": "Magazyny danych"
     },
     "step0": {
-      "serverUrl": "Adres URL serwera Planar",
+      "serverUrl": "Adres URL serwera planar-asclepius",
       "comments": {
-        "default": "planar-asclepius"
+        "default": ""
       }
     },
     "step1": {

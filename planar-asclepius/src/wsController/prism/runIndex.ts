@@ -2,9 +2,9 @@ import runPrismScript from '@/shared/runPrismScript.js';
 import { concat, Observable } from 'rxjs';
 import { exec } from 'child_process';
 import { WebSocket } from 'ws';
+import logger from '@/shared/logger.js';
 
 import type { PrismIndexCompleteMessage, PrismIndexErrorMessage, PrismIndexProgressMessage, PrismIndexStartMessage, ProgressStep } from '@planar/shared';
-import logger from '@/shared/logger.js';
 
 type PrismIndexResponseData = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
@@ -16,6 +16,7 @@ export const runCommand = (command: string, step: ProgressStep): Observable<Pris
     };
     subscriber.next(message);
 
+    logger.debug(command);
     const childProcess = exec(command, (error) => {
       if (error) {
         subscriber.error(error);

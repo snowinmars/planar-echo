@@ -23,9 +23,9 @@
       "stores": "Datenspeicher"
     },
     "step0": {
-      "serverUrl": "Planar-Server-URL",
+      "serverUrl": "planar-asclepius Server-URL",
       "comments": {
-        "default": "planar-asclepius"
+        "default": ""
       }
     },
     "step1": {

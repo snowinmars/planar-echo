@@ -23,9 +23,9 @@
       "stores": "Stores"
     },
     "step0": {
-      "serverUrl": "Planar server url",
+      "serverUrl": "planar-asclepius server url",
       "comments": {
-        "default": "planar-asclepius"
+        "default": ""
       }
     },
     "step1": {

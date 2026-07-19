@@ -2,6 +2,7 @@ import { fork } from 'child_process';
 import { dirname, join } from 'path';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
+import logger from '@/shared/logger.js';
 
 import type { ChildProcess } from 'child_process';
 import type {
@@ -21,6 +22,7 @@ const runPrismScript = <T>(prismDir: string, commandName: string, data: T): Obse
     const scriptDir = join(prismDir, commandName);
     const commandCwd = dirname(scriptDir);
 
+    logger.debug(`'${commandCwd}' at '${scriptDir}'`);
     child = fork(scriptDir, {
       cwd: commandCwd,
       stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
