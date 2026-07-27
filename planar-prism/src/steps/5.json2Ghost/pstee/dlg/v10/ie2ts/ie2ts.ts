@@ -51,6 +51,16 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
   };
 
   return [{
+    regex: /numinparty(gt|lt)?\((.*?)\)/,
+    onMatch: ([line, op, amount]) => {
+      if (!op) return `l.countPartyMembers() === ${amount}`; // NumInParty(1)
+      switch (op) {
+        case 'gt': return `l.countPartyMembers() > ${amount}`; // NumInPartygt(1)
+        case 'lt': return `l.countPartyMembers() < ${amount}`; // NumInPartylt(1)
+        default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
+      }
+    },
+  }, {
     regex: /(!)?inparty\("?(.*?)"?\)/,
     onMatch: ([line, not, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
@@ -467,16 +477,6 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
   }, {
     regex: /generatemodronmaze\(\)/,
     onMatch: () => `l.generateModronMaze()`, // GenerateModronMaze()
-  }, {
-    regex: /numinparty(gt|lt)?\((.*?)\)/,
-    onMatch: ([line, op, amount]) => {
-      if (!op) return `l.countPartyMembers() === ${amount}`; // NumInParty(1)
-      switch (op) {
-        case 'gt': return `l.countPartyMembers() > ${amount}`; // NumInPartygt(1)
-        case 'lt': return `l.countPartyMembers() < ${amount}`; // NumInPartylt(1)
-        default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
-      }
-    },
   }, {
     regex: /setportalcursor\((.*?),(.*?),(true|false)\)/,
     onMatch: ([line, locationId, portalId, reset]) => {
