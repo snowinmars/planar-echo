@@ -4,38 +4,36 @@ import { nothing } from '@planar/shared';
 import type { Maybe } from '@planar/shared';
 import type { StoreName } from './db';
 
-export type CachedTranslatedSkeletonItem = Readonly<{
+export type CachedSkeletonItem = Readonly<{
   id: string;
   skeleton: string;
-  translation: string;
   lastTouched: number;
 }>;
 
-export const getTranslatedSkeletonItem = async (storeName: StoreName, id: string): Promise<Maybe<CachedTranslatedSkeletonItem>> => {
+export const getSkeletonItem = async (storeName: StoreName, id: string): Promise<Maybe<CachedSkeletonItem>> => {
   const db = await connect();
   const tx = db.transaction(storeName, 'readwrite');
   const store = tx.objectStore(storeName);
 
-  const entry: Maybe<CachedTranslatedSkeletonItem> = await store.get(id);
+  const entry: Maybe<CachedSkeletonItem> = await store.get(id);
   if (!entry) return nothing();
 
   const lastTouched = Date.now();
-  const touched: CachedTranslatedSkeletonItem = { ...entry, lastTouched };
+  const touched: CachedSkeletonItem = { ...entry, lastTouched };
   await store.put(touched);
   await tx.done;
 
   return touched;
 };
 
-export const setTranslatedSkeletonItem = async (storeName: StoreName, id: string, skeleton: string, translation: string): Promise<void> => {
+export const setSkeletonItem = async (storeName: StoreName, id: string, skeleton: string): Promise<void> => {
   const db = await connect();
   const tx = db.transaction(storeName, 'readwrite');
   const store = tx.objectStore(storeName);
 
-  const touched: CachedTranslatedSkeletonItem = {
+  const touched: CachedSkeletonItem = {
     id,
     skeleton,
-    translation,
     lastTouched: Date.now(),
   };
 

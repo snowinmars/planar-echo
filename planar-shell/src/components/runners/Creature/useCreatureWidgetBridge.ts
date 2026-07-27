@@ -8,7 +8,6 @@ const pickWidgetState = (state: CreatureStore) => ({
   loading: state.loading,
   creatures: state.creatures,
   currentCreatureId: state.currentCreatureId,
-  translatedCreature: state.translatedCreature,
 });
 
 export const useCreatureWidgetBridge = (): void => {

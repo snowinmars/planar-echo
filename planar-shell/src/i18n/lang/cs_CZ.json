@@ -90,6 +90,7 @@
       "ini_raw2json": ".ini do json",
       "itm_raw2json": ".itm do json",
       "tlk_raw2json": ".tlk do json",
+      "tlk_json2ghost": ".tlk json do ghost",
       "cre_json2ghost": ".cre json do ghost",
       "dlg_json2ghost": ".dlg json do ghost",
       "itm_json2ghost": ".itm json do ghost"
@@ -186,6 +187,16 @@
       "pstee-two-columns": "Jako v originálu, ale ve dvou sloupcích",
       "narrat": "Podobné Narrat",
       "mobile": "Mobilní"
+    },
+    "dialogueHistory": {
+      "title": "Historie dialogů",
+      "pageSize": "Řádků na stránku",
+      "browsedPages": "Stránek v prohlížeči",
+      "storedPages": "Stránek na pevném disku",
+      "unlimited": "Ukládat bez omezení",
+      "apply": "Použít nastavení",
+      "reset": "Reset",
+      "help": "Historie dialogů je uložena po stránkách. Na každé stránce je {{pageSize}} řádků. Na obrazovku se načítá {{browsedPages}} posledních stránek z {{storedPages}} uložených na pevném disku.\nČím více stránek je uloženo na pevném disku, tím více místa na disku hra zabírá, ale o to dále do minulosti můžete historii dialogů procházet.\nČím více stránek se načítá na obrazovku z pevného disku, tím větší zátěž na prohlížeč."
     },
     "theme": {
       "title": "Barevný motiv"

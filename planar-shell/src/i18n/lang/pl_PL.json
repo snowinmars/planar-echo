@@ -90,6 +90,7 @@
       "ini_raw2json": ".ini → json",
       "itm_raw2json": ".itm → json",
       "tlk_raw2json": ".tlk → json",
+      "tlk_json2ghost": ".tlk json → ghost",
       "cre_json2ghost": ".cre json → ghost",
       "dlg_json2ghost": ".dlg json → ghost",
       "itm_json2ghost": ".itm json → ghost"
@@ -186,6 +187,16 @@
       "pstee-two-columns": "Jak w oryginale, ale w dwóch kolumnach",
       "narrat": "Podobny do Narrat",
       "mobile": "Mobilny"
+    },
+    "dialogueHistory": {
+      "title": "Historia dialogów",
+      "pageSize": "Wierszy na stronę",
+      "browsedPages": "Stron w przeglądarce",
+      "storedPages": "Stron na dysku twardym",
+      "unlimited": "Przechowuj bez ograniczeń",
+      "apply": "Zastosuj ustawienia",
+      "reset": "Resetuj",
+      "help": "Historia dialogów jest przechowywana w postaci stron. Każda strona zawiera {{pageSize}} wierszy. Na ekranie ładowanych jest {{browsedPages}} ostatnich stron z {{storedPages}} przechowywanych na dysku twardym.\nIm więcej stron przechowywanych jest na dysku twardym, tym więcej miejsca na dysku zajmuje gra, ale tym dalej w przeszłość można przewijać historię dialogów.\nIm więcej stron ładowanych jest na ekran z dysku twardego, tym większe obciążenie dla przeglądarki."
     },
     "theme": {
       "title": "Motyw kolorystyczny"

@@ -1,10 +1,15 @@
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { useDialogueStore } from '../../store/dialogueStore';
-import { useShallow } from 'zustand/react/shallow';
-import { getExternDialogueId, getSaysResponses, isDestructor } from '../../store/helpers';
-import planarLocalStorage from '@/shared/planarLocalStorage';
-import { useWorldStores } from '../broadcast';
+import {
+  emptyTlkSource,
+  sourceId,
+} from '../../store/tlkStore.types';
+import {
+  useDialogueStore,
+  useDialogueViewStore,
+  useTlkStore,
+} from '../../store/di';
+import Loading from '@/components/Loading';
+import MobileHistory from './children/MobileHistory';
+import MobilePhrase from './children/MobilePhrase';
 import clsx from 'clsx';
 
 import type { FC } from 'react';
@@ -13,128 +18,33 @@ import type { WithClassName } from '@/types/fcWithClassName';
 import styles from './MobileRenderer.module.scss';
 
 const MobileRenderer: FC<WithClassName> = ({ className }) => {
-  useWorldStores();
-  const {
-    loading,
-    tree,
-    gameLanguage,
-    currentStateId,
-    setCurrentStateId,
-    loadDialogue,
-    disposeDialogue,
-  } = useDialogueStore(useShallow(state => ({
-    loading: state.loading,
-    tree: state.tree,
-    gameLanguage: state.gameLanguage,
-    currentStateId: state.currentStateId,
-    setCurrentStateId: state.setCurrentStateId,
-    loadDialogue: state.loadDialogue,
-    disposeDialogue: state.disposeDialogue,
-  })));
+  const phraseLoading = useDialogueStore(x => x.loading);
+  const selectResponse = useDialogueStore(x => x.selectResponse);
 
-  if (!tree || !currentStateId) return null;
+  const view = useDialogueViewStore(state => state.view);
+  const tlkSource = useTlkStore(state => state.sources.get(sourceId.dialogue) ?? emptyTlkSource);
 
-  const state = getSaysResponses(tree, gameLanguage, currentStateId);
+  if (tlkSource.loading) return (
+    <div className={clsx(styles.mobile, className)}>
+      <Loading />
+    </div>
+  );
+
+  if (!view) return (
+    <div className={clsx(styles.mobile, className)}>
+      <MobileHistory />
+    </div>
+  );
 
   return (
     <div className={clsx(styles.narrat, className)}>
-      <div className={styles.says}>
-        {
-          state.says.map(say => (
-            <div
-              className={styles.say}
-              key={say.sayId}
-            >
-              {/*
-              <Typography
-                className={styles.who}
-                variant="h6"
-              >
-                {say.whoId}
-              </Typography>
-              <span className={styles.sayDivider}>:</span>
-              */}
-              <Typography>{say.what}</Typography>
-            </div>
-          ))
-        }
-      </div>
-      <div className={styles.responses}>
-        {
-          state.responses
-            .filter((response) => {
-              const alwaysRender = !response.args || !response.args.onlyIf;
-              if (alwaysRender) return true;
-
-              const shouldRender = response.args.onlyIf();
-              return shouldRender;
-            })
-            .map((response, i) => {
-              const destructor = isDestructor(response.jumpTo);
-              if (destructor) {
-                const markDisposers = planarLocalStorage.get<boolean>('dialogueMarks_markDisposers', true)!;
-                return (
-                  <Button
-                    key={response.responseId}
-                    className={styles.response}
-                    disabled={loading}
-                    onClick={() => {
-                      response.args?.onEnter?.();
-                      disposeDialogue();
-                    }}
-                  >
-                    <Typography>{i + 1}</Typography>
-                    <span className={styles.responseDivider}>.</span>
-                    <Typography>
-                      {response.what}
-                    </Typography>
-                    <Typography className={styles.disposers}>{markDisposers && `✕`}</Typography>
-                  </Button>
-                );
-              }
-
-              const externDialogueId = getExternDialogueId(response.responseId, response.jumpTo);
-              const isExtern = !!externDialogueId;
-              if (isExtern) {
-                const markExterns = planarLocalStorage.get<boolean>('dialogueMarks_markExterns', false)!;
-                return (
-                  <Button
-                    key={response.responseId}
-                    className={styles.response}
-                    disabled={loading}
-                    onClick={() => {
-                      response.args?.onEnter?.();
-                      loadDialogue(externDialogueId, response.jumpTo).catch(e => console.error(e));
-                    }}
-                  >
-                    <Typography>{i + 1}</Typography>
-                    <span className={styles.responseDivider}>.</span>
-                    <Typography>
-                      {response.what}
-                    </Typography>
-                    <Typography className={styles.externs}>{markExterns && `→ ${externDialogueId}`}</Typography>
-                  </Button>
-                );
-              }
-
-              return (
-                <Button
-                  key={response.responseId}
-                  className={styles.response}
-                  disabled={loading}
-                  onClick={() => {
-                    response.args?.onEnter?.();
-                    setCurrentStateId(response.jumpTo);
-                  }}
-                >
-                  <Typography>{i + 1}</Typography>
-                  <span className={styles.responseDivider}>.</span>
-                  <Typography>{response.what}</Typography>
-                </Button>
-              );
-            })
-        }
-      </div>
+      <MobileHistory />
+      <MobilePhrase
+        view={view}
+        tlkSource={tlkSource}
+        loading={phraseLoading}
+        selectResponse={selectResponse}
+      />
     </div>
   );
 };

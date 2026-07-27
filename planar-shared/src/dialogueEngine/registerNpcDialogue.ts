@@ -2,24 +2,23 @@ import { just, nothing } from '../maybe.js';
 import { createSayId } from './common.js';
 
 import type { Maybe } from '../maybe.js';
-import type { GameLanguage } from '../gameLanguage.js';
 import type { StateId } from './enums/state.js';
 import type { ResponseId } from './enums/response.js';
+import type { WhoId } from './enums/who.js';
+import type { ItemId } from './enums/item.js';
 import type {
   ArgsProps,
   InternalArgsProps,
-  UntranslatedNpcDialogue,
-  UntranslatedLabel,
-  UntranslatedSay,
-  UntranslatedResponse,
-  UntranslatedJump,
+  NpcDialogue,
+  DialogueLabel,
+  DialogueJump,
 } from './registerNpcDialogue.types.js';
 
 type LabelFunction<T> = (stateId: StateId, args?: Maybe<InternalArgsProps<T>>) => Readonly<{ say: SayFunction<T> }>;
-type SayFunction<T> = (args: Maybe<InternalArgsProps<T>>) => Readonly<{ say: SayFunction<T>; response: ResponseFunction<T>; jump: JumpFunction<T> }>;
-type ResponseFunction<T> = (responseId: ResponseId, jumpTo: StateId, args: Maybe<InternalArgsProps<T>>) => Readonly<{ response: ResponseFunction<T>; flush: FlushFunction }>;
+type SayFunction<T> = (whoId: WhoId | ItemId, whoIdRef: number, textRef: number, args?: Maybe<InternalArgsProps<T>>) => Readonly<{ say: SayFunction<T>; response: ResponseFunction<T>; jump: JumpFunction<T> }>;
+type ResponseFunction<T> = (responseRef: Maybe<number>, responseId: ResponseId, jumpTo: StateId, args: Maybe<InternalArgsProps<T>>) => Readonly<{ response: ResponseFunction<T>; flush: FlushFunction }>;
 type JumpFunction<T> = (stateId: StateId, args?: Maybe<InternalArgsProps<T>>) => Readonly<{ flush: FlushFunction }>;
-type FlushFunction = () => UntranslatedNpcDialogue;
+type FlushFunction = () => NpcDialogue;
 
 const injectLogic = <T>(args: Maybe<InternalArgsProps<T>>, dialogueLogic: T): ArgsProps => {
   return {
@@ -29,12 +28,12 @@ const injectLogic = <T>(args: Maybe<InternalArgsProps<T>>, dialogueLogic: T): Ar
   };
 };
 
-export const registerNpcDialogue = <T>(dialogueLogic: T): { label: LabelFunction<T>; expose: () => UntranslatedNpcDialogue } => {
-  let _label: Maybe<UntranslatedLabel> = nothing();
-  let _jumpTo: Maybe<UntranslatedJump> = nothing();
+export const registerNpcDialogue = <T>(dialogueLogic: T): { label: LabelFunction<T>; expose: () => NpcDialogue } => {
+  let _label: Maybe<DialogueLabel> = nothing();
+  let _jumpTo: Maybe<DialogueJump> = nothing();
   let exposed = false;
-  const npcDialogue: UntranslatedNpcDialogue = {
-    tree: new Map<StateId, UntranslatedLabel>(),
+  const npcDialogue: NpcDialogue = {
+    tree: new Map<StateId, DialogueLabel>(),
     constructorsWeights: new Map<StateId, number>(),
   };
 
@@ -58,24 +57,24 @@ export const registerNpcDialogue = <T>(dialogueLogic: T): { label: LabelFunction
     _label = {
       stateId: stateId,
       args: injectLogic(args, dialogueLogic),
-      says: new Map<GameLanguage, UntranslatedSay[]>(),
-      responses: new Map<GameLanguage, UntranslatedResponse[]>(),
+      says: [],
+      responses: [],
       jump: nothing(),
     };
-
-    _label.says.set('dev', []);
-    _label.responses.set('dev', []);
 
     return {
       say,
     };
   };
-  const say: SayFunction<T> = (args: Maybe<InternalArgsProps<T>>) => {
+  const say: SayFunction<T> = (whoId: WhoId | ItemId, whoIdRef: number, textRef: number, args?: Maybe<InternalArgsProps<T>>) => {
     if (exposed) throw new Error(`Result dialogue was already exposed`);
 
-    const says = _label!.says.get('dev')!;
+    const says = _label!.says;
     says.push({
       sayId: createSayId(_label!.stateId, says.length),
+      whoId,
+      whoIdRef,
+      textRef,
       args: injectLogic(args, dialogueLogic),
     });
 
@@ -86,13 +85,15 @@ export const registerNpcDialogue = <T>(dialogueLogic: T): { label: LabelFunction
     };
   };
   const response: ResponseFunction<T> = (
+    responseRef: Maybe<number>,
     responseId: ResponseId,
     jumpTo: StateId,
     args: Maybe<InternalArgsProps<T>>,
   ) => {
     if (exposed) throw new Error(`Result dialogue was already exposed`);
 
-    _label!.responses.get('dev')!.push({
+    _label!.responses.push({
+      responseRef,
       responseId,
       jumpTo,
       args: injectLogic(args, dialogueLogic),

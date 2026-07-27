@@ -13,6 +13,7 @@ const storeNames = [
 ] as const;
 export type StoreName = typeof storeNames[number];
 
+// TODO [snow]: do not pass strings as keys or ids, extract to constants
 let dbPromise: Promise<IDBPDatabase> | null = null;
 
 export const connect = () => {
@@ -23,9 +24,20 @@ export const connect = () => {
       upgrade(db) {
         for (const storeName of storeNames) {
           if (!db.objectStoreNames.contains(storeName)) {
-            const store = db.createObjectStore(storeName, { keyPath: 'id' });
+            const store = db.createObjectStore(storeName, {
+              keyPath: 'id',
+            });
             store.createIndex('lastTouched', 'lastTouched');
           }
+        }
+        if (!db.objectStoreNames.contains('gameHistory')) {
+          db.createObjectStore('gameHistory', {
+            keyPath: 'sequenceId',
+            autoIncrement: true,
+          });
+        }
+        if (!db.objectStoreNames.contains('gameHistoryRetentionPolicy')) {
+          db.createObjectStore('gameHistoryRetentionPolicy', { keyPath: 'id' });
         }
       },
     });

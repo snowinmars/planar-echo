@@ -2,7 +2,7 @@ import createWriter from '@/shared/writer.js';
 import { just, nothing } from '@planar/shared';
 import ie2ts from './ie2ts/index.js';
 
-import type { Maybe } from '@planar/shared';
+import type { Maybe, WhoId } from '@planar/shared';
 import type { NestedDlg, NestedDlgResponse, NestedDlgState } from './4.nestDialogue.types.js';
 import type { DiscoverNext } from '@/discoverer.types.js';
 
@@ -36,7 +36,7 @@ const collapseOperatorOr = (parts: string[], spaces: string): string[] => {
 const formTrigger = (triggerText: string, offset: number, npcLowercaseId: string, discover: DiscoverNext): string => {
   const spaces = ' '.repeat(offset);
   const parts = triggerText.split('\n');
-  const tsLikeParts = parts.map(x => x.startsWith('!') ? '!l.' + x.slice(1) : 'l.' + x).map(x => ie2ts(x, npcLowercaseId, discover));
+  const tsLikeParts = parts.map(x => ie2ts(x, npcLowercaseId, discover));
   const tsLikeSyntax = collapseOperatorOr(tsLikeParts, spaces).join(` &&\n${spaces}`);
 
   return tsLikeSyntax;
@@ -45,7 +45,7 @@ const formTrigger = (triggerText: string, offset: number, npcLowercaseId: string
 const formAction = (actionText: string, offset: number, npcLowercaseId: string, discover: DiscoverNext): string => {
   const spaces = ' '.repeat(offset);
   const parts = actionText.split('\n');
-  const tsLikeSyntax = parts.map(x => x.startsWith('!') ? '!l.' + x.slice(1) : 'l.' + x).map(x => ie2ts(x, npcLowercaseId, discover)).join(`;\n${spaces}`);
+  const tsLikeSyntax = parts.map(x => ie2ts(x, npcLowercaseId, discover)).join(`;\n${spaces}`);
 
   return tsLikeSyntax;
 };
@@ -119,7 +119,7 @@ const formStateLabel = ({
 const formResponseActionArgsProps = (response: NestedDlgResponse, npcLowercaseId: string, discover: DiscoverNext): Maybe<string> => {
   const hasAction = !!response.action;
   const hasTrigger = !!response.trigger;
-  const hasJournal = !!response.journalTlk;
+  const hasJournal = !!response.journalRef;
   if (!hasAction && !hasTrigger && !hasJournal) return nothing();
 
   const writer = createWriter();
@@ -128,8 +128,9 @@ const formResponseActionArgsProps = (response: NestedDlgResponse, npcLowercaseId
     writer.writeLine('onEnter: (l) => {', 6);
     if (hasAction) writer.writeLine(`${formAction(response.action.text, 8, npcLowercaseId, discover)};`, 8);
     if (hasJournal) {
-      writer.writeLine(`l.setJournal('${response.journalId!}');`, 8);
-      discover({ type: 'journal', name: just(response.journalId).toString() });
+      const journalRef = just(response.journalRef);
+      writer.writeLine(`l.setJournal('${journalRef}');`, 8);
+      discover({ type: 'journal', name: journalRef.toString() });
     }
     writer.writeLine('},', 6);
   }
@@ -167,9 +168,9 @@ const formResponse = ({
   const hasReponseArgsProps = !!responseActionArgsProps;
   if (hasReponseArgsProps) {
     /* eslint-disable @stylistic/no-multi-spaces */
-    if (isDestructor)  writer.writeLine(`.response('${responseId}', '${npcLowercaseId}_destructor', {`, 4);
-    else if (isExtern) writer.writeLine(`.response('${responseId}', '${targetState}', { // extern`, 4);
-    else               writer.writeLine(`.response('${responseId}', '${targetState}', {`, 4);
+    if (isDestructor)  writer.writeLine(`.response(${response.textRef ?? null}, '${responseId}', '${npcLowercaseId}_destructor', {`, 4);
+    else if (isExtern) writer.writeLine(`.response(${response.textRef ?? null}, '${responseId}', '${targetState}', { // extern`, 4);
+    else               writer.writeLine(`.response(${response.textRef ?? null}, '${responseId}', '${targetState}', {`, 4);
     /* eslint-enable */
 
     writer.write(just(responseActionArgsProps));
@@ -178,17 +179,29 @@ const formResponse = ({
   }
   else {
     /* eslint-disable @stylistic/no-multi-spaces */
-    if (isDestructor)  writer.writeLine(`.response('${responseId}', '${npcLowercaseId}_destructor')`, 4);
-    else if (isExtern) writer.writeLine(`.response('${responseId}', '${targetState}') // extern`, 4);
-    else               writer.writeLine(`.response('${responseId}', '${targetState}')`, 4);
+    if (isDestructor)  writer.writeLine(`.response(${response.textRef ?? null}, '${responseId}', '${npcLowercaseId}_destructor')`, 4);
+    else if (isExtern) writer.writeLine(`.response(${response.textRef ?? null}, '${responseId}', '${targetState}') // extern`, 4);
+    else               writer.writeLine(`.response(${response.textRef ?? null}, '${responseId}', '${targetState}')`, 4);
     /* eslint-enable */
   }
 
   return writer.done();
 };
 
-const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string => {
+type BuildDialogueSkeletonProps = Readonly<{
+  dlg: NestedDlg;
+  npcId: string;
+  npcNameRef: number;
+  discover: DiscoverNext;
+}>;
+const buildDialogueSkeleton = ({
+  dlg,
+  npcId,
+  npcNameRef,
+  discover,
+}: BuildDialogueSkeletonProps): string => {
   const npcLowercaseId = dlg.resourceName.split('.')[0]!.replace(`'`, ``);
+  const who = npcId.replaceAll(`'`, `\\'`);
 
   const writer = createWriter();
   writer.writeLine(`import { registerNpcDialogue } from '@planar/shared';`);
@@ -197,6 +210,7 @@ const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string =
   writer.writeLine('/**');
   writer.writeLine(` * Original source: ${dlg.resourceName}`);
   writer.writeLine(' */');
+  writer.writeLine(`const _whoRef = ${npcNameRef};`);
   writer.writeLine(`const ${npcLowercaseId}DialogueSkeleton = (dialogueLogic: DialogueLogic) => {`);
   writer.writeLine(`const dialogue = registerNpcDialogue<DialogueLogic>(dialogueLogic);`, 2);
   writer.br();
@@ -212,7 +226,7 @@ const buildDialogueSkeleton = (dlg: NestedDlg, discover: DiscoverNext): string =
       discover,
     }));
 
-    writer.writeLine('.say()', 4);
+    writer.writeLine(`.say('${who}', _whoRef, ${state.textRef})`, 4);
 
     for (const response of state.responses) {
       const responseId = formResponseId(npcLowercaseId, response.index);

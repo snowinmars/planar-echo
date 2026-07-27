@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { dialogueWidgetState } from '@/shared/widgets';
-import { useDialogueStore } from './store/dialogueStore';
+import { useDialogueStoreApi } from './store/di';
 
-import type { DialogueStore } from './store/dialogueStore';
+import type { DialogueStore } from './store/dialogueStore.types';
 
 const pickWidgetState = (state: DialogueStore) => ({
   loading: state.loading,
@@ -13,13 +13,15 @@ const pickWidgetState = (state: DialogueStore) => ({
 });
 
 export const useDialogueWidgetBridge = (): void => {
+  const dialogueStore = useDialogueStoreApi();
+
   useEffect(() => {
-    const store = useDialogueStore.getState();
+    const store = dialogueStore.getState();
 
     dialogueWidgetState.registerActions({
-      loadDialogues: store.loadDialogues,
-      loadDialogue: store.loadDialogue,
-      setCurrentStateId: store.setCurrentStateId,
+      loadDialoguesIds: store.loadDialoguesIds,
+      loadDialogue: (dialogueId, targetState) => store.loadDialogue(dialogueId, targetState, 'header'),
+      setCurrentStateId: targetStateId => store.setCurrentStateId(targetStateId),
     });
 
     const syncFromStore = (state: DialogueStore) => {
@@ -27,14 +29,14 @@ export const useDialogueWidgetBridge = (): void => {
     };
 
     syncFromStore(store);
-    const unsubscribe = useDialogueStore.subscribe(syncFromStore);
+    const unsubscribe = dialogueStore.subscribe(syncFromStore);
 
-    store.loadDialogues().catch(e => console.error(e));
+    store.loadDialoguesIds().catch(e => console.error(e));
 
     return () => {
       unsubscribe();
       dialogueWidgetState.unregisterActions();
       dialogueWidgetState.reset();
     };
-  }, []);
+  }, [dialogueStore]);
 };

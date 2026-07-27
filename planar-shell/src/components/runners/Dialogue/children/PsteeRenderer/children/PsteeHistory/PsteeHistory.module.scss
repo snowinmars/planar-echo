@@ -1,0 +1,19 @@
+.history {
+  max-height: 40vh;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.say,
+.response {
+  padding: 0.25em 0.5em;
+}
+
+.say {
+  color: #9ba290;
+}
+
+.response {
+  color: #ff2e21;
+  text-align: right;
+}

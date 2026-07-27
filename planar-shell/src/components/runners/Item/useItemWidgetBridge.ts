@@ -8,7 +8,6 @@ const pickWidgetState = (state: ItemStore) => ({
   loading: state.loading,
   items: state.items,
   currentItemId: state.currentItemId,
-  translatedItem: state.translatedItem,
 });
 
 export const useItemWidgetBridge = (): void => {

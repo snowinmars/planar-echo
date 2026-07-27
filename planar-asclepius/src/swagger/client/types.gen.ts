@@ -8,7 +8,9 @@ export type ClientOptions = {
 
 export type DialogueDialogueIdSkeleton = string;
 
-export type DialogueDialogueIdGameLanguage = string;
+export type CreatureCreatureIdSkeleton = string;
+
+export type CreatureCreatureIdGameLanguage = string;
 
 export const GameLanguage = {
     RU_RU: 'ru_RU',
@@ -21,10 +23,6 @@ export const GameLanguage = {
 } as const;
 
 export type GameLanguage = typeof GameLanguage[keyof typeof GameLanguage];
-
-export type CreatureCreatureIdSkeleton = string;
-
-export type CreatureCreatureIdGameLanguage = string;
 
 export type ItemItemIdSkeleton = string;
 
@@ -44,16 +42,6 @@ export type DialogueToItemDialogueId = string;
 export type DialogueDialogueIdSkeleton2 = DialogueDialogueIdSkeleton;
 
 /**
- * Skeleton dialogue id
- */
-export type DialogueDialogueIdGameLanguage2 = DialogueDialogueIdGameLanguage;
-
-/**
- * Skeleton item language
- */
-export type GameLanguage2 = GameLanguage;
-
-/**
  * Skeleton creature id
  */
 export type CreatureCreatureIdSkeleton2 = CreatureCreatureIdSkeleton;
@@ -62,6 +50,11 @@ export type CreatureCreatureIdSkeleton2 = CreatureCreatureIdSkeleton;
  * Skeleton creature id
  */
 export type CreatureCreatureIdGameLanguage2 = CreatureCreatureIdGameLanguage;
+
+/**
+ * Tlk language
+ */
+export type GameLanguage2 = GameLanguage;
 
 /**
  * Skeleton item id
@@ -408,51 +401,6 @@ export type PostApiGhostDialogueByDialogueIdSkeletonResponses = {
 
 export type PostApiGhostDialogueByDialogueIdSkeletonResponse = PostApiGhostDialogueByDialogueIdSkeletonResponses[keyof PostApiGhostDialogueByDialogueIdSkeletonResponses];
 
-export type PostApiGhostDialogueByDialogueIdByGameLanguageData = {
-    body: {
-        ghostDir: string;
-    };
-    path: {
-        /**
-         * Skeleton dialogue id
-         */
-        dialogueId: DialogueDialogueIdGameLanguage;
-        /**
-         * Skeleton item language
-         */
-        gameLanguage: GameLanguage;
-    };
-    query?: never;
-    url: '/api/ghost/dialogue/{dialogueId}/{gameLanguage}';
-};
-
-export type PostApiGhostDialogueByDialogueIdByGameLanguageErrors = {
-    /**
-     * Dialogue translation is not found by this path
-     */
-    404: {
-        error: {
-            message: string;
-            code: 'FILE_NOT_FOUND';
-        };
-    };
-};
-
-export type PostApiGhostDialogueByDialogueIdByGameLanguageError = PostApiGhostDialogueByDialogueIdByGameLanguageErrors[keyof PostApiGhostDialogueByDialogueIdByGameLanguageErrors];
-
-export type PostApiGhostDialogueByDialogueIdByGameLanguageResponses = {
-    /**
-     * Dialogue translation content in ghost format
-     */
-    200: {
-        data: {
-            content: string;
-        };
-    };
-};
-
-export type PostApiGhostDialogueByDialogueIdByGameLanguageResponse = PostApiGhostDialogueByDialogueIdByGameLanguageResponses[keyof PostApiGhostDialogueByDialogueIdByGameLanguageResponses];
-
 export type PostApiGhostDialogueData = {
     body: {
         ghostDir: string;
@@ -537,7 +485,7 @@ export type PostApiGhostCreatureByCreatureIdByGameLanguageData = {
          */
         creatureId: CreatureCreatureIdGameLanguage;
         /**
-         * Skeleton item language
+         * Tlk language
          */
         gameLanguage: GameLanguage;
     };
@@ -656,7 +604,7 @@ export type PostApiGhostItemByItemIdByGameLanguageData = {
          */
         itemId: ItemItemIdGameLanguage;
         /**
-         * Skeleton item language
+         * Tlk language
          */
         gameLanguage: GameLanguage;
     };
@@ -723,6 +671,51 @@ export type PostApiGhostItemResponses = {
 };
 
 export type PostApiGhostItemResponse = PostApiGhostItemResponses[keyof PostApiGhostItemResponses];
+
+export type PostApiGhostTlkByGameLanguageData = {
+    body: {
+        ghostDir: string;
+        tlkRefs: Array<number>;
+    };
+    path: {
+        /**
+         * Tlk language
+         */
+        gameLanguage: GameLanguage;
+    };
+    query?: never;
+    url: '/api/ghost/tlk/{gameLanguage}';
+};
+
+export type PostApiGhostTlkByGameLanguageErrors = {
+    /**
+     * Cannot get tlk ref, see error code
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'TLK_NOT_FOUND' | 'TLK_REF_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostTlkByGameLanguageError = PostApiGhostTlkByGameLanguageErrors[keyof PostApiGhostTlkByGameLanguageErrors];
+
+export type PostApiGhostTlkByGameLanguageResponses = {
+    /**
+     * Translated tlk ref
+     */
+    200: {
+        data: {
+            content: Array<{
+                ref: number;
+                line: string;
+            }>;
+        };
+    };
+};
+
+export type PostApiGhostTlkByGameLanguageResponse = PostApiGhostTlkByGameLanguageResponses[keyof PostApiGhostTlkByGameLanguageResponses];
 
 export type GetApiMapCreatureToDialoguesByCreatureIdData = {
     body?: never;

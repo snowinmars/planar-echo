@@ -39,22 +39,23 @@ const Item: FC = () => {
 
   const {
     // loading,
-    translatedItem,
+    currentItem,
     disposeItem,
   } = useItemStore(useShallow(state => ({
     // loading: state.loading, // TODO [snow]: pass into <T>...</T> to show loader inside TextFields
-    translatedItem: state.translatedItem,
+    currentItem: state.currentItem,
     loadItem: state.loadItem,
     disposeItem: state.disposeItem,
   })));
 
+  // TODO [snow]: ref to tlk
   useEffect(() => () => disposeItem(), []);
 
   useEffect(() => {
     checkCanTalk().then(x => setCanTalk(x)).catch(() => setCanTalk(false));
-  }, [translatedItem]);
+  }, [currentItem]);
 
-  if (!translatedItem) return null;
+  if (!currentItem) return null;
 
   return (
     <div>
@@ -69,11 +70,11 @@ const Item: FC = () => {
 
       <Grid container spacing="1em">
         <Grid size={{ md: 6, xs: 12 }}>
-          <T title={translatedItem.unidentifiedNameTlk} value={translatedItem.identifiedNameTlk} />
+          <T title={currentItem.unidentifiedNameRef} value={currentItem.identifiedNameRef} />
         </Grid>
         <Grid size={{ md: 6, xs: 12 }}>
-          <TextField fullWidth multiline className={styles.p} disabled variant="standard" label={t('run.item.unidentifiedDescriptionTlk')} value={translatedItem.unidentifiedDescriptionTlk} />
-          <TextField fullWidth multiline className={styles.p} disabled variant="standard" label={t('run.item.identifiedDescriptionTlk')} value={translatedItem.identifiedDescriptionTlk} />
+          <TextField fullWidth multiline className={styles.p} disabled variant="standard" label={t('run.item.unidentifiedDescriptionTlk')} value={currentItem.unidentifiedDescriptionRef} />
+          <TextField fullWidth multiline className={styles.p} disabled variant="standard" label={t('run.item.identifiedDescriptionTlk')} value={currentItem.identifiedDescriptionRef} />
         </Grid>
       </Grid>
 
@@ -82,40 +83,38 @@ const Item: FC = () => {
           <Typography>{t('run.item.properties')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title={translatedItem.unidentifiedNameTlk} value={translatedItem.identifiedNameTlk} />
-
-          <T title="dropSound" value={translatedItem.dropSound} />
-          <T title="flags" value={translatedItem.flags?.join(', ')} />
-          <T title="category" value={translatedItem.category} />
-          <T title="unusableBy" value={translatedItem.unusableBy?.join(', ')} />
-          <T title="equippedAppearance" value={translatedItem.equippedAppearance} />
-          <T title="minLevel" value={translatedItem.minLevel} />
-          <T title="minStrength" value={translatedItem.minStrength} />
-          <T title="minStrengthBonus" value={translatedItem.minStrengthBonus} />
-          <T title="kitUsability1" value={translatedItem.kitUsability1?.join(', ')} />
-          <T title="minIntelligence" value={translatedItem.minIntelligence} />
-          <T title="kitUsability2" value={translatedItem.kitUsability2?.join(', ')} />
-          <T title="minDexterity" value={translatedItem.minDexterity} />
-          <T title="kitUsability3" value={translatedItem.kitUsability3?.join(', ')} />
-          <T title="minWisdom" value={translatedItem.minWisdom} />
-          <T title="kitUsability4" value={translatedItem.kitUsability4?.join(', ')} />
-          <T title="minConstitution" value={translatedItem.minConstitution} />
-          <T title="weaponProficiency" value={translatedItem.weaponProficiency} />
-          <T title="minCharisma" value={translatedItem.minCharisma} />
-          <T title="price" value={translatedItem.price} />
-          <T title="maxInStack" value={translatedItem.maxInStack} />
-          <T title="inventoryIcon" value={translatedItem.inventoryIcon} />
-          <T title="loreToId" value={translatedItem.loreToId} />
-          <T title="groundIcon" value={translatedItem.groundIcon} />
-          <T title="weight" value={translatedItem.weight} />
-          <T title="pickupSound" value={translatedItem.pickupSound} />
-          <T title="enchantment" value={translatedItem.enchantment} />
+          <T title="dropSound" value={currentItem.dropSound} />
+          <T title="flags" value={currentItem.flags?.join(', ')} />
+          <T title="category" value={currentItem.category} />
+          <T title="unusableBy" value={currentItem.unusableBy?.join(', ')} />
+          <T title="equippedAppearance" value={currentItem.equippedAppearance} />
+          <T title="minLevel" value={currentItem.minLevel} />
+          <T title="minStrength" value={currentItem.minStrength} />
+          <T title="minStrengthBonus" value={currentItem.minStrengthBonus} />
+          <T title="kitUsability1" value={currentItem.kitUsability1?.join(', ')} />
+          <T title="minIntelligence" value={currentItem.minIntelligence} />
+          <T title="kitUsability2" value={currentItem.kitUsability2?.join(', ')} />
+          <T title="minDexterity" value={currentItem.minDexterity} />
+          <T title="kitUsability3" value={currentItem.kitUsability3?.join(', ')} />
+          <T title="minWisdom" value={currentItem.minWisdom} />
+          <T title="kitUsability4" value={currentItem.kitUsability4?.join(', ')} />
+          <T title="minConstitution" value={currentItem.minConstitution} />
+          <T title="weaponProficiency" value={currentItem.weaponProficiency} />
+          <T title="minCharisma" value={currentItem.minCharisma} />
+          <T title="price" value={currentItem.price} />
+          <T title="maxInStack" value={currentItem.maxInStack} />
+          <T title="inventoryIcon" value={currentItem.inventoryIcon} />
+          <T title="loreToId" value={currentItem.loreToId} />
+          <T title="groundIcon" value={currentItem.groundIcon} />
+          <T title="weight" value={currentItem.weight} />
+          <T title="pickupSound" value={currentItem.pickupSound} />
+          <T title="enchantment" value={currentItem.enchantment} />
         </AccordionDetails>
       </Accordion>
 
       {
         // I may use here 'i' as key, because order is hardcoded in the format
-        translatedItem.abilities.map((x, i) => (
+        currentItem.abilities.map((x, i) => (
           <Accordion key={`item_ability_${i}`} slotProps={{ transition: { unmountOnExit: true } }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography>
@@ -164,7 +163,7 @@ const Item: FC = () => {
 
       {
         // I may use here 'i' as key, because order is hardcoded in the format
-        translatedItem.effects.map((x, i) => (
+        currentItem.effects.map((x, i) => (
           <Accordion key={`item_effect_${i}`} slotProps={{ transition: { unmountOnExit: true } }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography>

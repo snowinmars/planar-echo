@@ -3,7 +3,12 @@ import { nothing } from '@planar/shared';
 import { useDialogueWidgetBridge } from './useDialogueWidgetBridge';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { useSearchParams } from 'react-router';
-import { useDialogueStore } from './store/dialogueStore';
+import {
+  DialogueRuntimeProvider,
+  dialogueFeatureModules,
+  useDialogueStore,
+  useLocalStorageStore,
+} from './store/di';
 
 import type { StateId, Maybe } from '@planar/shared';
 import type { FC } from 'react';
@@ -15,25 +20,26 @@ const PsteeRenderer = lazy(() => import('./children/PsteeRenderer'));
 const NarratRenderer = lazy(() => import('./children/NarratRenderer'));
 const MobileRenderer = lazy(() => import('./children/MobileRenderer'));
 
-const Dialogue: FC = () => {
+const DialogueContent: FC = () => {
   useDialogueWidgetBridge();
 
   const [searchParams] = useSearchParams();
-  if (searchParams.size) {
+  const loadDialogue = useDialogueStore(x => x.loadDialogue);
+  useEffect(() => {
+    if (!searchParams.size) return;
     const dialogueId = searchParams.get('dialogueId');
     const stateId = searchParams.get('stateId') ?? nothing();
     if (dialogueId) {
-      const loadDialogue = useDialogueStore(x => x.loadDialogue);
-      loadDialogue(dialogueId, stateId as StateId).catch(e => console.error(e)); // TODO [snow]: wrong typing, could I throw if stateId is out of type range?
+      loadDialogue(dialogueId, stateId as StateId, 'dialogue-route').catch(e => console.error(e)); // TODO [snow]: wrong typing, could I throw if stateId is out of type range?;
     }
-  }
+  }, [loadDialogue, searchParams]);
 
   useEffect(() => {
     planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'dialogue');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 
-  const renderer = planarLocalStorage.get<string>('dialogueRenderer', 'pstee-two-columns');
+  const renderer = useLocalStorageStore(state => state.dialogueRenderer);
 
   return (
     <div className={styles.dialogue}>
@@ -49,5 +55,11 @@ const Dialogue: FC = () => {
     </div>
   );
 };
+
+const Dialogue: FC = () => (
+  <DialogueRuntimeProvider modules={dialogueFeatureModules}>
+    <DialogueContent />
+  </DialogueRuntimeProvider>
+);
 
 export default Dialogue;

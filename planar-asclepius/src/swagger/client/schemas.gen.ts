@@ -8,10 +8,16 @@ export const dialogue_dialogueId_skeletonSchema = {
     example: 'dmorte1.dlg'
 } as const;
 
-export const dialogue_dialogueId_gameLanguageSchema = {
+export const creature_creatureId_skeletonSchema = {
     type: 'string',
     minLength: 1,
-    example: 'dmorte1.dlg'
+    example: 'morte.cre'
+} as const;
+
+export const creature_creatureId_gameLanguageSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'morte.cre'
 } as const;
 
 export const gameLanguageSchema = {
@@ -26,18 +32,6 @@ export const gameLanguageSchema = {
         'pl_PL'
     ],
     example: 'ru_RU'
-} as const;
-
-export const creature_creatureId_skeletonSchema = {
-    type: 'string',
-    minLength: 1,
-    example: 'morte.cre'
-} as const;
-
-export const creature_creatureId_gameLanguageSchema = {
-    type: 'string',
-    minLength: 1,
-    example: 'morte.cre'
 } as const;
 
 export const item_itemId_skeletonSchema = {

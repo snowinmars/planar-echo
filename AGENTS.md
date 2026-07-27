@@ -26,6 +26,8 @@
 | Вывод тестов/логов >500 строк | Спросить разрешение до загрузки в контекст |
 | Коммит `planar-ghost/**` | Запрещено (конвертированные данные, возможный копирайт игры) |
 | Коммит оригинальных игровых файлов | Запрещено |
+| void foo() | foo().catch((e: unknown) => console.error(e)) |
+| Subscribe without unsubscription | Always unsubscribe when subscribe |
 
 ## Монорепозиторий
 

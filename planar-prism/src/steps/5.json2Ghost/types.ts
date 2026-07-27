@@ -132,19 +132,16 @@ export type GhostItemV10 = ItmV10 & Readonly<{
 export type GhostDlg = Readonly<{
   resourceName: string;
   skeleton: string;
-  translations: Map<GameLanguage, string>;
 }>;
 
 export type GhostCreature = Readonly<{
   resourceName: string;
   skeleton: string;
-  translations: Map<GameLanguage, string>;
   ghostCreature: GhostCreatureV10 | GhostCreatureV11;
 }>;
 
 export type GhostItem = Readonly<{
   resourceName: string;
   skeleton: string;
-  translations: Map<GameLanguage, string>;
   ghostItem: GhostItemV10;
 }>;

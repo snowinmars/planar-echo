@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useShallow } from 'zustand/react/shallow';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -36,20 +35,14 @@ const Creature: FC = () => {
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 
-  const {
-    // loading,
-    translatedCreature,
-    disposeCreature,
-  } = useCreatureStore(useShallow(state => ({
-    // loading: state.loading, // TODO [snow]: pass into <T>...</T> to show loader inside TextFields
-    translatedCreature: state.translatedCreature,
-    loadCreature: state.loadCreature,
-    disposeCreature: state.disposeCreature,
-  })));
+  // TODO [snow]: pass loading into <T>...</T> to show loader inside TextFields
+  const currentCreature = useCreatureStore(x => x.currentCreature);
+  const disposeCreature = useCreatureStore(x => x.disposeCreature);
 
+  // TODO [snow]: ref to tlk
   useEffect(() => () => disposeCreature(), []);
 
-  if (!translatedCreature) return null;
+  if (!currentCreature) return null;
 
   return (
     <div>
@@ -62,29 +55,29 @@ const Creature: FC = () => {
         </Button>
       </div>
 
-      <T title={translatedCreature.tooltipTlk} value={translatedCreature.nameTlk} />
-      <T title={t('run.creature.hp')} value={`${translatedCreature.currentHp}/${translatedCreature.maximumHp}`} />
-      <T title={t('run.creature.sex')} value={translatedCreature.sex} />
-      <T title={t('run.creature.race')} value={translatedCreature.race} />
-      <T title={t('run.creature.theClass')} value={translatedCreature.theClass} />
-      <T title={t('run.creature.gender')} value={translatedCreature.gender} />
+      <T title={currentCreature.tooltipRef} value={currentCreature.nameRef} />
+      <T title={t('run.creature.hp')} value={`${currentCreature.currentHp}/${currentCreature.maximumHp}`} />
+      <T title={t('run.creature.sex')} value={currentCreature.sex} />
+      <T title={t('run.creature.race')} value={currentCreature.race} />
+      <T title={t('run.creature.theClass')} value={currentCreature.theClass} />
+      <T title={t('run.creature.gender')} value={currentCreature.gender} />
 
       {/* TODO [snow]: render portraits */}
-      <T title="smallPortrait" value={translatedCreature.smallPortrait} />
-      <T title="largePortrait" value={translatedCreature.largePortrait} />
+      <T title="smallPortrait" value={currentCreature.smallPortrait} />
+      <T title="largePortrait" value={currentCreature.largePortrait} />
 
       <Accordion slotProps={{ transition: { unmountOnExit: true } }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>{t('run.creature.characteristics')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          { !translatedCreature.strengthPercentageBonus && <T title={t('run.creature.strength')} value={translatedCreature.strength} />}
-          { !!translatedCreature.strengthPercentageBonus && <T title={t('run.creature.strength')} value={`${translatedCreature.strength}/${translatedCreature.strengthPercentageBonus}`} />}
-          <T title={t('run.creature.intelligence')} value={translatedCreature.intelligence} />
-          <T title={t('run.creature.wisdom')} value={translatedCreature.wisdom} />
-          <T title={t('run.creature.dexterity')} value={translatedCreature.dexterity} />
-          <T title={t('run.creature.constitution')} value={translatedCreature.constitution} />
-          <T title={t('run.creature.charisma')} value={translatedCreature.charisma} />
+          { !currentCreature.strengthPercentageBonus && <T title={t('run.creature.strength')} value={currentCreature.strength} />}
+          { !!currentCreature.strengthPercentageBonus && <T title={t('run.creature.strength')} value={`${currentCreature.strength}/${currentCreature.strengthPercentageBonus}`} />}
+          <T title={t('run.creature.intelligence')} value={currentCreature.intelligence} />
+          <T title={t('run.creature.wisdom')} value={currentCreature.wisdom} />
+          <T title={t('run.creature.dexterity')} value={currentCreature.dexterity} />
+          <T title={t('run.creature.constitution')} value={currentCreature.constitution} />
+          <T title={t('run.creature.charisma')} value={currentCreature.charisma} />
         </AccordionDetails>
       </Accordion>
 
@@ -93,10 +86,10 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.fightCharacteristics')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title={t('run.creature.naturalAc')} value={translatedCreature.naturalAc} />
-          <T title={t('run.creature.effectiveAc')} value={translatedCreature.effectiveAc} />
-          <T title={t('run.creature.thac0')} value={translatedCreature.thac0} />
-          <T title={t('run.creature.numberOfAttacksPerRound')} value={translatedCreature.numberOfAttacksPerRound} />
+          <T title={t('run.creature.naturalAc')} value={currentCreature.naturalAc} />
+          <T title={t('run.creature.effectiveAc')} value={currentCreature.effectiveAc} />
+          <T title={t('run.creature.thac0')} value={currentCreature.thac0} />
+          <T title={t('run.creature.numberOfAttacksPerRound')} value={currentCreature.numberOfAttacksPerRound} />
         </AccordionDetails>
       </Accordion>
 
@@ -105,16 +98,16 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.secondaryAbilities')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title={t('run.creature.hideInShadows')} value={translatedCreature.hideInShadows} />
+          <T title={t('run.creature.hideInShadows')} value={currentCreature.hideInShadows} />
           {
-            translatedCreature.version === 'v1.0' && <T title={t('run.creature.detectIllusion')} value={translatedCreature.detectIllusion} />
+            currentCreature.version === 'v1.0' && <T title={t('run.creature.detectIllusion')} value={currentCreature.detectIllusion} />
           }
-          <T title={t('run.creature.setTraps')} value={translatedCreature.setTraps} />
-          <T title={t('run.creature.lore')} value={translatedCreature.lore} />
-          <T title={t('run.creature.lockpicking')} value={translatedCreature.lockpicking} />
-          <T title={t('run.creature.moveSilently')} value={translatedCreature.moveSilently} />
-          <T title={t('run.creature.findOrDisarmTraps')} value={translatedCreature.findOrDisarmTraps} />
-          <T title={t('run.creature.pickPockets')} value={translatedCreature.pickPockets} />
+          <T title={t('run.creature.setTraps')} value={currentCreature.setTraps} />
+          <T title={t('run.creature.lore')} value={currentCreature.lore} />
+          <T title={t('run.creature.lockpicking')} value={currentCreature.lockpicking} />
+          <T title={t('run.creature.moveSilently')} value={currentCreature.moveSilently} />
+          <T title={t('run.creature.findOrDisarmTraps')} value={currentCreature.findOrDisarmTraps} />
+          <T title={t('run.creature.pickPockets')} value={currentCreature.pickPockets} />
         </AccordionDetails>
       </Accordion>
 
@@ -123,54 +116,54 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.other')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="flags" value={translatedCreature.flags?.join(', ')} />
-          <T title="xpGainedForKilling" value={translatedCreature.xpGainedForKilling} />
-          <T title="powerLevelOrXp" value={translatedCreature.powerLevelOrXp} />
-          <T title="goldCarried" value={translatedCreature.goldCarried} />
-          <T title="status" value={translatedCreature.status?.join(', ')} />
-          <T title="animationId" value={translatedCreature.animationId} />
-          <T title="effectVersion" value={translatedCreature.effectVersion} />
-          <T title="reputation" value={translatedCreature.reputation} />
-          <T title="fatigue" value={translatedCreature.fatigue} />
-          <T title="intoxication" value={translatedCreature.intoxication} />
-          <T title="luck" value={translatedCreature.luck} />
+          <T title="flags" value={currentCreature.flags?.join(', ')} />
+          <T title="xpGainedForKilling" value={currentCreature.xpGainedForKilling} />
+          <T title="powerLevelOrXp" value={currentCreature.powerLevelOrXp} />
+          <T title="goldCarried" value={currentCreature.goldCarried} />
+          <T title="status" value={currentCreature.status?.join(', ')} />
+          <T title="animationId" value={currentCreature.animationId} />
+          <T title="effectVersion" value={currentCreature.effectVersion} />
+          <T title="reputation" value={currentCreature.reputation} />
+          <T title="fatigue" value={currentCreature.fatigue} />
+          <T title="intoxication" value={currentCreature.intoxication} />
+          <T title="luck" value={currentCreature.luck} />
           {
-            translatedCreature.version === 'v1.0' && (
+            currentCreature.version === 'v1.0' && (
               <>
-                <T title="availableInventorySlotsCount" value={translatedCreature.availableInventorySlotsCount} />
-                <T title="nightmareModeModifiersApplied" value={translatedCreature.nightmareModeModifiersApplied} />
-                <T title="translucency" value={translatedCreature.translucency} />
+                <T title="availableInventorySlotsCount" value={currentCreature.availableInventorySlotsCount} />
+                <T title="nightmareModeModifiersApplied" value={currentCreature.nightmareModeModifiersApplied} />
+                <T title="translucency" value={currentCreature.translucency} />
               </>
             )
           }
-          <T title="murderIncrementBy" value={translatedCreature.murderIncrementBy} />
-          <T title="turnUndeadLevel" value={translatedCreature.turnUndeadLevel} />
-          <T title="tracking" value={translatedCreature.tracking} />
-          <T title="faction" value={translatedCreature.faction} />
-          <T title="team" value={translatedCreature.team} />
-          <T title="species" value={translatedCreature.species} />
-          <T title="dialogueActivationRange" value={translatedCreature.dialogueActivationRange} />
-          <T title="collisionRadius" value={translatedCreature.collisionRadius} />
-          <T title="shieldFlags" value={translatedCreature.shieldFlags?.join(', ')} />
-          <T title="fieldOfVision" value={translatedCreature.fieldOfVision} />
-          <T title="attributes" value={translatedCreature.attributes?.join(', ')} />
-          <T title="levelFirstClass" value={translatedCreature.levelFirstClass} />
-          <T title="levelSecondClass" value={translatedCreature.levelSecondClass} />
-          <T title="levelThirdClass" value={translatedCreature.levelThirdClass} />
-          <T title="morale" value={translatedCreature.morale} />
-          <T title="moraleBreak" value={translatedCreature.moraleBreak} />
-          <T title="racialEnemy" value={translatedCreature.racialEnemy} />
-          <T title="moraleRecoveryTime" value={translatedCreature.moraleRecoveryTime} />
-          <T title="deity" value={translatedCreature.deity} />
-          <T title="mageType" value={translatedCreature.mageType?.join(', ')} />
-          <T title="allegiance" value={translatedCreature.allegiance} />
-          <T title="general" value={translatedCreature.general} />
-          <T title="specific" value={translatedCreature.specific} />
-          <T title="objectSpecs" value={translatedCreature.objectSpecs?.join(', ')} />
-          <T title="alignment" value={translatedCreature.alignment} />
-          <T title="globalIdentifier" value={translatedCreature.globalIdentifier} />
-          <T title="localIdentifier" value={translatedCreature.localIdentifier} />
-          <T title="dialogueRef" value={translatedCreature.dialogueRef} />
+          <T title="murderIncrementBy" value={currentCreature.murderIncrementBy} />
+          <T title="turnUndeadLevel" value={currentCreature.turnUndeadLevel} />
+          <T title="tracking" value={currentCreature.tracking} />
+          <T title="faction" value={currentCreature.faction} />
+          <T title="team" value={currentCreature.team} />
+          <T title="species" value={currentCreature.species} />
+          <T title="dialogueActivationRange" value={currentCreature.dialogueActivationRange} />
+          <T title="collisionRadius" value={currentCreature.collisionRadius} />
+          <T title="shieldFlags" value={currentCreature.shieldFlags?.join(', ')} />
+          <T title="fieldOfVision" value={currentCreature.fieldOfVision} />
+          <T title="attributes" value={currentCreature.attributes?.join(', ')} />
+          <T title="levelFirstClass" value={currentCreature.levelFirstClass} />
+          <T title="levelSecondClass" value={currentCreature.levelSecondClass} />
+          <T title="levelThirdClass" value={currentCreature.levelThirdClass} />
+          <T title="morale" value={currentCreature.morale} />
+          <T title="moraleBreak" value={currentCreature.moraleBreak} />
+          <T title="racialEnemy" value={currentCreature.racialEnemy} />
+          <T title="moraleRecoveryTime" value={currentCreature.moraleRecoveryTime} />
+          <T title="deity" value={currentCreature.deity} />
+          <T title="mageType" value={currentCreature.mageType?.join(', ')} />
+          <T title="allegiance" value={currentCreature.allegiance} />
+          <T title="general" value={currentCreature.general} />
+          <T title="specific" value={currentCreature.specific} />
+          <T title="objectSpecs" value={currentCreature.objectSpecs?.join(', ')} />
+          <T title="alignment" value={currentCreature.alignment} />
+          <T title="globalIdentifier" value={currentCreature.globalIdentifier} />
+          <T title="localIdentifier" value={currentCreature.localIdentifier} />
+          <T title="dialogueRef" value={currentCreature.dialogueRef} />
         </AccordionDetails>
       </Accordion>
 
@@ -179,10 +172,10 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.acModifier')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="crushingAcModifier" value={translatedCreature.crushingAcModifier} />
-          <T title="missileAcModifier" value={translatedCreature.missileAcModifier} />
-          <T title="piercingAcModifier" value={translatedCreature.piercingAcModifier} />
-          <T title="slashingAcModifier" value={translatedCreature.slashingAcModifier} />
+          <T title="crushingAcModifier" value={currentCreature.crushingAcModifier} />
+          <T title="missileAcModifier" value={currentCreature.missileAcModifier} />
+          <T title="piercingAcModifier" value={currentCreature.piercingAcModifier} />
+          <T title="slashingAcModifier" value={currentCreature.slashingAcModifier} />
         </AccordionDetails>
       </Accordion>
 
@@ -191,11 +184,11 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.saveVersus')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="saveVersusDeath" value={translatedCreature.saveVersusDeath} />
-          <T title="saveVersusWands" value={translatedCreature.saveVersusWands} />
-          <T title="saveVersusPolymorph" value={translatedCreature.saveVersusPolymorph} />
-          <T title="saveVersusBreath" value={translatedCreature.saveVersusBreath} />
-          <T title="saveVersusSpells" value={translatedCreature.saveVersusSpells} />
+          <T title="saveVersusDeath" value={currentCreature.saveVersusDeath} />
+          <T title="saveVersusWands" value={currentCreature.saveVersusWands} />
+          <T title="saveVersusPolymorph" value={currentCreature.saveVersusPolymorph} />
+          <T title="saveVersusBreath" value={currentCreature.saveVersusBreath} />
+          <T title="saveVersusSpells" value={currentCreature.saveVersusSpells} />
         </AccordionDetails>
       </Accordion>
 
@@ -204,17 +197,17 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.resistances')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="fireResistance" value={translatedCreature.fireResistance} />
-          <T title="coldResistance" value={translatedCreature.coldResistance} />
-          <T title="electricityResistance" value={translatedCreature.electricityResistance} />
-          <T title="acidResistance" value={translatedCreature.acidResistance} />
-          <T title="magicResistance" value={translatedCreature.magicResistance} />
-          <T title="magicFireResistance" value={translatedCreature.magicFireResistance} />
-          <T title="magicColdResistance" value={translatedCreature.magicColdResistance} />
-          <T title="slashingResistance" value={translatedCreature.slashingResistance} />
-          <T title="crushingResistance" value={translatedCreature.crushingResistance} />
-          <T title="piercingResistance" value={translatedCreature.piercingResistance} />
-          <T title="missileResistance" value={translatedCreature.missileResistance} />
+          <T title="fireResistance" value={currentCreature.fireResistance} />
+          <T title="coldResistance" value={currentCreature.coldResistance} />
+          <T title="electricityResistance" value={currentCreature.electricityResistance} />
+          <T title="acidResistance" value={currentCreature.acidResistance} />
+          <T title="magicResistance" value={currentCreature.magicResistance} />
+          <T title="magicFireResistance" value={currentCreature.magicFireResistance} />
+          <T title="magicColdResistance" value={currentCreature.magicColdResistance} />
+          <T title="slashingResistance" value={currentCreature.slashingResistance} />
+          <T title="crushingResistance" value={currentCreature.crushingResistance} />
+          <T title="piercingResistance" value={currentCreature.piercingResistance} />
+          <T title="missileResistance" value={currentCreature.missileResistance} />
         </AccordionDetails>
       </Accordion>
 
@@ -223,23 +216,23 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.proficiencies')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="bowProficiency" value={translatedCreature.bowProficiency} />
-          <T title="axeProficiency" value={translatedCreature.axeProficiency} />
-          <T title="unspentProficiencies" value={translatedCreature.unspentProficiencies} />
+          <T title="bowProficiency" value={currentCreature.bowProficiency} />
+          <T title="axeProficiency" value={currentCreature.axeProficiency} />
+          <T title="unspentProficiencies" value={currentCreature.unspentProficiencies} />
           {
-            translatedCreature.version === 'v1.0' && (
+            currentCreature.version === 'v1.0' && (
               <>
-                <T title="largeSwordProficiency" value={translatedCreature.largeSwordProficiency} />
-                <T title="smallSwordProficiency" value={translatedCreature.smallSwordProficiency} />
-                <T title="spearProficiency" value={translatedCreature.spearProficiency} />
-                <T title="bluntProficiency" value={translatedCreature.bluntProficiency} />
-                <T title="spikedProficiency" value={translatedCreature.spikedProficiency} />
-                <T title="missileProficiency" value={translatedCreature.missileProficiency} />
-                <T title="unusedProficiency1" value={translatedCreature.unusedProficiency1} />
-                <T title="unusedProficiency2" value={translatedCreature.unusedProficiency2} />
-                <T title="unusedProficiency3" value={translatedCreature.unusedProficiency3} />
-                <T title="unusedProficiency4" value={translatedCreature.unusedProficiency4} />
-                <T title="unusedProficiency5" value={translatedCreature.unusedProficiency5} />
+                <T title="largeSwordProficiency" value={currentCreature.largeSwordProficiency} />
+                <T title="smallSwordProficiency" value={currentCreature.smallSwordProficiency} />
+                <T title="spearProficiency" value={currentCreature.spearProficiency} />
+                <T title="bluntProficiency" value={currentCreature.bluntProficiency} />
+                <T title="spikedProficiency" value={currentCreature.spikedProficiency} />
+                <T title="missileProficiency" value={currentCreature.missileProficiency} />
+                <T title="unusedProficiency1" value={currentCreature.unusedProficiency1} />
+                <T title="unusedProficiency2" value={currentCreature.unusedProficiency2} />
+                <T title="unusedProficiency3" value={currentCreature.unusedProficiency3} />
+                <T title="unusedProficiency4" value={currentCreature.unusedProficiency4} />
+                <T title="unusedProficiency5" value={currentCreature.unusedProficiency5} />
               </>
             )
           }
@@ -251,12 +244,12 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.scripts')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="overrideScriptRef" value={translatedCreature.overrideScriptRef} />
-          <T title="classScriptRef" value={translatedCreature.classScriptRef} />
-          <T title="raceScriptRef" value={translatedCreature.raceScriptRef} />
-          <T title="generalScriptRef" value={translatedCreature.generalScriptRef} />
-          <T title="defaultScriptRef" value={translatedCreature.defaultScriptRef} />
-          <T title="scriptName" value={translatedCreature.scriptName} />
+          <T title="overrideScriptRef" value={currentCreature.overrideScriptRef} />
+          <T title="classScriptRef" value={currentCreature.classScriptRef} />
+          <T title="raceScriptRef" value={currentCreature.raceScriptRef} />
+          <T title="generalScriptRef" value={currentCreature.generalScriptRef} />
+          <T title="defaultScriptRef" value={currentCreature.defaultScriptRef} />
+          <T title="scriptName" value={currentCreature.scriptName} />
         </AccordionDetails>
       </Accordion>
 
@@ -265,13 +258,13 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.colourIndex')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="metalColourIndex" value={translatedCreature.metalColourIndex} />
-          <T title="minorColourIndex" value={translatedCreature.minorColourIndex} />
-          <T title="majorColourIndex" value={translatedCreature.majorColourIndex} />
-          <T title="skinColourIndex" value={translatedCreature.skinColourIndex} />
-          <T title="leatherColourIndex" value={translatedCreature.leatherColourIndex} />
-          <T title="armorColourIndex" value={translatedCreature.armorColourIndex} />
-          <T title="hairColourIndex" value={translatedCreature.hairColourIndex} />
+          <T title="metalColourIndex" value={currentCreature.metalColourIndex} />
+          <T title="minorColourIndex" value={currentCreature.minorColourIndex} />
+          <T title="majorColourIndex" value={currentCreature.majorColourIndex} />
+          <T title="skinColourIndex" value={currentCreature.skinColourIndex} />
+          <T title="leatherColourIndex" value={currentCreature.leatherColourIndex} />
+          <T title="armorColourIndex" value={currentCreature.armorColourIndex} />
+          <T title="hairColourIndex" value={currentCreature.hairColourIndex} />
         </AccordionDetails>
       </Accordion>
 
@@ -280,106 +273,106 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.soundsTitle')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="initialMeetingSoundTlk" value={translatedCreature.initialMeetingSoundTlk} />
-          <T title="moraleSoundTlk" value={translatedCreature.moraleSoundTlk} />
-          <T title="happySoundTlk" value={translatedCreature.happySoundTlk} />
-          <T title="unhappyAnnoyedSoundTlk" value={translatedCreature.unhappyAnnoyedSoundTlk} />
-          <T title="unhappySeriousSoundTlk" value={translatedCreature.unhappySeriousSoundTlk} />
-          <T title="unhappyBreakingPointSoundTlk" value={translatedCreature.unhappyBreakingPointSoundTlk} />
-          <T title="leaderSoundTlk" value={translatedCreature.leaderSoundTlk} />
-          <T title="tiredSoundTlk" value={translatedCreature.tiredSoundTlk} />
-          <T title="boredSoundTlk" value={translatedCreature.boredSoundTlk} />
-          <T title="battleCry1SoundTlk" value={translatedCreature.battleCry1SoundTlk} />
-          <T title="battleCry2SoundTlk" value={translatedCreature.battleCry2SoundTlk} />
-          <T title="battleCry3SoundTlk" value={translatedCreature.battleCry3SoundTlk} />
-          <T title="battleCry4SoundTlk" value={translatedCreature.battleCry4SoundTlk} />
-          <T title="battleCry5SoundTlk" value={translatedCreature.battleCry5SoundTlk} />
-          <T title="attack1SoundTlk" value={translatedCreature.attack1SoundTlk} />
-          <T title="attack2SoundTlk" value={translatedCreature.attack2SoundTlk} />
-          <T title="attack3SoundTlk" value={translatedCreature.attack3SoundTlk} />
-          <T title="attack4SoundTlk" value={translatedCreature.attack4SoundTlk} />
-          <T title="damageSoundTlk" value={translatedCreature.damageSoundTlk} />
-          <T title="dyingSoundTlk" value={translatedCreature.dyingSoundTlk} />
-          <T title="hurtSoundTlk" value={translatedCreature.hurtSoundTlk} />
-          <T title="areaForestSoundTlk" value={translatedCreature.areaForestSoundTlk} />
-          <T title="areaCitySoundTlk" value={translatedCreature.areaCitySoundTlk} />
-          <T title="areaDungeonSoundTlk" value={translatedCreature.areaDungeonSoundTlk} />
-          <T title="areaDaySoundTlk" value={translatedCreature.areaDaySoundTlk} />
-          <T title="areaNightSoundTlk" value={translatedCreature.areaNightSoundTlk} />
-          <T title="selectCommon1SoundTlk" value={translatedCreature.selectCommon1SoundTlk} />
-          <T title="selectCommon2SoundTlk" value={translatedCreature.selectCommon2SoundTlk} />
-          <T title="selectCommon3SoundTlk" value={translatedCreature.selectCommon3SoundTlk} />
-          <T title="selectCommon4SoundTlk" value={translatedCreature.selectCommon4SoundTlk} />
-          <T title="selectCommon5SoundTlk" value={translatedCreature.selectCommon5SoundTlk} />
-          <T title="selectCommon6SoundTlk" value={translatedCreature.selectCommon6SoundTlk} />
-          <T title="selectAction1SoundTlk" value={translatedCreature.selectAction1SoundTlk} />
-          <T title="selectAction2SoundTlk" value={translatedCreature.selectAction2SoundTlk} />
-          <T title="selectAction3SoundTlk" value={translatedCreature.selectAction3SoundTlk} />
-          <T title="selectAction4SoundTlk" value={translatedCreature.selectAction4SoundTlk} />
-          <T title="selectAction5SoundTlk" value={translatedCreature.selectAction5SoundTlk} />
-          <T title="selectAction6SoundTlk" value={translatedCreature.selectAction6SoundTlk} />
-          <T title="selectAction7SoundTlk" value={translatedCreature.selectAction7SoundTlk} />
-          <T title="interaction1SoundTlk" value={translatedCreature.interaction1SoundTlk} />
-          <T title="interaction2SoundTlk" value={translatedCreature.interaction2SoundTlk} />
-          <T title="interaction3SoundTlk" value={translatedCreature.interaction3SoundTlk} />
-          <T title="interaction4SoundTlk" value={translatedCreature.interaction4SoundTlk} />
-          <T title="interaction5SoundTlk" value={translatedCreature.interaction5SoundTlk} />
-          <T title="insult1SoundTlk" value={translatedCreature.insult1SoundTlk} />
-          <T title="insult2SoundTlk" value={translatedCreature.insult2SoundTlk} />
-          <T title="insult3SoundTlk" value={translatedCreature.insult3SoundTlk} />
-          <T title="compliment1SoundTlk" value={translatedCreature.compliment1SoundTlk} />
-          <T title="compliment2SoundTlk" value={translatedCreature.compliment2SoundTlk} />
-          <T title="compliment3SoundTlk" value={translatedCreature.compliment3SoundTlk} />
-          <T title="special1SoundTlk" value={translatedCreature.special1SoundTlk} />
-          <T title="special2SoundTlk" value={translatedCreature.special2SoundTlk} />
-          <T title="special3SoundTlk" value={translatedCreature.special3SoundTlk} />
-          <T title="reactToDieGeneralSoundTlk" value={translatedCreature.reactToDieGeneralSoundTlk} />
-          <T title="reactToDieSpecificSoundTlk" value={translatedCreature.reactToDieSpecificSoundTlk} />
-          <T title="responseToCompliment1SoundTlk" value={translatedCreature.responseToCompliment1SoundTlk} />
-          <T title="responseToCompliment2SoundTlk" value={translatedCreature.responseToCompliment2SoundTlk} />
-          <T title="responseToCompliment3SoundTlk" value={translatedCreature.responseToCompliment3SoundTlk} />
-          <T title="responseToInsult1SoundTlk" value={translatedCreature.responseToInsult1SoundTlk} />
-          <T title="responseToInsult2SoundTlk" value={translatedCreature.responseToInsult2SoundTlk} />
-          <T title="responseToInsult3SoundTlk" value={translatedCreature.responseToInsult3SoundTlk} />
-          <T title="dialogHostileSoundTlk" value={translatedCreature.dialogHostileSoundTlk} />
-          <T title="dialogDefaultSoundTlk" value={translatedCreature.dialogDefaultSoundTlk} />
-          <T title="selectRare1SoundTlk" value={translatedCreature.selectRare1SoundTlk} />
-          <T title="selectRare2SoundTlk" value={translatedCreature.selectRare2SoundTlk} />
-          <T title="criticalHitSoundTlk" value={translatedCreature.criticalHitSoundTlk} />
-          <T title="criticalMissSoundTlk" value={translatedCreature.criticalMissSoundTlk} />
-          <T title="targetImmuneSoundTlk" value={translatedCreature.targetImmuneSoundTlk} />
-          <T title="inventoryFullSoundTlk" value={translatedCreature.inventoryFullSoundTlk} />
-          <T title="pickedPicketSoundTlk" value={translatedCreature.pickedPicketSoundTlk} />
-          <T title="hiddenInShadowsSoundTlk" value={translatedCreature.hiddenInShadowsSoundTlk} />
-          <T title="spellDisruptedSoundTlk" value={translatedCreature.spellDisruptedSoundTlk} />
-          <T title="setTrapSoundTlk" value={translatedCreature.setTrapSoundTlk} />
-          <T title="existance4SoundTlk" value={translatedCreature.existance4SoundTlk} />
-          <T title="bioSoundTlk" value={translatedCreature.bioSoundTlk} />
-          <T title="sound1Tlk" value={translatedCreature.sound1Tlk} />
-          <T title="sound2Tlk" value={translatedCreature.sound2Tlk} />
-          <T title="sound3Tlk" value={translatedCreature.sound3Tlk} />
-          <T title="sound4Tlk" value={translatedCreature.sound4Tlk} />
-          <T title="sound5Tlk" value={translatedCreature.sound5Tlk} />
-          <T title="sound6Tlk" value={translatedCreature.sound6Tlk} />
-          <T title="sound7Tlk" value={translatedCreature.sound7Tlk} />
-          <T title="sound8Tlk" value={translatedCreature.sound8Tlk} />
-          <T title="sound9Tlk" value={translatedCreature.sound9Tlk} />
-          <T title="sound10Tlk" value={translatedCreature.sound10Tlk} />
-          <T title="sound11Tlk" value={translatedCreature.sound11Tlk} />
-          <T title="sound12Tlk" value={translatedCreature.sound12Tlk} />
-          <T title="sound13Tlk" value={translatedCreature.sound13Tlk} />
-          <T title="sound14Tlk" value={translatedCreature.sound14Tlk} />
-          <T title="sound15Tlk" value={translatedCreature.sound15Tlk} />
-          <T title="sound16Tlk" value={translatedCreature.sound16Tlk} />
-          <T title="sound17Tlk" value={translatedCreature.sound17Tlk} />
-          <T title="sound18Tlk" value={translatedCreature.sound18Tlk} />
-          <T title="sound19Tlk" value={translatedCreature.sound19Tlk} />
-          <T title="sound20Tlk" value={translatedCreature.sound20Tlk} />
-          <T title="sound21Tlk" value={translatedCreature.sound21Tlk} />
-          <T title="sound22Tlk" value={translatedCreature.sound22Tlk} />
-          <T title="sound23Tlk" value={translatedCreature.sound23Tlk} />
-          <T title="sound24Tlk" value={translatedCreature.sound24Tlk} />
-          <T title="sound25Tlk" value={translatedCreature.sound25Tlk} />
+          <T title="initialMeetingSoundTlk" value={currentCreature.initialMeetingSoundRef} />
+          <T title="moraleSoundTlk" value={currentCreature.moraleSoundRef} />
+          <T title="happySoundTlk" value={currentCreature.happySoundRef} />
+          <T title="unhappyAnnoyedSoundTlk" value={currentCreature.unhappyAnnoyedSoundRef} />
+          <T title="unhappySeriousSoundTlk" value={currentCreature.unhappySeriousSoundRef} />
+          <T title="unhappyBreakingPointSoundTlk" value={currentCreature.unhappyBreakingPointSoundRef} />
+          <T title="leaderSoundTlk" value={currentCreature.leaderSoundRef} />
+          <T title="tiredSoundTlk" value={currentCreature.tiredSoundRef} />
+          <T title="boredSoundTlk" value={currentCreature.boredSoundRef} />
+          <T title="battleCry1SoundTlk" value={currentCreature.battleCry1SoundRef} />
+          <T title="battleCry2SoundTlk" value={currentCreature.battleCry2SoundRef} />
+          <T title="battleCry3SoundTlk" value={currentCreature.battleCry3SoundRef} />
+          <T title="battleCry4SoundTlk" value={currentCreature.battleCry4SoundRef} />
+          <T title="battleCry5SoundTlk" value={currentCreature.battleCry5SoundRef} />
+          <T title="attack1SoundTlk" value={currentCreature.attack1SoundRef} />
+          <T title="attack2SoundTlk" value={currentCreature.attack2SoundRef} />
+          <T title="attack3SoundTlk" value={currentCreature.attack3SoundRef} />
+          <T title="attack4SoundTlk" value={currentCreature.attack4SoundRef} />
+          <T title="damageSoundTlk" value={currentCreature.damageSoundRef} />
+          <T title="dyingSoundTlk" value={currentCreature.dyingSoundRef} />
+          <T title="hurtSoundTlk" value={currentCreature.hurtSoundRef} />
+          <T title="areaForestSoundTlk" value={currentCreature.areaForestSoundRef} />
+          <T title="areaCitySoundTlk" value={currentCreature.areaCitySoundRef} />
+          <T title="areaDungeonSoundTlk" value={currentCreature.areaDungeonSoundRef} />
+          <T title="areaDaySoundTlk" value={currentCreature.areaDaySoundRef} />
+          <T title="areaNightSoundTlk" value={currentCreature.areaNightSoundRef} />
+          <T title="selectCommon1SoundTlk" value={currentCreature.selectCommon1SoundRef} />
+          <T title="selectCommon2SoundTlk" value={currentCreature.selectCommon2SoundRef} />
+          <T title="selectCommon3SoundTlk" value={currentCreature.selectCommon3SoundRef} />
+          <T title="selectCommon4SoundTlk" value={currentCreature.selectCommon4SoundRef} />
+          <T title="selectCommon5SoundTlk" value={currentCreature.selectCommon5SoundRef} />
+          <T title="selectCommon6SoundTlk" value={currentCreature.selectCommon6SoundRef} />
+          <T title="selectAction1SoundTlk" value={currentCreature.selectAction1SoundRef} />
+          <T title="selectAction2SoundTlk" value={currentCreature.selectAction2SoundRef} />
+          <T title="selectAction3SoundTlk" value={currentCreature.selectAction3SoundRef} />
+          <T title="selectAction4SoundTlk" value={currentCreature.selectAction4SoundRef} />
+          <T title="selectAction5SoundTlk" value={currentCreature.selectAction5SoundRef} />
+          <T title="selectAction6SoundTlk" value={currentCreature.selectAction6SoundRef} />
+          <T title="selectAction7SoundTlk" value={currentCreature.selectAction7SoundRef} />
+          <T title="interaction1SoundTlk" value={currentCreature.interaction1SoundRef} />
+          <T title="interaction2SoundTlk" value={currentCreature.interaction2SoundRef} />
+          <T title="interaction3SoundTlk" value={currentCreature.interaction3SoundRef} />
+          <T title="interaction4SoundTlk" value={currentCreature.interaction4SoundRef} />
+          <T title="interaction5SoundTlk" value={currentCreature.interaction5SoundRef} />
+          <T title="insult1SoundTlk" value={currentCreature.insult1SoundRef} />
+          <T title="insult2SoundTlk" value={currentCreature.insult2SoundRef} />
+          <T title="insult3SoundTlk" value={currentCreature.insult3SoundRef} />
+          <T title="compliment1SoundTlk" value={currentCreature.compliment1SoundRef} />
+          <T title="compliment2SoundTlk" value={currentCreature.compliment2SoundRef} />
+          <T title="compliment3SoundTlk" value={currentCreature.compliment3SoundRef} />
+          <T title="special1SoundTlk" value={currentCreature.special1SoundRef} />
+          <T title="special2SoundTlk" value={currentCreature.special2SoundRef} />
+          <T title="special3SoundTlk" value={currentCreature.special3SoundRef} />
+          <T title="reactToDieGeneralSoundTlk" value={currentCreature.reactToDieGeneralSoundRef} />
+          <T title="reactToDieSpecificSoundTlk" value={currentCreature.reactToDieSpecificSoundRef} />
+          <T title="responseToCompliment1SoundTlk" value={currentCreature.responseToCompliment1SoundRef} />
+          <T title="responseToCompliment2SoundTlk" value={currentCreature.responseToCompliment2SoundRef} />
+          <T title="responseToCompliment3SoundTlk" value={currentCreature.responseToCompliment3SoundRef} />
+          <T title="responseToInsult1SoundTlk" value={currentCreature.responseToInsult1SoundRef} />
+          <T title="responseToInsult2SoundTlk" value={currentCreature.responseToInsult2SoundRef} />
+          <T title="responseToInsult3SoundTlk" value={currentCreature.responseToInsult3SoundRef} />
+          <T title="dialogHostileSoundTlk" value={currentCreature.dialogHostileSoundRef} />
+          <T title="dialogDefaultSoundTlk" value={currentCreature.dialogDefaultSoundRef} />
+          <T title="selectRare1SoundTlk" value={currentCreature.selectRare1SoundRef} />
+          <T title="selectRare2SoundTlk" value={currentCreature.selectRare2SoundRef} />
+          <T title="criticalHitSoundTlk" value={currentCreature.criticalHitSoundRef} />
+          <T title="criticalMissSoundTlk" value={currentCreature.criticalMissSoundRef} />
+          <T title="targetImmuneSoundTlk" value={currentCreature.targetImmuneSoundRef} />
+          <T title="inventoryFullSoundTlk" value={currentCreature.inventoryFullSoundRef} />
+          <T title="pickedPicketSoundTlk" value={currentCreature.pickedPicketSoundRef} />
+          <T title="hiddenInShadowsSoundTlk" value={currentCreature.hiddenInShadowsSoundRef} />
+          <T title="spellDisruptedSoundTlk" value={currentCreature.spellDisruptedSoundRef} />
+          <T title="setTrapSoundTlk" value={currentCreature.setTrapSoundRef} />
+          <T title="existance4SoundTlk" value={currentCreature.existance4SoundRef} />
+          <T title="bioSoundTlk" value={currentCreature.bioSoundRef} />
+          <T title="sound1Tlk" value={currentCreature.sound1Ref} />
+          <T title="sound2Tlk" value={currentCreature.sound2Ref} />
+          <T title="sound3Tlk" value={currentCreature.sound3Ref} />
+          <T title="sound4Tlk" value={currentCreature.sound4Ref} />
+          <T title="sound5Tlk" value={currentCreature.sound5Ref} />
+          <T title="sound6Tlk" value={currentCreature.sound6Ref} />
+          <T title="sound7Tlk" value={currentCreature.sound7Ref} />
+          <T title="sound8Tlk" value={currentCreature.sound8Ref} />
+          <T title="sound9Tlk" value={currentCreature.sound9Ref} />
+          <T title="sound10Tlk" value={currentCreature.sound10Ref} />
+          <T title="sound11Tlk" value={currentCreature.sound11Ref} />
+          <T title="sound12Tlk" value={currentCreature.sound12Ref} />
+          <T title="sound13Tlk" value={currentCreature.sound13Ref} />
+          <T title="sound14Tlk" value={currentCreature.sound14Ref} />
+          <T title="sound15Tlk" value={currentCreature.sound15Ref} />
+          <T title="sound16Tlk" value={currentCreature.sound16Ref} />
+          <T title="sound17Tlk" value={currentCreature.sound17Ref} />
+          <T title="sound18Tlk" value={currentCreature.sound18Ref} />
+          <T title="sound19Tlk" value={currentCreature.sound19Ref} />
+          <T title="sound20Tlk" value={currentCreature.sound20Ref} />
+          <T title="sound21Tlk" value={currentCreature.sound21Ref} />
+          <T title="sound22Tlk" value={currentCreature.sound22Ref} />
+          <T title="sound23Tlk" value={currentCreature.sound23Ref} />
+          <T title="sound24Tlk" value={currentCreature.sound24Ref} />
+          <T title="sound25Tlk" value={currentCreature.sound25Ref} />
         </AccordionDetails>
       </Accordion>
 
@@ -388,17 +381,17 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.techInfo')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="knownSpellsOffset" value={translatedCreature.knownSpellsOffset} />
-          <T title="knownSpellsCount" value={translatedCreature.knownSpellsCount} />
-          <T title="spellMemorizationInfoOffset" value={translatedCreature.spellMemorizationInfoOffset} />
-          <T title="spellMemorizationInfoEntriesCount" value={translatedCreature.spellMemorizationInfoEntriesCount} />
-          <T title="memorizedSpellsOffset" value={translatedCreature.memorizedSpellsOffset} />
-          <T title="memorizedSpellsCount" value={translatedCreature.memorizedSpellsCount} />
-          <T title="offsetToItemSlots" value={translatedCreature.offsetToItemSlots} />
-          <T title="offsetToItems" value={translatedCreature.offsetToItems} />
-          <T title="countOfItems" value={translatedCreature.countOfItems} />
-          <T title="offsetToEffects" value={translatedCreature.offsetToEffects} />
-          <T title="countOfEffects" value={translatedCreature.countOfEffects} />
+          <T title="knownSpellsOffset" value={currentCreature.knownSpellsOffset} />
+          <T title="knownSpellsCount" value={currentCreature.knownSpellsCount} />
+          <T title="spellMemorizationInfoOffset" value={currentCreature.spellMemorizationInfoOffset} />
+          <T title="spellMemorizationInfoEntriesCount" value={currentCreature.spellMemorizationInfoEntriesCount} />
+          <T title="memorizedSpellsOffset" value={currentCreature.memorizedSpellsOffset} />
+          <T title="memorizedSpellsCount" value={currentCreature.memorizedSpellsCount} />
+          <T title="offsetToItemSlots" value={currentCreature.offsetToItemSlots} />
+          <T title="offsetToItems" value={currentCreature.offsetToItems} />
+          <T title="countOfItems" value={currentCreature.countOfItems} />
+          <T title="offsetToEffects" value={currentCreature.offsetToEffects} />
+          <T title="countOfEffects" value={currentCreature.countOfEffects} />
         </AccordionDetails>
       </Accordion>
     </div>

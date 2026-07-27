@@ -35,7 +35,7 @@ const biffs2jsonPstee = async (
 ): Promise<AllPsteeJsons> => {
   logger.info(`Converting tlk to json...`);
   const tlk = await parseTlk(paths.tlkDir);
-  await paths.ghostDir.saveJson.dialogues('dialog.tlk', tlk);
+  await paths.ghostDir.saveJson.tlk(`dialogue.${paths.gameLanguage}.json`, tlk);
 
   ///
 

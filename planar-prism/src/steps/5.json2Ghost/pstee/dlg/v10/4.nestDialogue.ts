@@ -1,7 +1,8 @@
 import { nothing, isNothing } from '@planar/shared';
 
-import type { SplittedState, SplittedDlg } from './3.splitTranslation.types.js';
-import type { TlkedResponse } from './2.patchTranslation.types.js';
+import type { WeightedDlg } from './1.attachWeights.types.js';
+import type { RawResponse } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/3.parseResponses.types.js';
+import type { RawState } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/2.parseStates.types.js';
 import type { NestedDlg, NestedDlgResponse, NestedDlgState } from './4.nestDialogue.types.js';
 
 const formTrigger = ({
@@ -23,8 +24,8 @@ const formAction = ({
   return { index: trigger.index, text: trigger.text };
 };
 
-type NestResponseProps = Pick<SplittedDlg, 'responsesTriggers' | 'responsesActions'> & Readonly<{
-  response: SplittedDlg['responses'][number];
+type NestResponseProps = Pick<WeightedDlg, 'responsesTriggers' | 'responsesActions'> & Readonly<{
+  response: WeightedDlg['responses'][number];
 }>;
 const nestResponse = ({
   response,
@@ -39,16 +40,15 @@ const nestResponse = ({
     flags: response.flags,
     nextDialog: response.nextDialog,
     nextDialogState: response.nextDialogState,
-    textTlk: response.textTlk,
-    journalId: response.journalRef,
-    journalTlk: response.journalTlk,
+    textRef: response.textRef,
+    journalRef: response.journalRef,
     trigger,
     action,
   };
 };
 
-type NestStateProps = Pick<SplittedDlg, 'responses' | 'stateTriggers' | 'responsesTriggers' | 'responsesActions'> & Readonly<{
-  state: SplittedDlg['states'][number];
+type NestStateProps = Pick<WeightedDlg, 'responses' | 'stateTriggers' | 'responsesTriggers' | 'responsesActions'> & Readonly<{
+  state: WeightedDlg['states'][number];
 }>;
 const nestState = ({
   state,
@@ -59,7 +59,7 @@ const nestState = ({
 }: NestStateProps): NestedDlgState => {
   const _responses = responses
     .slice(state.firstResponseIndex, state.firstResponseIndex + state.responsesCount)
-    .map((r: TlkedResponse) => nestResponse({
+    .map((r: RawResponse) => nestResponse({
       response: r,
       responsesTriggers,
       responsesActions,
@@ -70,15 +70,15 @@ const nestState = ({
   return {
     index: state.index,
     trigger,
-    action: state.action,
+    action: nothing(),
     responses: _responses,
-    textTlk: state.textTlk,
+    textRef: state.textRef,
   };
 };
 
-export const nestDialogue = (dlg: SplittedDlg): NestedDlg => {
+export const nestDialogue = (dlg: WeightedDlg): NestedDlg => {
   const nestedStates = dlg.states
-    .map((state: SplittedState) => nestState({
+    .map((state: RawState) => nestState({
       state: state,
       responses: dlg.responses,
       stateTriggers: dlg.stateTriggers,

@@ -37,7 +37,6 @@ export const LocalData: FC = () => {
         onClick={() => {
           deleteDb()
             .then(() => {
-              planarLocalStorage.set('storesStatus', 'empty');
               setLocalIndexedDb(true);
 
               setTimeout(() => {

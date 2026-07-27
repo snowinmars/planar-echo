@@ -6,7 +6,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { getZustandCharacter } from '@/engine/store/worldStores';
 import { triggerSave } from '@/engine/store/saveSubject';
 import VirtualizedListbox from '@/shared/VirtualizedListbox';
-import { NumberField } from '../../NumberField';
+import { NumberField } from '@/shared/NumberField';
 import { useGridColumns } from '@/hooks/useGridColumns';
 import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
 import { reloadStoresFromDb } from '@/components/runners/Dialogue/children/broadcast';

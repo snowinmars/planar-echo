@@ -21,6 +21,7 @@ export type PrismIndexStartMessage = Readonly<{
 export const progressSteps = [
   'buildPrism', // value 0
   'decompileBiffs', // value 0
+  'tlk_json2ghost', // value: number in percent; params: {index: number}
   'ids_raw2json', // value: number in percent; params: {resourceName: string}
   'dlg_json2ghost_build', // value: number in percent
   'cre_raw2json', // here and below reportProgress params is : value: number in percent; params: {version: string, resourceName: string}

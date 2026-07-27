@@ -8,13 +8,12 @@ const getEmptyResponses = (index: number): NestedDlgResponse[] => {
       'has associated text',
       'terminates dialog',
     ],
-    textTlk: '...',
+    textRef: nothing(),
     trigger: nothing(),
     action: nothing(),
     nextDialog: nothing(),
     nextDialogState: nothing(),
-    journalId: nothing(),
-    journalTlk: nothing(),
+    journalRef: nothing(),
   };
 
   return [emptyResponse];

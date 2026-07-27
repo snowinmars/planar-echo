@@ -90,6 +90,7 @@
       "ini_raw2json": ".ini → json",
       "itm_raw2json": ".itm → json",
       "tlk_raw2json": ".tlk → json",
+      "tlk_json2ghost": ".tlk json → 고스트",
       "cre_json2ghost": ".cre json → 고스트",
       "dlg_json2ghost": ".dlg json → 고스트",
       "itm_json2ghost": ".itm json → 고스트"
@@ -186,6 +187,16 @@
       "pstee-two-columns": "원본처럼, 두 열로",
       "narrat": "Narrat 스타일",
       "mobile": "모바일"
+    },
+    "dialogueHistory": {
+      "title": "대화 기록",
+      "pageSize": "페이지당 줄 수",
+      "browsedPages": "브라우저에 표시할 페이지 수",
+      "storedPages": "하드 디스크에 저장된 페이지 수",
+      "unlimited": "무제한 저장",
+      "apply": "설정 적용",
+      "reset": "초기화",
+      "help": "대화 기록은 페이지 단위로 저장됩니다. 각 페이지에는 {{pageSize}}줄이 있습니다. 하드 디스크에 저장된 {{storedPages}}페이지 중 최근 {{browsedPages}}페이지가 화면에 로드됩니다.\n하드 디스크에 저장된 페이지가 많을수록 게임이 더 많은 디스크 공간을 차지하지만, 더 오래된 대화 기록까지 스크롤할 수 있습니다.\n하드 디스크에서 화면으로 로드되는 페이지가 많을수록 브라우저 부하가 커집니다."
     },
     "theme": {
       "title": "색상 테마"

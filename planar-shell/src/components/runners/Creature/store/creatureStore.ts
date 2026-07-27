@@ -3,16 +3,16 @@ import { nothing } from '@planar/shared';
 import { client } from '@/swagger/client/client.gen';
 import { postApiGhostCreature } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import { loadTranslatedCreature } from './creatureApi';
+import { loadUntranslatedCreature } from './creatureApi';
 
 import type {
   Maybe,
-  TranslatedCreatureV10,
-  TranslatedCreatureV11,
+  UntranslatedCreatureV10,
+  UntranslatedCreatureV11,
 } from '@planar/shared';
 import type { GameLanguage } from '@/swagger/client';
 
-type TranslatedCreature = TranslatedCreatureV10 | TranslatedCreatureV11;
+type UntranslatedCreature = UntranslatedCreatureV10 | UntranslatedCreatureV11;
 export type CreatureStore = Readonly<{
   serverUrl: string;
   ghostDir: string;
@@ -21,7 +21,7 @@ export type CreatureStore = Readonly<{
 
   creatures: string[];
   currentCreatureId: Maybe<string>;
-  translatedCreature: Maybe<TranslatedCreature>;
+  currentCreature: Maybe<UntranslatedCreature>;
 
   loadCreatures: () => Promise<void>;
   loadCreature: (creatureId: string) => Promise<void>;
@@ -36,7 +36,7 @@ export const useCreatureStore = create<CreatureStore>((set, get) => ({
 
   creatures: [],
   currentCreatureId: nothing(),
-  translatedCreature: nothing(),
+  currentCreature: nothing(),
 
   loadCreatures: async (): Promise<void> => {
     set({
@@ -82,25 +82,23 @@ export const useCreatureStore = create<CreatureStore>((set, get) => ({
       const {
         serverUrl,
         ghostDir,
-        gameLanguage,
       } = get();
-      const t = await loadTranslatedCreature({
+      const t = await loadUntranslatedCreature({
         serverUrl,
         ghostDir,
-        gameLanguage,
         creatureId,
       });
 
       set({
         currentCreatureId: creatureId,
-        translatedCreature: t,
+        currentCreature: t,
       });
     }
     catch (e: unknown) {
       console.error(e);
       set({
         currentCreatureId: nothing(),
-        translatedCreature: nothing(),
+        currentCreature: nothing(),
       });
     }
     finally {
@@ -112,6 +110,6 @@ export const useCreatureStore = create<CreatureStore>((set, get) => ({
 
   disposeCreature: () => set({
     currentCreatureId: nothing(),
-    translatedCreature: nothing(),
+    currentCreature: nothing(),
   }),
 }));

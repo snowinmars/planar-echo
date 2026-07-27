@@ -3,9 +3,9 @@ import { nothing } from '@planar/shared';
 import { client } from '@/swagger/client/client.gen';
 import { postApiGhostItem } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import { loadTranslatedItem } from './itemApi';
+import { loadUntranslatedItem } from './itemApi';
 
-import type { Maybe, TranslatedItem } from '@planar/shared';
+import type { Maybe, UntranslatedItem } from '@planar/shared';
 import type { GameLanguage } from '@/swagger/client';
 
 export type ItemStore = Readonly<{
@@ -16,7 +16,7 @@ export type ItemStore = Readonly<{
 
   items: string[];
   currentItemId: Maybe<string>;
-  translatedItem: Maybe<TranslatedItem>;
+  currentItem: Maybe<UntranslatedItem>;
 
   loadItems: () => Promise<void>;
   loadItem: (itemId: string) => Promise<void>;
@@ -31,7 +31,7 @@ export const useItemStore = create<ItemStore>((set, get) => ({
 
   items: [],
   currentItemId: nothing(),
-  translatedItem: nothing(),
+  currentItem: nothing(),
 
   loadItems: async (): Promise<void> => {
     set({
@@ -77,25 +77,23 @@ export const useItemStore = create<ItemStore>((set, get) => ({
       const {
         serverUrl,
         ghostDir,
-        gameLanguage,
       } = get();
-      const t = await loadTranslatedItem({
+      const t = await loadUntranslatedItem({
         serverUrl,
         ghostDir,
-        gameLanguage,
         itemId,
       });
 
       set({
         currentItemId: itemId,
-        translatedItem: t,
+        currentItem: t,
       });
     }
     catch (e: unknown) {
       console.error(e);
       set({
         currentItemId: nothing(),
-        translatedItem: nothing(),
+        currentItem: nothing(),
       });
     }
     finally {
@@ -107,6 +105,6 @@ export const useItemStore = create<ItemStore>((set, get) => ({
 
   disposeItem: () => set({
     currentItemId: nothing(),
-    translatedItem: nothing(),
+    currentItem: nothing(),
   }),
 }));

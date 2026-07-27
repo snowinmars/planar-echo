@@ -3,5 +3,18 @@ export { getDbDialogue, setDbDialogue } from './dialogues';
 export { getDbItem, setDbItem } from './items';
 export { getDbNarrative, setDbNarrative } from './narrative';
 export { getDbCharacters, setDbCharacters } from './characters';
+export {
+  appendGameHistory,
+  applyGameHistoryStorageLimit,
+  gameHistoryChanged$,
+  getGameHistoryPage,
+} from './gameHistory';
 export type { NarrativeState } from './narrative';
 export type { CharactersState } from './characters';
+export type {
+  GameHistoryChange,
+  GameHistoryEntry,
+  GameHistoryEvent,
+  GameHistoryKind,
+  GameHistoryPage,
+} from './gameHistory.types';

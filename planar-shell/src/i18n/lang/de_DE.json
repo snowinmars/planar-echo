@@ -90,6 +90,7 @@
       "ini_raw2json": ".ini nach json",
       "itm_raw2json": ".itm nach json",
       "tlk_raw2json": ".tlk nach json",
+      "tlk_json2ghost": ".tlk json zu Ghost",
       "cre_json2ghost": ".cre json zu Ghost",
       "dlg_json2ghost": ".dlg json zu Ghost",
       "itm_json2ghost": ".itm json zu Ghost"
@@ -186,6 +187,16 @@
       "pstee-two-columns": "Wie im Original, aber zweispaltig",
       "narrat": "Narrat-ähnlich",
       "mobile": "Mobil"
+    },
+    "dialogueHistory": {
+      "title": "Dialogverlauf",
+      "pageSize": "Zeilen pro Seite",
+      "browsedPages": "Seiten im Browser",
+      "storedPages": "Seiten auf der Festplatte",
+      "unlimited": "Unbegrenzt speichern",
+      "apply": "Einstellungen übernehmen",
+      "reset": "Zurücksetzen",
+      "help": "Der Dialogverlauf wird in Seiten gespeichert. Jede Seite enthält {{pageSize}} Zeilen. Auf dem Bildschirm werden die letzten {{browsedPages}} Seiten von {{storedPages}} auf der Festplatte gespeicherten Seiten geladen.\nJe mehr Seiten auf der Festplatte gespeichert werden, desto mehr Speicherplatz beansprucht das Spiel, aber desto weiter kann man in den Dialogverlauf zurückblättern.\nJe mehr Seiten von der Festplatte auf den Bildschirm geladen werden, desto höher ist die Belastung des Browsers."
     },
     "theme": {
       "title": "Farbschema"

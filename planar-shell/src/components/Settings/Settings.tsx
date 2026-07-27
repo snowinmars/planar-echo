@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import ThemeSwitcher from './children/ThemeSwitcher';
 import LanguageSwitcher from './children/LanguageSwitcher';
 import DialogueRendererSwitcher from './children/DialogueRendererSwitcher';
+import DialogueHistorySettings from './children/DialogueHistorySettings/DialogueHistorySettings';
 import DialogueMarks from './children/DialogueMarks';
 import LocalData from './children/LocalData';
 import BackendUrl from './children/BackendUrl';
@@ -62,6 +63,9 @@ const Settings: FC = () => {
         </Grid>
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
           <DialogueRendererSwitcher />
+        </Grid>
+        <Grid size={{ md: 3, sm: 6, xs: 12 }}>
+          <DialogueHistorySettings />
         </Grid>
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
           <DialogueMarks />

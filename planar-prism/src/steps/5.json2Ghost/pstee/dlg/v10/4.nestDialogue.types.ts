@@ -10,8 +10,8 @@ export type NestedDlgState = Readonly<{
   index: number;
   responses: NestedDlgResponse[];
   trigger: Maybe<NestedDlgFunction>;
-  action: Maybe<string>; // this is action, that is not presented in source code, so it can be set only manually
-  textTlk: Maybe<string>;
+  action: Maybe<string>; // this action prop is not presented in source code, so it can be set only manually, if required
+  textRef: number;
 }>;
 
 export type NestedDlgResponse = Readonly<{
@@ -21,9 +21,8 @@ export type NestedDlgResponse = Readonly<{
   action: Maybe<NestedDlgFunction>;
   nextDialog: Maybe<string>;
   nextDialogState: Maybe<number>;
-  textTlk: Maybe<string>;
-  journalId: Maybe<number>;
-  journalTlk: Maybe<string>;
+  textRef: Maybe<number>;
+  journalRef: Maybe<number>;
 }>;
 
 export type NestedDlg = Readonly<{

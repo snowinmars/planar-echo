@@ -1,5 +1,5 @@
 import { getCurrentDialogues } from '../Creature/store/creatureApi';
-import { loadTranslatedDialogue } from '../Dialogue/store/dialogueApi';
+import { dialogueRepository } from '../Dialogue/store/dialogueRepository';
 import { pickMatchingConstructorStateId } from '../Dialogue/store/helpers';
 import { getZustandNarrative, getZustandCharacter } from '@/engine/store/worldStores';
 
@@ -21,7 +21,6 @@ export const resolveCreatureDialogue = async ({
   creatureId,
   serverUrl,
   ghostDir,
-  gameLanguage,
 }: ResolveCreatureDialogueParams): Promise<ResolvedCreatureDialogue> => {
   const narrative = getZustandNarrative();
   const character = getZustandCharacter();
@@ -33,11 +32,10 @@ export const resolveCreatureDialogue = async ({
   const dialogueIds = await getCurrentDialogues(serverUrl, creatureId);
 
   for (const dialogueId of dialogueIds) {
-    const tree = await loadTranslatedDialogue({
+    const tree = await dialogueRepository.loadDialogueTree({
       dialogueId,
       serverUrl,
       ghostDir,
-      gameLanguage,
       narrative,
       character,
     });

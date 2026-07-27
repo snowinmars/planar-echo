@@ -22,6 +22,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const decompiledBiffCacheJson = normalize(join(decompiledBiffRoot, 'output.json'));
 
   const jsonRoot       = normalize(join(ghostDir, 'json'));
+  const jsonTlk        = normalize(join(jsonRoot, 'tlk'));
   const jsonDialogues  = normalize(join(jsonRoot, 'dialogues'));
   const jsonItems      = normalize(join(jsonRoot, 'items'));
   const jsonIds        = normalize(join(jsonRoot, 'ids'));
@@ -30,6 +31,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const jsonEffects    = normalize(join(jsonRoot, 'effects'));
 
   const ghostRoot      = normalize(join(ghostDir , 'ghost'));
+  const ghostTlk       = normalize(join(ghostRoot, 'tlk'));
   const ghostDialogues = normalize(join(ghostRoot, 'dialogues'));
   const ghostItems     = normalize(join(ghostRoot, 'items'));
   const ghostIds       = normalize(join(ghostRoot, 'ids'));
@@ -56,6 +58,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
       },
       json: {
         root     : jsonRoot,
+        tlk      : jsonTlk,
         dialogues: jsonDialogues,
         items    : jsonItems,
         ids      : jsonIds,
@@ -64,6 +67,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         effects  : jsonEffects,
       },
       saveJson: {
+        tlk: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonTlk, resourceName), entry, asIs),
         dialogues: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonDialogues, resourceName), entry, asIs),
         items    : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonItems    , resourceName), entry, asIs),
         ids      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonIds      , resourceName), entry, asIs),
@@ -73,6 +77,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
       },
       ghost: {
         root     : ghostRoot,
+        tlk      : ghostTlk,
         dialogues: ghostDialogues,
         items    : ghostItems,
         ids      : ghostIds,
@@ -81,6 +86,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         effects  : ghostEffects,
       },
       saveGhost: {
+        tlk: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostTlk, resourceName), entry, asIs),
         dialogues: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostDialogues, resourceName), entry, asIs),
         items    : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostItems    , resourceName), entry, asIs),
         ids      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostIds      , resourceName), entry, asIs),
@@ -97,12 +103,14 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   await mkdirsIfNotExists([
     paths.ghostDir.root,
     paths.ghostDir.decompiledBiff.root,
+    paths.ghostDir.json.tlk,
     paths.ghostDir.json.dialogues,
     paths.ghostDir.json.items,
     paths.ghostDir.json.ids,
     paths.ghostDir.json.inis,
     paths.ghostDir.json.creatures,
     paths.ghostDir.json.effects,
+    paths.ghostDir.ghost.tlk,
     paths.ghostDir.ghost.dialogues,
     paths.ghostDir.ghost.items,
     paths.ghostDir.ghost.ids,

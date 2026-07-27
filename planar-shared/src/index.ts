@@ -6,7 +6,6 @@ export { just, maybe, nothing, isNothing } from './maybe.js';
 export { objectEntries, objectKeys, objectValues } from './objects.js';
 export { progressSteps } from './prismIndexStartMessage.js';
 export { registerNpcDialogue } from './dialogueEngine/registerNpcDialogue.js';
-export { translateNpcDialogue } from './dialogueEngine/translateNpcDialogue.js';
 export { dialogueToCreatures, creatureToDialogues } from './resourceMappers/creatureToDialogue.js';
 export { dialogueToCreatureOrItem } from './resourceMappers/dialogueToCreatureOrItem.js';
 export { dialogueToItems, itemToDialogues } from './resourceMappers/itemToDialogues.js';
@@ -67,36 +66,23 @@ export type {
 } from './dialogueEngine/enums/variable.js';
 export type { WhoId } from './dialogueEngine/enums/who.js';
 export type {
-  DevGameLanguage,
   EngineInstructionPlaySound,
   EngineInstruction,
   ConditionCallback,
   ActionCallback,
   ArgsProps,
-  UntranslatedNpcDialogue,
-  UntranslatedLabel,
-  UntranslatedSay,
-  UntranslatedResponse,
-  UntranslatedJump,
+  NpcDialogue,
+  DialogueLabel,
+  DialogueSay,
+  DialogueResponse,
+  DialogueJump,
 } from './dialogueEngine/registerNpcDialogue.types.js';
-export type {
-  TranslatedNpcDialogue,
-  TranslatedLabel,
-  TranslatedSay,
-  TranslatedResponse,
-  TranslatedJump,
-} from './dialogueEngine/translateNpcDialogue.types.js';
 export type {
   UntranslatedCreatureV10,
   UntranslatedCreatureV11,
 } from './creatureEngine/untranslatedCreature.types.js';
 export type {
-  TranslatedCreatureV10,
-  TranslatedCreatureV11,
-} from './creatureEngine/translatedCreature.types.js';
-export type {
   UntranslatedItem,
   UntranslatedAbility,
   UntranslatedEffect,
 } from './itemEngine/untranslatedItem.types.js';
-export type { TranslatedItem } from './itemEngine/translatedItem.types.js';

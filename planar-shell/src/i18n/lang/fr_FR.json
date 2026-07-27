@@ -90,6 +90,7 @@
       "ini_raw2json": ".ini vers json",
       "itm_raw2json": ".itm vers json",
       "tlk_raw2json": ".tlk vers json",
+      "tlk_json2ghost": ".tlk json vers ghost",
       "cre_json2ghost": ".cre json vers ghost",
       "dlg_json2ghost": ".dlg json vers ghost",
       "itm_json2ghost": ".itm json vers ghost"
@@ -186,6 +187,16 @@
       "pstee-two-columns": "Comme dans l'original, mais sur deux colonnes",
       "narrat": "Style Narrat",
       "mobile": "Mobile"
+    },
+    "dialogueHistory": {
+      "title": "Historique des dialogues",
+      "pageSize": "Lignes par page",
+      "browsedPages": "Pages dans le navigateur",
+      "storedPages": "Pages sur le disque dur",
+      "unlimited": "Stocker sans limite",
+      "apply": "Appliquer les paramètres",
+      "reset": "Réinitialiser",
+      "help": "L'historique des dialogues est enregistré par pages. Chaque page contient {{pageSize}} lignes. Les {{browsedPages}} dernières pages parmi les {{storedPages}} stockées sur le disque dur sont chargées à l'écran.\nPlus il y a de pages stockées sur le disque dur, plus le jeu consomme d'espace disque, mais plus vous pouvez remonter loin dans l'historique.\nPlus il y a de pages chargées à l'écran depuis le disque dur, plus la charge sur le navigateur est élevée."
     },
     "theme": {
       "title": "Thème de couleurs"

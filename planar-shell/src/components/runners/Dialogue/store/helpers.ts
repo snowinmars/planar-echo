@@ -1,31 +1,16 @@
 import type {
-  GameLanguage,
-  TranslatedNpcDialogue,
-  TranslatedSay,
+  NpcDialogue,
   StateId,
-  TranslatedResponse,
   ResponseId,
   Maybe,
 } from '@planar/shared';
-import { nothing } from '@planar/shared';
+import { isNothing, just, nothing } from '@planar/shared';
 
-export const getStateIds = (tree: Maybe<TranslatedNpcDialogue>): StateId[] => {
+export type DisposeFunction = () => void;
+
+export const getStateIds = (tree: Maybe<NpcDialogue>): StateId[] => {
   if (!tree) return [];
   return [...tree.tree.keys()];
-};
-
-export const getSaysResponses = (tree: TranslatedNpcDialogue, gameLanguage: GameLanguage, currentStateId: StateId): Readonly<{
-  says: TranslatedSay[];
-  responses: TranslatedResponse[];
-}> => {
-  const state = tree.tree.get(currentStateId)!;
-  const says = state.says.get(gameLanguage)!;
-  const responses = state.responses.get(gameLanguage)!;
-
-  return {
-    says,
-    responses,
-  };
 };
 
 export const getExternDialogueId = (responseId: ResponseId, targetStateId: StateId): Maybe<string> => {
@@ -39,13 +24,13 @@ export const getExternDialogueId = (responseId: ResponseId, targetStateId: State
 
 export const isDestructor = (stateId: StateId) => stateId.endsWith('destructor');
 
-const constructorStateIdsByWeight = (tree: TranslatedNpcDialogue): StateId[] => (
+const constructorStateIdsByWeight = (tree: NpcDialogue): StateId[] => (
   [...tree.constructorsWeights.entries()]
     .sort(([, weightA], [, weightB]) => weightA - weightB)
     .map(([stateId]) => stateId)
 );
 
-export const pickMatchingConstructorStateId = (tree: TranslatedNpcDialogue): Maybe<StateId> => {
+export const pickMatchingConstructorStateId = (tree: NpcDialogue): Maybe<StateId> => {
   for (const stateId of constructorStateIdsByWeight(tree)) {
     const label = tree.tree.get(stateId);
     if (label?.args?.onlyIf?.()) return stateId;
@@ -53,8 +38,17 @@ export const pickMatchingConstructorStateId = (tree: TranslatedNpcDialogue): May
   return nothing();
 };
 
-export const chooseStartingStateId = (tree: TranslatedNpcDialogue): StateId => {
+export const chooseStartingStateId = (tree: NpcDialogue): StateId => {
   const matched = pickMatchingConstructorStateId(tree);
   if (matched) return matched;
-  return tree.tree.keys().next().value!;
+  const firstStateId = tree.tree.keys().next().value!;
+  return firstStateId;
 };
+
+export const mapTlkRefs = (entries: Readonly<{ ref: Maybe<number> }>[]): number[] => (
+  [
+    ...new Set<number>(entries
+      .filter(x => !isNothing(x.ref))
+      .map(x => just(x.ref))),
+  ]
+);

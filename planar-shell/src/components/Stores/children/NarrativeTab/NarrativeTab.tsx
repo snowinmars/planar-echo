@@ -5,13 +5,13 @@ import { getZustandNarrative } from '@/engine/store/worldStores';
 import { triggerSave } from '@/engine/store/saveSubject';
 import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
 import { reloadStoresFromDb } from '@/components/runners/Dialogue/children/broadcast';
+import { NumberField } from '@/shared/NumberField';
+import { useTranslation } from 'react-i18next';
+import { useGridColumns } from '@/hooks/useGridColumns';
 
 import type { NumberVariableId, BooleanVariableId } from '@planar/shared';
 import type { CellComponentProps } from 'react-window';
 import type { ReactElement, FC } from 'react';
-import { NumberField } from '../../NumberField';
-import { useTranslation } from 'react-i18next';
-import { useGridColumns } from '@/hooks/useGridColumns';
 
 import styles from './NarrativeTab.module.scss';
 

@@ -51,7 +51,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
   };
 
   return [{
-    regex: /(!)?l\.inparty\((.*?)\)/,
+    regex: /(!)?inparty\("?(.*?)"?\)/,
     onMatch: ([line, not, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       const who = notMe(whoId);
@@ -60,7 +60,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       return `${not ? '!' : ''}l.isNpcInParty('${who}')`; // InParty("variable")
     },
   }, {
-    regex: /(!)?l\.nearbydialog\((.*?)\)/,
+    regex: /(!)?nearbydialog\("?(.*?)"?\)/,
     onMatch: ([line, not, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       const who = notMe(whoId);
@@ -429,7 +429,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       return `l.getTimesTalkedToNpc() === ${amount}`; // NumTimesTalkedTo(0)
     },
   }, {
-    regex: /(!)?exists\((.*?)\)/,
+    regex: /(!)?exists\("?(.*?)"?\)/,
     onMatch: ([line, not, whoId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       const who = notMe(whoId);
@@ -983,7 +983,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       return `l.polymorph({ whoId: '${myself}', target: '${target}' })`; // Polymorph(nameless_one_severed_arm)
     },
   }, {
-    regex: /smallwait\((\d+)\)/,
+    regex: /(?:small)?wait\((\d+)\)/,
     onMatch: ([line, seconds]) => {
       if (!seconds) throw new Error(`Wrong line syntax: cannot find 'seconds' in '${line}'`);
 
@@ -1040,29 +1040,22 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     },
   }, {
     regex: /fixengineroom\(\)/,
-    onMatch: () => {
-      return `l.fixEngineRoom()`; // FixEngineRoom()
-    },
+    onMatch: () => `l.fixEngineRoom()`, // FixEngineRoom()
   }, {
     regex: /showfirsttimehelp\(\)/,
-    onMatch: () => {
-      return `l.showFirstTimeHelp()`; // ShowFirstTimeHelp()
-    },
+    onMatch: () => `l.showFirstTimeHelp()`, // ShowFirstTimeHelp()
   }, {
     regex: /endcutscenemode\(\)/,
-    onMatch: () => {
-      return `l.endCutsceneMode()`; // EndCutsceneMode()
-    },
+    onMatch: () => `l.endCutsceneMode()`, // EndCutsceneMode()
   }, {
     regex: /recoil\(\)/,
-    onMatch: () => {
-      return `l.recoil()`; // Recoil()
-    },
+    onMatch: () => `l.recoil()`, // Recoil()
   }, {
     regex: /explore\(\)/,
-    onMatch: () => {
-      return `l.explore()`; // Explore()
-    },
+    onMatch: () => `l.explore()`, // Explore()
+  }, {
+    regex: /enemy\(\)/,
+    onMatch: () => `l.enemy()`, // Enemy()
   }, {
     regex: /savegame\((\d+)\)/,
     onMatch: ([line, slot]) => {

@@ -1,20 +1,15 @@
 import { client } from '@/swagger/client/client.gen';
 import {
   postApiGhostCreatureByCreatureIdSkeleton,
-  postApiGhostCreatureByCreatureIdByGameLanguage,
   getApiMapCreatureToDialoguesByCreatureId,
 } from '@/swagger/client';
 import { getDbCreature, setDbCreature } from '@/shared/indexedDb';
 
 import type {
-  GameLanguage,
-  TranslatedCreatureV10,
-  TranslatedCreatureV11,
   UntranslatedCreatureV10,
   UntranslatedCreatureV11,
 } from '@planar/shared';
 
-type TranslatedCreature = TranslatedCreatureV10 | TranslatedCreatureV11;
 type UntranslatedCreature = UntranslatedCreatureV10 | UntranslatedCreatureV11;
 type Skeleton = () => UntranslatedCreature;
 export const getSkeleton = async (serverUrl: string, ghostDir: string, creatureId: string): Promise<string> => {
@@ -34,55 +29,30 @@ export const getSkeleton = async (serverUrl: string, ghostDir: string, creatureI
   }
 };
 
-type Translation = (untranslatedNpcDialogue: UntranslatedCreature) => TranslatedCreature;
-export const getTranslation = async (serverUrl: string, ghostDir: string, creatureId: string, gameLanguage: GameLanguage): Promise<string> => {
-  const translationResponse = await postApiGhostCreatureByCreatureIdByGameLanguage({
-    client,
-    baseURL: serverUrl,
-    body: { ghostDir: ghostDir },
-    path: { creatureId, gameLanguage },
-  });
-  if (translationResponse.error) {
-    console.error(translationResponse.error);
-    throw new Error(translationResponse.error.error.message);
-  }
-  else {
-    return translationResponse.data.data.content;
-  }
-};
-
-export type LoadTranslatedCreatureProps = Readonly<{
+export type LoadUntranslatedCreatureProps = Readonly<{
   creatureId: string;
   serverUrl: string;
   ghostDir: string;
-  gameLanguage: GameLanguage;
 }>;
-export const loadTranslatedCreature = async ({
+export const loadUntranslatedCreature = async ({
   creatureId,
   serverUrl,
   ghostDir,
-  gameLanguage,
-}: LoadTranslatedCreatureProps,
-): Promise<TranslatedCreature> => {
+}: LoadUntranslatedCreatureProps,
+): Promise<UntranslatedCreature> => {
   const dbCreature = await getDbCreature(creatureId);
   let skeleton: Skeleton;
-  let translation: Translation;
 
   if (dbCreature) {
     skeleton = ((0, eval)(dbCreature.skeleton));
-    translation = ((0, eval)(dbCreature.translation));
   }
   else {
     const skeletonContent = await getSkeleton(serverUrl, ghostDir, creatureId);
-    const translationContent = await getTranslation(serverUrl, ghostDir, creatureId, gameLanguage);
-    await setDbCreature(creatureId, skeletonContent, translationContent);
+    await setDbCreature(creatureId, skeletonContent);
     skeleton = ((0, eval)(skeletonContent));
-    translation = ((0, eval)(translationContent));
   }
 
-  const untranslated = skeleton();
-  const translated = translation(untranslated);
-  return translated;
+  return skeleton();
 };
 
 export const getCurrentDialogues = async (serverUrl: string, creatureId: string): Promise<string[]> => {

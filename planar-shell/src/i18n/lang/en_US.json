@@ -90,6 +90,7 @@
       "ini_raw2json": ".ini to json",
       "itm_raw2json": ".itm to json",
       "tlk_raw2json": ".tlk to json",
+      "tlk_json2ghost": ".tlk json to ghost",
       "cre_json2ghost": ".cre json to ghost",
       "dlg_json2ghost": ".dlg json to ghost",
       "itm_json2ghost": ".itm json to ghost"
@@ -186,6 +187,16 @@
       "pstee-two-columns": "As original, but in two columns",
       "narrat": "Narrat-like",
       "mobile": "Mobile"
+    },
+    "dialogueHistory": {
+      "title": "Dialogue History",
+      "pageSize": "Lines per page",
+      "browsedPages": "Pages in browser",
+      "storedPages": "Pages on hard disk",
+      "unlimited": "Store without limit",
+      "apply": "Apply settings",
+      "reset": "Reset",
+      "help": "Dialogue history is stored in pages. Each page has {{pageSize}} lines. The last {{browsedPages}} pages out of {{storedPages}} stored on the hard disk are loaded onto the screen.\nThe more pages stored on the hard disk, the more disk space the game consumes, but the further back you can scroll through dialogue history.\nThe more pages loaded from the hard disk onto the screen, the higher the load on the browser."
     },
     "theme": {
       "title": "Color theme"

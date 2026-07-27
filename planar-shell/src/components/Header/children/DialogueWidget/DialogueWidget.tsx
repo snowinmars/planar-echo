@@ -35,7 +35,8 @@ const Dialogues: FC<WithClassName> = ({ className }) => {
       value={currentDialogueId ?? ''}
       onChange={(_, dialogueId) => {
         if (isNothing(dialogueId)) throw new Error('Dialogue id cannot be empty here');
-        actions?.loadDialogue(dialogueId!).catch(e => console.error(e));
+        if (actions) actions.loadDialogue(dialogueId).catch(e => console.error(e));
+        else console.warn('Widget is not working properly: no actions were found');
       }}
       loading={loading}
       disabled={loading || !actions}
@@ -86,7 +87,8 @@ const States: FC<WithClassName> = ({ className }) => {
       value={currentStateId ?? ''}
       onChange={(_, stateId) => {
         if (!stateId) throw new Error('State id cannot be empty here');
-        actions?.setCurrentStateId(stateId as StateId);
+        if (actions) actions.setCurrentStateId(stateId as StateId);
+        else console.warn('Widget is not working properly: no actions were found');
       }}
       loading={loading}
       disabled={loading || !currentDialogueId || !actions}

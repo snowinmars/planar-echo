@@ -1,10 +1,9 @@
-import type { GameLanguage } from '../gameLanguage.js';
 import type { Maybe } from '../maybe.js';
 import type { StateId } from './enums/state.js';
 // import type { SoundId } from './enums/sound.js';
 import type { ResponseId } from './enums/response.js';
-
-export type DevGameLanguage = GameLanguage | 'dev';
+import type { WhoId } from './enums/who.js';
+import type { ItemId } from './enums/item.js';
 
 export type EngineInstructionPlaySound = Readonly<{
   id: 'playSound';
@@ -33,31 +32,35 @@ export type ArgsProps = Readonly<{
 }>
 ;
 
-export type UntranslatedNpcDialogue = Readonly<{
-  tree: Map<StateId, UntranslatedLabel>;
+export type NpcDialogue = Readonly<{
+  tree: Map<StateId, DialogueLabel>;
   constructorsWeights: Map<StateId, number>;
 }>
 ;
-export type UntranslatedLabel = Readonly<{
+export type DialogueLabel = Readonly<{
   stateId: StateId;
   args: Maybe<ArgsProps>;
-  says: Map<DevGameLanguage, UntranslatedSay[]>;
-  responses: Map<DevGameLanguage, UntranslatedResponse[]>;
-  jump: Maybe<UntranslatedJump>;
+  says: DialogueSay[];
+  responses: DialogueResponse[];
+  jump: Maybe<DialogueJump>;
 }>
 ;
-export type UntranslatedSay = Readonly<{
+export type DialogueSay = Readonly<{
+  textRef: number;
+  whoId: WhoId | ItemId;
+  whoIdRef: number;
   sayId: string;
   args: Maybe<ArgsProps>;
 }>
 ;
-export type UntranslatedResponse = Readonly<{
+export type DialogueResponse = Readonly<{
+  responseRef: Maybe<number>;
   responseId: ResponseId;
   jumpTo: StateId;
   args: Maybe<ArgsProps>;
 }>
 ;
-export type UntranslatedJump = Readonly<{
+export type DialogueJump = Readonly<{
   jumpTo: StateId;
   args: Maybe<ArgsProps>;
 }>

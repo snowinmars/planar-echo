@@ -39,6 +39,7 @@ const planarLocalStorage = {
 
   has: (key: string): boolean => localStorage.getItem(buildKey(key)) !== null,
 
+  // TODO [snow]: entype key
   onKeyChange: (key: string): Observable<string> => {
     const crossTab$ = fromEvent<StorageEvent>(window, 'storage').pipe(
       filter(e => e.key === buildKey(key)),

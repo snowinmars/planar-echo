@@ -1,12 +1,11 @@
 import { client } from '@/swagger/client/client.gen';
 import {
   postApiGhostItemByItemIdSkeleton,
-  postApiGhostItemByItemIdByGameLanguage,
   getApiMapItemToDialoguesByItemId,
 } from '@/swagger/client';
 import { getDbItem, setDbItem } from '@/shared/indexedDb';
 
-import type { GameLanguage, TranslatedItem, UntranslatedItem } from '@planar/shared';
+import type { UntranslatedItem } from '@planar/shared';
 
 type Skeleton = () => UntranslatedItem;
 export const getSkeleton = async (serverUrl: string, ghostDir: string, itemId: string): Promise<string> => {
@@ -26,55 +25,30 @@ export const getSkeleton = async (serverUrl: string, ghostDir: string, itemId: s
   }
 };
 
-type Translation = (untranslatedNpcDialogue: UntranslatedItem) => TranslatedItem;
-export const getTranslation = async (serverUrl: string, ghostDir: string, itemId: string, gameLanguage: GameLanguage): Promise<string> => {
-  const translationResponse = await postApiGhostItemByItemIdByGameLanguage({
-    client,
-    baseURL: serverUrl,
-    body: { ghostDir: ghostDir },
-    path: { itemId, gameLanguage },
-  });
-  if (translationResponse.error) {
-    console.error(translationResponse.error);
-    throw new Error(translationResponse.error.error.message);
-  }
-  else {
-    return translationResponse.data.data.content;
-  }
-};
-
-export type LoadTranslatedItemProps = Readonly<{
+export type LoadUntranslatedItemProps = Readonly<{
   itemId: string;
   serverUrl: string;
   ghostDir: string;
-  gameLanguage: GameLanguage;
 }>;
-export const loadTranslatedItem = async ({
+export const loadUntranslatedItem = async ({
   itemId,
   serverUrl,
   ghostDir,
-  gameLanguage,
-}: LoadTranslatedItemProps,
-): Promise<TranslatedItem> => {
+}: LoadUntranslatedItemProps,
+): Promise<UntranslatedItem> => {
   const dbItem = await getDbItem(itemId);
   let skeleton: Skeleton;
-  let translation: Translation;
 
   if (dbItem) {
     skeleton = ((0, eval)(dbItem.skeleton));
-    translation = ((0, eval)(dbItem.translation));
   }
   else {
     const skeletonContent = await getSkeleton(serverUrl, ghostDir, itemId);
-    const translationContent = await getTranslation(serverUrl, ghostDir, itemId, gameLanguage);
-    await setDbItem(itemId, skeletonContent, translationContent);
+    await setDbItem(itemId, skeletonContent);
     skeleton = ((0, eval)(skeletonContent));
-    translation = ((0, eval)(translationContent));
   }
 
-  const untranslated = skeleton();
-  const translated = translation(untranslated);
-  return translated;
+  return skeleton();
 };
 
 export const getCurrentDialogues = async (serverUrl: string, itemId: string): Promise<string[]> => {

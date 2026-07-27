@@ -603,6 +603,10 @@ const buildItemSkeletonV11 = (itm: GhostItemV10, discover: DiscoverNext): string
   writer.writeLine(`const item: UntranslatedItem = {`, 2);
 
   writer.writeLine(`version: '${itm.header.version}',`, 4);
+  writer.writeLine(`unidentifiedNameRef: '${itm.header.unidentifiedNameRef}',`, 4);
+  writer.writeLine(`identifiedNameRef: '${itm.header.identifiedNameRef}',`, 4);
+  writer.writeLine(`unidentifiedDescriptionRef: '${itm.header.unidentifiedDescriptionRef}',`, 4);
+  writer.writeLine(`identifiedDescriptionRef: '${itm.header.identifiedDescriptionRef}',`, 4);
   writer.writeLine(`dropSound: '${itm.header.dropSound ?? null}',`, 4);
   writeFlags(
     writer,
