@@ -28,6 +28,7 @@
 | Коммит оригинальных игровых файлов | Запрещено |
 | void foo() | foo().catch((e: unknown) => console.error(e)) |
 | Subscribe without unsubscription | Always unsubscribe when subscribe |
+| x++ or ++x outside of for loop | Use infix operators to avoid misreading possibilities |
 
 ## Монорепозиторий
 
@@ -151,7 +152,7 @@
 - `i18n/` - en_US, ru_RU, cs_CZ, de_DE, fr_FR, ko_KR, pl_PL
 - Default backend URL: `http://localhost:3003`
 
-Рендереры диалогов (localStorage `dialogueRenderer`): pstee, pstee-two-columns, narrat, mobile.
+Рендереры диалогов (localStorage `dialogueRenderer`): pstee, pstee-two-columns, narrat.
 
 ### planar-ghost/
 

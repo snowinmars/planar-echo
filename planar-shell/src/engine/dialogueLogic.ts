@@ -122,7 +122,7 @@ export const createDialogueLogic = (stores: DialogueLogicStores): DialogueLogic 
       return;
     },
     countPartyMembers: () => {
-      return 0;
+      return 1;
     },
     setPortalCursor: ({ locationId, portalId, reset }) => {
       console.log({ locationId, portalId, reset });

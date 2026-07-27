@@ -10,8 +10,7 @@ import {
 } from '@/shared/gameHistorySettings';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { dialogueStoreId } from './di/runtime.types';
-import { sourceId } from './tlkStore.types';
-import { mapTlkRefs, type DisposeFunction } from './helpers';
+import { mapTlkRefs } from './helpers';
 import { Subscription } from 'rxjs';
 
 import type {
@@ -22,6 +21,7 @@ import type { GameHistoryStore } from './gameHistoryStore.types';
 import type { StateCreator } from 'zustand/vanilla';
 import type { DialogueRuntime } from './di/runtime.types';
 import type { TlkStore } from './tlkStore.types';
+import type { DisposeFunction } from './helpers';
 
 const getMaxEntries = (): number => (
   // TODO [snow]: wrong: use indexedDb
@@ -58,12 +58,8 @@ export const createGameHistoryStore = (runtime: DialogueRuntime): StateCreator<G
 
     const { entries } = get();
 
-    // this promise starts tlk ref loading, that will flick ui state later on
     runtime.getStore<TlkStore>(dialogueStoreId.tlk).getState()
-      .loadTlkRefs({
-        tlkRefs: mapTlkRefs(entries.map(x => ({ ref: x.tlkRef }))),
-        sourceId: sourceId.gameHistory,
-      })
+      .loadTlkRefs(mapTlkRefs(entries.map(x => ({ ref: x.tlkRef }))))
       .catch(e => console.error(e));
   };
 
@@ -178,12 +174,8 @@ export const createGameHistoryStore = (runtime: DialogueRuntime): StateCreator<G
 
         const { entries } = get();
 
-        // this promise starts tlk ref loading, that will flick ui state later on
         runtime.getStore<TlkStore>(dialogueStoreId.tlk).getState()
-          .loadTlkRefs({
-            tlkRefs: mapTlkRefs(entries.map(x => ({ ref: x.tlkRef }))),
-            sourceId: sourceId.gameHistory,
-          })
+          .loadTlkRefs(mapTlkRefs(entries.map(x => ({ ref: x.tlkRef }))))
           .catch(e => console.error(e));
       }),
     );
@@ -217,11 +209,6 @@ export const createGameHistoryStore = (runtime: DialogueRuntime): StateCreator<G
 
     append: async (events): Promise<void> => await appendGameHistory(...events),
     activateView: async (): Promise<void> => await loadNewest(),
-
-    deactivateView: (): void => {
-      const release = runtime.getStore<TlkStore>(dialogueStoreId.tlk).getState().release;
-      release(sourceId.gameHistory);
-    },
 
     loadNewest,
     loadOlder,

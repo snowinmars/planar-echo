@@ -1,14 +1,11 @@
 import { useEffect, useRef } from 'react';
 import Typography from '@mui/material/Typography';
-import Loading from '@/components/Loading';
+import Skeleton from '@mui/material/Skeleton';
 import {
   useGameHistoryStore,
   useTlkStore,
 } from '@/components/runners/Dialogue/store/di';
-import {
-  emptyTlkSource,
-  sourceId,
-} from '@/components/runners/Dialogue/store/tlkStore.types';
+import { isNothing } from '@planar/shared';
 
 import type { FC, UIEvent } from 'react';
 
@@ -21,26 +18,41 @@ const PsteeHistory: FC = () => {
   const loadOlder = useGameHistoryStore(x => x.loadOlder);
   const loadNewer = useGameHistoryStore(x => x.loadNewer);
 
-  const tlkSource = useTlkStore(state => state.sources.get(sourceId.gameHistory) ?? emptyTlkSource);
+  const lines = useTlkStore(state => state.lines);
+  const tlkLoading = useTlkStore(state => state.loading);
+  const touchRefs = useTlkStore(state => state.touchRefs);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const scrolledRevision = useRef(0);
 
   useEffect(() => {
-    if (tlkSource.loading || scrolledRevision.current === revision) return;
+    const refs = entries
+      .map(entry => entry.tlkRef)
+      .filter(ref => !isNothing(ref));
+    touchRefs(refs);
+  }, [entries, revision, touchRefs]);
+
+  useEffect(() => {
+    if (tlkLoading || scrolledRevision.current === revision) return;
     const container = containerRef.current;
     if (container) container.scrollTop = container.scrollHeight;
     scrolledRevision.current = revision;
-  }, [revision, tlkSource.loading]);
+  }, [revision, tlkLoading]);
 
   const onScroll = (event: UIEvent<HTMLDivElement>) => {
     const element = event.currentTarget;
-    if (element.scrollTop <= 32) loadOlder().catch((error: unknown) => console.error(error));
-    if (element.scrollHeight - element.scrollTop - element.clientHeight <= 32) loadNewer().catch((error: unknown) => console.error(error));
+    const bumperPx = 32;
+    const atTop = element.scrollTop <= bumperPx;
+    const atBottom = element.scrollHeight - element.scrollTop - element.clientHeight <= bumperPx;
+    if (atTop) loadOlder().catch((e: unknown) => console.error(e));
+    if (atBottom) loadNewer().catch((e: unknown) => console.error(e));
   };
 
-  if (loading || tlkSource.loading) return (
+  if (loading) return (
     <div className={styles.history} onScroll={onScroll} ref={containerRef}>
-      <Loading />
+      <Skeleton variant="text" width="80%" />
+      <Skeleton variant="text" width="60%" />
+      <Skeleton variant="text" width="70%" />
     </div>
   );
 
@@ -48,17 +60,26 @@ const PsteeHistory: FC = () => {
     <div className={styles.history} onScroll={onScroll} ref={containerRef}>
       {
         entries.map((entry) => {
-          const lines = entry.tlkRef ? tlkSource.lines.get(entry.tlkRef)!.split('\\n') : ['…'];
-          return (
-            lines.map((x, i) => (
-              <Typography
-                className={entry.kind === 'say' ? styles.say : styles.response}
-                key={`${entry.sequenceId}_${i}`}
-              >
-                {x}
-              </Typography>
-            ))
-          );
+          const text = entry.tlkRef ? lines.get(entry.tlkRef) : undefined;
+          if (!text) {
+            return (
+              <Skeleton
+                className={entry.kind === 'say' ? styles.saySkeleton : styles.responseSkeleton}
+                key={entry.sequenceId}
+                variant="text"
+                width="70%"
+              />
+            );
+          }
+
+          return text.split('\\n').map((x, i) => (
+            <Typography
+              className={entry.kind === 'say' ? styles.say : styles.response}
+              key={`${entry.sequenceId}_${i}`}
+            >
+              {x}
+            </Typography>
+          ));
         })
       }
     </div>

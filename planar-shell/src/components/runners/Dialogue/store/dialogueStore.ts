@@ -8,7 +8,6 @@ import {
 } from './helpers';
 import { dialogueRepository } from './dialogueRepository';
 import { getZustandNarrative, getZustandCharacter } from '@/engine/store/worldStores';
-import { sourceId } from './tlkStore.types';
 import { dialogueStoreId } from './di/runtime.types';
 
 import type { DialogueResponse, DialogueSay, Maybe, NpcDialogue, StateId } from '@planar/shared';
@@ -18,7 +17,6 @@ import type { StateCreator } from 'zustand/vanilla';
 import type { DialogueRuntime } from './di/runtime.types';
 import type { GameHistoryStore } from './gameHistoryStore.types';
 import type { LocalStorageStore } from './localStorageStore.types';
-import type { TlkStore } from './tlkStore.types';
 
 const createDialogueHistoryEvents = (
   says: DialogueSay[],
@@ -96,7 +94,6 @@ export const createDialogueStore = (runtime: DialogueRuntime): StateCreator<Dial
       currentStateId: nothing(),
       currentDialogueId: nothing(),
     });
-    runtime.getStore<TlkStore>(dialogueStoreId.tlk).getState().release(sourceId.dialogue);
   };
 
   const selectResponse = async (response: DialogueResponse, source: string): Promise<void> => runTransition(async () => {

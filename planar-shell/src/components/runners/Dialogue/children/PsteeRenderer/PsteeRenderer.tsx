@@ -1,13 +1,8 @@
 import {
-  emptyTlkSource,
-  sourceId,
-} from '../../store/tlkStore.types';
-import {
   useDialogueStore,
   useDialogueViewStore,
   useTlkStore,
 } from '../../store/di';
-import Loading from '@/components/Loading';
 import PsteeHistory from './children/PsteeHistory';
 import PsteePhrase from './children/PsteePhrase';
 import clsx from 'clsx';
@@ -22,13 +17,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
   const selectResponse = useDialogueStore(x => x.selectResponse);
 
   const view = useDialogueViewStore(state => state.view);
-  const tlkSource = useTlkStore(state => state.sources.get(sourceId.dialogue) ?? emptyTlkSource);
-
-  if (tlkSource.loading) return (
-    <div className={clsx(styles.pstee, className)}>
-      <Loading />
-    </div>
-  );
+  const lines = useTlkStore(state => state.lines);
 
   if (!view) return (
     <div className={clsx(styles.pstee, className)}>
@@ -41,7 +30,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
       <PsteeHistory />
       <PsteePhrase
         view={view}
-        tlkSource={tlkSource}
+        lines={lines}
         loading={phraseLoading}
         selectResponse={selectResponse}
       />

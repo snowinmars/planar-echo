@@ -9,7 +9,6 @@ export type GameHistoryStore = GameHistoryPage & Readonly<{
   revision: number;
   append: (events: GameHistoryEvent[]) => Promise<void>;
   activateView: () => Promise<void>;
-  deactivateView: DisposeFunction;
   loadNewest: () => Promise<void>;
   loadOlder: () => Promise<void>;
   loadNewer: () => Promise<void>;

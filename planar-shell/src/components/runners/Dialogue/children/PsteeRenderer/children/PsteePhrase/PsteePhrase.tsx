@@ -1,75 +1,108 @@
+import { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Skeleton from '@mui/material/Skeleton';
 import clsx from 'clsx';
 import { isNothing } from '@planar/shared';
+import { useTlkStore } from '@/components/runners/Dialogue/store/di';
 
 import type { FC } from 'react';
 import type { CurrentDialogueView } from '@/components/runners/Dialogue/store/dialogueViewStore.types';
-import type { TlkSource } from '@/components/runners/Dialogue/store/tlkStore.types';
 import type { DialogueStore } from '@/components/runners/Dialogue/store/dialogueStore.types';
 
 import styles from './PsteePhrase.module.scss';
 
 type PsteePhraseProps = Readonly<{
   view: CurrentDialogueView;
-  tlkSource: TlkSource;
+  lines: ReadonlyMap<number, string>;
   loading: boolean;
   selectResponse: DialogueStore['selectResponse'];
 }>;
 export const PsteePhrase: FC<PsteePhraseProps> = ({
   view,
-  tlkSource,
+  lines,
   loading,
   selectResponse,
 }: PsteePhraseProps) => {
+  // TODO [snow]: why there are view.tlkRefs and lines at the same time?
+  const touchRefs = useTlkStore(state => state.touchRefs);
+  const hasMissingText = view.tlkRefs.some(x => !lines.has(x));
+
+  useEffect(() => {
+    touchRefs(view.tlkRefs);
+  }, [view, touchRefs]);
+
   return (
     <>
       <div className={styles.says}>
         {
-          view.says.map(say => (
-            <div className={styles.say} key={say.sayId}>
-              {
-                tlkSource.lines.get(say.textRef)!
-                  .split('\\n')
-                  .map((x, i) => <Typography className={styles.line} key={i}>{x}</Typography>)
-              }
-            </div>
-          ))
+          view.says.map((say) => {
+            const text = lines.get(say.textRef);
+
+            if (text) return (
+              <div className={styles.say} key={say.sayId}>
+                {
+                  text.split('\\n')
+                    .map((x, i) => (
+                      <Typography className={styles.line} key={i}>{x}</Typography>
+                    ))
+                }
+              </div>
+            );
+
+            return (
+              <div className={styles.say} key={say.sayId}>
+                <Skeleton variant="text" width="80%" />
+              </div>
+            );
+          })
         }
       </div>
+
       <div className={styles.responses}>
         {
-          view.responses.map(({ response, index, kind, marker }) => (
-            <Button
-              key={response.responseId}
-              className={clsx(
-                styles.response,
-                view.useTwoColumns ? styles.twoColumnResponse : styles.oneColumnResponse,
-              )}
-              disabled={loading}
-              onClick={() => {
-                selectResponse(response, 'pstee').catch((error: unknown) => console.error(error));
-              }}
-            >
-              <Typography>{index + 1}</Typography>
-              <span className={styles.responseDivider}>.</span>
+          view.responses.map(({ response, index, kind, marker }) => {
+            const responseText = isNothing(response.responseRef)
+              ? '…'
+              : lines.get(response.responseRef);
+            const isUntranslated = isNothing(responseText);
 
-              <Typography>{isNothing(response.responseRef) ? '…' : tlkSource.lines.get(response.responseRef)}</Typography>
+            return (
+              <Button
+                key={response.responseId}
+                className={clsx(
+                  styles.response,
+                  view.useTwoColumns ? styles.twoColumnResponse : styles.oneColumnResponse,
+                )}
+                disabled={loading || hasMissingText}
+                onClick={() => {
+                  selectResponse(response, 'pstee').catch((error: unknown) => console.error(error));
+                }}
+              >
+                <Typography>{index + 1}</Typography>
+                <span className={styles.responseDivider}>.</span>
 
-              {
-                kind !== 'default' && (
-                  <Typography
-                    className={clsx(
-                      kind === 'destructor' && styles.disposers,
-                      kind === 'extern' && styles.externs,
-                    )}
-                  >
-                    {marker}
-                  </Typography>
-                )
-              }
-            </Button>
-          ))
+                {
+                  isUntranslated
+                    ? <Skeleton variant="text" width="60%" />
+                    : <Typography>{responseText}</Typography>
+                }
+
+                {
+                  kind !== 'default' && (
+                    <Typography
+                      className={clsx(
+                        kind === 'destructor' && styles.disposers,
+                        kind === 'extern' && styles.externs,
+                      )}
+                    >
+                      {marker}
+                    </Typography>
+                  )
+                }
+              </Button>
+            );
+          })
         }
       </div>
     </>

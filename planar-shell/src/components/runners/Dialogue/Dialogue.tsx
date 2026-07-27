@@ -18,7 +18,6 @@ import styles from './Dialogue.module.scss';
 
 const PsteeRenderer = lazy(() => import('./children/PsteeRenderer'));
 const NarratRenderer = lazy(() => import('./children/NarratRenderer'));
-const MobileRenderer = lazy(() => import('./children/MobileRenderer'));
 
 const DialogueContent: FC = () => {
   useDialogueWidgetBridge();
@@ -44,13 +43,10 @@ const DialogueContent: FC = () => {
   return (
     <div className={styles.dialogue}>
       {
-        (renderer === 'pstee' || renderer === 'pstee-two-columns') && <PsteeRenderer className={styles.renderer} />
+        (renderer === 'pstee' || renderer === 'pstee-two-columns') && <PsteeRenderer />
       }
       {
-        renderer === 'narrat' && <NarratRenderer className={styles.renderer} />
-      }
-      {
-        renderer === 'mobile' && <MobileRenderer className={styles.renderer} />
+        renderer === 'narrat' && <NarratRenderer />
       }
     </div>
   );

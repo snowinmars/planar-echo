@@ -6,14 +6,15 @@ import type { StateCreator } from 'zustand/vanilla';
 import type { GameLanguage } from '@planar/shared';
 
 const getValues = () => ({
-  serverUrl: planarLocalStorage.get<string>('serverUrl')!,
-  ghostDir: planarLocalStorage.get<string>('ghostDir')!,
-  gameLanguage: planarLocalStorage.get<GameLanguage>('gameLanguage')!,
-  dialogueRenderer: planarLocalStorage.get<string>('dialogueRenderer')!,
+  serverUrl: planarLocalStorage.get<string>('serverUrl', 'http://localhost:3003')!,
+  ghostDir: planarLocalStorage.get<string>('ghostDir'),
+  gameLanguage: planarLocalStorage.get<GameLanguage>('gameLanguage'),
+  dialogueRenderer: planarLocalStorage.get<string>('dialogueRenderer', 'pstee')!,
   dialogueMarks: {
-    markDisposers: planarLocalStorage.get<boolean>('dialogueMarks_markDisposers')!,
-    markExterns: planarLocalStorage.get<boolean>('dialogueMarks_markExterns')!,
+    markDisposers: planarLocalStorage.get<boolean>('dialogueMarks_markDisposers', false)!,
+    markExterns: planarLocalStorage.get<boolean>('dialogueMarks_markExterns', false)!,
   },
+  tlkCacheMaxLines: planarLocalStorage.get<number>('tlkCacheMaxLines', 200)!,
 });
 
 export const createLocalStorageStore: StateCreator<LocalStorageStore> = (set) => {
@@ -61,6 +62,11 @@ export const createLocalStorageStore: StateCreator<LocalStorageStore> = (set) =>
               markExterns: planarLocalStorage.get<boolean>('dialogueMarks_markExterns')!,
             },
           }));
+        }),
+      );
+      masterSubscription.add(
+        planarLocalStorage.onKeyChange('tlkCacheMaxLines').subscribe(() => {
+          set({ tlkCacheMaxLines: planarLocalStorage.get<number>('tlkCacheMaxLines')! });
         }),
       );
 

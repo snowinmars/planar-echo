@@ -1,6 +1,5 @@
 .history {
-  max-height: 40vh;
-  min-height: 0;
+  height: 60vh;
   overflow-y: auto;
 }
 
@@ -16,4 +15,12 @@
 .response {
   color: #ff2e21;
   text-align: right;
+}
+
+.saySkeleton {
+  margin-right: auto;
+}
+
+.responseSkeleton {
+  margin-left: auto;
 }

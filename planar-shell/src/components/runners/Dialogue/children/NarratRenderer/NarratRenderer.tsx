@@ -1,11 +1,6 @@
 import clsx from 'clsx';
-import Loading from '@/components/Loading';
 import NarratHistory from './children/NarratHistory';
 import NarratPhrase from './children/NarratPhrase';
-import {
-  sourceId,
-  emptyTlkSource,
-} from '../../store/tlkStore.types';
 import {
   useDialogueStore,
   useDialogueViewStore,
@@ -22,13 +17,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
   const selectResponse = useDialogueStore(x => x.selectResponse);
 
   const view = useDialogueViewStore(state => state.view);
-  const tlkSource = useTlkStore(state => state.sources.get(sourceId.dialogue) ?? emptyTlkSource);
-
-  if (tlkSource.loading) return (
-    <div className={clsx(styles.narrat, className)}>
-      <Loading />
-    </div>
-  );
+  const lines = useTlkStore(state => state.lines);
 
   if (!view) return (
     <div className={clsx(styles.narrat, className)}>
@@ -41,7 +30,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
       <NarratHistory />
       <NarratPhrase
         view={view}
-        tlkSource={tlkSource}
+        lines={lines}
         loading={phraseLoading}
         selectResponse={selectResponse}
       />

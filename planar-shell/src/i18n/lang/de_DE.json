@@ -185,18 +185,18 @@
       "title": "Dialogansicht",
       "pstee": "Wie im Original",
       "pstee-two-columns": "Wie im Original, aber zweispaltig",
-      "narrat": "Narrat-ähnlich",
-      "mobile": "Mobil"
+      "narrat": "Narrat-ähnlich"
     },
     "dialogueHistory": {
       "title": "Dialogverlauf",
+      "tlkCacheMaxLines": "TLK-Zeilen im Speicher (LRU)",
       "pageSize": "Zeilen pro Seite",
       "browsedPages": "Seiten im Browser",
       "storedPages": "Seiten auf der Festplatte",
       "unlimited": "Unbegrenzt speichern",
       "apply": "Einstellungen übernehmen",
       "reset": "Zurücksetzen",
-      "help": "Der Dialogverlauf wird in Seiten gespeichert. Jede Seite enthält {{pageSize}} Zeilen. Auf dem Bildschirm werden die letzten {{browsedPages}} Seiten von {{storedPages}} auf der Festplatte gespeicherten Seiten geladen.\nJe mehr Seiten auf der Festplatte gespeichert werden, desto mehr Speicherplatz beansprucht das Spiel, aber desto weiter kann man in den Dialogverlauf zurückblättern.\nJe mehr Seiten von der Festplatte auf den Bildschirm geladen werden, desto höher ist die Belastung des Browsers."
+      "help": "Der Dialogverlauf wird in Seiten gespeichert. Jede Seite enthält {{pageSize}} Zeilen. Jede Zeile hat eine Nummer, aber keinen Übersetzungstext. Auf dem Bildschirm werden die letzten {{browsedPages}} Seiten von {{storedPages}} auf der Festplatte gespeicherten Seiten geladen. Übersetzungen für Zeilen werden in einem LRU-Cache gespeichert, der {{tlkCacheMaxLines}} Einträge fasst. Bei einem Cache-Miss werden Übersetzungen von asclepius nachgeladen.\nJe mehr Seiten auf der Festplatte gespeichert werden, desto mehr Speicherplatz beansprucht das Spiel, aber desto weiter kann man in den Dialogverlauf zurückblättern.\nJe mehr Seiten von der Festplatte auf den Bildschirm geladen werden, desto höher ist die Belastung des Browsers."
     },
     "theme": {
       "title": "Farbschema"

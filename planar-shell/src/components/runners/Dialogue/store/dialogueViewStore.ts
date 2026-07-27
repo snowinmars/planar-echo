@@ -5,7 +5,6 @@ import {
 } from '@/engine/store/worldStores';
 import { getExternDialogueId, isDestructor, mapTlkRefs, type DisposeFunction } from './helpers';
 import { dialogueStoreId } from './di/runtime.types';
-import { sourceId } from './tlkStore.types';
 
 import type { StateCreator, StoreApi } from 'zustand/vanilla';
 import type { Maybe, NpcDialogue, StateId } from '@planar/shared';
@@ -76,9 +75,8 @@ export const createDialogueViewStore = (runtime: DialogueRuntime): StateCreator<
     const view = createView(tree, currentStateId, settings);
     set({ view });
 
-    // this promise starts tlk ref loading, that will flick ui state later on
     runtime.getStore<TlkStore>(dialogueStoreId.tlk).getState()
-      .loadTlkRefs({ tlkRefs: view.tlkRefs, sourceId: sourceId.dialogue })
+      .loadTlkRefs(view.tlkRefs)
       .catch((e: unknown) => console.error(e));
   };
 
@@ -109,7 +107,13 @@ export const createDialogueViewStore = (runtime: DialogueRuntime): StateCreator<
       };
 
       subscriptions.push(
-        runtime.getStore<DialogueStore>(dialogueStoreId.dialogue).subscribe(() => {
+        runtime.getStore<DialogueStore>(dialogueStoreId.dialogue).subscribe((state, prevState) => {
+          const navigationChanged = state.tree !== prevState.tree
+            || state.currentStateId !== prevState.currentStateId
+            || state.currentDialogueId !== prevState.currentDialogueId
+          ;
+          if (!navigationChanged) return;
+
           rebindWorldStores();
           refresh();
         }),

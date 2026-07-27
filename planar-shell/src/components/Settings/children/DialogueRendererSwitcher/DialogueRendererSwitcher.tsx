@@ -37,7 +37,7 @@ export const DialogueRendererSwitcher: FC<WithClassName> = ({ className }) => {
         }}
       >
         {
-          ['pstee', 'pstee-two-columns', 'narrat', 'mobile'].map(renderer => (
+          ['pstee', 'pstee-two-columns', 'narrat'].map(renderer => (
             <MenuItem key={renderer} value={renderer}>
               <Typography>{t(`settings.dialogueRenderer.${renderer}`)}</Typography>
             </MenuItem>

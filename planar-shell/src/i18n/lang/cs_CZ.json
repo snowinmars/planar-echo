@@ -185,18 +185,18 @@
       "title": "Zobrazení dialogu",
       "pstee": "Jako v originálu",
       "pstee-two-columns": "Jako v originálu, ale ve dvou sloupcích",
-      "narrat": "Podobné Narrat",
-      "mobile": "Mobilní"
+      "narrat": "Podobné Narrat"
     },
     "dialogueHistory": {
       "title": "Historie dialogů",
+      "tlkCacheMaxLines": "Řádků TLK v paměti (LRU)",
       "pageSize": "Řádků na stránku",
       "browsedPages": "Stránek v prohlížeči",
       "storedPages": "Stránek na pevném disku",
       "unlimited": "Ukládat bez omezení",
       "apply": "Použít nastavení",
       "reset": "Reset",
-      "help": "Historie dialogů je uložena po stránkách. Na každé stránce je {{pageSize}} řádků. Na obrazovku se načítá {{browsedPages}} posledních stránek z {{storedPages}} uložených na pevném disku.\nČím více stránek je uloženo na pevném disku, tím více místa na disku hra zabírá, ale o to dále do minulosti můžete historii dialogů procházet.\nČím více stránek se načítá na obrazovku z pevného disku, tím větší zátěž na prohlížeč."
+      "help": "Historie dialogů je uložena po stránkách. Na každé stránce je {{pageSize}} řádků. Každý řádek má číslo, ale nemá překlad. Na obrazovku se načítá {{browsedPages}} posledních stránek z {{storedPages}} uložených na pevném disku. Překlady řádků jsou uloženy v LRU cache, která pojme {{tlkCacheMaxLines}} položek. Při promáchnutí cache se překlady načítají z asclepius.\nČím více stránek je uloženo na pevném disku, tím více místa na disku hra zabírá, ale o to dále do minulosti můžete historii dialogů procházet.\nČím více stránek se načítá na obrazovku z pevného disku, tím větší zátěž na prohlížeč."
     },
     "theme": {
       "title": "Barevný motiv"

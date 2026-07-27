@@ -185,18 +185,18 @@
       "title": "Widok dialogu",
       "pstee": "Jak w oryginale",
       "pstee-two-columns": "Jak w oryginale, ale w dwóch kolumnach",
-      "narrat": "Podobny do Narrat",
-      "mobile": "Mobilny"
+      "narrat": "Podobny do Narrat"
     },
     "dialogueHistory": {
       "title": "Historia dialogów",
+      "tlkCacheMaxLines": "Wierszy TLK w pamięci (LRU)",
       "pageSize": "Wierszy na stronę",
       "browsedPages": "Stron w przeglądarce",
       "storedPages": "Stron na dysku twardym",
       "unlimited": "Przechowuj bez ograniczeń",
       "apply": "Zastosuj ustawienia",
       "reset": "Resetuj",
-      "help": "Historia dialogów jest przechowywana w postaci stron. Każda strona zawiera {{pageSize}} wierszy. Na ekranie ładowanych jest {{browsedPages}} ostatnich stron z {{storedPages}} przechowywanych na dysku twardym.\nIm więcej stron przechowywanych jest na dysku twardym, tym więcej miejsca na dysku zajmuje gra, ale tym dalej w przeszłość można przewijać historię dialogów.\nIm więcej stron ładowanych jest na ekran z dysku twardego, tym większe obciążenie dla przeglądarki."
+      "help": "Historia dialogów jest przechowywana w postaci stron. Każda strona zawiera {{pageSize}} wierszy. Każdy wiersz ma numer, ale nie ma tłumaczenia. Na ekranie ładowanych jest {{browsedPages}} ostatnich stron z {{storedPages}} przechowywanych na dysku twardym. Tłumaczenia wierszy są przechowywane w pamięci podręcznej LRU mieszczącej {{tlkCacheMaxLines}} elementów. Przy chybieniu cache tłumaczenia są pobierane z asclepius.\nIm więcej stron przechowywanych jest na dysku twardym, tym więcej miejsca na dysku zajmuje gra, ale tym dalej w przeszłość można przewijać historię dialogów.\nIm więcej stron ładowanych jest na ekran z dysku twardego, tym większe obciążenie dla przeglądarki."
     },
     "theme": {
       "title": "Motyw kolorystyczny"

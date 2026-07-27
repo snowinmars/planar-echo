@@ -37,6 +37,8 @@ const DialogueHistorySettings: FC = () => {
   const [browsedPages, setBrowsedPages] = useState(() => getGameHistoryBrowsedPages());
   const [storedPages, setStoredPages] = useState<Maybe<number>>(() => getGameHistoryStoredPages());
   const [unlimitedStoredPages, setUnlimitedStoredPages] = useState(() => isUnlimited(getGameHistoryStoredPages()));
+  const [tlkCacheMaxLines, setTlkCacheMaxLines] = useState(() => planarLocalStorage.get<number>('tlkCacheMaxLines', 200)!);
+
   const [changed, setChanged] = useState(false);
 
   const [openHelp, setOpenHelp] = useState(false);
@@ -55,8 +57,22 @@ const DialogueHistorySettings: FC = () => {
     else planarLocalStorage.set(gameHistorySettingsKeys.storedPages, storedPages);
   }, [storedPages]);
 
+  useEffect(() => {
+    planarLocalStorage.set('tlkCacheMaxLines', tlkCacheMaxLines);
+  }, [tlkCacheMaxLines]);
+
   return (
     <Stack spacing={2}>
+      <NumberField
+        size="small"
+        label={t('settings.dialogueHistory.tlkCacheMaxLines')}
+        value={tlkCacheMaxLines}
+        min={100}
+        onValueChange={(x) => {
+          setTlkCacheMaxLines(x ?? 100);
+        }}
+      />
+
       <NumberField
         size="small"
         label={t('settings.dialogueHistory.pageSize')}
@@ -186,6 +202,7 @@ const DialogueHistorySettings: FC = () => {
                     pageSize,
                     browsedPages,
                     storedPages: isUnlimited(storedPages) ? '∞' : storedPages,
+                    tlkCacheMaxLines,
                   })}
                 </Typography>
               </ClickAwayListener>

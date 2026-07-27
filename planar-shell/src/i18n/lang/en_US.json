@@ -185,18 +185,18 @@
       "title": "Dialogue view",
       "pstee": "As original",
       "pstee-two-columns": "As original, but in two columns",
-      "narrat": "Narrat-like",
-      "mobile": "Mobile"
+      "narrat": "Narrat-like"
     },
     "dialogueHistory": {
       "title": "Dialogue History",
+      "tlkCacheMaxLines": "TLK lines in memory (LRU)",
       "pageSize": "Lines per page",
       "browsedPages": "Pages in browser",
       "storedPages": "Pages on hard disk",
       "unlimited": "Store without limit",
       "apply": "Apply settings",
       "reset": "Reset",
-      "help": "Dialogue history is stored in pages. Each page has {{pageSize}} lines. The last {{browsedPages}} pages out of {{storedPages}} stored on the hard disk are loaded onto the screen.\nThe more pages stored on the hard disk, the more disk space the game consumes, but the further back you can scroll through dialogue history.\nThe more pages loaded from the hard disk onto the screen, the higher the load on the browser."
+      "help": "Dialogue history is stored in pages. Each page has {{pageSize}} lines. Each line has a number, but no translation. The last {{browsedPages}} pages out of {{storedPages}} stored on the hard disk are loaded onto the screen. Line translations are stored in an LRU cache, that holds {{tlkCacheMaxLines}} entries. On a cache miss, translations are fetched from asclepius.\nThe more pages stored on the hard disk, the more disk space the game consumes, but the further back you can scroll through dialogue history.\nThe more pages loaded from the hard disk onto the screen, the higher the load on the browser."
     },
     "theme": {
       "title": "Color theme"
