@@ -2,10 +2,10 @@ import type { Maybe } from '../maybe.js';
 
 export type UntranslatedItem = Readonly<{
   version: 'v10';
-  unidentifiedNameRef: string;
-  identifiedNameRef: string;
-  unidentifiedDescriptionRef: string;
-  identifiedDescriptionRef: string;
+  unidentifiedNameRef: number;
+  identifiedNameRef: number;
+  unidentifiedDescriptionRef: number;
+  identifiedDescriptionRef: number;
   dropSound: Maybe<string>;
   flags: string[];
   category: string;

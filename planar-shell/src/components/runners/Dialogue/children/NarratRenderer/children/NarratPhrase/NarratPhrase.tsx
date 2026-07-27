@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Skeleton from '@mui/material/Skeleton';
 import { isNothing } from '@planar/shared';
 import clsx from 'clsx';
-import { useTlkStore } from '@/components/runners/Dialogue/store/di';
+import { useTlkStore } from '@/engine/store/planarRuntime';
 
 import type { FC } from 'react';
 import type { CurrentDialogueView } from '@/components/runners/Dialogue/store/dialogueViewStore.types';

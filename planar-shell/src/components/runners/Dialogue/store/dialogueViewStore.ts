@@ -4,11 +4,11 @@ import {
   getZustandNarrative,
 } from '@/engine/store/worldStores';
 import { getExternDialogueId, isDestructor, mapTlkRefs, type DisposeFunction } from './helpers';
-import { dialogueStoreId } from './di/runtime.types';
+import { planarStoreId } from '@/engine/store/planarRuntime.types';
 
 import type { StateCreator, StoreApi } from 'zustand/vanilla';
 import type { Maybe, NpcDialogue, StateId } from '@planar/shared';
-import type { DialogueRuntime } from './di/runtime.types';
+import type { PlanarRuntime } from '@/engine/store/planarRuntime.types';
 import type { DialogueStore } from './dialogueStore.types';
 import type { LocalStorageStore } from './localStorageStore.types';
 import type { TlkStore } from './tlkStore.types';
@@ -63,19 +63,19 @@ const createView = (
   };
 };
 
-export const createDialogueViewStore = (runtime: DialogueRuntime): StateCreator<DialogueViewStore> => (set) => {
+export const createDialogueViewStore = (runtime: PlanarRuntime): StateCreator<DialogueViewStore> => (set) => {
   const refresh = (): void => {
-    const { tree, currentStateId } = runtime.getStore<DialogueStore>(dialogueStoreId.dialogue).getState();
+    const { tree, currentStateId } = runtime.getStore<DialogueStore>(planarStoreId.dialogue).getState();
     if (!tree || !currentStateId) {
       set({ view: nothing() });
       return;
     }
 
-    const settings = runtime.getStore<LocalStorageStore>(dialogueStoreId.localStorage).getState();
+    const settings = runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).getState();
     const view = createView(tree, currentStateId, settings);
     set({ view });
 
-    runtime.getStore<TlkStore>(dialogueStoreId.tlk).getState()
+    runtime.getStore<TlkStore>(planarStoreId.tlk).getState()
       .loadTlkRefs(view.tlkRefs)
       .catch((e: unknown) => console.error(e));
   };
@@ -107,7 +107,7 @@ export const createDialogueViewStore = (runtime: DialogueRuntime): StateCreator<
       };
 
       subscriptions.push(
-        runtime.getStore<DialogueStore>(dialogueStoreId.dialogue).subscribe((state, prevState) => {
+        runtime.getStore<DialogueStore>(planarStoreId.dialogue).subscribe((state, prevState) => {
           const navigationChanged = state.tree !== prevState.tree
             || state.currentStateId !== prevState.currentStateId
             || state.currentDialogueId !== prevState.currentDialogueId
@@ -119,7 +119,7 @@ export const createDialogueViewStore = (runtime: DialogueRuntime): StateCreator<
         }),
       );
       subscriptions.push(
-        runtime.getStore<LocalStorageStore>(dialogueStoreId.localStorage).subscribe(refresh),
+        runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).subscribe(refresh),
       );
 
       rebindWorldStores();

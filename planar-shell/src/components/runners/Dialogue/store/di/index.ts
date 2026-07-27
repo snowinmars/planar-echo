@@ -1,2 +1,7 @@
-export * from './runtime';
-export { DialogueRuntimeProvider } from './runtimeProvider';
+export {
+  dialogueFeatureModules,
+  useDialogueStore,
+  useDialogueStoreApi,
+  useDialogueViewStore,
+  useGameHistoryStore,
+} from './dialogueHooks';

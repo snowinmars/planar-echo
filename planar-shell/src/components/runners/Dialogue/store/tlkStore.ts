@@ -1,17 +1,17 @@
 import { LRUCache } from 'lru-cache';
 import { dialogueRepository } from './dialogueRepository';
-import { dialogueStoreId } from './di/runtime.types';
+import { planarStoreId } from '@/engine/store/planarRuntime.types';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { Subscription } from 'rxjs';
 
 import type { TlkStore } from './tlkStore.types';
 import type { StateCreator } from 'zustand/vanilla';
-import type { DialogueRuntime } from './di/runtime.types';
+import type { PlanarRuntime } from '@/engine/store/planarRuntime.types';
 import type { LocalStorageStore } from './localStorageStore.types';
 
-export const createTlkStore = (runtime: DialogueRuntime): StateCreator<TlkStore> => (set) => {
+export const createTlkStore = (runtime: PlanarRuntime): StateCreator<TlkStore> => (set) => {
   const tlkCacheMaxLines = runtime
-    .getStore<LocalStorageStore>(dialogueStoreId.localStorage)
+    .getStore<LocalStorageStore>(planarStoreId.localStorage)
     .getState()
     .tlkCacheMaxLines;
 
@@ -62,7 +62,7 @@ export const createTlkStore = (runtime: DialogueRuntime): StateCreator<TlkStore>
 
   const fetchMissing = (missingTlkRefs: number[]): Promise<Map<number, string>> => {
     const { serverUrl, ghostDir, gameLanguage } = runtime
-      .getStore<LocalStorageStore>(dialogueStoreId.localStorage)
+      .getStore<LocalStorageStore>(planarStoreId.localStorage)
       .getState();
 
     if (!ghostDir) throw new Error('Ghost directory cannot be empty here');

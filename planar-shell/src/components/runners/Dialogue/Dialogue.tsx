@@ -4,11 +4,10 @@ import { useDialogueWidgetBridge } from './useDialogueWidgetBridge';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { useSearchParams } from 'react-router';
 import {
-  DialogueRuntimeProvider,
   dialogueFeatureModules,
   useDialogueStore,
-  useLocalStorageStore,
 } from './store/di';
+import { useFeatureLease, useLocalStorageStore } from '@/engine/store/planarRuntime';
 
 import type { StateId, Maybe } from '@planar/shared';
 import type { FC } from 'react';
@@ -19,7 +18,8 @@ import styles from './Dialogue.module.scss';
 const PsteeRenderer = lazy(() => import('./children/PsteeRenderer'));
 const NarratRenderer = lazy(() => import('./children/NarratRenderer'));
 
-const DialogueContent: FC = () => {
+const Dialogue: FC = () => {
+  useFeatureLease(dialogueFeatureModules);
   useDialogueWidgetBridge();
 
   const [searchParams] = useSearchParams();
@@ -51,11 +51,5 @@ const DialogueContent: FC = () => {
     </div>
   );
 };
-
-const Dialogue: FC = () => (
-  <DialogueRuntimeProvider modules={dialogueFeatureModules}>
-    <DialogueContent />
-  </DialogueRuntimeProvider>
-);
 
 export default Dialogue;

@@ -8,13 +8,13 @@ import {
 } from './helpers';
 import { dialogueRepository } from './dialogueRepository';
 import { getZustandNarrative, getZustandCharacter } from '@/engine/store/worldStores';
-import { dialogueStoreId } from './di/runtime.types';
+import { planarStoreId } from '@/engine/store/planarRuntime.types';
 
 import type { DialogueResponse, DialogueSay, Maybe, NpcDialogue, StateId } from '@planar/shared';
 import type { GameHistoryEvent } from '@/shared/indexedDb';
 import type { DialogueStore } from './dialogueStore.types';
 import type { StateCreator } from 'zustand/vanilla';
-import type { DialogueRuntime } from './di/runtime.types';
+import type { PlanarRuntime } from '@/engine/store/planarRuntime.types';
 import type { GameHistoryStore } from './gameHistoryStore.types';
 import type { LocalStorageStore } from './localStorageStore.types';
 
@@ -41,12 +41,12 @@ const createDialogueHistoryEvents = (
   ];
 };
 
-export const createDialogueStore = (runtime: DialogueRuntime): StateCreator<DialogueStore> => (set, get) => {
+export const createDialogueStore = (runtime: PlanarRuntime): StateCreator<DialogueStore> => (set, get) => {
   const loadDialogueTree = async (dialogueId: string, initialStateId: Maybe<StateId>): Promise<void> => {
     const {
       serverUrl,
       ghostDir,
-    } = runtime.getStore<LocalStorageStore>(dialogueStoreId.localStorage).getState();
+    } = runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).getState();
 
     const narrative = getZustandNarrative();
     const character = getZustandCharacter();
@@ -85,7 +85,7 @@ export const createDialogueStore = (runtime: DialogueRuntime): StateCreator<Dial
     if (!tree || !currentStateId) return;
     const { says } = tree.tree.get(currentStateId)!;
     const events = createDialogueHistoryEvents(says, response, source);
-    await runtime.getStore<GameHistoryStore>(dialogueStoreId.gameHistory).getState().append(events);
+    await runtime.getStore<GameHistoryStore>(planarStoreId.gameHistory).getState().append(events);
   };
 
   const disposeTree = (): void => {
@@ -120,7 +120,7 @@ export const createDialogueStore = (runtime: DialogueRuntime): StateCreator<Dial
     const {
       serverUrl,
       ghostDir,
-    } = runtime.getStore<LocalStorageStore>(dialogueStoreId.localStorage).getState();
+    } = runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).getState();
 
     set({ loading: true });
     const { error, data } = await postApiGhostDialogue({

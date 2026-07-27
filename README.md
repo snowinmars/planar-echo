@@ -2,11 +2,13 @@
 
 [\[Русский\]](README.ru.md) \[English\]
 
-Open-source tool to convert **Infinity Engine** game data files you already own into an open format and run them in a custom engine in the browser.
+Open-source tool to convert **Infinity Engine** game data files you already own into an open format and run them in a browser.
 
 Everything runs locally on your machine.
 
-![Current state example](./_dev/promo.png)
+![Current dialogue state example](./_dev/promo_dlg.png)
+![Current creature state example](./_dev/promo_cre.png)
+![Current item state example](./_dev/promo_itm.png)
 
 ## Prerequisites
 
@@ -18,7 +20,7 @@ No game assets are stored in this repository.
 
 ## Legal
 
-Using planar-echo is legal if you own the game. Data never leaves your PC. The project does not distribute copyrighted content, like an emulator.
+Using planar-echo is legal if you own the game. Data never leaves your PC. The project, like an emulator, does not distribute copyrighted content.
 
 ## Status
 
@@ -31,8 +33,14 @@ Tech demo under active development.
 - **Supports all available game data localizations:** Russian, English, Czech, German, French, Korean, Polish via original game data.
 - **Planar-echo site human-localizations:** Russian, English.
 - **Planar-echo site LLM-localizations:** Czech, German, French, Korean, Polish. If these are your native language, please, verify the [translation](planar-shell/src/i18n/lang/).
-- **In-browser viewing** of dialogues, creatures and items, binded together with game state logic variables via Ghost bundles served by the backend.
-- **Dialogue flow** uses shared `dialogueEngine` (`planar-shared`) and Shell `engine/dialogueLogic.ts` (not a full game simulation yet).
+- **In-browser viewing** of:
+  - dialogues with:
+    - history
+    - game state logic
+  - creatures with:
+    - 'talk' button, that respect weights and game state logic
+  - items with:
+    - 'talk' button, if available
 
 ### Close-range roadmap
 
@@ -43,7 +51,7 @@ Tech demo under active development.
 
 ## Architecture (five parts)
 
-| Part                 | Role                                                                                       |
+| Service              | Role                                                                                       |
 | -------------------- | ------------------------------------------------------------------------------------------ |
 | **planar-prism**     | CLI: BIFF → JSON → Ghost TypeScript; runs standalone or as a forked child process.         |
 | **planar-ghost**     | Output format and on-disk artifacts (your machine); not an npm workspace package.          |
@@ -53,10 +61,10 @@ Tech demo under active development.
 
 **Typical flow**
 
-1. Configure WeiDU, game key/path, and ghost output directory in **Shell** (validated via **Asclepius** REST).
-2. Start conversion: Shell opens WebSocket `/api/prism/index`; Asclepius builds Prism, forks it, then runs `build-ghost`.
-3. Prism uses WeiDU, writes JSON/Ghost under your ghost directory; progress streams to the UI.
-4. Open `/dialogue`, `/creature`, or `/item` in Shell; data is loaded via REST `/api/ghost/*`.
+1. Configure WeiDU, game files path, and ghost output directory in **Shell**.
+2. Start conversion
+3. Prism writes JSON/Ghost under your ghost directory; progress streams to the UI.
+4. Open `/dialogue`, `/creature`, or `/item` in Shell.
 
 **Ports:** backend `http://localhost:3003`; frontend dev server `http://localhost:3000`.
 

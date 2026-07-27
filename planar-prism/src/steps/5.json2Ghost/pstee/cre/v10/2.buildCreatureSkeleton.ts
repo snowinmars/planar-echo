@@ -30,8 +30,8 @@ const buildCreatureSkeletonV10 = (cre: GhostCreatureV10, discover: DiscoverNext)
   writer.writeLine(`const creature: UntranslatedCreatureV10 = {`, 2);
 
   writer.writeLine(`version: '${cre.header.version}',`, 4);
-  writer.writeLine(`nameRef: '${cre.header.nameRef}',`, 4);
-  writer.writeLine(`tooltipRef: '${cre.header.tooltipRef}',`, 4);
+  writer.writeLine(`nameRef: ${cre.header.nameRef},`, 4);
+  writer.writeLine(`tooltipRef: ${cre.header.tooltipRef},`, 4);
   writeFlags(
     writer,
     cre.header.flags,

@@ -1,15 +1,16 @@
 import type { Maybe } from '@planar/shared';
 import type { StoreApi } from 'zustand/vanilla';
-import type { DisposeFunction } from '../helpers';
 
-export const dialogueStoreId = {
+export type DisposeFunction = () => void;
+
+export const planarStoreId = {
   localStorage: 'localStorage',
   tlk: 'tlk',
   gameHistory: 'gameHistory',
   dialogue: 'dialogue',
   dialogueView: 'dialogueView',
 } as const;
-export type DialogueStoreId = typeof dialogueStoreId[keyof typeof dialogueStoreId];
+export type PlanarStoreId = typeof planarStoreId[keyof typeof planarStoreId];
 
 export type AnyStore = StoreApi<unknown>;
 
@@ -21,12 +22,12 @@ export type RuntimeEntry = {
 };
 
 export type StoreDefinition = Readonly<{
-  dependencies: DialogueStoreId[];
-  create: (runtime: DialogueRuntime) => AnyStore;
+  dependencies: PlanarStoreId[];
+  create: (runtime: PlanarRuntime) => AnyStore;
   start?: Maybe<(store: AnyStore) => DisposeFunction>;
 }>;
 
-export type DialogueRuntime = Readonly<{
-  getStore: <T>(id: DialogueStoreId) => StoreApi<T>;
-  acquire: (id: DialogueStoreId) => DisposeFunction;
+export type PlanarRuntime = Readonly<{
+  getStore: <T>(id: PlanarStoreId) => StoreApi<T>;
+  acquire: (id: PlanarStoreId) => DisposeFunction;
 }>;

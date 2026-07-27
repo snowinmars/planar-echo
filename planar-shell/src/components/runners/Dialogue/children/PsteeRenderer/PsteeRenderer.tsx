@@ -1,8 +1,8 @@
 import {
   useDialogueStore,
   useDialogueViewStore,
-  useTlkStore,
 } from '../../store/di';
+import { useTlkStore } from '@/engine/store/planarRuntime';
 import PsteeHistory from './children/PsteeHistory';
 import PsteePhrase from './children/PsteePhrase';
 import clsx from 'clsx';

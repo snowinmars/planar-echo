@@ -9,7 +9,7 @@ import {
   getGameHistoryPageSize,
 } from '@/shared/gameHistorySettings';
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import { dialogueStoreId } from './di/runtime.types';
+import { planarStoreId } from '@/engine/store/planarRuntime.types';
 import { mapTlkRefs } from './helpers';
 import { Subscription } from 'rxjs';
 
@@ -19,7 +19,7 @@ import type {
 } from '@/shared/indexedDb';
 import type { GameHistoryStore } from './gameHistoryStore.types';
 import type { StateCreator } from 'zustand/vanilla';
-import type { DialogueRuntime } from './di/runtime.types';
+import type { PlanarRuntime } from '@/engine/store/planarRuntime.types';
 import type { TlkStore } from './tlkStore.types';
 import type { DisposeFunction } from './helpers';
 
@@ -47,7 +47,7 @@ const reduceChanges = (
   };
 }, currentWindow);
 
-export const createGameHistoryStore = (runtime: DialogueRuntime): StateCreator<GameHistoryStore> => (set, get) => {
+export const createGameHistoryStore = (runtime: PlanarRuntime): StateCreator<GameHistoryStore> => (set, get) => {
   let requestId = 0;
 
   const updatePage = (page: GameHistoryPage): void => {
@@ -58,7 +58,7 @@ export const createGameHistoryStore = (runtime: DialogueRuntime): StateCreator<G
 
     const { entries } = get();
 
-    runtime.getStore<TlkStore>(dialogueStoreId.tlk).getState()
+    runtime.getStore<TlkStore>(planarStoreId.tlk).getState()
       .loadTlkRefs(mapTlkRefs(entries.map(x => ({ ref: x.tlkRef }))))
       .catch(e => console.error(e));
   };
@@ -174,7 +174,7 @@ export const createGameHistoryStore = (runtime: DialogueRuntime): StateCreator<G
 
         const { entries } = get();
 
-        runtime.getStore<TlkStore>(dialogueStoreId.tlk).getState()
+        runtime.getStore<TlkStore>(planarStoreId.tlk).getState()
           .loadTlkRefs(mapTlkRefs(entries.map(x => ({ ref: x.tlkRef }))))
           .catch(e => console.error(e));
       }),

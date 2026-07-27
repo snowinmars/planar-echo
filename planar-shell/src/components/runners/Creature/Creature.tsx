@@ -11,6 +11,8 @@ import { useCreatureStore } from './store/creatureStore';
 import { useCreatureWidgetBridge } from './useCreatureWidgetBridge';
 import { useTranslation } from 'react-i18next';
 import { useCreatureTalk } from './useCreatureTalk';
+import { useTlkStore } from '@/engine/store/planarRuntime';
+import { mapCreatureToTlkRefs } from './mapCreatureToTlkRefs';
 
 import type { FC } from 'react';
 import type { Widget } from '@/shared/widget';
@@ -39,8 +41,17 @@ const Creature: FC = () => {
   const currentCreature = useCreatureStore(x => x.currentCreature);
   const disposeCreature = useCreatureStore(x => x.disposeCreature);
 
-  // TODO [snow]: ref to tlk
+  const lines = useTlkStore(x => x.lines);
+  const loadTlkRefs = useTlkStore(x => x.loadTlkRefs);
+  const tlk = (ref: number): string => lines.get(ref) ?? `… (${ref})`;
+
   useEffect(() => () => disposeCreature(), []);
+
+  useEffect(() => {
+    if (!currentCreature) return;
+    const tlkRefs = mapCreatureToTlkRefs(currentCreature);
+    loadTlkRefs(tlkRefs).catch((e: unknown) => console.error(e));
+  }, [currentCreature, loadTlkRefs]);
 
   if (!currentCreature) return null;
 
@@ -55,7 +66,7 @@ const Creature: FC = () => {
         </Button>
       </div>
 
-      <T title={currentCreature.tooltipRef} value={currentCreature.nameRef} />
+      <T title={tlk(currentCreature.tooltipRef)} value={tlk(currentCreature.nameRef)} />
       <T title={t('run.creature.hp')} value={`${currentCreature.currentHp}/${currentCreature.maximumHp}`} />
       <T title={t('run.creature.sex')} value={currentCreature.sex} />
       <T title={t('run.creature.race')} value={currentCreature.race} />
@@ -273,106 +284,106 @@ const Creature: FC = () => {
           <Typography>{t('run.creature.soundsTitle')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <T title="initialMeetingSoundTlk" value={currentCreature.initialMeetingSoundRef} />
-          <T title="moraleSoundTlk" value={currentCreature.moraleSoundRef} />
-          <T title="happySoundTlk" value={currentCreature.happySoundRef} />
-          <T title="unhappyAnnoyedSoundTlk" value={currentCreature.unhappyAnnoyedSoundRef} />
-          <T title="unhappySeriousSoundTlk" value={currentCreature.unhappySeriousSoundRef} />
-          <T title="unhappyBreakingPointSoundTlk" value={currentCreature.unhappyBreakingPointSoundRef} />
-          <T title="leaderSoundTlk" value={currentCreature.leaderSoundRef} />
-          <T title="tiredSoundTlk" value={currentCreature.tiredSoundRef} />
-          <T title="boredSoundTlk" value={currentCreature.boredSoundRef} />
-          <T title="battleCry1SoundTlk" value={currentCreature.battleCry1SoundRef} />
-          <T title="battleCry2SoundTlk" value={currentCreature.battleCry2SoundRef} />
-          <T title="battleCry3SoundTlk" value={currentCreature.battleCry3SoundRef} />
-          <T title="battleCry4SoundTlk" value={currentCreature.battleCry4SoundRef} />
-          <T title="battleCry5SoundTlk" value={currentCreature.battleCry5SoundRef} />
-          <T title="attack1SoundTlk" value={currentCreature.attack1SoundRef} />
-          <T title="attack2SoundTlk" value={currentCreature.attack2SoundRef} />
-          <T title="attack3SoundTlk" value={currentCreature.attack3SoundRef} />
-          <T title="attack4SoundTlk" value={currentCreature.attack4SoundRef} />
-          <T title="damageSoundTlk" value={currentCreature.damageSoundRef} />
-          <T title="dyingSoundTlk" value={currentCreature.dyingSoundRef} />
-          <T title="hurtSoundTlk" value={currentCreature.hurtSoundRef} />
-          <T title="areaForestSoundTlk" value={currentCreature.areaForestSoundRef} />
-          <T title="areaCitySoundTlk" value={currentCreature.areaCitySoundRef} />
-          <T title="areaDungeonSoundTlk" value={currentCreature.areaDungeonSoundRef} />
-          <T title="areaDaySoundTlk" value={currentCreature.areaDaySoundRef} />
-          <T title="areaNightSoundTlk" value={currentCreature.areaNightSoundRef} />
-          <T title="selectCommon1SoundTlk" value={currentCreature.selectCommon1SoundRef} />
-          <T title="selectCommon2SoundTlk" value={currentCreature.selectCommon2SoundRef} />
-          <T title="selectCommon3SoundTlk" value={currentCreature.selectCommon3SoundRef} />
-          <T title="selectCommon4SoundTlk" value={currentCreature.selectCommon4SoundRef} />
-          <T title="selectCommon5SoundTlk" value={currentCreature.selectCommon5SoundRef} />
-          <T title="selectCommon6SoundTlk" value={currentCreature.selectCommon6SoundRef} />
-          <T title="selectAction1SoundTlk" value={currentCreature.selectAction1SoundRef} />
-          <T title="selectAction2SoundTlk" value={currentCreature.selectAction2SoundRef} />
-          <T title="selectAction3SoundTlk" value={currentCreature.selectAction3SoundRef} />
-          <T title="selectAction4SoundTlk" value={currentCreature.selectAction4SoundRef} />
-          <T title="selectAction5SoundTlk" value={currentCreature.selectAction5SoundRef} />
-          <T title="selectAction6SoundTlk" value={currentCreature.selectAction6SoundRef} />
-          <T title="selectAction7SoundTlk" value={currentCreature.selectAction7SoundRef} />
-          <T title="interaction1SoundTlk" value={currentCreature.interaction1SoundRef} />
-          <T title="interaction2SoundTlk" value={currentCreature.interaction2SoundRef} />
-          <T title="interaction3SoundTlk" value={currentCreature.interaction3SoundRef} />
-          <T title="interaction4SoundTlk" value={currentCreature.interaction4SoundRef} />
-          <T title="interaction5SoundTlk" value={currentCreature.interaction5SoundRef} />
-          <T title="insult1SoundTlk" value={currentCreature.insult1SoundRef} />
-          <T title="insult2SoundTlk" value={currentCreature.insult2SoundRef} />
-          <T title="insult3SoundTlk" value={currentCreature.insult3SoundRef} />
-          <T title="compliment1SoundTlk" value={currentCreature.compliment1SoundRef} />
-          <T title="compliment2SoundTlk" value={currentCreature.compliment2SoundRef} />
-          <T title="compliment3SoundTlk" value={currentCreature.compliment3SoundRef} />
-          <T title="special1SoundTlk" value={currentCreature.special1SoundRef} />
-          <T title="special2SoundTlk" value={currentCreature.special2SoundRef} />
-          <T title="special3SoundTlk" value={currentCreature.special3SoundRef} />
-          <T title="reactToDieGeneralSoundTlk" value={currentCreature.reactToDieGeneralSoundRef} />
-          <T title="reactToDieSpecificSoundTlk" value={currentCreature.reactToDieSpecificSoundRef} />
-          <T title="responseToCompliment1SoundTlk" value={currentCreature.responseToCompliment1SoundRef} />
-          <T title="responseToCompliment2SoundTlk" value={currentCreature.responseToCompliment2SoundRef} />
-          <T title="responseToCompliment3SoundTlk" value={currentCreature.responseToCompliment3SoundRef} />
-          <T title="responseToInsult1SoundTlk" value={currentCreature.responseToInsult1SoundRef} />
-          <T title="responseToInsult2SoundTlk" value={currentCreature.responseToInsult2SoundRef} />
-          <T title="responseToInsult3SoundTlk" value={currentCreature.responseToInsult3SoundRef} />
-          <T title="dialogHostileSoundTlk" value={currentCreature.dialogHostileSoundRef} />
-          <T title="dialogDefaultSoundTlk" value={currentCreature.dialogDefaultSoundRef} />
-          <T title="selectRare1SoundTlk" value={currentCreature.selectRare1SoundRef} />
-          <T title="selectRare2SoundTlk" value={currentCreature.selectRare2SoundRef} />
-          <T title="criticalHitSoundTlk" value={currentCreature.criticalHitSoundRef} />
-          <T title="criticalMissSoundTlk" value={currentCreature.criticalMissSoundRef} />
-          <T title="targetImmuneSoundTlk" value={currentCreature.targetImmuneSoundRef} />
-          <T title="inventoryFullSoundTlk" value={currentCreature.inventoryFullSoundRef} />
-          <T title="pickedPicketSoundTlk" value={currentCreature.pickedPicketSoundRef} />
-          <T title="hiddenInShadowsSoundTlk" value={currentCreature.hiddenInShadowsSoundRef} />
-          <T title="spellDisruptedSoundTlk" value={currentCreature.spellDisruptedSoundRef} />
-          <T title="setTrapSoundTlk" value={currentCreature.setTrapSoundRef} />
-          <T title="existance4SoundTlk" value={currentCreature.existance4SoundRef} />
-          <T title="bioSoundTlk" value={currentCreature.bioSoundRef} />
-          <T title="sound1Tlk" value={currentCreature.sound1Ref} />
-          <T title="sound2Tlk" value={currentCreature.sound2Ref} />
-          <T title="sound3Tlk" value={currentCreature.sound3Ref} />
-          <T title="sound4Tlk" value={currentCreature.sound4Ref} />
-          <T title="sound5Tlk" value={currentCreature.sound5Ref} />
-          <T title="sound6Tlk" value={currentCreature.sound6Ref} />
-          <T title="sound7Tlk" value={currentCreature.sound7Ref} />
-          <T title="sound8Tlk" value={currentCreature.sound8Ref} />
-          <T title="sound9Tlk" value={currentCreature.sound9Ref} />
-          <T title="sound10Tlk" value={currentCreature.sound10Ref} />
-          <T title="sound11Tlk" value={currentCreature.sound11Ref} />
-          <T title="sound12Tlk" value={currentCreature.sound12Ref} />
-          <T title="sound13Tlk" value={currentCreature.sound13Ref} />
-          <T title="sound14Tlk" value={currentCreature.sound14Ref} />
-          <T title="sound15Tlk" value={currentCreature.sound15Ref} />
-          <T title="sound16Tlk" value={currentCreature.sound16Ref} />
-          <T title="sound17Tlk" value={currentCreature.sound17Ref} />
-          <T title="sound18Tlk" value={currentCreature.sound18Ref} />
-          <T title="sound19Tlk" value={currentCreature.sound19Ref} />
-          <T title="sound20Tlk" value={currentCreature.sound20Ref} />
-          <T title="sound21Tlk" value={currentCreature.sound21Ref} />
-          <T title="sound22Tlk" value={currentCreature.sound22Ref} />
-          <T title="sound23Tlk" value={currentCreature.sound23Ref} />
-          <T title="sound24Tlk" value={currentCreature.sound24Ref} />
-          <T title="sound25Tlk" value={currentCreature.sound25Ref} />
+          <T title="initialMeetingSoundTlk" value={tlk(currentCreature.initialMeetingSoundRef)} />
+          <T title="moraleSoundTlk" value={tlk(currentCreature.moraleSoundRef)} />
+          <T title="happySoundTlk" value={tlk(currentCreature.happySoundRef)} />
+          <T title="unhappyAnnoyedSoundTlk" value={tlk(currentCreature.unhappyAnnoyedSoundRef)} />
+          <T title="unhappySeriousSoundTlk" value={tlk(currentCreature.unhappySeriousSoundRef)} />
+          <T title="unhappyBreakingPointSoundTlk" value={tlk(currentCreature.unhappyBreakingPointSoundRef)} />
+          <T title="leaderSoundTlk" value={tlk(currentCreature.leaderSoundRef)} />
+          <T title="tiredSoundTlk" value={tlk(currentCreature.tiredSoundRef)} />
+          <T title="boredSoundTlk" value={tlk(currentCreature.boredSoundRef)} />
+          <T title="battleCry1SoundTlk" value={tlk(currentCreature.battleCry1SoundRef)} />
+          <T title="battleCry2SoundTlk" value={tlk(currentCreature.battleCry2SoundRef)} />
+          <T title="battleCry3SoundTlk" value={tlk(currentCreature.battleCry3SoundRef)} />
+          <T title="battleCry4SoundTlk" value={tlk(currentCreature.battleCry4SoundRef)} />
+          <T title="battleCry5SoundTlk" value={tlk(currentCreature.battleCry5SoundRef)} />
+          <T title="attack1SoundTlk" value={tlk(currentCreature.attack1SoundRef)} />
+          <T title="attack2SoundTlk" value={tlk(currentCreature.attack2SoundRef)} />
+          <T title="attack3SoundTlk" value={tlk(currentCreature.attack3SoundRef)} />
+          <T title="attack4SoundTlk" value={tlk(currentCreature.attack4SoundRef)} />
+          <T title="damageSoundTlk" value={tlk(currentCreature.damageSoundRef)} />
+          <T title="dyingSoundTlk" value={tlk(currentCreature.dyingSoundRef)} />
+          <T title="hurtSoundTlk" value={tlk(currentCreature.hurtSoundRef)} />
+          <T title="areaForestSoundTlk" value={tlk(currentCreature.areaForestSoundRef)} />
+          <T title="areaCitySoundTlk" value={tlk(currentCreature.areaCitySoundRef)} />
+          <T title="areaDungeonSoundTlk" value={tlk(currentCreature.areaDungeonSoundRef)} />
+          <T title="areaDaySoundTlk" value={tlk(currentCreature.areaDaySoundRef)} />
+          <T title="areaNightSoundTlk" value={tlk(currentCreature.areaNightSoundRef)} />
+          <T title="selectCommon1SoundTlk" value={tlk(currentCreature.selectCommon1SoundRef)} />
+          <T title="selectCommon2SoundTlk" value={tlk(currentCreature.selectCommon2SoundRef)} />
+          <T title="selectCommon3SoundTlk" value={tlk(currentCreature.selectCommon3SoundRef)} />
+          <T title="selectCommon4SoundTlk" value={tlk(currentCreature.selectCommon4SoundRef)} />
+          <T title="selectCommon5SoundTlk" value={tlk(currentCreature.selectCommon5SoundRef)} />
+          <T title="selectCommon6SoundTlk" value={tlk(currentCreature.selectCommon6SoundRef)} />
+          <T title="selectAction1SoundTlk" value={tlk(currentCreature.selectAction1SoundRef)} />
+          <T title="selectAction2SoundTlk" value={tlk(currentCreature.selectAction2SoundRef)} />
+          <T title="selectAction3SoundTlk" value={tlk(currentCreature.selectAction3SoundRef)} />
+          <T title="selectAction4SoundTlk" value={tlk(currentCreature.selectAction4SoundRef)} />
+          <T title="selectAction5SoundTlk" value={tlk(currentCreature.selectAction5SoundRef)} />
+          <T title="selectAction6SoundTlk" value={tlk(currentCreature.selectAction6SoundRef)} />
+          <T title="selectAction7SoundTlk" value={tlk(currentCreature.selectAction7SoundRef)} />
+          <T title="interaction1SoundTlk" value={tlk(currentCreature.interaction1SoundRef)} />
+          <T title="interaction2SoundTlk" value={tlk(currentCreature.interaction2SoundRef)} />
+          <T title="interaction3SoundTlk" value={tlk(currentCreature.interaction3SoundRef)} />
+          <T title="interaction4SoundTlk" value={tlk(currentCreature.interaction4SoundRef)} />
+          <T title="interaction5SoundTlk" value={tlk(currentCreature.interaction5SoundRef)} />
+          <T title="insult1SoundTlk" value={tlk(currentCreature.insult1SoundRef)} />
+          <T title="insult2SoundTlk" value={tlk(currentCreature.insult2SoundRef)} />
+          <T title="insult3SoundTlk" value={tlk(currentCreature.insult3SoundRef)} />
+          <T title="compliment1SoundTlk" value={tlk(currentCreature.compliment1SoundRef)} />
+          <T title="compliment2SoundTlk" value={tlk(currentCreature.compliment2SoundRef)} />
+          <T title="compliment3SoundTlk" value={tlk(currentCreature.compliment3SoundRef)} />
+          <T title="special1SoundTlk" value={tlk(currentCreature.special1SoundRef)} />
+          <T title="special2SoundTlk" value={tlk(currentCreature.special2SoundRef)} />
+          <T title="special3SoundTlk" value={tlk(currentCreature.special3SoundRef)} />
+          <T title="reactToDieGeneralSoundTlk" value={tlk(currentCreature.reactToDieGeneralSoundRef)} />
+          <T title="reactToDieSpecificSoundTlk" value={tlk(currentCreature.reactToDieSpecificSoundRef)} />
+          <T title="responseToCompliment1SoundTlk" value={tlk(currentCreature.responseToCompliment1SoundRef)} />
+          <T title="responseToCompliment2SoundTlk" value={tlk(currentCreature.responseToCompliment2SoundRef)} />
+          <T title="responseToCompliment3SoundTlk" value={tlk(currentCreature.responseToCompliment3SoundRef)} />
+          <T title="responseToInsult1SoundTlk" value={tlk(currentCreature.responseToInsult1SoundRef)} />
+          <T title="responseToInsult2SoundTlk" value={tlk(currentCreature.responseToInsult2SoundRef)} />
+          <T title="responseToInsult3SoundTlk" value={tlk(currentCreature.responseToInsult3SoundRef)} />
+          <T title="dialogHostileSoundTlk" value={tlk(currentCreature.dialogHostileSoundRef)} />
+          <T title="dialogDefaultSoundTlk" value={tlk(currentCreature.dialogDefaultSoundRef)} />
+          <T title="selectRare1SoundTlk" value={tlk(currentCreature.selectRare1SoundRef)} />
+          <T title="selectRare2SoundTlk" value={tlk(currentCreature.selectRare2SoundRef)} />
+          <T title="criticalHitSoundTlk" value={tlk(currentCreature.criticalHitSoundRef)} />
+          <T title="criticalMissSoundTlk" value={tlk(currentCreature.criticalMissSoundRef)} />
+          <T title="targetImmuneSoundTlk" value={tlk(currentCreature.targetImmuneSoundRef)} />
+          <T title="inventoryFullSoundTlk" value={tlk(currentCreature.inventoryFullSoundRef)} />
+          <T title="pickedPicketSoundTlk" value={tlk(currentCreature.pickedPicketSoundRef)} />
+          <T title="hiddenInShadowsSoundTlk" value={tlk(currentCreature.hiddenInShadowsSoundRef)} />
+          <T title="spellDisruptedSoundTlk" value={tlk(currentCreature.spellDisruptedSoundRef)} />
+          <T title="setTrapSoundTlk" value={tlk(currentCreature.setTrapSoundRef)} />
+          <T title="existance4SoundTlk" value={tlk(currentCreature.existance4SoundRef)} />
+          <T title="bioSoundTlk" value={tlk(currentCreature.bioSoundRef)} />
+          <T title="sound1Tlk" value={tlk(currentCreature.sound1Ref)} />
+          <T title="sound2Tlk" value={tlk(currentCreature.sound2Ref)} />
+          <T title="sound3Tlk" value={tlk(currentCreature.sound3Ref)} />
+          <T title="sound4Tlk" value={tlk(currentCreature.sound4Ref)} />
+          <T title="sound5Tlk" value={tlk(currentCreature.sound5Ref)} />
+          <T title="sound6Tlk" value={tlk(currentCreature.sound6Ref)} />
+          <T title="sound7Tlk" value={tlk(currentCreature.sound7Ref)} />
+          <T title="sound8Tlk" value={tlk(currentCreature.sound8Ref)} />
+          <T title="sound9Tlk" value={tlk(currentCreature.sound9Ref)} />
+          <T title="sound10Tlk" value={tlk(currentCreature.sound10Ref)} />
+          <T title="sound11Tlk" value={tlk(currentCreature.sound11Ref)} />
+          <T title="sound12Tlk" value={tlk(currentCreature.sound12Ref)} />
+          <T title="sound13Tlk" value={tlk(currentCreature.sound13Ref)} />
+          <T title="sound14Tlk" value={tlk(currentCreature.sound14Ref)} />
+          <T title="sound15Tlk" value={tlk(currentCreature.sound15Ref)} />
+          <T title="sound16Tlk" value={tlk(currentCreature.sound16Ref)} />
+          <T title="sound17Tlk" value={tlk(currentCreature.sound17Ref)} />
+          <T title="sound18Tlk" value={tlk(currentCreature.sound18Ref)} />
+          <T title="sound19Tlk" value={tlk(currentCreature.sound19Ref)} />
+          <T title="sound20Tlk" value={tlk(currentCreature.sound20Ref)} />
+          <T title="sound21Tlk" value={tlk(currentCreature.sound21Ref)} />
+          <T title="sound22Tlk" value={tlk(currentCreature.sound22Ref)} />
+          <T title="sound23Tlk" value={tlk(currentCreature.sound23Ref)} />
+          <T title="sound24Tlk" value={tlk(currentCreature.sound24Ref)} />
+          <T title="sound25Tlk" value={tlk(currentCreature.sound25Ref)} />
         </AccordionDetails>
       </Accordion>
 

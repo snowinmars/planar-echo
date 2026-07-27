@@ -13,6 +13,8 @@ import { useItemWidgetBridge } from './useItemWidgetBridge';
 import { useTranslation } from 'react-i18next';
 import { useItemTalk } from './useItemTalk';
 import Grid from '@mui/material/Grid';
+import { useTlkStore } from '@/engine/store/planarRuntime';
+import { mapItemToTlkRefs } from './mapItemToTlkRefs';
 
 import type { FC } from 'react';
 import type { Widget } from '@/shared/widget';
@@ -48,14 +50,25 @@ const Item: FC = () => {
     disposeItem: state.disposeItem,
   })));
 
-  // TODO [snow]: ref to tlk
+  const lines = useTlkStore(x => x.lines);
+  const tlkLoading = useTlkStore(x => x.loading);
+  const loadTlkRefs = useTlkStore(x => x.loadTlkRefs);
+
   useEffect(() => () => disposeItem(), []);
+
+  useEffect(() => {
+    if (!currentItem) return;
+    const tlkRefs = mapItemToTlkRefs(currentItem);
+    loadTlkRefs(tlkRefs).catch((e: unknown) => console.error(e));
+  }, [currentItem, loadTlkRefs]);
 
   useEffect(() => {
     checkCanTalk().then(x => setCanTalk(x)).catch(() => setCanTalk(false));
   }, [currentItem]);
 
   if (!currentItem) return null;
+
+  const tlk = (ref: number): string => lines.get(ref) ?? `… (${ref})`;
 
   return (
     <div>
@@ -70,11 +83,11 @@ const Item: FC = () => {
 
       <Grid container spacing="1em">
         <Grid size={{ md: 6, xs: 12 }}>
-          <T title={currentItem.unidentifiedNameRef} value={currentItem.identifiedNameRef} />
+          <T title={tlk(currentItem.unidentifiedNameRef)} value={tlk(currentItem.identifiedNameRef)} />
         </Grid>
         <Grid size={{ md: 6, xs: 12 }}>
-          <TextField fullWidth multiline className={styles.p} disabled variant="standard" label={t('run.item.unidentifiedDescriptionTlk')} value={currentItem.unidentifiedDescriptionRef} />
-          <TextField fullWidth multiline className={styles.p} disabled variant="standard" label={t('run.item.identifiedDescriptionTlk')} value={currentItem.identifiedDescriptionRef} />
+          <TextField fullWidth multiline className={styles.p} disabled variant="standard" label={t('run.item.unidentifiedDescriptionTlk')} value={tlk(currentItem.unidentifiedDescriptionRef)} />
+          <TextField fullWidth multiline className={styles.p} disabled variant="standard" label={t('run.item.identifiedDescriptionTlk')} value={tlk(currentItem.identifiedDescriptionRef)} />
         </Grid>
       </Grid>
 

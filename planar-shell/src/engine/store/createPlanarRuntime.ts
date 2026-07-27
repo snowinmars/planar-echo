@@ -1,56 +1,56 @@
 import { createStore } from 'zustand/vanilla';
-import { createDialogueStore } from '../dialogueStore';
-import { createDialogueViewStore } from '../dialogueViewStore';
-import { createGameHistoryStore } from '../gameHistoryStore';
-import { createLocalStorageStore } from '../localStorageStore';
-import { createTlkStore } from '../tlkStore';
-import { dialogueStoreId } from './runtime.types';
+import { nothing } from '@planar/shared';
+import { createDialogueStore } from '@/components/runners/Dialogue/store/dialogueStore';
+import { createDialogueViewStore } from '@/components/runners/Dialogue/store/dialogueViewStore';
+import { createGameHistoryStore } from '@/components/runners/Dialogue/store/gameHistoryStore';
+import { createLocalStorageStore } from '@/components/runners/Dialogue/store/localStorageStore';
+import { createTlkStore } from '@/components/runners/Dialogue/store/tlkStore';
+import { planarStoreId } from './planarRuntime.types';
 
 import type { StoreApi } from 'zustand/vanilla';
-import type { DialogueViewStore } from '../dialogueViewStore.types';
-import type { GameHistoryStore } from '../gameHistoryStore.types';
-import type { LocalStorageStore } from '../localStorageStore.types';
-import type { TlkStore } from '../tlkStore.types';
+import type { DialogueViewStore } from '@/components/runners/Dialogue/store/dialogueViewStore.types';
+import type { GameHistoryStore } from '@/components/runners/Dialogue/store/gameHistoryStore.types';
+import type { LocalStorageStore } from '@/components/runners/Dialogue/store/localStorageStore.types';
+import type { TlkStore } from '@/components/runners/Dialogue/store/tlkStore.types';
 import type {
-  DialogueRuntime,
-  DialogueStoreId,
+  DisposeFunction,
+  PlanarRuntime,
+  PlanarStoreId,
   RuntimeEntry,
   StoreDefinition,
-} from './runtime.types';
-import { nothing } from '@planar/shared';
-import type { DisposeFunction } from '../helpers';
+} from './planarRuntime.types';
 
-const definitions: Record<DialogueStoreId, StoreDefinition> = {
-  [dialogueStoreId.localStorage]: {
+const definitions: Record<PlanarStoreId, StoreDefinition> = {
+  [planarStoreId.localStorage]: {
     dependencies: [],
     create: () => createStore(createLocalStorageStore),
     start: store => (store as StoreApi<LocalStorageStore>).getState().start(),
   },
-  [dialogueStoreId.tlk]: {
-    dependencies: [dialogueStoreId.localStorage],
+  [planarStoreId.tlk]: {
+    dependencies: [planarStoreId.localStorage],
     create: runtime => createStore(createTlkStore(runtime)),
     start: store => (store as StoreApi<TlkStore>).getState().start(),
   },
-  [dialogueStoreId.gameHistory]: {
-    dependencies: [dialogueStoreId.localStorage, dialogueStoreId.tlk],
+  [planarStoreId.gameHistory]: {
+    dependencies: [planarStoreId.localStorage, planarStoreId.tlk],
     create: runtime => createStore(createGameHistoryStore(runtime)),
     start: store => (store as StoreApi<GameHistoryStore>).getState().start(),
   },
-  [dialogueStoreId.dialogue]: {
-    dependencies: [dialogueStoreId.localStorage, dialogueStoreId.tlk, dialogueStoreId.gameHistory],
+  [planarStoreId.dialogue]: {
+    dependencies: [planarStoreId.localStorage, planarStoreId.tlk, planarStoreId.gameHistory],
     create: runtime => createStore(createDialogueStore(runtime)),
   },
-  [dialogueStoreId.dialogueView]: {
-    dependencies: [dialogueStoreId.dialogue, dialogueStoreId.localStorage, dialogueStoreId.tlk],
+  [planarStoreId.dialogueView]: {
+    dependencies: [planarStoreId.dialogue, planarStoreId.localStorage, planarStoreId.tlk],
     create: runtime => createStore(createDialogueViewStore(runtime)),
     start: store => (store as StoreApi<DialogueViewStore>).getState().start(),
   },
 };
 
-export const createDialogueRuntime = (): DialogueRuntime => {
-  const entries = new Map<DialogueStoreId, RuntimeEntry>();
+export const createPlanarRuntime = (): PlanarRuntime => {
+  const entries = new Map<PlanarStoreId, RuntimeEntry>();
 
-  const getStore = <T>(id: DialogueStoreId): StoreApi<T> => {
+  const getStore = <T>(id: PlanarStoreId): StoreApi<T> => {
     const existing = entries.get(id);
     if (existing) return existing.store as StoreApi<T>;
 
@@ -66,12 +66,12 @@ export const createDialogueRuntime = (): DialogueRuntime => {
     return entry.store as StoreApi<T>;
   };
 
-  const getEntry = (id: DialogueStoreId): RuntimeEntry => {
+  const getEntry = (id: PlanarStoreId): RuntimeEntry => {
     getStore(id);
     return entries.get(id)!;
   };
 
-  const acquire = (id: DialogueStoreId): DisposeFunction => {
+  const acquire = (id: PlanarStoreId): DisposeFunction => {
     const definition = definitions[id];
     const disposeDependencies = definition.dependencies.map(dependency => acquire(dependency));
     const entry = getEntry(id);
@@ -94,7 +94,7 @@ export const createDialogueRuntime = (): DialogueRuntime => {
     };
   };
 
-  const runtime: DialogueRuntime = {
+  const runtime: PlanarRuntime = {
     getStore,
     acquire,
   };

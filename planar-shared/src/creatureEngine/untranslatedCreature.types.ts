@@ -2,8 +2,8 @@ import type { ClassId } from '../dialogueEngine/enums/class.js';
 import type { Maybe } from '../maybe.js';
 
 type BaseUntranslatedCreature = Readonly<{
-  nameRef: string;
-  tooltipRef: string;
+  nameRef: number;
+  tooltipRef: number;
   flags: string[];
   xpGainedForKilling: number;
   powerLevelOrXp: number;

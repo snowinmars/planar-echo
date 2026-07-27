@@ -1,10 +1,8 @@
 import { useEffect, useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
-import {
-  useGameHistoryStore,
-  useTlkStore,
-} from '@/components/runners/Dialogue/store/di';
+import { useGameHistoryStore } from '@/components/runners/Dialogue/store/di';
+import { useTlkStore } from '@/engine/store/planarRuntime';
 import { isNothing } from '@planar/shared';
 
 import type { FC, UIEvent } from 'react';
