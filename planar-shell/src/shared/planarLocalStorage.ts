@@ -45,7 +45,7 @@ const planarLocalStorage = {
       filter(e => e.key === buildKey(key)),
       map(() => key),
     );
-    const sameTab$ = key$.pipe(filter(x => x === buildKey(key)));
+    const sameTab$ = key$.pipe(filter(x => x === key));
 
     return merge(sameTab$, crossTab$);
   },
