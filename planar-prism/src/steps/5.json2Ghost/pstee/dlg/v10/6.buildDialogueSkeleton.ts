@@ -62,7 +62,9 @@ const formLabelArgsProps = (state: NestedDlgState, weight: number, npcLowercaseI
     if (hasTrigger) {
       writer.writeLine(`weight: ${weight},`, 6)
         .writeLine(`onlyIf: (l) => { // trigger index ${state.trigger.index}`, 6)
-        .writeLine(`return ${formTrigger(state.trigger.text, 13, npcLowercaseId, discover)};`, 8)
+        .writeLine(`return (`, 8)
+        .writeLine(`${formTrigger(state.trigger.text, 10, npcLowercaseId, discover)}`, 10)
+        .writeLine(`);`, 8)
         .writeLine('},', 6);
     }
     else {

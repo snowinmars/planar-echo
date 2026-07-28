@@ -65,7 +65,7 @@ const nestState = ({
       responsesActions,
     }));
 
-  const hasTrigger = state.triggerIndex && state.triggerIndex >= 0;
+  const hasTrigger = !isNothing(state.triggerIndex) && state.triggerIndex >= 0;
   const trigger = hasTrigger ? stateTriggers.get(state.triggerIndex)! : nothing();
   return {
     index: state.index,
