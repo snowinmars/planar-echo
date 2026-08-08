@@ -29,6 +29,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const jsonInis       = normalize(join(jsonRoot, 'inis'));
   const jsonCreatures  = normalize(join(jsonRoot, 'creatures'));
   const jsonEffects    = normalize(join(jsonRoot, 'effects'));
+  const jsonBcs        = normalize(join(jsonRoot, 'bcs'));
 
   const ghostRoot      = normalize(join(ghostDir , 'ghost'));
   const ghostTlk       = normalize(join(ghostRoot, 'tlk'));
@@ -38,6 +39,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const ghostInis      = normalize(join(ghostRoot, 'inis'));
   const ghostCreatures = normalize(join(ghostRoot, 'creatures'));
   const ghostEffects   = normalize(join(ghostRoot, 'effects'));
+  const ghostBcs       = normalize(join(ghostRoot, 'bcs'));
   const ghostStores    = normalize(join(ghostRoot, 'stores'));
 
   // TODO [snow]: I do not like this path, but where should it lead to?..
@@ -65,6 +67,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         inis     : jsonInis,
         creatures: jsonCreatures,
         effects  : jsonEffects,
+        bcs      : jsonBcs,
       },
       saveJson: {
         tlk: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonTlk, resourceName), entry, asIs),
@@ -74,6 +77,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         inis     : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonInis     , resourceName), entry, asIs),
         creatures: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonCreatures, resourceName), entry, asIs),
         effects  : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonEffects  , resourceName), entry, asIs),
+        bcs      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonBcs      , resourceName), entry, asIs),
       },
       ghost: {
         root     : ghostRoot,
@@ -84,6 +88,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         inis     : ghostInis,
         creatures: ghostCreatures,
         effects  : ghostEffects,
+        bcs      : ghostBcs,
       },
       saveGhost: {
         tlk: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostTlk, resourceName), entry, asIs),
@@ -93,6 +98,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         inis     : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostInis     , resourceName), entry, asIs),
         creatures: (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostCreatures, resourceName), entry, asIs),
         effects  : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostEffects  , resourceName), entry, asIs),
+        bcs      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostBcs      , resourceName), entry, asIs),
       },
       sharedEnums,
       stores: ghostStores,
@@ -110,6 +116,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     paths.ghostDir.json.inis,
     paths.ghostDir.json.creatures,
     paths.ghostDir.json.effects,
+    paths.ghostDir.json.bcs,
     paths.ghostDir.ghost.tlk,
     paths.ghostDir.ghost.dialogues,
     paths.ghostDir.ghost.items,
@@ -117,6 +124,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     paths.ghostDir.ghost.inis,
     paths.ghostDir.ghost.creatures,
     paths.ghostDir.ghost.effects,
+    paths.ghostDir.ghost.bcs,
     paths.ghostDir.stores,
   ], props.recreate || false);
 

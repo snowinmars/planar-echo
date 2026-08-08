@@ -9,6 +9,7 @@ type OutDir = Readonly<{
   creatures: string;
   effects: string;
   items: string;
+  bcs: string;
 }>;
 type SaveFunction = (resourceName: string, entry: unknown, asIs?: boolean) => Promise<void>;
 type OutSave = Readonly<{
@@ -19,6 +20,7 @@ type OutSave = Readonly<{
   creatures: SaveFunction;
   effects: SaveFunction;
   items: SaveFunction;
+  bcs: SaveFunction;
 }>;
 export type Paths = Readonly<{
   weiduExeDir: string;

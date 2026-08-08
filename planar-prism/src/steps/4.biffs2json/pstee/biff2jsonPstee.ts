@@ -6,6 +6,7 @@ import { parseCre } from './cre/index.js';
 import { parseDlg } from './dlg/index.js';
 import { parseEffV20 } from './eff/index.js';
 import { parseItm } from './itm/index.js';
+import { buildBcsContext, parseBcs } from './bcs/index.js';
 
 import type { Paths } from '../../1.createPaths/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../../3.decompileBiffs/index.js';
@@ -15,6 +16,7 @@ import type { CreatureV10, CreatureV11 } from './cre/index.js';
 import type { RawDlg } from './dlg/index.js';
 import type { EffectV20 } from './eff/index.js';
 import type { ItmV10 } from './itm/index.js';
+import type { DecompiledBcs } from './bcs/index.js';
 import type { AllPsteeJsons } from '../types.js';
 
 type Creature = CreatureV10 | CreatureV11;
@@ -48,6 +50,18 @@ const biffs2jsonPstee = async (
   }
 
   for (const mustHaveId of mustHaveIds) if (!ids.has(mustHaveId)) throw new Error(`Pstee sources has '${mustHaveId}' file, but you did not pass it`);
+
+  ///
+
+  logger.info(`Converting bcs to json...`);
+  const bcs: DecompiledBcs[] = [];
+  const bcsItems = decompiledBiffs.get('bcs') ?? [];
+  const bcsCtx = await buildBcsContext(ids);
+  const bcsIterator = parseBcs(paths, bcsItems, bcsCtx);
+  for await (const b of bcsIterator) {
+    bcs.push(b);
+    await paths.ghostDir.saveJson.bcs(`${b.resourceName}.json`, b);
+  }
 
   ///
 
@@ -123,6 +137,7 @@ const biffs2jsonPstee = async (
     dlgs,
     effs,
     itms,
+    bcs,
   };
 };
 

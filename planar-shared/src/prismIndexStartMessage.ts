@@ -31,6 +31,7 @@ export const progressSteps = [
   'ini_raw2json',
   'itm_raw2json',
   'tlk_raw2json',
+  'bcs_raw2json',
   'cre_json2ghost',
   'dlg_json2ghost',
   'itm_json2ghost',

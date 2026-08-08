@@ -28,7 +28,7 @@
 | Коммит оригинальных игровых файлов | Запрещено |
 | void foo() | foo().catch((e: unknown) => console.error(e)) |
 | Subscribe without unsubscription | Always unsubscribe when subscribe |
-| x++ or ++x outside of for loop | Use infix operators to avoid misreading possibilities |
+| x++ or ++x **outside of for loops** | Use infix operators to avoid misreading possibilities outside of for loops. Use i++ inside for loops |
 
 ## Монорепозиторий
 
