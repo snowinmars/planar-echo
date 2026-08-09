@@ -52,6 +52,7 @@ export const createDialogueStore = (runtime: PlanarRuntime): StateCreator<Dialog
     const character = getZustandCharacter();
 
     if (!narrative || !character) throw new Error('World stores were not initialized');
+    if (!ghostDir) throw new Error('Ghost directory should be initialized here');
 
     set({ loading: true });
     const tree = await dialogueRepository.loadDialogueTree({
@@ -122,11 +123,13 @@ export const createDialogueStore = (runtime: PlanarRuntime): StateCreator<Dialog
       ghostDir,
     } = runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).getState();
 
+    if (!ghostDir) throw new Error('Ghost directory should be initialized here');
+
     set({ loading: true });
     const { error, data } = await postApiGhostDialogue({
       client,
       baseURL: serverUrl,
-      body: { ghostDir: ghostDir }, // may use server filter here, but nah
+      body: { ghostDir }, // may use server filter here, but nah
     }).finally(() => set({ loading: false }));
 
     if (error) {
