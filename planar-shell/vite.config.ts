@@ -30,6 +30,7 @@ export default defineConfig(({ mode }): UserConfig => {
       tsconfigPaths: true,
       alias: {
         '@': resolve(__dirname, 'src'),
+        '@planar/shared': resolve(__dirname, '../planar-shared/src/index.ts'),
       },
     },
     server: {
@@ -40,7 +41,7 @@ export default defineConfig(({ mode }): UserConfig => {
       },
     },
     optimizeDeps: {
-      include: ['@planar/shared'],
+      exclude: ['@planar/shared'],
       esbuildOptions: {
         format: 'esm',
       },
