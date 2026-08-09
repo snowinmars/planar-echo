@@ -1,20 +1,20 @@
 import {
   BCS_REQUIRED_IDS,
   PST_STRING_PACKS_BY_ID,
-} from './types.js';
-import { just } from '@planar/shared';
+} from './engineRules.js';
+import { just, nothing } from '@planar/shared';
 
 import type { Ids } from '../ids/types.js';
+import type { BcsContext } from './buildBcsContext.types.js';
 import type {
   FunctionParam,
   ParamType,
   SignatureFunction,
   Signatures,
-} from './v1/signatures.js';
-import type { BcsContext } from './v1/decompileScript/decompileScript.js';
+} from './v1/signatures.types.js';
 
 /**
- * Stamp each signature string parameter (S) with how it is stored in BCS bytecode.
+ * Stamp each signature string parameter (s) with how it is stored in BCS bytecode.
  *
  * Problem: TRIGGER.IDS / ACTION.IDS describe *logical* arguments (e.g. SetGlobal has
  * separate S:Name and S:Area), but triggers/actions only have two physical string slots
@@ -26,11 +26,11 @@ import type { BcsContext } from './v1/decompileScript/decompileScript.js';
  * say which functions pack strings this way; that ruleset is hardcoded per function id
  * (Near Infinity: ScriptInfo.functionConcatMap + Parameter.isCombinedString).
  *
- * I resolve that once when parsing IDS tails into FunctionParam[], so decompilation
- * can split slots in getStringParam (see decompileObject.ts) without re-deriving masks.
+ * I resolve that once when parsing IDS tails into FunctionParam[], so translation
+ * can split slots without re-deriving masks.
  *
  * PST EE v1: only area6 packing (no colon-separated slots). Queues live in
- * PST_STRING_PACKS_BY_ID / PST_STRING_PACKS_A|B in ./types.ts (ported from NI PST profile).
+ * PST_STRING_PACKS_BY_ID / PST_STRING_PACKS_A|B in ./engineRules.ts (ported from NI PST profile).
  *
  * Further reading:
  * - BCS wire format & string-slot limits:
@@ -50,20 +50,20 @@ import type { BcsContext } from './v1/decompileScript/decompileScript.js';
 const assignStringPacks = (id: number, parameters: FunctionParam[]): FunctionParam[] => {
   const packs = PST_STRING_PACKS_BY_ID.get(id);
 
-  let stringIndex = 0; // index of a parameter typeof string in the PST_STRING_PACKS_BY_ID value
+  let index = 0;
 
-  // the point is to iterate using stringIndex over parameters
-  return parameters.map((p) => {
-    const isString = p.type === 's';
-    if (!isString) return p;
+  return parameters
+    .map((p) => {
+      const isString = p.type === 's';
+      if (!isString) return p;
 
-    // override stringPack to 'plain', if it is a common parameter
-    if (!packs) return { ...p, stringPack: 'plain' };
+      const isCommonParameter = !packs;
+      if (isCommonParameter) return { ...p, stringPack: 'plain' };
 
-    const stringPack = just(packs[stringIndex]);
-    stringIndex += 1;
-    return { ...p, stringPack };
-  });
+      const stringPack = just(packs[index]);
+      index++;
+      return { ...p, stringPack };
+    });
 };
 
 const validateType = (x: string): ParamType => {
@@ -80,26 +80,28 @@ const validateType = (x: string): ParamType => {
 };
 
 const parseParameters = (param: string, id: number): FunctionParam[] => {
-  const result = param.split(',').map((arg) => {
-    const [rawType, subtype] = arg.split(':').map(x => x.trim());
-    if (!rawType) throw new Error(`Wrong format of '${arg}': cannot find the type of an argument`);
-    if (!subtype) throw new Error(`Wrong format of '${arg}': cannot find the subtype of an argument`);
+  const result = param
+    .split(',')
+    .map((arg) => {
+      const [rawType, subtype] = arg.split(':').map(x => x.trim());
+      if (!rawType) throw new Error(`Wrong format of '${arg}': cannot find the type of an argument`);
+      if (!subtype) throw new Error(`Wrong format of '${arg}': cannot find the subtype of an argument`);
 
-    const [tag, idsRef] = subtype.split('*').map(x => x.trim());
-    if (!tag) throw new Error(`Wrong format of '${arg}': cannot find the subtype of an argument`);
-    // idsRef can be empty
+      const [tag, idsRef] = subtype.split('*').map(x => x.trim());
+      if (!tag) throw new Error(`Wrong format of '${arg}': cannot find the tag of an argument`);
+      // idsRef can be empty
 
-    const type = validateType(rawType);
+      const type = validateType(rawType);
 
-    const parameter: FunctionParam = {
-      type,
-      tag,
-      idsRef: idsRef ?? '',
-      stringPack: 'plain',
-    };
+      const parameter: FunctionParam = {
+        type,
+        tag,
+        idsRef: idsRef ? idsRef : nothing(),
+        stringPack: 'plain',
+      };
 
-    return parameter;
-  });
+      return parameter;
+    });
 
   return assignStringPacks(id, result);
 };
@@ -114,7 +116,7 @@ const parseSignature = (
   if (!match) throw new Error(`Wrong signature syntax at '${tail}' (id='${id}', resource='${resourceName}')`);
 
   const name = match[1];
-  const brackets = match[2] ?? ''; // without brackets itself, 'args' name is too generic
+  const brackets = match[2]; // without brackets itself, 'args' name is too generic
   if (!name) throw new Error(`Cannot parse signature name from '${tail}' (id='${id}', resource='${resourceName}')`);
   // brackets can be empty, if a function has no args
 
@@ -160,7 +162,6 @@ const parseXorKey = (code: string): number[] => {
   return numbers;
 };
 
-// TODO [snow]: ping NI team about it
 const loadXorKey = async (): Promise<number[]> => {
   const url = 'https://raw.githubusercontent.com/NearInfinityBrowser/NearInfinity/master/src/org/infinity/util/StaticSimpleXorDecryptor.java';
   const response = await fetch(url);
@@ -169,9 +170,7 @@ const loadXorKey = async (): Promise<number[]> => {
 };
 
 export const buildBcsContext = async (ids: Map<string, Ids>): Promise<BcsContext> => {
-  for (const must of BCS_REQUIRED_IDS) {
-    if (!ids.has(must)) throw new Error(`BCS parser requires '${must}' in ids map`);
-  }
+  for (const must of BCS_REQUIRED_IDS) if (!ids.has(must)) throw new Error(`BCS parser requires '${must}' to be in ids map`);
 
   const xorKey = await loadXorKey();
 

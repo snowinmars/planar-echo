@@ -1,11 +1,12 @@
-import type { PstStringPack } from '../types.js';
+import type { Maybe } from '@planar/shared';
+import type { PstStringPack } from '../engineRules.js';
 
 export type ParamType = 'a' | 't' | 'i' | 'o' | 'p' | 's';
 
 export type FunctionParam = Readonly<{
   type: ParamType;
   tag: string;
-  idsRef: string;
+  idsRef: Maybe<string>;
   stringPack: PstStringPack;
 }>;
 

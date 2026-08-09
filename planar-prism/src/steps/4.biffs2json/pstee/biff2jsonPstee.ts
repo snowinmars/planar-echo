@@ -16,7 +16,7 @@ import type { CreatureV10, CreatureV11 } from './cre/index.js';
 import type { RawDlg } from './dlg/index.js';
 import type { EffectV20 } from './eff/index.js';
 import type { ItmV10 } from './itm/index.js';
-import type { DecompiledBcs } from './bcs/index.js';
+import type { Bcs } from './bcs/index.js';
 import type { AllPsteeJsons } from '../types.js';
 
 type Creature = CreatureV10 | CreatureV11;
@@ -54,7 +54,7 @@ const biffs2jsonPstee = async (
   ///
 
   logger.info(`Converting bcs to json...`);
-  const bcs: DecompiledBcs[] = [];
+  const bcs: Bcs[] = [];
   const bcsItems = decompiledBiffs.get('bcs') ?? [];
   const bcsCtx = await buildBcsContext(ids);
   const bcsIterator = parseBcs(paths, bcsItems, bcsCtx);

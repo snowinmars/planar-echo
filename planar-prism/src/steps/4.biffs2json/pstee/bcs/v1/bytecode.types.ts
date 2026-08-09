@@ -53,12 +53,3 @@ export type ParsedBcsCr = Readonly<{
 export type ParsedBcsScript = Readonly<{
   blocks: ParsedBcsCr[];
 }>;
-
-export const emptyObject = (): ParsedBcsObject => ({
-  target: Array.from({ length: 12 }, () => 0),
-  identifier: Array.from({ length: 5 }, () => 0),
-  region: { x: -1, y: -1, width: -1, height: -1 },
-  name: '',
-});
-
-export const emptyPoint = (): BcsPoint => ({ x: 0, y: 0 });

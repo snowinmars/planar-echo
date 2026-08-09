@@ -3,7 +3,7 @@
 const xorDecrypt = (buffer: Buffer, offset: number, xorKey: number[]): Buffer => {
   const out = Buffer.alloc(buffer.length - offset);
   let decOff = 0;
-  for (let i = offset; i < buffer.length; i += 1) {
+  for (let i = offset; i < buffer.length; i++) {
     const b = buffer[i]!;
     const signed = b > 127 ? b - 256 : b;
     out[i - offset] = ((256 + signed) ^ xorKey[decOff]!) & 0xff;

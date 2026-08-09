@@ -1,6 +1,5 @@
 import type { Maybe } from '@planar/shared';
 
-/** Port of Near Infinity StringBufferStream (subset used by BCS parsers). */
 export type BcsStream = Readonly<{
   eos: () => boolean;
   positionOf: () => number;

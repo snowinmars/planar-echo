@@ -1,11 +1,11 @@
 export { parseBcs } from './parseBcs.js';
-export { loadBcsBytecode } from './loadBcsBytecode.js';
 export { buildBcsContext } from './buildBcsContext.js';
+
 export type {
-  DecompiledBcs,
-  IfBlock,
-  BlockScope,
+  Bcs,
+  BcsArg,
   BlockFunction,
-  DecompiledArg,
+  BlockScope,
+  IfBlock,
   TempVariable,
-} from './types.js';
+} from './parseBcs.types.js';

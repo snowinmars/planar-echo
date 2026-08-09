@@ -13,7 +13,7 @@ export const createBcsStream = (data: string): BcsStream => {
   const positionOf = (): number => position;
 
   const skipWhitespaces = (): BcsStream => {
-    while (!eos() && WHITESPACES.includes(data[position]!)) position += 1;
+    while (!eos() && WHITESPACES.includes(data[position]!)) position++;
 
     return stream;
   };
@@ -45,9 +45,7 @@ export const createBcsStream = (data: string): BcsStream => {
   };
 
   const skipByte = (andWhitespaces = true): BcsStream => {
-    if (position < data.length) {
-      position += 1;
-    }
+    if (position < data.length) position++;
     return andWhitespaces ? skipWhitespaces() : stream;
   };
 
@@ -64,7 +62,7 @@ export const createBcsStream = (data: string): BcsStream => {
 
   const getByte = (andWhitespaces = true): string => {
     const ch = peek();
-    if (position < data.length) position += 1;
+    if (position < data.length) position++;
 
     if (andWhitespaces) skipWhitespaces();
 

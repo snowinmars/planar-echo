@@ -82,7 +82,7 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOf
 
   const byte = (maxToZero = false): number => {
     const value = buffer.readInt8(offset);
-    offset += 1;
+    offset++;
     if (maxToZero && value === maxInt8) return 0;
     return value;
   };
@@ -97,7 +97,7 @@ export const createReader = (buffer: Buffer, initialOffset: number = 0, forkedOf
 
   const ubyte = (maxToZero = false): number => {
     const value = buffer.readUInt8(offset);
-    offset += 1;
+    offset++;
     if (maxToZero && value === maxUint8) return 0;
     return value;
   };
