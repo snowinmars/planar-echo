@@ -31,6 +31,10 @@ export type Paths = Readonly<{
   gameLanguage: GameLanguage;
   ghostDir: Readonly<{
     root: string;
+    cache: Readonly<{
+      root: string;
+      xorKey: string;
+    }>;
     decompiledBiff: Readonly<{
       root: string;
       cacheJson: string;

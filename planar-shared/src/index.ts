@@ -9,6 +9,7 @@ export { registerNpcDialogue } from './dialogueEngine/registerNpcDialogue.js';
 export { dialogueToCreatures, creatureToDialogues } from './resourceMappers/creatureToDialogue.js';
 export { dialogueToCreatureOrItem } from './resourceMappers/dialogueToCreatureOrItem.js';
 export { dialogueToItems, itemToDialogues } from './resourceMappers/itemToDialogues.js';
+export { sleep } from './sleep.js';
 
 export type { Direction } from './direction.js';
 export type { GameName } from './gameName.js';

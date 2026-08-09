@@ -18,6 +18,9 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const gameDir        = normalize(dirname(chitinKeyFile));
   const tlkDir         = normalize(join(gameDir, 'lang', props.gameLanguage, 'dialog.tlk'));
 
+  const cacheRoot      = normalize(join(ghostDir, 'cache'));
+  const cacheXorKey    = normalize(join(cacheRoot, 'xor-key.json'));
+
   const decompiledBiffRoot      = normalize(join(ghostDir          , 'decompiledBiff'));
   const decompiledBiffCacheJson = normalize(join(decompiledBiffRoot, 'output.json'));
 
@@ -54,6 +57,10 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     gameLanguage: props.gameLanguage,
     ghostDir: {
       root: ghostDir,
+      cache: {
+        root  : cacheRoot,
+        xorKey: cacheXorKey,
+      },
       decompiledBiff: {
         root     : decompiledBiffRoot,
         cacheJson: decompiledBiffCacheJson,
@@ -108,6 +115,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
 
   await mkdirsIfNotExists([
     paths.ghostDir.root,
+    paths.ghostDir.cache.root,
     paths.ghostDir.decompiledBiff.root,
     paths.ghostDir.json.tlk,
     paths.ghostDir.json.dialogues,

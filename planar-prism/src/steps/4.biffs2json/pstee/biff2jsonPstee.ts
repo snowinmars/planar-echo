@@ -56,7 +56,7 @@ const biffs2jsonPstee = async (
   logger.info(`Converting bcs to json...`);
   const bcs: Bcs[] = [];
   const bcsItems = decompiledBiffs.get('bcs') ?? [];
-  const bcsCtx = await buildBcsContext(ids);
+  const bcsCtx = await buildBcsContext(ids, paths.ghostDir.cache.xorKey);
   const bcsIterator = parseBcs(paths, bcsItems, bcsCtx);
   for await (const b of bcsIterator) {
     bcs.push(b);
