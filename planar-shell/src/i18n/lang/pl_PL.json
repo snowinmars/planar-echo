@@ -90,6 +90,7 @@
       "ini_raw2json": ".ini → json",
       "itm_raw2json": ".itm → json",
       "tlk_raw2json": ".tlk → json",
+      "bcs_raw2json": ".bcs → json",
       "tlk_json2ghost": ".tlk json → ghost",
       "cre_json2ghost": ".cre json → ghost",
       "dlg_json2ghost": ".dlg json → ghost",
