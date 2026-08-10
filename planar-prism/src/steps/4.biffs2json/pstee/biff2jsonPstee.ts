@@ -6,7 +6,13 @@ import { parseCre } from './cre/index.js';
 import { parseDlg } from './dlg/index.js';
 import { parseEffV20 } from './eff/index.js';
 import { parseItm } from './itm/index.js';
-import { buildBcsContext, parseBcs } from './bcs/index.js';
+import {
+  buildBcsContext,
+  buildUniqueSpecificToWhoId,
+  markBcsKind,
+  parseBcs,
+  resolveBcsObjectWhoIds,
+} from './bcs/index.js';
 
 import type { Paths } from '../../1.createPaths/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../../3.decompileBiffs/index.js';
@@ -129,6 +135,18 @@ const biffs2jsonPstee = async (
     await paths.ghostDir.saveJson.items(itm.resourceName, itm);
   }
 
+  ///
+
+  logger.info(`Resolving bcs object whoIds from unique CRE specifics...`);
+  const specificToWhoId = buildUniqueSpecificToWhoId(cres);
+  const resolvedBcs = resolveBcsObjectWhoIds(bcs, specificToWhoId);
+
+  logger.info(`Marking bcs kind (ai|cutscene)...`);
+  const markedBcs = markBcsKind(resolvedBcs, dlgs);
+  for (const b of markedBcs) {
+    await paths.ghostDir.saveJson.bcs(`${b.resourceName}.json`, b);
+  }
+
   return {
     tlk,
     ids,
@@ -137,7 +155,7 @@ const biffs2jsonPstee = async (
     dlgs,
     effs,
     itms,
-    bcs,
+    bcs: markedBcs,
   };
 };
 

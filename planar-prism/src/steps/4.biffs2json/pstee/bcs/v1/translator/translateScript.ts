@@ -52,5 +52,5 @@ export const translateScript = (
     )),
   }));
 
-  return { resourceName, blocks };
+  return { resourceName, kind: 'ai', blocks };
 };

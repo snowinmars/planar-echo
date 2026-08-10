@@ -87,3 +87,15 @@ export type {
   UntranslatedAbility,
   UntranslatedEffect,
 } from './itemEngine/untranslatedItem.types.js';
+export type {
+  ObjectQuery,
+  ScriptAction,
+  ScriptBlock,
+  ScriptCondition,
+  ScriptDefinition,
+  ScriptKind,
+  ScriptLogic,
+  ScriptResponse,
+  ScriptSkeleton,
+  ScriptTarget,
+} from './scriptEngine/index.js';

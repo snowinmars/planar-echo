@@ -3,6 +3,7 @@ import { patchTlk } from './tlk/patch.js';
 import { patchCres } from './cre/v10/patch.js';
 import { patchDlgs } from './dlg/v10/patch.js';
 import { patchItms } from './itm/v11/patch.js';
+import { patchBcs } from './bcs/index.js';
 
 import type { Paths } from '../../1.createPaths/types.js';
 import type { AllPsteeJsons } from '../../4.biffs2json/types.js';
@@ -51,5 +52,11 @@ export const json2GhostPstee = async (
   for await (const dlg of dlgsIterator) {
     dlgs.set(dlg.resourceName, dlg);
     await paths.ghostDir.saveGhost.dialogues(`${dlg.resourceName.replaceAll(`'`, '')}.ts`, dlg.skeleton, true);
+  }
+
+  logger.info(`Converting bcs json to ghost...`);
+  const bcsIterator = patchBcs(allJsons.bcs, discover);
+  for await (const bcs of bcsIterator) {
+    await paths.ghostDir.saveGhost.bcs(`${bcs.resourceName.replaceAll(`'`, '')}.ts`, bcs.skeleton, true);
   }
 };

@@ -35,6 +35,7 @@ export const progressSteps = [
   'cre_json2ghost',
   'dlg_json2ghost',
   'itm_json2ghost',
+  'bcs_json2ghost',
 ] as const;
 export type ProgressStep = typeof progressSteps[number];
 
