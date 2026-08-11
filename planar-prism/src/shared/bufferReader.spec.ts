@@ -196,12 +196,12 @@ describe('BufferReader', () => {
     });
 
     it('read value with maxToZero', () => {
-      expect(reader.ubyte(true)).to.equal(0);
+      expect(reader.ushort(true)).to.equal(0);
     });
 
     it('read value without maxToZero', () => {
       reader.ushort();
-      expect(reader.ubyte(true)).to.equal(1);
+      expect(reader.ushort(true)).to.equal(1);
     });
 
     it('offset increments', () => {
@@ -361,6 +361,16 @@ describe('BufferReader', () => {
       expect(reader.offset).to.equal(4);
     });
 
+    it('long should shift by 8', function () {
+      reader.skip.long();
+      expect(reader.offset).to.equal(8);
+    });
+
+    it('ulong should shift by 8', function () {
+      reader.skip.ulong();
+      expect(reader.offset).to.equal(8);
+    });
+
     it('custom should shift by N', function () {
       reader.skip.custom(7);
       expect(reader.offset).to.equal(7);
@@ -387,8 +397,11 @@ describe('BufferReader', () => {
       reader.skip.uint();
       expect(reader.offset).to.equal(14);
 
+      reader.skip.long();
+      expect(reader.offset).to.equal(22);
+
       reader.skip.custom(7);
-      expect(reader.offset).to.equal(21);
+      expect(reader.offset).to.equal(29);
     });
   });
 
@@ -409,7 +422,7 @@ describe('BufferReader', () => {
 
     it('read value with asIs', function () {
       const s = reader.string(buffer.length, true, 'utf-8');
-      expect(s).to.equal('  ПриВет\r\nWorld  ');
+      expect(s).to.equal('  ПриВет\0\r\nWorld  ');
       expect(reader.offset).to.equal(buffer.length);
     });
 
@@ -515,6 +528,13 @@ describe('BufferReader', () => {
       expect(reader.map.uint(x => x)).to.equal(2147483648);
       expect(reader.offset).to.equal(16);
     });
+
+    it('read string value', function () {
+      const buf = Buffer.from('AbCd\0', 'ascii');
+      const r = createReader(buf);
+      expect(r.map.string(buf.length, x => `mapped:${x}`)).to.equal('mapped:abcd');
+      expect(r.offset).to.equal(buf.length);
+    });
   });
 
   describe('boolean', function () {
@@ -614,6 +634,38 @@ describe('BufferReader', () => {
       expect(() => reader.boolean.uint()).to.throw();
     });
 
+    it('read long value', function () {
+      const reader = createReader(bufferFromBytes(
+        0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+        0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+        0x2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+      ));
+
+      expect(reader.boolean.long()).to.equal(false);
+      expect(reader.offset).to.equal(8);
+
+      expect(reader.boolean.long()).to.equal(true);
+      expect(reader.offset).to.equal(16);
+
+      expect(() => reader.boolean.long()).to.throw();
+    });
+
+    it('read ulong value', function () {
+      const reader = createReader(bufferFromBytes(
+        0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+        0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+        0x2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+      ));
+
+      expect(reader.boolean.ulong()).to.equal(false);
+      expect(reader.offset).to.equal(8);
+
+      expect(reader.boolean.ulong()).to.equal(true);
+      expect(reader.offset).to.equal(16);
+
+      expect(() => reader.boolean.ulong()).to.throw();
+    });
+
     it('разные типы (short, int) корректно работают', function () {
       const buf = Buffer.alloc(2);
 
@@ -624,15 +676,123 @@ describe('BufferReader', () => {
   });
 
   describe('customBytes', function () {
-    it('read value', function () {
+    it('read unsigned bytes', function () {
       const reader = createReader(bufferFromBytes(
         0x7F, // 127
-        0xFF, // -1
-        0x80, // -128
+        0xFF, // 255
+        0x80, // 128
       ));
       const bytes = reader.customBytes(3);
-      expect(bytes).to.deep.equal([127, -1, -128]);
+      expect(bytes).to.deep.equal([127, 255, 128]);
       expect(reader.offset).to.equal(3);
+    });
+  });
+
+  describe('long / int64 LE', function () {
+    let reader: BufferReader;
+
+    beforeEach(function () {
+      reader = createReader(bufferFromBytes(
+        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x7f, // maxInt64
+        0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, // 1
+        0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, // 0
+        0x00, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80, // minInt64
+      ));
+    });
+
+    it('read value', () => {
+      expect(reader.long()).to.equal(9223372036854775807n);
+      expect(reader.offset).to.equal(8);
+    });
+
+    it('read value with maxToZero', () => {
+      expect(reader.long(true)).to.equal(0n);
+    });
+
+    it('read value without maxToZero', () => {
+      reader.long();
+      expect(reader.long(true)).to.equal(1n);
+    });
+
+    it('offset increments', () => {
+      expect(reader.offset).to.equal(0);
+
+      expect(reader.long()).to.equal(9223372036854775807n);
+      expect(reader.offset).to.equal(8);
+
+      expect(reader.long()).to.equal(1n);
+      expect(reader.offset).to.equal(16);
+
+      expect(reader.long()).to.equal(0n);
+      expect(reader.offset).to.equal(24);
+
+      expect(reader.long()).to.equal(-9223372036854775808n);
+      expect(reader.offset).to.equal(32);
+    });
+
+    it('out of range access is forbidden', function () {
+      const r = createReader(bufferFromBytes(0, 0, 0, 0, 0, 0, 0, 0));
+      r.long();
+      expect(() => r.long()).to.throw(RangeError);
+    });
+  });
+
+  describe('ulong / uint64 LE', function () {
+    let reader: BufferReader;
+
+    beforeEach(function () {
+      reader = createReader(bufferFromBytes(
+        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, // maxUint64
+        0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, // 1
+        0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, // 0
+        0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, // maxUint64 - 1
+      ));
+    });
+
+    it('read value', () => {
+      expect(reader.ulong()).to.equal(18446744073709551615n);
+      expect(reader.offset).to.equal(8);
+    });
+
+    it('read value with maxToZero', () => {
+      expect(reader.ulong(true)).to.equal(0n);
+    });
+
+    it('read value without maxToZero', () => {
+      reader.ulong();
+      expect(reader.ulong(true)).to.equal(1n);
+    });
+
+    it('offset increments', () => {
+      expect(reader.offset).to.equal(0);
+
+      expect(reader.ulong()).to.equal(18446744073709551615n);
+      expect(reader.offset).to.equal(8);
+
+      expect(reader.ulong()).to.equal(1n);
+      expect(reader.offset).to.equal(16);
+
+      expect(reader.ulong()).to.equal(0n);
+      expect(reader.offset).to.equal(24);
+
+      expect(reader.ulong()).to.equal(18446744073709551614n);
+      expect(reader.offset).to.equal(32);
+    });
+
+    it('out of range access is forbidden', function () {
+      const r = createReader(bufferFromBytes(0, 0, 0, 0, 0, 0, 0, 0));
+      r.ulong();
+      expect(() => r.ulong()).to.throw(RangeError);
+    });
+  });
+
+  describe('sliceRaw', function () {
+    it('returns subarray from start', function () {
+      const buf = bufferFromBytes(1, 2, 3, 4, 5);
+      const reader = createReader(buf);
+      const sliced = reader.sliceRaw(2);
+      expect([...sliced]).to.deep.equal([3, 4, 5]);
+      expect(reader.offset).to.equal(0);
     });
   });
 
@@ -714,6 +874,15 @@ describe('BufferReader', () => {
       const lines = Array.from(reader.readLineByLine(true, true, true, 'ascii'));
 
       expect(lines).to.deep.equal(['hello', 'world']);
+      expect(reader.offset).to.equal(buf.length);
+    });
+
+    it('strips trailing CR when trim=false', function () {
+      const buf = Buffer.from('  Hello\r\n  WORLD\r\n', 'ascii');
+      const reader = createReader(buf);
+      const lines = Array.from(reader.readLineByLine(false, false, true, 'ascii'));
+
+      expect(lines).to.deep.equal(['  Hello', '  WORLD']);
       expect(reader.offset).to.equal(buf.length);
     });
 

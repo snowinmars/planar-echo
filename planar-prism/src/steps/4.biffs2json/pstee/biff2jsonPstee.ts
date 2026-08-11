@@ -7,6 +7,11 @@ import { parseDlg } from './dlg/index.js';
 import { parseEffV20 } from './eff/index.js';
 import { parseItm } from './itm/index.js';
 import { buildBcsContext, parseBcs } from './bcs/index.js';
+import { parseWed } from './wed/index.js';
+import { parsePvrz } from './pvrz/index.js';
+import { parseTis } from './tis/index.js';
+import { decodePvrToRgba } from './pvrz/decode/index.js';
+import { isPaletteArtfact } from './tis/v1/parseTisV1.types.js';
 
 import type { Paths } from '../../1.createPaths/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../../3.decompileBiffs/index.js';
@@ -17,7 +22,11 @@ import type { RawDlg } from './dlg/index.js';
 import type { EffectV20 } from './eff/index.js';
 import type { ItmV10 } from './itm/index.js';
 import type { Bcs } from './bcs/index.js';
+import type { Wed } from './wed/index.js';
+import type { Tis } from './tis/index.js';
 import type { AllPsteeJsons } from '../types.js';
+import type { Pvr } from './pvrz/index.js';
+import type { RgbaImage } from './pvrz/decode/index.js';
 
 type Creature = CreatureV10 | CreatureV11;
 
@@ -129,6 +138,52 @@ const biffs2jsonPstee = async (
     await paths.ghostDir.saveJson.items(itm.resourceName, itm);
   }
 
+  ///
+
+  logger.info(`Converting wed to json...`);
+  const weds: Wed[] = [];
+  const wedItems = decompiledBiffs.get('wed') ?? [];
+  const wedIterator = parseWed(paths, wedItems);
+  for await (const wed of wedIterator) {
+    weds.push(wed);
+    await paths.ghostDir.saveJson.wed(wed.resourceName, wed);
+  }
+  const wedIndex = new Map<string, Wed>(weds.map(wed => [wed.resourceName, wed]));
+
+  ///
+
+  logger.info(`Converting pvrz to json...`);
+  const pvrs: Pvr[] = [];
+  const pvrzRgbaIndex = new Map<string, RgbaImage>();
+  const pvrzItems = decompiledBiffs.get('pvrz') ?? [];
+  const pvrzIterator = parsePvrz(paths, pvrzItems);
+  for await (const { pvr, pixelData } of pvrzIterator) {
+    pvrs.push(pvr);
+    pvrzRgbaIndex.set(pvr.resourceName, decodePvrToRgba(pvr, pixelData));
+    await paths.ghostDir.saveJson.pvrz(pvr.resourceName, pvr);
+  }
+
+  ///
+
+  logger.info(`Converting tis to json...`);
+  const tiss: Tis[] = [];
+  const tisItems = decompiledBiffs.get('tis') ?? [];
+  const tisIterator = parseTis({
+    paths,
+    decompiledItems: tisItems,
+    wedIndex: wedIndex,
+    pvrzRgbaIndex,
+  });
+  for await (const artifacts of tisIterator) {
+    tiss.push(artifacts.tis);
+    await paths.ghostDir.saveJson.tis(artifacts.tis.resourceName, artifacts.tis);
+    await paths.ghostDir.saveBinary.tisImage(artifacts.tis.resourceName, artifacts.png);
+    if (isPaletteArtfact(artifacts)) {
+      await paths.ghostDir.saveBinary.tisPalette(artifacts.tis.resourceName, artifacts.palette);
+      await paths.ghostDir.saveBinary.tisIndices(artifacts.tis.resourceName, artifacts.indices);
+    }
+  }
+
   return {
     tlk,
     ids,
@@ -138,6 +193,9 @@ const biffs2jsonPstee = async (
     effs,
     itms,
     bcs,
+    weds,
+    pvrs,
+    tiss,
   };
 };
 

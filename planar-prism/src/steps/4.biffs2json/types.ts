@@ -7,6 +7,9 @@ import type { EffectV10 as EffectV10Pstee } from './pstee/eff/v10/parseEffectV10
 import type { EffectV20 as EffectV20Pstee } from './pstee/eff/v20/parseEffectV20.types.js';
 import type { ItmV10 as ItmV10Pstee } from './pstee/itm/types.js';
 import type { Bcs as BcsPstee } from './pstee/bcs/index.js';
+import type { Wed as WedPstee } from './pstee/wed/index.js';
+import type { Pvr as PvrPstee } from './pstee/pvrz/index.js';
+import type { Tis as TisPstee } from './pstee/tis/index.js';
 
 type EffectPstee = EffectV10Pstee | EffectV20Pstee;
 type CreaturePstee = CreatureV10Pstee | CreatureV11Pstee;
@@ -20,4 +23,7 @@ export type AllPsteeJsons = Readonly<{
   effs: EffectPstee[];
   itms: ItmV10Pstee[];
   bcs: BcsPstee[];
+  weds: WedPstee[];
+  pvrs: PvrPstee[];
+  tiss: TisPstee[];
 }>;

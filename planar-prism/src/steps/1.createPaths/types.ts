@@ -10,8 +10,12 @@ type OutDir = Readonly<{
   effects: string;
   items: string;
   bcs: string;
+  wed: string;
+  pvrz: string;
+  tis: string;
 }>;
 type SaveFunction = (resourceName: string, entry: unknown, asIs?: boolean) => Promise<void>;
+type SaveBinaryFunction = (resourceName: string, data: Buffer) => Promise<void>;
 type OutSave = Readonly<{
   tlk: SaveFunction;
   dialogues: SaveFunction;
@@ -21,6 +25,14 @@ type OutSave = Readonly<{
   effects: SaveFunction;
   items: SaveFunction;
   bcs: SaveFunction;
+  wed: SaveFunction;
+  pvrz: SaveFunction;
+  tis: SaveFunction;
+}>;
+type OutSaveBinary = Readonly<{
+  tisImage: SaveBinaryFunction;
+  tisPalette: SaveBinaryFunction;
+  tisIndices: SaveBinaryFunction;
 }>;
 export type Paths = Readonly<{
   weiduExeDir: string;
@@ -41,6 +53,7 @@ export type Paths = Readonly<{
     }>;
     json: OutDir;
     saveJson: OutSave;
+    saveBinary: OutSaveBinary;
     ghost: OutDir;
     saveGhost: OutSave;
     sharedEnums: string;

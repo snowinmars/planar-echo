@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@planar/shared": "workspace:*",
+    "pngjs": "^7.0.0",
     "rxjs": "^7.8.2",
     "winston": "^3.19.0"
   },
@@ -37,6 +38,7 @@
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.5.0",
+    "@types/pngjs": "^6.0.5",
     "@typescript-eslint/parser": "^8.57.1",
     "chai": "^6.2.2",
     "cpy-cli": "^7.0.0",

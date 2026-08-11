@@ -34,6 +34,9 @@ export const entryExists = async (entryPath: Maybe<string>): Promise<boolean> =>
 export const saveToFile = async (path: string, item: unknown, asIs = false): Promise<void> => {
   await writeFile(path, asIs ? item as string : jsonStringify(item), { encoding: 'utf8' });
 };
+export const saveBinaryToFile = async (path: string, data: Buffer): Promise<void> => {
+  await writeFile(path, data);
+};
 export const loadFromFile = async <T>(path: string, asIs = false): Promise<T> => {
   const json = await readFile(path, { encoding: 'utf8' });
   return asIs ? json as T : jsonParse(json);
