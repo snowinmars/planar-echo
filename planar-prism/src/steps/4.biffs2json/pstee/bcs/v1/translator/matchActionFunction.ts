@@ -19,10 +19,16 @@ type ActionSignatureScore = Readonly<{
   hasStrings: boolean;
 }>;
 
-const scoreActionSignature = (
-  action: ParsedBcsAction,
-  signature: SignatureFunction,
-): ActionSignatureScore => {
+type ScoreActionSignatureProps = Readonly<{
+  resourceName: string;
+  action: ParsedBcsAction;
+  signature: SignatureFunction;
+}>;
+const scoreActionSignature = ({
+  resourceName,
+  action,
+  signature,
+}: ScoreActionSignatureProps): ActionSignatureScore => {
   let integerCount = 0;
   let stringCount = 0;
   let objectCount = 0;
@@ -45,8 +51,8 @@ const scoreActionSignature = (
         pointCount++;
         break;
       case 'a':
-      case 't': throw new Error(`Unexpected trigger parameter type '${parameter.type}' in action ${signature.name}`);
-      default: throw new Error(`Unknown trigger parameter type '${parameter.type}' in action ${signature.name}`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+      case 't': throw new Error(`Unexpected trigger parameter type '${parameter.type}' in action '${signature.name}' for resource '${resourceName}'`);
+      default: throw new Error(`Unknown trigger parameter type '${parameter.type}' in action '${signature.name}' for resource '${resourceName}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
     }
   }
 
@@ -71,7 +77,11 @@ const scoreActionSignature = (
   else {
     // a8/a9 hold at most 4 logical string (2 slots of (area6 + name) pairs), so indices will be 0..3
     for (let i = 3; i >= 0; i -= 1) {
-      const value = splitHalfOfAreaStrings(signature, i, [action.a8, action.a9]);
+      const value = splitHalfOfAreaStrings({
+        functionSignature: signature,
+        index: i,
+        strings: [action.a8, action.a9],
+      });
       if (!isNothing(value) && value !== '') {
         stringScore = stringCount - i - 1;
         break;
@@ -108,12 +118,18 @@ const scoreActionSignature = (
   };
 };
 
-export const matchActionFunction = (
-  action: ParsedBcsAction,
-  signatures: Signatures,
-): SignatureFunction => {
+type MatchActionFunctionProps = Readonly<{
+  resourceName: string;
+  action: ParsedBcsAction;
+  signatures: Signatures;
+}>;
+export const matchActionFunction = ({
+  resourceName,
+  action,
+  signatures,
+}: MatchActionFunctionProps): SignatureFunction => {
   const functions = signatures.byId.get(action.id);
-  if (!functions) throw new Error(`Could not find action ${action.id} in ${signatures.resource}`);
+  if (!functions) throw new Error(`Could not find action '${action.id}' in '${signatures.resource}' for resource '${resourceName}'`);
   if (functions.length === 1) return functions[0]!;
 
   let best: Maybe<SignatureFunction> = nothing();
@@ -127,7 +143,11 @@ export const matchActionFunction = (
       parameterCount,
       isMatch,
       hasStrings,
-    } = scoreActionSignature(action, signature);
+    } = scoreActionSignature({
+      resourceName,
+      action,
+      signature,
+    });
 
     const isFirstStringSignature = isNothing(fallback) && hasStrings;
     if (isFirstStringSignature) fallback = signature;

@@ -66,7 +66,7 @@ export default async ({
       },
     };
 
-    logger.info(`Load ${tlk.length} tlk items for language '${gameLanguage}'`);
+    logger.info(`Load '${tlk.length}' tlk items for language '${gameLanguage}'`);
     tlks.set(gameLanguage, tlk);
   }
 

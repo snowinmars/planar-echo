@@ -182,7 +182,7 @@ const fetchXorKey = async (): Promise<number[]> => {
   for (let attempt = 0; attempt < XOR_KEY_FETCH_ATTEMPTS; attempt++) {
     try {
       const response = await fetch(url);
-      if (!response.ok) throw new Error(`Could not load InfinityEngine xorKey: HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`Could not load InfinityEngine xorKey: HTTP '${response.status}'`);
 
       return parseXorKey(await response.text());
     }

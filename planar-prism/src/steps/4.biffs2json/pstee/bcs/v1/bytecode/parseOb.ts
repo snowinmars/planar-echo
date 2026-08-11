@@ -10,7 +10,7 @@ import type { BcsStream } from '../bcsStream.types.js';
 import type { BcsRegion, ParsedBcsObject } from '../bytecode.types.js';
 
 export const parseOb = (stream: BcsStream): ParsedBcsObject => {
-  if (!stream.skipToken(OB_TOKEN)) throw new Error(`Expected '${OB_TOKEN}' at position ${stream.positionOf()}`);
+  if (!stream.skipToken(OB_TOKEN)) throw new Error(`Expected '${OB_TOKEN}' at position '${stream.positionOf()}'`);
 
   const numbers: number[] = [];
   let name: Maybe<string> = nothing();
@@ -29,7 +29,7 @@ export const parseOb = (stream: BcsStream): ParsedBcsObject => {
         name = parseString(stream);
         break;
       case 'o': throw new Error(`Unsupported BCS object code 'o' at position '${stream.positionOf()}'`);
-      default: throw new Error(`Invalid BCS object code '${kind}' at position ${stream.positionOf()}`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+      default: throw new Error(`Invalid BCS object code '${kind}' at position '${stream.positionOf()}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
     }
   }
 
@@ -38,7 +38,7 @@ export const parseOb = (stream: BcsStream): ParsedBcsObject => {
 
   const identifierCount = 5;
   const tooFewNumbers = numbers.length < identifierCount;
-  if (tooFewNumbers) throw new Error(`Too few numeric parameters: at least ${identifierCount} numbers should be found`);
+  if (tooFewNumbers) throw new Error(`Too few numeric parameters: at least '${identifierCount}' numbers should be found`);
 
   return {
     target: numbers.slice(0, -identifierCount),

@@ -39,7 +39,7 @@ export const parseDirection = (s: string): Direction => {
     case 'w': return '4=west';
     case 'n': return '8=north';
     case 'e': return '12=east';
-    default: throw new Error(`Cannot parse Direction from ${s}`);
+    default: throw new Error(`Cannot parse Direction from '${s}'`);
   }
 };
 

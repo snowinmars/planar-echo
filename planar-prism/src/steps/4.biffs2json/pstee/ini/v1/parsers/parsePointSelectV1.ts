@@ -9,6 +9,6 @@ export const parsePointSelectV1 = (s: Maybe<string>): CreatureIniPointSelect => 
     case 'i': return 'i=POINT_SELECT_INDEXED_SEQUENTIAL';
     case 'r': return 'r=POINT_SELECT_RANDOM_SEQUENTIAL';
     case 's': return 's=POINT_SELECT_SEQUENTIAL';
-    default: throw new Error(`Cannot parse PointSelect from ${s}`);
+    default: throw new Error(`Cannot parse PointSelect from '${s}'`);
   }
 };

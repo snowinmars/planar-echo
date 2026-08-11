@@ -106,7 +106,7 @@ export const parseIniV1 = ({
       continue;
     }
 
-    throw new Error(`Cannot parse section ${section.name} at file ${resourceName}`);
+    throw new Error(`Cannot parse section '${section.name}' at file '${resourceName}'`);
   }
 
   return {

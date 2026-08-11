@@ -12,17 +12,23 @@ import type {
   Signatures,
 } from '../signatures.types.js';
 
-const findSignatures = (
-  id: number,
-  signatures: Signatures,
-): SignatureFunction[] => {
+type FindSignaturesProps = Readonly<{
+  resourceName: string;
+  id: number;
+  signatures: Signatures;
+}>;
+const findSignatures = ({
+  resourceName,
+  id,
+  signatures,
+}: FindSignaturesProps): SignatureFunction[] => {
   const direct = signatures.byId.get(id);
   if (direct) return direct;
 
   const alternate = signatures.byId.get(id ^ 0x4000);
   if (alternate) return alternate;
 
-  throw new Error(`Could not find trigger 0x${id.toString(16)} in ${signatures.resource}`);
+  throw new Error(`Could not find trigger '0x${id.toString(16)}' in '${signatures.resource}' for resource '${resourceName}'`);
 };
 
 type ParameterCounts = Readonly<{
@@ -30,7 +36,14 @@ type ParameterCounts = Readonly<{
   strings: number;
   objects: number;
 }>;
-const countParameters = (signature: SignatureFunction): ParameterCounts => {
+type CountParametersProps = Readonly<{
+  resourceName: string;
+  signature: SignatureFunction;
+}>;
+const countParameters = ({
+  resourceName,
+  signature,
+}: CountParametersProps): ParameterCounts => {
   let integers = 0;
   let strings = 0;
   let objects = 0;
@@ -48,8 +61,8 @@ const countParameters = (signature: SignatureFunction): ParameterCounts => {
         break;
       case 'p':
       case 'a':
-      case 't': throw new Error(`Unsupported trigger parameter type ${parameter.type} in ${signature.name}`);
-      default: throw new Error(`Unknown trigger parameter type '${parameter.type}' in ${signature.name}`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+      case 't': throw new Error(`Unsupported trigger parameter type '${parameter.type}' in '${signature.name}' for resource '${resourceName}'`);
+      default: throw new Error(`Unknown trigger parameter type '${parameter.type}' in '${signature.name}' for resource '${resourceName}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
     }
   }
 
@@ -61,11 +74,20 @@ type FunctionScore = Readonly<{
   primary: number;
   average: number;
 }>;
-const scoreSignature = (
-  trigger: ParsedBcsTrigger,
-  signature: SignatureFunction,
-): FunctionScore => {
-  const counts = countParameters(signature);
+type ScoreSignatureProps = Readonly<{
+  resourceName: string;
+  trigger: ParsedBcsTrigger;
+  signature: SignatureFunction;
+}>;
+const scoreSignature = ({
+  resourceName,
+  trigger,
+  signature,
+}: ScoreSignatureProps): FunctionScore => {
+  const counts = countParameters({
+    resourceName,
+    signature,
+  });
 
   let integerScore = 0;
   if (!isNothing(trigger.t1) && trigger.t1 !== 0) integerScore++;
@@ -75,7 +97,11 @@ const scoreSignature = (
 
   let stringScore = 0;
   for (let i = 0; i < counts.strings; i++) {
-    const value = splitHalfOfAreaStrings(signature, i, [trigger.t5, trigger.t6]); // TODO [snow]: why value may be '' here?
+    const value = splitHalfOfAreaStrings({
+      functionSignature: signature,
+      index: i,
+      strings: [trigger.t5, trigger.t6],
+    }); // TODO [snow]: why value may be '' here?
     if (!isNothing(value)) stringScore++;
   }
   stringScore -= counts.strings;
@@ -91,11 +117,21 @@ const scoreSignature = (
   };
 };
 
-export const matchTriggerFunction = (
-  trigger: ParsedBcsTrigger,
-  signatures: Signatures,
-): SignatureFunction => {
-  const functions = findSignatures(trigger.id, signatures);
+type MatchTriggerFunctionProps = Readonly<{
+  resourceName: string;
+  trigger: ParsedBcsTrigger;
+  signatures: Signatures;
+}>;
+export const matchTriggerFunction = ({
+  resourceName,
+  trigger,
+  signatures,
+}: MatchTriggerFunctionProps): SignatureFunction => {
+  const functions = findSignatures({
+    resourceName,
+    id: trigger.id,
+    signatures,
+  });
   if (functions.length === 1) return functions[0]!;
 
   let best: Maybe<SignatureFunction> = nothing();
@@ -104,7 +140,11 @@ export const matchTriggerFunction = (
   let bestParameterCount = Number.POSITIVE_INFINITY;
 
   for (const signature of functions) {
-    const score = scoreSignature(trigger, signature);
+    const score = scoreSignature({
+      resourceName,
+      trigger,
+      signature,
+    });
     const noWinner = isNothing(best);
     const betterPrimary = score.primary < bestPrimary;
     const tiedPrimary = score.primary === bestPrimary;
@@ -122,7 +162,7 @@ export const matchTriggerFunction = (
   }
 
   if (isNothing(best)) {
-    throw new Error(`No matching signature for trigger ${trigger.id}`);
+    throw new Error(`No matching signature for trigger '${trigger.id}' for resource '${resourceName}'`);
   }
   return best;
 };

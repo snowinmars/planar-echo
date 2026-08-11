@@ -1,7 +1,7 @@
 import { objectKeys } from '@planar/shared';
 import { gameLanguages } from '@planar/shared';
 
-import type{ GameLanguage } from '@planar/shared';
+import type { GameLanguage } from '@planar/shared';
 import type { Resource, ResourceLanguage } from 'i18next';
 
 export type NativeLang = Readonly<{
@@ -14,7 +14,7 @@ const getNativeLangNames = (resources: Resource): NativeLang[] => {
       const lang = x as GameLanguage;
       const name = gameLanguages[lang];
       if (name) return { code: lang, name };
-      throw new Error(`Out of range lang ${lang}`);
+      throw new Error(`Out of range lang '${lang}'`);
     });
 };
 

@@ -251,7 +251,7 @@ const detectVariableType = (variable: string, variableInfo: Maybe<VariableInfo>)
   const types = new Set([...variableInfo.spectre].map(v => typeof v));
   if (types.size > 1) {
     const x = [...types].join(', ');
-    throw new Error(`Variable '${variable}' cannot exist in several types: ${x}`);
+    throw new Error(`Variable '${variable}' cannot exist in several types: '${x}'`);
   }
 
   if (variableInfo.forceType === 'string') return 'string';

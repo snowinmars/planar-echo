@@ -56,7 +56,7 @@ const detectDecompiledItemType = (extension: string): DecompiledBiffType => {
 const decompileBiffsRegex = /\[(.*?)\] created from \[(.*?)\]/;
 const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => {
   const noMatches = line.startsWith('No matches for');
-  if (noMatches) logger.warn(`It may be ok, but: ${line}`);
+  if (noMatches) logger.warn(`It may be ok, but: '${line}'`);
 
   const matches = decompileBiffsRegex.exec(line.toLowerCase());
   const isTechInfo = !matches || matches.length <= 1;

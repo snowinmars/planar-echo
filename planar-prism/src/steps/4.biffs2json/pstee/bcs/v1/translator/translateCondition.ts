@@ -23,12 +23,20 @@ import type {
 } from '../signatures.types.js';
 import type { VariableWrapper } from '../temps/createVariableWrapper.types.js';
 
-const translateTriggerArguments = (
-  trigger: ParsedBcsTrigger,
-  functionSignature: SignatureFunction,
-  ids: Map<string, Ids>,
-  variableWrapper: VariableWrapper,
-): BcsArg[] => {
+type TranslateTriggerArgumentsProps = Readonly<{
+  resourceName: string;
+  trigger: ParsedBcsTrigger;
+  functionSignature: SignatureFunction;
+  ids: Map<string, Ids>;
+  variableWrapper: VariableWrapper;
+}>;
+const translateTriggerArguments = ({
+  resourceName,
+  trigger,
+  functionSignature,
+  ids,
+  variableWrapper,
+}: TranslateTriggerArgumentsProps): BcsArg[] => {
   const args: BcsArg[] = [];
   let numberIndex = 0;
   let stringIndex = 0;
@@ -39,12 +47,21 @@ const translateTriggerArguments = (
   for (const parameter of functionSignature.parameters) {
     switch (parameter.type) {
       case 'i':
-        args.push(translateNumber(numbers[numberIndex] ?? 0, parameter, ids));
+        args.push(translateNumber({
+          resourceName,
+          value: numbers[numberIndex] ?? 0,
+          param: parameter,
+          ids,
+        }));
         numberIndex++;
         break;
       case 's': {
-        const value = splitHalfOfAreaStrings(functionSignature, stringIndex, strings);
-        if (isNothing(value) || value === '') throw new Error(`Cannot parse string parameter of trigger '${trigger.id}'`);
+        const value = splitHalfOfAreaStrings({
+          functionSignature,
+          index: stringIndex,
+          strings,
+        });
+        if (isNothing(value) || value === '') throw new Error(`Cannot parse string parameter of trigger '${trigger.id}' for resource '${resourceName}'`);
         args.push({ kind: 'string', value });
         stringIndex++;
         break;
@@ -53,69 +70,118 @@ const translateTriggerArguments = (
         if (objectIndex !== 0) {
           throw new Error(`Too many object params for trigger '${functionSignature.name}'`);
         }
-        args.push(objectArgForScope(just(trigger.t7), ids, variableWrapper));
+        args.push(objectArgForScope({
+          resourceName,
+          object: just(trigger.t7),
+          ids,
+          variableWrapper,
+        }));
         objectIndex++;
         break;
       case 'p':
       case 'a':
-      case 't': throw new Error(`Unsupported parameter type '${parameter.type}' in trigger '${functionSignature.name}'`);
-      default: throw new Error(`Unknown parameter type '${parameter.type}' in trigger '${functionSignature.name}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+      case 't': throw new Error(`Unsupported parameter type '${parameter.type}' in trigger '${functionSignature.name}' for resource '${resourceName}'`);
+      default: throw new Error(`Unknown parameter type '${parameter.type}' in trigger '${functionSignature.name}' for resource '${resourceName}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
     }
   }
 
   return args;
 };
 
-const translateTrigger = (
-  trigger: ParsedBcsTrigger,
-  functionSignature: SignatureFunction,
-  ids: Map<string, Ids>,
-  variableWrapper: VariableWrapper,
-): BlockFunction => ({
+type TranslateTriggerProps = Readonly<{
+  resourceName: string;
+  trigger: ParsedBcsTrigger;
+  functionSignature: SignatureFunction;
+  ids: Map<string, Ids>;
+  variableWrapper: VariableWrapper;
+}>;
+const translateTrigger = ({
+  resourceName,
+  trigger,
+  functionSignature,
+  ids,
+  variableWrapper,
+}: TranslateTriggerProps): BlockFunction => ({
   name: functionSignature.name,
   negated: !!trigger.t2negated,
-  args: translateTriggerArguments(trigger, functionSignature, ids, variableWrapper),
+  args: translateTriggerArguments({
+    resourceName,
+    trigger,
+    functionSignature,
+    ids,
+    variableWrapper,
+  }),
 });
 
-const translateTriggerOverride = (
-  nextTriggerObject: ParsedBcsTrigger,
-  innerTrigger: ParsedBcsTrigger,
-  signatures: Signatures,
-  ids: Map<string, Ids>,
-  variableWrapper: VariableWrapper,
-): BlockFunction => {
-  const innerSignature = matchTriggerFunction(innerTrigger, signatures);
+type TranslateTriggerOverrideProps = Readonly<{
+  resourceName: string;
+  nextTriggerObject: ParsedBcsTrigger;
+  innerTrigger: ParsedBcsTrigger;
+  signatures: Signatures;
+  ids: Map<string, Ids>;
+  variableWrapper: VariableWrapper;
+}>;
+const translateTriggerOverride = ({
+  resourceName,
+  nextTriggerObject,
+  innerTrigger,
+  signatures,
+  ids,
+  variableWrapper,
+}: TranslateTriggerOverrideProps): BlockFunction => {
+  const innerSignature = matchTriggerFunction({
+    resourceName,
+    trigger: innerTrigger,
+    signatures,
+  });
 
   return {
     name: 'triggeroverride',
     negated: !!innerTrigger.t2negated,
     args: [
-      objectArgForScope(just(nextTriggerObject.t7), ids, variableWrapper),
+      objectArgForScope({
+        resourceName,
+        object: just(nextTriggerObject.t7),
+        ids,
+        variableWrapper,
+      }),
       {
         kind: 'function',
         name: innerSignature.name,
-        args: translateTriggerArguments(
-          innerTrigger,
-          innerSignature,
+        args: translateTriggerArguments({
+          resourceName,
+          trigger: innerTrigger,
+          functionSignature: innerSignature,
           ids,
           variableWrapper,
-        ),
+        }),
       },
     ],
   };
 };
 
-export const translateCondition = (
-  triggers: ParsedBcsTrigger[],
-  triggerSignatures: Signatures,
-  ids: Map<string, Ids>,
-): BlockScope => {
+type TranslateConditionProps = Readonly<{
+  resourceName: string;
+  triggers: ParsedBcsTrigger[];
+  triggerSignatures: Signatures;
+  ids: Map<string, Ids>;
+}>;
+export const translateCondition = ({
+  resourceName,
+  triggers,
+  triggerSignatures,
+  ids,
+}: TranslateConditionProps): BlockScope => {
   const variableWrapper = createVariableWrapper();
   let orCount = 0;
   let pendingTrigger: Maybe<ParsedBcsTrigger> = nothing();
 
   for (const trigger of triggers) {
-    const signature = matchTriggerFunction(trigger, triggerSignatures);
+    const signature = matchTriggerFunction({
+      resourceName,
+      trigger,
+      signatures: triggerSignatures,
+    });
 
     const isNextTriggerObject = signature.name === 'nexttriggerobject'
       && signature.parameters.length === 1
@@ -125,18 +191,25 @@ export const translateCondition = (
         pendingTrigger = trigger;
         continue;
       }
-      throw new Error('Do not want to override pending trigger because of TriggerOverride policy');
+      throw new Error(`Do not want to override pending trigger because of TriggerOverride policy for resource '${resourceName}'`);
     }
 
     const translated = isNothing(pendingTrigger)
-      ? translateTrigger(trigger, signature, ids, variableWrapper)
-      : translateTriggerOverride(
-          pendingTrigger,
+      ? translateTrigger({
+          resourceName,
           trigger,
-          triggerSignatures,
+          functionSignature: signature,
           ids,
           variableWrapper,
-        );
+        })
+      : translateTriggerOverride({
+          resourceName,
+          nextTriggerObject: pendingTrigger,
+          innerTrigger: trigger,
+          signatures: triggerSignatures,
+          ids,
+          variableWrapper,
+        });
 
     if (!isNothing(pendingTrigger)) pendingTrigger = nothing();
 
@@ -159,13 +232,18 @@ export const translateCondition = (
   }
 
   if (!isNothing(pendingTrigger)) {
-    const pendingSignature = matchTriggerFunction(pendingTrigger, triggerSignatures);
-    variableWrapper.addFunction(translateTrigger(
-      pendingTrigger,
-      pendingSignature,
+    const pendingSignature = matchTriggerFunction({
+      resourceName,
+      trigger: pendingTrigger,
+      signatures: triggerSignatures,
+    });
+    variableWrapper.addFunction(translateTrigger({
+      resourceName,
+      trigger: pendingTrigger,
+      functionSignature: pendingSignature,
       ids,
       variableWrapper,
-    ));
+    }));
   }
 
   return {

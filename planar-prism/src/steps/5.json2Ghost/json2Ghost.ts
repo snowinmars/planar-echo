@@ -18,6 +18,6 @@ export const json2Ghost = async (
     case 'bg2ee':
     case 'iwdee':
     case 'iwd2':
-      throw new Error(`${paths.gameName} is unsupported by now, you can be the one who change it`);
+      throw new Error(`'${paths.gameName}' is unsupported by now, you can be the one who change it`);
   }
 };

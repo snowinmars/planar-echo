@@ -10,17 +10,17 @@ const DELIMITER_TOKEN = '.';
 const pointsInRectangle = 4; // ...
 
 export const parseRectangle = (stream: BcsStream): BcsRegion => {
-  if (stream.getByte() !== START_TOKEN) throw new Error(`Expected '${START_TOKEN}' at position ${stream.positionOf()}`);
+  if (stream.getByte() !== START_TOKEN) throw new Error(`Expected '${START_TOKEN}' at position '${stream.positionOf()}'`);
 
   const values: number[] = [];
   for (let i = 0; i < pointsInRectangle; i++) {
     const shouldHaveDelimiter = i > 0;
     // do not extract stream.getByte to variable: it executes only if shouldHaveDelimiter is true
-    if (shouldHaveDelimiter && stream.getByte() !== DELIMITER_TOKEN) throw new Error(`Expected '${DELIMITER_TOKEN}' at position ${stream.positionOf()}`);
+    if (shouldHaveDelimiter && stream.getByte() !== DELIMITER_TOKEN) throw new Error(`Expected '${DELIMITER_TOKEN}' at position '${stream.positionOf()}'`);
     values.push(parseNumber(stream));
   }
 
-  if (stream.getByte() !== END_TOKEN) throw new Error(`Expected '${END_TOKEN}' at position ${stream.positionOf()}`);
+  if (stream.getByte() !== END_TOKEN) throw new Error(`Expected '${END_TOKEN}' at position '${stream.positionOf()}'`);
 
   return {
     x: just(values[0]),

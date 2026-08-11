@@ -15,7 +15,7 @@ const unify = (value: LoaderProps['value'], variant: LoaderProps['variant']): nu
       const percent = Math.round(max * value / 100);
       return percent;
     }
-    default: throw new Error(`Out of range variant ${variant}`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+    default: throw new Error(`Out of range variant '${variant}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
   }
 };
 

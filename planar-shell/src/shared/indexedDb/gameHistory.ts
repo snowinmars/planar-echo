@@ -167,7 +167,7 @@ export const getGameHistoryPage = async ({
 
 export const applyGameHistoryStorageLimit = async (storedPages: Maybe<number>): Promise<void> => {
   if (!isNothing(storedPages) && storedPages < 1) {
-    throw new Error(`Invalid game history max entries: ${storedPages}`);
+    throw new Error(`Invalid game history max entries: '${storedPages}'`);
   }
 
   const db = await connect();

@@ -60,7 +60,7 @@ const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
           ws.send(JSON.stringify(message));
         }
         else {
-          logger.warn(`Cannot send next websocket message because its state it ${ws.readyState}`);
+          logger.warn(`Cannot send next websocket message because its state it '${ws.readyState}'`);
         }
       },
       error: (err: PrismIndexErrorMessage['data']) => {
@@ -69,7 +69,7 @@ const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
           ws.send(JSON.stringify(message));
         }
         else {
-          logger.warn(`Cannot send error websocket message because its state it ${ws.readyState}`);
+          logger.warn(`Cannot send error websocket message because its state it '${ws.readyState}'`);
         }
       },
       complete: () => {
@@ -78,7 +78,7 @@ const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
           ws.send(JSON.stringify(message));
         }
         else {
-          logger.warn(`Cannot send complete websocket message because its state it ${ws.readyState}`);
+          logger.warn(`Cannot send complete websocket message because its state it '${ws.readyState}'`);
         }
       },
     });

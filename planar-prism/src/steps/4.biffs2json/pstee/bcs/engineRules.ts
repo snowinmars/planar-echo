@@ -2,11 +2,14 @@ export type PstStringPack = 'plain' | 'halfOfArea6';
 
 export const BCS_REQUIRED_IDS = [
   'action.ids',
+  'align.ids',
   'class.ids',
   'ea.ids',
+  'gender.ids',
   'general.ids',
   'object.ids',
   'race.ids',
+  'specific.ids',
   'trigger.ids',
 ] as const;
 
@@ -66,10 +69,9 @@ export const PST_STRING_PACKS_BY_ID = new Map<number, readonly PstStringPack[]>(
   [261, PST_STRING_PACKS_B],
 ]);
 
-export const PST_OBJECT_TARGET_IDS = [
+/** PSTEE uses Engine.EE object layout (BG-style), not classic PST with faction/team. */
+export const PSTEE_OBJECT_TARGET_IDS = [
   'ea',
-  'faction',
-  'team',
   'general',
   'race',
   'class',

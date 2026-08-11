@@ -23,8 +23,8 @@ export const parseDlg = (
     const signature = reader.string(4);
     const version = reader.string(4);
 
-    if (signature !== 'dlg') throw new Error(`Unsupported signature: ${signature}`);
-    if (version !== 'v1.0') throw new Error(`Unsupported version: ${version}`);
+    if (signature !== 'dlg') throw new Error(`Unsupported signature: '${signature}'`);
+    if (version !== 'v1.0') throw new Error(`Unsupported version: '${version}'`);
 
     const dlg = parseDlgV1({
       reader,

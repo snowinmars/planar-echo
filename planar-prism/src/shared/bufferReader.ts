@@ -11,8 +11,8 @@ import type { Maybe } from '@planar/shared';
 //   return getNthBit(byte, bitOffset);
 // };
 // export const getNthBit = (byte: number, n: number): (0 | 1) => {
-//   if (byte < 0 || byte > 255) throw new Error(`getNthBit from byte expect the byte to be in the byte range, but ${byte}...`);
-//   if (n < 0 || n > 8) throw new Error(`getNthBit from byte expect the N to be in the byte range, but ${n}...`);
+//   if (byte < 0 || byte > 255) throw new Error(`getNthBit from byte expect the byte to be in the byte range, but '${byte}'...`);
+//   if (n < 0 || n > 8) throw new Error(`getNthBit from byte expect the N to be in the byte range, but '${n}'...`);
 //   const shift = (7 - n);
 //   const bitValue = (byte >> shift) & 1;
 //   return bitValue === 0 ? 0 : 1;
@@ -66,7 +66,7 @@ const numberAsBoolean = (x: number, sourceName: Maybe<string> = null): boolean =
     switch (x) {
       case 0: return false;
       case 1: return true;
-      default: throw new Error(`Property ${x} is out of boolean 0..1 range for ${sourceName ?? 'unspecified source'}`);
+      default: throw new Error(`Property '${x}' is out of boolean 0..1 range for '${sourceName ?? 'unspecified source'}'`);
     }
   }
 };

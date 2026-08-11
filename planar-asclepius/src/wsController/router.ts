@@ -33,7 +33,7 @@ const createPrismIndexWsEndpoint = (server: Server<typeof IncomingMessage, typeo
           ws.send(JSON.stringify({ type: 'error', data: err.toString ? err.toString() : err }));
         }
         else {
-          logger.warn(`Cannot send error websocket message because its state it ${ws.readyState}`);
+          logger.warn(`Cannot send error websocket message because its state it '${ws.readyState}'`);
         }
 
         return;

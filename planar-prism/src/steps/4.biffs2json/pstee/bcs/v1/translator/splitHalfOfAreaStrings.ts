@@ -3,11 +3,16 @@ import { nothing } from '@planar/shared';
 import type { Maybe } from '@planar/shared';
 import type { SignatureFunction } from '../signatures.types.js';
 
-export const splitHalfOfAreaStrings = (
-  functionSignature: SignatureFunction,
-  index: number,
-  strings: Maybe<string>[],
-): Maybe<string> => {
+type SplitHalfOfAreaStringsProps = Readonly<{
+  functionSignature: SignatureFunction;
+  index: number;
+  strings: Maybe<string>[];
+}>;
+export const splitHalfOfAreaStrings = ({
+  functionSignature,
+  index,
+  strings,
+}: SplitHalfOfAreaStringsProps): Maybe<string> => {
   let logicalStringIndex = 0;
   let physicalHalfIndex = 0;
 

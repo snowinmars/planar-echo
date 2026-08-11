@@ -20,6 +20,6 @@ export const parseDirectionV1 = (s: Maybe<string>): Direction => {
     case '13': return '13=south-east-east';
     case '14': return '14=south-east';
     case '15': return '15=south-south-east';
-    default: throw new Error(`Cannot parse Direction from ${s}`);
+    default: throw new Error(`Cannot parse Direction from '${s}'`);
   }
 };

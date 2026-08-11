@@ -43,7 +43,7 @@ export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({ 
           components: darkTheme.components,
         });
       }
-      default: throw new Error(`Out of range theme ${theme}`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+      default: throw new Error(`Out of range theme '${theme}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
     }
   },
   [theme],

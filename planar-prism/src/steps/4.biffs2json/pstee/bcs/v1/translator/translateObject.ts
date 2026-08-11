@@ -1,5 +1,6 @@
 import { isNothing, just, nothing } from '@planar/shared';
-import { PST_OBJECT_TARGET_IDS } from '../../engineRules.js';
+import logger from '@/shared/logger.js';
+import { PSTEE_OBJECT_TARGET_IDS } from '../../engineRules.js';
 import { lookupIdsSymbol } from './lookupIdsSymbol.js';
 
 import type { Maybe } from '@planar/shared';
@@ -7,16 +8,22 @@ import type { Ids } from '../../../ids/types.js';
 import type { BcsArg } from '../../parseBcs.types.js';
 import type { ParsedBcsObject } from '../bytecode.types.js';
 
-const translateTarget = (
-  object: ParsedBcsObject,
-  ids: Map<string, Ids>,
-): Maybe<string> => {
+type TranslateTargetProps = Readonly<{
+  resourceName: string;
+  object: ParsedBcsObject;
+  ids: Map<string, Ids>;
+}>;
+const translateTarget = ({
+  resourceName,
+  object,
+  ids,
+}: TranslateTargetProps): Maybe<string> => {
   const lastUsedIndex = object.target.findLastIndex(value => value !== 0);
   if (lastUsedIndex < 0) return nothing();
 
   const parts: string[] = [];
-  for (let i = 0; i < lastUsedIndex + 1; i++) {
-    const idsName = PST_OBJECT_TARGET_IDS[i] ?? `target${i}`;
+  for (let i = 0; i < object.target.length; i++) {
+    const idsName = PSTEE_OBJECT_TARGET_IDS[i] ?? `target${i}`;
     const value = just(object.target[i]);
 
     if (value === 0) {
@@ -24,19 +31,40 @@ const translateTarget = (
       continue;
     }
 
-    const symbol = lookupIdsSymbol(ids, idsName, value);
-    parts.push(symbol ?? String(value));
+    const symbol = lookupIdsSymbol({
+      resourceName,
+      ids,
+      idsName,
+      value,
+    });
+    if (isNothing(symbol)) {
+      logger.warn(`BCS object target: '${value}' not found in '${idsName}'.ids for resource '${resourceName}'`);
+      parts.push(String(value));
+      continue;
+    }
+
+    parts.push(symbol);
   }
 
   return `[${parts.join('.')}]`;
 };
 
 type BcsStringFunctionArg = Extract<BcsArg, { kind: 'string' | 'function' }>;
-export const translateObject = (
-  object: ParsedBcsObject,
-  ids: Map<string, Ids>,
-): BcsStringFunctionArg => {
-  let target = translateTarget(object, ids);
+type TranslateObjectProps = Readonly<{
+  resourceName: string;
+  object: ParsedBcsObject;
+  ids: Map<string, Ids>;
+}>;
+export const translateObject = ({
+  resourceName,
+  object,
+  ids,
+}: TranslateObjectProps): BcsStringFunctionArg => {
+  let target = translateTarget({
+    resourceName,
+    object,
+    ids,
+  });
 
   if (isNothing(target) && !isNothing(object.name) && object.name !== '') {
     target = object.name;
@@ -49,8 +77,13 @@ export const translateObject = (
     const value = object.identifier[i]!;
     if (value === 0) break;
 
-    const symbol = lookupIdsSymbol(ids, 'object', value);
-    if (isNothing(symbol)) throw new Error(`Unknown OBJECT.IDS id ${value}`);
+    const symbol = lookupIdsSymbol({
+      resourceName,
+      ids,
+      idsName: 'object',
+      value,
+    });
+    if (isNothing(symbol)) throw new Error(`Unknown OBJECT.IDS id '${value}' for resource '${resourceName}'`);
     identifiers.push(symbol);
   }
 
@@ -58,7 +91,7 @@ export const translateObject = (
 
   const hasRegion = !isNothing(object.region);
   if (hasRegion && identifiers.length > 0) {
-    throw new Error('Compound object with region is not supported in v1');
+    throw new Error(`Compound object with region is not supported in v1 for resource '${resourceName}'`);
   }
 
   if (!identifiers.length) {

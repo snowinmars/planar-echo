@@ -5,7 +5,7 @@ type ExtendedMap<TKey extends number, TValue extends string> = Record<TKey, TVal
 
 const parse = <TKey extends number, TValue extends string>(x: number, r: Record<TKey, TValue>): TValue => {
   if (x in r) return r[x as TKey];
-  throw new Error(`Cannot parse ${x} over ${JSON.stringify(r)}`);
+  throw new Error(`Cannot parse '${x}' over '${JSON.stringify(r)}'`);
 };
 
 const parseFlags = <TKey extends number, TValue extends string>(value: number, r: Record<TKey, TValue>): TValue[] => Array.from({ length: 32 }, (_, i) => Math.abs(1 << i))

@@ -21,7 +21,7 @@ export const decompileBiffs = async (paths: Paths): Promise<Map<DecompiledBiffTy
 
   const hasPreviousDecompilation = await entryExists(cacheJson);
   if (hasPreviousDecompilation) {
-    logger.info(`Restore decompilation state from ${cacheJson}`);
+    logger.info(`Restore decompilation state from '${cacheJson}'`);
 
     reportProgress({
       value: 100,
@@ -44,7 +44,7 @@ export const decompileBiffs = async (paths: Paths): Promise<Map<DecompiledBiffTy
       step: 'decompileBiffs',
     });
 
-    logger.info(`Decompiled biff archives from '${gameDir}' to '${ghostDir}' with cache at ${cacheJson}`);
+    logger.info(`Decompiled biff archives from '${gameDir}' to '${ghostDir}' with cache at '${cacheJson}'`);
 
     return decompiledBiffs;
   }

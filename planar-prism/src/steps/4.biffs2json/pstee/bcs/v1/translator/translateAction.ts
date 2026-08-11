@@ -17,13 +17,22 @@ import type {
 } from '../signatures.types.js';
 import type { VariableWrapper } from '../temps/createVariableWrapper.types.js';
 
-const translateArguments = (
-  action: ParsedBcsAction,
-  functionSignature: SignatureFunction,
-  ids: Map<string, Ids>,
-  variableWrapper: VariableWrapper,
-  startObjectIndex: number,
-): BcsArg[] => {
+type TranslateArgumentsProps = Readonly<{
+  resourceName: string;
+  action: ParsedBcsAction;
+  functionSignature: SignatureFunction;
+  ids: Map<string, Ids>;
+  variableWrapper: VariableWrapper;
+  startObjectIndex: number;
+}>;
+const translateArguments = ({
+  resourceName,
+  action,
+  functionSignature,
+  ids,
+  variableWrapper,
+  startObjectIndex,
+}: TranslateArgumentsProps): BcsArg[] => {
   const args: BcsArg[] = [];
   let numberIndex = 0;
   let objectIndex = startObjectIndex;
@@ -37,18 +46,32 @@ const translateArguments = (
       case 'o': {
         const object = objects[objectIndex];
         if (isNothing(object)) {
-          throw new Error(`No object slot ${objectIndex} for action ${functionSignature.name}`);
+          throw new Error(`No object slot '${objectIndex}' for action '${functionSignature.name}' for resource '${resourceName}'`);
         }
-        args.push(objectArgForScope(object, ids, variableWrapper));
+        args.push(objectArgForScope({
+          resourceName,
+          object,
+          ids,
+          variableWrapper,
+        }));
         objectIndex++;
         break;
       }
       case 'i':
-        args.push(translateNumber(numbers[numberIndex] ?? 0, parameter, ids));
+        args.push(translateNumber({
+          resourceName,
+          value: numbers[numberIndex] ?? 0,
+          param: parameter,
+          ids,
+        }));
         numberIndex++;
         break;
       case 's': {
-        const value = splitHalfOfAreaStrings(functionSignature, stringIndex, strings); // may be ''
+        const value = splitHalfOfAreaStrings({
+          functionSignature,
+          index: stringIndex,
+          strings,
+        }); // may be ''
         args.push({ kind: 'string', value: just(value) });
         stringIndex++;
         break;
@@ -63,26 +86,38 @@ const translateArguments = (
         break;
       }
       case 'a':
-      case 't': throw new Error(`Unsupported parameter type '${parameter.type}' in action ${functionSignature.name}`);
-      default: throw new Error(`Unknown parameter type '${parameter.type}' in action ${functionSignature.name}`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+      case 't': throw new Error(`Unsupported parameter type '${parameter.type}' in action '${functionSignature.name}' for resource '${resourceName}'`);
+      default: throw new Error(`Unknown parameter type '${parameter.type}' in action '${functionSignature.name}' for resource '${resourceName}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
     }
   }
 
   return args;
 };
 
-export const translateAction = (
-  action: ParsedBcsAction,
-  signatures: Signatures,
-  ids: Map<string, Ids>,
-  variableWrapper: VariableWrapper,
-): BlockFunction => {
-  const functionSignature = matchActionFunction(action, signatures);
+type TranslateActionProps = Readonly<{
+  resourceName: string;
+  action: ParsedBcsAction;
+  signatures: Signatures;
+  ids: Map<string, Ids>;
+  variableWrapper: VariableWrapper;
+}>;
+export const translateAction = ({
+  resourceName,
+  action,
+  signatures,
+  ids,
+  variableWrapper,
+}: TranslateActionProps): BlockFunction => {
+  const functionSignature = matchActionFunction({
+    resourceName,
+    action,
+    signatures,
+  });
   const override = action.a1;
   const hasOverride = !isNothing(override) && !isEmptyObject(override);
 
   const actionNotFound = functionSignature.parameters.some(parameter => parameter.type === 'a') && functionSignature.name !== 'actionoverride';
-  if (actionNotFound) throw new Error(`Action signature ${functionSignature.name} requires TYPE_ACTION parameter which is not supported`);
+  if (actionNotFound) throw new Error(`Action signature '${functionSignature.name}' requires TYPE_ACTION parameter which is not supported for resource '${resourceName}'`);
 
   if (hasOverride) {
     const overrideFunctions = signatures.byId.get(1);
@@ -104,14 +139,26 @@ export const translateAction = (
     const inner: BcsArg = {
       kind: 'function',
       name: functionSignature.name,
-      args: translateArguments(action, functionSignature, ids, variableWrapper, 1),
+      args: translateArguments({
+        resourceName,
+        action,
+        functionSignature,
+        ids,
+        variableWrapper,
+        startObjectIndex: 1,
+      }),
     };
 
     return {
       name: overrideName,
       negated: false,
       args: [
-        objectArgForScope(override, ids, variableWrapper),
+        objectArgForScope({
+          resourceName,
+          object: override,
+          ids,
+          variableWrapper,
+        }),
         inner,
       ],
     };
@@ -120,6 +167,13 @@ export const translateAction = (
   return {
     name: functionSignature.name,
     negated: false,
-    args: translateArguments(action, functionSignature, ids, variableWrapper, 1),
+    args: translateArguments({
+      resourceName,
+      action,
+      functionSignature,
+      ids,
+      variableWrapper,
+      startObjectIndex: 1,
+    }),
   };
 };

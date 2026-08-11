@@ -85,7 +85,7 @@ export const parseCreatureSectionV1 = (section: Section): Maybe<CreatureIniSecti
 
   if (!tmp.specQty) tmp.specQty = tmp.createQty ?? 1;
 
-  if (!tmp.spec) throw new Error(`Spec should not be optional for creature ini section ${section.name}`);
+  if (!tmp.spec) throw new Error(`Spec should not be optional for creature ini section '${section.name}'`);
 
   return {
     name: section.name,

@@ -12,18 +12,28 @@ import type { ParsedBcsAction, ParsedBcsScript } from '../bytecode.types.js';
 import type { Signatures } from '../signatures.types.js';
 import type { BcsContext } from '../../buildBcsContext.types.js';
 
-const translateResponse = (
-  weight: number,
-  actions: ParsedBcsAction[],
-  actionSignatures: Signatures,
-  ids: Map<string, Ids>,
-): BlockScope => {
+type TranslateResponseProps = Readonly<{
+  resourceName: string;
+  weight: number;
+  actions: ParsedBcsAction[];
+  actionSignatures: Signatures;
+  ids: Map<string, Ids>;
+}>;
+const translateResponse = ({
+  resourceName,
+  weight,
+  actions,
+  actionSignatures,
+  ids,
+}: TranslateResponseProps): BlockScope => {
   const variableWrapper = createVariableWrapper();
-  const functions = actions.map(action => translateAction(
+  const functions = actions.map(action => translateAction({
+    resourceName,
     action,
-    actionSignatures,
+    signatures: actionSignatures,
     ids,
     variableWrapper,
+  },
   ));
 
   return {
@@ -39,17 +49,19 @@ export const translateScript = (
   context: BcsContext,
 ): Bcs => {
   const blocks = parsed.blocks.map((block): IfBlock => ({
-    condition: translateCondition(
-      block.triggers,
-      context.triggerSignatures,
-      context.ids,
-    ),
-    actions: block.responses.map(response => translateResponse(
-      response.weight,
-      response.actions,
-      context.actionSignatures,
-      context.ids,
-    )),
+    condition: translateCondition({
+      resourceName,
+      triggers: block.triggers,
+      triggerSignatures: context.triggerSignatures,
+      ids: context.ids,
+    }),
+    actions: block.responses.map(response => translateResponse({
+      resourceName,
+      weight: response.weight,
+      actions: response.actions,
+      actionSignatures: context.actionSignatures,
+      ids: context.ids,
+    })),
   }));
 
   return { resourceName, blocks };
