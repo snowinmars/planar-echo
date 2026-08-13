@@ -10,6 +10,7 @@ import { buildBcsContext, parseBcs } from './bcs/index.js';
 import { parseWed } from './wed/index.js';
 import { parsePvrz } from './pvrz/index.js';
 import { parseTis } from './tis/index.js';
+import { parseMos, isMosV1Artifacts } from './mos/index.js';
 import { decodePvrToRgba } from './pvrz/decode/index.js';
 import { isPaletteArtfact } from './tis/v1/parseTisV1.types.js';
 
@@ -24,6 +25,7 @@ import type { ItmV10 } from './itm/index.js';
 import type { Bcs } from './bcs/index.js';
 import type { Wed } from './wed/index.js';
 import type { Tis } from './tis/index.js';
+import type { Mos } from './mos/index.js';
 import type { AllPsteeJsons } from '../types.js';
 import type { Pvr } from './pvrz/index.js';
 import type { RgbaImage } from './pvrz/decode/index.js';
@@ -165,6 +167,26 @@ const biffs2jsonPstee = async (
 
   ///
 
+  logger.info(`Converting mos to json...`);
+  const moss: Mos[] = [];
+  const mosItems = decompiledBiffs.get('mos') ?? [];
+  const mosIterator = parseMos({
+    paths,
+    decompiledItems: mosItems,
+    pvrzRgbaIndex,
+  });
+  for await (const artifacts of mosIterator) {
+    moss.push(artifacts.mos);
+    await paths.ghostDir.saveJson.mos(artifacts.mos.resourceName, artifacts.mos);
+    await paths.ghostDir.saveBinary.mos.image(artifacts.mos.resourceName, artifacts.png);
+    if (isMosV1Artifacts(artifacts)) {
+      await paths.ghostDir.saveBinary.mos.palette(artifacts.mos.resourceName, artifacts.palette);
+      await paths.ghostDir.saveBinary.mos.indices(artifacts.mos.resourceName, artifacts.indices);
+    }
+  }
+
+  ///
+
   logger.info(`Converting tis to json...`);
   const tiss: Tis[] = [];
   const tisItems = decompiledBiffs.get('tis') ?? [];
@@ -177,10 +199,10 @@ const biffs2jsonPstee = async (
   for await (const artifacts of tisIterator) {
     tiss.push(artifacts.tis);
     await paths.ghostDir.saveJson.tis(artifacts.tis.resourceName, artifacts.tis);
-    await paths.ghostDir.saveBinary.tisImage(artifacts.tis.resourceName, artifacts.png);
+    await paths.ghostDir.saveBinary.tis.image(artifacts.tis.resourceName, artifacts.png);
     if (isPaletteArtfact(artifacts)) {
-      await paths.ghostDir.saveBinary.tisPalette(artifacts.tis.resourceName, artifacts.palette);
-      await paths.ghostDir.saveBinary.tisIndices(artifacts.tis.resourceName, artifacts.indices);
+      await paths.ghostDir.saveBinary.tis.palette(artifacts.tis.resourceName, artifacts.palette);
+      await paths.ghostDir.saveBinary.tis.indices(artifacts.tis.resourceName, artifacts.indices);
     }
   }
 
@@ -195,6 +217,7 @@ const biffs2jsonPstee = async (
     bcs,
     weds,
     pvrs,
+    moss,
     tiss,
   };
 };

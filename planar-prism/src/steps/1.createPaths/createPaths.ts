@@ -37,6 +37,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const jsonWed        = normalize(join(jsonRoot, 'wed'));
   const jsonPvrz       = normalize(join(jsonRoot, 'pvrz'));
   const jsonTis        = normalize(join(jsonRoot, 'tis'));
+  const jsonMos        = normalize(join(jsonRoot, 'mos'));
 
   const ghostRoot      = normalize(join(ghostDir , 'ghost'));
   const ghostTlk       = normalize(join(ghostRoot, 'tlk'));
@@ -50,11 +51,15 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const ghostWed       = normalize(join(ghostRoot, 'wed'));
   const ghostPvrz      = normalize(join(ghostRoot, 'pvrz'));
   const ghostTis       = normalize(join(ghostRoot, 'tis'));
+  const ghostMos       = normalize(join(ghostRoot, 'mos'));
   const ghostStores    = normalize(join(ghostRoot, 'stores'));
 
   const jsonTisPng: NamingFunction = x => `${x}.png`;
   const jsonTisPalette: NamingFunction = x => `${x}.palette`;
   const jsonTisIndices: NamingFunction = x => `${x}.indices`;
+  const jsonMosPng: NamingFunction = x => `${x}.png`;
+  const jsonMosPalette: NamingFunction = x => `${x}.palette`;
+  const jsonMosIndices: NamingFunction = x => `${x}.indices`;
 
   // TODO [snow]: I do not like this path, but where should it lead to?..
   const sharedEnums    = normalize(join(ghostDir, '..', 'planar-shared', 'src', 'dialogueEngine', 'enums'));
@@ -89,6 +94,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wed      : jsonWed,
         pvrz     : jsonPvrz,
         tis      : jsonTis,
+        mos      : jsonMos,
       },
       saveJson: {
         tlk      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonTlk      , resourceName), entry, asIs),
@@ -102,11 +108,19 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wed      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonWed      , resourceName), entry, asIs),
         pvrz     : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonPvrz     , resourceName), entry, asIs),
         tis      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonTis      , resourceName), entry, asIs),
+        mos      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonMos      , resourceName), entry, asIs),
       },
       saveBinary: {
-        tisImage  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisPng(resourceName)), data),
-        tisPalette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisPalette(resourceName)), data),
-        tisIndices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisIndices(resourceName)), data),
+        tis: {
+          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisPng(resourceName)), data),
+          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisPalette(resourceName)), data),
+          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisIndices(resourceName)), data),
+        },
+        mos: {
+          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonMos, jsonMosPng(resourceName)), data),
+          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonMos, jsonMosPalette(resourceName)), data),
+          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonMos, jsonMosIndices(resourceName)), data),
+        },
       },
       ghost: {
         root     : ghostRoot,
@@ -121,6 +135,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wed      : ghostWed,
         pvrz     : ghostPvrz,
         tis      : ghostTis,
+        mos      : ghostMos,
       },
       saveGhost: {
         tlk      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostTlk      , resourceName), entry, asIs),
@@ -134,6 +149,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wed      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostWed      , resourceName), entry, asIs),
         pvrz     : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostPvrz     , resourceName), entry, asIs),
         tis      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostTis      , resourceName), entry, asIs),
+        mos      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostMos      , resourceName), entry, asIs),
       },
       sharedEnums,
       stores: ghostStores,
@@ -156,6 +172,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     paths.ghostDir.json.wed,
     paths.ghostDir.json.pvrz,
     paths.ghostDir.json.tis,
+    paths.ghostDir.json.mos,
     paths.ghostDir.ghost.tlk,
     paths.ghostDir.ghost.dialogues,
     paths.ghostDir.ghost.items,
@@ -167,6 +184,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     paths.ghostDir.ghost.wed,
     paths.ghostDir.ghost.pvrz,
     paths.ghostDir.ghost.tis,
+    paths.ghostDir.ghost.mos,
     paths.ghostDir.stores,
   ], props.recreate || false);
 

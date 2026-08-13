@@ -1,5 +1,6 @@
 import { TILE_DIMENSION, calcAtlasColumns, calcAtlasRows, PALETTE_TILE_SIZE } from '../../shared/tisCommon.js';
 import { blitTileRgba, createAtlasBuffer, encodeRgbaPng } from '../../shared/writePng.js';
+import { isGreenColorKeyBgra } from '../../../shared/greenColorKey.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
 import type { Tis, PaletteTisTileMeta } from '../../parseTis.types.js';
@@ -16,15 +17,15 @@ const renderTileRgba = (paletteBgra: Buffer, indices: Buffer): Buffer => {
   for (let i = 0; i < TILE_DIMENSION * TILE_DIMENSION; i++) {
     const index = indices[i]!;
     const out = i * 4;
-    if (index === 0) {
+    const pal = index * 4;
+    // BGRA in file → RGBA out; green color key → transparent
+    if (isGreenColorKeyBgra(paletteBgra, pal)) {
       rgba[out] = 0;
       rgba[out + 1] = 0;
       rgba[out + 2] = 0;
       rgba[out + 3] = 0;
       continue;
     }
-    const pal = index * 4;
-    // BGRA in file → RGBA out; force opaque
     rgba[out] = paletteBgra[pal + 2]!;
     rgba[out + 1] = paletteBgra[pal + 1]!;
     rgba[out + 2] = paletteBgra[pal]!;

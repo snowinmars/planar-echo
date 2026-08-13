@@ -35,6 +35,7 @@ export const progressSteps = [
   'wed_raw2json',
   'pvrz_raw2json',
   'tis_raw2json',
+  'mos_raw2json',
   'cre_json2ghost',
   'dlg_json2ghost',
   'itm_json2ghost',
