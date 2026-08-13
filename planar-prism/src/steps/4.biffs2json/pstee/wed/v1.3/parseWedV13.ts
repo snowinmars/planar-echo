@@ -32,9 +32,9 @@ export const parseWedV13 = ({
   // x and y are little-endian 16-bit integer
   // so each vertex is 32 bits = 4 bytes
   const sizeOfVertexInBytes = 4;
-  const verticesTailLength = reader.buffer.length - secondaryHeader.verticesOffset;
+  const verticesTailLength = reader.length - secondaryHeader.verticesOffset;
   if (verticesTailLength % sizeOfVertexInBytes) throw new Error(`Broken vertices for resource '${resourceName}'`);
-  const verticesCount = (reader.buffer.length - secondaryHeader.verticesOffset) / sizeOfVertexInBytes;
+  const verticesCount = (reader.length - secondaryHeader.verticesOffset) / sizeOfVertexInBytes;
   const vertices: WedVertex[] = parseVertices({
     reader: reader.fork(secondaryHeader.verticesOffset),
     count: verticesCount,

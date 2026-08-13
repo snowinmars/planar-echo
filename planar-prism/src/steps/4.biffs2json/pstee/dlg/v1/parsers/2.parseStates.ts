@@ -30,6 +30,6 @@ export const parseStates = ({
 }: ParseStatesProps): RawState[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/dlg_v1.htm
 
-  const knownStateSize = 16;
-  return Array.from<never, RawState>({ length: count }, (_, i) => parse(reader.fork(reader.offset + i * knownStateSize), i));
+  const r = reader.fork();
+  return Array.from<never, RawState>({ length: count }, (_, i) => parse(r, i));
 };

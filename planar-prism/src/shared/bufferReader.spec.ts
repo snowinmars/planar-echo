@@ -13,21 +13,23 @@ describe('BufferReader', () => {
 
       expect(reader.offset).to.equal(0);
       expect(reader.offsetHex).to.equal('0x0');
-      expect(reader.forkedOffsets).to.deep.equal([]);
-      expect(reader.forkedOffsetsHex).to.deep.equal([]);
-      expect(reader.totalOffset).to.equal(0);
-      expect(reader.totalOffsetHex).to.equal('0x0');
+      expect(reader.length).to.equal(1);
     });
 
     it('sould handle initialOffset properly', () => {
-      const reader = createReader(bufferFromBytes(0), 3, [5, 17]);
+      const reader = createReader(bufferFromBytes(0), 3);
 
       expect(reader.offset).to.equal(3);
       expect(reader.offsetHex).to.equal('0x3');
-      expect(reader.forkedOffsets).to.deep.equal([5, 17]);
-      expect(reader.forkedOffsetsHex).to.deep.equal(['0x5', '0x11']);
-      expect(reader.totalOffset).to.equal(3 + 5 + 17);
-      expect(reader.totalOffsetHex).to.equal('0x19');
+    });
+
+    it('length equals buffer size and does not move offset', () => {
+      const reader = createReader(bufferFromBytes(1, 2, 3, 4));
+      expect(reader.length).to.equal(4);
+      expect(reader.offset).to.equal(0);
+      reader.byte();
+      expect(reader.length).to.equal(4);
+      expect(reader.offset).to.equal(1);
     });
   });
 
@@ -786,11 +788,11 @@ describe('BufferReader', () => {
     });
   });
 
-  describe('sliceRaw', function () {
+  describe('blob', function () {
     it('returns subarray from start', function () {
       const buf = bufferFromBytes(1, 2, 3, 4, 5);
       const reader = createReader(buf);
-      const sliced = reader.sliceRaw(2);
+      const sliced = reader.blob(2);
       expect([...sliced]).to.deep.equal([3, 4, 5]);
       expect(reader.offset).to.equal(0);
     });
@@ -806,8 +808,6 @@ describe('BufferReader', () => {
       expect(child.buffer).to.equal(buf);
       expect(parent.offset).to.equal(1);
       expect(child.offset).to.equal(1);
-      expect(parent.forkedOffsets).to.deep.equal([]);
-      expect(child.forkedOffsets).to.deep.equal([1]);
 
       expect(parent.byte()).to.equal(2);
       expect(parent.offset).to.equal(2);
@@ -827,8 +827,6 @@ describe('BufferReader', () => {
       expect(child.buffer).to.equal(buf);
       expect(parent.offset).to.equal(1);
       expect(child.offset).to.equal(2);
-      expect(parent.forkedOffsets).to.deep.equal([]);
-      expect(child.forkedOffsets).to.deep.equal([2]);
 
       expect(parent.byte()).to.equal(2);
       expect(parent.offset).to.equal(2);

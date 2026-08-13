@@ -69,7 +69,7 @@ export const parsePvr = (reader: BufferReader, resourceName: string): PixelPvr =
 
   const read = reader.offset - initialOffset; // 0x34 = 52 bytes = 13 uints
   const pixelDataOffset = read + metadataSize;
-  const pixelData = reader.sliceRaw(pixelDataOffset);
+  const pixelData = reader.blob(pixelDataOffset);
   reader.skip.custom(pixelDataOffset);
 
   return {

@@ -12,7 +12,7 @@ export const parsePalette = ({
   start,
   end,
 }: ParsePalettesProps): Buffer => {
-  const palette = reader.sliceRaw(start, end);
+  const palette = reader.blob(start, end);
   if (palette.length !== end - start) throw new Error(`MOS palette size mismatch: expect '${end - start}', but got '${palette.length}' for resource '${resourceName}'`);
   return palette;
 };

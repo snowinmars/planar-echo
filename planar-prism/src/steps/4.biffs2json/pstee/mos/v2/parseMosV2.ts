@@ -1,5 +1,4 @@
 import { encodeRgbaPng } from '../../tis/shared/writePng.js';
-import { MOS_V2_BLOCK_SIZE } from '../parseMos.types.js';
 import { parseHeader } from './parsers/1.parseHeader.js';
 import { nothing } from '@planar/shared';
 
@@ -74,15 +73,15 @@ export const parseMosV2 = ({
   const canvas = Buffer.alloc(header.width * header.height * 4, 0);
   const blocks: MosV2Block[] = [];
 
+  const blockReader = reader.fork(header.blocksOffset);
   for (let blockIdx = 0; blockIdx < header.blockCount; blockIdx++) {
-    const ofs = header.blocksOffset + (blockIdx * MOS_V2_BLOCK_SIZE);
-    const page = reader.buffer.readInt32LE(ofs); // TODO [snow]: to reader.uint
-    const sourceX = reader.buffer.readUInt32LE(ofs + 4);
-    const sourceY = reader.buffer.readUInt32LE(ofs + 8);
-    const width = reader.buffer.readUInt32LE(ofs + 12);
-    const height = reader.buffer.readUInt32LE(ofs + 16);
-    const targetX = reader.buffer.readUInt32LE(ofs + 20);
-    const targetY = reader.buffer.readUInt32LE(ofs + 24);
+    const page = blockReader.int();
+    const sourceX = blockReader.uint();
+    const sourceY = blockReader.uint();
+    const width = blockReader.uint();
+    const height = blockReader.uint();
+    const targetX = blockReader.uint();
+    const targetY = blockReader.uint();
 
     const pvrzResourceName = pvrzFileNameForMosPage(page);
     if (!pvrzResourceName) throw new Error(`Invalid PVRZ page '${page}' in block '${blockIdx}' for resource '${resourceName}'`);

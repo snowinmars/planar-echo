@@ -25,6 +25,6 @@ export const parseKnownSpellsV10 = ({
 }: ParseKnownSpellsV10Props): KnownSpellV10[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
-  const knownSpellSize = 12;
-  return Array.from<never, KnownSpellV10>({ length: count }, (_, i) => parse(reader.fork(reader.offset + i * knownSpellSize)));
+  const r = reader.fork();
+  return Array.from<never, KnownSpellV10>({ length: count }, () => parse(r));
 };

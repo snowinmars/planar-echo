@@ -23,6 +23,6 @@ export const parseMemorizedSpellsTableV10 = ({
 }: ParseMemorizedSpellsTableV10Props): MemorizedSpellV10[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
-  const memorizedSpellSize = 12;
-  return Array.from<never, MemorizedSpellV10>({ length: count }, (_, i) => parse(reader.fork(reader.offset + i * memorizedSpellSize)));
+  const r = reader.fork();
+  return Array.from<never, MemorizedSpellV10>({ length: count }, () => parse(r));
 };

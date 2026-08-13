@@ -33,6 +33,6 @@ export const parseSpellMemorizationInfosV10 = ({
 }: ParseSpellMemorizationInfosV10Props): SpellMemorizationInfoV10[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
-  const spellMemorizationInfoSize = 16;
-  return Array.from<never, SpellMemorizationInfoV10>({ length: count }, (_, i) => parse(reader.fork(reader.offset + i * spellMemorizationInfoSize)));
+  const r = reader.fork();
+  return Array.from<never, SpellMemorizationInfoV10>({ length: count }, () => parse(r));
 };

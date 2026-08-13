@@ -51,6 +51,6 @@ export const parseEffectsV10 = ({
 }: ParseEffectsV10Props): EffectV10[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/eff_v1.htm
 
-  const effectSize = 48;
-  return Array.from<never, EffectV10>({ length: count }, (_, i) => parse(reader.fork(reader.offset + i * effectSize)));
+  const r = reader.fork();
+  return Array.from<never, EffectV10>({ length: count }, () => parse(r));
 };

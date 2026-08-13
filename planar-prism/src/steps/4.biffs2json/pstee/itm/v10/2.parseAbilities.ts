@@ -6,11 +6,11 @@ import type { AbilityV10 } from './2.parseAbilities.types.js';
 import type { EffectV10 } from './3.parseEffects.types.js';
 
 const parseAbilityEffects = (reader: BufferReader, count: number, index: number): EffectV10[] => {
-  const abilityEffectSize = 48;
   const abilityEffects: EffectV10[] = [];
   // TODO [snow]: I may have a bug here: choose index vs i
+  const r = reader.fork();
   for (let i = 0; i < count; i++) {
-    const abilityEffect = parseEffect(reader.fork(reader.offset + i * abilityEffectSize));
+    const abilityEffect = parseEffect(r);
     abilityEffects.push(abilityEffect);
   }
 
@@ -55,10 +55,6 @@ const parseAbility = (reader: BufferReader, offsetToEffects: number): AbilityV10
   const sizeOfAbilityEffectBytes = 48;
   const thisAbilityEffectsOffset = offsetToEffects + sizeOfAbilityEffectBytes * firstEffectIndex;
   const effects = parseAbilityEffects(reader.fork(thisAbilityEffectsOffset), countOfEffects, firstEffectIndex);
-
-  reader.skip.short();
-  reader.skip.short();
-  reader.skip.short();
 
   return {
     attackType,
@@ -106,6 +102,6 @@ export const parseAbilities = ({
   count,
   offsetToEffects,
 }: ParseAbilitiesProps): AbilityV10[] => {
-  const abilitySize = 56;
-  return Array.from<never, AbilityV10>({ length: count }, (_, i) => parseAbility(reader.fork(reader.offset + i * abilitySize), offsetToEffects));
+  const r = reader.fork();
+  return Array.from<never, AbilityV10>({ length: count }, () => parseAbility(r, offsetToEffects));
 };

@@ -995,6 +995,6 @@ export const parseEffects = ({
   reader,
   count,
 }: ParseFeatureBlocksProps): EffectV10[] => {
-  const effectSize = 48;
-  return Array.from<never, EffectV10>({ length: count }, (_, i) => parseEffect(reader.fork(reader.offset + i * effectSize)));
+  const r = reader.fork();
+  return Array.from<never, EffectV10>({ length: count }, () => parseEffect(r));
 };

@@ -50,6 +50,6 @@ export const parseResponses = ({
 }: ParseResponsesProps): RawResponse[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/dlg_v1.htm
 
-  const knownResponseSize = 32;
-  return Array.from<never, RawResponse>({ length: count }, (_, i) => parse(reader.fork(reader.offset + i * knownResponseSize), i));
+  const r = reader.fork();
+  return Array.from<never, RawResponse>({ length: count }, (_, i) => parse(r, i));
 };

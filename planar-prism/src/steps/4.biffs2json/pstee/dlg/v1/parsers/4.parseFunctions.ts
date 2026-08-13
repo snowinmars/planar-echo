@@ -26,11 +26,11 @@ export const parseFunction = ({
 }: ParseFunctionProps): Map<number, RawFunction> => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/dlg_v1.htm
 
-  const knownFunctionSize = 8;
+  const r = reader.fork();
   return Array.from({ length: count })
     .map((_, i) => i)
     .reduce((map, index) => {
-      const f = parse(reader.fork(reader.offset + index * knownFunctionSize), index);
+      const f = parse(r, index);
       map.set(index, f);
       return map;
     }, new Map<number, RawFunction>());

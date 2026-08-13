@@ -58,24 +58,19 @@ export const parsePaletteTis = ({
 
   const dataReader = reader.fork(header.headerSize);
 
-  for (let tileIdx = 0; tileIdx < header.tileCount; tileIdx = tileIdx + 1) {
-    const tilePalette = Buffer.alloc(256 * 4);
-    for (let p = 0; p < 256; p = p + 1) {
-      const b = dataReader.ubyte();
-      const g = dataReader.ubyte();
-      const r = dataReader.ubyte();
-      const a = dataReader.ubyte();
-      const off = p * 4;
-      tilePalette[off] = b;
-      tilePalette[off + 1] = g;
-      tilePalette[off + 2] = r;
-      tilePalette[off + 3] = a;
-    }
-    tilePalette.copy(palette, tileIdx * 256 * 4);
+  const paletteBytesPerTile = 256 * 4;
+  const indicesBytesPerTile = TILE_DIMENSION * TILE_DIMENSION;
 
-    const tileIndices = Buffer.alloc(TILE_DIMENSION * TILE_DIMENSION);
-    for (let i = 0; i < TILE_DIMENSION * TILE_DIMENSION; i++) tileIndices[i] = dataReader.ubyte();
-    tileIndices.copy(indices, tileIdx * TILE_DIMENSION * TILE_DIMENSION);
+  for (let tileIdx = 0; tileIdx < header.tileCount; tileIdx = tileIdx + 1) {
+    const palStart = dataReader.offset;
+    const tilePalette = dataReader.blob(palStart, palStart + paletteBytesPerTile);
+    dataReader.skip.custom(paletteBytesPerTile);
+    tilePalette.copy(palette, tileIdx * paletteBytesPerTile);
+
+    const idxStart = dataReader.offset;
+    const tileIndices = dataReader.blob(idxStart, idxStart + indicesBytesPerTile);
+    dataReader.skip.custom(indicesBytesPerTile);
+    tileIndices.copy(indices, tileIdx * indicesBytesPerTile);
 
     const tileRgba = renderTileRgba(tilePalette, tileIndices);
     blitTileRgba(atlas, columns, tileIdx, tileRgba);

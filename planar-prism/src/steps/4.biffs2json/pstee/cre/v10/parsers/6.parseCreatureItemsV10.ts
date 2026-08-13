@@ -31,6 +31,6 @@ export const parseCreatureItemsV10 = ({
 }: ParseCreatureItemsV10Props): ItemV10[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
-  const creatureItemSize = 20;
-  return Array.from<never, ItemV10>({ length: count }, (_, i) => parse(reader.fork(reader.offset + i * creatureItemSize)));
+  const r = reader.fork();
+  return Array.from<never, ItemV10>({ length: count }, () => parse(r));
 };
