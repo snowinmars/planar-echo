@@ -22,6 +22,7 @@ type Step4Props = WithClassName & Readonly<{
   commentArgs: LandingStateStep4['step4CommentArgs'];
   resultType: LandingStateStep4['step4ResultType'];
   validate: LandingStateStep4['step4Validate'];
+  openDir: LandingStateStep4['step4OpenDir'];
 }>;
 const Step4: FC<Step4Props> = (props: Step4Props) => {
   return (
@@ -45,6 +46,7 @@ const Step4: FC<Step4Props> = (props: Step4Props) => {
           setGhostDir={props.setGhostDir}
           loading={props.loading}
           validate={props.validate}
+          openDir={props.openDir}
         />
 
         <Comment

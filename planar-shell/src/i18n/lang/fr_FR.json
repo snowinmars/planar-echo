@@ -80,6 +80,8 @@
         "connection": "Vérifiez la connexion",
         "DIRECTORY_NOT_FOUND": "Dossier introuvable",
         "DIRECTORY_NOT_EMPTY": "Le dossier n'est pas vide",
+        "NOT_A_DIRECTORY": "Le chemin n'est pas un dossier",
+        "OPEN_FAILED": "Impossible d'ouvrir le dossier",
         "unknown": "Erreur, voir F12"
       }
     },

@@ -80,6 +80,8 @@
         "connection": "Verbindung prüfen",
         "DIRECTORY_NOT_FOUND": "Verzeichnis nicht gefunden",
         "DIRECTORY_NOT_EMPTY": "Verzeichnis ist nicht leer",
+        "NOT_A_DIRECTORY": "Pfad ist kein Verzeichnis",
+        "OPEN_FAILED": "Verzeichnis konnte nicht geöffnet werden",
         "unknown": "Fehler, siehe F12"
       }
     },

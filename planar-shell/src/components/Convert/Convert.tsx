@@ -99,6 +99,7 @@ const Convert: FC = () => {
           commentArgs={store.step4CommentArgs}
           resultType={store.step4ResultType}
           validate={store.step4Validate}
+          openDir={store.step4OpenDir}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>

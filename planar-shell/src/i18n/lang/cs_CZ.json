@@ -80,6 +80,8 @@
         "connection": "Zkontrolujte připojení",
         "DIRECTORY_NOT_FOUND": "Složka nebyla nalezena",
         "DIRECTORY_NOT_EMPTY": "Složka není prázdná",
+        "NOT_A_DIRECTORY": "Cesta není složka",
+        "OPEN_FAILED": "Složku se nepodařilo otevřít",
         "unknown": "Chyba, viz F12"
       }
     },

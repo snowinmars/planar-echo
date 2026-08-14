@@ -80,6 +80,8 @@
         "connection": "Sprawdź połączenie",
         "DIRECTORY_NOT_FOUND": "Nie znaleziono katalogu",
         "DIRECTORY_NOT_EMPTY": "Katalog nie jest pusty",
+        "NOT_A_DIRECTORY": "Ścieżka nie jest katalogiem",
+        "OPEN_FAILED": "Nie udało się otworzyć katalogu",
         "unknown": "Błąd, patrz F12"
       }
     },

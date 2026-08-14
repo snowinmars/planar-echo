@@ -80,6 +80,8 @@
         "connection": "Check connection",
         "DIRECTORY_NOT_FOUND": "Directory not found",
         "DIRECTORY_NOT_EMPTY": "Directory is not empty",
+        "NOT_A_DIRECTORY": "Path is not a directory",
+        "OPEN_FAILED": "Failed to open directory",
         "unknown": "Error, see F12"
       }
     },

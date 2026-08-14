@@ -1,11 +1,11 @@
 import { nothing } from '@planar/shared';
 import { client } from '@/swagger/client/client.gen';
-import { postApiFsValidateGhostDir } from '@/swagger/client';
+import { postApiFsOpenDir, postApiFsValidateGhostDir } from '@/swagger/client';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { LandingState, LandingStateStep4, ZustandGetType, ZustandSetType } from './types';
 import type { StateCreator } from 'zustand';
-import type { PostApiFsValidateGhostDirErrors } from '@/swagger/client';
+import type { PostApiFsOpenDirErrors, PostApiFsValidateGhostDirErrors } from '@/swagger/client';
 import { debounce, interval, Subject } from 'rxjs';
 
 type FormErrorStateProps = PostApiFsValidateGhostDirErrors[404 | 406];
@@ -16,6 +16,51 @@ const translateErrorState = (error: FormErrorStateProps): string => {
     case 'DIRECTORY_NOT_FOUND': return 'landing.step4.comments.DIRECTORY_NOT_FOUND';
     case 'DIRECTORY_NOT_EMPTY': return 'landing.step4.comments.DIRECTORY_NOT_EMPTY';
     default: return 'landing.step4.comments.unknown';
+  }
+};
+
+type OpenDirErrorStateProps = PostApiFsOpenDirErrors[400 | 404 | 500];
+const translateOpenDirError = (error: OpenDirErrorStateProps): string => {
+  const isConnectionIssue = !error.error;
+  if (isConnectionIssue) return 'landing.step4.comments.connection';
+  switch (error.error.code) {
+    case 'DIRECTORY_NOT_FOUND': return 'landing.step4.comments.DIRECTORY_NOT_FOUND';
+    case 'NOT_A_DIRECTORY': return 'landing.step4.comments.NOT_A_DIRECTORY';
+    case 'OPEN_FAILED': return 'landing.step4.comments.OPEN_FAILED';
+    default: return 'landing.step4.comments.unknown';
+  }
+};
+
+const openDir = async (
+  serverUrl: string,
+  set: ZustandSetType<LandingStateStep4>,
+  get: ZustandGetType<LandingStateStep4>,
+): Promise<void> => {
+  const { ghostDir } = get();
+  if (!ghostDir) return;
+
+  try {
+    const { error } = await postApiFsOpenDir({
+      client,
+      baseURL: serverUrl,
+      body: { dir: ghostDir },
+    });
+
+    if (error) {
+      set({
+        step4Comment: translateOpenDirError(error),
+        step4CommentArgs: {},
+        step4ResultType: 'error',
+      });
+    }
+  }
+  catch (e: unknown) {
+    console.error(e);
+    set({
+      step4Comment: 'landing.step4.comments.unknown',
+      step4CommentArgs: {},
+      step4ResultType: 'error',
+    });
   }
 };
 
@@ -107,6 +152,10 @@ export const useLandingStoreStep4: StateCreator<LandingState, [], [], LandingSta
     step4Validate: () => {
       const { serverUrl } = get();
       return validate(serverUrl, set, get);
+    },
+    step4OpenDir: () => {
+      const { serverUrl } = get();
+      return openDir(serverUrl, set, get);
     },
     step4Destroy: () => {
       subscription.unsubscribe();

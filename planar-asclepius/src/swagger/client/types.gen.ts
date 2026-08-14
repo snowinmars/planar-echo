@@ -266,6 +266,58 @@ export type PostApiFsDownloadWeiduResponses = {
 
 export type PostApiFsDownloadWeiduResponse = PostApiFsDownloadWeiduResponses[keyof PostApiFsDownloadWeiduResponses];
 
+export type PostApiFsOpenDirData = {
+    body: {
+        dir: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/fs/openDir';
+};
+
+export type PostApiFsOpenDirErrors = {
+    /**
+     * Path is not a directory
+     */
+    400: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND' | 'NOT_A_DIRECTORY' | 'OPEN_FAILED';
+        };
+    };
+    /**
+     * Directory not found
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND' | 'NOT_A_DIRECTORY' | 'OPEN_FAILED';
+        };
+    };
+    /**
+     * Failed to open directory
+     */
+    500: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND' | 'NOT_A_DIRECTORY' | 'OPEN_FAILED';
+        };
+    };
+};
+
+export type PostApiFsOpenDirError = PostApiFsOpenDirErrors[keyof PostApiFsOpenDirErrors];
+
+export type PostApiFsOpenDirResponses = {
+    /**
+     * Directory opened
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type PostApiFsOpenDirResponse = PostApiFsOpenDirResponses[keyof PostApiFsOpenDirResponses];
+
 export type GetApiFsGhostDirByFilePathData = {
     body?: never;
     path: {

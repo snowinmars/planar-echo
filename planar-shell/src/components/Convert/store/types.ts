@@ -78,6 +78,7 @@ export type LandingStateStep4 = Readonly<{
   step4CommentArgs: Record<string, string>;
   step4ResultType: Maybe<'success' | 'error'>;
   step4Validate: () => Promise<void>;
+  step4OpenDir: () => Promise<void>;
   step4Destroy: () => void;
 }>;
 

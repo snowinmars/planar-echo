@@ -80,6 +80,8 @@
         "connection": "연결 확인",
         "DIRECTORY_NOT_FOUND": "디렉터리를 찾을 수 없음",
         "DIRECTORY_NOT_EMPTY": "디렉터리가 비어 있지 않음",
+        "NOT_A_DIRECTORY": "경로가 디렉터리가 아님",
+        "OPEN_FAILED": "디렉터리를 열 수 없음",
         "unknown": "오류, F12 확인"
       }
     },

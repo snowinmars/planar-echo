@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import FolderIcon from '@mui/icons-material/Folder';
 import ReplayIcon from '@mui/icons-material/Replay';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
@@ -15,6 +16,7 @@ type ContentProps = Readonly<{
   setGhostDir: LandingStateStep4['setGhostDir'];
   loading: boolean;
   validate: (ghostDir: string) => Promise<void>;
+  openDir: LandingStateStep4['step4OpenDir'];
 }>;
 const Content: FC<ContentProps> = (props: ContentProps) => {
   const { t } = useTranslation();
@@ -34,16 +36,29 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
         placeholder="Empty output directory"
       />
 
-      <IconButton
-        className={styles.inputReload}
-        aria-label="replay"
-        disabled={!props.ghostDir || props.loading || props.disabled}
-        onClick={() => {
-          if (props.ghostDir && !props.disabled) props.validate(props.ghostDir).catch(e => console.error(e));
-        }}
-      >
-        <ReplayIcon />
-      </IconButton>
+      <div className={styles.inputActions}>
+        <IconButton
+          className={styles.inputReload}
+          aria-label="replay"
+          disabled={!props.ghostDir || props.loading || props.disabled}
+          onClick={() => {
+            if (props.ghostDir && !props.disabled) props.validate(props.ghostDir).catch((e: unknown) => console.error(e));
+          }}
+        >
+          <ReplayIcon />
+        </IconButton>
+
+        <IconButton
+          className={styles.inputOpen}
+          aria-label="open folder"
+          disabled={!props.ghostDir || props.loading || props.disabled}
+          onClick={() => {
+            props.openDir().catch((e: unknown) => console.error(e));
+          }}
+        >
+          <FolderIcon />
+        </IconButton>
+      </div>
     </Paper>
   );
 };
