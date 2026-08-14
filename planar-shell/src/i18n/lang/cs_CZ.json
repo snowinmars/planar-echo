@@ -80,6 +80,7 @@
     },
     "step6": {
       "start": "Mám místo na disku a chci začít",
+      "buildPrism": "Sestavení Prism",
       "decompileBiffs": "Dekompilace .biff archivů",
       "ids_raw2json": ".ids do json",
       "dlg_json2ghost_build": "Kompilace ghost dialogů",

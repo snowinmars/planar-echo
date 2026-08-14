@@ -80,6 +80,7 @@
     },
     "step6": {
       "start": "Места на диске достаточно, я хочу начать",
+      "buildPrism": "Сборка Prism",
       "decompileBiffs": "Декомпиляция .biff архивов",
       "ids_raw2json": ".ids в json",
       "dlg_json2ghost_build": "Компиляция ghost диалогов",

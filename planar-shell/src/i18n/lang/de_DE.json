@@ -80,6 +80,7 @@
     },
     "step6": {
       "start": "Ich habe Platz auf der Festplatte und möchte starten",
+      "buildPrism": "Kompilieren von Prism",
       "decompileBiffs": "Dekompilieren von .biff-Archiven",
       "ids_raw2json": ".ids nach json",
       "dlg_json2ghost_build": "Kompilieren von Ghost-Dialogen",

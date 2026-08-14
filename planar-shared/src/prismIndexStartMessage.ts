@@ -21,24 +21,24 @@ export type PrismIndexStartMessage = Readonly<{
 export const progressSteps = [
   'buildPrism', // value 0
   'decompileBiffs', // value 0
-  'tlk_json2ghost', // value: number in percent; params: {index: number}
+  'tlk_raw2json', // value: number in percent; params: {version: string, resourceName: string}
   'ids_raw2json', // value: number in percent; params: {resourceName: string}
+  'bcs_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'ini_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'cre_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'dlg_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'effV10_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'effV20_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'itm_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'wed_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'pvrz_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'mos_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'tis_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'tlk_json2ghost', // value: number in percent; params: {index: number}
+  'itm_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'cre_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'dlg_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'dlg_json2ghost_build', // value: number in percent
-  'cre_raw2json', // here and below reportProgress params is : value: number in percent; params: {version: string, resourceName: string}
-  'dlg_raw2json',
-  'effV10_raw2json',
-  'effV20_raw2json',
-  'ini_raw2json',
-  'itm_raw2json',
-  'tlk_raw2json',
-  'bcs_raw2json',
-  'wed_raw2json',
-  'pvrz_raw2json',
-  'tis_raw2json',
-  'mos_raw2json',
-  'cre_json2ghost',
-  'dlg_json2ghost',
-  'itm_json2ghost',
 ] as const;
 export type ProgressStep = typeof progressSteps[number];
 

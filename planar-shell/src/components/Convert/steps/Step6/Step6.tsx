@@ -53,6 +53,10 @@ const Step6: FC<Step6Props> = (props: Step6Props) => {
 
       <Grid container spacing="1em">
         <Grid size={{ xs: 12 }}>
+          <L item={props.progress.get('buildPrism')!} />
+        </Grid>
+
+        <Grid size={{ xs: 12 }}>
           <L item={props.progress.get('decompileBiffs')!} />
         </Grid>
 
