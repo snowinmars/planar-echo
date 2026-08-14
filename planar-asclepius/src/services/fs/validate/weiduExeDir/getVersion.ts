@@ -9,7 +9,10 @@ type GetVersionsProps = Readonly<{
 const weiduRegex = /^.*WeiDU version (\d+)\s*$/;
 const getVersion = async ({ weiduExe }: GetVersionsProps): Promise<string> => {
   const lines = await execConsole<string>(
-    `"${weiduExe}" --version`,
+    {
+      file: weiduExe,
+      args: ['--version'],
+    },
     (line: string): Maybe<string> => {
       const matches = weiduRegex.exec(line);
       const isTechInfo = !matches || matches.length <= 1;

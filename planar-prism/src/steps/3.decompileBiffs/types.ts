@@ -1,11 +1,10 @@
 import type { Paths } from '@/steps/1.createPaths/index.js';
 
-export type ListBiffsProps = Readonly<{
+export type DecompileBiffsProps = Readonly<{
   weiduExeDir: Paths['weiduExeDir'];
   gameDir: Paths['gameDir'];
   gameLanguage: Paths['gameLanguage'];
-}>;
-export type DecompileBiffsProps = ListBiffsProps & Readonly<{
+  tlkDir: Paths['tlkDir'];
   ghostDir: Paths['ghostDir'];
 }>;
 export type DecompiledBiffType
@@ -41,10 +40,6 @@ export type DecompiledBiffType
     | 'wed'
     | 'wmp'
 ;
-export type Biff = Readonly<{
-  resourceName: string;
-  sizeBytes: number;
-}>;
 export type DecompiledBiff = Readonly<{
   resourceName: string;
   fromBiffResourceName: string;

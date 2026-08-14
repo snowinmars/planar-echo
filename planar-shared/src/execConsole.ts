@@ -4,32 +4,33 @@ import { just } from './maybe.js';
 
 import type { Maybe } from './maybe.js';
 
-const splitCommand = (command: string): [string, string[]] => {
-  let args: string[] = [];
-  const splitted = command.split(' ');
-  if (splitted.length === 0) throw new Error('Empty command');
-  const cmd = command.split(' ')[0];
-  if (splitted.length > 1) {
-    args = command.split(' ').slice(1);
-  }
-
-  if (!cmd) throw new Error(`Cannot understand command '${cmd}'`);
-
-  return [cmd, args];
-};
+export type ExecConsoleProps = Readonly<{
+  file: string;
+  args: readonly string[];
+  cwd?: string;
+}>;
 
 export const execConsole = async <T>(
-  command: string,
+  props: ExecConsoleProps,
   map: (line: string, i: number) => Maybe<T>,
   ignoreStdout = false,
 ): Promise<T[]> => {
   return new Promise((resolve, reject) => {
-    const [cmd, args] = splitCommand(command);
-
-    const proc = spawn(cmd, args, {
-      shell: true,
+    const proc = spawn(props.file, [...props.args], {
+      shell: false,
       windowsHide: true,
+      cwd: props.cwd,
+      stdio: ['pipe', 'pipe', 'pipe'],
     });
+
+    // Close stdin so WeiDU autopause ("Press ENTER") gets EOF instead of hanging.
+    // Do not use stdio 'ignore' for stdin — some WeiDU builds then exit before doing work.
+    if (proc.stdin) {
+      proc.stdin.on('error', (e) => {
+        console.warn(e);
+      });
+      proc.stdin.end();
+    }
 
     let stdoutBuffer = '';
     let stderrBuffer = '';

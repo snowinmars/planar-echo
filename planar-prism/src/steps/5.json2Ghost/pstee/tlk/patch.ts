@@ -10,6 +10,14 @@ export const patchTlk = (tlk: Tlk): string => {
 
   const values = [...tlk.itemsMap.values()]; // need percent, map is ~100 000 elements of 7 props
 
+  reportProgress({
+    value: 1,
+    step: 'tlk_json2ghost',
+    params: {
+      index: '0',
+    },
+  });
+
   for (let i = 0; i < values.length; i++) {
     const { index, text } = values[i]!;
 

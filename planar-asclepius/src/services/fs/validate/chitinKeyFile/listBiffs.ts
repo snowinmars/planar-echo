@@ -10,7 +10,10 @@ type ListBiffsProps = Readonly<{
 }>;
 const listBiffsRegex = /\[(.*?)\]\s+(\d+) bytes.*/;
 const listBiffs = async ({ weiduExe, gameDir, gameLanguage }: ListBiffsProps): Promise<string[]> => execConsole<string>(
-  `"${weiduExe}" --game "${gameDir}" --list-biffs --use-lang ${gameLanguage}`,
+  {
+    file: weiduExe,
+    args: ['--game', gameDir, '--list-biffs', '--use-lang', gameLanguage],
+  },
   (line: string): Maybe<string> => {
     const matches = listBiffsRegex.exec(line);
     const isTechInfo = !matches || matches.length <= 1;

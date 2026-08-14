@@ -1040,6 +1040,10 @@ export type CharacterStore = Readonly<{
   'wrat09': CharacterNarrativeProps;
   'wrat10': CharacterNarrativeProps;
   'wtropo': CharacterNarrativeProps;
+  'xach': CharacterNarrativeProps;
+  'xan': CharacterNarrativeProps;
+  'xander': CharacterNarrativeProps;
+  'xanthia': CharacterNarrativeProps;
   'yelaan': CharacterNarrativeProps;
   'yellow': CharacterNarrativeProps;
   'yvana': CharacterNarrativeProps;
@@ -1099,9 +1103,5 @@ export type CharacterStore = Readonly<{
   'zommbar': CharacterNarrativeProps;
   'zommbou': CharacterNarrativeProps;
   'zommbou2': CharacterNarrativeProps;
-  'xach': CharacterNarrativeProps;
-  'xan': CharacterNarrativeProps;
-  'xander': CharacterNarrativeProps;
-  'xanthia': CharacterNarrativeProps;
 }>;
 

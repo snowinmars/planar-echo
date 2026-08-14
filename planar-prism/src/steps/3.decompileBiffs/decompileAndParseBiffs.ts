@@ -6,11 +6,9 @@ import {
 } from 'path';
 import { nothing } from '@planar/shared';
 import { execConsole } from '@planar/shared/node';
-import listBiffs from './listBiffs.js';
 
 import type { Maybe } from '@planar/shared';
 import type {
-  Biff,
   DecompiledBiff,
   DecompiledBiffType,
   DecompileBiffsProps,
@@ -69,23 +67,32 @@ const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => 
 
   return { resourceName, fromBiffResourceName, type };
 };
-const getDecompileBiffsCommand = ({ weiduExeDir, gameDir, ghostDir, gameLanguage }: DecompileBiffsProps, biffs: Biff[]): string => {
-  const biffNames = biffs.map(b => `${b.resourceName}`).join(' ');
-  return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decompiledBiff.root}" --biff-get "[${biffNames}]"`;
-};
-const getDecompileOtherBiffsCommand = ({ weiduExeDir, gameDir, ghostDir, gameLanguage }: DecompileBiffsProps): string => {
-  return `"${weiduExeDir}" --game "${gameDir}" --use-lang ${gameLanguage} --out "${ghostDir.decompiledBiff.root}" --biff-get-rest "*"`;
-};
-const decompileAndParseBiffs = async (props: DecompileBiffsProps, reportProgress: (percent: number) => void): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
-  // for some reason, unarchiving takes two steps, afais.
-  const biffs: Biff[] = await listBiffs(props);
-  reportProgress(3);// values that look cool in ui
-  const items = await execConsole<DecompiledBiff>(getDecompileBiffsCommand(props, biffs), parseDecompiledItem);
-  reportProgress(43);
-  const otherItems = await execConsole<DecompiledBiff>(getDecompileOtherBiffsCommand(props), parseDecompiledItem);
-  reportProgress(74);
 
-  const unique = [...new Map([...items, ...otherItems].map(x => [x.resourceName, x])).values()];
+const decompileAndParseBiffs = async (props: DecompileBiffsProps, reportProgress: (percent: number) => void): Promise<Map<DecompiledBiffType, DecompiledBiff[]>> => {
+  const {
+    weiduExeDir,
+    gameDir,
+    ghostDir,
+    tlkDir,
+  } = props;
+
+  reportProgress(3);
+  // WeiDU on Windows uses MSVC CRT argv wildcard expansion: `.*` becomes `..` and aborts. So use `.+` (same “all resources” intent, no `*` / `?` for the CRT to expand).
+  // Prefer --tlkin over --use-lang: WeiDU lowercases lang_dir and then fails to match `ru_RU`/`en_US` folders.
+  const items = await execConsole<DecompiledBiff>(
+    {
+      file: weiduExeDir,
+      args: [
+        '--game', gameDir,
+        '--tlkin', tlkDir,
+        '--out', ghostDir.decompiledBiff.root,
+        '--biff-get', '.+',
+      ],
+    },
+    parseDecompiledItem,
+  );
+
+  const unique = [...new Map(items.map(x => [x.resourceName, x])).values()];
 
   return Map.groupBy(unique, x => x.type);
 };
