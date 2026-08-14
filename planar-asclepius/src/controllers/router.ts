@@ -8,6 +8,7 @@ import {
 import registerFsValidateChitinKeyFile from './fs/validate/chitinKeyFile.js';
 import registerFsValidateGhostDir from './fs/validate/ghostDir.js';
 import registerFsValidateWeiduExeDir from './fs/validate/weiduExeDir.js';
+import registerFsDownloadWeidu from './fs/download/weidu.js';
 import registerFsGhostDir from './fs/ghostDir.js';
 import registerFsPrismDir from './fs/prismDir.js';
 import registerFsShellDir from './fs/shellDir.js';
@@ -46,6 +47,7 @@ const router = express.Router();
 registerFsValidateChitinKeyFile(registry, router);
 registerFsValidateGhostDir(registry, router);
 registerFsValidateWeiduExeDir(registry, router);
+registerFsDownloadWeidu(registry, router);
 registerFsGhostDir(registry, router);
 registerFsPrismDir(registry, router);
 registerFsShellDir(registry, router);

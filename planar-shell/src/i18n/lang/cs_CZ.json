@@ -48,7 +48,16 @@
         "connection": "Zkontrolujte připojení",
         "FILE_NOT_FOUND": "Soubor weidu.exe nebyl nalezen",
         "WEIDU_ERROR": "Chyba weidu",
+        "downloading": "Stahuji WeiDU...",
+        "DOWNLOAD_FAILED": "Stažení WeiDU selhalo",
+        "EXTRACT_FAILED": "Rozbalení WeiDU selhalo",
+        "BINARY_NOT_FOUND": "Binárka WeiDU v archivu chybí",
         "unknown": "Chyba, viz F12"
+      },
+      "download": {
+        "windows": "Windows",
+        "linux": "Linux",
+        "mac": "Mac"
       }
     },
     "step3": {

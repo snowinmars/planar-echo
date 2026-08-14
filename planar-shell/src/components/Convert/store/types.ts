@@ -42,6 +42,8 @@ export type LandingStateStep1 = Readonly<{
   step1Destroy: () => void;
 }>;
 
+export type WeiduDownloadPlatform = 'windows' | 'linux' | 'mac';
+
 export type LandingStateStep2 = Readonly<{
   weiduExeDir: string;
   setWeiduExeDir: (weiduExeDir: string) => void;
@@ -51,6 +53,7 @@ export type LandingStateStep2 = Readonly<{
   step2CommentArgs: Record<string, string>;
   step2ResultType: Maybe<'success' | 'error'>;
   step2Validate: () => Promise<void>;
+  step2DownloadWeidu: (platform: WeiduDownloadPlatform) => Promise<void>;
   step2Destroy: () => void;
 }>;
 

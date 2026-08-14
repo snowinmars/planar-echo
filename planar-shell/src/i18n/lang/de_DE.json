@@ -48,7 +48,16 @@
         "connection": "Verbindung prüfen",
         "FILE_NOT_FOUND": "Datei weidu.exe nicht gefunden",
         "WEIDU_ERROR": "Weidu-Fehler",
+        "downloading": "WeiDU wird heruntergeladen...",
+        "DOWNLOAD_FAILED": "WeiDU konnte nicht heruntergeladen werden",
+        "EXTRACT_FAILED": "WeiDU konnte nicht entpackt werden",
+        "BINARY_NOT_FOUND": "WeiDU-Binary nicht im Archiv gefunden",
         "unknown": "Fehler, siehe F12"
+      },
+      "download": {
+        "windows": "Windows",
+        "linux": "Linux",
+        "mac": "Mac"
       }
     },
     "step3": {

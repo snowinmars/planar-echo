@@ -48,7 +48,16 @@
         "connection": "Vérifiez la connexion",
         "FILE_NOT_FOUND": "Fichier weidu.exe introuvable",
         "WEIDU_ERROR": "Erreur weidu",
+        "downloading": "Téléchargement de WeiDU...",
+        "DOWNLOAD_FAILED": "Échec du téléchargement de WeiDU",
+        "EXTRACT_FAILED": "Échec de l'extraction de WeiDU",
+        "BINARY_NOT_FOUND": "Binaire WeiDU introuvable dans l'archive",
         "unknown": "Erreur, voir F12"
+      },
+      "download": {
+        "windows": "Windows",
+        "linux": "Linux",
+        "mac": "Mac"
       }
     },
     "step3": {

@@ -212,6 +212,60 @@ export type PostApiFsValidateWeiduExeDirResponses = {
 
 export type PostApiFsValidateWeiduExeDirResponse = PostApiFsValidateWeiduExeDirResponses[keyof PostApiFsValidateWeiduExeDirResponses];
 
+export type PostApiFsDownloadWeiduData = {
+    body: {
+        platform: 'windows' | 'linux' | 'mac';
+    };
+    path?: never;
+    query?: never;
+    url: '/api/fs/download/weidu';
+};
+
+export type PostApiFsDownloadWeiduErrors = {
+    /**
+     * WeiDU binary not found in archive
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DOWNLOAD_FAILED' | 'EXTRACT_FAILED' | 'BINARY_NOT_FOUND';
+        };
+    };
+    /**
+     * Failed to extract WeiDU
+     */
+    500: {
+        error: {
+            message: string;
+            code: 'DOWNLOAD_FAILED' | 'EXTRACT_FAILED' | 'BINARY_NOT_FOUND';
+        };
+    };
+    /**
+     * Failed to download WeiDU
+     */
+    502: {
+        error: {
+            message: string;
+            code: 'DOWNLOAD_FAILED' | 'EXTRACT_FAILED' | 'BINARY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiFsDownloadWeiduError = PostApiFsDownloadWeiduErrors[keyof PostApiFsDownloadWeiduErrors];
+
+export type PostApiFsDownloadWeiduResponses = {
+    /**
+     * Path to the WeiDU binary
+     */
+    200: {
+        data: {
+            weiduExeDir: string;
+        };
+    };
+};
+
+export type PostApiFsDownloadWeiduResponse = PostApiFsDownloadWeiduResponses[keyof PostApiFsDownloadWeiduResponses];
+
 export type GetApiFsGhostDirByFilePathData = {
     body?: never;
     path: {

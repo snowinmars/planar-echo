@@ -22,6 +22,7 @@ type Step2Props = WithClassName & Readonly<{
   commentArgs: LandingStateStep2['step2CommentArgs'];
   resultType: LandingStateStep2['step2ResultType'];
   validate: LandingStateStep2['step2Validate'];
+  downloadWeidu: LandingStateStep2['step2DownloadWeidu'];
 }>;
 const Step2: FC<Step2Props> = (props) => {
   return (
@@ -43,6 +44,7 @@ const Step2: FC<Step2Props> = (props) => {
           setWeiduExeDir={props.setWeiduExeDir}
           loading={props.loading}
           validate={props.validate}
+          downloadWeidu={props.downloadWeidu}
         />
 
         <Comment

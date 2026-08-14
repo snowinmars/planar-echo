@@ -48,7 +48,16 @@
         "connection": "Проверь соединение",
         "FILE_NOT_FOUND": "Файл weidu.exe не найден",
         "WEIDU_ERROR": "Ошибка weidu",
+        "downloading": "Скачиваю WeiDU...",
+        "DOWNLOAD_FAILED": "Не удалось скачать WeiDU",
+        "EXTRACT_FAILED": "Не удалось распаковать WeiDU",
+        "BINARY_NOT_FOUND": "Бинарник WeiDU не найден в архиве",
         "unknown": "Ошибка, см. F12"
+      },
+      "download": {
+        "windows": "Windows",
+        "linux": "Linux",
+        "mac": "Mac"
       }
     },
     "step3": {

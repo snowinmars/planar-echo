@@ -48,7 +48,16 @@
         "connection": "연결 확인",
         "FILE_NOT_FOUND": "weidu.exe 파일을 찾을 수 없음",
         "WEIDU_ERROR": "Weidu 오류",
+        "downloading": "WeiDU 다운로드 중...",
+        "DOWNLOAD_FAILED": "WeiDU 다운로드 실패",
+        "EXTRACT_FAILED": "WeiDU 압축 해제 실패",
+        "BINARY_NOT_FOUND": "아카이브에서 WeiDU 바이너리를 찾을 수 없음",
         "unknown": "오류, F12 확인"
+      },
+      "download": {
+        "windows": "Windows",
+        "linux": "Linux",
+        "mac": "Mac"
       }
     },
     "step3": {

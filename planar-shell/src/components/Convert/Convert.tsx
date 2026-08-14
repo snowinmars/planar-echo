@@ -65,6 +65,7 @@ const Convert: FC = () => {
           weiduExeDir={store.weiduExeDir}
           setWeiduExeDir={store.setWeiduExeDir}
           validate={store.step2Validate}
+          downloadWeidu={store.step2DownloadWeidu}
           comment={store.step2Comment}
           commentArgs={store.step2CommentArgs}
           resultType={store.step2ResultType}
