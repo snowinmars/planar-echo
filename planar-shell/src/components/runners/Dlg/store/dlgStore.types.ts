@@ -6,7 +6,7 @@ import type {
 } from '@planar/shared';
 
 export type DlgStore = Readonly<{
-  loading: boolean;
+  loading: number;
 
   dlgs: string[];
   tree: Maybe<GhostDlg>;

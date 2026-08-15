@@ -42,6 +42,11 @@ const createDlgHistoryEvents = (
 };
 
 export const createDlgStore = (runtime: PlanarRuntime): StateCreator<DlgStore> => (set, get) => {
+  const withLoading = async (fn: () => Promise<void>): Promise<void> => {
+    set(s => ({ loading: s.loading + 1 }));
+    await fn().finally(() => set(s => ({ loading: s.loading - 1 })));
+  };
+
   const loadDlgTree = async (dlgId: string, initialStateId: Maybe<StateId>): Promise<void> => {
     const {
       serverUrl,
@@ -54,28 +59,24 @@ export const createDlgStore = (runtime: PlanarRuntime): StateCreator<DlgStore> =
     if (!narrative || !character) throw new Error('World stores were not initialized');
     if (!ghostDir) throw new Error('Ghost directory should be initialized here');
 
-    set({ loading: true });
-    const tree = await dlgRepository.loadDlgTree({
-      serverUrl,
-      ghostDir,
-      dlgId,
-      narrative,
-      character,
-    }).finally(() => set({ loading: false }));
+    await withLoading(async () => {
+      const tree = await dlgRepository.loadDlgTree({
+        serverUrl,
+        ghostDir,
+        dlgId,
+        narrative,
+        character,
+      });
 
-    set({
-      tree,
-      currentDlgId: dlgId,
-      currentStateId: initialStateId ?? chooseStartingStateId(tree),
+      set({
+        tree,
+        currentDlgId: dlgId,
+        currentStateId: initialStateId ?? chooseStartingStateId(tree),
+      });
     });
   };
 
-  const runTransition = async (transition: () => Promise<void>): Promise<void> => {
-    if (get().loading) return;
-
-    set({ loading: true });
-    await transition().finally(() => set({ loading: false }));
-  };
+  const runTransition = async (transition: () => Promise<void>): Promise<void> => withLoading(transition);
 
   const appendStateToHistory = async (
     tree: Maybe<GhostDlg>,
@@ -125,22 +126,23 @@ export const createDlgStore = (runtime: PlanarRuntime): StateCreator<DlgStore> =
 
     if (!ghostDir) throw new Error('Ghost directory should be initialized here');
 
-    set({ loading: true });
-    const { error, data } = await postApiGhostDlg({
-      client,
-      baseURL: serverUrl,
-      body: { ghostDir }, // may use server filter here, but nah
-    }).finally(() => set({ loading: false }));
-
-    if (error) {
-      console.error(error);
-      set({ dlgs: [] });
-    }
-    else {
-      set({
-        dlgs: data,
+    await withLoading(async () => {
+      const { error, data } = await postApiGhostDlg({
+        client,
+        baseURL: serverUrl,
+        body: { ghostDir }, // may use server filter here, but nah
       });
-    }
+
+      if (error) {
+        console.error(error);
+        set({ dlgs: [] });
+      }
+      else {
+        set({
+          dlgs: data,
+        });
+      }
+    });
   };
 
   const setCurrentStateId = (targetStateId: StateId): void => {
@@ -149,7 +151,7 @@ export const createDlgStore = (runtime: PlanarRuntime): StateCreator<DlgStore> =
   };
 
   return {
-    loading: false,
+    loading: 0,
 
     dlgs: [],
     tree: nothing(),

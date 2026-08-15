@@ -5,7 +5,7 @@ import { useDlgStoreApi } from './store/di';
 import type { DlgStore } from './store/dlgStore.types';
 
 const pickWidgetState = (state: DlgStore) => ({
-  loading: state.loading,
+  loading: state.loading > 0,
   dlgs: state.dlgs,
   tree: state.tree,
   currentDlgId: state.currentDlgId,

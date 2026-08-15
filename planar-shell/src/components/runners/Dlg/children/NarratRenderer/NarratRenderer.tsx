@@ -31,7 +31,7 @@ const NarratRenderer: FC<WithClassName> = ({ className }) => {
       <NarratPhrase
         view={view}
         lines={lines}
-        loading={phraseLoading}
+        loading={phraseLoading > 0}
         selectResponse={selectResponse}
       />
     </div>

@@ -31,7 +31,7 @@ const PsteeRenderer: FC<WithClassName> = ({ className }) => {
       <PsteePhrase
         view={view}
         lines={lines}
-        loading={phraseLoading}
+        loading={phraseLoading > 0}
         selectResponse={selectResponse}
       />
     </div>
