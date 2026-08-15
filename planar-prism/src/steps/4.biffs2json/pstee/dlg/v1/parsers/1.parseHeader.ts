@@ -1,9 +1,9 @@
 import { extendMap } from './1.parseHeader.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawHeader } from './1.parseHeader.types.js';
+import type { RawDlgHeader } from './1.parseHeader.types.js';
 
-export const parseHeader = (reader: BufferReader): RawHeader => {
+export const parseHeader = (reader: BufferReader): RawDlgHeader => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/dlg_v1.htm
 
   /* eslint-disable @stylistic/no-multi-spaces */

@@ -3,17 +3,17 @@ import { extendMap } from './1.parseHeaderV11.types.js';
 import { normalizeRef } from '@/shared/numbers.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { CreatureHeaderV11 } from './1.parseHeaderV11.types.js';
-import type { Ids } from '../../../ids/index.js';
+import type { RawCreHeaderV11 } from './1.parseHeaderV11.types.js';
+import type { RawIds } from '../../../ids/index.js';
 
 type ParseHeaderV11Props = Readonly<{
   reader: BufferReader;
-  ids: Map<string, Ids>;
+  ids: Map<string, RawIds>;
 }>;
 export const parseHeaderV11 = ({
   reader,
   ids,
-}: ParseHeaderV11Props): CreatureHeaderV11 => {
+}: ParseHeaderV11Props): RawCreHeaderV11 => {
   // https://gibberlings3.github.io does not have v1.1 docs
 
   const nameRef = normalizeRef(reader.uint());
@@ -212,7 +212,7 @@ export const parseHeaderV11 = ({
   const racialEnemy = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('race.ids')!.entries));
   const moraleRecoveryTime = reader.short();
   const deity = reader.map.short(x => externalOffsetMap.parseExternal(x, ids.get('diety.ids')!.entries)); // in pstee it is diety, not deity
-  const mageType = reader.map.short<CreatureHeaderV11['mageType']>(x => externalOffsetMap.parseFlagsExternal(x, ids.get('magespec.ids')!.entries));
+  const mageType = reader.map.short<RawCreHeaderV11['mageType']>(x => externalOffsetMap.parseFlagsExternal(x, ids.get('magespec.ids')!.entries));
   const overrideScriptRef = reader.string(8);
   const classScriptRef = reader.string(8);
   const raceScriptRef = reader.string(8);
@@ -279,7 +279,7 @@ export const parseHeaderV11 = ({
   const countOfItems = reader.uint();
   const offsetToEffects = reader.uint();
   const countOfEffects = reader.uint();
-  const dialogueRef = reader.string(8);
+  const dlgRef = reader.string(8);
 
   return {
     signature: 'cre',
@@ -528,6 +528,6 @@ export const parseHeaderV11 = ({
     countOfItems,
     offsetToEffects,
     countOfEffects,
-    dialogueRef,
+    dlgRef,
   };
 };

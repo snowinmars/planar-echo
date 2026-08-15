@@ -1,9 +1,9 @@
 import { extendMap } from './5.parsePolygons.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { WedPolygon } from './5.parsePolygons.types.js';
+import type { RawWedPolygon } from './5.parsePolygons.types.js';
 
-const parsePolygon = (reader: BufferReader): WedPolygon => {
+const parsePolygon = (reader: BufferReader): RawWedPolygon => {
   const vertexStartingIndex = reader.uint();
   const vertexCount = reader.uint();
   const flags = reader.map.ubyte(extendMap.flags.parseFlags);
@@ -32,8 +32,8 @@ type ParsePolygonsProps = Readonly<{
 export const parsePolygons = ({
   reader,
   count,
-}: ParsePolygonsProps): WedPolygon[] => {
-  const wallPolygons: WedPolygon[] = [];
+}: ParsePolygonsProps): RawWedPolygon[] => {
+  const wallPolygons: RawWedPolygon[] = [];
 
   for (let i = 0; i < count; i++) {
     const wallPolygon = parsePolygon(reader);

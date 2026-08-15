@@ -1,4 +1,4 @@
-import { dialogueToCreatureOrItem } from '@planar/shared';
+import { dlgToCreOrItm } from '@planar/shared';
 
 import type { DiscoverNext } from '@/discoverer.types.js';
 import type { Direction } from '@planar/shared';
@@ -134,125 +134,125 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     },
   }, {
     regex: /giveitemcreate\((.*?),(.*?),(\d+),(\d+),(\d+)\)/,
-    onMatch: ([line, itemId, whoId, amount, identified, slotId]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
+    onMatch: ([line, itmId, whoId, amount, identified, slotId]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
       if (!identified) throw new Error(`Wrong line syntax: cannot find 'identified' in '${line}'`);
       if (!slotId) throw new Error(`Wrong line syntax: cannot find 'slotId' in '${line}'`);
-      const item = dropQuotes(itemId);
+      const itm = dropQuotes(itmId);
       const who = notMe(whoId);
       const slot = dropQuotes(slotId);
-      discover({ type: 'item', name: item });
+      discover({ type: 'itm', name: itm });
       discover({ type: 'who', name: who });
       discover({ type: 'slot', name: slot });
 
-      return `l.createItem({itemId: '${item}', whoId: '${who}', amount: ${amount}, identified: ${identified === '1' ? true : false}, slotId: '${slot}' })`; // GiveItemCreate("variable",Protagonist,1,0,0)
+      return `l.createItem({itmId: '${itm}', whoId: '${who}', amount: ${amount}, identified: ${identified === '1' ? true : false}, slotId: '${slot}' })`; // GiveItemCreate("variable",Protagonist,1,0,0)
     },
   }, {
     regex: /createitem\((.*?),(\d+),(\d+),(\d+)\)/,
-    onMatch: ([line, itemId, amount, identified, slotId]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
+    onMatch: ([line, itmId, amount, identified, slotId]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
       if (!identified) throw new Error(`Wrong line syntax: cannot find 'identified' in '${line}'`);
       if (!slotId) throw new Error(`Wrong line syntax: cannot find 'slotId' in '${line}'`);
-      const item = dropQuotes(itemId);
+      const itm = dropQuotes(itmId);
       const slot = dropQuotes(slotId);
-      discover({ type: 'item', name: item });
+      discover({ type: 'itm', name: itm });
       discover({ type: 'slot', name: slot });
 
-      return `l.createItem({itemId: '${item}', amount: ${amount}, identified: ${identified === '1' ? true : false}, slotId: '${slot}' })`; // GiveItemCreate("variable",Protagonist,1,0,0)
+      return `l.createItem({itmId: '${itm}', amount: ${amount}, identified: ${identified === '1' ? true : false}, slotId: '${slot}' })`; // GiveItemCreate("variable",Protagonist,1,0,0)
     },
   }, {
     regex: /(give|take)item\((.*?),(.*?)\)/,
-    onMatch: ([line, op, itemId, whoId]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
+    onMatch: ([line, op, itmId, whoId]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      const item = dropQuotes(itemId);
+      const itm = dropQuotes(itmId);
       const who = notMe(whoId);
-      discover({ type: 'item', name: item });
+      discover({ type: 'itm', name: itm });
       discover({ type: 'who', name: who });
 
-      return `l.${op}Item({itemId: '${item}', whoId: '${who}' })`; // GiveItem("variable",Protagonist) / TakeItem("variable",Protagonist)
+      return `l.${op}Item({itmId: '${itm}', whoId: '${who}' })`; // GiveItem("variable",Protagonist) / TakeItem("variable",Protagonist)
     },
   }, {
     regex: /takepartyitemnum\((.*?),(\d+)\)/,
-    onMatch: ([line, itemId, amount]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
+    onMatch: ([line, itmId, amount]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      const item = dropQuotes(itemId);
-      discover({ type: 'item', name: item });
+      const itm = dropQuotes(itmId);
+      discover({ type: 'itm', name: itm });
 
-      return `l.takePartyItems({itemId: '${item}', amount: ${amount}})`; // TakePartyItemNum("variable",1)
+      return `l.takePartyItems({itmId: '${itm}', amount: ${amount}})`; // TakePartyItemNum("variable",1)
     },
   }, {
     regex: /takepartyitem\("(.*?)"\)/,
-    onMatch: ([line, itemId]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
-      const item = dropQuotes(itemId);
-      discover({ type: 'item', name: item });
+    onMatch: ([line, itmId]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
+      const itm = dropQuotes(itmId);
+      discover({ type: 'itm', name: itm });
 
-      return `l.takePartyItems({itemId: '${item}', amount: 'stack'})`; // TakePartyItem("dgem")
+      return `l.takePartyItems({itmId: '${itm}', amount: 'stack'})`; // TakePartyItem("dgem")
     },
   }, {
     regex: /numitemsparty(gt|lt)?\("(.*?)",(\d+)\)/,
-    onMatch: ([line, op, itemId, amount]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
+    onMatch: ([line, op, itmId, amount]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
       if (!amount) throw new Error(`Wrong line syntax: cannot find 'amount' in '${line}'`);
-      const item = dropQuotes(itemId);
-      discover({ type: 'item', name: item });
+      const itm = dropQuotes(itmId);
+      discover({ type: 'itm', name: itm });
 
-      if (!op) return `l.countPartyItem('${item}') === ${amount}`; // NumItemsParty("tail",0)
+      if (!op) return `l.countPartyItem('${itm}') === ${amount}`; // NumItemsParty("tail",0)
 
       switch (op) {
-        case 'gt': return `l.countPartyItem('${item}') > ${amount}`; // NumItemsPartyGT("tail",0)
-        case 'lt': return `l.countPartyItem('${item}') < ${amount}`; // NumItemsPartyLT("tail",0)
+        case 'gt': return `l.countPartyItem('${itm}') > ${amount}`; // NumItemsPartyGT("tail",0)
+        case 'lt': return `l.countPartyItem('${itm}') < ${amount}`; // NumItemsPartyLT("tail",0)
         default: throw new Error(`Operation '${op}' is out of range in line '${line}'`);
       }
     },
   }, {
     regex: /(!)?hasitem\((.*?),(.*?)\)/,
-    onMatch: ([line, not, itemId, whoId]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
+    onMatch: ([line, not, itmId, whoId]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      const item = dropQuotes(itemId);
+      const itm = dropQuotes(itmId);
       const who = notMe(whoId);
-      discover({ type: 'item', name: item });
+      discover({ type: 'itm', name: itm });
       discover({ type: 'who', name: who });
 
-      return `${not ? '!' : ''}l.hasItem({itemId: '${item}', whoId: '${who}' })`; // HasItem("variable",Myself)
+      return `${not ? '!' : ''}l.hasItem({itmId: '${itm}', whoId: '${who}' })`; // HasItem("variable",Myself)
     },
   }, {
     regex: /(!)?partyhasitem\((.*?)\)/,
-    onMatch: ([line, not, itemId]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
-      const item = dropQuotes(itemId);
-      discover({ type: 'item', name: item });
+    onMatch: ([line, not, itmId]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
+      const itm = dropQuotes(itmId);
+      discover({ type: 'itm', name: itm });
       discover({ type: 'who', name: 'party' });
 
-      return `${not ? '!' : ''}l.hasItem({itemId: '${item}', whoId: 'party' })`; // PartyHasItem("variable")
+      return `${not ? '!' : ''}l.hasItem({itmId: '${itm}', whoId: 'party' })`; // PartyHasItem("variable")
     },
   }, {
     regex: /destroypartyitem\((.*?),(true|false)\)/,
-    onMatch: ([line, itemId, all]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
-      const item = dropQuotes(itemId);
-      discover({ type: 'item', name: item });
+    onMatch: ([line, itmId, all]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
+      const itm = dropQuotes(itmId);
+      discover({ type: 'itm', name: itm });
       discover({ type: 'who', name: 'party' });
 
-      return `l.destroyItem({itemId: '${item}', whoId: 'party', all: ${all === 'true' ? true : false} })`; // DestroyPartyItem("variable",TRUE)
+      return `l.destroyItem({itmId: '${itm}', whoId: 'party', all: ${all === 'true' ? true : false} })`; // DestroyPartyItem("variable",TRUE)
     },
   }, {
     regex: /destroyitemobject\((.*?),(.*),(true|false)\)/,
-    onMatch: ([line, itemId, whoId, all]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
+    onMatch: ([line, itmId, whoId, all]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      const item = dropQuotes(itemId);
+      const itm = dropQuotes(itmId);
       const who = notMe(whoId);
-      discover({ type: 'item', name: item });
+      discover({ type: 'itm', name: itm });
       discover({ type: 'who', name: who });
 
-      return `l.destroyItem({itemId: '${item}', whoId: '${who}', all: ${all === 'true' ? true : false} })`; // DestroyItemObject("variable",Protagonist,TRUE)
+      return `l.destroyItem({itmId: '${itm}', whoId: '${who}', all: ${all === 'true' ? true : false} })`; // DestroyItemObject("variable",Protagonist,TRUE)
     },
   }, {
     regex: /(!)?(set)?global(gt|lt)?\((.*?),(.*?),([-\d]+)\)/,
@@ -449,18 +449,18 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     },
   }, {
     regex: /transformpartyitem\((.*?),(.*?),(\d+),(\d+),(\d+)\)/,
-    onMatch: ([line, fromItemId, toItemId, charge1, charge2, charge3]) => {
-      if (!fromItemId) throw new Error(`Wrong line syntax: cannot find 'fromItemId' in '${line}'`);
-      if (!toItemId) throw new Error(`Wrong line syntax: cannot find 'toItemId' in '${line}'`);
+    onMatch: ([line, fromItmId, toItmId, charge1, charge2, charge3]) => {
+      if (!fromItmId) throw new Error(`Wrong line syntax: cannot find 'fromItmId' in '${line}'`);
+      if (!toItmId) throw new Error(`Wrong line syntax: cannot find 'toItmId' in '${line}'`);
       if (!charge1) throw new Error(`Wrong line syntax: cannot find 'charge1' in '${line}'`);
       if (!charge2) throw new Error(`Wrong line syntax: cannot find 'charge2' in '${line}'`);
       if (!charge3) throw new Error(`Wrong line syntax: cannot find 'charge3' in '${line}'`);
-      const fromItem = dropQuotes(fromItemId);
-      const toItem = dropQuotes(toItemId);
-      discover({ type: 'item', name: fromItem });
-      discover({ type: 'item', name: toItem });
+      const fromItm = dropQuotes(fromItmId);
+      const toItm = dropQuotes(toItmId);
+      discover({ type: 'itm', name: fromItm });
+      discover({ type: 'itm', name: toItm });
 
-      return `l.transformItem({fromItemId: '${fromItem}', toItemId: '${toItem}', charge1: ${charge1}, charge2: ${charge2}, charge3: ${charge3}, targetId: 'party' })`; // TransformPartyItem("tankard","tankardf",1,0,0)
+      return `l.transformItem({fromItmId: '${fromItm}', toItmId: '${toItm}', charge1: ${charge1}, charge2: ${charge2}, charge3: ${charge3}, targetId: 'party' })`; // TransformPartyItem("tankard","tankardf",1,0,0)
     },
   }, {
     regex: /(!)?alignment\((.*?),(.*?)\)/,
@@ -1028,15 +1028,15 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     },
   }, {
     regex: /useitem\("(.*?)",(.*?)\)/,
-    onMatch: ([line, itemId, whoId]) => {
-      if (!itemId) throw new Error(`Wrong line syntax: cannot find 'itemId' in '${line}'`);
+    onMatch: ([line, itmId, whoId]) => {
+      if (!itmId) throw new Error(`Wrong line syntax: cannot find 'itmId' in '${line}'`);
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      const item = dropQuotes(itemId);
+      const itm = dropQuotes(itmId);
       const who = notMe(whoId);
       discover({ type: 'who', name: who });
-      discover({ type: 'item', name: item });
+      discover({ type: 'itm', name: itm });
 
-      return `l.useItem({ whoId: '${who}', itemId: '${item}' })`; // UseItem("m_gaze",protagonist)
+      return `l.useItem({ whoId: '${who}', itmId: '${itm}' })`; // UseItem("m_gaze",protagonist)
     },
   }, {
     regex: /fixengineroom\(\)/,
@@ -1132,13 +1132,13 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     },
   }, {
     regex: /changedialog\("(.*?)","(.*?)"\)/,
-    onMatch: ([line, whoId, dialogueId]) => {
+    onMatch: ([line, whoId, dlgId]) => {
       if (!whoId) throw new Error(`Wrong line syntax: cannot find 'whoId' in '${line}'`);
-      if (dialogueId === null || dialogueId === undefined) throw new Error(`Wrong line syntax: cannot find 'dialogueId' in '${line}'`);
+      if (dlgId === null || dlgId === undefined) throw new Error(`Wrong line syntax: cannot find 'dlgId' in '${line}'`);
       const who = notMe(whoId);
       discover({ type: 'who', name: who });
 
-      return `l.changeDialog({ whoId: '${whoId}', dialogueId: '${dialogueId}' })`; // ChangeDialog("sybil","")
+      return `l.changeDialog({ whoId: '${whoId}', dlgId: '${dlgId}' })`; // ChangeDialog("sybil","")
     },
   }, {
     regex: /allegiance\((.*?),(.*?)\)/,
@@ -1154,7 +1154,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
 };
 
 const ie2ts = (line: string, npcLowercaseId: string, discover: DiscoverNext): string => {
-  const myself = dialogueToCreatureOrItem(npcLowercaseId);
+  const myself = dlgToCreOrItm(npcLowercaseId);
 
   for (const item of createItems(discover, myself)) {
     const matches = item.regex.exec(line);

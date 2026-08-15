@@ -1,6 +1,6 @@
 import type { Maybe } from '@planar/shared';
 
-export type NumberedSection = Readonly<{
+export type RawIniNumberedSection = Readonly<{
   hitsound: Maybe<string[]>;
   hitframe: Maybe<number>;
   dfbsound: Maybe<string>;

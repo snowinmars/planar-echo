@@ -7,7 +7,7 @@ export const allCategories = [
   'disguise',
   'door',
   'env',
-  'item',
+  'itm',
   'journal',
   'journalType',
   'key',

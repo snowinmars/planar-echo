@@ -7,10 +7,10 @@ import {
 import { parseParameterValues } from './parseParameterValues.js';
 import { AC_TOKEN } from './tokens.js';
 
-import type { BcsStream } from '../bcsStream.types.js';
-import type { ParsedBcsAction } from '../bytecode.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
+import type { RawBcsAction } from './parseAc.types.js';
 
-export const parseAc = (stream: BcsStream): ParsedBcsAction => {
+export const parseAc = (stream: RawBcsStream): RawBcsAction => {
   const { ints, strings, objects } = parseParameterValues({
     stream,
     closingToken: AC_TOKEN,

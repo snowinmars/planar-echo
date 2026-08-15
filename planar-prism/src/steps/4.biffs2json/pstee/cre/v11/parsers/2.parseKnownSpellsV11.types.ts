@@ -15,7 +15,7 @@ export const extendMap = {
   type: extend(typeV11),
 };
 
-export type KnownSpellV11 = Readonly<{
+export type RawCreKnownSpellV11 = Readonly<{
   spell: string;
   level: number;
   type: TypeV11;

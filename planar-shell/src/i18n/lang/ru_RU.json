@@ -14,9 +14,9 @@
       "5": "Требования: node.js и приобретённая оригинальная игра."
     },
     "runnerGuard": {
-      "dialogue": "Диалог из",
-      "creature": "Существо из",
-      "item": "Предмет из",
+      "dlg": "Диалог из",
+      "cre": "Существо из",
+      "itm": "Предмет из",
       "ghostDir": "Каталог с игрой",
       "or": "или",
       "convert": "Сконвертировать",
@@ -114,11 +114,11 @@
     }
   },
   "run": {
-    "dialoguesLabel": "Диалог (всего {{amount}})",
-    "creaturesLabel": "Существо (всего {{amount}})",
-    "itemsLabel": "Предмет (всего {{amount}})",
+    "dlgsLabel": "Диалог (всего {{amount}})",
+    "cresLabel": "Существо (всего {{amount}})",
+    "itmsLabel": "Предмет (всего {{amount}})",
     "statesLabel": "Метка (всего {{amount}})",
-    "creature": {
+    "cre": {
       "talk": "Поговорить",
       "nameTlk": "Имя",
       "tooltipTlk": "Описание",
@@ -158,7 +158,7 @@
       "scripts": "Скрипты",
       "techInfo": "Техническая информация"
     },
-    "item": {
+    "itm": {
       "talk": "Поговорить",
       "unidentifiedDescriptionTlk": "Описание до опознания",
       "identifiedDescriptionTlk": "Описание после опознания",
@@ -198,13 +198,13 @@
       "saved": "Сохранено",
       "failed": "Ошибка, см. F12"
     },
-    "dialogueRenderer": {
+    "dlgRenderer": {
       "title": "Вид диалога",
       "pstee": "Как в оригинале",
       "pstee-two-columns": "Как в оригинале, но в две колонки",
       "narrat": "Как в Narrat"
     },
-    "dialogueHistory": {
+    "dlgHistory": {
       "title": "История диалогов",
       "tlkCacheMaxLines": "Строк TLK в памяти (LRU)",
       "pageSize": "Строк на странице",
@@ -221,7 +221,7 @@
     "language": {
       "title": "Язык интерфейса"
     },
-    "dialogueMarks": {
+    "dlgMarks": {
       "title": "Метки в диалогах",
       "markDisposers": "Отмечать завершающие реплики",
       "markExterns": "Отмечать extern (dev)"

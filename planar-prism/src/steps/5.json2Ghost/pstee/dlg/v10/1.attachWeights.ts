@@ -1,8 +1,8 @@
 import type { RawDlg } from '@/steps/4.biffs2json/pstee/dlg/index.js';
 import type { WeightedDlg } from './1.attachWeights.types.js';
 
-const attachWeights = (dialogue: RawDlg): WeightedDlg => {
-  const stateIndicesOrderedByWeight = dialogue.states
+const attachWeights = (dlg: RawDlg): WeightedDlg => {
+  const stateIndicesOrderedByWeight = dlg.states
     .filter(s => s.triggerIndex >= 0)
     .sort((lhs, rhs) => {
       // Order states by trigger index, then by state index
@@ -13,7 +13,7 @@ const attachWeights = (dialogue: RawDlg): WeightedDlg => {
     .map(s => s.index);
 
   return {
-    ...dialogue,
+    ...dlg,
     stateIndicesOrderedByWeight,
   };
 };

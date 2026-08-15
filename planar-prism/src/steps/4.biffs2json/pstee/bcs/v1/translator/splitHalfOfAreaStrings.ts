@@ -1,10 +1,10 @@
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type { SignatureFunction } from '../signatures.types.js';
+import type { RawBcsSignatureFunction } from '../../buildBcsContext.types.js';
 
 type SplitHalfOfAreaStringsProps = Readonly<{
-  functionSignature: SignatureFunction;
+  functionSignature: RawBcsSignatureFunction;
   index: number;
   strings: Maybe<string>[];
 }>;

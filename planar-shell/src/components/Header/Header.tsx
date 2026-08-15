@@ -10,19 +10,20 @@ import { lazy, useEffect, useState } from 'react';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { FC } from 'react';
-import type { Maybe } from '@planar/shared';
 
 import styles from './Header.module.scss';
 
-const CreatureWidget = lazy(() => import('./children/CreatureWidget/CreatureWidget'));
-const DialogueWidget = lazy(() => import('./children/DialogueWidget/DialogueWidget'));
-const ItemWidget = lazy(() => import('./children/ItemWidget/ItemWidget'));
+type CurrentWidget = 'cre' | 'dlg' | 'itm' | '';
+
+const CreWidget = lazy(() => import('./children/CreWidget/CreWidget'));
+const DlgWidget = lazy(() => import('./children/DlgWidget/DlgWidget'));
+const ItmWidget = lazy(() => import('./children/ItmWidget/ItmWidget'));
 
 const Header: FC = () => {
-  const [currentWidget, setCurrentWidget] = useState<Maybe<string>>(() => planarLocalStorage.get(planarLocalStorage.currentWidget, '')!);
+  const [currentWidget, setCurrentWidget] = useState<CurrentWidget>(() => planarLocalStorage.get<CurrentWidget>(planarLocalStorage.currentWidget, '')!);
   useEffect(() => {
     const subscription = planarLocalStorage.onKeyChange(planarLocalStorage.currentWidget)
-      .subscribe(key => setCurrentWidget(planarLocalStorage.get<string>(key, '')));
+      .subscribe(key => setCurrentWidget(planarLocalStorage.get<CurrentWidget>(key, '')!));
     return () => subscription.unsubscribe();
   }, []);
 
@@ -37,9 +38,9 @@ const Header: FC = () => {
           </Grid>
 
           <Grid size={{ xs: 9.5 }}>
-            { currentWidget === 'creature' && <CreatureWidget />}
-            { currentWidget === 'dialogue' && <DialogueWidget />}
-            { currentWidget === 'item' && <ItemWidget />}
+            { currentWidget === 'cre' && <CreWidget />}
+            { currentWidget === 'dlg' && <DlgWidget />}
+            { currentWidget === 'itm' && <ItmWidget />}
           </Grid>
 
           <Grid size={{ xs: 0.5 }}>

@@ -1,6 +1,6 @@
-import type { WedPolygon } from './5.parsePolygons.types.js';
+import type { RawWedPolygon } from './5.parsePolygons.types.js';
 
-export type WedDoor = Readonly<{
+export type RawWedDoor = Readonly<{
   name: string;
   isOpen: boolean;
   firstDoorTileCellIndex: number;
@@ -10,6 +10,6 @@ export type WedDoor = Readonly<{
   openPolygonsOffset: number;
   closedPolygonsOffset: number;
   doorTileCells: number[];
-  openPolygons: WedPolygon[];
-  closedPolygons: WedPolygon[];
+  openPolygons: RawWedPolygon[];
+  closedPolygons: RawWedPolygon[];
 }>;

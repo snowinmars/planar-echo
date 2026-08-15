@@ -1,7 +1,7 @@
 import type { Maybe } from '@planar/shared';
-import type { CreatureIniSpecVarOperation } from './parseSpecVarOperationV1.types.js';
+import type { RawIniCreatureIniSpecVarOperation } from './parseSpecVarOperationV1.types.js';
 
-export const parseSpecVarOperationV1 = (s: Maybe<string>): CreatureIniSpecVarOperation => {
+export const parseSpecVarOperationV1 = (s: Maybe<string>): RawIniCreatureIniSpecVarOperation => {
   if (!s) throw new Error(`Cannot parse SpecVarOperation from nothing`);
 
   switch (s) {

@@ -1,10 +1,10 @@
 import { findEntry } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
-import type { Section } from '../../iniParser/iniParserTypes.js';
-import type { GeneralIniSection } from './parseGeneralSectionV1.types.js';
+import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
+import type { RawIniGeneralIniSection } from './parseGeneralSectionV1.types.js';
 
-export const parseGeneralSectionV1 = (section: Section): Maybe<GeneralIniSection> => {
+export const parseGeneralSectionV1 = (section: RawIniSection): Maybe<RawIniGeneralIniSection> => {
   if (section.name !== 'general') throw new Error(`Expect section '${section.name}' to be 'general' section`);
 
   /* eslint-disable @stylistic/no-multi-spaces */

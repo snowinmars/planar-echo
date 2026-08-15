@@ -3,25 +3,25 @@ import {
   nothing,
 } from '@planar/shared';
 import { splitHalfOfAreaStrings } from './splitHalfOfAreaStrings.js';
+import { isEmptyObject } from './isEmptyObject.js';
 
 import type { Maybe } from '@planar/shared';
-import type { ParsedBcsTrigger } from '../bytecode.types.js';
-import { isEmptyObject } from './isEmptyObject.js';
+import type { RawBcsTrigger } from '../bytecode/parseTr.types.js';
 import type {
-  SignatureFunction,
-  Signatures,
-} from '../signatures.types.js';
+  RawBcsSignatureFunction,
+  RawBcsSignatures,
+} from '../../buildBcsContext.types.js';
 
 type FindSignaturesProps = Readonly<{
   resourceName: string;
   id: number;
-  signatures: Signatures;
+  signatures: RawBcsSignatures;
 }>;
 const findSignatures = ({
   resourceName,
   id,
   signatures,
-}: FindSignaturesProps): SignatureFunction[] => {
+}: FindSignaturesProps): RawBcsSignatureFunction[] => {
   const direct = signatures.byId.get(id);
   if (direct) return direct;
 
@@ -38,7 +38,7 @@ type ParameterCounts = Readonly<{
 }>;
 type CountParametersProps = Readonly<{
   resourceName: string;
-  signature: SignatureFunction;
+  signature: RawBcsSignatureFunction;
 }>;
 const countParameters = ({
   resourceName,
@@ -76,8 +76,8 @@ type FunctionScore = Readonly<{
 }>;
 type ScoreSignatureProps = Readonly<{
   resourceName: string;
-  trigger: ParsedBcsTrigger;
-  signature: SignatureFunction;
+  trigger: RawBcsTrigger;
+  signature: RawBcsSignatureFunction;
 }>;
 const scoreSignature = ({
   resourceName,
@@ -119,14 +119,14 @@ const scoreSignature = ({
 
 type MatchTriggerFunctionProps = Readonly<{
   resourceName: string;
-  trigger: ParsedBcsTrigger;
-  signatures: Signatures;
+  trigger: RawBcsTrigger;
+  signatures: RawBcsSignatures;
 }>;
 export const matchTriggerFunction = ({
   resourceName,
   trigger,
   signatures,
-}: MatchTriggerFunctionProps): SignatureFunction => {
+}: MatchTriggerFunctionProps): RawBcsSignatureFunction => {
   const functions = findSignatures({
     resourceName,
     id: trigger.id,
@@ -134,7 +134,7 @@ export const matchTriggerFunction = ({
   });
   if (functions.length === 1) return functions[0]!;
 
-  let best: Maybe<SignatureFunction> = nothing();
+  let best: Maybe<RawBcsSignatureFunction> = nothing();
   let bestPrimary = Number.POSITIVE_INFINITY;
   let bestAverage = Number.POSITIVE_INFINITY;
   let bestParameterCount = Number.POSITIVE_INFINITY;

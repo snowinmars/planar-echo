@@ -5,18 +5,16 @@ import {
 } from './parsers/index.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { Tlk } from '../types.js';
-import type { TlkItem } from './parsers/2.parseItemsV1.types.js';
+import type { RawTlk } from '../types.js';
+import type { RawTlkItem } from './parsers/2.parseItemsV1.types.js';
 
-const get = (itemsMap: Map<number, TlkItem>, id: number): TlkItem => {
+const get = (itemsMap: Map<number, RawTlkItem>, id: number): RawTlkItem => {
   const longNameTlkItem = itemsMap.get(id);
   if (!longNameTlkItem) throw new Error(`Unable to find tlk translation '${id}'`);
   return longNameTlkItem;
 };
 
-const getText = (itemsMap: Map<number, TlkItem>, id: number): string => {
-  return get(itemsMap, id).text;
-};
+const getText = (itemsMap: Map<number, RawTlkItem>, id: number): string => get(itemsMap, id).text;
 
 type ParseTlkV1Props = Readonly<{
   reader: BufferReader;
@@ -27,7 +25,7 @@ export const parseTlkV1 = ({
   reader,
   signature,
   version,
-}: ParseTlkV1Props): Tlk => {
+}: ParseTlkV1Props): RawTlk => {
   const header = parseHeaderV1({
     reader,
     signature,

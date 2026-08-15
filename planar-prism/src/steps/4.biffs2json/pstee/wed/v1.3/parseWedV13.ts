@@ -7,8 +7,8 @@ import { parseDoors } from './6.parseDoors.js';
 import { parseWallGroups } from './7.parseWallGroups.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { Wed } from '../types.js';
-import type { WedVertex } from './4.parseVertices.types.js';
+import type { RawWed } from '../parseWeds.types.js';
+import type { RawWedVertex } from './4.parseVertices.types.js';
 
 type ParseWedV13Props = Readonly<{
   reader: BufferReader;
@@ -17,7 +17,7 @@ type ParseWedV13Props = Readonly<{
 export const parseWedV13 = ({
   reader,
   resourceName,
-}: ParseWedV13Props): Wed => {
+}: ParseWedV13Props): RawWed => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/wed_v1.3.htm
   const header = parseHeader(reader);
 
@@ -35,7 +35,7 @@ export const parseWedV13 = ({
   const verticesTailLength = reader.length - secondaryHeader.verticesOffset;
   if (verticesTailLength % sizeOfVertexInBytes) throw new Error(`Broken vertices for resource '${resourceName}'`);
   const verticesCount = (reader.length - secondaryHeader.verticesOffset) / sizeOfVertexInBytes;
-  const vertices: WedVertex[] = parseVertices({
+  const vertices: RawWedVertex[] = parseVertices({
     reader: reader.fork(secondaryHeader.verticesOffset),
     count: verticesCount,
   });

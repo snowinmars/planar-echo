@@ -1,5 +1,5 @@
 export const headerLengthBytes = 18;
-export type Header = Readonly<{
+export type RawTlkHeader = Readonly<{
   signature: 'tlk';
   version: 'v1';
   language: number;

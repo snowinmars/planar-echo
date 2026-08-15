@@ -3,8 +3,8 @@ import { parseHeader } from './parsers/1.parseHeader.js';
 import { nothing } from '@planar/shared';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RgbaImage } from '../../pvrz/decode/index.js';
-import type { MosV2, MosV2Block, ParsedMosV2Artifacts } from '../parseMos.types.js';
+import type { RawPvrRgbaImage } from '../../pvrz/decode/index.js';
+import type { RawMosV2, RawMosV2Block, RawMosV2Artifacts } from './parseMosV2.types.js';
 import type { Maybe } from '@planar/shared';
 
 const pvrzFileNameForMosPage = (page: number): Maybe<string> => {
@@ -16,7 +16,7 @@ type CropAndBlitProps = Readonly<{
   canvas: Buffer;
   canvasWidth: number;
   canvasHeight: number;
-  image: RgbaImage;
+  image: RawPvrRgbaImage;
   sourceX: number;
   sourceY: number;
   width: number;
@@ -61,17 +61,17 @@ const cropAndBlit = ({
 type ParseMosV2Props = Readonly<{
   reader: BufferReader;
   resourceName: string;
-  pvrzRgbaIndex: Map<string, RgbaImage>;
+  pvrzRgbaIndex: Map<string, RawPvrRgbaImage>;
 }>;
 export const parseMosV2 = ({
   reader,
   resourceName,
   pvrzRgbaIndex,
-}: ParseMosV2Props): ParsedMosV2Artifacts => {
+}: ParseMosV2Props): RawMosV2Artifacts => {
   const header = parseHeader(reader, resourceName);
 
   const canvas = Buffer.alloc(header.width * header.height * 4, 0);
-  const blocks: MosV2Block[] = [];
+  const blocks: RawMosV2Block[] = [];
 
   const blockReader = reader.fork(header.blocksOffset);
   for (let blockIdx = 0; blockIdx < header.blockCount; blockIdx++) {
@@ -116,7 +116,7 @@ export const parseMosV2 = ({
   }
 
   const imageName = `${resourceName}.png`;
-  const mos: MosV2 = {
+  const mos: RawMosV2 = {
     resourceName,
     signature: 'mos',
     variant: 'v2',

@@ -4,11 +4,11 @@ import {
 } from './tokens.js';
 import { parseRe } from './parseRe.js';
 
-import type { BcsStream } from '../bcsStream.types.js';
-import type { ParsedBcsResponse } from '../bytecode.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
+import type { RawBcsResponse } from './parseRe.types.js';
 
-export const parseRs = (stream: BcsStream): ParsedBcsResponse[] => {
-  const responses: ParsedBcsResponse[] = [];
+export const parseRs = (stream: RawBcsStream): RawBcsResponse[] => {
+  const responses: RawBcsResponse[] = [];
 
   while (!stream.eos() && !stream.skipToken(RS_TOKEN)) {
     if (stream.skipToken(RE_TOKEN)) responses.push(parseRe(stream));

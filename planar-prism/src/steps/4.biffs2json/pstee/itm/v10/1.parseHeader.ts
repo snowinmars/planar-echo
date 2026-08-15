@@ -2,9 +2,9 @@ import { extendMap } from './1.parseHeader.types.js';
 import { normalizeRef } from '@/shared/numbers.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { HeaderV10 } from './1.parseHeader.types.js';
+import type { RawItmHeaderV10 } from './1.parseHeader.types.js';
 
-export const parseHeader = (reader: BufferReader): HeaderV10 => {
+export const parseHeader = (reader: BufferReader): RawItmHeaderV10 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.1.htm
 
   const unidentifiedNameRef = normalizeRef(reader.uint());

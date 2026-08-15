@@ -4,7 +4,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetApiFsGhostDirByFilePathData, GetApiFsGhostDirByFilePathErrors, GetApiFsGhostDirByFilePathResponses, GetApiFsPrismDirByFilePathData, GetApiFsPrismDirByFilePathErrors, GetApiFsPrismDirByFilePathResponses, GetApiFsShellDirByFilePathData, GetApiFsShellDirByFilePathErrors, GetApiFsShellDirByFilePathResponses, GetApiMapCreatureToDialoguesByCreatureIdData, GetApiMapCreatureToDialoguesByCreatureIdErrors, GetApiMapCreatureToDialoguesByCreatureIdResponses, GetApiMapDialogueToCreatureByDialogueIdData, GetApiMapDialogueToCreatureByDialogueIdErrors, GetApiMapDialogueToCreatureByDialogueIdResponses, GetApiMapDialogueToItemByDialogueIdData, GetApiMapDialogueToItemByDialogueIdErrors, GetApiMapDialogueToItemByDialogueIdResponses, GetApiMapItemToDialoguesByItemIdData, GetApiMapItemToDialoguesByItemIdErrors, GetApiMapItemToDialoguesByItemIdResponses, GetApiPingData, GetApiPingResponses, GetApiSettingsGhostDirData, GetApiSettingsGhostDirResponses, GetApiSettingsPrismDirData, GetApiSettingsPrismDirResponses, GetApiSettingsShellDirData, GetApiSettingsShellDirResponses, PostApiFsDownloadWeiduData, PostApiFsDownloadWeiduErrors, PostApiFsDownloadWeiduResponses, PostApiFsOpenDirData, PostApiFsOpenDirErrors, PostApiFsOpenDirResponses, PostApiFsValidateChitinKeyFileData, PostApiFsValidateChitinKeyFileErrors, PostApiFsValidateChitinKeyFileResponses, PostApiFsValidateGhostDirData, PostApiFsValidateGhostDirErrors, PostApiFsValidateGhostDirResponses, PostApiFsValidateWeiduExeDirData, PostApiFsValidateWeiduExeDirErrors, PostApiFsValidateWeiduExeDirResponses, PostApiGhostCreatureByCreatureIdByGameLanguageData, PostApiGhostCreatureByCreatureIdByGameLanguageErrors, PostApiGhostCreatureByCreatureIdByGameLanguageResponses, PostApiGhostCreatureByCreatureIdSkeletonData, PostApiGhostCreatureByCreatureIdSkeletonErrors, PostApiGhostCreatureByCreatureIdSkeletonResponses, PostApiGhostCreatureData, PostApiGhostCreatureErrors, PostApiGhostCreatureResponses, PostApiGhostDialogueByDialogueIdSkeletonData, PostApiGhostDialogueByDialogueIdSkeletonErrors, PostApiGhostDialogueByDialogueIdSkeletonResponses, PostApiGhostDialogueData, PostApiGhostDialogueErrors, PostApiGhostDialogueResponses, PostApiGhostItemByItemIdByGameLanguageData, PostApiGhostItemByItemIdByGameLanguageErrors, PostApiGhostItemByItemIdByGameLanguageResponses, PostApiGhostItemByItemIdSkeletonData, PostApiGhostItemByItemIdSkeletonErrors, PostApiGhostItemByItemIdSkeletonResponses, PostApiGhostItemData, PostApiGhostItemErrors, PostApiGhostItemResponses, PostApiGhostTlkByGameLanguageData, PostApiGhostTlkByGameLanguageErrors, PostApiGhostTlkByGameLanguageResponses, PostApiSettingsGhostDirData, PostApiSettingsGhostDirErrors, PostApiSettingsGhostDirResponses, PostApiSettingsPrismDirData, PostApiSettingsPrismDirErrors, PostApiSettingsPrismDirResponses, PostApiSettingsShellDirData, PostApiSettingsShellDirErrors, PostApiSettingsShellDirResponses } from './types.gen';
+import type { GetApiFsGhostDirByFilePathData, GetApiFsGhostDirByFilePathErrors, GetApiFsGhostDirByFilePathResponses, GetApiFsPrismDirByFilePathData, GetApiFsPrismDirByFilePathErrors, GetApiFsPrismDirByFilePathResponses, GetApiFsShellDirByFilePathData, GetApiFsShellDirByFilePathErrors, GetApiFsShellDirByFilePathResponses, GetApiMapCreToDlgsByCreIdData, GetApiMapCreToDlgsByCreIdErrors, GetApiMapCreToDlgsByCreIdResponses, GetApiMapDlgToCresByDlgIdData, GetApiMapDlgToCresByDlgIdErrors, GetApiMapDlgToCresByDlgIdResponses, GetApiMapDlgToItmsByDlgIdData, GetApiMapDlgToItmsByDlgIdErrors, GetApiMapDlgToItmsByDlgIdResponses, GetApiMapItmToDlgsByItmIdData, GetApiMapItmToDlgsByItmIdErrors, GetApiMapItmToDlgsByItmIdResponses, GetApiPingData, GetApiPingResponses, GetApiSettingsGhostDirData, GetApiSettingsGhostDirResponses, GetApiSettingsPrismDirData, GetApiSettingsPrismDirResponses, GetApiSettingsShellDirData, GetApiSettingsShellDirResponses, PostApiFsDownloadWeiduData, PostApiFsDownloadWeiduErrors, PostApiFsDownloadWeiduResponses, PostApiFsOpenDirData, PostApiFsOpenDirErrors, PostApiFsOpenDirResponses, PostApiFsValidateChitinKeyFileData, PostApiFsValidateChitinKeyFileErrors, PostApiFsValidateChitinKeyFileResponses, PostApiFsValidateGhostDirData, PostApiFsValidateGhostDirErrors, PostApiFsValidateGhostDirResponses, PostApiFsValidateWeiduExeDirData, PostApiFsValidateWeiduExeDirErrors, PostApiFsValidateWeiduExeDirResponses, PostApiGhostCreByCreIdByGameLanguageData, PostApiGhostCreByCreIdByGameLanguageErrors, PostApiGhostCreByCreIdByGameLanguageResponses, PostApiGhostCreByCreIdSkeletonData, PostApiGhostCreByCreIdSkeletonErrors, PostApiGhostCreByCreIdSkeletonResponses, PostApiGhostCreData, PostApiGhostCreErrors, PostApiGhostCreResponses, PostApiGhostDlgByDlgIdSkeletonData, PostApiGhostDlgByDlgIdSkeletonErrors, PostApiGhostDlgByDlgIdSkeletonResponses, PostApiGhostDlgData, PostApiGhostDlgErrors, PostApiGhostDlgResponses, PostApiGhostItmByItmIdByGameLanguageData, PostApiGhostItmByItmIdByGameLanguageErrors, PostApiGhostItmByItmIdByGameLanguageResponses, PostApiGhostItmByItmIdSkeletonData, PostApiGhostItmByItmIdSkeletonErrors, PostApiGhostItmByItmIdSkeletonResponses, PostApiGhostItmData, PostApiGhostItmErrors, PostApiGhostItmResponses, PostApiGhostTlkByGameLanguageData, PostApiGhostTlkByGameLanguageErrors, PostApiGhostTlkByGameLanguageResponses, PostApiSettingsGhostDirData, PostApiSettingsGhostDirErrors, PostApiSettingsGhostDirResponses, PostApiSettingsPrismDirData, PostApiSettingsPrismDirErrors, PostApiSettingsPrismDirResponses, PostApiSettingsShellDirData, PostApiSettingsShellDirErrors, PostApiSettingsShellDirResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -122,11 +122,11 @@ export const getApiPing = <ThrowOnError extends boolean = false>(options?: Optio
 });
 
 /**
- * Get skeleton of the dialogue in ghost format
+ * Get skeleton of the dlg in ghost format
  */
-export const postApiGhostDialogueByDialogueIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDialogueByDialogueIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDialogueByDialogueIdSkeletonResponses, PostApiGhostDialogueByDialogueIdSkeletonErrors, ThrowOnError>({
+export const postApiGhostDlgByDlgIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDlgByDlgIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDlgByDlgIdSkeletonResponses, PostApiGhostDlgByDlgIdSkeletonErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/ghost/dialogue/{dialogueId}/skeleton',
+    url: '/api/ghost/dlg/{dlgId}/skeleton',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -135,11 +135,11 @@ export const postApiGhostDialogueByDialogueIdSkeleton = <ThrowOnError extends bo
 });
 
 /**
- * Get available dialogues in ghost format
+ * Get available dlgs in ghost format
  */
-export const postApiGhostDialogue = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDialogueData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDialogueResponses, PostApiGhostDialogueErrors, ThrowOnError>({
+export const postApiGhostDlg = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostDlgData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostDlgResponses, PostApiGhostDlgErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/ghost/dialogue',
+    url: '/api/ghost/dlg',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -148,11 +148,11 @@ export const postApiGhostDialogue = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
- * Get skeleton of the creature in ghost format
+ * Get skeleton of the cre in ghost format
  */
-export const postApiGhostCreatureByCreatureIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreatureByCreatureIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreatureByCreatureIdSkeletonResponses, PostApiGhostCreatureByCreatureIdSkeletonErrors, ThrowOnError>({
+export const postApiGhostCreByCreIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreByCreIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreByCreIdSkeletonResponses, PostApiGhostCreByCreIdSkeletonErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/ghost/creature/{creatureId}/skeleton',
+    url: '/api/ghost/cre/{creId}/skeleton',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -161,11 +161,11 @@ export const postApiGhostCreatureByCreatureIdSkeleton = <ThrowOnError extends bo
 });
 
 /**
- * Get translation of the creature in ghost format
+ * Get translation of the cre in ghost format
  */
-export const postApiGhostCreatureByCreatureIdByGameLanguage = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreatureByCreatureIdByGameLanguageData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreatureByCreatureIdByGameLanguageResponses, PostApiGhostCreatureByCreatureIdByGameLanguageErrors, ThrowOnError>({
+export const postApiGhostCreByCreIdByGameLanguage = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreByCreIdByGameLanguageData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreByCreIdByGameLanguageResponses, PostApiGhostCreByCreIdByGameLanguageErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/ghost/creature/{creatureId}/{gameLanguage}',
+    url: '/api/ghost/cre/{creId}/{gameLanguage}',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -174,11 +174,11 @@ export const postApiGhostCreatureByCreatureIdByGameLanguage = <ThrowOnError exte
 });
 
 /**
- * Get available creatures in ghost format
+ * Get available cres in ghost format
  */
-export const postApiGhostCreature = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreatureData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreatureResponses, PostApiGhostCreatureErrors, ThrowOnError>({
+export const postApiGhostCre = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostCreData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostCreResponses, PostApiGhostCreErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/ghost/creature',
+    url: '/api/ghost/cre',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -187,11 +187,11 @@ export const postApiGhostCreature = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
- * Get skeleton of the item in ghost format
+ * Get skeleton of the itm in ghost format
  */
-export const postApiGhostItemByItemIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostItemByItemIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostItemByItemIdSkeletonResponses, PostApiGhostItemByItemIdSkeletonErrors, ThrowOnError>({
+export const postApiGhostItmByItmIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostItmByItmIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostItmByItmIdSkeletonResponses, PostApiGhostItmByItmIdSkeletonErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/ghost/item/{itemId}/skeleton',
+    url: '/api/ghost/itm/{itmId}/skeleton',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -200,11 +200,11 @@ export const postApiGhostItemByItemIdSkeleton = <ThrowOnError extends boolean = 
 });
 
 /**
- * Get translation of the item in ghost format
+ * Get translation of the itm in ghost format
  */
-export const postApiGhostItemByItemIdByGameLanguage = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostItemByItemIdByGameLanguageData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostItemByItemIdByGameLanguageResponses, PostApiGhostItemByItemIdByGameLanguageErrors, ThrowOnError>({
+export const postApiGhostItmByItmIdByGameLanguage = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostItmByItmIdByGameLanguageData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostItmByItmIdByGameLanguageResponses, PostApiGhostItmByItmIdByGameLanguageErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/ghost/item/{itemId}/{gameLanguage}',
+    url: '/api/ghost/itm/{itmId}/{gameLanguage}',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -213,11 +213,11 @@ export const postApiGhostItemByItemIdByGameLanguage = <ThrowOnError extends bool
 });
 
 /**
- * Get available items in ghost format
+ * Get available itms in ghost format
  */
-export const postApiGhostItem = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostItemData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostItemResponses, PostApiGhostItemErrors, ThrowOnError>({
+export const postApiGhostItm = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostItmData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostItmResponses, PostApiGhostItmErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/ghost/item',
+    url: '/api/ghost/itm',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -239,38 +239,38 @@ export const postApiGhostTlkByGameLanguage = <ThrowOnError extends boolean = fal
 });
 
 /**
- * Get dialogues ids for the creature id
+ * Get dlgs ids for the cre id
  */
-export const getApiMapCreatureToDialoguesByCreatureId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapCreatureToDialoguesByCreatureIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapCreatureToDialoguesByCreatureIdResponses, GetApiMapCreatureToDialoguesByCreatureIdErrors, ThrowOnError>({
+export const getApiMapCreToDlgsByCreId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapCreToDlgsByCreIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapCreToDlgsByCreIdResponses, GetApiMapCreToDlgsByCreIdErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/map/creatureToDialogues/{creatureId}',
+    url: '/api/map/creToDlgs/{creId}',
     ...options
 });
 
 /**
- * Get creature id for the dialogue id
+ * Get cre id for the dlg id
  */
-export const getApiMapDialogueToCreatureByDialogueId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapDialogueToCreatureByDialogueIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapDialogueToCreatureByDialogueIdResponses, GetApiMapDialogueToCreatureByDialogueIdErrors, ThrowOnError>({
+export const getApiMapDlgToCresByDlgId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapDlgToCresByDlgIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapDlgToCresByDlgIdResponses, GetApiMapDlgToCresByDlgIdErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/map/dialogueToCreature/{dialogueId}',
+    url: '/api/map/dlgToCres/{dlgId}',
     ...options
 });
 
 /**
- * Get dialogues ids for the item id
+ * Get dlgs ids for the itm id
  */
-export const getApiMapItemToDialoguesByItemId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapItemToDialoguesByItemIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapItemToDialoguesByItemIdResponses, GetApiMapItemToDialoguesByItemIdErrors, ThrowOnError>({
+export const getApiMapItmToDlgsByItmId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapItmToDlgsByItmIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapItmToDlgsByItmIdResponses, GetApiMapItmToDlgsByItmIdErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/map/itemToDialogues/{itemId}',
+    url: '/api/map/itmToDlgs/{itmId}',
     ...options
 });
 
 /**
- * Get item id for the dialogue id
+ * Get itm id for the dlg id
  */
-export const getApiMapDialogueToItemByDialogueId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapDialogueToItemByDialogueIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapDialogueToItemByDialogueIdResponses, GetApiMapDialogueToItemByDialogueIdErrors, ThrowOnError>({
+export const getApiMapDlgToItmsByDlgId = <ThrowOnError extends boolean = false>(options: Options<GetApiMapDlgToItmsByDlgIdData, ThrowOnError>) => (options.client ?? client).get<GetApiMapDlgToItmsByDlgIdResponses, GetApiMapDlgToItmsByDlgIdErrors, ThrowOnError>({
     responseType: 'json',
-    url: '/api/map/dialogueToItem/{dialogueId}',
+    url: '/api/map/dlgToItms/{dlgId}',
     ...options
 });
 

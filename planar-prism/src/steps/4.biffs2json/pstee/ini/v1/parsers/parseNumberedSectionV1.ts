@@ -1,12 +1,12 @@
 import { findEntry } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
-import type { Section } from '../../iniParser/iniParserTypes.js';
-import type { NumberedSection } from './parseNumberedSectionV1.types.js';
+import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
+import type { RawIniNumberedSection } from './parseNumberedSectionV1.types.js';
 
 const numberRegex = /^\d+$/;
 
-export const parseNumberedSectionV1 = (section: Section): Maybe<NumberedSection> => {
+export const parseNumberedSectionV1 = (section: RawIniSection): Maybe<RawIniNumberedSection> => {
   const isNumberedSection = numberRegex.test(section.name);
   if (!isNumberedSection) throw new Error(`Expect section '${section.name}' to have number as a section name`);
 

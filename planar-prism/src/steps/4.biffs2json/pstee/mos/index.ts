@@ -1,11 +1,12 @@
-import type { MosV1, MosV2 } from './parseMos.types.js';
+import type { RawMosV1 } from './v1/parseMosV1.types.js';
+import type { RawMosV2 } from './v2/parseMosV2.types.js';
 
-export { parseMos } from './parseMos.js';
-export { isMosV1Artifacts } from './parseMos.types.js';
+export { parseMoss } from './parseMoss.js';
+export { isMosV1Artifacts } from './parseMoss.const.js';
 
 export type {
-  MosV1,
-  MosV2,
+  RawMosV1,
+  RawMosV2,
 };
 
-export type Mos = MosV1 | MosV2;
+export type RawMos = RawMosV1 | RawMosV2;

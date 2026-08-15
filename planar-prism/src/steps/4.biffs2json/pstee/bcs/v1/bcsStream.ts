@@ -1,18 +1,18 @@
 import { isNothing, nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type { BcsStream } from './bcsStream.types.js';
+import type { RawBcsStream } from './bcsStream.types.js';
 
 const WHITESPACES = ' \t\r\n\f';
 
-export const createBcsStream = (data: string): BcsStream => {
+export const createBcsStream = (data: string): RawBcsStream => {
   let position = 0;
 
   const eos = (): boolean => position >= data.length;
 
   const positionOf = (): number => position;
 
-  const skipWhitespaces = (): BcsStream => {
+  const skipWhitespaces = (): RawBcsStream => {
     while (!eos() && WHITESPACES.includes(data[position]!)) position++;
 
     return stream;
@@ -44,7 +44,7 @@ export const createBcsStream = (data: string): BcsStream => {
     return m[0];
   };
 
-  const skipByte = (andWhitespaces = true): BcsStream => {
+  const skipByte = (andWhitespaces = true): RawBcsStream => {
     if (position < data.length) position++;
     return andWhitespaces ? skipWhitespaces() : stream;
   };
@@ -79,7 +79,7 @@ export const createBcsStream = (data: string): BcsStream => {
     return s;
   };
 
-  const stream: BcsStream = {
+  const stream: RawBcsStream = {
     eos,
     positionOf,
     skipWhitespaces,

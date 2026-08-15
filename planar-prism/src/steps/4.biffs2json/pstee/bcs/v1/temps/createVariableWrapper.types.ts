@@ -1,9 +1,10 @@
-import type { BlockFunction, TempVariable } from '../../parseBcs.types.js';
+import type { RawBcsTempVariable } from '../translator/objectArgForScope.types.js';
+import type { RawBcsBlockFunction } from '../translator/translateRawBcsIfBlock.types.js';
 
-export type VariableWrapper = Readonly<{
-  getTemps: () => TempVariable[];
-  getFunctions: () => BlockFunction[];
+export type RawBcsVariableWrapper = Readonly<{
+  getTemps: () => RawBcsTempVariable[];
+  getFunctions: () => RawBcsBlockFunction[];
   getNextTempIndex: () => number;
-  addTemp: (value: TempVariable) => void;
-  addFunction: (value: BlockFunction) => void;
+  addTemp: (value: RawBcsTempVariable) => void;
+  addFunction: (value: RawBcsBlockFunction) => void;
 }>;

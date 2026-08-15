@@ -1,8 +1,13 @@
-import type { BufferReader } from '@/shared/bufferReader.js';
-import type { TisHeader } from './1.parseHeader.types.js';
-import { PALETTE_TILE_SIZE, PVRZ_TILE_SIZE, TILE_DIMENSION } from '../shared/tisCommon.js';
+import {
+  PALETTE_TILE_SIZE,
+  PVRZ_TILE_SIZE,
+  TILE_DIMENSION,
+} from '../shared/tisCommon.js';
 
-export const parseHeader = (reader: BufferReader, resourceName: string): TisHeader => {
+import type { BufferReader } from '@/shared/bufferReader.js';
+import type { RawTisHeader } from './1.parseHeader.types.js';
+
+export const parseHeader = (reader: BufferReader, resourceName: string): RawTisHeader => {
   const tileCount = reader.uint();
   const tileSize = reader.uint();
   const headerSize = reader.uint();

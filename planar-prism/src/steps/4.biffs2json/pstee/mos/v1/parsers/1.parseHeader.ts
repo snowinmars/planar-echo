@@ -1,10 +1,10 @@
-import { MOS_BLOCK_DIMENSION } from '../../parseMos.types.js';
+import { MOS_BLOCK_DIMENSION } from '../../parseMoss.const.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { MosV1Header } from './1.parseHeader.types.js';
+import type { RawMosV1Header } from './1.parseHeader.types.js';
 
 const MOS_V1_HEADER_SIZE = 24;
-export const parseHeader = (reader: BufferReader, resourceName: string): MosV1Header => {
+export const parseHeader = (reader: BufferReader, resourceName: string): RawMosV1Header => {
   const width = reader.ushort();
   const height = reader.ushort();
   const columns = reader.ushort();

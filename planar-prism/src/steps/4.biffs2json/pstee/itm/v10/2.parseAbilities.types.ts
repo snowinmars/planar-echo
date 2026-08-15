@@ -1,6 +1,6 @@
 import { extend } from '@/shared/extendedMap.js';
 
-import type { EffectV10 } from './3.parseEffects.types.js';
+import type { RawItmEffectV10 } from './3.parseEffects.types.js';
 
 /* createGenerator().register().enum("attackTypeV10",
  *   ['none','melee','ranged','magic','launcher',]
@@ -139,7 +139,7 @@ export const extendMap = {
   flags: extend(flagsV10),
 };
 
-export type AbilityV10 = Readonly<{
+export type RawItmAbilityV10 = Readonly<{
   attackType: AttackTypeV10;
   typeFlags: TypeFlagsV10[];
   abilityLocation: AbilityLocationV10;
@@ -171,5 +171,5 @@ export type AbilityV10 = Readonly<{
   isArrow: number;
   isBolt: number;
   isBullet: number;
-  effects: EffectV10[];
+  effects: RawItmEffectV10[];
 }>;

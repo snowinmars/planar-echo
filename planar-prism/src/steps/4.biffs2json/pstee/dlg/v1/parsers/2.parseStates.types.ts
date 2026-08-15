@@ -1,4 +1,4 @@
-export type RawState = Readonly<{
+export type RawDlgState = Readonly<{
   index: number;
   textRef: number;
   firstResponseIndex: number;

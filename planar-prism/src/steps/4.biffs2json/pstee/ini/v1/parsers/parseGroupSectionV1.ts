@@ -1,10 +1,10 @@
 import { findEntry } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
-import type { Section } from '../../iniParser/iniParserTypes.js';
-import type { GroupIniSection } from './parseGroupSectionV1.types.js';
+import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
+import type { RawIniGroupIniSection } from './parseGroupSectionV1.types.js';
 
-export const parseGroupSectionV1 = (section: Section): Maybe<GroupIniSection> => {
+export const parseGroupSectionV1 = (section: RawIniSection): Maybe<RawIniGroupIniSection> => {
   /* eslint-disable @stylistic/no-multi-spaces */
   const critters       = findEntry(section.entries, 'critters').stringOrThrow(section.name);
   const interval       = findEntry(section.entries, 'interval').decOrNothing();

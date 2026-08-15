@@ -3,17 +3,17 @@ import { extendMap } from './1.parseHeaderV10.types.js';
 import { normalizeRef } from '@/shared/numbers.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { CreatureHeaderV10 } from './1.parseHeaderV10.types.js';
-import type { Ids } from '../../../ids/index.js';
+import type { RawCreHeaderV10 } from './1.parseHeaderV10.types.js';
+import type { RawIds } from '../../../ids/index.js';
 
 type ParseHeaderV10Props = Readonly<{
   reader: BufferReader;
-  ids: Map<string, Ids>;
+  ids: Map<string, RawIds>;
 }>;
 export const parseHeaderV10 = ({
   reader,
   ids,
-}: ParseHeaderV10Props): CreatureHeaderV10 => {
+}: ParseHeaderV10Props): RawCreHeaderV10 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
   const nameRef = normalizeRef(reader.uint());
@@ -34,7 +34,7 @@ export const parseHeaderV10 = ({
   const armorColourIndex = reader.byte();
   const hairColourIndex = reader.byte();
   const effectVersion = reader.byte();
-  if (effectVersion !== 0 && effectVersion !== 1) throw new Error(`Unsupported effectVersion '${effectVersion}' for creature`);
+  if (effectVersion !== 0 && effectVersion !== 1) throw new Error(`Unsupported effectVersion '${effectVersion}' for cre`);
   const smallPortrait = reader.string(8);
   const largePortrait = reader.string(8);
   const reputation = reader.ubyte();
@@ -225,7 +225,7 @@ export const parseHeaderV10 = ({
   const racialEnemy = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('race.ids')!.entries));
   const moraleRecoveryTime = reader.short();
   const deity = reader.map.short<string>(x => externalOffsetMap.parseExternal(x, ids.get('diety.ids')!.entries)); // in pstee it is diety, not deity
-  const mageType = reader.map.short<CreatureHeaderV10['mageType']>(x => externalOffsetMap.parseFlagsExternal(x, ids.get('magespec.ids')!.entries));
+  const mageType = reader.map.short<RawCreHeaderV10['mageType']>(x => externalOffsetMap.parseFlagsExternal(x, ids.get('magespec.ids')!.entries));
   const overrideScriptRef = reader.string(8);
   const classScriptRef = reader.string(8);
   const raceScriptRef = reader.string(8);
@@ -257,7 +257,7 @@ export const parseHeaderV10 = ({
   const countOfItems = reader.uint();
   const offsetToEffects = reader.uint();
   const countOfEffects = reader.uint();
-  const dialogueRef = reader.string(8);
+  const dlgRef = reader.string(8);
 
   return {
     signature: 'cre',
@@ -499,6 +499,6 @@ export const parseHeaderV10 = ({
     countOfItems,
     offsetToEffects,
     countOfEffects,
-    dialogueRef,
+    dlgRef,
   };
 };

@@ -6,16 +6,14 @@ import {
 import { parseCo } from './parseCo.js';
 import { parseRs } from './parseRs.js';
 
-import type { BcsStream } from '../bcsStream.types.js';
-import type {
-  ParsedBcsCr,
-  ParsedBcsResponse,
-  ParsedBcsTrigger,
-} from '../bytecode.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
+import type { RawBcsCr } from './parseCr.types.js';
+import type { RawBcsTrigger } from './parseTr.types.js';
+import type { RawBcsResponse } from './parseRe.types.js';
 
-export const parseCr = (stream: BcsStream): ParsedBcsCr => {
-  const triggers: ParsedBcsTrigger[] = [];
-  const responses: ParsedBcsResponse[] = [];
+export const parseCr = (stream: RawBcsStream): RawBcsCr => {
+  const triggers: RawBcsTrigger[] = [];
+  const responses: RawBcsResponse[] = [];
 
   while (!stream.eos() && !stream.skipToken(CR_TOKEN)) {
     if (stream.skipToken(CO_TOKEN)) triggers.push(...parseCo(stream));

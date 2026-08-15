@@ -15,7 +15,7 @@ export const extendMap = {
   spellType: extend(spellTypeV10),
 };
 
-export type SpellMemorizationInfoV10 = Readonly<{
+export type RawCreSpellMemorizationInfoV10 = Readonly<{
   spellLevel: number;
   memorizableSpellsCount: number;
   memorizableSpellsAfterEffectsCount: number;
@@ -24,7 +24,7 @@ export type SpellMemorizationInfoV10 = Readonly<{
   spellsCount: number;
 }>;
 
-export type SpellMemorizationInfoPsteeV10 = Readonly<{
+export type RawCreSpellMemorizationInfoPsteeV10 = Readonly<{
   spellRef: string;
   memoraization: number;
 }>;

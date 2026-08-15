@@ -1,5 +1,5 @@
 import { nothing } from '@planar/shared';
-import type { NestedDlg, NestedDlgResponse } from './4.nestDialogue.types.js';
+import type { NestedDlg, NestedDlgResponse } from './4.nestDlg.types.js';
 
 const getEmptyResponses = (index: number): NestedDlgResponse[] => {
   const emptyResponse: NestedDlgResponse = {
@@ -11,8 +11,8 @@ const getEmptyResponses = (index: number): NestedDlgResponse[] => {
     textRef: nothing(),
     trigger: nothing(),
     action: nothing(),
-    nextDialog: nothing(),
-    nextDialogState: nothing(),
+    nextDlg: nothing(),
+    nextDlgState: nothing(),
     journalRef: nothing(),
   };
 

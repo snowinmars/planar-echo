@@ -14,9 +14,9 @@
       "5": "Voraussetzungen: node.js und eigene Original-Spieldateien."
     },
     "runnerGuard": {
-      "dialogue": "Dialog von",
-      "creature": "Kreatur von",
-      "item": "Stück von",
+      "dlg": "Dialog von",
+      "cre": "Kreatur von",
+      "itm": "Stück von",
       "ghostDir": "Spielordner",
       "or": "oder",
       "convert": "Konvertieren",
@@ -114,11 +114,11 @@
     }
   },
   "run": {
-    "dialoguesLabel": "Dialog (insgesamt {{amount}})",
-    "creaturesLabel": "Kreatur (insgesamt {{amount}})",
-    "itemsLabel": "Stück (insgesamt {{amount}})",
+    "dlgsLabel": "Dialog (insgesamt {{amount}})",
+    "cresLabel": "Kreatur (insgesamt {{amount}})",
+    "itmsLabel": "Stück (insgesamt {{amount}})",
     "statesLabel": "Zustand (insgesamt {{amount}})",
-    "creature": {
+    "cre": {
       "talk": "Lass uns reden",
       "nameTlk": "Name",
       "tooltipTlk": "Tooltip",
@@ -158,7 +158,7 @@
       "scripts": "Skripte",
       "techInfo": "Technische Infos"
     },
-    "item": {
+    "itm": {
       "talk": "Sprechen",
       "unidentifiedDescriptionTlk": "Unbekannte Beschreibung",
       "identifiedDescriptionTlk": "Identifizierte Beschreibung",
@@ -198,13 +198,13 @@
       "saved": "Gespeichert",
       "failed": "Fehler, siehe F12"
     },
-    "dialogueRenderer": {
+    "dlgRenderer": {
       "title": "Dialogansicht",
       "pstee": "Wie im Original",
       "pstee-two-columns": "Wie im Original, aber zweispaltig",
       "narrat": "Narrat-ähnlich"
     },
-    "dialogueHistory": {
+    "dlgHistory": {
       "title": "Dialogverlauf",
       "tlkCacheMaxLines": "TLK-Zeilen im Speicher (LRU)",
       "pageSize": "Zeilen pro Seite",
@@ -221,7 +221,7 @@
     "language": {
       "title": "Oberflächensprache"
     },
-    "dialogueMarks": {
+    "dlgMarks": {
       "title": "Markierungen in Dialogen",
       "markDisposers": "Abschlusszeilen markieren",
       "markExterns": "Externe markieren (Entwickler)"

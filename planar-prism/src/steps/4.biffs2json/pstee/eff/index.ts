@@ -1,5 +1,5 @@
-export { parseEffV10 } from './parseEffV10.js';
-export { parseEffV20 } from './parseEffV20.js';
+export { parseEffsV10 } from './parseEffsV10.js';
+export { parseEffsV20 } from './parseEffsV20.js';
 
-export type { EffectV10 } from './v10/parseEffectV10.types.js';
-export type { EffectV20 } from './v20/parseEffectV20.types.js';
+export type { RawEffV10 } from './v10/parseEffV10.types.js';
+export type { RawEffV20 } from './v20/parseEffV20.types.js';

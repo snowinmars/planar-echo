@@ -423,7 +423,7 @@ export const extendMap = {
   objectIdsReferences: extend(objectIdsReferencesV11),
   alignment: extend(alignmentV11),
 };
-export type CreatureHeaderV11 = Readonly<{
+export type RawCreHeaderV11 = Readonly<{
   signature: 'cre';
   version: 'v1.1';
   nameRef: number;
@@ -670,5 +670,5 @@ export type CreatureHeaderV11 = Readonly<{
   countOfItems: number;
   offsetToEffects: number;
   countOfEffects: number;
-  dialogueRef: string;
+  dlgRef: string;
 }>;

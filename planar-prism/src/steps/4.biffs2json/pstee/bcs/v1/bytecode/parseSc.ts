@@ -4,11 +4,11 @@ import {
 } from './tokens.js';
 import { parseCr } from './parseCr.js';
 
-import type { BcsStream } from '../bcsStream.types.js';
-import type { ParsedBcsCr } from '../bytecode.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
+import type { RawBcsCr } from './parseCr.types.js';
 
-export const parseSc = (stream: BcsStream): ParsedBcsCr[] => {
-  const blocks: ParsedBcsCr[] = [];
+export const parseSc = (stream: RawBcsStream): RawBcsCr[] => {
+  const blocks: RawBcsCr[] = [];
 
   if (!stream.skipToken(SC_TOKEN)) throw new Error(`BCS script must start with '${SC_TOKEN}'`);
 

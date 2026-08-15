@@ -1,7 +1,7 @@
-import type { BcsStream } from '../bcsStream.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
 
 type ParamKind = 'i' | 's' | 'p' | 'o';
-export const determineParamType = (stream: BcsStream): ParamKind => {
+export const determineParamType = (stream: RawBcsStream): ParamKind => {
   const value = stream.peek();
   switch (value) {
     case '-':

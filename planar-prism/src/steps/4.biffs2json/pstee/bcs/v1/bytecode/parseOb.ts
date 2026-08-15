@@ -1,20 +1,21 @@
 import { isNothing, nothing } from '@planar/shared';
 import { determineParamType } from './determineParamType.js';
 import { parseNumber } from './parseNumber.js';
-import { parseRectangle } from './parseRectangle.js';
 import { parseString } from './parseString.js';
 import { OB_TOKEN } from './tokens.js';
+import { parseRegion } from './parseRegion.js';
 
 import type { Maybe } from '@planar/shared';
-import type { BcsStream } from '../bcsStream.types.js';
-import type { BcsRegion, ParsedBcsObject } from '../bytecode.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
+import type { RawBcsObject } from './parseOb.types.js';
+import type { RawBcsRegion } from './parseRegion.types.js';
 
-export const parseOb = (stream: BcsStream): ParsedBcsObject => {
+export const parseOb = (stream: RawBcsStream): RawBcsObject => {
   if (!stream.skipToken(OB_TOKEN)) throw new Error(`Expected '${OB_TOKEN}' at position '${stream.positionOf()}'`);
 
   const numbers: number[] = [];
   let name: Maybe<string> = nothing();
-  let region: Maybe<BcsRegion> = nothing();
+  let region: Maybe<RawBcsRegion> = nothing();
 
   while (!stream.eos() && !stream.skipToken(OB_TOKEN)) {
     const kind = determineParamType(stream);
@@ -23,7 +24,7 @@ export const parseOb = (stream: BcsStream): ParsedBcsObject => {
         numbers.push(parseNumber(stream));
         break;
       case 'p':
-        region = parseRectangle(stream);
+        region = parseRegion(stream);
         break;
       case 's':
         name = parseString(stream);

@@ -1,5 +1,6 @@
-import type { Pvr, PvrPixelFormat } from '../types.js';
-import type { Rectangle, RgbaImage } from './dxtDecoder.types.js';
+import type { RawPvrPixelFormat } from '../parsePvrzs.types.js';
+import type { RawPvr } from '../pvr/parsePvr.types.js';
+import type { RawPvrRectangle, RawPvrRgbaImage } from './dxtDecoder.types.js';
 
 /**
  * Whole algorithms here are neurogenerated.
@@ -41,7 +42,7 @@ const argbToRgbaBuffer = (argb: Uint32Array, width: number, height: number): Buf
 };
 
 type AlignRectangleProps = Readonly<{
-  rectangle: Rectangle;
+  rectangle: RawPvrRectangle;
   alignX: number;
   alignY: number;
 }>;
@@ -49,7 +50,7 @@ const alignRectangle = ({
   rectangle,
   alignX,
   alignY,
-}: AlignRectangleProps): Rectangle => {
+}: AlignRectangleProps): RawPvrRectangle => {
   let {
     x,
     y,
@@ -96,7 +97,7 @@ const unpackColors565 = (inData: number, outData: number[]): void => {
 type DecodeDxt1Props = Readonly<{
   data: Buffer;
   texWidth: number;
-  rectangle: Rectangle;
+  rectangle: RawPvrRectangle;
   imgWidth: number;
 }>;
 const decodeDxt1 = ({
@@ -174,7 +175,7 @@ const decodeDxt1 = ({
 type DecodeDxt5Props = Readonly<{
   data: Buffer;
   texWidth: number;
-  rectangle: Rectangle;
+  rectangle: RawPvrRectangle;
   imgWidth: number;
 }>;
 const decodeDxt5 = ({
@@ -262,10 +263,10 @@ const decodeDxt5 = ({
 };
 
 type AlignDxtProps = Readonly<{
-  pixelFormat: PvrPixelFormat;
+  pixelFormat: RawPvrPixelFormat;
   data: Buffer;
   imgWidth: number;
-  rectangle: Rectangle;
+  rectangle: RawPvrRectangle;
   texWidth: number;
 }>;
 const alignDxt = ({
@@ -290,8 +291,8 @@ const alignDxt = ({
   else throw new Error(`Pixel format '${pixelFormat}' not supported`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
 };
 
-const decodeDxtToArgb = (pvr: Pvr, pixelData: Buffer): Uint32Array => {
-  const region: Rectangle = {
+const decodeDxtToArgb = (pvr: RawPvr, pixelData: Buffer): Uint32Array => {
+  const region: RawPvrRectangle = {
     x: 0,
     y: 0,
     width: pvr.width,
@@ -320,7 +321,7 @@ const decodeDxtToArgb = (pvr: Pvr, pixelData: Buffer): Uint32Array => {
   // return copyRectArgb(aligned, rectangle.width, region.x - rectangle.x, region.y - rectangle.y, pvr.width, pvr.height);
 };
 
-const decodeParsedToArgb = (pvr: Pvr, pixelData: Buffer): Uint32Array => {
+const decodeParsedToArgb = (pvr: RawPvr, pixelData: Buffer): Uint32Array => {
   switch (pvr.pixelFormat) {
     case 'dxt1':
     case 'dxt5': return decodeDxtToArgb(pvr, pixelData);
@@ -328,7 +329,7 @@ const decodeParsedToArgb = (pvr: Pvr, pixelData: Buffer): Uint32Array => {
   }
 };
 
-export const decodePvrToRgba = (pvr: Pvr, pixelData: Buffer): RgbaImage => {
+export const decodePvrToRgba = (pvr: RawPvr, pixelData: Buffer): RawPvrRgbaImage => {
   const argb = decodeParsedToArgb(pvr, pixelData);
   return {
     width: pvr.width,

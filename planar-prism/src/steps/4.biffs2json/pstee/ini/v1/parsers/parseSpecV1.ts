@@ -1,9 +1,9 @@
 import { parseDecOrDefault } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
-import type { CreatureIniSpec } from './parseSpecV1.types.js';
+import type { RawIniCreatureIniSpec } from './parseSpecV1.types.js';
 
-export const parseSpecV1 = (s: Maybe<string>): string | CreatureIniSpec => {
+export const parseSpecV1 = (s: Maybe<string>): string | RawIniCreatureIniSpec => {
   if (!s) throw new Error(`Cannot parse Spec variable from nothing`);
 
   const seemsScriptName = !s.startsWith('[') && !s.endsWith(']');

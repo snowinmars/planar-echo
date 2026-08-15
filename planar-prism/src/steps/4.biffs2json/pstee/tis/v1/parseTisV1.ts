@@ -2,12 +2,12 @@ import { findWedForTis } from '../../wed/index.js';
 import { PALETTE_TILE_SIZE, PVRZ_TILE_SIZE } from '../shared/tisCommon.js';
 import { parsePaletteTis } from './palette/parsePaletteTis.js';
 import { parsePvrzTis } from './pvrz/parsePvrzTis.js';
-
-import type { Wed } from '../../wed/index.js';
-import type { RgbaImage } from '../../pvrz/decode/index.js';
-import type { BufferReader } from '@/shared/bufferReader.js';
 import { parseHeader } from './1.parseHeader.js';
-import type { ParsedTisArtifacts } from './parseTisV1.types.js';
+
+import type { RawWed } from '../../wed/index.js';
+import type { RawPvrRgbaImage } from '../../pvrz/decode/index.js';
+import type { BufferReader } from '@/shared/bufferReader.js';
+import type { RawTisArtifacts } from './parseTisV1.types.js';
 
 const knownTisWithoutWed = [
   'fire01.tis',
@@ -17,15 +17,15 @@ const knownTisWithoutWed = [
 type ParseTisV1Props = Readonly<{
   reader: BufferReader;
   resourceName: string;
-  wedIndex: Map<string, Wed>;
-  pvrzRgbaIndex: Map<string, RgbaImage>;
+  wedIndex: Map<string, RawWed>;
+  pvrzRgbaIndex: Map<string, RawPvrRgbaImage>;
 }>;
 export const parseTisV1 = ({
   reader,
   resourceName,
   wedIndex,
   pvrzRgbaIndex,
-}: ParseTisV1Props): ParsedTisArtifacts => {
+}: ParseTisV1Props): RawTisArtifacts => {
   const header = parseHeader(reader, resourceName);
 
   const wed = findWedForTis(wedIndex, resourceName, header.tileCount);

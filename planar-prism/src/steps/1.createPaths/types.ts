@@ -3,12 +3,12 @@ import type { GameName, GameLanguage } from '@planar/shared';
 type OutDir = Readonly<{
   root: string;
   tlk: string;
-  dialogues: string;
+  dlg: string;
   ids: string;
-  inis: string;
-  creatures: string;
-  effects: string;
-  items: string;
+  ini: string;
+  cre: string;
+  eff: string;
+  itm: string;
   bcs: string;
   wed: string;
   pvrz: string;
@@ -19,12 +19,12 @@ type SaveFunction = (resourceName: string, entry: unknown, asIs?: boolean) => Pr
 type SaveBinaryFunction = (resourceName: string, data: Buffer) => Promise<void>;
 type OutSave = Readonly<{
   tlk: SaveFunction;
-  dialogues: SaveFunction;
+  dlg: SaveFunction;
   ids: SaveFunction;
-  inis: SaveFunction;
-  creatures: SaveFunction;
-  effects: SaveFunction;
-  items: SaveFunction;
+  ini: SaveFunction;
+  cre: SaveFunction;
+  eff: SaveFunction;
+  itm: SaveFunction;
   bcs: SaveFunction;
   wed: SaveFunction;
   pvrz: SaveFunction;

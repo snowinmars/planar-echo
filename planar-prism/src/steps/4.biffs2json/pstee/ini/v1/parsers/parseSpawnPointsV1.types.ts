@@ -1,6 +1,6 @@
 import type { Direction } from '@planar/shared';
 
-export type CreatureIniSpawnPoint = Readonly<{
+export type RawIniCreatureIniSpawnPoint = Readonly<{
   x: number;
   y: number;
   direction: Direction;

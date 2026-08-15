@@ -3,10 +3,10 @@ import { readFile } from 'fs/promises';
 import { parseTlkV1 } from './v1/index.js';
 import { reportProgress } from '@/shared/report.js';
 
-import type { Tlk } from './types.js';
-import type { TlkItem } from './v1/parsers/2.parseItemsV1.types.js';
+import type { RawTlk } from './types.js';
+import type { RawTlkItem } from './v1/parsers/2.parseItemsV1.types.js';
 
-export const parseTlk = async (resourceName: string): Promise<Tlk> => {
+export const parseTlk = async (resourceName: string): Promise<RawTlk> => {
   const buffer = await readFile(resourceName);
   const reader = createReader(buffer);
 
@@ -35,7 +35,7 @@ export const parseTlk = async (resourceName: string): Promise<Tlk> => {
   // I change 4294967295 to -1 to make it easy to use
   // I also add artificial tlk item with id -1
   // to make it easy to render later
-  const emptyTlkItem: TlkItem = {
+  const emptyTlkItem: RawTlkItem = {
     index: -1,
     flags: ['no message data'],
     soundResRef: '',

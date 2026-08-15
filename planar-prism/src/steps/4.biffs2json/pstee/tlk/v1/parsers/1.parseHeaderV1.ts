@@ -1,5 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { Header } from './1.parseHeaderV1.types.js';
+import type { RawTlkHeader } from './1.parseHeaderV1.types.js';
 
 type ParseHeaderV1Props = Readonly<{
   reader: BufferReader;
@@ -10,7 +10,7 @@ export const parseHeaderV1 = ({
   reader,
   signature,
   version,
-}: ParseHeaderV1Props): Header => {
+}: ParseHeaderV1Props): RawTlkHeader => {
   /* eslint-disable @stylistic/no-multi-spaces */
   const language     = reader.short ();
   const stringCount  = reader.uint  ();

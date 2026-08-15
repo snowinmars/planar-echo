@@ -1,2 +1,2 @@
-export { parseIni } from './parseIni.js';
-export type { Ini } from './types.js';
+export { parseInis } from './parseInis.js';
+export type { RawIni } from './parseInis.types.js';

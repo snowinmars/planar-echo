@@ -1,4 +1,4 @@
-export type GeneralIniSection = Readonly<{
+export type RawIniGeneralIniSection = Readonly<{
   animationType: string;
   moveScale: number;
   ellipse: number;

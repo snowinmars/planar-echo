@@ -2,10 +2,10 @@ import { nothing } from '@planar/shared';
 import { findEntry } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
-import type { Section } from '../../iniParser/iniParserTypes.js';
-import type { SpawnMainIniSection } from './parseSpawnMainSectionV1.types.js';
+import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
+import type { RawIniSpawnMainIniSection } from './parseSpawnMainSectionV1.types.js';
 
-export const parseSpawnMainSectionV1 = (section: Section): Maybe<SpawnMainIniSection> => {
+export const parseSpawnMainSectionV1 = (section: RawIniSection): Maybe<RawIniSpawnMainIniSection> => {
   if (section.name !== 'spawn_main') throw new Error(`Expect section '${section.name}' to be 'spawn_main' section`);
 
   /* eslint-disable @stylistic/no-multi-spaces */

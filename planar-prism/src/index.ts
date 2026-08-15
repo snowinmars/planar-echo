@@ -58,7 +58,7 @@ const main = async (props: PrismIndexStartMessage['data']) => {
 
   const allJsons = await biffs2json(decompiledBiffs, paths);
   const [discover, done] = discoverer();
-  const allGhosts = await json2Ghost(allJsons, paths, discover);
+  await json2Ghost(allJsons, paths, discover);
   await saveDiscovered(done(), paths, allJsons);
 
   reportComplete('success');

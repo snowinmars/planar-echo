@@ -322,7 +322,7 @@ export const extendMap = {
   weaponProficiency: extend(weaponProficiencyV10),
 };
 
-export type HeaderV10 = Readonly<{
+export type RawItmHeaderV10 = Readonly<{
   signature: 'itm';
   version: 'v10';
   unidentifiedNameRef: number;

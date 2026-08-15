@@ -2,9 +2,9 @@ import { parseDecOrThrow } from './shared.js';
 import { parseDirectionV1 } from './parseDirectionV1.js';
 
 import type { Maybe } from '@planar/shared';
-import type { CreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';
+import type { RawIniCreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';
 
-export const parseSpawnPoint = (s: string): CreatureIniSpawnPoint => {
+export const parseSpawnPoint = (s: string): RawIniCreatureIniSpawnPoint => {
   const [coords, directionPart] = s.split(':');
   if (!coords) throw new Error(`Supported format are '[x.y:dir],[x.y:dir],...' / '[x.y:dir][x.y:dir]...', but you passed '${s}'. Why?`);
 
@@ -18,13 +18,13 @@ export const parseSpawnPoint = (s: string): CreatureIniSpawnPoint => {
   };
 };
 
-const parseCommaSeparatedSpawnPoints = (s: string): CreatureIniSpawnPoint[] =>
+const parseCommaSeparatedSpawnPoints = (s: string): RawIniCreatureIniSpawnPoint[] =>
   s.split(',').map(batch => parseSpawnPoint(batch.slice(1, -1)));
 
-const parseBracketSeparatedSpawnPoints = (s: string): CreatureIniSpawnPoint[] =>
+const parseBracketSeparatedSpawnPoints = (s: string): RawIniCreatureIniSpawnPoint[] =>
   s.slice(1, -1).split('][').map(parseSpawnPoint);
 
-export const parseSpawnPointsV1 = (s: Maybe<string>): CreatureIniSpawnPoint[] => {
+export const parseSpawnPointsV1 = (s: Maybe<string>): RawIniCreatureIniSpawnPoint[] => {
   if (!s) throw new Error(`Cannot parse SpawnPoint from nothing`);
 
   const commaSeparatedSyntax = s.includes('],[');

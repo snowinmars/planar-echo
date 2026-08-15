@@ -1,9 +1,9 @@
 import { extendMap } from './5.parseEffectsV20.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { EffectV20 } from './5.parseEffectsV20.types.js';
+import type { RawCreEffectV20 } from './5.parseEffectsV20.types.js';
 
-const parse = (reader: BufferReader): EffectV20 => {
+const parse = (reader: BufferReader): RawCreEffectV20 => {
   reader.skip.custom(4); // signature
   reader.skip.custom(4); // version
   const type = reader.uint();
@@ -102,9 +102,9 @@ type ParseEffectsV20Props = Readonly<{
 export const parseEffectsV20 = ({
   reader,
   count,
-}: ParseEffectsV20Props): EffectV20[] => {
+}: ParseEffectsV20Props): RawCreEffectV20[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/eff_v2.htm
 
   const r = reader.fork();
-  return Array.from<never, EffectV20>({ length: count }, () => parse(r));
+  return Array.from<never, RawCreEffectV20>({ length: count }, () => parse(r));
 };

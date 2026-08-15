@@ -1,11 +1,11 @@
 import {
   MOS_BLOCK_DIMENSION,
   MOS_PALETTE_BLOCK_STRIDE,
-} from '../../parseMos.types.js';
+} from '../../parseMoss.const.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { MosV1IndicesBlockLayout, MosV1BlockMeta } from '../../parseMos.types.js';
-import type { MosV1Header } from './1.parseHeader.types.js';
+import type { RawMosV1IndicesBlockLayout, RawMosV1BlockMeta } from './4.parseTileData.types.js';
+import type { RawMosV1Header } from './1.parseHeader.types.js';
 
 const getBlockWidth = (col: number, columns: number, width: number): number => {
   if (col < columns - 1) return MOS_BLOCK_DIMENSION;
@@ -21,14 +21,14 @@ const getBlockHeight = (row: number, rows: number, height: number): number => {
 
 type ParseTileDataProps = Readonly<{
   reader: BufferReader;
-  header: MosV1Header;
+  header: RawMosV1Header;
   blocksCount: number;
   start: number;
   lookups: number[];
 }>;
 type ParseTileDataResponse = Readonly<{
-  blocks: MosV1BlockMeta[];
-  indicesLayoutBlocks: MosV1IndicesBlockLayout[];
+  blocks: RawMosV1BlockMeta[];
+  indicesLayoutBlocks: RawMosV1IndicesBlockLayout[];
   indicesChunks: Buffer[];
   indices: Buffer;
 }>;
@@ -38,8 +38,8 @@ export const parseTileData = ({
   blocksCount,
   start,
   lookups }: ParseTileDataProps): ParseTileDataResponse => {
-  const blocks: MosV1BlockMeta[] = [];
-  const indicesLayoutBlocks: MosV1IndicesBlockLayout[] = [];
+  const blocks: RawMosV1BlockMeta[] = [];
+  const indicesLayoutBlocks: RawMosV1IndicesBlockLayout[] = [];
   const indicesChunks: Buffer[] = [];
   let indicesByteOffset = 0;
 

@@ -1,6 +1,6 @@
-export { getDbCreature, setDbCreature } from './creatures';
-export { getDbDialogue, setDbDialogue } from './dialogues';
-export { getDbItem, setDbItem } from './items';
+export { getDbCre, setDbCre } from './cre';
+export { getDbDlg, setDbDlg } from './dlgs';
+export { getDbItm, setDbItm } from './itms';
 export { getDbNarrative, setDbNarrative } from './narrative';
 export { getDbCharacters, setDbCharacters } from './characters';
 export {

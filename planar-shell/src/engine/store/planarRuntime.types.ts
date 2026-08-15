@@ -7,8 +7,8 @@ export const planarStoreId = {
   localStorage: 'localStorage',
   tlk: 'tlk',
   gameHistory: 'gameHistory',
-  dialogue: 'dialogue',
-  dialogueView: 'dialogueView',
+  dlg: 'dlg',
+  dlgView: 'dlgView',
 } as const;
 export type PlanarStoreId = typeof planarStoreId[keyof typeof planarStoreId];
 

@@ -193,7 +193,7 @@ export const useLandingStoreStep2: StateCreator<LandingState, [], [], LandingSta
         serverUrl,
         setWeiduExeDir,
       } = get();
-      return downloadWeidu(serverUrl, platform, setWeiduExeDir, set, get);
+      return downloadWeidu(serverUrl, platform, setWeiduExeDir, set);
     },
     step2Destroy: () => {
       subscription.unsubscribe();

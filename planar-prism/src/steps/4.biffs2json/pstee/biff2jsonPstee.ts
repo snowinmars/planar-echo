@@ -1,36 +1,34 @@
 import logger from '@/shared/logger.js';
 import { parseTlk } from './tlk/index.js';
 import { parseIds } from './ids/index.js';
-import { parseIni } from './ini/index.js';
-import { parseCre } from './cre/index.js';
-import { parseDlg } from './dlg/index.js';
-import { parseEffV20 } from './eff/index.js';
-import { parseItm } from './itm/index.js';
+import { parseInis } from './ini/index.js';
+import { parseCres } from './cre/index.js';
+import { parseDlgs } from './dlg/index.js';
+import { parseEffsV20 } from './eff/index.js';
+import { parseItms } from './itm/index.js';
 import { buildBcsContext, parseBcs } from './bcs/index.js';
-import { parseWed } from './wed/index.js';
-import { parsePvrz } from './pvrz/index.js';
-import { parseTis } from './tis/index.js';
-import { parseMos, isMosV1Artifacts } from './mos/index.js';
+import { parseWeds } from './wed/index.js';
+import { parsePvrzs } from './pvrz/index.js';
+import { parseTiss } from './tis/index.js';
+import { parseMoss, isMosV1Artifacts } from './mos/index.js';
 import { decodePvrToRgba } from './pvrz/decode/index.js';
 import { isPaletteArtfact } from './tis/v1/parseTisV1.types.js';
 
 import type { Paths } from '../../1.createPaths/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../../3.decompileBiffs/index.js';
-import type { Ids } from './ids/index.js';
-import type { Ini } from './ini/index.js';
-import type { CreatureV10, CreatureV11 } from './cre/index.js';
+import type { RawIds } from './ids/index.js';
+import type { RawIni } from './ini/index.js';
+import type { RawCre } from './cre/index.js';
 import type { RawDlg } from './dlg/index.js';
-import type { EffectV20 } from './eff/index.js';
-import type { ItmV10 } from './itm/index.js';
-import type { Bcs } from './bcs/index.js';
-import type { Wed } from './wed/index.js';
-import type { Tis } from './tis/index.js';
-import type { Mos } from './mos/index.js';
+import type { RawEffV20 } from './eff/index.js';
+import type { RawItmV10 } from './itm/index.js';
+import type { RawBcs } from './bcs/index.js';
+import type { RawWed } from './wed/index.js';
+import type { RawTis } from './tis/index.js';
+import type { RawMos } from './mos/index.js';
 import type { AllPsteeJsons } from '../types.js';
-import type { Pvr } from './pvrz/index.js';
-import type { RgbaImage } from './pvrz/decode/index.js';
-
-type Creature = CreatureV10 | CreatureV11;
+import type { RawPvr } from './pvrz/index.js';
+import type { RawPvrRgbaImage } from './pvrz/decode/index.js';
 
 const mustHaveIds = [
   'diety.ids', // in pstee it is diety, not deity
@@ -48,12 +46,12 @@ const biffs2jsonPstee = async (
 ): Promise<AllPsteeJsons> => {
   logger.info(`Converting tlk to json...`);
   const tlk = await parseTlk(paths.tlkDir);
-  await paths.ghostDir.saveJson.tlk(`dialogue.${paths.gameLanguage}.json`, tlk);
+  await paths.ghostDir.saveJson.tlk(`${paths.gameLanguage}.json`, tlk);
 
   ///
 
   logger.info(`Converting ids to json...`);
-  const ids = new Map<string, Ids>();
+  const ids = new Map<string, RawIds>();
   const idsIterator = parseIds(paths, decompiledBiffs.get('ids')!);
   for await (const id of idsIterator) {
     ids.set(id.resourceName, id);
@@ -65,10 +63,9 @@ const biffs2jsonPstee = async (
   ///
 
   logger.info(`Converting bcs to json...`);
-  const bcs: Bcs[] = [];
-  const bcsItems = decompiledBiffs.get('bcs') ?? [];
+  const bcs: RawBcs[] = [];
   const bcsCtx = await buildBcsContext(ids, paths.ghostDir.cache.xorKey);
-  const bcsIterator = parseBcs(paths, bcsItems, bcsCtx);
+  const bcsIterator = parseBcs(paths, decompiledBiffs.get('bcs')!, bcsCtx);
   for await (const b of bcsIterator) {
     bcs.push(b);
     await paths.ghostDir.saveJson.bcs(`${b.resourceName}.json`, b);
@@ -77,30 +74,30 @@ const biffs2jsonPstee = async (
   ///
 
   logger.info(`Converting ini to json...`);
-  const inis = new Map<string, Ini>();
-  const iniIterator = parseIni(paths, decompiledBiffs.get('ini')!);
-  for await (const ini of iniIterator) {
+  const inis = new Map<string, RawIni>();
+  const inisIterator = parseInis(paths, decompiledBiffs.get('ini')!);
+  for await (const ini of inisIterator) {
     if (!ini) continue;
     inis.set(ini.resourceName, ini);
-    await paths.ghostDir.saveJson.inis(ini.resourceName, ini);
+    await paths.ghostDir.saveJson.ini(ini.resourceName, ini);
   }
 
   ///
 
   logger.info(`Converting cre to json...`);
-  const cres: Creature[] = [];
-  const cresIterator = parseCre(paths, decompiledBiffs.get('cre')!, ids);
+  const cres: RawCre[] = [];
+  const cresIterator = parseCres(paths, decompiledBiffs.get('cre')!, ids);
   for await (const cre of cresIterator) {
     if (!cre) continue;
     cres.push(cre);
-    await paths.ghostDir.saveJson.creatures(cre.resourceName, cre);
+    await paths.ghostDir.saveJson.cre(cre.resourceName, cre);
   }
 
   ///
 
   logger.info(`Converting dlg to json...`);
   const dlgs: RawDlg[] = [];
-  const emptyDialogues = [
+  const emptyDlgs = [
     'dzxxx.dlg',
     'dzxxxx.dlg',
     'ddrndegh.dlg',
@@ -113,53 +110,51 @@ const biffs2jsonPstee = async (
     'over02.dlg',
     'over03.dlg',
   ];
-  const dlgIterator = parseDlg(paths, decompiledBiffs.get('dlg')!.filter(x => !emptyDialogues.includes(x.resourceName)));
-  for await (const dlg of dlgIterator) {
+  const dlgsIterator = parseDlgs(paths, decompiledBiffs.get('dlg')!.filter(x => !emptyDlgs.includes(x.resourceName)));
+  for await (const dlg of dlgsIterator) {
     dlgs.push(dlg);
-    await paths.ghostDir.saveJson.dialogues(dlg.resourceName, dlg);
+    await paths.ghostDir.saveJson.dlg(dlg.resourceName, dlg);
   }
 
   ///
 
   logger.info(`Converting eff to json...`);
-  const effs: EffectV20[] = [];
+  const effs: RawEffV20[] = [];
   // const effIterator = parseEffV10(paths, decompiledBiffs.get('eff')!);
-  const effIterator = parseEffV20(paths, decompiledBiffs.get('eff')!);
+  const effIterator = parseEffsV20(paths, decompiledBiffs.get('eff')!);
   for await (const eff of effIterator) {
     effs.push(eff);
-    await paths.ghostDir.saveJson.effects(eff.resourceName, eff);
+    await paths.ghostDir.saveJson.eff(eff.resourceName, eff);
   }
 
   ///
 
   logger.info(`Converting itm to json...`);
-  const itms: ItmV10[] = [];
-  const itmIterator = parseItm(paths, decompiledBiffs.get('itm')!);
-  for await (const itm of itmIterator) {
+  const itms: RawItmV10[] = [];
+  const itmsIterator = parseItms(paths, decompiledBiffs.get('itm')!);
+  for await (const itm of itmsIterator) {
     itms.push(itm);
-    await paths.ghostDir.saveJson.items(itm.resourceName, itm);
+    await paths.ghostDir.saveJson.itm(itm.resourceName, itm);
   }
 
   ///
 
   logger.info(`Converting wed to json...`);
-  const weds: Wed[] = [];
-  const wedItems = decompiledBiffs.get('wed') ?? [];
-  const wedIterator = parseWed(paths, wedItems);
-  for await (const wed of wedIterator) {
+  const weds: RawWed[] = [];
+  const wedsIterator = parseWeds(paths, decompiledBiffs.get('wed')!);
+  for await (const wed of wedsIterator) {
     weds.push(wed);
     await paths.ghostDir.saveJson.wed(wed.resourceName, wed);
   }
-  const wedIndex = new Map<string, Wed>(weds.map(wed => [wed.resourceName, wed]));
+  const wedIndex = new Map<string, RawWed>(weds.map(wed => [wed.resourceName, wed]));
 
   ///
 
   logger.info(`Converting pvrz to json...`);
-  const pvrs: Pvr[] = [];
-  const pvrzRgbaIndex = new Map<string, RgbaImage>();
-  const pvrzItems = decompiledBiffs.get('pvrz') ?? [];
-  const pvrzIterator = parsePvrz(paths, pvrzItems);
-  for await (const { pvr, pixelData } of pvrzIterator) {
+  const pvrs: RawPvr[] = [];
+  const pvrzRgbaIndex = new Map<string, RawPvrRgbaImage>();
+  const pvrsIterator = parsePvrzs(paths, decompiledBiffs.get('pvrz')!);
+  for await (const { pvr, pixelData } of pvrsIterator) {
     pvrs.push(pvr);
     pvrzRgbaIndex.set(pvr.resourceName, decodePvrToRgba(pvr, pixelData));
     await paths.ghostDir.saveJson.pvrz(pvr.resourceName, pvr);
@@ -168,14 +163,9 @@ const biffs2jsonPstee = async (
   ///
 
   logger.info(`Converting mos to json...`);
-  const moss: Mos[] = [];
-  const mosItems = decompiledBiffs.get('mos') ?? [];
-  const mosIterator = parseMos({
-    paths,
-    decompiledItems: mosItems,
-    pvrzRgbaIndex,
-  });
-  for await (const artifacts of mosIterator) {
+  const moss: RawMos[] = [];
+  const mossIterator = parseMoss(paths, decompiledBiffs.get('mos')!, pvrzRgbaIndex);
+  for await (const artifacts of mossIterator) {
     moss.push(artifacts.mos);
     await paths.ghostDir.saveJson.mos(artifacts.mos.resourceName, artifacts.mos);
     await paths.ghostDir.saveBinary.mos.image(artifacts.mos.resourceName, artifacts.png);
@@ -188,15 +178,9 @@ const biffs2jsonPstee = async (
   ///
 
   logger.info(`Converting tis to json...`);
-  const tiss: Tis[] = [];
-  const tisItems = decompiledBiffs.get('tis') ?? [];
-  const tisIterator = parseTis({
-    paths,
-    decompiledItems: tisItems,
-    wedIndex: wedIndex,
-    pvrzRgbaIndex,
-  });
-  for await (const artifacts of tisIterator) {
+  const tiss: RawTis[] = [];
+  const tissIterator = parseTiss(paths, decompiledBiffs.get('tis')!, wedIndex, pvrzRgbaIndex);
+  for await (const artifacts of tissIterator) {
     tiss.push(artifacts.tis);
     await paths.ghostDir.saveJson.tis(artifacts.tis.resourceName, artifacts.tis);
     await paths.ghostDir.saveBinary.tis.image(artifacts.tis.resourceName, artifacts.png);

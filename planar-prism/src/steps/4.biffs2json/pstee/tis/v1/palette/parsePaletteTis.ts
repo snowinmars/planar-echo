@@ -3,9 +3,12 @@ import { blitTileRgba, createAtlasBuffer, encodeRgbaPng } from '../../shared/wri
 import { isGreenColorKeyBgra } from '../../../shared/greenColorKey.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { Tis, PaletteTisTileMeta } from '../../parseTis.types.js';
-import type { TisHeader } from '../1.parseHeader.types.js';
-import type { ParsePaletteTisResult } from './parsePaletteTis.types.js';
+import type { RawTisHeader } from '../1.parseHeader.types.js';
+import type {
+  RawTisPalette,
+  RawTisPaletteParseResult,
+  RawTisTileMeta,
+} from './parsePaletteTis.types.js';
 
 /**
  * Whole algorithms here are neurogenerated.
@@ -37,7 +40,7 @@ const renderTileRgba = (paletteBgra: Buffer, indices: Buffer): Buffer => {
 type ParsePaletteTisProps = Readonly<{
   reader: BufferReader;
   resourceName: string;
-  header: TisHeader;
+  header: RawTisHeader;
   wedWidth: number | undefined;
 }>;
 export const parsePaletteTis = ({
@@ -45,7 +48,7 @@ export const parsePaletteTis = ({
   resourceName,
   header,
   wedWidth,
-}: ParsePaletteTisProps): ParsePaletteTisResult => {
+}: ParsePaletteTisProps): RawTisPaletteParseResult => {
   if (header.tileSize !== PALETTE_TILE_SIZE) throw new Error(`Expected palette tile size '${PALETTE_TILE_SIZE}', got '${header.tileSize}' for resource '${resourceName}'`);
 
   const { columns, source } = calcAtlasColumns(header.tileCount, wedWidth);
@@ -54,7 +57,7 @@ export const parsePaletteTis = ({
 
   const palette = Buffer.alloc(header.tileCount * 256 * 4);
   const indices = Buffer.alloc(header.tileCount * TILE_DIMENSION * TILE_DIMENSION);
-  const tiles: PaletteTisTileMeta[] = [];
+  const tiles: RawTisTileMeta[] = [];
 
   const dataReader = reader.fork(header.headerSize);
 
@@ -81,7 +84,7 @@ export const parsePaletteTis = ({
   const paletteName = `${resourceName}.palette`;
   const indicesName = `${resourceName}.indices`;
 
-  const tis: Tis = {
+  const tis: RawTisPalette = {
     resourceName,
     header,
     variant: 'palette',

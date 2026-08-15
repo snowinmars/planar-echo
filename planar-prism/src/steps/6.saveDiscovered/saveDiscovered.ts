@@ -9,8 +9,7 @@ import type { Discovered, StoreDiscoveredType, VariableInfo } from '@/discoverer
 import type { Paths } from '../1.createPaths/index.js';
 import type { CharacterNarrativeProps, ClassId, Maybe } from '@planar/shared';
 import type { AllPsteeJsons } from '../4.biffs2json/types.js';
-import type { CreatureV10, CreatureV11 } from '../4.biffs2json/pstee/cre/types.js';
-type Creature = CreatureV10 | CreatureV11;
+import type { RawCre } from '../4.biffs2json/pstee/cre/parseCres.types.js';
 
 const isNpc = (x: string): boolean => {
   switch (x) {
@@ -223,28 +222,24 @@ const isNpc = (x: string): boolean => {
     default: return false;
   }
 };
-const noQuotes = (x: string): string => {
-  return x.replaceAll('\'', '\\\'');
-};
+const noQuotes = (x: string): string => x.replaceAll('\'', '\\\'');
 // TODO [snow]: this function may have a bug: the nameless one level calculates wrong, because docs do not have rules for that
 export const calculateLevel = (character: Pick<CharacterNarrativeProps, 'levelFirstClass' | 'levelSecondClass' | 'levelThirdClass' | 'theClass'>): number => {
-  if (character.theClass === 'cleric') return character.levelFirstClass;
-  if (character.theClass === 'cleric_mage') return character.levelFirstClass + character.levelSecondClass;
-
-  if (character.theClass === 'fighter') return character.levelFirstClass;
-  if (character.theClass === 'fighter_mage') return character.levelFirstClass + character.levelSecondClass;
-  if (character.theClass === 'fighter_thief') return character.levelFirstClass + character.levelSecondClass;
-
-  if (character.theClass === 'mage') return character.levelFirstClass;
-
-  if (character.theClass === 'no_class') return character.levelFirstClass;
-
-  if (character.theClass === 'thief') return character.levelFirstClass;
-
-  throw new Error(`Unknown class '${character.theClass}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+  switch (character.theClass) {
+    case 'cleric': return character.levelFirstClass;
+    case 'cleric_mage': return character.levelFirstClass + character.levelSecondClass;
+    case 'fighter': return character.levelFirstClass;
+    case 'fighter_mage': return character.levelFirstClass + character.levelSecondClass;
+    case 'fighter_thief': return character.levelFirstClass + character.levelSecondClass;
+    case 'mage': return character.levelFirstClass;
+    case 'no_class': return character.levelFirstClass;
+    case 'thief': return character.levelFirstClass;
+    default: throw new Error(`Unknown class '${character.theClass}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+  }
 };
 
-const detectVariableType = (variable: string, variableInfo: Maybe<VariableInfo>): Maybe<string> => {
+type VariableType = 'string' | 'number' | 'boolean';
+const detectVariableType = (variable: string, variableInfo: Maybe<VariableInfo>): Maybe<VariableType> => {
   if (isNpc(variable)) return 'number';
 
   if (!variableInfo || !variableInfo?.spectre || variableInfo.spectre.size === 0) return nothing();
@@ -277,7 +272,6 @@ const serializeVariables = (variables: string[], variableInfos: Map<string, Vari
   const numberInitialStoreWriter = createWriter();
   const booleanWriter = createWriter();
   const booleanInitialStoreWriter = createWriter();
-  // const stringWriter = createWriter(); // no string are found
 
   numberWriter.writeLine('export type NumberVariableId');
   numberInitialStoreWriter.writeLine('import { NumberVariableId, BooleanVariableId } from "@planar/shared";');
@@ -371,7 +365,7 @@ const serializeKeys = (keys: string[], variableInfos: Map<string, VariableInfo>)
   };
 };
 
-const serializeCharacters = (cres: Creature[]) => {
+const serializeCres = (cres: RawCre[]) => {
   const writer = createWriter();
   const initialStoreWriter = createWriter();
 
@@ -478,7 +472,7 @@ const saveDiscovered = async (discovered: Discovered, paths: Paths, allJsons: Al
   }
 
   // TODO [snow]: Что-то тут не то...
-  const result = serializeCharacters(allJsons.cres);
+  const result = serializeCres(allJsons.cres);
   const storeTargetFile = join(paths.ghostDir.stores, 'character.ts');
   const typesTargetFile = join(paths.ghostDir.sharedEnums, `character.ts`);
   await saveToFile(typesTargetFile, result.types, true);

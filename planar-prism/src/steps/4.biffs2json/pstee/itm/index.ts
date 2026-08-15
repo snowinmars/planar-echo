@@ -1,3 +1,3 @@
-export { parseItm } from './parseItm.js';
+export { parseItms } from './parseItms.js';
 
-export type { ItmV10 } from './types.js';
+export type { RawItmV10 } from './parseItms.types.js';

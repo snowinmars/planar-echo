@@ -1,17 +1,16 @@
 import { isNothing } from '@planar/shared';
-import { BITWISE_IDS } from '../../engineRules.js';
 import { lookupIdsSymbol } from './lookupIdsSymbol.js';
 
-import type { Ids } from '../../../ids/types.js';
-import type { FunctionParam } from '../signatures.types.js';
-import type { BcsArg } from '../../parseBcs.types.js';
+import type { RawIds } from '../../../ids/parseIds.types.js';
+import type { RawBcsArg, RawBcsFunctionParam } from '../../buildBcsContext.types.js';
+import { BITWISE_IDS } from '../../buildBcsContext.const.js';
 
-type BcsIntArg = Extract<BcsArg, { kind: 'int' }>;
+type BcsIntArg = Extract<RawBcsArg, { kind: 'int' }>;
 type TranslateNumberProps = Readonly<{
   resourceName: string;
   value: number;
-  param: FunctionParam;
-  ids: Map<string, Ids>;
+  param: RawBcsFunctionParam;
+  ids: Map<string, RawIds>;
 }>;
 export const translateNumber = ({
   resourceName,

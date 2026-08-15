@@ -1,4 +1,4 @@
-export type ParsedIds = Readonly<{
+export type RawIdsParsedIds = Readonly<{
   ids: Readonly<{
     key: number;
     value: string;

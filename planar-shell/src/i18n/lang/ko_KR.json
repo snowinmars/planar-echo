@@ -14,9 +14,9 @@
       "5": "요구 사항: node.js 및 본인이 소유한 원본 게임 파일."
     },
     "runnerGuard": {
-      "dialogue": "대화 상자 실행",
-      "creature": "생물",
-      "item": "품목",
+      "dlg": "대화 상자 실행",
+      "cre": "생물",
+      "itm": "품목",
       "ghostDir": "게임 폴더",
       "or": "또는",
       "convert": "변환",
@@ -114,11 +114,11 @@
     }
   },
   "run": {
-    "dialoguesLabel": "대화 (총 {{amount}}개)",
-    "creaturesLabel": "생물 (총 {{amount}})",
-    "itemsLabel": "품목 (총 {{amount}})",
+    "dlgsLabel": "대화 (총 {{amount}}개)",
+    "cresLabel": "생물 (총 {{amount}})",
+    "itmsLabel": "품목 (총 {{amount}})",
     "statesLabel": "상태 (총 {{amount}}개)",
-    "creature": {
+    "cre": {
       "talk": "이야기해 봅시다",
       "nameTlk": "이름",
       "tooltipTlk": "툴팁",
@@ -158,7 +158,7 @@
       "scripts": "스크립트",
       "techInfo": "기술 정보"
     },
-    "item": {
+    "itm": {
       "talk": "말하다",
       "unidentifiedDescriptionTlk": "설명 불명확",
       "identifiedDescriptionTlk": "식별된 설명",
@@ -198,13 +198,13 @@
       "saved": "저장됨",
       "failed": "오류 발생 시 F12 키를 누르세요"
     },
-    "dialogueRenderer": {
+    "dlgRenderer": {
       "title": "대화 보기 방식",
       "pstee": "원본처럼",
       "pstee-two-columns": "원본처럼, 두 열로",
       "narrat": "Narrat 스타일"
     },
-    "dialogueHistory": {
+    "dlgHistory": {
       "title": "대화 기록",
       "tlkCacheMaxLines": "메모리의 TLK 줄 수 (LRU)",
       "pageSize": "페이지당 줄 수",
@@ -221,7 +221,7 @@
     "language": {
       "title": "인터페이스 언어"
     },
-    "dialogueMarks": {
+    "dlgMarks": {
       "title": "대화 내 마커",
       "markDisposers": "종료 발화 표시",
       "markExterns": "외부(개발용) 표시"

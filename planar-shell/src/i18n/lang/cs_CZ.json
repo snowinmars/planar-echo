@@ -14,9 +14,9 @@
       "5": "Požadavky: node.js a vlastnictví původních herních souborů."
     },
     "runnerGuard": {
-      "dialogue": "Dialog od",
-      "creature": "Stvoření od",
-      "item": "Položka od",
+      "dlg": "Dialog od",
+      "cre": "Stvoření od",
+      "itm": "Položka od",
       "ghostDir": "Složka hry",
       "or": "nebo",
       "convert": "Převést",
@@ -114,11 +114,11 @@
     }
   },
   "run": {
-    "dialoguesLabel": "Dialog (celkem {{amount}})",
-    "creaturesLabel": "Stvoření (celkem {{amount}})",
-    "itemsLabel": "Položky (celkem {{amount}})",
+    "dlgsLabel": "Dialog (celkem {{amount}})",
+    "cresLabel": "Stvoření (celkem {{amount}})",
+    "itmsLabel": "Položky (celkem {{amount}})",
     "statesLabel": "Stav (celkem {{amount}})",
-    "creature": {
+    "cre": {
       "talk": "Pojďme si promluvit",
       "nameTlk": "Jméno",
       "tooltipTlk": "Nápověda",
@@ -158,7 +158,7 @@
       "scripts": "Skripty",
       "techInfo": "Technické informace"
     },
-    "item": {
+    "itm": {
       "talk": "Mluvit",
       "unidentifiedDescriptionTlk": "Neidentifikovaný popis",
       "identifiedDescriptionTlk": "Identifikovaný popis",
@@ -198,13 +198,13 @@
       "saved": "Uloženo",
       "failed": "Chyba, viz F12"
     },
-    "dialogueRenderer": {
+    "dlgRenderer": {
       "title": "Zobrazení dialogu",
       "pstee": "Jako v originálu",
       "pstee-two-columns": "Jako v originálu, ale ve dvou sloupcích",
       "narrat": "Podobné Narrat"
     },
-    "dialogueHistory": {
+    "dlgHistory": {
       "title": "Historie dialogů",
       "tlkCacheMaxLines": "Řádků TLK v paměti (LRU)",
       "pageSize": "Řádků na stránku",
@@ -221,7 +221,7 @@
     "language": {
       "title": "Jazyk rozhraní"
     },
-    "dialogueMarks": {
+    "dlgMarks": {
       "title": "Značky v dialozích",
       "markDisposers": "Označit ukončovací repliky",
       "markExterns": "Označit externí (pro vývojáře)"

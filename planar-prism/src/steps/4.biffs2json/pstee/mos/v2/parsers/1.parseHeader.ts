@@ -1,9 +1,9 @@
-import { MOS_V2_HEADER_SIZE } from '../../parseMos.types.js';
+import { MOS_V2_HEADER_SIZE } from '../../parseMoss.const.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { MosV2Header } from './1.parseHeader.types.js';
+import type { RawMosV2Header } from './1.parseHeader.types.js';
 
-export const parseHeader = (reader: BufferReader, resourceName: string): MosV2Header => {
+export const parseHeader = (reader: BufferReader, resourceName: string): RawMosV2Header => {
   const width = reader.uint();
   const height = reader.uint();
   const blockCount = reader.uint();

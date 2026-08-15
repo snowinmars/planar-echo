@@ -1,1 +1,1 @@
-export { translateScript } from './translateScript.js';
+export { translateRawBcs } from './translateRawBcs.js';

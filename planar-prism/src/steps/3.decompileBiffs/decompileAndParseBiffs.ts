@@ -15,7 +15,7 @@ import type {
 } from './types.js';
 import logger from '@/shared/logger.js';
 
-const detectDecompiledItemType = (extension: string): DecompiledBiffType => {
+const detectDecompiledBiffType = (extension: string): DecompiledBiffType => {
   switch (extension) {
     case '.2da': return '2da';
     case '.are': return 'are';
@@ -48,11 +48,11 @@ const detectDecompiledItemType = (extension: string): DecompiledBiffType => {
     case '.wbm': return 'wbm';
     case '.wed': return 'wed';
     case '.wmp': return 'wmp';
-    default: throw new Error(`Cannot parse DecompiledItemType from extension '${extension}'`);
+    default: throw new Error(`Cannot parse decompiled biff type from extension '${extension}'`);
   }
 };
 const decompileBiffsRegex = /\[(.*?)\] created from \[(.*?)\]/;
-const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => {
+const parseDecompiledBiff = (line: string, i: number): Maybe<DecompiledBiff> => {
   const noMatches = line.startsWith('No matches for');
   if (noMatches) logger.warn(`It may be ok, but: '${line}'`);
 
@@ -63,7 +63,7 @@ const parseDecompiledItem = (line: string, i: number): Maybe<DecompiledBiff> => 
   const resourceName = basename(normalize(matches[1]!.trim()));
   const fromBiffParent = basename(dirname(normalize(matches[2]!.trim())));
   const fromBiffResourceName = fromBiffParent + '/' + basename(normalize(matches[2]!.trim()));
-  const type = detectDecompiledItemType(extname(resourceName) || resourceName); // there is a filename '.bcs'
+  const type = detectDecompiledBiffType(extname(resourceName) || resourceName); // there is a filename '.bcs'
 
   return { resourceName, fromBiffResourceName, type };
 };
@@ -79,7 +79,7 @@ const decompileAndParseBiffs = async (props: DecompileBiffsProps, reportProgress
   reportProgress(3);
   // WeiDU on Windows uses MSVC CRT argv wildcard expansion: `.*` becomes `..` and aborts. So use `.+` (same “all resources” intent, no `*` / `?` for the CRT to expand).
   // Prefer --tlkin over --use-lang: WeiDU lowercases lang_dir and then fails to match `ru_RU`/`en_US` folders.
-  const items = await execConsole<DecompiledBiff>(
+  const biffs = await execConsole<DecompiledBiff>(
     {
       file: weiduExeDir,
       args: [
@@ -89,10 +89,10 @@ const decompileAndParseBiffs = async (props: DecompileBiffsProps, reportProgress
         '--biff-get', '.+',
       ],
     },
-    parseDecompiledItem,
+    parseDecompiledBiff,
   );
 
-  const unique = [...new Map(items.map(x => [x.resourceName, x])).values()];
+  const unique = [...new Map(biffs.map(x => [x.resourceName, x])).values()];
 
   return Map.groupBy(unique, x => x.type);
 };

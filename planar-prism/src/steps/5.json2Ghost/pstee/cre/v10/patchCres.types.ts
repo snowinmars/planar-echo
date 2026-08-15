@@ -1,0 +1,130 @@
+import type { RawCreV10, RawCreV11 } from '@/steps/4.biffs2json/pstee/cre/index.js';
+
+type TlkSoundExtension = Readonly<{
+  initialMeetingSoundTlk: string;
+  moraleSoundTlk: string;
+  happySoundTlk: string;
+  unhappyAnnoyedSoundTlk: string;
+  unhappySeriousSoundTlk: string;
+  unhappyBreakingPointSoundTlk: string;
+  leaderSoundTlk: string;
+  tiredSoundTlk: string;
+  boredSoundTlk: string;
+  battleCry1SoundTlk: string;
+  battleCry2SoundTlk: string;
+  battleCry3SoundTlk: string;
+  battleCry4SoundTlk: string;
+  battleCry5SoundTlk: string;
+  attack1SoundTlk: string;
+  attack2SoundTlk: string;
+  attack3SoundTlk: string;
+  attack4SoundTlk: string;
+  damageSoundTlk: string;
+  dyingSoundTlk: string;
+  hurtSoundTlk: string;
+  areaForestSoundTlk: string;
+  areaCitySoundTlk: string;
+  areaDungeonSoundTlk: string;
+  areaDaySoundTlk: string;
+  areaNightSoundTlk: string;
+  selectCommon1SoundTlk: string;
+  selectCommon2SoundTlk: string;
+  selectCommon3SoundTlk: string;
+  selectCommon4SoundTlk: string;
+  selectCommon5SoundTlk: string;
+  selectCommon6SoundTlk: string;
+  selectAction1SoundTlk: string;
+  selectAction2SoundTlk: string;
+  selectAction3SoundTlk: string;
+  selectAction4SoundTlk: string;
+  selectAction5SoundTlk: string;
+  selectAction6SoundTlk: string;
+  selectAction7SoundTlk: string;
+  interaction1SoundTlk: string;
+  interaction2SoundTlk: string;
+  interaction3SoundTlk: string;
+  interaction4SoundTlk: string;
+  interaction5SoundTlk: string;
+  insult1SoundTlk: string;
+  insult2SoundTlk: string;
+  insult3SoundTlk: string;
+  compliment1SoundTlk: string;
+  compliment2SoundTlk: string;
+  compliment3SoundTlk: string;
+  special1SoundTlk: string;
+  special2SoundTlk: string;
+  special3SoundTlk: string;
+  reactToDieGeneralSoundTlk: string;
+  reactToDieSpecificSoundTlk: string;
+  responseToCompliment1SoundTlk: string;
+  responseToCompliment2SoundTlk: string;
+  responseToCompliment3SoundTlk: string;
+  responseToInsult1SoundTlk: string;
+  responseToInsult2SoundTlk: string;
+  responseToInsult3SoundTlk: string;
+  dialogHostileSoundTlk: string;
+  dialogDefaultSoundTlk: string;
+  selectRare1SoundTlk: string;
+  selectRare2SoundTlk: string;
+  criticalHitSoundTlk: string;
+  criticalMissSoundTlk: string;
+  targetImmuneSoundTlk: string;
+  inventoryFullSoundTlk: string;
+  pickedPicketSoundTlk: string;
+  hiddenInShadowsSoundTlk: string;
+  spellDisruptedSoundTlk: string;
+  setTrapSoundTlk: string;
+  existance4SoundTlk: string;
+  bioSoundTlk: string;
+  sound1Tlk: string;
+  sound2Tlk: string;
+  sound3Tlk: string;
+  sound4Tlk: string;
+  sound5Tlk: string;
+  sound6Tlk: string;
+  sound7Tlk: string;
+  sound8Tlk: string;
+  sound9Tlk: string;
+  sound10Tlk: string;
+  sound11Tlk: string;
+  sound12Tlk: string;
+  sound13Tlk: string;
+  sound14Tlk: string;
+  sound15Tlk: string;
+  sound16Tlk: string;
+  sound17Tlk: string;
+  sound18Tlk: string;
+  sound19Tlk: string;
+  sound20Tlk: string;
+  sound21Tlk: string;
+  sound22Tlk: string;
+  sound23Tlk: string;
+  sound24Tlk: string;
+  sound25Tlk: string;
+}>;
+
+type TlkNameExtension = Readonly<{
+  nameTlk: string;
+  tooltipTlk: string;
+}>;
+
+export type CreWithTlkV10 = RawCreV10 & Readonly<{
+  header: RawCreV10['header'] & TlkNameExtension;
+}> & Readonly<{
+  header: RawCreV10['header'] & TlkSoundExtension;
+}>;
+export type CreWithTlkV11 = RawCreV11 & Readonly<{
+  header: RawCreV11['header'] & TlkNameExtension;
+}> & Readonly<{
+  header: RawCreV11['header'] & TlkSoundExtension;
+}>;
+
+export type CreWithTlk = CreWithTlkV10 | CreWithTlkV11;
+
+export type CreOut = Readonly<{
+  resourceName: string;
+  skeleton: string;
+  cre: CreWithTlk;
+}>;
+
+export const isCreWithTlkV10 = (x: CreWithTlkV10 | CreWithTlkV11): x is CreWithTlkV10 => x.header.version === 'v1.0';

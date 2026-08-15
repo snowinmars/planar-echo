@@ -7,23 +7,19 @@ import {
   MOS_PALETTE_BLOCK_STRIDE,
   MOS_PALETTE_ENTRIES,
   MOS_PALETTE_ENTRY_BYTES,
-} from '../parseMos.types.js';
+} from '../parseMoss.const.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type {
-  MosV1,
-  ParsedMosV1Artifacts,
-} from '../parseMos.types.js';
+import type { RawMosV1, RawMosV1Artifacts } from './parseMosV1.types.js';
 
 type ParseMosV1Props = Readonly<{
   reader: BufferReader;
   resourceName: string;
 }>;
-
 export const parseMosV1 = ({
   reader,
   resourceName,
-}: ParseMosV1Props): ParsedMosV1Artifacts => {
+}: ParseMosV1Props): RawMosV1Artifacts => {
   const header = parseHeader(reader, resourceName);
 
   // absolute position of MOS V1 Palettes section
@@ -61,7 +57,7 @@ export const parseMosV1 = ({
     indicesChunks: tileData.indicesChunks,
   });
 
-  const mos: MosV1 = {
+  const mos: RawMosV1 = {
     resourceName,
     signature: 'mos',
     variant: 'v1',

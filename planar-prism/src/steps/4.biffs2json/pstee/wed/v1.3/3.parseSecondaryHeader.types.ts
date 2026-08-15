@@ -1,4 +1,4 @@
-export type WedSecondaryHeader = Readonly<{
+export type RawWedSecondaryHeader = Readonly<{
   wallPolygonCount: number;
   polygonsOffset: number;
   verticesOffset: number;

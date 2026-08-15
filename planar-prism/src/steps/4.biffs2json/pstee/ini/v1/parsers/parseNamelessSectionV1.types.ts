@@ -1,6 +1,6 @@
 import type { Maybe } from '@planar/shared';
 
-export type NamelessIniSection = Readonly<{
+export type RawIniNamelessIniSection = Readonly<{
   destare: string;
   point: [number, number];
   state: number;

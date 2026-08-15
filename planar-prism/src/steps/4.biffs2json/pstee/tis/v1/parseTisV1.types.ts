@@ -1,6 +1,6 @@
-import type { ParsePaletteTisResult } from './palette/parsePaletteTis.types.js';
-import type { ParsePvrzTisResult } from './pvrz/parsePvrzTis.types.js';
+import type { RawTisParsePaletteTisResult } from './palette/parsePaletteTis.types.js';
+import type { RawTisParsePvrzTisResult } from './pvrz/parsePvrzTis.types.js';
 
-export type ParsedTisArtifacts = ParsePaletteTisResult | ParsePvrzTisResult;
+export type RawTisArtifacts = RawTisParsePaletteTisResult | RawTisParsePvrzTisResult;
 
-export const isPaletteArtfact = (x: ParsedTisArtifacts): x is ParsePaletteTisResult => x.tis.variant === 'palette';
+export const isPaletteArtfact = (x: RawTisArtifacts): x is RawTisParsePaletteTisResult => x.tis.variant === 'palette';

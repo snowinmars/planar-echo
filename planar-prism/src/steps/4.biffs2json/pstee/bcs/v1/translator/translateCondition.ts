@@ -10,25 +10,22 @@ import { objectArgForScope } from './objectArgForScope.js';
 import { translateNumber } from './translateNumber.js';
 
 import type { Maybe } from '@planar/shared';
-import type { Ids } from '../../../ids/types.js';
+import type { RawIds } from '../../../ids/parseIds.types.js';
+import type { RawBcsTrigger } from '../bytecode/parseTr.types.js';
 import type {
-  BcsArg,
-  BlockFunction,
-  BlockScope,
-} from '../../parseBcs.types.js';
-import type { ParsedBcsTrigger } from '../bytecode.types.js';
-import type {
-  SignatureFunction,
-  Signatures,
-} from '../signatures.types.js';
-import type { VariableWrapper } from '../temps/createVariableWrapper.types.js';
+  RawBcsArg,
+  RawBcsSignatureFunction,
+  RawBcsSignatures,
+} from '../../buildBcsContext.types.js';
+import type { RawBcsVariableWrapper } from '../temps/createVariableWrapper.types.js';
+import type { RawBcsBlockFunction, RawBcsBlockScope } from './translateRawBcsIfBlock.types.js';
 
 type TranslateTriggerArgumentsProps = Readonly<{
   resourceName: string;
-  trigger: ParsedBcsTrigger;
-  functionSignature: SignatureFunction;
-  ids: Map<string, Ids>;
-  variableWrapper: VariableWrapper;
+  trigger: RawBcsTrigger;
+  functionSignature: RawBcsSignatureFunction;
+  ids: Map<string, RawIds>;
+  variableWrapper: RawBcsVariableWrapper;
 }>;
 const translateTriggerArguments = ({
   resourceName,
@@ -36,8 +33,8 @@ const translateTriggerArguments = ({
   functionSignature,
   ids,
   variableWrapper,
-}: TranslateTriggerArgumentsProps): BcsArg[] => {
-  const args: BcsArg[] = [];
+}: TranslateTriggerArgumentsProps): RawBcsArg[] => {
+  const args: RawBcsArg[] = [];
   let numberIndex = 0;
   let stringIndex = 0;
   let objectIndex = 0;
@@ -90,10 +87,10 @@ const translateTriggerArguments = ({
 
 type TranslateTriggerProps = Readonly<{
   resourceName: string;
-  trigger: ParsedBcsTrigger;
-  functionSignature: SignatureFunction;
-  ids: Map<string, Ids>;
-  variableWrapper: VariableWrapper;
+  trigger: RawBcsTrigger;
+  functionSignature: RawBcsSignatureFunction;
+  ids: Map<string, RawIds>;
+  variableWrapper: RawBcsVariableWrapper;
 }>;
 const translateTrigger = ({
   resourceName,
@@ -101,7 +98,7 @@ const translateTrigger = ({
   functionSignature,
   ids,
   variableWrapper,
-}: TranslateTriggerProps): BlockFunction => ({
+}: TranslateTriggerProps): RawBcsBlockFunction => ({
   name: functionSignature.name,
   negated: !!trigger.t2negated,
   args: translateTriggerArguments({
@@ -115,11 +112,11 @@ const translateTrigger = ({
 
 type TranslateTriggerOverrideProps = Readonly<{
   resourceName: string;
-  nextTriggerObject: ParsedBcsTrigger;
-  innerTrigger: ParsedBcsTrigger;
-  signatures: Signatures;
-  ids: Map<string, Ids>;
-  variableWrapper: VariableWrapper;
+  nextTriggerObject: RawBcsTrigger;
+  innerTrigger: RawBcsTrigger;
+  signatures: RawBcsSignatures;
+  ids: Map<string, RawIds>;
+  variableWrapper: RawBcsVariableWrapper;
 }>;
 const translateTriggerOverride = ({
   resourceName,
@@ -128,7 +125,7 @@ const translateTriggerOverride = ({
   signatures,
   ids,
   variableWrapper,
-}: TranslateTriggerOverrideProps): BlockFunction => {
+}: TranslateTriggerOverrideProps): RawBcsBlockFunction => {
   const innerSignature = matchTriggerFunction({
     resourceName,
     trigger: innerTrigger,
@@ -162,19 +159,19 @@ const translateTriggerOverride = ({
 
 type TranslateConditionProps = Readonly<{
   resourceName: string;
-  triggers: ParsedBcsTrigger[];
-  triggerSignatures: Signatures;
-  ids: Map<string, Ids>;
+  triggers: RawBcsTrigger[];
+  triggerSignatures: RawBcsSignatures;
+  ids: Map<string, RawIds>;
 }>;
 export const translateCondition = ({
   resourceName,
   triggers,
   triggerSignatures,
   ids,
-}: TranslateConditionProps): BlockScope => {
+}: TranslateConditionProps): RawBcsBlockScope => {
   const variableWrapper = createVariableWrapper();
   let orCount = 0;
-  let pendingTrigger: Maybe<ParsedBcsTrigger> = nothing();
+  let pendingTrigger: Maybe<RawBcsTrigger> = nothing();
 
   for (const trigger of triggers) {
     const signature = matchTriggerFunction({

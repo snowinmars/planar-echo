@@ -14,7 +14,7 @@ import {
 } from './parsers/index.js';
 
 import type { Maybe } from '@planar/shared';
-import type { Ini } from '../types.js';
+import type { RawIni } from '../parseInis.types.js';
 
 const patchIniSyntax = (content: string, resourceName: string): string => {
   switch (resourceName) {
@@ -33,20 +33,20 @@ type ParseIniV1Props = Readonly<{
 export const parseIniV1 = ({
   buffer,
   resourceName,
-}: ParseIniV1Props): Ini => {
+}: ParseIniV1Props): RawIni => {
   const content = patchIniSyntax(buffer.toString(), resourceName);
   const ini = parseIniFromString(content);
 
-  let nameless: Maybe<Ini['nameless']> = nothing();
-  let namelessvar: Maybe<Ini['namelessvar']> = nothing();
-  let locals: Maybe<Ini['locals']> = nothing();
-  let spawnMain: Maybe<Ini['spawnMain']> = nothing();
-  let general: Maybe<Ini['general']> = nothing();
-  let monsterPlanescape: Maybe<Ini['monsterPlanescape']> = nothing();
-  let sounds: Maybe<Ini['sounds']> = nothing();
-  const numberedSections: Ini['numberedSections'] = [];
-  const groupSections: Ini['groupSections'] = [];
-  const creatureSections: Ini['creatureSections'] = [];
+  let nameless: Maybe<RawIni['nameless']> = nothing();
+  let namelessvar: Maybe<RawIni['namelessvar']> = nothing();
+  let locals: Maybe<RawIni['locals']> = nothing();
+  let spawnMain: Maybe<RawIni['spawnMain']> = nothing();
+  let general: Maybe<RawIni['general']> = nothing();
+  let monsterPlanescape: Maybe<RawIni['monsterPlanescape']> = nothing();
+  let sounds: Maybe<RawIni['sounds']> = nothing();
+  const numberedSections: RawIni['numberedSections'] = [];
+  const groupSections: RawIni['groupSections'] = [];
+  const creatureSections: RawIni['creatureSections'] = [];
 
   for (const section of ini.sections) {
     if (!section.entries.length) continue;

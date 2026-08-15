@@ -1,7 +1,7 @@
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type { SectionEntry } from '../../iniParser/iniParserTypes.js';
+import type { RawIniSectionEntry } from '../../iniParser/iniParserTypes.js';
 
 export const parseDecOrThrow = (s: Maybe<string>): number => {
   if (!s) throw new Error(`Cannot parse base 10 inteter from nothing`);
@@ -45,7 +45,7 @@ type FoundEntry = Readonly<{
   decOrNothing: () => Maybe<number>;
 }>;
 export const findEntry = (
-  entries: SectionEntry[],
+  entries: RawIniSectionEntry[],
   key: string,
 ): FoundEntry => {
   const value = entries.find(e => e.key === key)?.value;

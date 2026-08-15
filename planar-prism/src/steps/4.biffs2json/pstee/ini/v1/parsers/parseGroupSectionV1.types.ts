@@ -1,6 +1,6 @@
 import type { Maybe } from '@planar/shared';
 
-export type GroupIniSection = Readonly<{
+export type RawIniGroupIniSection = Readonly<{
   name: string;
   critters: string[];
   interval: Maybe<number>;

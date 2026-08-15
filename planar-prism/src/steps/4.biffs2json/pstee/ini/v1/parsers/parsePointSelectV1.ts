@@ -1,7 +1,7 @@
 import type { Maybe } from '@planar/shared';
-import type { CreatureIniPointSelect } from './parsePointSelectV1.types.js';
+import type { RawIniCreatureIniPointSelect } from './parsePointSelectV1.types.js';
 
-export const parsePointSelectV1 = (s: Maybe<string>): CreatureIniPointSelect => {
+export const parsePointSelectV1 = (s: Maybe<string>): RawIniCreatureIniPointSelect => {
   if (!s) throw new Error(`Cannot parse PointSelect from nothing`);
 
   switch (s.toLowerCase()) {

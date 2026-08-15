@@ -14,9 +14,9 @@
       "5": "Prérequis : node.js et les fichiers de jeu originaux que vous possédez."
     },
     "runnerGuard": {
-      "dialogue": "Le dialogue depuis",
-      "creature": "Créature depuis",
-      "item": "Objet depuis",
+      "dlg": "Le dialogue depuis",
+      "cre": "Créature depuis",
+      "itm": "Objet depuis",
       "ghostDir": "Dossier du jeu",
       "or": "ou",
       "convert": "Convertir",
@@ -114,11 +114,11 @@
     }
   },
   "run": {
-    "dialoguesLabel": "Dialogue ({{amount}} au total)",
-    "creaturesLabel": "Créature ({{amount}} au total)",
-    "itemsLabel": "Objets ({{amount}} au total)",
+    "dlgsLabel": "Dialogue ({{amount}} au total)",
+    "cresLabel": "Créature ({{amount}} au total)",
+    "itmsLabel": "Objets ({{amount}} au total)",
     "statesLabel": "État ({{amount}} au total)",
-    "creature": {
+    "cre": {
       "talk": "Parlons-en",
       "nameTlk": "Nom",
       "tooltipTlk": "Info-bulle",
@@ -158,7 +158,7 @@
       "scripts": "Scripts",
       "techInfo": "Infos techniques"
     },
-    "item": {
+    "itm": {
       "talk": "Parler",
       "unidentifiedDescriptionTlk": "Description non identifiée",
       "identifiedDescriptionTlk": "Description identifiée",
@@ -198,13 +198,13 @@
       "saved": "Enregistré",
       "failed": "Erreur, appuyez sur F12"
     },
-    "dialogueRenderer": {
+    "dlgRenderer": {
       "title": "Affichage du dialogue",
       "pstee": "Comme dans l'original",
       "pstee-two-columns": "Comme dans l'original, mais sur deux colonnes",
       "narrat": "Style Narrat"
     },
-    "dialogueHistory": {
+    "dlgHistory": {
       "title": "Historique des dialogues",
       "tlkCacheMaxLines": "Lignes TLK en mémoire (LRU)",
       "pageSize": "Lignes par page",
@@ -221,7 +221,7 @@
     "language": {
       "title": "Langue de l'interface"
     },
-    "dialogueMarks": {
+    "dlgMarks": {
       "title": "Marques dans les dialogues",
       "markDisposers": "Marquer les répliques de sortie",
       "markExterns": "Marquer les externes (dev)"

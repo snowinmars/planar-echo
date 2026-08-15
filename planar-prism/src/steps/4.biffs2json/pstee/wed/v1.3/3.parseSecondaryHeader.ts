@@ -1,8 +1,8 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { WedSecondaryHeader } from './3.parseSecondaryHeader.types.js';
+import type { RawWedSecondaryHeader } from './3.parseSecondaryHeader.types.js';
 
-export const parseSecondaryHeader = (reader: BufferReader): WedSecondaryHeader => {
-  const secondaryHeader: WedSecondaryHeader = {
+export const parseSecondaryHeader = (reader: BufferReader): RawWedSecondaryHeader => {
+  const secondaryHeader: RawWedSecondaryHeader = {
     wallPolygonCount: reader.uint(),
     polygonsOffset: reader.uint(),
     verticesOffset: reader.uint(),

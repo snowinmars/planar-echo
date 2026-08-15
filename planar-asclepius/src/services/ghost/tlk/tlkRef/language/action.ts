@@ -41,7 +41,7 @@ export default async ({
   gameLanguage,
   ghostDir,
 }: Command): Promise<Result> => {
-  const tlkFile = join(ghostDir, 'ghost', 'tlk', `dialogue.${gameLanguage}.json`);
+  const tlkFile = join(ghostDir, 'ghost', 'tlk', `${gameLanguage}.json`);
   const found = await fileExists(tlkFile);
   if (!found) {
     return {

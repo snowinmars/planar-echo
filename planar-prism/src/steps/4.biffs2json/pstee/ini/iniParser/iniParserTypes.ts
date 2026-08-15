@@ -3,7 +3,7 @@
 /**
  * Represents an individual entry within a configuration section.
  */
-export type SectionEntry = {
+export type RawIniSectionEntry = {
   /**
    * The offset in the file where the key starts.
    */
@@ -43,7 +43,7 @@ export type SectionEntry = {
 /**
  * Represents a section in the configuration file, which contains multiple entries.
  */
-export type Section = {
+export type RawIniSection = {
   /**
    * The offset in the file where the section starts.
    */
@@ -62,13 +62,13 @@ export type Section = {
   /**
    * An array of entries within this section.
    */
-  entries: SectionEntry[];
+  entries: RawIniSectionEntry[];
 };
 
 /**
  * Represents the overall configuration, containing multiple sections and metadata.
  */
-export type Configuration = {
+export type RawIniConfiguration = {
   /**
    * The symbol used for indentation in the configuration file (e.g., a tab or spaces). If the file has a mixture
    * of spaces and tabs, the last key's indentation will be used.
@@ -83,5 +83,5 @@ export type Configuration = {
   /**
    * An array of sections parsed from the configuration file.
    */
-  sections: Section[];
+  sections: RawIniSection[];
 };

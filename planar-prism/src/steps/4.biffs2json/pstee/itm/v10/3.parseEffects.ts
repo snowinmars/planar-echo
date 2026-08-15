@@ -2,100 +2,100 @@ import { extendMap } from './3.parseEffects.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
 import type {
-  AbstractEffectV10,
-  EffectOpCode0V10,
-  EffectOpCode1V10,
-  EffectOpCode3V10,
-  EffectOpCode6V10,
-  EffectOpCode7V10,
-  EffectOpCode9V10,
-  EffectOpCode10V10,
-  EffectOpCode11V10,
-  EffectOpCode12V10,
-  EffectOpCode15V10,
-  EffectOpCode16V10,
-  EffectOpCode17V10,
-  EffectOpCode18V10,
-  EffectOpCode19V10,
-  EffectOpCode20V10,
-  EffectOpCode21V10,
-  EffectOpCode22V10,
-  EffectOpCode23V10,
-  EffectOpCode24V10,
-  EffectOpCode25V10,
-  EffectOpCode27V10,
-  EffectOpCode28V10,
-  EffectOpCode29V10,
-  EffectOpCode30V10,
-  EffectOpCode33V10,
-  EffectOpCode34V10,
-  EffectOpCode35V10,
-  EffectOpCode36V10,
-  EffectOpCode37V10,
-  EffectOpCode38V10,
-  EffectOpCode41V10,
-  EffectOpCode42V10,
-  EffectOpCode44V10,
-  EffectOpCode45V10,
-  EffectOpCode49V10,
-  EffectOpCode54V10,
-  EffectOpCode59V10,
-  EffectOpCode62V10,
-  EffectOpCode65V10,
-  EffectOpCode66V10,
-  EffectOpCode73V10,
-  EffectOpCode74V10,
-  EffectOpCode83V10,
-  EffectOpCode84V10,
-  EffectOpCode85V10,
-  EffectOpCode86V10,
-  EffectOpCode87V10,
-  EffectOpCode88V10,
-  EffectOpCode89V10,
-  EffectOpCode90V10,
-  EffectOpCode91V10,
-  EffectOpCode92V10,
-  EffectOpCode93V10,
-  EffectOpCode94V10,
-  EffectOpCode97V10,
-  EffectOpCode98V10,
-  EffectOpCode101V10,
-  EffectOpCode104V10,
-  EffectOpCode105V10,
-  EffectOpCode106V10,
-  EffectOpCode109V10,
-  EffectOpCode120V10,
-  EffectOpCode128V10,
-  EffectOpCode138V10,
-  EffectOpCode146V10,
-  EffectOpCode147V10,
-  EffectOpCode148V10,
-  EffectOpCode159V10,
-  EffectOpCode161V10,
-  EffectOpCode166V10,
-  EffectOpCode169V10,
-  EffectOpCode173V10,
-  EffectOpCode174V10,
-  EffectOpCode206V10,
-  EffectOpCode208V10,
-  EffectOpCode215V10,
-  EffectOpCode267V10,
-  EffectOpCode269V10,
-  EffectOpCode278V10,
-  EffectOpCode296V10,
-  EffectOpCode297V10,
-  EffectOpCode301V10,
-  EffectOpCode319V10,
-  EffectOpCode354V10,
-  EffectOpCode355V10,
-  EffectOpCode369V10,
-  EffectOpCode380V10,
-  EffectOpCode383V10,
-  EffectV10,
+  RawItmAbstractEffectV10,
+  RawItmEffectOpCode0V10,
+  RawItmEffectOpCode1V10,
+  RawItmEffectOpCode3V10,
+  RawItmEffectOpCode6V10,
+  RawItmEffectOpCode7V10,
+  RawItmEffectOpCode9V10,
+  RawItmEffectOpCode10V10,
+  RawItmEffectOpCode11V10,
+  RawItmEffectOpCode12V10,
+  RawItmEffectOpCode15V10,
+  RawItmEffectOpCode16V10,
+  RawItmEffectOpCode17V10,
+  RawItmEffectOpCode18V10,
+  RawItmEffectOpCode19V10,
+  RawItmEffectOpCode20V10,
+  RawItmEffectOpCode21V10,
+  RawItmEffectOpCode22V10,
+  RawItmEffectOpCode23V10,
+  RawItmEffectOpCode24V10,
+  RawItmEffectOpCode25V10,
+  RawItmEffectOpCode27V10,
+  RawItmEffectOpCode28V10,
+  RawItmEffectOpCode29V10,
+  RawItmEffectOpCode30V10,
+  RawItmEffectOpCode33V10,
+  RawItmEffectOpCode34V10,
+  RawItmEffectOpCode35V10,
+  RawItmEffectOpCode36V10,
+  RawItmEffectOpCode37V10,
+  RawItmEffectOpCode38V10,
+  RawItmEffectOpCode41V10,
+  RawItmEffectOpCode42V10,
+  RawItmEffectOpCode44V10,
+  RawItmEffectOpCode45V10,
+  RawItmEffectOpCode49V10,
+  RawItmEffectOpCode54V10,
+  RawItmEffectOpCode59V10,
+  RawItmEffectOpCode62V10,
+  RawItmEffectOpCode65V10,
+  RawItmEffectOpCode66V10,
+  RawItmEffectOpCode73V10,
+  RawItmEffectOpCode74V10,
+  RawItmEffectOpCode83V10,
+  RawItmEffectOpCode84V10,
+  RawItmEffectOpCode85V10,
+  RawItmEffectOpCode86V10,
+  RawItmEffectOpCode87V10,
+  RawItmEffectOpCode88V10,
+  RawItmEffectOpCode89V10,
+  RawItmEffectOpCode90V10,
+  RawItmEffectOpCode91V10,
+  RawItmEffectOpCode92V10,
+  RawItmEffectOpCode93V10,
+  RawItmEffectOpCode94V10,
+  RawItmEffectOpCode97V10,
+  RawItmEffectOpCode98V10,
+  RawItmEffectOpCode101V10,
+  RawItmEffectOpCode104V10,
+  RawItmEffectOpCode105V10,
+  RawItmEffectOpCode106V10,
+  RawItmEffectOpCode109V10,
+  RawItmEffectOpCode120V10,
+  RawItmEffectOpCode128V10,
+  RawItmEffectOpCode138V10,
+  RawItmEffectOpCode146V10,
+  RawItmEffectOpCode147V10,
+  RawItmEffectOpCode148V10,
+  RawItmEffectOpCode159V10,
+  RawItmEffectOpCode161V10,
+  RawItmEffectOpCode166V10,
+  RawItmEffectOpCode169V10,
+  RawItmEffectOpCode173V10,
+  RawItmEffectOpCode174V10,
+  RawItmEffectOpCode206V10,
+  RawItmEffectOpCode208V10,
+  RawItmEffectOpCode215V10,
+  RawItmEffectOpCode267V10,
+  RawItmEffectOpCode269V10,
+  RawItmEffectOpCode278V10,
+  RawItmEffectOpCode296V10,
+  RawItmEffectOpCode297V10,
+  RawItmEffectOpCode301V10,
+  RawItmEffectOpCode319V10,
+  RawItmEffectOpCode354V10,
+  RawItmEffectOpCode355V10,
+  RawItmEffectOpCode369V10,
+  RawItmEffectOpCode380V10,
+  RawItmEffectOpCode383V10,
+  RawItmEffectV10,
 } from './3.parseEffects.types.js';
 import { normalizeRef } from '@/shared/numbers.js';
 
-export const parseEffect = (reader: BufferReader): EffectV10 => {
+export const parseEffect = (reader: BufferReader): RawItmEffectV10 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.1.htm
 
   const opcode = reader.map.short(extendMap.opcode.parse);
@@ -115,7 +115,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
   const savingThrowBonus = reader.uint();
   const custom3 = reader.uint();
 
-  const abstractEffect: AbstractEffectV10 = {
+  const abstractEffect: RawItmAbstractEffectV10 = {
     target,
     power, // TODO [snow]: not always, redo to custom
     timingMode,
@@ -132,7 +132,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
   // TODO [snow}: should I write it in binary order?
   switch (opcode) {
     case 'acBonus': {
-      const effect: EffectOpCode0V10 = {
+      const effect: RawItmEffectOpCode0V10 = {
         ...abstractEffect,
         opcode,
         acvalue: custom1,
@@ -142,7 +142,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'modifyAttacksPerRound': {
-      const effect: EffectOpCode1V10 = {
+      const effect: RawItmEffectOpCode1V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -152,7 +152,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'berserk': {
-      const effect: EffectOpCode3V10 = {
+      const effect: RawItmEffectOpCode3V10 = {
         ...abstractEffect,
         opcode,
         berserkType: custom2,
@@ -161,7 +161,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'charismaBonus': {
-      const effect: EffectOpCode6V10 = {
+      const effect: RawItmEffectOpCode6V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -171,7 +171,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'setColor': {
-      const effect: EffectOpCode7V10 = {
+      const effect: RawItmEffectOpCode7V10 = {
         ...abstractEffect,
         opcode,
         color: custom1,
@@ -181,7 +181,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'setColorGlowPulse': {
-      const effect: EffectOpCode9V10 = {
+      const effect: RawItmEffectOpCode9V10 = {
         ...abstractEffect,
         opcode,
         color: custom1,
@@ -192,7 +192,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'consitutionBonus': {
-      const effect: EffectOpCode10V10 = {
+      const effect: RawItmEffectOpCode10V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -202,7 +202,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'curePoison': {
-      const effect: EffectOpCode11V10 = {
+      const effect: RawItmEffectOpCode11V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -210,7 +210,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'damage': {
-      const effect: EffectOpCode12V10 = {
+      const effect: RawItmEffectOpCode12V10 = {
         ...abstractEffect,
         opcode,
         amount: custom1,
@@ -221,7 +221,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'dexterityBonus': {
-      const effect: EffectOpCode15V10 = {
+      const effect: RawItmEffectOpCode15V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -231,7 +231,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'haste': {
-      const effect: EffectOpCode16V10 = {
+      const effect: RawItmEffectOpCode16V10 = {
         ...abstractEffect,
         opcode,
         hasteType: custom2,
@@ -240,7 +240,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'currentHpBonus': {
-      const effect: EffectOpCode17V10 = {
+      const effect: RawItmEffectOpCode17V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -251,7 +251,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'maximumHpBonus': {
-      const effect: EffectOpCode18V10 = {
+      const effect: RawItmEffectOpCode18V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -261,7 +261,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'intelligenceBonus': {
-      const effect: EffectOpCode19V10 = {
+      const effect: RawItmEffectOpCode19V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -271,7 +271,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'invisibility': {
-      const effect: EffectOpCode20V10 = {
+      const effect: RawItmEffectOpCode20V10 = {
         ...abstractEffect,
         opcode,
         invisibilityType: custom2,
@@ -280,7 +280,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'loreBonus': {
-      const effect: EffectOpCode21V10 = {
+      const effect: RawItmEffectOpCode21V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -290,7 +290,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'luckBonus': {
-      const effect: EffectOpCode22V10 = {
+      const effect: RawItmEffectOpCode22V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -300,7 +300,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'moraleBonus': {
-      const effect: EffectOpCode23V10 = {
+      const effect: RawItmEffectOpCode23V10 = {
         ...abstractEffect,
         opcode,
         mode: custom3,
@@ -308,7 +308,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'panic': {
-      const effect: EffectOpCode24V10 = {
+      const effect: RawItmEffectOpCode24V10 = {
         ...abstractEffect,
         opcode,
         panicType: custom2,
@@ -317,7 +317,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'poison': {
-      const effect: EffectOpCode25V10 = {
+      const effect: RawItmEffectOpCode25V10 = {
         ...abstractEffect,
         opcode,
         amount: custom1,
@@ -327,7 +327,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'acidResistanceBonus': {
-      const effect: EffectOpCode27V10 = {
+      const effect: RawItmEffectOpCode27V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -337,7 +337,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'coldResistanceBonus': {
-      const effect: EffectOpCode28V10 = {
+      const effect: RawItmEffectOpCode28V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -347,7 +347,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'electricityResistanceBonus': {
-      const effect: EffectOpCode29V10 = {
+      const effect: RawItmEffectOpCode29V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -357,7 +357,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'fireResistanceBonus': {
-      const effect: EffectOpCode30V10 = {
+      const effect: RawItmEffectOpCode30V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -367,7 +367,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'saveVsDeathBonus': {
-      const effect: EffectOpCode33V10 = {
+      const effect: RawItmEffectOpCode33V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -377,7 +377,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'saveVsWandBonus': {
-      const effect: EffectOpCode34V10 = {
+      const effect: RawItmEffectOpCode34V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -387,7 +387,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'saveVsPolymorphBonus': {
-      const effect: EffectOpCode35V10 = {
+      const effect: RawItmEffectOpCode35V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -397,7 +397,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'saveVsBreathBonus': {
-      const effect: EffectOpCode36V10 = {
+      const effect: RawItmEffectOpCode36V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -407,7 +407,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'saveVsSpellBonus': {
-      const effect: EffectOpCode37V10 = {
+      const effect: RawItmEffectOpCode37V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -417,7 +417,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'silence': {
-      const effect: EffectOpCode38V10 = {
+      const effect: RawItmEffectOpCode38V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -425,7 +425,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'sparkle': {
-      const effect: EffectOpCode41V10 = {
+      const effect: RawItmEffectOpCode41V10 = {
         ...abstractEffect,
         opcode,
         amount: custom1,
@@ -436,7 +436,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'bonusWizardSpell': {
-      const effect: EffectOpCode42V10 = {
+      const effect: RawItmEffectOpCode42V10 = {
         ...abstractEffect,
         opcode,
         amountSpellsToAdd: custom1,
@@ -446,7 +446,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'strengthBonus': {
-      const effect: EffectOpCode44V10 = {
+      const effect: RawItmEffectOpCode44V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -456,7 +456,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'stun': {
-      const effect: EffectOpCode45V10 = {
+      const effect: RawItmEffectOpCode45V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -464,7 +464,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'wisdomBonus': {
-      const effect: EffectOpCode49V10 = {
+      const effect: RawItmEffectOpCode49V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -474,7 +474,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'baseThac0Bonus': {
-      const effect: EffectOpCode54V10 = {
+      const effect: RawItmEffectOpCode54V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -484,7 +484,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'moveSilentlyBonus': {
-      const effect: EffectOpCode59V10 = {
+      const effect: RawItmEffectOpCode59V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -494,7 +494,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'bonusPriestSpell': {
-      const effect: EffectOpCode62V10 = {
+      const effect: RawItmEffectOpCode62V10 = {
         ...abstractEffect,
         opcode,
         amountSpellsToAdd: custom1,
@@ -504,7 +504,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'blur': {
-      const effect: EffectOpCode65V10 = {
+      const effect: RawItmEffectOpCode65V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -512,7 +512,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'translucency': {
-      const effect: EffectOpCode66V10 = {
+      const effect: RawItmEffectOpCode66V10 = {
         ...abstractEffect,
         opcode,
         fadeAmount: custom1,
@@ -522,7 +522,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'attackDamageBonus': {
-      const effect: EffectOpCode73V10 = {
+      const effect: RawItmEffectOpCode73V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -532,7 +532,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'blindness': {
-      const effect: EffectOpCode74V10 = {
+      const effect: RawItmEffectOpCode74V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -540,7 +540,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'immunityToProjectile': {
-      const effect: EffectOpCode83V10 = {
+      const effect: RawItmEffectOpCode83V10 = {
         ...abstractEffect,
         opcode,
         projectile: custom2,
@@ -549,7 +549,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'magicalFireResistanceBonus': {
-      const effect: EffectOpCode84V10 = {
+      const effect: RawItmEffectOpCode84V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -559,7 +559,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'magicalColdResistanceBonus': {
-      const effect: EffectOpCode85V10 = {
+      const effect: RawItmEffectOpCode85V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -569,7 +569,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'slashingResistanceBonus': {
-      const effect: EffectOpCode86V10 = {
+      const effect: RawItmEffectOpCode86V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -579,7 +579,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'crushingResistanceBonus': {
-      const effect: EffectOpCode87V10 = {
+      const effect: RawItmEffectOpCode87V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -589,7 +589,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'piercingResistanceBonus': {
-      const effect: EffectOpCode88V10 = {
+      const effect: RawItmEffectOpCode88V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -599,7 +599,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'missileResistanceBonus': {
-      const effect: EffectOpCode89V10 = {
+      const effect: RawItmEffectOpCode89V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -609,7 +609,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'openLockBonus': {
-      const effect: EffectOpCode90V10 = {
+      const effect: RawItmEffectOpCode90V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -619,7 +619,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'findTrapBonus': {
-      const effect: EffectOpCode91V10 = {
+      const effect: RawItmEffectOpCode91V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -629,7 +629,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'pickPocketBonus': {
-      const effect: EffectOpCode92V10 = {
+      const effect: RawItmEffectOpCode92V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -639,7 +639,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'fatigueBonus': {
-      const effect: EffectOpCode93V10 = {
+      const effect: RawItmEffectOpCode93V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -649,7 +649,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'intoxicationBonus': {
-      const effect: EffectOpCode94V10 = {
+      const effect: RawItmEffectOpCode94V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -659,7 +659,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'exceptionalStrengthBonus': {
-      const effect: EffectOpCode97V10 = {
+      const effect: RawItmEffectOpCode97V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -669,7 +669,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'regeneration': {
-      const effect: EffectOpCode98V10 = {
+      const effect: RawItmEffectOpCode98V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -679,7 +679,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'immunityToEffect': {
-      const effect: EffectOpCode101V10 = {
+      const effect: RawItmEffectOpCode101V10 = {
         ...abstractEffect,
         opcode,
         effect: custom2,
@@ -688,7 +688,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'xpBonus': {
-      const effect: EffectOpCode104V10 = {
+      const effect: RawItmEffectOpCode104V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -698,7 +698,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'removeGold': {
-      const effect: EffectOpCode105V10 = {
+      const effect: RawItmEffectOpCode105V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -708,7 +708,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'moraleBreak': {
-      const effect: EffectOpCode106V10 = {
+      const effect: RawItmEffectOpCode106V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -718,7 +718,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'paralyze': {
-      const effect: EffectOpCode109V10 = {
+      const effect: RawItmEffectOpCode109V10 = {
         ...abstractEffect,
         opcode,
         idsValue: custom1,
@@ -728,7 +728,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'immunityToWeapons': {
-      const effect: EffectOpCode120V10 = {
+      const effect: RawItmEffectOpCode120V10 = {
         ...abstractEffect,
         opcode,
         maximumEnchantment: custom1,
@@ -738,7 +738,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'confusion': {
-      const effect: EffectOpCode128V10 = {
+      const effect: RawItmEffectOpCode128V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -746,7 +746,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'setAnimationSequence': {
-      const effect: EffectOpCode138V10 = {
+      const effect: RawItmEffectOpCode138V10 = {
         ...abstractEffect,
         opcode,
         sequence: custom2,
@@ -755,7 +755,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'castSpell': {
-      const effect: EffectOpCode146V10 = {
+      const effect: RawItmEffectOpCode146V10 = {
         ...abstractEffect,
         opcode,
         castAtLevel: custom1,
@@ -766,7 +766,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'learnSpell': {
-      const effect: EffectOpCode147V10 = {
+      const effect: RawItmEffectOpCode147V10 = {
         ...abstractEffect,
         opcode,
         resource,
@@ -775,7 +775,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'castSpellAtPoint': {
-      const effect: EffectOpCode148V10 = {
+      const effect: RawItmEffectOpCode148V10 = {
         ...abstractEffect,
         opcode,
         castAtLevel: custom1,
@@ -786,7 +786,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'mirrorImageEffect': {
-      const effect: EffectOpCode159V10 = {
+      const effect: RawItmEffectOpCode159V10 = {
         ...abstractEffect,
         opcode,
         imagesCount: custom1,
@@ -795,7 +795,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'removeFear': {
-      const effect: EffectOpCode161V10 = {
+      const effect: RawItmEffectOpCode161V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -803,7 +803,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'magicResistanceBonus': {
-      const effect: EffectOpCode166V10 = {
+      const effect: RawItmEffectOpCode166V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -813,7 +813,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'preventPortraitIcon': {
-      const effect: EffectOpCode169V10 = {
+      const effect: RawItmEffectOpCode169V10 = {
         ...abstractEffect,
         opcode,
         icon: custom2,
@@ -822,7 +822,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'poisonResistanceBonus': {
-      const effect: EffectOpCode173V10 = {
+      const effect: RawItmEffectOpCode173V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -831,7 +831,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'playSound': {
-      const effect: EffectOpCode174V10 = {
+      const effect: RawItmEffectOpCode174V10 = {
         ...abstractEffect,
         opcode,
         resource,
@@ -840,7 +840,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'protectionmFromSpell': {
-      const effect: EffectOpCode206V10 = {
+      const effect: RawItmEffectOpCode206V10 = {
         ...abstractEffect,
         opcode,
         stringRef: normalizeRef(custom1),
@@ -851,7 +851,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'minimumHp': {
-      const effect: EffectOpCode208V10 = {
+      const effect: RawItmEffectOpCode208V10 = {
         ...abstractEffect,
         opcode,
         hpAmount: custom1,
@@ -860,7 +860,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'playVisualEffect': {
-      const effect: EffectOpCode215V10 = {
+      const effect: RawItmEffectOpCode215V10 = {
         ...abstractEffect,
         opcode,
         playwhere: custom2,
@@ -870,7 +870,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'disableDisplayString': {
-      const effect: EffectOpCode267V10 = {
+      const effect: RawItmEffectOpCode267V10 = {
         ...abstractEffect,
         opcode,
         stringRef: normalizeRef(custom1),
@@ -880,7 +880,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'shakeScreen': {
-      const effect: EffectOpCode269V10 = {
+      const effect: RawItmEffectOpCode269V10 = {
         ...abstractEffect,
         opcode,
         strength: custom1,
@@ -889,7 +889,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'thac0Bonus': {
-      const effect: EffectOpCode278V10 = {
+      const effect: RawItmEffectOpCode278V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -899,7 +899,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'immunityToSpecificAnimation': {
-      const effect: EffectOpCode296V10 = {
+      const effect: RawItmEffectOpCode296V10 = {
         ...abstractEffect,
         opcode,
         resource,
@@ -908,7 +908,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'immunityToTurnUndead': {
-      const effect: EffectOpCode297V10 = {
+      const effect: RawItmEffectOpCode297V10 = {
         ...abstractEffect,
         opcode,
         statValue: custom2,
@@ -917,7 +917,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'criticalHitBonus': {
-      const effect: EffectOpCode301V10 = {
+      const effect: RawItmEffectOpCode301V10 = {
         ...abstractEffect,
         opcode,
         value: custom1,
@@ -927,7 +927,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'restrictItem': {
-      const effect: EffectOpCode319V10 = {
+      const effect: RawItmEffectOpCode319V10 = {
         ...abstractEffect,
         opcode,
         idsTarget: custom2,
@@ -937,7 +937,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'flashScreen': {
-      const effect: EffectOpCode354V10 = {
+      const effect: RawItmEffectOpCode354V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -945,7 +945,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'soulExodus': {
-      const effect: EffectOpCode355V10 = {
+      const effect: RawItmEffectOpCode355V10 = {
         ...abstractEffect,
         opcode,
         spe: custom3,
@@ -953,7 +953,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'playBamFile': {
-      const effect: EffectOpCode369V10 = {
+      const effect: RawItmEffectOpCode369V10 = {
         ...abstractEffect,
         opcode,
         color: custom1,
@@ -964,7 +964,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'embalm': {
-      const effect: EffectOpCode380V10 = {
+      const effect: RawItmEffectOpCode380V10 = {
         ...abstractEffect,
         opcode,
         embalmingType: custom2,
@@ -974,7 +974,7 @@ export const parseEffect = (reader: BufferReader): EffectV10 => {
       return effect;
     }
     case 'hitPointTransfer': {
-      const effect: EffectOpCode383V10 = {
+      const effect: RawItmEffectOpCode383V10 = {
         ...abstractEffect,
         opcode,
         amount: custom1,
@@ -994,7 +994,7 @@ type ParseFeatureBlocksProps = Readonly<{
 export const parseEffects = ({
   reader,
   count,
-}: ParseFeatureBlocksProps): EffectV10[] => {
+}: ParseFeatureBlocksProps): RawItmEffectV10[] => {
   const r = reader.fork();
-  return Array.from<never, EffectV10>({ length: count }, () => parseEffect(r));
+  return Array.from<never, RawItmEffectV10>({ length: count }, () => parseEffect(r));
 };

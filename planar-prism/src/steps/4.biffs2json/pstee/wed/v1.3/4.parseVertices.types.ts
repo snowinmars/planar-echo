@@ -1,4 +1,4 @@
-export type WedVertex = Readonly<{
+export type RawWedVertex = Readonly<{
   x: number;
   y: number;
 }>;

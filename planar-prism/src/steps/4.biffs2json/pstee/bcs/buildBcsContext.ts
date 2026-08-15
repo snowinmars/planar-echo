@@ -1,7 +1,7 @@
 import {
   BCS_REQUIRED_IDS,
   PST_STRING_PACKS_BY_ID,
-} from './engineRules.js';
+} from './buildBcsContext.const.js';
 import { just, nothing, sleep } from '@planar/shared';
 import {
   entryExists,
@@ -9,14 +9,14 @@ import {
   saveToFile,
 } from '@/shared/customFs.js';
 
-import type { Ids } from '../ids/types.js';
-import type { BcsContext } from './buildBcsContext.types.js';
 import type {
-  FunctionParam,
-  ParamType,
-  SignatureFunction,
-  Signatures,
-} from './v1/signatures.types.js';
+  RawBcsContext,
+  RawBcsFunctionParam,
+  RawBcsParamType,
+  RawBcsSignatureFunction,
+  RawBcsSignatures,
+} from './buildBcsContext.types.js';
+import type { RawIds } from '../ids/index.js';
 
 /**
  * Stamp each signature string parameter (s) with how it is stored in BCS bytecode.
@@ -31,7 +31,7 @@ import type {
  * say which functions pack strings this way; that ruleset is hardcoded per function id
  * (Near Infinity: ScriptInfo.functionConcatMap + Parameter.isCombinedString).
  *
- * I resolve that once when parsing IDS tails into FunctionParam[], so translation
+ * I resolve that once when parsing IDS tails into RawBcsFunctionParam[], so translation
  * can split slots without re-deriving masks.
  *
  * PST EE v1: only area6 packing (no colon-separated slots). Queues live in
@@ -52,7 +52,7 @@ import type {
  * - IESDP BCS overview:
  *   https://gibberlings3.ithacus.com/iesdp/file_formats/ie_formats/bcs_v1.htm
  */
-const assignStringPacks = (id: number, parameters: FunctionParam[]): FunctionParam[] => {
+const assignStringPacks = (id: number, parameters: RawBcsFunctionParam[]): RawBcsFunctionParam[] => {
   const packs = PST_STRING_PACKS_BY_ID.get(id);
 
   let index = 0;
@@ -71,7 +71,7 @@ const assignStringPacks = (id: number, parameters: FunctionParam[]): FunctionPar
     });
 };
 
-const validateType = (x: string): ParamType => {
+const validateType = (x: string): RawBcsParamType => {
   switch (x) {
     case 'a':
     case 't':
@@ -80,11 +80,11 @@ const validateType = (x: string): ParamType => {
     case 'p':
     case 's':
       return x;
-    default: throw new Error(`Out of range ParamType for bcs function: '${x}'`);
+    default: throw new Error(`Out of range RawBcsParamType for bcs function: '${x}'`);
   }
 };
 
-const parseParameters = (param: string, id: number): FunctionParam[] => {
+const parseParameters = (param: string, id: number): RawBcsFunctionParam[] => {
   const result = param
     .split(',')
     .map((arg) => {
@@ -98,7 +98,7 @@ const parseParameters = (param: string, id: number): FunctionParam[] => {
 
       const type = validateType(rawType);
 
-      const parameter: FunctionParam = {
+      const parameter: RawBcsFunctionParam = {
         type,
         tag,
         idsRef: idsRef ? idsRef : nothing(),
@@ -116,7 +116,7 @@ const parseSignature = (
   id: number,
   tail: string,
   resourceName: string,
-): SignatureFunction => {
+): RawBcsSignatureFunction => {
   const match = parseSignatureRegex.exec(tail);
   if (!match) throw new Error(`Wrong signature syntax at '${tail}' (id='${id}', resource='${resourceName}')`);
 
@@ -133,10 +133,10 @@ const parseSignature = (
   };
 };
 
-const parseSignatures = (ids: Ids): Signatures => {
+const parseSignatures = (ids: RawIds): RawBcsSignatures => {
   // See https://github.com/NearInfinityBrowser/NearInfinity/blob/master/src/org/infinity/resource/bcs/ScriptInfo.java
   // about what is going on
-  const byId = new Map<number, SignatureFunction[]>();
+  const byId = new Map<number, RawBcsSignatureFunction[]>();
 
   for (const [id, tails] of ids.entries) {
     for (const tail of tails) {
@@ -171,7 +171,7 @@ const XOR_KEY_LENGTH = 64;
 const isXorKey = (value: unknown): value is number[] =>
   Array.isArray(value)
   && value.length === XOR_KEY_LENGTH
-  && value.every(item => typeof item === 'number' && Number.isFinite(item));
+  && value.every(x => typeof x === 'number' && Number.isFinite(x));
 
 const XOR_KEY_FETCH_ATTEMPTS = 3;
 const XOR_KEY_FETCH_RETRY_DELAY_MS = 1000;
@@ -214,9 +214,9 @@ const loadXorKey = async (cachePath: string): Promise<number[]> => {
 };
 
 export const buildBcsContext = async (
-  ids: Map<string, Ids>,
+  ids: Map<string, RawIds>,
   xorKeyCachePath: string,
-): Promise<BcsContext> => {
+): Promise<RawBcsContext> => {
   for (const must of BCS_REQUIRED_IDS) if (!ids.has(must)) throw new Error(`BCS parser requires '${must}' to be in ids map`);
 
   const xorKey = await loadXorKey(xorKeyCachePath);

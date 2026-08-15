@@ -8,14 +8,13 @@ import {
 } from '../../shared/tisCommon.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { PvrzTisTile, Tis } from '../../parseTis.types.js';
-import type { RgbaImage } from '../../../pvrz/decode/index.js';
-import type { TisHeader } from '../1.parseHeader.types.js';
-import type { ParsePvrzTisResult } from './parsePvrzTis.types.js';
+import type { RawPvrRgbaImage } from '../../../pvrz/decode/index.js';
+import type { RawTisHeader } from '../1.parseHeader.types.js';
+import type { RawTisPvrzParseResult, RawTisPvrz, RawTisTile } from './parsePvrzTis.types.js';
 
 const blackTile = (): Buffer => Buffer.alloc(TILE_DIMENSION * TILE_DIMENSION * 4, 0);
 
-const cropTile = (image: RgbaImage, x: number, y: number): Buffer => {
+const cropTile = (image: RawPvrRgbaImage, x: number, y: number): Buffer => {
   const out = Buffer.alloc(TILE_DIMENSION * TILE_DIMENSION * 4);
   for (let row = 0; row < TILE_DIMENSION; row = row + 1) {
     const srcY = y + row;
@@ -37,9 +36,9 @@ const cropTile = (image: RgbaImage, x: number, y: number): Buffer => {
 type ParsePvrzTisProps = Readonly<{
   reader: BufferReader;
   resourceName: string;
-  header: TisHeader;
+  header: RawTisHeader;
   wedWidth: number | undefined;
-  pvrzRgbaIndex: Map<string, RgbaImage>;
+  pvrzRgbaIndex: Map<string, RawPvrRgbaImage>;
 }>;
 export const parsePvrzTis = ({
   reader,
@@ -47,13 +46,13 @@ export const parsePvrzTis = ({
   header,
   wedWidth,
   pvrzRgbaIndex,
-}: ParsePvrzTisProps): ParsePvrzTisResult => {
+}: ParsePvrzTisProps): RawTisPvrzParseResult => {
   if (header.tileSize !== PVRZ_TILE_SIZE) throw new Error(`Expected pvrz tile size '${PVRZ_TILE_SIZE}', got '${header.tileSize}' for resource '${resourceName}'`);
 
   const { columns, source } = calcAtlasColumns(header.tileCount, wedWidth);
   const rows = calcAtlasRows(header.tileCount, columns);
   const atlas = createAtlasBuffer(columns, rows);
-  const tiles: PvrzTisTile[] = [];
+  const tiles: RawTisTile[] = [];
 
   const dataReader = reader.fork(header.headerSize);
 
@@ -86,7 +85,7 @@ export const parsePvrzTis = ({
 
   const imageName = `${resourceName}.png`;
 
-  const tis: Tis = {
+  const tis: RawTisPvrz = {
     resourceName,
     header,
     variant: 'pvrz',

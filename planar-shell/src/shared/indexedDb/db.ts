@@ -5,9 +5,9 @@ import { deleteDB } from 'idb';
 import type { IDBPDatabase } from 'idb';
 
 const storeNames = [
-  'creatures',
-  'dialogues',
-  'items',
+  'cres',
+  'dlgs',
+  'itms',
   'narrative',
   'characters',
 ] as const;

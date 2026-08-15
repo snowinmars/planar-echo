@@ -1,3 +1,3 @@
-export { parseWed, findWedForTis } from './parseWed.js';
+export { parseWeds, findWedForTis } from './parseWeds.js';
 
-export type { Wed } from './types.js';
+export type { RawWed } from './parseWeds.types.js';

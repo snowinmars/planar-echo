@@ -21,7 +21,7 @@ export const extendMap = {
   flags: extend(flagsV10),
 };
 
-export type WedPolygon = Readonly<{
+export type RawWedPolygon = Readonly<{
   vertexStartingIndex: number;
   vertexCount: number;
   flags: FlagsV10[];

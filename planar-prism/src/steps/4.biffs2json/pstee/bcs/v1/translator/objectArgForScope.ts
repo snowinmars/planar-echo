@@ -1,22 +1,22 @@
 import { translateObject } from './translateObject.js';
 
-import type { Ids } from '../../../ids/types.js';
-import type { BcsArg } from '../../parseBcs.types.js';
-import type { ParsedBcsObject } from '../bytecode.types.js';
-import type { VariableWrapper } from '../temps/createVariableWrapper.types.js';
+import type { RawIds } from '../../../ids/parseIds.types.js';
+import type { RawBcsObject } from '../bytecode/parseOb.types.js';
+import type { RawBcsVariableWrapper } from '../temps/createVariableWrapper.types.js';
+import type { RawBcsArg } from '../../buildBcsContext.types.js';
 
 type ObjectArgForScopeProps = Readonly<{
   resourceName: string;
-  object: ParsedBcsObject;
-  ids: Map<string, Ids>;
-  variableWrapper: VariableWrapper;
+  object: RawBcsObject;
+  ids: Map<string, RawIds>;
+  variableWrapper: RawBcsVariableWrapper;
 }>;
 export const objectArgForScope = ({
   resourceName,
   object,
   ids,
   variableWrapper,
-}: ObjectArgForScopeProps): BcsArg => {
+}: ObjectArgForScopeProps): RawBcsArg => {
   const argument = translateObject({
     resourceName,
     object,

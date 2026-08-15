@@ -1,4 +1,4 @@
-export type MosV2Header = Readonly<{
+export type RawMosV2Header = Readonly<{
   signature: 'mos';
   version: 'v2';
   width: number;

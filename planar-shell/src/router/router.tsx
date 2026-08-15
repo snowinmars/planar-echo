@@ -9,9 +9,9 @@ const Landing = lazy(() => import('@/components/Landing'));
 const Details = lazy(() => import('@/components/Details'));
 const Convert = lazy(() => import('@/components/Convert'));
 const Settings = lazy(() => import('@/components/Settings'));
-const Dialogue = lazy(() => import('@/components/runners/Dialogue'));
-const Creature = lazy(() => import('@/components/runners/Creature'));
-const Item = lazy(() => import('@/components/runners/Item'));
+const Dlg = lazy(() => import('@/components/runners/Dlg'));
+const Cre = lazy(() => import('@/components/runners/Cre'));
+const Itm = lazy(() => import('@/components/runners/Itm'));
 const Stores = lazy(() => import('@/components/Stores'));
 
 // https://github.com/remix-run/react-router/issues/12474#issuecomment-2538281149
@@ -33,14 +33,14 @@ const router = createBrowserRouter([{
     path: '/convert',
     element: <HelloDevs><Convert /></HelloDevs>,
   }, {
-    path: '/dialogue',
-    element: <HelloDevs><Dialogue /></HelloDevs>,
+    path: '/dlg',
+    element: <HelloDevs><Dlg /></HelloDevs>,
   }, {
-    path: '/creature',
-    element: <HelloDevs><Creature /></HelloDevs>,
+    path: '/cre',
+    element: <HelloDevs><Cre /></HelloDevs>,
   }, {
-    path: '/item',
-    element: <HelloDevs><Item /></HelloDevs>,
+    path: '/itm',
+    element: <HelloDevs><Itm /></HelloDevs>,
   }, {
     path: '/settings',
     element: <HelloDevs><Settings /></HelloDevs>,

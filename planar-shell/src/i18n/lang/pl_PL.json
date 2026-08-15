@@ -14,9 +14,9 @@
       "5": "Wymagania: node.js i oryginalne pliki gry, które posiadasz."
     },
     "runnerGuard": {
-      "dialogue": "Dialog z",
-      "creature": "Istota z",
-      "item": "Przedmiot z",
+      "dlg": "Dialog z",
+      "cre": "Istota z",
+      "itm": "Przedmiot z",
       "ghostDir": "Folder gry",
       "or": "lub",
       "convert": "Konwertuj",
@@ -114,11 +114,11 @@
     }
   },
   "run": {
-    "dialoguesLabel": "Dialog (łącznie {{amount}})",
-    "creaturesLabel": "Istota (łącznie {{amount}})",
-    "itemsLabel": "Przedmiot (łącznie {{amount}})",
+    "dlgsLabel": "Dialog (łącznie {{amount}})",
+    "cresLabel": "Istota (łącznie {{amount}})",
+    "itmsLabel": "Przedmiot (łącznie {{amount}})",
     "statesLabel": "Stan (łącznie {{amount}})",
-    "creature": {
+    "cre": {
       "talk": "Porozmawiajmy",
       "nameTlk": "Nazwa",
       "tooltipTlk": "Podpowiedź",
@@ -158,7 +158,7 @@
       "scripts": "Skrypty",
       "techInfo": "Informacje techniczne"
     },
-    "item": {
+    "itm": {
       "talk": "Mówić",
       "unidentifiedDescriptionTlk": "Niezidentyfikowany opis",
       "identifiedDescriptionTlk": "Zidentyfikowany opis",
@@ -198,13 +198,13 @@
       "saved": "Zapisano",
       "failed": "Błąd, patrz F12"
     },
-    "dialogueRenderer": {
+    "dlgRenderer": {
       "title": "Widok dialogu",
       "pstee": "Jak w oryginale",
       "pstee-two-columns": "Jak w oryginale, ale w dwóch kolumnach",
       "narrat": "Podobny do Narrat"
     },
-    "dialogueHistory": {
+    "dlgHistory": {
       "title": "Historia dialogów",
       "tlkCacheMaxLines": "Wierszy TLK w pamięci (LRU)",
       "pageSize": "Wierszy na stronę",
@@ -221,7 +221,7 @@
     "language": {
       "title": "Język interfejsu"
     },
-    "dialogueMarks": {
+    "dlgMarks": {
       "title": "Znaczniki w dialogach",
       "markDisposers": "Oznaczaj zakończenia wątków",
       "markExterns": "Oznaczaj zewnętrzne (dla deweloperów)"

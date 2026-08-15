@@ -1,6 +1,6 @@
 // https://github.com/PMarinov1994/cool-ini-parser-js/blob/master/src/parser.ts
 
-import type { Section, SectionEntry, Configuration } from './iniParserTypes.js';
+import type { RawIniSection, RawIniSectionEntry, RawIniConfiguration } from './iniParserTypes.js';
 
 const SYMBOL_SECTION_START = '[';
 const SYMBOL_SECTION_END = ']';
@@ -30,18 +30,18 @@ const INVALID_PARSE_END_STATE: State[] = [
 ];
 
 /**
- * Parses a string containing INI-formatted content and converts it into a `Configuration` object.
+ * Parses a string containing INI-formatted content and converts it into a `RawIniConfiguration` object.
  *
  * @param content - The string containing the INI-formatted data to be parsed.
- * @returns A `Configuration` object representing the parsed INI content, including sections and key-value pairs.
+ * @returns A `RawIniConfiguration` object representing the parsed INI content, including sections and key-value pairs.
  */
-export const parseIniFromString = (content: string): Configuration => {
-  const sections: Section[] = [];
+export const parseIniFromString = (content: string): RawIniConfiguration => {
+  const sections: RawIniSection[] = [];
 
   let currState: State = State.NEW_LINE_START;
 
-  let currSection: Section | undefined = undefined;
-  let currSectionEntry: SectionEntry | undefined = undefined;
+  let currSection: RawIniSection | undefined = undefined;
+  let currSectionEntry: RawIniSectionEntry | undefined = undefined;
 
   let hasValueStarted = false; // Skip the spaces and tabs before the value
   let isWaitingForValue = false;
@@ -68,7 +68,7 @@ export const parseIniFromString = (content: string): Configuration => {
       }
     }
 
-    switch (currState as State) {
+    switch (currState) {
       case State.WAIT_SECTION_START: {
         if (currChar !== SYMBOL_SECTION_START)
           throw new Error(`Error: Invalid section start symbol '${currChar}'!`);
@@ -99,7 +99,7 @@ export const parseIniFromString = (content: string): Configuration => {
           throw new Error('WrongStateError');
 
         if (currChar === '\n') {
-          throw new Error(`Error: Section cannot be multiline`);
+          throw new Error(`Error: RawIniSection cannot be multiline`);
         }
 
         if (currChar === SYMBOL_SECTION_END) {
@@ -107,7 +107,7 @@ export const parseIniFromString = (content: string): Configuration => {
           currState = State.WAIT_SECTION_END_NEWLINE;
         }
         else if (SECTION_NAME_INVALID_SYMBOLS.includes(currChar)) {
-          throw new Error(`Error: Section name cannot contain '${currChar}' symbol!`);
+          throw new Error(`Error: RawIniSection name cannot contain '${currChar}' symbol!`);
         }
         else {
           currSection.name += currChar;

@@ -1,6 +1,6 @@
 import type { Maybe } from '@planar/shared';
 
-export type MonsterPlanescapeIniSection = Readonly<{
+export type RawIniMonsterPlanescapeIniSection = Readonly<{
   attack1: Maybe<string>;
   attack2: Maybe<string>;
   stance2stand: Maybe<string>;

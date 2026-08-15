@@ -99,7 +99,7 @@ export const extendMap = {
   savingThrowType: extend(savingThrowTypeV10),
 };
 
-export type EffectV10 = Readonly<{
+export type RawCreEffectV10 = Readonly<{
   type: number;
   target: TargetV10;
   power: number;

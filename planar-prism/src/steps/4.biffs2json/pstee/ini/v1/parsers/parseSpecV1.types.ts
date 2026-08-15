@@ -1,4 +1,4 @@
-export type CreatureIniSpec = Readonly<{
+export type RawIniCreatureIniSpec = Readonly<{
   ea: number;
   faction: number;
   team: number;

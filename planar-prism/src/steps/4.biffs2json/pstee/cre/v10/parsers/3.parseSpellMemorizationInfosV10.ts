@@ -2,10 +2,10 @@ import { extendMap } from './3.parseSpellMemorizationInfosV10.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
 import type {
-  SpellMemorizationInfoV10,
+  RawCreSpellMemorizationInfoV10,
 } from './3.parseSpellMemorizationInfosV10.types.js';
 
-const parse = (reader: BufferReader): SpellMemorizationInfoV10 => {
+const parse = (reader: BufferReader): RawCreSpellMemorizationInfoV10 => {
   const spellLevel = reader.short();
   const memorizableSpellsCount = reader.short();
   const memorizableSpellsAfterEffectsCount = reader.short();
@@ -30,9 +30,9 @@ type ParseSpellMemorizationInfosV10Props = Readonly<{
 export const parseSpellMemorizationInfosV10 = ({
   reader,
   count,
-}: ParseSpellMemorizationInfosV10Props): SpellMemorizationInfoV10[] => {
+}: ParseSpellMemorizationInfosV10Props): RawCreSpellMemorizationInfoV10[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
   const r = reader.fork();
-  return Array.from<never, SpellMemorizationInfoV10>({ length: count }, () => parse(r));
+  return Array.from<never, RawCreSpellMemorizationInfoV10>({ length: count }, () => parse(r));
 };

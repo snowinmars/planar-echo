@@ -8,21 +8,22 @@ import { splitHalfOfAreaStrings } from './splitHalfOfAreaStrings.js';
 import { objectArgForScope } from './objectArgForScope.js';
 import { translateNumber } from './translateNumber.js';
 
-import type { Ids } from '../../../ids/types.js';
-import type { BcsArg, BlockFunction } from '../../parseBcs.types.js';
-import type { ParsedBcsAction } from '../bytecode.types.js';
+import type { RawIds } from '../../../ids/parseIds.types.js';
+import type { RawBcsAction } from '../bytecode/parseAc.types.js';
 import type {
-  SignatureFunction,
-  Signatures,
-} from '../signatures.types.js';
-import type { VariableWrapper } from '../temps/createVariableWrapper.types.js';
+  RawBcsArg,
+  RawBcsSignatureFunction,
+  RawBcsSignatures,
+} from '../../buildBcsContext.types.js';
+import type { RawBcsVariableWrapper } from '../temps/createVariableWrapper.types.js';
+import type { RawBcsBlockFunction } from './translateRawBcsIfBlock.types.js';
 
 type TranslateArgumentsProps = Readonly<{
   resourceName: string;
-  action: ParsedBcsAction;
-  functionSignature: SignatureFunction;
-  ids: Map<string, Ids>;
-  variableWrapper: VariableWrapper;
+  action: RawBcsAction;
+  functionSignature: RawBcsSignatureFunction;
+  ids: Map<string, RawIds>;
+  variableWrapper: RawBcsVariableWrapper;
   startObjectIndex: number;
 }>;
 const translateArguments = ({
@@ -32,8 +33,8 @@ const translateArguments = ({
   ids,
   variableWrapper,
   startObjectIndex,
-}: TranslateArgumentsProps): BcsArg[] => {
-  const args: BcsArg[] = [];
+}: TranslateArgumentsProps): RawBcsArg[] => {
+  const args: RawBcsArg[] = [];
   let numberIndex = 0;
   let objectIndex = startObjectIndex;
   let stringIndex = 0;
@@ -96,10 +97,10 @@ const translateArguments = ({
 
 type TranslateActionProps = Readonly<{
   resourceName: string;
-  action: ParsedBcsAction;
-  signatures: Signatures;
-  ids: Map<string, Ids>;
-  variableWrapper: VariableWrapper;
+  action: RawBcsAction;
+  signatures: RawBcsSignatures;
+  ids: Map<string, RawIds>;
+  variableWrapper: RawBcsVariableWrapper;
 }>;
 export const translateAction = ({
   resourceName,
@@ -107,7 +108,7 @@ export const translateAction = ({
   signatures,
   ids,
   variableWrapper,
-}: TranslateActionProps): BlockFunction => {
+}: TranslateActionProps): RawBcsBlockFunction => {
   const functionSignature = matchActionFunction({
     resourceName,
     action,
@@ -136,7 +137,7 @@ export const translateAction = ({
       }
     }
 
-    const inner: BcsArg = {
+    const inner: RawBcsArg = {
       kind: 'function',
       name: functionSignature.name,
       args: translateArguments({

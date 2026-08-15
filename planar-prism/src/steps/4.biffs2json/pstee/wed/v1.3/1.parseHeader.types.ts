@@ -1,9 +1,6 @@
-export type Signature = 'wed';
-export type Versions = 'v1.3';
-
-export type WedHeader = Readonly<{
-  signature: Signature;
-  version: Versions;
+export type RawWedHeader = Readonly<{
+  signature: 'wed';
+  version: 'v1.3';
   overlaysCount: number;
   doorsCount: number;
   overlaysOffset: number;

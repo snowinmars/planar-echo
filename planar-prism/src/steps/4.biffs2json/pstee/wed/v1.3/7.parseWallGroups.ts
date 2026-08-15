@@ -1,10 +1,10 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { WedWallGroup } from './7.parseWallGroups.types.js';
+import type { RawWedWallGroup } from './7.parseWallGroups.types.js';
 
-type RawWedWallGroup = Omit<WedWallGroup, 'polygonIndices'>;
+type WallGroupLookup = Omit<RawWedWallGroup, 'polygonIndices'>;
 type ParsePolygonIndicesLookupTableProps = Readonly<{
   reader: BufferReader;
-  wallGroups: RawWedWallGroup[];
+  wallGroups: WallGroupLookup[];
 }>;
 const parsePolygonIndicesLookupTable = ({
   reader,
@@ -24,7 +24,7 @@ type ParseWallGroupsProps = Readonly<{
   polygonIndicesLookupTableOffset: number;
 }>;
 type ParseWallGroupsResponse = Readonly<{
-  wallGroups: WedWallGroup[];
+  wallGroups: RawWedWallGroup[];
   polygonIndicesLookupTable: number[];
 }>;
 export const parseWallGroups = ({
@@ -32,13 +32,13 @@ export const parseWallGroups = ({
   count,
   polygonIndicesLookupTableOffset,
 }: ParseWallGroupsProps): ParseWallGroupsResponse => {
-  const rawWallGroups: RawWedWallGroup[] = [];
+  const rawWallGroups: WallGroupLookup[] = [];
 
   for (let i = 0; i < count; i++) {
     const lookupStart = reader.ushort();
     const lookupCount = reader.ushort();
 
-    const rawWallGroup: RawWedWallGroup = {
+    const rawWallGroup: WallGroupLookup = {
       lookupStart,
       lookupCount,
     };

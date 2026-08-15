@@ -34,13 +34,13 @@ export const extendMap = {
   flags: extend(flagsV10),
 };
 
-export type RawResponse = Readonly<{
+export type RawDlgResponse = Readonly<{
   index: number;
   flags: FlagsV10[];
   textRef: Maybe<number>;
   journalRef: Maybe<number>;
   triggerIndex: Maybe<number>;
   actionIndex: Maybe<number>;
-  nextDialog: Maybe<string>;
-  nextDialogState: Maybe<number>;
+  nextDlg: Maybe<string>;
+  nextDlgState: Maybe<number>;
 }>;

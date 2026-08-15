@@ -1,7 +1,7 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawFunction } from './4.parseFunctions.types.js';
+import type { RawDlgFunction } from './4.parseFunctions.types.js';
 
-const parse = (reader: BufferReader, index: number): RawFunction => {
+const parse = (reader: BufferReader, index: number): RawDlgFunction => {
   /* eslint-disable @stylistic/no-multi-spaces */
   const offset = reader.uint();
   const length = reader.uint();
@@ -23,7 +23,7 @@ type ParseFunctionProps = Readonly<{
 export const parseFunction = ({
   reader,
   count,
-}: ParseFunctionProps): Map<number, RawFunction> => {
+}: ParseFunctionProps): Map<number, RawDlgFunction> => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/dlg_v1.htm
 
   const r = reader.fork();
@@ -33,5 +33,5 @@ export const parseFunction = ({
       const f = parse(r, index);
       map.set(index, f);
       return map;
-    }, new Map<number, RawFunction>());
+    }, new Map<number, RawDlgFunction>());
 };

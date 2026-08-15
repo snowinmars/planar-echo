@@ -14,9 +14,9 @@
       "5": "Requirements: node.js and original game files you own."
     },
     "runnerGuard": {
-      "dialogue": "Dialogue from",
-      "creature": "Creature from",
-      "item": "Item from",
+      "dlg": "Dialogue from",
+      "cre": "Creature from",
+      "itm": "Item from",
       "ghostDir": "Game directory",
       "or": "or",
       "convert": "Convert",
@@ -114,11 +114,11 @@
     }
   },
   "run": {
-    "dialoguesLabel": "Dialogue ({{amount}} in total)",
-    "creaturesLabel": "Creatures ({{amount}} in total)",
-    "itemsLabel": "Items ({{amount}} in total)",
+    "dlgsLabel": "Dialogue ({{amount}} in total)",
+    "cresLabel": "Creatures ({{amount}} in total)",
+    "itmsLabel": "Items ({{amount}} in total)",
     "statesLabel": "State ({{amount}}) in total",
-    "creature": {
+    "cre": {
       "talk": "Talk",
       "nameTlk": "Name",
       "tooltipTlk": "Tooltip",
@@ -158,7 +158,7 @@
       "scripts": "Scripts",
       "techInfo": "Tech info"
     },
-    "item": {
+    "itm": {
       "talk": "Talk",
       "unidentifiedDescriptionTlk": "Unidentified description",
       "identifiedDescriptionTlk": "Identified description",
@@ -198,13 +198,13 @@
       "saved": "Saved",
       "failed": "Error, see F12"
     },
-    "dialogueRenderer": {
+    "dlgRenderer": {
       "title": "Dialogue view",
       "pstee": "As original",
       "pstee-two-columns": "As original, but in two columns",
       "narrat": "Narrat-like"
     },
-    "dialogueHistory": {
+    "dlgHistory": {
       "title": "Dialogue History",
       "tlkCacheMaxLines": "TLK lines in memory (LRU)",
       "pageSize": "Lines per page",
@@ -221,7 +221,7 @@
     "language": {
       "title": "Interface language"
     },
-    "dialogueMarks": {
+    "dlgMarks": {
       "title": "Marks in dialogues",
       "markDisposers": "Mark exits",
       "markExterns": "Mark externs (dev)"

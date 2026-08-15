@@ -1,3 +1,3 @@
-export { creatureWidgetState } from './creatureWidgetState';
-export { dialogueWidgetState } from './dialogueWidgetState';
-export { itemWidgetState } from './itemWidgetState';
+export { creWidgetState } from './creWidgetState';
+export { dlgWidgetState } from './dlgWidgetState';
+export { itmWidgetState } from './itmWidgetState';

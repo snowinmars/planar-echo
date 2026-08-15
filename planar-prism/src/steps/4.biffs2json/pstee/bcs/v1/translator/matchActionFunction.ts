@@ -6,11 +6,11 @@ import {
 import { splitHalfOfAreaStrings } from './splitHalfOfAreaStrings.js';
 
 import type { Maybe } from '@planar/shared';
-import type { ParsedBcsAction } from '../bytecode.types.js';
+import type { RawBcsAction } from '../bytecode/parseAc.types.js';
 import type {
-  SignatureFunction,
-  Signatures,
-} from '../signatures.types.js';
+  RawBcsSignatureFunction,
+  RawBcsSignatures,
+} from '../../buildBcsContext.types.js';
 
 type ActionSignatureScore = Readonly<{
   score: number;
@@ -21,8 +21,8 @@ type ActionSignatureScore = Readonly<{
 
 type ScoreActionSignatureProps = Readonly<{
   resourceName: string;
-  action: ParsedBcsAction;
-  signature: SignatureFunction;
+  action: RawBcsAction;
+  signature: RawBcsSignatureFunction;
 }>;
 const scoreActionSignature = ({
   resourceName,
@@ -120,22 +120,22 @@ const scoreActionSignature = ({
 
 type MatchActionFunctionProps = Readonly<{
   resourceName: string;
-  action: ParsedBcsAction;
-  signatures: Signatures;
+  action: RawBcsAction;
+  signatures: RawBcsSignatures;
 }>;
 export const matchActionFunction = ({
   resourceName,
   action,
   signatures,
-}: MatchActionFunctionProps): SignatureFunction => {
+}: MatchActionFunctionProps): RawBcsSignatureFunction => {
   const functions = signatures.byId.get(action.id);
   if (!functions) throw new Error(`Could not find action '${action.id}' in '${signatures.resource}' for resource '${resourceName}'`);
   if (functions.length === 1) return functions[0]!;
 
-  let best: Maybe<SignatureFunction> = nothing();
+  let best: Maybe<RawBcsSignatureFunction> = nothing();
   let bestScore = Number.POSITIVE_INFINITY;
   let bestParams = Number.POSITIVE_INFINITY;
-  let fallback: Maybe<SignatureFunction> = nothing();
+  let fallback: Maybe<RawBcsSignatureFunction> = nothing();
 
   for (const signature of functions) {
     const {

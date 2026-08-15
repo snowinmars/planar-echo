@@ -1,3 +1,3 @@
-export { parsePvrz } from './parsePvrz.js';
+export { parsePvrzs } from './parsePvrzs.js';
 
-export type { Pvr } from './types.js';
+export type { RawPvr } from './pvr/parsePvr.types.js';

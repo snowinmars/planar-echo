@@ -14,19 +14,19 @@ import registerFsGhostDir from './fs/ghostDir.js';
 import registerFsPrismDir from './fs/prismDir.js';
 import registerFsShellDir from './fs/shellDir.js';
 import registerPing from './ping/ping.js';
-import registerGhostDialogueDialogueIdSkeleton from './ghost/dialogue/dialogueId/skeleton.js';
-import registerGhostDialogueList from './ghost/dialogue/list.js';
-import registerGhostCreatureCreatureIdSkeleton from './ghost/creature/creatureId/skeleton.js';
-import registerGhostCreatureCreatureIdLanguage from './ghost/creature/creatureId/language.js';
-import registerGhostCreatureList from './ghost/creature/list.js';
-import registerGhostItemItemIdSkeleton from './ghost/item/itemId/skeleton.js';
-import registerGhostItemItemIdLanguage from './ghost/item/itemId/language.js';
-import registerGhostItemList from './ghost/item/list.js';
+import registerGhostDlgDlgIdSkeleton from './ghost/dlg/dlgId/skeleton.js';
+import registerGhostDlgList from './ghost/dlg/list.js';
+import registerGhostCreCreIdSkeleton from './ghost/cre/creId/skeleton.js';
+import registerGhostCreCreIdLanguage from './ghost/cre/creId/language.js';
+import registerGhostCreList from './ghost/cre/list.js';
+import registerGhostItmItmIdSkeleton from './ghost/itm/itmId/skeleton.js';
+import registerGhostItmItmIdLanguage from './ghost/itm/itmId/language.js';
+import registerGhostItmList from './ghost/itm/list.js';
 import registerGhostTlkTlkRefLanguage from './ghost/tlk/tlkRef/language.js';
-import registerCreatureToDialogues from './map/creatureToDialogues.js';
-import registerDialogueToCreature from './map/dialogueToCreature.js';
-import registerItemToDialogues from './map/itemToDialogues.js';
-import registerDialogueToItem from './map/dialogueToItem.js';
+import registerCreToDlgs from './map/creToDlgs.js';
+import registerDlgToCres from './map/dlgToCres.js';
+import registerItmToDlgs from './map/itmToDlgs.js';
+import registerDlgToItms from './map/dlgToItms.js';
 import registerSettingsGetGhost from './settings/getGhostDir.js';
 import registerSettingsGetPrism from './settings/getPrismDir.js';
 import registerSettingsGetShell from './settings/getShellDir.js';
@@ -41,7 +41,7 @@ const registry = new OpenAPIRegistry();
  * @swagger
  * tags:
  *   - name: Health
- *   - name: GhostDialogue
+ *   - name: GhostDlg
  */
 const router = express.Router();
 
@@ -54,19 +54,19 @@ registerFsGhostDir(registry, router);
 registerFsPrismDir(registry, router);
 registerFsShellDir(registry, router);
 registerPing(registry, router);
-registerGhostDialogueDialogueIdSkeleton(registry, router);
-registerGhostDialogueList(registry, router);
-registerGhostCreatureCreatureIdSkeleton(registry, router);
-registerGhostCreatureCreatureIdLanguage(registry, router);
-registerGhostCreatureList(registry, router);
-registerGhostItemItemIdSkeleton(registry, router);
-registerGhostItemItemIdLanguage(registry, router);
-registerGhostItemList(registry, router);
+registerGhostDlgDlgIdSkeleton(registry, router);
+registerGhostDlgList(registry, router);
+registerGhostCreCreIdSkeleton(registry, router);
+registerGhostCreCreIdLanguage(registry, router);
+registerGhostCreList(registry, router);
+registerGhostItmItmIdSkeleton(registry, router);
+registerGhostItmItmIdLanguage(registry, router);
+registerGhostItmList(registry, router);
 registerGhostTlkTlkRefLanguage(registry, router);
-registerCreatureToDialogues(registry, router);
-registerDialogueToCreature(registry, router);
-registerItemToDialogues(registry, router);
-registerDialogueToItem(registry, router);
+registerCreToDlgs(registry, router);
+registerDlgToCres(registry, router);
+registerItmToDlgs(registry, router);
+registerDlgToItms(registry, router);
 registerSettingsGetGhost(registry, router);
 registerSettingsGetPrism(registry, router);
 registerSettingsGetShell(registry, router);

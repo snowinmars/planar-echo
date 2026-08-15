@@ -1,4 +1,4 @@
 export type Widget
-  = | 'dialogue'
-    | 'creature'
-    | 'item';
+  = | 'dlg'
+    | 'cre'
+    | 'itm';

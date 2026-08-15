@@ -4,9 +4,9 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import ThemeSwitcher from './children/ThemeSwitcher';
 import LanguageSwitcher from './children/LanguageSwitcher';
-import DialogueRendererSwitcher from './children/DialogueRendererSwitcher';
-import DialogueHistorySettings from './children/DialogueHistorySettings/DialogueHistorySettings';
-import DialogueMarks from './children/DialogueMarks';
+import DlgRendererSwitcher from './children/DlgRendererSwitcher';
+import DlgHistorySettings from './children/DlgHistorySettings/DlgHistorySettings';
+import DlgMarks from './children/DlgMarks';
 import LocalData from './children/LocalData';
 import BackendUrl from './children/BackendUrl';
 import ShellDir from './children/ShellDir/ShellDir';
@@ -62,13 +62,13 @@ const Settings: FC = () => {
           </Typography>
         </Grid>
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
-          <DialogueRendererSwitcher />
+          <DlgRendererSwitcher />
         </Grid>
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
-          <DialogueHistorySettings />
+          <DlgHistorySettings />
         </Grid>
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
-          <DialogueMarks />
+          <DlgMarks />
         </Grid>
         <Grid size={{ md: 3, sm: 6, xs: 12 }}>
           <LocalData />

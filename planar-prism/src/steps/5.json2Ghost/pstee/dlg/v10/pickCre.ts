@@ -1,48 +1,43 @@
-import { dialogueToCreatures, dialogueToItems, nothing } from '@planar/shared';
+import { dlgToCres, dlgToItms, nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type {
-  GhostCreatureV10,
-  GhostCreatureV11,
-  GhostItemV10,
-} from '../../../types.js';
+import type { CreWithTlk } from '../../cre/v10/patchCres.types.js';
+import type { ItmWithTlk } from '../../itm/v11/patchItms.types.js';
 
-type GhostCreature = GhostCreatureV10 | GhostCreatureV11;
-
-const pickItem = (items: Map<string, GhostItemV10>, dlgResourceName: string): Maybe<GhostItemV10> | 'narrator' => {
+const pickItm = (itms: Map<string, ItmWithTlk>, dlgResourceName: string): Maybe<ItmWithTlk> | 'narrator' => {
   try {
-    const creResourceNames = dialogueToItems(dlgResourceName);
+    const creResourceNames = dlgToItms(dlgResourceName);
     if (creResourceNames.length === 1 && creResourceNames[0] === 'narrator') return creResourceNames[0];
-    const creature = items.get(creResourceNames[0]!)!;
+    const cre = itms.get(creResourceNames[0]!)!;
 
-    return creature;
+    return cre;
   }
   catch {
     return nothing();
   }
 };
 
-const pickCreature = (cres: Map<string, GhostCreature>, dlgResourceName: string): Maybe<GhostCreature> | 'narrator' => {
+const pickCre = (cres: Map<string, CreWithTlk>, dlgResourceName: string): Maybe<CreWithTlk> | 'narrator' => {
   try {
-    const creResourceNames = dialogueToCreatures(dlgResourceName);
+    const creResourceNames = dlgToCres(dlgResourceName);
     if (creResourceNames.length === 1 && creResourceNames[0] === 'narrator') return creResourceNames[0];
-    const creature = cres.get(creResourceNames[0]!)!;
+    const cre = cres.get(creResourceNames[0]!)!;
 
-    return creature;
+    return cre;
   }
   catch {
     return nothing();
   }
 };
 
-export const pickCreatureOrItemToTalk = (
-  cres: Map<string, GhostCreature>,
-  items: Map<string, GhostItemV10>,
-  dlgResourceName: string): GhostCreature | GhostItemV10 | 'narrator' => {
-  const creature = pickCreature(cres, dlgResourceName);
-  const item = pickItem(items, dlgResourceName);
+export const pickCreOrItm = (
+  cres: Map<string, CreWithTlk>,
+  itms: Map<string, ItmWithTlk>,
+  dlgResourceName: string): CreWithTlk | ItmWithTlk | 'narrator' => {
+  const cre = pickCre(cres, dlgResourceName);
+  const itm = pickItm(itms, dlgResourceName);
 
-  if (!creature && !item) throw new Error(`Cannot find creature or item for '${dlgResourceName}'`);
-  if (creature) return creature;
-  return item!;
+  if (!cre && !itm) throw new Error(`Cannot find cre or itm for '${dlgResourceName}'`);
+  if (cre) return cre;
+  return itm!;
 };

@@ -1,4 +1,4 @@
-export type ItemSlotsV10 = Readonly<{
+export type RawCreItemSlotsV10 = Readonly<{
   leftEarringOrLensOrHelmet: number;
   chest: number;
   rightLowerTattoo: number;

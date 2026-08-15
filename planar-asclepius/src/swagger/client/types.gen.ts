@@ -6,11 +6,11 @@ export type ClientOptions = {
     baseURL: 'http://localhost:3003' | (string & {});
 };
 
-export type DialogueDialogueIdSkeleton = string;
+export type DlgDlgIdSkeleton = string;
 
-export type CreatureCreatureIdSkeleton = string;
+export type CreCreIdSkeleton = string;
 
-export type CreatureCreatureIdGameLanguage = string;
+export type CreCreIdGameLanguage = string;
 
 export const GameLanguage = {
     RU_RU: 'ru_RU',
@@ -24,32 +24,32 @@ export const GameLanguage = {
 
 export type GameLanguage = typeof GameLanguage[keyof typeof GameLanguage];
 
-export type ItemItemIdSkeleton = string;
+export type ItmItmIdSkeleton = string;
 
-export type ItemItemIdGameLanguage = string;
+export type ItmItmIdGameLanguage = string;
 
-export type CreatureToDialoguesCreatureId = string;
+export type CreToDlgsCreId = string;
 
-export type DialogueToCreatureDialogueId = string;
+export type DlgToCreDlgId = string;
 
-export type ItemToDialoguesItemId = string;
+export type ItmToDlgsItmId = string;
 
-export type DialogueToItemDialogueId = string;
-
-/**
- * Skeleton dialogue id
- */
-export type DialogueDialogueIdSkeleton2 = DialogueDialogueIdSkeleton;
+export type DlgToItmDlgId = string;
 
 /**
- * Skeleton creature id
+ * Skeleton dlg id
  */
-export type CreatureCreatureIdSkeleton2 = CreatureCreatureIdSkeleton;
+export type DlgDlgIdSkeleton2 = DlgDlgIdSkeleton;
 
 /**
- * Skeleton creature id
+ * Skeleton cre id
  */
-export type CreatureCreatureIdGameLanguage2 = CreatureCreatureIdGameLanguage;
+export type CreCreIdSkeleton2 = CreCreIdSkeleton;
+
+/**
+ * Skeleton cre id
+ */
+export type CreCreIdGameLanguage2 = CreCreIdGameLanguage;
 
 /**
  * Tlk language
@@ -57,34 +57,34 @@ export type CreatureCreatureIdGameLanguage2 = CreatureCreatureIdGameLanguage;
 export type GameLanguage2 = GameLanguage;
 
 /**
- * Skeleton item id
+ * Skeleton itm id
  */
-export type ItemItemIdSkeleton2 = ItemItemIdSkeleton;
+export type ItmItmIdSkeleton2 = ItmItmIdSkeleton;
 
 /**
- * Skeleton item id
+ * Skeleton itm id
  */
-export type ItemItemIdGameLanguage2 = ItemItemIdGameLanguage;
+export type ItmItmIdGameLanguage2 = ItmItmIdGameLanguage;
 
 /**
- * Creature id
+ * Cre id
  */
-export type CreatureToDialoguesCreatureId2 = CreatureToDialoguesCreatureId;
+export type CreToDlgsCreId2 = CreToDlgsCreId;
 
 /**
- * Dialogue id
+ * Dlg id
  */
-export type DialogueToCreatureDialogueId2 = DialogueToCreatureDialogueId;
+export type DlgToCreDlgId2 = DlgToCreDlgId;
 
 /**
- * Item id
+ * Itm id
  */
-export type ItemToDialoguesItemId2 = ItemToDialoguesItemId;
+export type ItmToDlgsItmId2 = ItmToDlgsItmId;
 
 /**
- * Dialogue id
+ * Dlg id
  */
-export type DialogueToItemDialogueId2 = DialogueToItemDialogueId;
+export type DlgToItmDlgId2 = DlgToItmDlgId;
 
 export type PostApiFsValidateChitinKeyFileData = {
     body: {
@@ -466,23 +466,23 @@ export type GetApiPingResponses = {
 
 export type GetApiPingResponse = GetApiPingResponses[keyof GetApiPingResponses];
 
-export type PostApiGhostDialogueByDialogueIdSkeletonData = {
+export type PostApiGhostDlgByDlgIdSkeletonData = {
     body: {
         ghostDir: string;
     };
     path: {
         /**
-         * Skeleton dialogue id
+         * Skeleton dlg id
          */
-        dialogueId: DialogueDialogueIdSkeleton;
+        dlgId: DlgDlgIdSkeleton;
     };
     query?: never;
-    url: '/api/ghost/dialogue/{dialogueId}/skeleton';
+    url: '/api/ghost/dlg/{dlgId}/skeleton';
 };
 
-export type PostApiGhostDialogueByDialogueIdSkeletonErrors = {
+export type PostApiGhostDlgByDlgIdSkeletonErrors = {
     /**
-     * Dialogue skeleton is not found by this path
+     * Dlg skeleton is not found by this path
      */
     404: {
         error: {
@@ -492,11 +492,11 @@ export type PostApiGhostDialogueByDialogueIdSkeletonErrors = {
     };
 };
 
-export type PostApiGhostDialogueByDialogueIdSkeletonError = PostApiGhostDialogueByDialogueIdSkeletonErrors[keyof PostApiGhostDialogueByDialogueIdSkeletonErrors];
+export type PostApiGhostDlgByDlgIdSkeletonError = PostApiGhostDlgByDlgIdSkeletonErrors[keyof PostApiGhostDlgByDlgIdSkeletonErrors];
 
-export type PostApiGhostDialogueByDialogueIdSkeletonResponses = {
+export type PostApiGhostDlgByDlgIdSkeletonResponses = {
     /**
-     * Dialogue skeleton content in ghost format
+     * Dlg skeleton content in ghost format
      */
     200: {
         data: {
@@ -505,21 +505,21 @@ export type PostApiGhostDialogueByDialogueIdSkeletonResponses = {
     };
 };
 
-export type PostApiGhostDialogueByDialogueIdSkeletonResponse = PostApiGhostDialogueByDialogueIdSkeletonResponses[keyof PostApiGhostDialogueByDialogueIdSkeletonResponses];
+export type PostApiGhostDlgByDlgIdSkeletonResponse = PostApiGhostDlgByDlgIdSkeletonResponses[keyof PostApiGhostDlgByDlgIdSkeletonResponses];
 
-export type PostApiGhostDialogueData = {
+export type PostApiGhostDlgData = {
     body: {
         ghostDir: string;
         partialName?: string;
     };
     path?: never;
     query?: never;
-    url: '/api/ghost/dialogue';
+    url: '/api/ghost/dlg';
 };
 
-export type PostApiGhostDialogueErrors = {
+export type PostApiGhostDlgErrors = {
     /**
-     * Available dialogues are not found by this path
+     * Available dlgs are not found by this path
      */
     404: {
         error: {
@@ -529,34 +529,34 @@ export type PostApiGhostDialogueErrors = {
     };
 };
 
-export type PostApiGhostDialogueError = PostApiGhostDialogueErrors[keyof PostApiGhostDialogueErrors];
+export type PostApiGhostDlgError = PostApiGhostDlgErrors[keyof PostApiGhostDlgErrors];
 
-export type PostApiGhostDialogueResponses = {
+export type PostApiGhostDlgResponses = {
     /**
-     * Available dialogues in ghost format
+     * Available dlgs in ghost format
      */
     200: Array<string>;
 };
 
-export type PostApiGhostDialogueResponse = PostApiGhostDialogueResponses[keyof PostApiGhostDialogueResponses];
+export type PostApiGhostDlgResponse = PostApiGhostDlgResponses[keyof PostApiGhostDlgResponses];
 
-export type PostApiGhostCreatureByCreatureIdSkeletonData = {
+export type PostApiGhostCreByCreIdSkeletonData = {
     body: {
         ghostDir: string;
     };
     path: {
         /**
-         * Skeleton creature id
+         * Skeleton cre id
          */
-        creatureId: CreatureCreatureIdSkeleton;
+        creId: CreCreIdSkeleton;
     };
     query?: never;
-    url: '/api/ghost/creature/{creatureId}/skeleton';
+    url: '/api/ghost/cre/{creId}/skeleton';
 };
 
-export type PostApiGhostCreatureByCreatureIdSkeletonErrors = {
+export type PostApiGhostCreByCreIdSkeletonErrors = {
     /**
-     * Creature skeleton is not found by this path
+     * Cre skeleton is not found by this path
      */
     404: {
         error: {
@@ -566,11 +566,11 @@ export type PostApiGhostCreatureByCreatureIdSkeletonErrors = {
     };
 };
 
-export type PostApiGhostCreatureByCreatureIdSkeletonError = PostApiGhostCreatureByCreatureIdSkeletonErrors[keyof PostApiGhostCreatureByCreatureIdSkeletonErrors];
+export type PostApiGhostCreByCreIdSkeletonError = PostApiGhostCreByCreIdSkeletonErrors[keyof PostApiGhostCreByCreIdSkeletonErrors];
 
-export type PostApiGhostCreatureByCreatureIdSkeletonResponses = {
+export type PostApiGhostCreByCreIdSkeletonResponses = {
     /**
-     * Creature skeleton content in ghost format
+     * Cre skeleton content in ghost format
      */
     200: {
         data: {
@@ -579,29 +579,29 @@ export type PostApiGhostCreatureByCreatureIdSkeletonResponses = {
     };
 };
 
-export type PostApiGhostCreatureByCreatureIdSkeletonResponse = PostApiGhostCreatureByCreatureIdSkeletonResponses[keyof PostApiGhostCreatureByCreatureIdSkeletonResponses];
+export type PostApiGhostCreByCreIdSkeletonResponse = PostApiGhostCreByCreIdSkeletonResponses[keyof PostApiGhostCreByCreIdSkeletonResponses];
 
-export type PostApiGhostCreatureByCreatureIdByGameLanguageData = {
+export type PostApiGhostCreByCreIdByGameLanguageData = {
     body: {
         ghostDir: string;
     };
     path: {
         /**
-         * Skeleton creature id
+         * Skeleton cre id
          */
-        creatureId: CreatureCreatureIdGameLanguage;
+        creId: CreCreIdGameLanguage;
         /**
          * Tlk language
          */
         gameLanguage: GameLanguage;
     };
     query?: never;
-    url: '/api/ghost/creature/{creatureId}/{gameLanguage}';
+    url: '/api/ghost/cre/{creId}/{gameLanguage}';
 };
 
-export type PostApiGhostCreatureByCreatureIdByGameLanguageErrors = {
+export type PostApiGhostCreByCreIdByGameLanguageErrors = {
     /**
-     * Creature translation is not found by this path
+     * Cre translation is not found by this path
      */
     404: {
         error: {
@@ -611,11 +611,11 @@ export type PostApiGhostCreatureByCreatureIdByGameLanguageErrors = {
     };
 };
 
-export type PostApiGhostCreatureByCreatureIdByGameLanguageError = PostApiGhostCreatureByCreatureIdByGameLanguageErrors[keyof PostApiGhostCreatureByCreatureIdByGameLanguageErrors];
+export type PostApiGhostCreByCreIdByGameLanguageError = PostApiGhostCreByCreIdByGameLanguageErrors[keyof PostApiGhostCreByCreIdByGameLanguageErrors];
 
-export type PostApiGhostCreatureByCreatureIdByGameLanguageResponses = {
+export type PostApiGhostCreByCreIdByGameLanguageResponses = {
     /**
-     * Creature translation content in ghost format
+     * Cre translation content in ghost format
      */
     200: {
         data: {
@@ -624,21 +624,21 @@ export type PostApiGhostCreatureByCreatureIdByGameLanguageResponses = {
     };
 };
 
-export type PostApiGhostCreatureByCreatureIdByGameLanguageResponse = PostApiGhostCreatureByCreatureIdByGameLanguageResponses[keyof PostApiGhostCreatureByCreatureIdByGameLanguageResponses];
+export type PostApiGhostCreByCreIdByGameLanguageResponse = PostApiGhostCreByCreIdByGameLanguageResponses[keyof PostApiGhostCreByCreIdByGameLanguageResponses];
 
-export type PostApiGhostCreatureData = {
+export type PostApiGhostCreData = {
     body: {
         ghostDir: string;
         partialName?: string;
     };
     path?: never;
     query?: never;
-    url: '/api/ghost/creature';
+    url: '/api/ghost/cre';
 };
 
-export type PostApiGhostCreatureErrors = {
+export type PostApiGhostCreErrors = {
     /**
-     * Available creatures are not found by this path
+     * Available cres are not found by this path
      */
     404: {
         error: {
@@ -648,34 +648,34 @@ export type PostApiGhostCreatureErrors = {
     };
 };
 
-export type PostApiGhostCreatureError = PostApiGhostCreatureErrors[keyof PostApiGhostCreatureErrors];
+export type PostApiGhostCreError = PostApiGhostCreErrors[keyof PostApiGhostCreErrors];
 
-export type PostApiGhostCreatureResponses = {
+export type PostApiGhostCreResponses = {
     /**
-     * Available creatures in ghost format
+     * Available cres in ghost format
      */
     200: Array<string>;
 };
 
-export type PostApiGhostCreatureResponse = PostApiGhostCreatureResponses[keyof PostApiGhostCreatureResponses];
+export type PostApiGhostCreResponse = PostApiGhostCreResponses[keyof PostApiGhostCreResponses];
 
-export type PostApiGhostItemByItemIdSkeletonData = {
+export type PostApiGhostItmByItmIdSkeletonData = {
     body: {
         ghostDir: string;
     };
     path: {
         /**
-         * Skeleton item id
+         * Skeleton itm id
          */
-        itemId: ItemItemIdSkeleton;
+        itmId: ItmItmIdSkeleton;
     };
     query?: never;
-    url: '/api/ghost/item/{itemId}/skeleton';
+    url: '/api/ghost/itm/{itmId}/skeleton';
 };
 
-export type PostApiGhostItemByItemIdSkeletonErrors = {
+export type PostApiGhostItmByItmIdSkeletonErrors = {
     /**
-     * Item skeleton is not found by this path
+     * Itm skeleton is not found by this path
      */
     404: {
         error: {
@@ -685,11 +685,11 @@ export type PostApiGhostItemByItemIdSkeletonErrors = {
     };
 };
 
-export type PostApiGhostItemByItemIdSkeletonError = PostApiGhostItemByItemIdSkeletonErrors[keyof PostApiGhostItemByItemIdSkeletonErrors];
+export type PostApiGhostItmByItmIdSkeletonError = PostApiGhostItmByItmIdSkeletonErrors[keyof PostApiGhostItmByItmIdSkeletonErrors];
 
-export type PostApiGhostItemByItemIdSkeletonResponses = {
+export type PostApiGhostItmByItmIdSkeletonResponses = {
     /**
-     * Item skeleton content in ghost format
+     * Itm skeleton content in ghost format
      */
     200: {
         data: {
@@ -698,29 +698,29 @@ export type PostApiGhostItemByItemIdSkeletonResponses = {
     };
 };
 
-export type PostApiGhostItemByItemIdSkeletonResponse = PostApiGhostItemByItemIdSkeletonResponses[keyof PostApiGhostItemByItemIdSkeletonResponses];
+export type PostApiGhostItmByItmIdSkeletonResponse = PostApiGhostItmByItmIdSkeletonResponses[keyof PostApiGhostItmByItmIdSkeletonResponses];
 
-export type PostApiGhostItemByItemIdByGameLanguageData = {
+export type PostApiGhostItmByItmIdByGameLanguageData = {
     body: {
         ghostDir: string;
     };
     path: {
         /**
-         * Skeleton item id
+         * Skeleton itm id
          */
-        itemId: ItemItemIdGameLanguage;
+        itmId: ItmItmIdGameLanguage;
         /**
          * Tlk language
          */
         gameLanguage: GameLanguage;
     };
     query?: never;
-    url: '/api/ghost/item/{itemId}/{gameLanguage}';
+    url: '/api/ghost/itm/{itmId}/{gameLanguage}';
 };
 
-export type PostApiGhostItemByItemIdByGameLanguageErrors = {
+export type PostApiGhostItmByItmIdByGameLanguageErrors = {
     /**
-     * Item translation is not found by this path
+     * Itm translation is not found by this path
      */
     404: {
         error: {
@@ -730,11 +730,11 @@ export type PostApiGhostItemByItemIdByGameLanguageErrors = {
     };
 };
 
-export type PostApiGhostItemByItemIdByGameLanguageError = PostApiGhostItemByItemIdByGameLanguageErrors[keyof PostApiGhostItemByItemIdByGameLanguageErrors];
+export type PostApiGhostItmByItmIdByGameLanguageError = PostApiGhostItmByItmIdByGameLanguageErrors[keyof PostApiGhostItmByItmIdByGameLanguageErrors];
 
-export type PostApiGhostItemByItemIdByGameLanguageResponses = {
+export type PostApiGhostItmByItmIdByGameLanguageResponses = {
     /**
-     * Item translation content in ghost format
+     * Itm translation content in ghost format
      */
     200: {
         data: {
@@ -743,21 +743,21 @@ export type PostApiGhostItemByItemIdByGameLanguageResponses = {
     };
 };
 
-export type PostApiGhostItemByItemIdByGameLanguageResponse = PostApiGhostItemByItemIdByGameLanguageResponses[keyof PostApiGhostItemByItemIdByGameLanguageResponses];
+export type PostApiGhostItmByItmIdByGameLanguageResponse = PostApiGhostItmByItmIdByGameLanguageResponses[keyof PostApiGhostItmByItmIdByGameLanguageResponses];
 
-export type PostApiGhostItemData = {
+export type PostApiGhostItmData = {
     body: {
         ghostDir: string;
         partialName?: string;
     };
     path?: never;
     query?: never;
-    url: '/api/ghost/item';
+    url: '/api/ghost/itm';
 };
 
-export type PostApiGhostItemErrors = {
+export type PostApiGhostItmErrors = {
     /**
-     * Available items are not found by this path
+     * Available itms are not found by this path
      */
     404: {
         error: {
@@ -767,16 +767,16 @@ export type PostApiGhostItemErrors = {
     };
 };
 
-export type PostApiGhostItemError = PostApiGhostItemErrors[keyof PostApiGhostItemErrors];
+export type PostApiGhostItmError = PostApiGhostItmErrors[keyof PostApiGhostItmErrors];
 
-export type PostApiGhostItemResponses = {
+export type PostApiGhostItmResponses = {
     /**
-     * Available items in ghost format
+     * Available itms in ghost format
      */
     200: Array<string>;
 };
 
-export type PostApiGhostItemResponse = PostApiGhostItemResponses[keyof PostApiGhostItemResponses];
+export type PostApiGhostItmResponse = PostApiGhostItmResponses[keyof PostApiGhostItmResponses];
 
 export type PostApiGhostTlkByGameLanguageData = {
     body: {
@@ -823,145 +823,145 @@ export type PostApiGhostTlkByGameLanguageResponses = {
 
 export type PostApiGhostTlkByGameLanguageResponse = PostApiGhostTlkByGameLanguageResponses[keyof PostApiGhostTlkByGameLanguageResponses];
 
-export type GetApiMapCreatureToDialoguesByCreatureIdData = {
+export type GetApiMapCreToDlgsByCreIdData = {
     body?: never;
     path: {
         /**
-         * Creature id
+         * Cre id
          */
-        creatureId: CreatureToDialoguesCreatureId;
+        creId: CreToDlgsCreId;
     };
     query?: never;
-    url: '/api/map/creatureToDialogues/{creatureId}';
+    url: '/api/map/creToDlgs/{creId}';
 };
 
-export type GetApiMapCreatureToDialoguesByCreatureIdErrors = {
+export type GetApiMapCreToDlgsByCreIdErrors = {
     /**
-     * Dialogues ids were not found for the creature id
+     * Dlgs ids were not found for the cre id
      */
     404: {
         error: {
             message: string;
-            code: 'DIALOGUES_NOT_FOUND';
+            code: 'DLGS_NOT_FOUND';
         };
     };
 };
 
-export type GetApiMapCreatureToDialoguesByCreatureIdError = GetApiMapCreatureToDialoguesByCreatureIdErrors[keyof GetApiMapCreatureToDialoguesByCreatureIdErrors];
+export type GetApiMapCreToDlgsByCreIdError = GetApiMapCreToDlgsByCreIdErrors[keyof GetApiMapCreToDlgsByCreIdErrors];
 
-export type GetApiMapCreatureToDialoguesByCreatureIdResponses = {
+export type GetApiMapCreToDlgsByCreIdResponses = {
     /**
-     * Dialogues ids
+     * Dlgs ids
      */
     200: Array<string>;
 };
 
-export type GetApiMapCreatureToDialoguesByCreatureIdResponse = GetApiMapCreatureToDialoguesByCreatureIdResponses[keyof GetApiMapCreatureToDialoguesByCreatureIdResponses];
+export type GetApiMapCreToDlgsByCreIdResponse = GetApiMapCreToDlgsByCreIdResponses[keyof GetApiMapCreToDlgsByCreIdResponses];
 
-export type GetApiMapDialogueToCreatureByDialogueIdData = {
+export type GetApiMapDlgToCresByDlgIdData = {
     body?: never;
     path: {
         /**
-         * Dialogue id
+         * Dlg id
          */
-        dialogueId: DialogueToCreatureDialogueId;
+        dlgId: DlgToCreDlgId;
     };
     query?: never;
-    url: '/api/map/dialogueToCreature/{dialogueId}';
+    url: '/api/map/dlgToCres/{dlgId}';
 };
 
-export type GetApiMapDialogueToCreatureByDialogueIdErrors = {
+export type GetApiMapDlgToCresByDlgIdErrors = {
     /**
-     * Creature id were not found for this dialogue id
+     * Cre id were not found for this dlg id
      */
     404: {
         error: {
             message: string;
-            code: 'CREATURE_NOT_FOUND';
+            code: 'CRE_NOT_FOUND';
         };
     };
 };
 
-export type GetApiMapDialogueToCreatureByDialogueIdError = GetApiMapDialogueToCreatureByDialogueIdErrors[keyof GetApiMapDialogueToCreatureByDialogueIdErrors];
+export type GetApiMapDlgToCresByDlgIdError = GetApiMapDlgToCresByDlgIdErrors[keyof GetApiMapDlgToCresByDlgIdErrors];
 
-export type GetApiMapDialogueToCreatureByDialogueIdResponses = {
+export type GetApiMapDlgToCresByDlgIdResponses = {
     /**
-     * Creature id
+     * Cre id
      */
     200: Array<string>;
 };
 
-export type GetApiMapDialogueToCreatureByDialogueIdResponse = GetApiMapDialogueToCreatureByDialogueIdResponses[keyof GetApiMapDialogueToCreatureByDialogueIdResponses];
+export type GetApiMapDlgToCresByDlgIdResponse = GetApiMapDlgToCresByDlgIdResponses[keyof GetApiMapDlgToCresByDlgIdResponses];
 
-export type GetApiMapItemToDialoguesByItemIdData = {
+export type GetApiMapItmToDlgsByItmIdData = {
     body?: never;
     path: {
         /**
-         * Item id
+         * Itm id
          */
-        itemId: ItemToDialoguesItemId;
+        itmId: ItmToDlgsItmId;
     };
     query?: never;
-    url: '/api/map/itemToDialogues/{itemId}';
+    url: '/api/map/itmToDlgs/{itmId}';
 };
 
-export type GetApiMapItemToDialoguesByItemIdErrors = {
+export type GetApiMapItmToDlgsByItmIdErrors = {
     /**
-     * Dialogues ids were not found for the item id
+     * Dlgs ids were not found for the itm id
      */
     404: {
         error: {
             message: string;
-            code: 'DIALOGUES_NOT_FOUND';
+            code: 'DLGS_NOT_FOUND';
         };
     };
 };
 
-export type GetApiMapItemToDialoguesByItemIdError = GetApiMapItemToDialoguesByItemIdErrors[keyof GetApiMapItemToDialoguesByItemIdErrors];
+export type GetApiMapItmToDlgsByItmIdError = GetApiMapItmToDlgsByItmIdErrors[keyof GetApiMapItmToDlgsByItmIdErrors];
 
-export type GetApiMapItemToDialoguesByItemIdResponses = {
+export type GetApiMapItmToDlgsByItmIdResponses = {
     /**
-     * Dialogues ids
+     * Dlgs ids
      */
     200: Array<string>;
 };
 
-export type GetApiMapItemToDialoguesByItemIdResponse = GetApiMapItemToDialoguesByItemIdResponses[keyof GetApiMapItemToDialoguesByItemIdResponses];
+export type GetApiMapItmToDlgsByItmIdResponse = GetApiMapItmToDlgsByItmIdResponses[keyof GetApiMapItmToDlgsByItmIdResponses];
 
-export type GetApiMapDialogueToItemByDialogueIdData = {
+export type GetApiMapDlgToItmsByDlgIdData = {
     body?: never;
     path: {
         /**
-         * Dialogue id
+         * Dlg id
          */
-        dialogueId: DialogueToItemDialogueId;
+        dlgId: DlgToItmDlgId;
     };
     query?: never;
-    url: '/api/map/dialogueToItem/{dialogueId}';
+    url: '/api/map/dlgToItms/{dlgId}';
 };
 
-export type GetApiMapDialogueToItemByDialogueIdErrors = {
+export type GetApiMapDlgToItmsByDlgIdErrors = {
     /**
-     * Item id were not found for this dialogue id
+     * Itm id were not found for this dlg id
      */
     404: {
         error: {
             message: string;
-            code: 'ITEM_NOT_FOUND';
+            code: 'ITM_NOT_FOUND';
         };
     };
 };
 
-export type GetApiMapDialogueToItemByDialogueIdError = GetApiMapDialogueToItemByDialogueIdErrors[keyof GetApiMapDialogueToItemByDialogueIdErrors];
+export type GetApiMapDlgToItmsByDlgIdError = GetApiMapDlgToItmsByDlgIdErrors[keyof GetApiMapDlgToItmsByDlgIdErrors];
 
-export type GetApiMapDialogueToItemByDialogueIdResponses = {
+export type GetApiMapDlgToItmsByDlgIdResponses = {
     /**
-     * Item id
+     * Itm id
      */
     200: Array<string>;
 };
 
-export type GetApiMapDialogueToItemByDialogueIdResponse = GetApiMapDialogueToItemByDialogueIdResponses[keyof GetApiMapDialogueToItemByDialogueIdResponses];
+export type GetApiMapDlgToItmsByDlgIdResponse = GetApiMapDlgToItmsByDlgIdResponses[keyof GetApiMapDlgToItmsByDlgIdResponses];
 
 export type GetApiSettingsGhostDirData = {
     body?: never;

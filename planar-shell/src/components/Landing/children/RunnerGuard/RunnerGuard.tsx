@@ -15,9 +15,10 @@ import styles from './RunnerGuard.module.scss';
 
 type ButtonInsideTextFieldProps = Readonly<{
   id: string;
+  to: string;
   disabled?: Maybe<boolean>;
 }>;
-const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id, disabled }: ButtonInsideTextFieldProps) => {
+const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id, to, disabled }: ButtonInsideTextFieldProps) => {
   const { t } = useTranslation();
 
   const [ghostDir, setGhostDir] = useState<string>(() => planarLocalStorage.get('ghostDir', '')!);
@@ -42,7 +43,7 @@ const ButtonInsideTextField: FC<ButtonInsideTextFieldProps> = ({ id, disabled }:
               <IconButton
                 className={styles.button}
                 component={RouterLink}
-                to={`/${id}`}
+                to={to}
                 nativeButton={false}
                 edge="start"
                 size="small"
@@ -76,9 +77,9 @@ const RunnerGuard: FC<RunnerGuardProps> = ({ hasStores }: RunnerGuardProps) => {
       <Typography>
         {t('landing.runnerGuard.or')}
       </Typography>
-      <ButtonInsideTextField id="dialogue" disabled={!hasStores} />
-      <ButtonInsideTextField id="creature" disabled={!hasStores} />
-      <ButtonInsideTextField id="item" disabled={!hasStores} />
+      <ButtonInsideTextField id="dlg" to="/dlg" disabled={!hasStores} />
+      <ButtonInsideTextField id="cre" to="/cre" disabled={!hasStores} />
+      <ButtonInsideTextField id="itm" to="/itm" disabled={!hasStores} />
       <Button
         component={RouterLink}
         to="/stores"

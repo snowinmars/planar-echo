@@ -1,9 +1,9 @@
 import { parseDecOrNothing } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
-import type { CreatureIniSpecArea } from './parseSpecAreaV1.types.js';
+import type { RawIniCreatureIniSpecArea } from './parseSpecAreaV1.types.js';
 
-export const parseSpecAreaV1 = (s: Maybe<string>): CreatureIniSpecArea => {
+export const parseSpecAreaV1 = (s: Maybe<string>): RawIniCreatureIniSpecArea => {
   if (!s) throw new Error(`Cannot parse SpecArea from nothing`);
 
   // [centerX,centerY,range,unknown?]

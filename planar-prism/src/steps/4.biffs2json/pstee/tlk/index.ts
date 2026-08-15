@@ -1,2 +1,2 @@
 export { parseTlk } from './parseTlk.js';
-export type { Tlk } from './types.js';
+export type { RawTlk } from './types.js';

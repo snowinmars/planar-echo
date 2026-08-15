@@ -1,4 +1,4 @@
-import type { ParsedIds } from './1.parseKeyValueV1.types.js';
+import type { RawIdsParsedIds } from './1.parseKeyValueV1.types.js';
 
 const parseKey = (line: string, resourceName: string, normalMatch: RegExpMatchArray | null, reverseMatch: RegExpMatchArray | null): [number, string] => {
   if (normalMatch) {
@@ -40,10 +40,10 @@ type ParseKeyValueV1Props = Readonly<{
 export const parseKeyValueV1 = ({
   lines,
   resourceName,
-}: ParseKeyValueV1Props): ParsedIds => {
-  const ids: ParsedIds['ids'] = [];
-  let wrongSignarute: ParsedIds['wrongSignarute'] = '';
-  let wrongEntriesCount: ParsedIds['wrongEntriesCount'] = '';
+}: ParseKeyValueV1Props): RawIdsParsedIds => {
+  const ids: RawIdsParsedIds['ids'] = [];
+  let wrongSignarute: RawIdsParsedIds['wrongSignarute'] = '';
+  let wrongEntriesCount: RawIdsParsedIds['wrongEntriesCount'] = '';
 
   for (const line of lines) {
     const isEmptyLine = !line;

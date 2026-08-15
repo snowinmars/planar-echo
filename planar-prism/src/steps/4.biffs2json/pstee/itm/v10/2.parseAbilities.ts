@@ -2,11 +2,11 @@ import { extendMap } from './2.parseAbilities.types.js';
 import { parseEffect } from './3.parseEffects.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { AbilityV10 } from './2.parseAbilities.types.js';
-import type { EffectV10 } from './3.parseEffects.types.js';
+import type { RawItmAbilityV10 } from './2.parseAbilities.types.js';
+import type { RawItmEffectV10 } from './3.parseEffects.types.js';
 
-const parseAbilityEffects = (reader: BufferReader, count: number, index: number): EffectV10[] => {
-  const abilityEffects: EffectV10[] = [];
+const parseAbilityEffects = (reader: BufferReader, count: number, index: number): RawItmEffectV10[] => {
+  const abilityEffects: RawItmEffectV10[] = [];
   // TODO [snow]: I may have a bug here: choose index vs i
   const r = reader.fork();
   for (let i = 0; i < count; i++) {
@@ -17,7 +17,7 @@ const parseAbilityEffects = (reader: BufferReader, count: number, index: number)
   return abilityEffects;
 };
 
-const parseAbility = (reader: BufferReader, offsetToEffects: number): AbilityV10 => {
+const parseAbility = (reader: BufferReader, offsetToEffects: number): RawItmAbilityV10 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.1.htm
 
   const attackType = reader.map.byte(extendMap.attackType.parse);
@@ -101,7 +101,7 @@ export const parseAbilities = ({
   reader,
   count,
   offsetToEffects,
-}: ParseAbilitiesProps): AbilityV10[] => {
+}: ParseAbilitiesProps): RawItmAbilityV10[] => {
   const r = reader.fork();
-  return Array.from<never, AbilityV10>({ length: count }, () => parseAbility(r, offsetToEffects));
+  return Array.from<never, RawItmAbilityV10>({ length: count }, () => parseAbility(r, offsetToEffects));
 };

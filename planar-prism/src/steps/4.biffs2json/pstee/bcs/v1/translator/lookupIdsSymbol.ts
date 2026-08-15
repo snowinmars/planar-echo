@@ -1,11 +1,11 @@
 import { just, nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type { Ids } from '../../../ids/types.js';
+import type { RawIds } from '../../../ids/parseIds.types.js';
 
 type LookupIdsSymbolProps = Readonly<{
   resourceName: string;
-  ids: Map<string, Ids>;
+  ids: Map<string, RawIds>;
   idsName: string;
   value: number;
 }>;
@@ -17,10 +17,10 @@ export const lookupIdsSymbol = ({
 }: LookupIdsSymbolProps): Maybe<string> => {
   const candidate = `${idsName}.ids`;
 
-  const idsItem = ids.get(candidate);
-  if (!idsItem) throw new Error(`Cannot find '${candidate}' in ids for recource '${resourceName}'`);
+  const id = ids.get(candidate);
+  if (!id) throw new Error(`Cannot find '${candidate}' in ids for recource '${resourceName}'`);
 
-  const entries = idsItem.entries.get(value);
+  const entries = id.entries.get(value);
   if (entries && entries.length) return just(entries[0]);
 
   return nothing();

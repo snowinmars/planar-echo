@@ -1,7 +1,7 @@
 import type { Maybe } from '@planar/shared';
-import type { CreatureIniScopedVariable } from './parseScopedVariableV1.types.js';
+import type { RawIniCreatureIniScopedVariable } from './parseScopedVariableV1.types.js';
 
-export const parseScopedVariableV1 = (s: Maybe<string>): CreatureIniScopedVariable => {
+export const parseScopedVariableV1 = (s: Maybe<string>): RawIniCreatureIniScopedVariable => {
   if (!s) throw new Error(`Cannot parse ScopedVariable from nothing`);
   const items = s.split('::');
 

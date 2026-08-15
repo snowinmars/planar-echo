@@ -51,7 +51,6 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
         <IconButton
           className={styles.inputOpen}
           aria-label="open folder"
-          disabled={!props.ghostDir || props.loading || props.disabled}
           onClick={() => {
             props.openDir().catch((e: unknown) => console.error(e));
           }}

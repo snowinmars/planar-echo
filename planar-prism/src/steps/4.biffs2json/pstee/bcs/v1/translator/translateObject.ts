@@ -1,17 +1,17 @@
-import { isNothing, just, nothing } from '@planar/shared';
 import logger from '@/shared/logger.js';
-import { PSTEE_OBJECT_TARGET_IDS } from '../../engineRules.js';
+import { isNothing, just, nothing } from '@planar/shared';
+import { PSTEE_OBJECT_TARGET_IDS } from '../../buildBcsContext.const.js';
 import { lookupIdsSymbol } from './lookupIdsSymbol.js';
 
 import type { Maybe } from '@planar/shared';
-import type { Ids } from '../../../ids/types.js';
-import type { BcsArg } from '../../parseBcs.types.js';
-import type { ParsedBcsObject } from '../bytecode.types.js';
+import type { RawIds } from '../../../ids/parseIds.types.js';
+import type { RawBcsObject } from '../bytecode/parseOb.types.js';
+import type { RawBcsArg } from '../../buildBcsContext.types.js';
 
 type TranslateTargetProps = Readonly<{
   resourceName: string;
-  object: ParsedBcsObject;
-  ids: Map<string, Ids>;
+  object: RawBcsObject;
+  ids: Map<string, RawIds>;
 }>;
 const translateTarget = ({
   resourceName,
@@ -49,11 +49,11 @@ const translateTarget = ({
   return `[${parts.join('.')}]`;
 };
 
-type BcsStringFunctionArg = Extract<BcsArg, { kind: 'string' | 'function' }>;
+type BcsStringFunctionArg = Extract<RawBcsArg, { kind: 'string' | 'function' }>;
 type TranslateObjectProps = Readonly<{
   resourceName: string;
-  object: ParsedBcsObject;
-  ids: Map<string, Ids>;
+  object: RawBcsObject;
+  ids: Map<string, RawIds>;
 }>;
 export const translateObject = ({
   resourceName,
@@ -105,7 +105,7 @@ export const translateObject = ({
     return { kind: 'string', value: literal };
   }
 
-  let leaf: BcsArg;
+  let leaf: RawBcsArg;
   let wrappers: string[];
 
   if (isNothing(target)) {

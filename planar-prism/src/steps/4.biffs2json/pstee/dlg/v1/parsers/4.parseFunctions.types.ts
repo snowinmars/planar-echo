@@ -1,4 +1,4 @@
-export type RawFunction = Readonly<{
+export type RawDlgFunction = Readonly<{
   index: number;
   offset: number;
   length: number;

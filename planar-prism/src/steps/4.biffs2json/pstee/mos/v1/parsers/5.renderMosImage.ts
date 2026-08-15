@@ -2,12 +2,12 @@ import { just } from '@planar/shared';
 import {
   MOS_BLOCK_DIMENSION,
   MOS_PALETTE_BLOCK_STRIDE,
-} from '../../parseMos.types.js';
+} from '../../parseMoss.const.js';
 import { isGreenColorKeyBgra } from '../../../shared/greenColorKey.js';
 import { encodeRgbaPng } from '../../../tis/shared/writePng.js';
 
-import type { MosV1BlockMeta } from '../../parseMos.types.js';
-import type { MosV1Header } from './1.parseHeader.types.js';
+import type { RawMosV1Header } from './1.parseHeader.types.js';
+import type { RawMosV1BlockMeta } from './4.parseTileData.types.js';
 
 type RenderBlockRgbaProps = Readonly<{
   paletteBgra: Buffer;
@@ -68,9 +68,9 @@ const blitBlockToCanvas = ({
 };
 
 type RenderMosImageProps = Readonly<{
-  header: MosV1Header;
+  header: RawMosV1Header;
   palette: Buffer;
-  blocks: MosV1BlockMeta[];
+  blocks: RawMosV1BlockMeta[];
   indicesChunks: Buffer[];
 }>;
 export const renderMosImage = ({

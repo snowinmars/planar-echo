@@ -1,8 +1,8 @@
 import { isNothing } from '@planar/shared';
 
-import type { BcsStream } from '../bcsStream.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
 
-export const parseNumber = (stream: BcsStream): number => {
+export const parseNumber = (stream: RawBcsStream): number => {
   const value = stream.getMatch('-?[0-9]+');
   if (isNothing(value)) throw new Error(`Expected number at position '${stream.positionOf()}'`);
 

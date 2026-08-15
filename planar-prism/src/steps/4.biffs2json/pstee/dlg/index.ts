@@ -1,3 +1,3 @@
-export { parseDlg } from './parseDlg.js';
+export { parseDlgs } from './parseDlgs.js';
 
-export type { RawDlg } from './types.js';
+export type { RawDlg } from './parseDlgs.types.js';

@@ -1,7 +1,7 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { ItemSlotsV11 } from './7.parseItemSlotsV11.types.js';
+import type { RawCreItemSlotsV11 } from './7.parseItemSlotsV11.types.js';
 
-export const parseItemSlotsV11 = (reader: BufferReader): ItemSlotsV11 => {
+export const parseItemSlotsV11 = (reader: BufferReader): RawCreItemSlotsV11 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
   // const itemSlotsSize = 80; // just to know

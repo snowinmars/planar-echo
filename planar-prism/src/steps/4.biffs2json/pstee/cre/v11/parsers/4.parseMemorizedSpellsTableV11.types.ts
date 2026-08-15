@@ -21,7 +21,7 @@ export const extendMap = {
   memorization: extend(memorizationV11),
 };
 
-export type MemorizedSpellV11 = Readonly<{
+export type RawCreMemorizedSpellV11 = Readonly<{
   spell: string;
   memorization: MemorizationV11[];
 }>;

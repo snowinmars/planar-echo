@@ -1,11 +1,11 @@
-export type Rectangle = Readonly<{
+export type RawPvrRectangle = Readonly<{
   x: number;
   y: number;
   width: number;
   height: number;
 }>;
 
-export type RgbaImage = Readonly<{
+export type RawPvrRgbaImage = Readonly<{
   width: number;
   height: number;
   data: Buffer;

@@ -2,9 +2,9 @@ import { nothing } from '@planar/shared';
 import { extendMap, tlkItemLengthBytes } from './2.parseItemsV1.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { TlkItem } from './2.parseItemsV1.types.js';
+import type { RawTlkItem } from './2.parseItemsV1.types.js';
 
-const parseTlkItem = (i: number, reader: BufferReader): Omit<TlkItem, 'text'> => {
+const parseTlkItem = (i: number, reader: BufferReader): Omit<RawTlkItem, 'text'> => {
   /* eslint-disable @stylistic/no-multi-spaces */
   const flags         = reader.map.ushort(extendMap.flags.parseFlags);
   const soundResRef   = reader.string(8) || nothing();
@@ -36,8 +36,8 @@ export const parseItemsV1 = ({
   headerLengthBytes,
   stringOffset,
   stringCount,
-}: ParseItemV1Props): Map<number, TlkItem> => {
-  const itemsMap = new Map<number, TlkItem>();
+}: ParseItemV1Props): Map<number, RawTlkItem> => {
+  const itemsMap = new Map<number, RawTlkItem>();
 
   const stringBlockStart = stringOffset;
 

@@ -4,5 +4,5 @@ export { parseSpellMemorizationInfosV10 } from './3.parseSpellMemorizationInfosV
 export { parseMemorizedSpellsTableV10 } from './4.parseMemorizedSpellsTableV10.js';
 export { parseEffectsV10 } from './5.parseEffectsV10.js';
 export { parseEffectsV20 } from './5.parseEffectsV20.js';
-export { parseCreatureItemsV10 } from './6.parseCreatureItemsV10.js';
+export { parseCreItemsV10 } from './6.parseCreItemsV10.js';
 export { parseItemSlotsV10 } from './7.parseItemSlotsV10.js';

@@ -24,7 +24,7 @@ export const extendMap = {
 };
 
 export const tlkItemLengthBytes = 26;
-export type TlkItem = Readonly<{
+export type RawTlkItem = Readonly<{
   index: number;
   flags: FlagsV10[];
   soundResRef: Maybe<string>;

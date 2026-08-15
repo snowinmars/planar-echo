@@ -2,10 +2,10 @@ import { just, maybe } from '@planar/shared';
 import { parseParameterValues } from './parseParameterValues.js';
 import { TR_TOKEN } from './tokens.js';
 
-import type { BcsStream } from '../bcsStream.types.js';
-import type { ParsedBcsTrigger } from '../bytecode.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
+import type { RawBcsTrigger } from './parseTr.types.js';
 
-export const parseTr = (stream: BcsStream): ParsedBcsTrigger => {
+export const parseTr = (stream: RawBcsStream): RawBcsTrigger => {
   const { ints, strings, objects } = parseParameterValues({
     stream,
     closingToken: TR_TOKEN,

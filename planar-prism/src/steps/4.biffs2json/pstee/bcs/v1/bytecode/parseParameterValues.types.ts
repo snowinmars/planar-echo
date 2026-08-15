@@ -1,18 +1,7 @@
-import type { BcsStream } from '../bcsStream.types.js';
-import type { ParsedBcsObject } from '../bytecode.types.js';
+import type { RawBcsObject } from './parseOb.types.js';
 
-export type ParsedParameters = Readonly<{
+export type RawBcsParsedParameters = Readonly<{
   ints: number[];
   strings: string[];
-  objects: ParsedBcsObject[];
-}>;
-type ParameterLimits = Readonly<{
-  ints: number;
-  strings: number;
-  objects: number;
-}>;
-export type ParseParameterValuesProps = Readonly<{
-  stream: BcsStream;
-  closingToken: string;
-  limits: ParameterLimits;
+  objects: RawBcsObject[];
 }>;

@@ -9,11 +9,11 @@ import { parsePointSelectV1 } from './parsePointSelectV1.js';
 import { parseDecOrThrow, parseDecOrDefault } from './shared.js';
 
 import type { PartialWriteable, Maybe } from '@planar/shared';
-import type { CreatureIniSection } from './parseCreatureSectionV1.types.js';
-import type { Section } from '../../iniParser/iniParserTypes.js';
+import type { RawIniCreatureIniSection } from './parseCreatureSectionV1.types.js';
+import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
 
-export const parseCreatureSectionV1 = (section: Section): Maybe<CreatureIniSection> => {
-  const tmp: PartialWriteable<CreatureIniSection> = {};
+export const parseCreatureSectionV1 = (section: RawIniSection): Maybe<RawIniCreatureIniSection> => {
+  const tmp: PartialWriteable<RawIniCreatureIniSection> = {};
 
   for (const entry of section.entries) {
   /* eslint-disable @stylistic/no-multi-spaces */

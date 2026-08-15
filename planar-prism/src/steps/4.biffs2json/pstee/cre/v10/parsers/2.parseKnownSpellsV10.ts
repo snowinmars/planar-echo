@@ -1,9 +1,9 @@
 import { extendMap } from './2.parseKnownSpellsV10.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { KnownSpellV10 } from './2.parseKnownSpellsV10.types.js';
+import type { RawCreKnownSpellV10 } from './2.parseKnownSpellsV10.types.js';
 
-const parse = (reader: BufferReader): KnownSpellV10 => {
+const parse = (reader: BufferReader): RawCreKnownSpellV10 => {
   const spell = reader.string(8);
   const level = reader.short();
   const type = reader.map.short(extendMap.type.parse);
@@ -22,9 +22,9 @@ type ParseKnownSpellsV10Props = Readonly<{
 export const parseKnownSpellsV10 = ({
   reader,
   count,
-}: ParseKnownSpellsV10Props): KnownSpellV10[] => {
+}: ParseKnownSpellsV10Props): RawCreKnownSpellV10[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
   const r = reader.fork();
-  return Array.from<never, KnownSpellV10>({ length: count }, () => parse(r));
+  return Array.from<never, RawCreKnownSpellV10>({ length: count }, () => parse(r));
 };

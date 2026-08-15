@@ -1,11 +1,11 @@
 import { nothing } from '@planar/shared';
 import { findEntry } from './shared.js';
 
-import type { Section } from '../../iniParser/iniParserTypes.js';
-import type { SoundsIniSection } from './parseSoundsSectionV1.types.js';
+import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
+import type { RawIniSoundsIniSection } from './parseSoundsSectionV1.types.js';
 import type { Maybe } from '@planar/shared';
 
-export const parseSoundsSectionV1 = (section: Section): Maybe<SoundsIniSection> => {
+export const parseSoundsSectionV1 = (section: RawIniSection): Maybe<RawIniSoundsIniSection> => {
   if (section.name !== 'sounds') throw new Error(`Expect section '${section.name}' to be 'sounds' section`);
 
   /* eslint-disable @stylistic/no-multi-spaces */

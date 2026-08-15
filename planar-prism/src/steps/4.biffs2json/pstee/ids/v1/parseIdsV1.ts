@@ -1,7 +1,7 @@
 import createReader from '@/shared/bufferReader.js';
 import { parseKeyValueV1 } from './parsers/index.js';
 
-import type { Ids } from '../types.js';
+import type { RawIds } from '../parseIds.types.js';
 
 type ParseIdsV1Props = Readonly<{
   buffer: Buffer;
@@ -10,7 +10,7 @@ type ParseIdsV1Props = Readonly<{
 export const parseIdsV1 = ({
   buffer,
   resourceName,
-}: ParseIdsV1Props): Ids => {
+}: ParseIdsV1Props): RawIds => {
   const reader = createReader(buffer);
   const parsed = parseKeyValueV1({
     lines: reader.readLineByLine(),

@@ -255,7 +255,7 @@ export const extendMap = {
   savingThrowType: extend(savingThrowTypeV10),
 };
 
-export type AbstractEffectV10 = Readonly<{
+export type RawItmAbstractEffectV10 = Readonly<{
   target: TargetV10;
   power: number;
   // custom1
@@ -273,359 +273,359 @@ export type AbstractEffectV10 = Readonly<{
   // custom3
 }>;
 
-export type EffectOpCode0V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode0V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'acBonus'; acvalue: number; bonusTo: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode1V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode1V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'modifyAttacksPerRound'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode3V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode3V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'berserk'; /* unused4; */ berserkType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode6V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode6V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'charismaBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode7V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode7V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'setColor'; color: number; location: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode9V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode9V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'setColorGlowPulse'; color: number; location: number; cycleSpeed: number; /* unused8; */
   spe: number;
 }>;
-export type EffectOpCode10V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode10V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'consitutionBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode11V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode11V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'curePoison'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode12V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode12V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'damage'; amount: number; mode: number; damageType: number; /* unused8; */ flags: number;
 }>;
-export type EffectOpCode15V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode15V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'dexterityBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode16V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode16V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'haste'; /* unused4 */ hasteType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode17V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode17V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'currentHpBonus'; value: number; modifierType: number; healFlags: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode18V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode18V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'maximumHpBonus'; value: number; modifierType: number; /* unused8; */ mode: number;
 }>;
-export type EffectOpCode19V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode19V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'intelligenceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode20V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode20V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'invisibility'; /* unused4 */ invisibilityType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode21V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode21V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'loreBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode22V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode22V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'luckBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode23V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode23V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'moraleBonus'; /* unused4; */ /* unused4; */ /* unused8; */ mode: number;
 }>;
-export type EffectOpCode24V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode24V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'panic'; /* unused4; */ panicType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode25V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode25V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'poison'; amount: number; poisonType: number; /* unused8; */ icon: number;
 }>;
-export type EffectOpCode27V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode27V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'acidResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode28V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode28V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'coldResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode29V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode29V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'electricityResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode30V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode30V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'fireResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode33V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode33V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'saveVsDeathBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode34V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode34V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'saveVsWandBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode35V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode35V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'saveVsPolymorphBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode36V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode36V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'saveVsBreathBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode37V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode37V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'saveVsSpellBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode38V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode38V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'silence'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode41V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode41V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'sparkle'; amount: number; particleEffect: number; resource: string; spe: number;
 }>;
-export type EffectOpCode42V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode42V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'bonusWizardSpell'; amountSpellsToAdd: number; spellLevels: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode44V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode44V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'strengthBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode45V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode45V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'stun'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode49V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode49V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'wisdomBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode54V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode54V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'baseThac0Bonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode59V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode59V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'moveSilentlyBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode62V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode62V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'bonusPriestSpell'; amountSpellsToAdd: number; spellLevels: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode65V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode65V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'blur'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode66V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode66V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'translucency'; fadeAmount: number; visualEffect: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode73V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode73V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'attackDamageBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode74V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode74V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'blindness'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode83V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode83V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'immunityToProjectile'; /* unused4; */ projectile: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode84V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode84V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'magicalFireResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode85V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode85V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'magicalColdResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode86V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode86V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'slashingResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode87V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode87V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'crushingResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode88V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode88V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'piercingResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode89V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode89V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'missileResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode90V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode90V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'openLockBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode91V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode91V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'findTrapBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode92V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode92V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'pickPocketBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode93V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode93V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'fatigueBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode94V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode94V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'intoxicationBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode97V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode97V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'exceptionalStrengthBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode98V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode98V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'regeneration'; value: number; regenerationType: number; /* unused8; */ icon: number;
 }>;
-export type EffectOpCode101V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode101V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'immunityToEffect'; /* unused4; */ effect: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode104V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode104V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'xpBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode105V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode105V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'removeGold'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode106V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode106V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'moraleBreak'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode109V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode109V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'paralyze'; idsValue: number; idsTarget: number; /* unused8; */ effect: number;
 }>;
-export type EffectOpCode120V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode120V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'immunityToWeapons'; maximumEnchantment: number; weaponType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode128V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode128V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'confusion'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode138V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode138V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'setAnimationSequence'; /* unused4; */ sequence: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode146V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode146V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'castSpell'; castAtLevel: number; mode: number; resource: string; spe: number;
 }>;
-export type EffectOpCode147V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode147V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'learnSpell'; /* unused4; */ /* unused4; */ resource: string; spe: number;
 }>;
-export type EffectOpCode148V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode148V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'castSpellAtPoint'; castAtLevel: number; mode: number; resource: string; spe: number;
 }>;
-export type EffectOpCode159V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode159V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'mirrorImageEffect'; imagesCount: number; /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode161V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode161V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'removeFear'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode166V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode166V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'magicResistanceBonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode169V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode169V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'preventPortraitIcon'; /* unused4; */ icon: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode173V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode173V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'poisonResistanceBonus'; value: number; /* unused4; */ /* unused8; */ spe: number; }>;
-export type EffectOpCode174V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode174V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'playSound'; /* unused4; */ /* unused4; */ resource: string; spe: number;
 }>;
-export type EffectOpCode206V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode206V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'protectionmFromSpell'; stringRef: number; stringTlk: string; /* unused4; */ resource: string; spe: number;
 }>;
-export type EffectOpCode208V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode208V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'minimumHp'; hpAmount: number; /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode215V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode215V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'playVisualEffect'; /* unused4; */ playwhere: number; resource: string; spe: number;
 }>;
-export type EffectOpCode267V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode267V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'disableDisplayString'; stringRef: number; stringTlk: string; /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode269V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode269V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'shakeScreen'; strength: number; /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode278V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode278V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'thac0Bonus'; value: number; modifierType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode296V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode296V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'immunityToSpecificAnimation'; /* unused4; */ /* unused4; */ resource: string; spe: number;
 }>;
-export type EffectOpCode297V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode297V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'immunityToTurnUndead'; /* unused4; */ statValue: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode301V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode301V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'criticalHitBonus'; value: number; condition: number; /* unused8; */ attackType: number;
 }>;
-export type EffectOpCode319V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode319V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'restrictItem'; /* unused4; */ idsTarget: number; /* unused8; */ descriptionNoteRef: number; descriptionNoteTlk: string;
 }>;
-export type EffectOpCode354V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode354V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'flashScreen'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode355V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode355V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'soulExodus'; /* unused4; */ /* unused4; */ /* unused8; */ spe: number;
 }>;
-export type EffectOpCode369V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode369V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'playBamFile'; color: number; method: number; resource: string; spe: number;
 }>;
-export type EffectOpCode380V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode380V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'embalm'; /* unused4; */ embalmingType: number; /* unused8; */ spe: number;
 }>;
-export type EffectOpCode383V10 = AbstractEffectV10 & Readonly<{
+export type RawItmEffectOpCode383V10 = RawItmAbstractEffectV10 & Readonly<{
   opcode: 'hitPointTransfer'; amount: number; direction: number; damageType: number; /* unused8; */
   spe: number;
 }>;
 
-export type EffectV10
-  = | EffectOpCode0V10
-    | EffectOpCode1V10
-    | EffectOpCode3V10
-    | EffectOpCode6V10
-    | EffectOpCode7V10
-    | EffectOpCode9V10
-    | EffectOpCode10V10
-    | EffectOpCode11V10
-    | EffectOpCode12V10
-    | EffectOpCode15V10
-    | EffectOpCode16V10
-    | EffectOpCode17V10
-    | EffectOpCode18V10
-    | EffectOpCode19V10
-    | EffectOpCode20V10
-    | EffectOpCode21V10
-    | EffectOpCode22V10
-    | EffectOpCode23V10
-    | EffectOpCode24V10
-    | EffectOpCode25V10
-    | EffectOpCode27V10
-    | EffectOpCode28V10
-    | EffectOpCode29V10
-    | EffectOpCode30V10
-    | EffectOpCode33V10
-    | EffectOpCode34V10
-    | EffectOpCode35V10
-    | EffectOpCode36V10
-    | EffectOpCode37V10
-    | EffectOpCode38V10
-    | EffectOpCode41V10
-    | EffectOpCode42V10
-    | EffectOpCode44V10
-    | EffectOpCode45V10
-    | EffectOpCode49V10
-    | EffectOpCode54V10
-    | EffectOpCode59V10
-    | EffectOpCode62V10
-    | EffectOpCode65V10
-    | EffectOpCode66V10
-    | EffectOpCode73V10
-    | EffectOpCode74V10
-    | EffectOpCode83V10
-    | EffectOpCode84V10
-    | EffectOpCode85V10
-    | EffectOpCode86V10
-    | EffectOpCode87V10
-    | EffectOpCode88V10
-    | EffectOpCode89V10
-    | EffectOpCode90V10
-    | EffectOpCode91V10
-    | EffectOpCode92V10
-    | EffectOpCode93V10
-    | EffectOpCode94V10
-    | EffectOpCode97V10
-    | EffectOpCode98V10
-    | EffectOpCode101V10
-    | EffectOpCode104V10
-    | EffectOpCode105V10
-    | EffectOpCode106V10
-    | EffectOpCode109V10
-    | EffectOpCode120V10
-    | EffectOpCode128V10
-    | EffectOpCode138V10
-    | EffectOpCode146V10
-    | EffectOpCode147V10
-    | EffectOpCode148V10
-    | EffectOpCode159V10
-    | EffectOpCode161V10
-    | EffectOpCode166V10
-    | EffectOpCode169V10
-    | EffectOpCode173V10
-    | EffectOpCode174V10
-    | EffectOpCode206V10
-    | EffectOpCode208V10
-    | EffectOpCode215V10
-    | EffectOpCode267V10
-    | EffectOpCode269V10
-    | EffectOpCode278V10
-    | EffectOpCode296V10
-    | EffectOpCode297V10
-    | EffectOpCode301V10
-    | EffectOpCode319V10
-    | EffectOpCode354V10
-    | EffectOpCode355V10
-    | EffectOpCode369V10
-    | EffectOpCode380V10
-    | EffectOpCode383V10
+export type RawItmEffectV10
+  = | RawItmEffectOpCode0V10
+    | RawItmEffectOpCode1V10
+    | RawItmEffectOpCode3V10
+    | RawItmEffectOpCode6V10
+    | RawItmEffectOpCode7V10
+    | RawItmEffectOpCode9V10
+    | RawItmEffectOpCode10V10
+    | RawItmEffectOpCode11V10
+    | RawItmEffectOpCode12V10
+    | RawItmEffectOpCode15V10
+    | RawItmEffectOpCode16V10
+    | RawItmEffectOpCode17V10
+    | RawItmEffectOpCode18V10
+    | RawItmEffectOpCode19V10
+    | RawItmEffectOpCode20V10
+    | RawItmEffectOpCode21V10
+    | RawItmEffectOpCode22V10
+    | RawItmEffectOpCode23V10
+    | RawItmEffectOpCode24V10
+    | RawItmEffectOpCode25V10
+    | RawItmEffectOpCode27V10
+    | RawItmEffectOpCode28V10
+    | RawItmEffectOpCode29V10
+    | RawItmEffectOpCode30V10
+    | RawItmEffectOpCode33V10
+    | RawItmEffectOpCode34V10
+    | RawItmEffectOpCode35V10
+    | RawItmEffectOpCode36V10
+    | RawItmEffectOpCode37V10
+    | RawItmEffectOpCode38V10
+    | RawItmEffectOpCode41V10
+    | RawItmEffectOpCode42V10
+    | RawItmEffectOpCode44V10
+    | RawItmEffectOpCode45V10
+    | RawItmEffectOpCode49V10
+    | RawItmEffectOpCode54V10
+    | RawItmEffectOpCode59V10
+    | RawItmEffectOpCode62V10
+    | RawItmEffectOpCode65V10
+    | RawItmEffectOpCode66V10
+    | RawItmEffectOpCode73V10
+    | RawItmEffectOpCode74V10
+    | RawItmEffectOpCode83V10
+    | RawItmEffectOpCode84V10
+    | RawItmEffectOpCode85V10
+    | RawItmEffectOpCode86V10
+    | RawItmEffectOpCode87V10
+    | RawItmEffectOpCode88V10
+    | RawItmEffectOpCode89V10
+    | RawItmEffectOpCode90V10
+    | RawItmEffectOpCode91V10
+    | RawItmEffectOpCode92V10
+    | RawItmEffectOpCode93V10
+    | RawItmEffectOpCode94V10
+    | RawItmEffectOpCode97V10
+    | RawItmEffectOpCode98V10
+    | RawItmEffectOpCode101V10
+    | RawItmEffectOpCode104V10
+    | RawItmEffectOpCode105V10
+    | RawItmEffectOpCode106V10
+    | RawItmEffectOpCode109V10
+    | RawItmEffectOpCode120V10
+    | RawItmEffectOpCode128V10
+    | RawItmEffectOpCode138V10
+    | RawItmEffectOpCode146V10
+    | RawItmEffectOpCode147V10
+    | RawItmEffectOpCode148V10
+    | RawItmEffectOpCode159V10
+    | RawItmEffectOpCode161V10
+    | RawItmEffectOpCode166V10
+    | RawItmEffectOpCode169V10
+    | RawItmEffectOpCode173V10
+    | RawItmEffectOpCode174V10
+    | RawItmEffectOpCode206V10
+    | RawItmEffectOpCode208V10
+    | RawItmEffectOpCode215V10
+    | RawItmEffectOpCode267V10
+    | RawItmEffectOpCode269V10
+    | RawItmEffectOpCode278V10
+    | RawItmEffectOpCode296V10
+    | RawItmEffectOpCode297V10
+    | RawItmEffectOpCode301V10
+    | RawItmEffectOpCode319V10
+    | RawItmEffectOpCode354V10
+    | RawItmEffectOpCode355V10
+    | RawItmEffectOpCode369V10
+    | RawItmEffectOpCode380V10
+    | RawItmEffectOpCode383V10
 ;

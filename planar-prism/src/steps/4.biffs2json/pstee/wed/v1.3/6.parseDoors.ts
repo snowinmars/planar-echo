@@ -1,5 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { WedDoor } from './6.parseDoors.types.js';
+import type { RawWedDoor } from './6.parseDoors.types.js';
 import { parsePolygons } from './5.parsePolygons.js';
 
 type ParseDoorProps = Readonly<{
@@ -9,7 +9,7 @@ type ParseDoorProps = Readonly<{
 const parseDoor = ({
   reader,
   doorsTileCellsOffset,
-}: ParseDoorProps): WedDoor => {
+}: ParseDoorProps): RawWedDoor => {
   const name = reader.string(8);
   const isOpen = reader.ushort() === 0; // yes: open is 0 / closed is 1
   const firstDoorTileCellIndex = reader.ushort();
@@ -62,7 +62,7 @@ export const parseDoors = ({
   count,
   doorsTileCellsOffset,
 }: ParseDoorsProps) => {
-  const doors: WedDoor[] = [];
+  const doors: RawWedDoor[] = [];
 
   for (let i = 0; i < count; i++) {
     doors.push(parseDoor({

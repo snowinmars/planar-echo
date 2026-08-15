@@ -4,9 +4,9 @@ import { extendMap } from './3.parseResponses.types.js';
 
 import type { Maybe } from '@planar/shared';
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawResponse } from './3.parseResponses.types.js';
+import type { RawDlgResponse } from './3.parseResponses.types.js';
 
-const parse = (reader: BufferReader, index: number): RawResponse => {
+const parse = (reader: BufferReader, index: number): RawDlgResponse => {
   const flags = reader.map.uint(extendMap.flags.parseFlags);
 
   let textRef: Maybe<number> = normalizeRef(reader.uint());
@@ -21,11 +21,11 @@ const parse = (reader: BufferReader, index: number): RawResponse => {
   let actionIndex: Maybe<number> = normalizeRef(reader.uint());
   if (!flags.includes('has action')) actionIndex = nothing();
 
-  let nextDialog: Maybe<string> = reader.string(8);
-  let nextDialogState: Maybe<number> = reader.uint();
+  let nextDlg: Maybe<string> = reader.string(8);
+  let nextDlgState: Maybe<number> = reader.uint();
   if (flags.includes('terminates dialog')) {
-    nextDialog = nothing();
-    nextDialogState = nothing();
+    nextDlg = nothing();
+    nextDlgState = nothing();
   }
 
   return {
@@ -35,8 +35,8 @@ const parse = (reader: BufferReader, index: number): RawResponse => {
     journalRef,
     triggerIndex,
     actionIndex,
-    nextDialog,
-    nextDialogState,
+    nextDlg,
+    nextDlgState,
   };
 };
 
@@ -47,9 +47,9 @@ type ParseResponsesProps = Readonly<{
 export const parseResponses = ({
   reader,
   count,
-}: ParseResponsesProps): RawResponse[] => {
+}: ParseResponsesProps): RawDlgResponse[] => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/dlg_v1.htm
 
   const r = reader.fork();
-  return Array.from<never, RawResponse>({ length: count }, (_, i) => parse(r, i));
+  return Array.from<never, RawDlgResponse>({ length: count }, (_, i) => parse(r, i));
 };

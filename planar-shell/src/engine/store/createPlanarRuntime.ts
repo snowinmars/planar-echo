@@ -1,17 +1,17 @@
 import { createStore } from 'zustand/vanilla';
 import { nothing } from '@planar/shared';
-import { createDialogueStore } from '@/components/runners/Dialogue/store/dialogueStore';
-import { createDialogueViewStore } from '@/components/runners/Dialogue/store/dialogueViewStore';
-import { createGameHistoryStore } from '@/components/runners/Dialogue/store/gameHistoryStore';
-import { createLocalStorageStore } from '@/components/runners/Dialogue/store/localStorageStore';
-import { createTlkStore } from '@/components/runners/Dialogue/store/tlkStore';
+import { createDlgStore } from '@/components/runners/Dlg/store/dlgStore';
+import { createDlgViewStore } from '@/components/runners/Dlg/store/dlgViewStore';
+import { createGameHistoryStore } from '@/components/runners/Dlg/store/gameHistoryStore';
+import { createLocalStorageStore } from '@/components/runners/Dlg/store/localStorageStore';
+import { createTlkStore } from '@/components/runners/Dlg/store/tlkStore';
 import { planarStoreId } from './planarRuntime.types';
 
 import type { StoreApi } from 'zustand/vanilla';
-import type { DialogueViewStore } from '@/components/runners/Dialogue/store/dialogueViewStore.types';
-import type { GameHistoryStore } from '@/components/runners/Dialogue/store/gameHistoryStore.types';
-import type { LocalStorageStore } from '@/components/runners/Dialogue/store/localStorageStore.types';
-import type { TlkStore } from '@/components/runners/Dialogue/store/tlkStore.types';
+import type { DlgViewStore } from '@/components/runners/Dlg/store/dlgViewStore.types';
+import type { GameHistoryStore } from '@/components/runners/Dlg/store/gameHistoryStore.types';
+import type { LocalStorageStore } from '@/components/runners/Dlg/store/localStorageStore.types';
+import type { TlkStore } from '@/components/runners/Dlg/store/tlkStore.types';
 import type {
   DisposeFunction,
   PlanarRuntime,
@@ -36,14 +36,14 @@ const definitions: Record<PlanarStoreId, StoreDefinition> = {
     create: runtime => createStore(createGameHistoryStore(runtime)),
     start: store => (store as StoreApi<GameHistoryStore>).getState().start(),
   },
-  [planarStoreId.dialogue]: {
+  [planarStoreId.dlg]: {
     dependencies: [planarStoreId.localStorage, planarStoreId.tlk, planarStoreId.gameHistory],
-    create: runtime => createStore(createDialogueStore(runtime)),
+    create: runtime => createStore(createDlgStore(runtime)),
   },
-  [planarStoreId.dialogueView]: {
-    dependencies: [planarStoreId.dialogue, planarStoreId.localStorage, planarStoreId.tlk],
-    create: runtime => createStore(createDialogueViewStore(runtime)),
-    start: store => (store as StoreApi<DialogueViewStore>).getState().start(),
+  [planarStoreId.dlgView]: {
+    dependencies: [planarStoreId.dlg, planarStoreId.localStorage, planarStoreId.tlk],
+    create: runtime => createStore(createDlgViewStore(runtime)),
+    start: store => (store as StoreApi<DlgViewStore>).getState().start(),
   },
 };
 

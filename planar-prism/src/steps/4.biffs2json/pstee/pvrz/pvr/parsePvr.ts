@@ -1,7 +1,11 @@
-import type { BufferReader } from '@/shared/bufferReader.js';
-import { PVR_SIGNATURE } from './pvrFormats.js';
+import { PVR_SIGNATURE } from './parsePvr.types.js';
 
-import type { PixelPvr, PvrPixelFormat } from '../types.js';
+import type { BufferReader } from '@/shared/bufferReader.js';
+import type { RawPvrPixelFormat } from '../parsePvrzs.types.js';
+import type { RawPvrPixelPvr } from './parsePvr.types.js';
+
+const DXT1_PIXEL_FORMAT = 7;
+const DXT5_PIXEL_FORMAT = 11;
 
 type DetectPixelFormatProps = Readonly<{
   resourceName: string;
@@ -12,16 +16,16 @@ const detectPixelFormat = ({
   resourceName,
   high,
   low,
-}: DetectPixelFormatProps): PvrPixelFormat => {
+}: DetectPixelFormatProps): RawPvrPixelFormat => {
   if (high !== 0) return 'dxt1';
   switch (low) {
-    case 7: return 'dxt1';
-    case 11: return 'dxt5';
+    case DXT1_PIXEL_FORMAT: return 'dxt1';
+    case DXT5_PIXEL_FORMAT: return 'dxt5';
     default: throw new Error(`Unsupported pvr pixelFormat: high='${high}', low='${low}' for resource '${resourceName}'`);
   }
 };
 
-export const parsePvr = (reader: BufferReader, resourceName: string): PixelPvr => {
+export const parsePvr = (reader: BufferReader, resourceName: string): RawPvrPixelPvr => {
   const initialOffset = reader.offset;
 
   const signature = reader.uint();

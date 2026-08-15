@@ -3,16 +3,23 @@ import { parseNumber } from './parseNumber.js';
 import { parseOb } from './parseOb.js';
 import { parseString } from './parseString.js';
 
-import type {
-  ParsedParameters,
-  ParseParameterValuesProps,
-} from './parseParameterValues.types.js';
+import type { RawBcsParsedParameters } from './parseParameterValues.types.js';
+import type { RawBcsStream } from '../bcsStream.types.js';
 
+type RawBcsParseParameterValuesProps = Readonly<{
+  stream: RawBcsStream;
+  closingToken: string;
+  limits: Readonly<{
+    ints: number;
+    strings: number;
+    objects: number;
+  }>;
+}>;
 export const parseParameterValues = ({
   stream,
   closingToken,
   limits,
-}: ParseParameterValuesProps): ParsedParameters => {
+}: RawBcsParseParameterValuesProps): RawBcsParsedParameters => {
   const ints: number[] = [];
   const strings: string[] = [];
   const objects = [];

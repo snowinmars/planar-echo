@@ -21,7 +21,7 @@ export const extendMap = {
   threatResponse: extend(threatResponseV10),
 };
 
-export type RawHeader = Readonly<{
+export type RawDlgHeader = Readonly<{
   signature: 'dlg';
   version: 'v1.0';
   statesCount: number;

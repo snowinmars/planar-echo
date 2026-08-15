@@ -159,7 +159,7 @@ export const extendMap = {
   parentResourceFlags: extend(parentResourceFlagsV20),
 };
 
-export type EffectV20 = Readonly<{
+export type RawCreEffectV20 = Readonly<{
   signature: string;
   version: string;
   type: number;

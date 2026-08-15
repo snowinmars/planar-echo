@@ -3,8 +3,8 @@ import { useStore } from 'zustand';
 import { createPlanarRuntime } from './createPlanarRuntime';
 import { planarStoreId } from './planarRuntime.types';
 
-import type { LocalStorageStore } from '@/components/runners/Dialogue/store/localStorageStore.types';
-import type { TlkStore } from '@/components/runners/Dialogue/store/tlkStore.types';
+import type { LocalStorageStore } from '@/components/runners/Dlg/store/localStorageStore.types';
+import type { TlkStore } from '@/components/runners/Dlg/store/tlkStore.types';
 import type { PlanarRuntime, PlanarStoreId } from './planarRuntime.types';
 
 export const planarCoreModules = [

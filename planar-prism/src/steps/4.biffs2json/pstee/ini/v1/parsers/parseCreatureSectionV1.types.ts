@@ -1,20 +1,20 @@
 import type { Direction } from '@planar/shared';
-import type { CreatureIniPointSelect } from './parsePointSelectV1.types.js';
-import type { CreatureIniScopedVariable } from './parseScopedVariableV1.types.js';
-import type { CreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';
-import type { CreatureIniSpecArea } from './parseSpecAreaV1.types.js';
-import type { CreatureIniSpec } from './parseSpecV1.types.js';
-import type { CreatureIniSpecVarOperation } from './parseSpecVarOperationV1.types.js';
+import type { RawIniCreatureIniPointSelect } from './parsePointSelectV1.types.js';
+import type { RawIniCreatureIniScopedVariable } from './parseScopedVariableV1.types.js';
+import type { RawIniCreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';
+import type { RawIniCreatureIniSpecArea } from './parseSpecAreaV1.types.js';
+import type { RawIniCreatureIniSpec } from './parseSpecV1.types.js';
+import type { RawIniCreatureIniSpecVarOperation } from './parseSpecVarOperationV1.types.js';
 
-export type CreatureIniSection = Readonly<{
+export type RawIniCreatureIniSection = Readonly<{
   name: string;
-  specVar: CreatureIniScopedVariable;
-  spec: string | CreatureIniSpec;
-  specArea: CreatureIniSpecArea;
+  specVar: RawIniCreatureIniScopedVariable;
+  spec: string | RawIniCreatureIniSpec;
+  specArea: RawIniCreatureIniSpecArea;
   specQty: number;
   specVarInc: number;
   specVarValue: number;
-  specVarOperation: CreatureIniSpecVarOperation;
+  specVarOperation: RawIniCreatureIniSpecVarOperation;
   areaDiff1: boolean;
   areaDiff2: boolean;
   areaDiff3: boolean;
@@ -51,17 +51,17 @@ export type CreatureIniSection = Readonly<{
   deathScriptname: boolean;
   deathFaction: boolean;
   deathTeam: boolean;
-  spawnPoint: CreatureIniSpawnPoint[];
-  pointSelect: CreatureIniPointSelect;
-  pointSelectVar: CreatureIniScopedVariable;
+  spawnPoint: RawIniCreatureIniSpawnPoint[];
+  pointSelect: RawIniCreatureIniPointSelect;
+  pointSelectVar: RawIniCreatureIniScopedVariable;
   facing: Direction;
   ignoreCanSee: boolean;
   checkCrowd: boolean;
   findSafestPoint: boolean;
-  saveSelectedPoint: CreatureIniScopedVariable;
-  saveSelectedFacing: CreatureIniScopedVariable;
-  spawnPointGlobal: CreatureIniScopedVariable;
-  spawnFacingGlobal: CreatureIniScopedVariable;
+  saveSelectedPoint: RawIniCreatureIniScopedVariable;
+  saveSelectedFacing: RawIniCreatureIniScopedVariable;
+  spawnPointGlobal: RawIniCreatureIniScopedVariable;
+  spawnFacingGlobal: RawIniCreatureIniScopedVariable;
   incSpawnPointIndex: boolean;
   holdSelectedPointKey: boolean;
   checkByViewPort: boolean;

@@ -1,2 +1,3 @@
 export { parseIds } from './parseIds.js';
-export type { Ids } from './types.js';
+
+export type { RawIds } from './parseIds.types.js';

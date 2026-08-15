@@ -21,7 +21,7 @@ export const extendMap = {
   drawOverlay: extend(drawOverlayV10),
 };
 
-export type WedTilemap = Readonly<{
+export type RawWedTilemap = Readonly<{
   tileIndexLookupStart: number;
   tileIndexLookupCount: number;
   secondaryTileIndex: number;
@@ -30,7 +30,7 @@ export type WedTilemap = Readonly<{
   tileIndices: number[]; // seems redundand, because without animation always has 1 number, that is equal to tileIndexLookupStart // TODO [snow]: deal with it
 }>;
 
-export type WedOverlay = Readonly<{
+export type RawWedOverlay = Readonly<{
   width: number;
   height: number;
   tileset: string;
@@ -38,5 +38,5 @@ export type WedOverlay = Readonly<{
   movementType: number;
   tilemapOffset: number;
   tileIndexLookupOffset: number;
-  tilemaps: WedTilemap[];
+  tilemaps: RawWedTilemap[];
 }>;

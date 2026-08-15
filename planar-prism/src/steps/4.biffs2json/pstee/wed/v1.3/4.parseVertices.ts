@@ -1,7 +1,7 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { WedVertex } from './4.parseVertices.types.js';
+import type { RawWedVertex } from './4.parseVertices.types.js';
 
-const parseVertex = (reader: BufferReader): WedVertex => ({
+const parseVertex = (reader: BufferReader): RawWedVertex => ({
   x: reader.short(),
   y: reader.short(),
 });
@@ -13,8 +13,8 @@ type ParseVerticesProps = Readonly<{
 export const parseVertices = ({
   reader,
   count,
-}: ParseVerticesProps): WedVertex[] => {
-  const vertices: WedVertex[] = [];
+}: ParseVerticesProps): RawWedVertex[] => {
+  const vertices: RawWedVertex[] = [];
 
   for (let i = 0; i < count; i++) {
     const vertex = parseVertex(reader);
