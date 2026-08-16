@@ -187,16 +187,6 @@ dist
 # build target dir
 **/PlanescapeTormentRmk-*-dists
 
-# Below is a image pack, that stores as a separate project and that should be installed separatelly
-**/animations/*
-!**/animations/animations.rpy
-**/audio/
-**/bg/
-**/fonts/
-**/gui/
-**/images/
-**/music/
-**/sound/
 src/sources/
 src/htmlcov/
 

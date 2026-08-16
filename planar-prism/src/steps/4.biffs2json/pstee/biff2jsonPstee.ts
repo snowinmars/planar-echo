@@ -11,6 +11,11 @@ import { parseWeds } from './wed/index.js';
 import { parsePvrzs } from './pvrz/index.js';
 import { parseTiss } from './tis/index.js';
 import { parseMoss, isMosV1Artifacts } from './mos/index.js';
+import { parseBams, isBamV1Artifacts } from './bam/index.js';
+import { parseBmps, isBmpPalettedArtifacts } from './bmp/index.js';
+import { parseWavs } from './wav/index.js';
+import { parseAcms } from './acm/index.js';
+import { parseMuss } from './mus/index.js';
 import { decodePvrToRgba } from './pvrz/decode/index.js';
 import { isPaletteArtfact } from './tis/v1/parseTisV1.types.js';
 
@@ -26,6 +31,11 @@ import type { RawBcs } from './bcs/index.js';
 import type { RawWed } from './wed/index.js';
 import type { RawTis } from './tis/index.js';
 import type { RawMos } from './mos/index.js';
+import type { RawBam } from './bam/index.js';
+import type { RawBmp } from './bmp/index.js';
+import type { RawWav } from './wav/index.js';
+import type { RawAcm } from './acm/index.js';
+import type { RawMus } from './mus/index.js';
 import type { AllPsteeJsons } from '../types.js';
 import type { RawPvr } from './pvrz/index.js';
 import type { RawPvrRgbaImage } from './pvrz/decode/index.js';
@@ -162,6 +172,21 @@ const biffs2jsonPstee = async (
 
   ///
 
+  logger.info(`Converting bam to json...`);
+  const bams: RawBam[] = [];
+  const bamsIterator = parseBams(paths, decompiledBiffs.get('bam') ?? [], pvrzRgbaIndex);
+  for await (const artifacts of bamsIterator) {
+    bams.push(artifacts.bam);
+    await paths.ghostDir.saveJson.bam(artifacts.bam.resourceName, artifacts.bam);
+    await paths.ghostDir.saveBinary.bam.image(artifacts.bam.resourceName, artifacts.png);
+    if (isBamV1Artifacts(artifacts)) {
+      await paths.ghostDir.saveBinary.bam.palette(artifacts.bam.resourceName, artifacts.palette);
+      await paths.ghostDir.saveBinary.bam.indices(artifacts.bam.resourceName, artifacts.indices);
+    }
+  }
+
+  ///
+
   logger.info(`Converting mos to json...`);
   const moss: RawMos[] = [];
   const mossIterator = parseMoss(paths, decompiledBiffs.get('mos')!, pvrzRgbaIndex);
@@ -190,6 +215,53 @@ const biffs2jsonPstee = async (
     }
   }
 
+  ///
+
+  logger.info(`Converting bmp to json...`);
+  const bmps: RawBmp[] = [];
+  const bmpsIterator = parseBmps(paths, decompiledBiffs.get('bmp') ?? []);
+  for await (const artifacts of bmpsIterator) {
+    bmps.push(artifacts.bmp);
+    await paths.ghostDir.saveJson.bmp(artifacts.bmp.resourceName, artifacts.bmp);
+    await paths.ghostDir.saveBinary.bmp.image(artifacts.bmp.resourceName, artifacts.png);
+    if (isBmpPalettedArtifacts(artifacts)) {
+      await paths.ghostDir.saveBinary.bmp.palette(artifacts.bmp.resourceName, artifacts.palette);
+      await paths.ghostDir.saveBinary.bmp.indices(artifacts.bmp.resourceName, artifacts.indices);
+    }
+  }
+
+  ///
+
+  logger.info(`Converting wav to json...`);
+  const wavs: RawWav[] = [];
+  const wavsIterator = parseWavs(paths, decompiledBiffs.get('wav') ?? []);
+  for await (const artifacts of wavsIterator) {
+    wavs.push(artifacts.wav);
+    await paths.ghostDir.saveJson.wav(artifacts.wav.resourceName, artifacts.wav);
+    await paths.ghostDir.saveBinary.wav.audio(artifacts.wav.resourceName, artifacts.pcmWav);
+  }
+
+  ///
+
+  logger.info(`Converting acm to json...`);
+  const acms: RawAcm[] = [];
+  const acmsIterator = await parseAcms(paths);
+  for await (const artifacts of acmsIterator) {
+    acms.push(artifacts.acm);
+    await paths.ghostDir.saveJson.acm(artifacts.acm.resourceName, artifacts.acm);
+    await paths.ghostDir.saveBinary.acm.audio(artifacts.acm.resourceName, artifacts.pcmWav);
+  }
+
+  ///
+
+  logger.info(`Converting mus to json...`);
+  const muss: RawMus[] = [];
+  const mussIterator = await parseMuss(paths);
+  for await (const mus of mussIterator) {
+    muss.push(mus);
+    await paths.ghostDir.saveJson.mus(mus.resourceName, mus);
+  }
+
   return {
     tlk,
     ids,
@@ -203,6 +275,11 @@ const biffs2jsonPstee = async (
     pvrs,
     moss,
     tiss,
+    bmps,
+    bams,
+    wavs,
+    acms,
+    muss,
   };
 };
 

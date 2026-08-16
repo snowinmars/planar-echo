@@ -14,6 +14,11 @@ type OutDir = Readonly<{
   pvrz: string;
   tis: string;
   mos: string;
+  bmp: string;
+  bam: string;
+  wav: string;
+  acm: string;
+  mus: string;
 }>;
 type SaveFunction = (resourceName: string, entry: unknown, asIs?: boolean) => Promise<void>;
 type SaveBinaryFunction = (resourceName: string, data: Buffer) => Promise<void>;
@@ -30,6 +35,11 @@ type OutSave = Readonly<{
   pvrz: SaveFunction;
   tis: SaveFunction;
   mos: SaveFunction;
+  bmp: SaveFunction;
+  bam: SaveFunction;
+  wav: SaveFunction;
+  acm: SaveFunction;
+  mus: SaveFunction;
 }>;
 type OutSaveBinary = Readonly<{
   tis: Readonly<{
@@ -41,6 +51,22 @@ type OutSaveBinary = Readonly<{
     image: SaveBinaryFunction;
     palette: SaveBinaryFunction;
     indices: SaveBinaryFunction;
+  }>;
+  bmp: Readonly<{
+    image: SaveBinaryFunction;
+    palette: SaveBinaryFunction;
+    indices: SaveBinaryFunction;
+  }>;
+  bam: Readonly<{
+    image: SaveBinaryFunction;
+    palette: SaveBinaryFunction;
+    indices: SaveBinaryFunction;
+  }>;
+  wav: Readonly<{
+    audio: SaveBinaryFunction;
+  }>;
+  acm: Readonly<{
+    audio: SaveBinaryFunction;
   }>;
 }>;
 export type Paths = Readonly<{

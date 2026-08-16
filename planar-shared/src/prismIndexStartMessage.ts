@@ -34,6 +34,11 @@ export const progressSteps = [
   'pvrz_raw2json', // value: number in percent; params: {version: string, resourceName: string}
   'mos_raw2json', // value: number in percent; params: {version: string, resourceName: string}
   'tis_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'bmp_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'bam_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'wav_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'acm_raw2json', // value: number in percent; params: {version: string, resourceName: string}
+  'mus_raw2json', // value: number in percent; params: {resourceName: string}
   'tlk_json2ghost', // value: number in percent; params: {index: number}
   'bcs_json2ghost', // value: number in percent; params: {resourceName: string}
   'cre_json2ghost', // value: number in percent; params: {version: string, resourceName: string}

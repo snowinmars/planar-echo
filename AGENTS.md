@@ -50,7 +50,7 @@
 
 - **planar-prism** - Node.js CLI (TypeScript). Парсит `.biff` → JSON → Ghost TS. `yarn start` (build + `node dist/index.js`) или дочерний процесс `process.fork` с IPC.
 - **planar-ghost** - формат и каталог вывода: семантический эквивалент данных игры в открытом виде. Раздаётся Asclepius как static под `/ghost`.
-- **planar-shell** - фронтенд: мастер конверсии, просмотр ghost (диалоги/существа/предметы + инспекторы bcs/mos/pvrz/tis/wed), настройки. REST + WebSocket к Asclepius.
+- **planar-shell** - фронтенд: мастер конверсии, просмотр ghost (диалоги/существа/предметы + инспекторы acm/bam/bcs/bmp/mos/mus/pvrz/tis/wav/wed), настройки. REST + WebSocket к Asclepius.
 - **planar-asclepius** - сервер: serve Shell на `/`, ghost-файлы, оркестрация Prism (build → fork → build-ghost), ретрансляция IPC → WebSocket.
 - **planar-shared** - общий код для Prism, Asclepius, Shell и Ghost.
 
@@ -61,7 +61,7 @@
 3. Asclepius: `yarn workspace @planar/prism build` → `fork(prism/dist/index.js)` + IPC → `yarn workspace @planar/prism build-ghost`.
 4. Prism: WeiDU extract → parse → JSON + Ghost TS; прогресс через `process.send`; логи в stdout/stderr (наследуются Asclepius).
 5. Asclepius шлёт клиенту `ready` | `progress` | `error` | `complete`.
-6. Просмотр: Shell → REST `/api/ghost/*` (dlg/cre/itm + инспекторы bcs/mos/pvrz/tis/wed) + `@planar/shared` `dlgEngine` / shell `engine/dlgLogic.ts`.
+6. Просмотр: Shell → REST `/api/ghost/*` (dlg/cre/itm + инспекторы acm/bam/bcs/bmp/mos/mus/pvrz/tis/wav/wed) + `@planar/shared` `dlgEngine` / shell `engine/dlgLogic.ts`.
 
 Связь Asclepius ↔ Prism: **только Node IPC**, не HTTP и не разбор stdout для прогресса.
 
@@ -72,8 +72,8 @@
 1. `1.createPaths` - context for next operations: output dirs, `weiduExe`, `chitinKey`, `gameLanguage`, `gameName`
 2. `2.validate` - WeiDU и пути игры
 3. `3.decompileBiffs` - run WeiDU, use cache
-4. `4.biffs2json` - бинарники → JSON (`pstee/`: cre, dlg, eff, ini, itm, tlk, ids, bcs, mos, pvrz, tis, wed)
-5. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; cre, dlg, itm, tlk, bcs, mos, pvrz, tis, wed)
+4. `4.biffs2json` - бинарники → JSON (`pstee/`: acm, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, tis, tlk, wav, wed)
+5. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; acm, bam, bcs, bmp, cre, dlg, itm, mos, mus, pvrz, tis, tlk, wav, wed)
 6. `6.saveDiscovered` - метаданные обнаружения
 
 **Режимы**
@@ -81,7 +81,7 @@
 - CLI: интерактивное подтверждение (если не dev-флаги); дефолты в `planar-prism/src/index.ts`.
 - IPC: `process.on('message')`, `{ type: 'start', data }`; без confirm; прогресс `process.send`.
 
-**Прогресс:** `planar-prism/src/shared/report.ts` - RxJS `buffer` flush **250 ms**; дедупликация последнего по `ProgressStep` (`prismIndexStartMessage.ts`, `progressSteps` в shared: в т.ч. `bcs|cre|dlg|itm|mos|pvrz|tis|tlk|wed` `*_raw2json` / `*_json2ghost`).
+**Прогресс:** `planar-prism/src/shared/report.ts` - RxJS `buffer` flush **250 ms**; дедупликация последнего по `ProgressStep` (`prismIndexStartMessage.ts`, `progressSteps` в shared: в т.ч. `acm|bam|bcs|bmp|cre|dlg|itm|mos|mus|pvrz|tis|tlk|wav|wed` `*_raw2json` / `*_json2ghost`).
 
 **Игры:** enum `gameName` шире списка; **реализованы парсеры pstee** (Planescape: Torment EE).
 

@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@planar/shared": "workspace:*",
+    "@wasm-audio-decoders/ogg-vorbis": "^0.1.20",
     "pngjs": "^7.0.0",
     "rxjs": "^7.8.2",
     "winston": "^3.19.0"

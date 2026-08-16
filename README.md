@@ -28,7 +28,7 @@ Tech demo under active development.
 ### What works today
 
 - **Game:** Planescape: Torment Enhanced Edition only. Other Infinity Engine games are possible, but not in the nearest roadmap.
-- **Conversion** from original binaries to JSON and Ghost modules: `.cre`, `.dlg`, `.eff`, `.ids`, `.ini`, `.itm`, `.tlk`, `.bcs`, `.mos`, `.pvrz`, `.tis`, `.wed`.
+- **Conversion** from original binaries to JSON and Ghost modules: `.acm`, `.bam`, `.bcs`, `.bmp`, `.cre`, `.dlg`, `.eff`, `.ids`, `.ini`, `.itm`, `.mos`, `.mus`, `.pvrz`, `.tis`, `.tlk`, `.wav`, `.wed`.
 - **Supports all available game data localizations:** Russian, English, Czech, German, French, Korean, Polish via original game data.
 - **Planar-echo site human-localizations:** Russian, English.
 - **Planar-echo site LLM-localizations:** Czech, German, French, Korean, Polish. If these are your native language, please, verify the [translation](planar-shell/src/i18n/lang/).
@@ -42,14 +42,14 @@ Tech demo under active development.
     - 'talk' button, if available
 - **In-browser inspectors** (structure and images, not a playable map or script runtime):
   - scripts (`.bcs`)
-  - mosaics (`.mos`) and tilesets (`.tis`) as PNG
+  - images (`.bam`, `.bmp`, `.mos`, `.tis` ) as PNG
   - area geometry (`.wed`) and PVR textures (`.pvrz`)
+  - sounds (`.acm`, `.mus`, `.wav`)
 
 ### Close-range roadmap
 
-- Community validation for cs, de, fr, ko, pl UI locales.
-- Deeper scripting logic.
-- Pack JSON back to BIFF for modding workflows.
+- Community validation for cs, de, fr, ko, pl shell locales.
+- Rendering area in pixi.
 - Ship `.sh` / `.exe` / `.apk` artifacts with preconverted content.
 
 ## Architecture (five parts)
