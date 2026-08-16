@@ -15,7 +15,7 @@ import { isNothing } from '@planar/shared';
 
 import type { FC } from 'react';
 import type { Widget } from '@/shared/widget';
-import type { GhostMosV1, GhostMosV2, Maybe } from '@planar/shared';
+import type { Maybe } from '@planar/shared';
 
 import styles from './Mos.module.scss';
 
@@ -101,7 +101,7 @@ const Mos: FC = () => {
   return (
     <div>
       {!isNothing(imageUrl) && <img className={styles.image} src={imageUrl} alt={imageName ?? ''} />}
-      <T title="imageName" value={(currentMos as GhostMosV2).imageName} />
+      <T title="imageName" value={currentMos.imageName} />
       <T title="resourceName" value={currentMos.resourceName} />
       <T title="signature" value={currentMos.signature} />
       <Accordion slotProps={{ transition: { unmountOnExit: true } }}>

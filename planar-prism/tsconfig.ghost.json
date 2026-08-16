@@ -1,0 +1,18 @@
+{
+  "include": ["../planar-ghost/ghost/**/*.ts"],
+  "exclude": ["**/dist", "node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2020",
+    "lib": ["ESNext"],
+    "paths": {
+      "@planar/shared": ["../node_modules/@planar/shared"]
+    }
+  }
+}

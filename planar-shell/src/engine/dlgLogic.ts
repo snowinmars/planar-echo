@@ -408,5 +408,9 @@ export const createDlgLogic = (stores: DlgLogicStores): DlgLogic => {
       console.log({ whoId, allegianceId });
       return false;
     },
+    timerNotExpired: ({ timer, env }) => {
+      console.log({ timer, env });
+      return false;
+    },
   };
 };

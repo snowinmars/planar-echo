@@ -213,7 +213,7 @@ const buildCreSkeletonV10 = (cre: CreWithTlkV10, discover: DiscoverNext): string
   writer.writeLine(`countOfItems: ${cre.header.countOfItems},`, 4);
   writer.writeLine(`offsetToEffects: ${cre.header.offsetToEffects},`, 4);
   writer.writeLine(`countOfEffects: ${cre.header.countOfEffects},`, 4);
-  writer.writeLine(`dialogueRef: '${escapeSingleQuote(cre.header.dlgRef)}',`, 4);
+  writer.writeLine(`dlgRef: '${escapeSingleQuote(cre.header.dlgRef)}',`, 4);
   writer.writeLine(`initialMeetingSoundRef: ${cre.header.initialMeetingSoundRef},`, 4);
   writer.writeLine(`moraleSoundRef: ${cre.header.moraleSoundRef},`, 4);
   writer.writeLine(`happySoundRef: ${cre.header.happySoundRef},`, 4);
@@ -338,8 +338,8 @@ const buildCreSkeletonV11 = (cre: CreWithTlkV11, discover: DiscoverNext): string
   writer.writeLine(`const cre: GhostCreV11 = {`, 2);
 
   writer.writeLine(`version: '${cre.header.version}',`, 4);
-  writer.writeLine(`nameRef: '${cre.header.nameRef}',`, 4);
-  writer.writeLine(`tooltipRef: '${cre.header.tooltipRef}',`, 4);
+  writer.writeLine(`nameRef: ${cre.header.nameRef},`, 4);
+  writer.writeLine(`tooltipRef: ${cre.header.tooltipRef},`, 4);
   writeFlags(
     writer,
     cre.header.flags,
@@ -530,7 +530,7 @@ const buildCreSkeletonV11 = (cre: CreWithTlkV11, discover: DiscoverNext): string
   writer.writeLine(`countOfItems: ${cre.header.countOfItems},`, 4);
   writer.writeLine(`offsetToEffects: ${cre.header.offsetToEffects},`, 4);
   writer.writeLine(`countOfEffects: ${cre.header.countOfEffects},`, 4);
-  writer.writeLine(`dialogueRef: '${escapeSingleQuote(cre.header.dlgRef)}',`, 4);
+  writer.writeLine(`dlgRef: '${escapeSingleQuote(cre.header.dlgRef)}',`, 4);
   writer.writeLine(`initialMeetingSoundRef: ${cre.header.initialMeetingSoundRef},`, 4);
   writer.writeLine(`moraleSoundRef: ${cre.header.moraleSoundRef},`, 4);
   writer.writeLine(`happySoundRef: ${cre.header.happySoundRef},`, 4);

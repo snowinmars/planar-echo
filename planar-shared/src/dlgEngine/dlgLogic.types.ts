@@ -135,4 +135,5 @@ export type DlgLogic = Readonly<{
   showFloatMessageOver: (args: Readonly<{ whoId: WhoId; messageId: MessageId }>) => void;
   changeDialog: (args: Readonly<{ whoId: WhoId; dlgId: string }>) => void;
   changeAllegiance: (args: Readonly<{ whoId: WhoId; allegianceId: string }>) => boolean;
+  timerNotExpired: (args: Readonly<{ timer: TimerId; env: EnvId }>) => boolean;
 }>;

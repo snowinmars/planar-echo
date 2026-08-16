@@ -779,13 +779,13 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     },
   }, {
     regex: /createcreatureatfeet\((.*?)\)/,
-    onMatch: ([line, creatureWhoId]) => {
-      if (!creatureWhoId) throw new Error(`Wrong line syntax: cannot find 'creatureWhoId' in '${line}'`);
-      const creatureWho = notMe(creatureWhoId);
-      discover({ type: 'who', name: creatureWho });
+    onMatch: ([line, creWhoId]) => {
+      if (!creWhoId) throw new Error(`Wrong line syntax: cannot find 'creWhoId' in '${line}'`);
+      const creWho = notMe(creWhoId);
+      discover({ type: 'who', name: creWho });
       discover({ type: 'who', name: myself });
 
-      return `l.createCreatureNearTo({creatureWhoId: '${creatureWho}', nearToWhoId: '${myself}'})`;
+      return `l.createCreatureNearTo({creWhoId: '${creWho}', nearToWhoId: '${myself}'})`;
     },
   }, {
     regex: /creatureinarea\((.*?)\)/,
@@ -795,7 +795,7 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       discover({ type: 'location', name: location });
       discover({ type: 'who', name: myself });
 
-      return `l.creatureInLocation({creatureWhoId: '${myself}', location: '${location}'})`; // CreatureInArea("AR0108")
+      return `l.creatureInLocation({creWhoId: '${myself}', location: '${location}'})`; // CreatureInArea("AR0108")
     },
   }, {
     regex: /triggeractivation\((.*?),(true|false)\)/,
@@ -1057,6 +1057,9 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
     regex: /enemy\(\)/,
     onMatch: () => `l.enemy()`, // Enemy()
   }, {
+    regex: /help\(\)/,
+    onMatch: () => `l.help()`, // Help()
+  }, {
     regex: /savegame\((\d+)\)/,
     onMatch: ([line, slot]) => {
       if (!slot) throw new Error(`Wrong line syntax: cannot find 'slot' in '${line}'`);
@@ -1149,6 +1152,16 @@ const createItems = (discover: DiscoverNext, myself: string): Ie2tsItem[] => {
       discover({ type: 'who', name: who });
 
       return `l.changeAllegiance({ whoId: '${who}', allegianceId: '${allegianceId}' })`; // Allegiance(myself,enemy)
+    },
+  }, {
+    regex: /globaltimernotexpired\("(.*?)","(.*?)"\)/,
+    onMatch: ([line, timer, envId]) => {
+      if (!timer) throw new Error(`Wrong line syntax: cannot find 'timer' in '${line}'`);
+      if (!envId) throw new Error(`Wrong line syntax: cannot find 'envId' in '${line}'`);
+      const env = dropQuotes(envId);
+      discover({ type: 'timer', name: timer, env: env, forceType: 'number' });
+
+      return `l.timerNotExpired({ timer: '${timer}', env: '${env}' })`; // GlobalTimerNotExpired("no_gamble","global")
     },
   }];
 };
