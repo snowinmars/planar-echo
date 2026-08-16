@@ -21,7 +21,7 @@ export const patchTlk = (tlk: RawTlk): string => {
   for (let i = 0; i < values.length; i++) {
     const { index, text } = values[i]!;
 
-    const line = text.replaceAll(`"`, `\\"`).replaceAll(`\n`, `\\\\n`); // double escape because of json.parse later
+    const line = text.replaceAll(`"`, `\\"`).replaceAll(`\n`, `\\\\n`).replaceAll(`\\ `, `\\\\ `); // double escape because of json.parse later
     writer.write(`"${index}": "${line}"`, 2);
 
     if (i < values.length - 1) writer.writeLine(',');
