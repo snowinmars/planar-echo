@@ -5,25 +5,20 @@ import { disposeReports, reportComplete, reportError } from './shared/report.js'
 // import convertTwoda from './pipes/convertTwoda/convertTwoda.js';
 // import convertAre from './pipes/convertAre/convertAre.js';
 // import convertBam from './pipes/convertBam/convertBam.js';
-// import convertBcs from './pipes/convertBcs/convertBcs.js';
 // import convertBmp from './pipes/convertBmp/convertBmp.js';
 // import convertChu from './pipes/convertChu/convertChu.js';
 // import convertGlsl from './pipes/convertGlsl/convertGlsl.js';
 // import convertLua from './pipes/convertLua/convertLua.js';
 // import convertMenu from './pipes/convertMenu/convertMenu.js';
-// import convertMos from './pipes/convertMos/convertMos.js';
-// import convertPvrz from './pipes/convertPvrz/convertPvrz.js';
 // import convertPro from './pipes/convertPro/convertPro.js';
 // import convertQsp from './pipes/convertQsp/convertQsp.js';
 // import convertSpl from './pipes/convertSpl/convertSpl.js';
 // import convertSrc from './pipes/convertSrc/convertSrc.js';
 // import convertSto from './pipes/convertSto/convertSto.js';
-// import convertTis from './pipes/convertTis/convertTis.js';
 // import convertTtf from './pipes/convertTtf/convertTtf.js';
 // import convertVvc from './pipes/convertVvc/convertVvc.js';
 // import convertWav from './pipes/convertWav/convertWav.js';
 // import convertWbm from './pipes/convertWbm/convertWbm.js';
-// import convertWed from './pipes/convertWed/convertWed.js';
 // import convertWmp from './pipes/convertWmp/convertWmp.js';
 
 import { createPaths } from '@/steps/1.createPaths/index.js';

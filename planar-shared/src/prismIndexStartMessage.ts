@@ -35,9 +35,14 @@ export const progressSteps = [
   'mos_raw2json', // value: number in percent; params: {version: string, resourceName: string}
   'tis_raw2json', // value: number in percent; params: {version: string, resourceName: string}
   'tlk_json2ghost', // value: number in percent; params: {index: number}
-  'itm_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'bcs_json2ghost', // value: number in percent; params: {resourceName: string}
   'cre_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'dlg_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'itm_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'wed_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'pvrz_json2ghost', // value: number in percent; params: {resourceName: string}
+  'mos_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'tis_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'dlg_json2ghost_build', // value: number in percent
 ] as const;
 export type ProgressStep = typeof progressSteps[number];

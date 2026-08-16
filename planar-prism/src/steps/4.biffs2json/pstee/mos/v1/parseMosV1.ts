@@ -57,11 +57,13 @@ export const parseMosV1 = ({
     indicesChunks: tileData.indicesChunks,
   });
 
+  const imageName = `${resourceName}.png`;
   const mos: RawMosV1 = {
     resourceName,
     signature: 'mos',
     variant: 'v1',
     header,
+    imageName,
     paletteLayout: {
       format: 'bgra',
       entryBytes: MOS_PALETTE_ENTRY_BYTES,

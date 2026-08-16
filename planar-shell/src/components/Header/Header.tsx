@@ -13,11 +13,16 @@ import type { FC } from 'react';
 
 import styles from './Header.module.scss';
 
-type CurrentWidget = 'cre' | 'dlg' | 'itm' | '';
+type CurrentWidget = 'cre' | 'dlg' | 'itm' | 'bcs' | 'mos' | 'pvrz' | 'tis' | 'wed' | '';
 
 const CreWidget = lazy(() => import('./children/CreWidget/CreWidget'));
 const DlgWidget = lazy(() => import('./children/DlgWidget/DlgWidget'));
 const ItmWidget = lazy(() => import('./children/ItmWidget/ItmWidget'));
+const BcsWidget = lazy(() => import('./children/BcsWidget/BcsWidget'));
+const MosWidget = lazy(() => import('./children/MosWidget/MosWidget'));
+const PvrzWidget = lazy(() => import('./children/PvrzWidget/PvrzWidget'));
+const TisWidget = lazy(() => import('./children/TisWidget/TisWidget'));
+const WedWidget = lazy(() => import('./children/WedWidget/WedWidget'));
 
 const Header: FC = () => {
   const [currentWidget, setCurrentWidget] = useState<CurrentWidget>(() => planarLocalStorage.get<CurrentWidget>(planarLocalStorage.currentWidget, '')!);
@@ -41,6 +46,11 @@ const Header: FC = () => {
             { currentWidget === 'cre' && <CreWidget />}
             { currentWidget === 'dlg' && <DlgWidget />}
             { currentWidget === 'itm' && <ItmWidget />}
+            { currentWidget === 'bcs' && <BcsWidget />}
+            { currentWidget === 'mos' && <MosWidget />}
+            { currentWidget === 'pvrz' && <PvrzWidget />}
+            { currentWidget === 'tis' && <TisWidget />}
+            { currentWidget === 'wed' && <WedWidget />}
           </Grid>
 
           <Grid size={{ xs: 0.5 }}>

@@ -28,6 +28,16 @@ export type ItmItmIdSkeleton = string;
 
 export type ItmItmIdGameLanguage = string;
 
+export type BcsBcsId = string;
+
+export type MosMosId = string;
+
+export type PvrzPvrzId = string;
+
+export type TisTisId = string;
+
+export type WedWedId = string;
+
 export type CreToDlgsCreId = string;
 
 export type DlgToCreDlgId = string;
@@ -65,6 +75,31 @@ export type ItmItmIdSkeleton2 = ItmItmIdSkeleton;
  * Skeleton itm id
  */
 export type ItmItmIdGameLanguage2 = ItmItmIdGameLanguage;
+
+/**
+ * Bcs id
+ */
+export type BcsBcsId2 = BcsBcsId;
+
+/**
+ * Mos id
+ */
+export type MosMosId2 = MosMosId;
+
+/**
+ * Pvrz id
+ */
+export type PvrzPvrzId2 = PvrzPvrzId;
+
+/**
+ * Tis id
+ */
+export type TisTisId2 = TisTisId;
+
+/**
+ * Wed id
+ */
+export type WedWedId2 = WedWedId;
 
 /**
  * Cre id
@@ -777,6 +812,376 @@ export type PostApiGhostItmResponses = {
 };
 
 export type PostApiGhostItmResponse = PostApiGhostItmResponses[keyof PostApiGhostItmResponses];
+
+export type PostApiGhostBcsData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/bcs';
+};
+
+export type PostApiGhostBcsErrors = {
+    /**
+     * Available bcs are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostBcsError = PostApiGhostBcsErrors[keyof PostApiGhostBcsErrors];
+
+export type PostApiGhostBcsResponses = {
+    /**
+     * Available bcs in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostBcsResponse = PostApiGhostBcsResponses[keyof PostApiGhostBcsResponses];
+
+export type PostApiGhostBcsByBcsIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Bcs id
+         */
+        bcsId: BcsBcsId;
+    };
+    query?: never;
+    url: '/api/ghost/bcs/{bcsId}/skeleton';
+};
+
+export type PostApiGhostBcsByBcsIdSkeletonErrors = {
+    /**
+     * Bcs is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostBcsByBcsIdSkeletonError = PostApiGhostBcsByBcsIdSkeletonErrors[keyof PostApiGhostBcsByBcsIdSkeletonErrors];
+
+export type PostApiGhostBcsByBcsIdSkeletonResponses = {
+    /**
+     * Bcs skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostBcsByBcsIdSkeletonResponse = PostApiGhostBcsByBcsIdSkeletonResponses[keyof PostApiGhostBcsByBcsIdSkeletonResponses];
+
+export type PostApiGhostMosData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/mos';
+};
+
+export type PostApiGhostMosErrors = {
+    /**
+     * Available mos are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostMosError = PostApiGhostMosErrors[keyof PostApiGhostMosErrors];
+
+export type PostApiGhostMosResponses = {
+    /**
+     * Available mos in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostMosResponse = PostApiGhostMosResponses[keyof PostApiGhostMosResponses];
+
+export type PostApiGhostMosByMosIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Mos id
+         */
+        mosId: MosMosId;
+    };
+    query?: never;
+    url: '/api/ghost/mos/{mosId}/skeleton';
+};
+
+export type PostApiGhostMosByMosIdSkeletonErrors = {
+    /**
+     * Mos is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostMosByMosIdSkeletonError = PostApiGhostMosByMosIdSkeletonErrors[keyof PostApiGhostMosByMosIdSkeletonErrors];
+
+export type PostApiGhostMosByMosIdSkeletonResponses = {
+    /**
+     * Mos skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostMosByMosIdSkeletonResponse = PostApiGhostMosByMosIdSkeletonResponses[keyof PostApiGhostMosByMosIdSkeletonResponses];
+
+export type PostApiGhostPvrzData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/pvrz';
+};
+
+export type PostApiGhostPvrzErrors = {
+    /**
+     * Available pvrz are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostPvrzError = PostApiGhostPvrzErrors[keyof PostApiGhostPvrzErrors];
+
+export type PostApiGhostPvrzResponses = {
+    /**
+     * Available pvrz in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostPvrzResponse = PostApiGhostPvrzResponses[keyof PostApiGhostPvrzResponses];
+
+export type PostApiGhostPvrzByPvrzIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Pvrz id
+         */
+        pvrzId: PvrzPvrzId;
+    };
+    query?: never;
+    url: '/api/ghost/pvrz/{pvrzId}/skeleton';
+};
+
+export type PostApiGhostPvrzByPvrzIdSkeletonErrors = {
+    /**
+     * Pvrz is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostPvrzByPvrzIdSkeletonError = PostApiGhostPvrzByPvrzIdSkeletonErrors[keyof PostApiGhostPvrzByPvrzIdSkeletonErrors];
+
+export type PostApiGhostPvrzByPvrzIdSkeletonResponses = {
+    /**
+     * Pvrz skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostPvrzByPvrzIdSkeletonResponse = PostApiGhostPvrzByPvrzIdSkeletonResponses[keyof PostApiGhostPvrzByPvrzIdSkeletonResponses];
+
+export type PostApiGhostTisData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/tis';
+};
+
+export type PostApiGhostTisErrors = {
+    /**
+     * Available tis are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostTisError = PostApiGhostTisErrors[keyof PostApiGhostTisErrors];
+
+export type PostApiGhostTisResponses = {
+    /**
+     * Available tis in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostTisResponse = PostApiGhostTisResponses[keyof PostApiGhostTisResponses];
+
+export type PostApiGhostTisByTisIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Tis id
+         */
+        tisId: TisTisId;
+    };
+    query?: never;
+    url: '/api/ghost/tis/{tisId}/skeleton';
+};
+
+export type PostApiGhostTisByTisIdSkeletonErrors = {
+    /**
+     * Tis is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostTisByTisIdSkeletonError = PostApiGhostTisByTisIdSkeletonErrors[keyof PostApiGhostTisByTisIdSkeletonErrors];
+
+export type PostApiGhostTisByTisIdSkeletonResponses = {
+    /**
+     * Tis skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostTisByTisIdSkeletonResponse = PostApiGhostTisByTisIdSkeletonResponses[keyof PostApiGhostTisByTisIdSkeletonResponses];
+
+export type PostApiGhostWedData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/wed';
+};
+
+export type PostApiGhostWedErrors = {
+    /**
+     * Available wed are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostWedError = PostApiGhostWedErrors[keyof PostApiGhostWedErrors];
+
+export type PostApiGhostWedResponses = {
+    /**
+     * Available wed in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostWedResponse = PostApiGhostWedResponses[keyof PostApiGhostWedResponses];
+
+export type PostApiGhostWedByWedIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Wed id
+         */
+        wedId: WedWedId;
+    };
+    query?: never;
+    url: '/api/ghost/wed/{wedId}/skeleton';
+};
+
+export type PostApiGhostWedByWedIdSkeletonErrors = {
+    /**
+     * Wed is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostWedByWedIdSkeletonError = PostApiGhostWedByWedIdSkeletonErrors[keyof PostApiGhostWedByWedIdSkeletonErrors];
+
+export type PostApiGhostWedByWedIdSkeletonResponses = {
+    /**
+     * Wed skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostWedByWedIdSkeletonResponse = PostApiGhostWedByWedIdSkeletonResponses[keyof PostApiGhostWedByWedIdSkeletonResponses];
 
 export type PostApiGhostTlkByGameLanguageData = {
     body: {

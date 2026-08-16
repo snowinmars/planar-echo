@@ -14,9 +14,14 @@
       "5": "Prérequis : node.js et les fichiers de jeu originaux que vous possédez."
     },
     "runnerGuard": {
-      "dlg": "Le dialogue depuis",
-      "cre": "Créature depuis",
-      "itm": "Objet depuis",
+      "dlg": "Dlg depuis",
+      "cre": "Cre depuis",
+      "itm": "Itm depuis",
+      "bcs": "Bcs depuis",
+      "mos": "Mos depuis",
+      "pvrz": "Pvrz depuis",
+      "tis": "Tis depuis",
+      "wed": "Wed depuis",
       "ghostDir": "Dossier du jeu",
       "or": "ou",
       "convert": "Convertir",
@@ -110,13 +115,24 @@
       "tlk_json2ghost": ".tlk json vers ghost",
       "cre_json2ghost": ".cre json vers ghost",
       "dlg_json2ghost": ".dlg json vers ghost",
-      "itm_json2ghost": ".itm json vers ghost"
+      "itm_json2ghost": ".itm json vers ghost",
+      "bcs_json2ghost": ".bcs json vers ghost",
+      "mos_json2ghost": ".mos json vers ghost",
+      "pvrz_json2ghost": ".pvrz json vers ghost",
+      "tis_json2ghost": ".tis json vers ghost",
+      "wed_json2ghost": ".wed json vers ghost"
     }
   },
   "run": {
-    "dlgsLabel": "Dialogue ({{amount}} au total)",
-    "cresLabel": "Créature ({{amount}} au total)",
-    "itmsLabel": "Objets ({{amount}} au total)",
+    "dlgsLabel": "Dlg ({{amount}} au total)",
+    "cresLabel": "Cre ({{amount}} au total)",
+    "itmsLabel": "Itm ({{amount}} au total)",
+    "bcsLabel": "Bcs ({{amount}} au total)",
+    "mosLabel": "Mos ({{amount}} au total)",
+    "pvrzLabel": "Pvrz ({{amount}} au total)",
+    "tisLabel": "Tis ({{amount}} au total)",
+    "wedLabel": "Wed ({{amount}} au total)",
+    "imageLoadError": "Échec du chargement de l'image",
     "statesLabel": "État ({{amount}} au total)",
     "cre": {
       "talk": "Parlons-en",

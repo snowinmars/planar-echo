@@ -89,3 +89,31 @@ export type {
   GhostItmEffect,
 } from './ghost/itm.types.js';
 export type { GhostTlk } from './ghost/tlk.types.js';
+export type {
+  GhostBcs,
+  GhostBcsArg,
+  GhostBcsBlockFunction,
+  GhostBcsBlockScope,
+  GhostBcsIfBlock,
+  GhostBcsTempVariable,
+} from './ghost/bcs.types.js';
+export type {
+  GhostMos,
+  GhostMosV1,
+  GhostMosV2,
+} from './ghost/mos.types.js';
+export type {
+  GhostPvr,
+  GhostPvrPixelFormat,
+} from './ghost/pvr.types.js';
+export type {
+  GhostTis,
+  GhostTisPalette,
+  GhostTisPvrz,
+} from './ghost/tis.types.js';
+export type {
+  GhostWed,
+  GhostWedDoor,
+  GhostWedOverlay,
+  GhostWedPolygon,
+} from './ghost/wed.types.js';

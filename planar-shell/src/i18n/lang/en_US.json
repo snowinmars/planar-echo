@@ -14,9 +14,14 @@
       "5": "Requirements: node.js and original game files you own."
     },
     "runnerGuard": {
-      "dlg": "Dialogue from",
-      "cre": "Creature from",
-      "itm": "Item from",
+      "dlg": "Dlg from",
+      "cre": "Cre from",
+      "itm": "Itm from",
+      "bcs": "Bcs from",
+      "mos": "Mos from",
+      "pvrz": "Pvrz from",
+      "tis": "Tis from",
+      "wed": "Wed from",
       "ghostDir": "Game directory",
       "or": "or",
       "convert": "Convert",
@@ -110,13 +115,24 @@
       "tlk_json2ghost": ".tlk json to ghost",
       "cre_json2ghost": ".cre json to ghost",
       "dlg_json2ghost": ".dlg json to ghost",
-      "itm_json2ghost": ".itm json to ghost"
+      "itm_json2ghost": ".itm json to ghost",
+      "bcs_json2ghost": ".bcs json to ghost",
+      "mos_json2ghost": ".mos json to ghost",
+      "pvrz_json2ghost": ".pvrz json to ghost",
+      "tis_json2ghost": ".tis json to ghost",
+      "wed_json2ghost": ".wed json to ghost"
     }
   },
   "run": {
-    "dlgsLabel": "Dialogue ({{amount}} in total)",
-    "cresLabel": "Creatures ({{amount}} in total)",
-    "itmsLabel": "Items ({{amount}} in total)",
+    "dlgsLabel": "Dlg ({{amount}} in total)",
+    "cresLabel": "Cre ({{amount}} in total)",
+    "itmsLabel": "Itms ({{amount}} in total)",
+    "bcsLabel": "Bcs ({{amount}} in total)",
+    "mosLabel": "Mos ({{amount}} in total)",
+    "pvrzLabel": "Pvrz ({{amount}} in total)",
+    "tisLabel": "Tis ({{amount}} in total)",
+    "wedLabel": "Wed ({{amount}} in total)",
+    "imageLoadError": "Failed to load image",
     "statesLabel": "State ({{amount}}) in total",
     "cre": {
       "talk": "Talk",

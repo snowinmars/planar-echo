@@ -14,9 +14,14 @@
       "5": "Требования: node.js и приобретённая оригинальная игра."
     },
     "runnerGuard": {
-      "dlg": "Диалог из",
-      "cre": "Существо из",
-      "itm": "Предмет из",
+      "dlg": "Dlg из",
+      "cre": "Cre из",
+      "itm": "Itm из",
+      "bcs": "Bcs из",
+      "mos": "Mos из",
+      "pvrz": "Pvrz из",
+      "tis": "Tis из",
+      "wed": "Wed из",
       "ghostDir": "Каталог с игрой",
       "or": "или",
       "convert": "Сконвертировать",
@@ -110,13 +115,24 @@
       "tlk_json2ghost": ".tlk json в ghost",
       "cre_json2ghost": ".cre json в ghost",
       "dlg_json2ghost": ".dlg json в ghost",
-      "itm_json2ghost": ".itm json в ghost"
+      "itm_json2ghost": ".itm json в ghost",
+      "bcs_json2ghost": ".bcs json в ghost",
+      "mos_json2ghost": ".mos json в ghost",
+      "pvrz_json2ghost": ".pvrz json в ghost",
+      "tis_json2ghost": ".tis json в ghost",
+      "wed_json2ghost": ".wed json в ghost"
     }
   },
   "run": {
-    "dlgsLabel": "Диалог (всего {{amount}})",
-    "cresLabel": "Существо (всего {{amount}})",
-    "itmsLabel": "Предмет (всего {{amount}})",
+    "dlgsLabel": "Dlg (всего {{amount}})",
+    "cresLabel": "Cre (всего {{amount}})",
+    "itmsLabel": "Itm (всего {{amount}})",
+    "bcsLabel": "Bcs (всего {{amount}})",
+    "mosLabel": "Mos (всего {{amount}})",
+    "pvrzLabel": "Pvrz (всего {{amount}})",
+    "tisLabel": "Tis (всего {{amount}})",
+    "wedLabel": "Wed (всего {{amount}})",
+    "imageLoadError": "Не удалось загрузить картинку",
     "statesLabel": "Метка (всего {{amount}})",
     "cre": {
       "talk": "Поговорить",

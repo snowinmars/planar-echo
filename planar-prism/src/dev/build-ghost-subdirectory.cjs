@@ -7,6 +7,7 @@ if (!target) throw new Error(`Wrong arguments. Usage: node script.js target, whe
 
 const srcDir = path.join(__dirname, '..', '..', '..', 'planar-ghost', 'ghost', target);
 const files = readdirSync(srcDir).filter(f => f.endsWith('.ts')).map(f => path.join(srcDir, f));
+if (files.length === 0) return;
 
 build({
   entryPoints: files,

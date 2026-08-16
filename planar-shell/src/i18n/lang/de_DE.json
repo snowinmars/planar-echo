@@ -14,9 +14,14 @@
       "5": "Voraussetzungen: node.js und eigene Original-Spieldateien."
     },
     "runnerGuard": {
-      "dlg": "Dialog von",
-      "cre": "Kreatur von",
-      "itm": "Stück von",
+      "dlg": "Dlg von",
+      "cre": "Cre von",
+      "itm": "Itm von",
+      "bcs": "Bcs von",
+      "mos": "Mos von",
+      "pvrz": "Pvrz von",
+      "tis": "Tis von",
+      "wed": "Wed von",
       "ghostDir": "Spielordner",
       "or": "oder",
       "convert": "Konvertieren",
@@ -110,13 +115,24 @@
       "tlk_json2ghost": ".tlk json zu Ghost",
       "cre_json2ghost": ".cre json zu Ghost",
       "dlg_json2ghost": ".dlg json zu Ghost",
-      "itm_json2ghost": ".itm json zu Ghost"
+      "itm_json2ghost": ".itm json zu Ghost",
+      "bcs_json2ghost": ".bcs json zu Ghost",
+      "mos_json2ghost": ".mos json zu Ghost",
+      "pvrz_json2ghost": ".pvrz json zu Ghost",
+      "tis_json2ghost": ".tis json zu Ghost",
+      "wed_json2ghost": ".wed json zu Ghost"
     }
   },
   "run": {
-    "dlgsLabel": "Dialog (insgesamt {{amount}})",
-    "cresLabel": "Kreatur (insgesamt {{amount}})",
-    "itmsLabel": "Stück (insgesamt {{amount}})",
+    "dlgsLabel": "Dlg (insgesamt {{amount}})",
+    "cresLabel": "Cre (insgesamt {{amount}})",
+    "itmsLabel": "Itm (insgesamt {{amount}})",
+    "bcsLabel": "Bcs (insgesamt {{amount}})",
+    "mosLabel": "Mos (insgesamt {{amount}})",
+    "pvrzLabel": "Pvrz (insgesamt {{amount}})",
+    "tisLabel": "Tis (insgesamt {{amount}})",
+    "wedLabel": "Wed (insgesamt {{amount}})",
+    "imageLoadError": "Bild konnte nicht geladen werden",
     "statesLabel": "Zustand (insgesamt {{amount}})",
     "cre": {
       "talk": "Lass uns reden",

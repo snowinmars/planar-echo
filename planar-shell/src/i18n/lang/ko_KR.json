@@ -14,9 +14,14 @@
       "5": "요구 사항: node.js 및 본인이 소유한 원본 게임 파일."
     },
     "runnerGuard": {
-      "dlg": "대화 상자 실행",
-      "cre": "생물",
-      "itm": "품목",
+      "dlg": "dlg",
+      "cre": "cre",
+      "itm": "itm",
+      "bcs": "bcs",
+      "mos": "mos",
+      "pvrz": "pvrz",
+      "tis": "tis",
+      "wed": "wed",
       "ghostDir": "게임 폴더",
       "or": "또는",
       "convert": "변환",
@@ -110,13 +115,24 @@
       "tlk_json2ghost": ".tlk json → 고스트",
       "cre_json2ghost": ".cre json → 고스트",
       "dlg_json2ghost": ".dlg json → 고스트",
-      "itm_json2ghost": ".itm json → 고스트"
+      "itm_json2ghost": ".itm json → 고스트",
+      "bcs_json2ghost": ".bcs json → 고스트",
+      "mos_json2ghost": ".mos json → 고스트",
+      "pvrz_json2ghost": ".pvrz json → 고스트",
+      "tis_json2ghost": ".tis json → 고스트",
+      "wed_json2ghost": ".wed json → 고스트"
     }
   },
   "run": {
-    "dlgsLabel": "대화 (총 {{amount}}개)",
-    "cresLabel": "생물 (총 {{amount}})",
-    "itmsLabel": "품목 (총 {{amount}})",
+    "dlgsLabel": "Dlg (총 {{amount}}개)",
+    "cresLabel": "Cre (총 {{amount}})",
+    "itmsLabel": "Itm (총 {{amount}})",
+    "bcsLabel": "Bcs (총 {{amount}})",
+    "mosLabel": "Mos (총 {{amount}})",
+    "pvrzLabel": "Pvrz (총 {{amount}})",
+    "tisLabel": "Tis (총 {{amount}})",
+    "wedLabel": "Wed (총 {{amount}})",
+    "imageLoadError": "이미지를 불러오지 못했습니다",
     "statesLabel": "상태 (총 {{amount}}개)",
     "cre": {
       "talk": "이야기해 봅시다",

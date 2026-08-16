@@ -14,9 +14,14 @@
       "5": "Požadavky: node.js a vlastnictví původních herních souborů."
     },
     "runnerGuard": {
-      "dlg": "Dialog od",
-      "cre": "Stvoření od",
-      "itm": "Položka od",
+      "dlg": "Dlg od",
+      "cre": "Cre od",
+      "itm": "Itm od",
+      "bcs": "Bcs od",
+      "mos": "Mos od",
+      "pvrz": "Pvrz od",
+      "tis": "Tis od",
+      "wed": "Wed od",
       "ghostDir": "Složka hry",
       "or": "nebo",
       "convert": "Převést",
@@ -110,13 +115,24 @@
       "tlk_json2ghost": ".tlk json do ghost",
       "cre_json2ghost": ".cre json do ghost",
       "dlg_json2ghost": ".dlg json do ghost",
-      "itm_json2ghost": ".itm json do ghost"
+      "itm_json2ghost": ".itm json do ghost",
+      "bcs_json2ghost": ".bcs json do ghost",
+      "mos_json2ghost": ".mos json do ghost",
+      "pvrz_json2ghost": ".pvrz json do ghost",
+      "tis_json2ghost": ".tis json do ghost",
+      "wed_json2ghost": ".wed json do ghost"
     }
   },
   "run": {
-    "dlgsLabel": "Dialog (celkem {{amount}})",
-    "cresLabel": "Stvoření (celkem {{amount}})",
-    "itmsLabel": "Položky (celkem {{amount}})",
+    "dlgsLabel": "Dlg (celkem {{amount}})",
+    "cresLabel": "Cre (celkem {{amount}})",
+    "itmsLabel": "Itm (celkem {{amount}})",
+    "bcsLabel": "Bcs (celkem {{amount}})",
+    "mosLabel": "Mos (celkem {{amount}})",
+    "pvrzLabel": "Pvrz (celkem {{amount}})",
+    "tisLabel": "Tis (celkem {{amount}})",
+    "wedLabel": "Wed (celkem {{amount}})",
+    "imageLoadError": "Nepodařilo se načíst obrázek",
     "statesLabel": "Stav (celkem {{amount}})",
     "cre": {
       "talk": "Pojďme si promluvit",

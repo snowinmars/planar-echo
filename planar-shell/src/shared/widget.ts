@@ -1,4 +1,9 @@
 export type Widget
   = | 'dlg'
     | 'cre'
-    | 'itm';
+    | 'itm'
+    | 'bcs'
+    | 'mos'
+    | 'pvrz'
+    | 'tis'
+    | 'wed';

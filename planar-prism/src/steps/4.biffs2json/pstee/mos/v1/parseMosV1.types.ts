@@ -21,6 +21,7 @@ export type RawMosV1 = Readonly<{
   signature: 'mos';
   variant: 'v1';
   header: RawMosV1Header;
+  imageName: string;
   paletteLayout: RawMosV1PaletteLayout;
   indicesLayout: RawMosV1IndicesLayout;
   blocks: RawMosV1BlockMeta[];

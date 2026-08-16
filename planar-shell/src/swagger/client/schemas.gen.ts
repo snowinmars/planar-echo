@@ -46,6 +46,36 @@ export const itm_itmId_gameLanguageSchema = {
     example: 'charchrm.itm'
 } as const;
 
+export const bcs_bcsIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: '0202cs2.bcs'
+} as const;
+
+export const mos_mosIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'ar0202.mos'
+} as const;
+
+export const pvrz_pvrzIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'a020301.pvrz'
+} as const;
+
+export const tis_tisIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'ar0202.tis'
+} as const;
+
+export const wed_wedIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'ar0202.wed'
+} as const;
+
 export const creToDlgs_creIdSchema = {
     type: 'string',
     minLength: 1,

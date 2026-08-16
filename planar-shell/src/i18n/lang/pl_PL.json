@@ -14,9 +14,14 @@
       "5": "Wymagania: node.js i oryginalne pliki gry, które posiadasz."
     },
     "runnerGuard": {
-      "dlg": "Dialog z",
-      "cre": "Istota z",
-      "itm": "Przedmiot z",
+      "dlg": "Dlg z",
+      "cre": "Cre z",
+      "itm": "Itm z",
+      "bcs": "Bcs z",
+      "mos": "Mos z",
+      "pvrz": "Pvrz z",
+      "tis": "Tis z",
+      "wed": "Wed z",
       "ghostDir": "Folder gry",
       "or": "lub",
       "convert": "Konwertuj",
@@ -110,13 +115,24 @@
       "tlk_json2ghost": ".tlk json → ghost",
       "cre_json2ghost": ".cre json → ghost",
       "dlg_json2ghost": ".dlg json → ghost",
-      "itm_json2ghost": ".itm json → ghost"
+      "itm_json2ghost": ".itm json → ghost",
+      "bcs_json2ghost": ".bcs json → ghost",
+      "mos_json2ghost": ".mos json → ghost",
+      "pvrz_json2ghost": ".pvrz json → ghost",
+      "tis_json2ghost": ".tis json → ghost",
+      "wed_json2ghost": ".wed json → ghost"
     }
   },
   "run": {
-    "dlgsLabel": "Dialog (łącznie {{amount}})",
-    "cresLabel": "Istota (łącznie {{amount}})",
-    "itmsLabel": "Przedmiot (łącznie {{amount}})",
+    "dlgsLabel": "Dlg (łącznie {{amount}})",
+    "cresLabel": "Cre (łącznie {{amount}})",
+    "itmsLabel": "Itm (łącznie {{amount}})",
+    "bcsLabel": "Bcs (łącznie {{amount}})",
+    "mosLabel": "Mos (łącznie {{amount}})",
+    "pvrzLabel": "Pvrz (łącznie {{amount}})",
+    "tisLabel": "Tis (łącznie {{amount}})",
+    "wedLabel": "Wed (łącznie {{amount}})",
+    "imageLoadError": "Nie udało się wczytać obrazu",
     "statesLabel": "Stan (łącznie {{amount}})",
     "cre": {
       "talk": "Porozmawiajmy",

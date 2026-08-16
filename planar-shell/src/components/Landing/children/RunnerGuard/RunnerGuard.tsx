@@ -80,6 +80,11 @@ const RunnerGuard: FC<RunnerGuardProps> = ({ hasStores }: RunnerGuardProps) => {
       <ButtonInsideTextField id="dlg" to="/dlg" disabled={!hasStores} />
       <ButtonInsideTextField id="cre" to="/cre" disabled={!hasStores} />
       <ButtonInsideTextField id="itm" to="/itm" disabled={!hasStores} />
+      <ButtonInsideTextField id="bcs" to="/bcs" disabled={!hasStores} />
+      <ButtonInsideTextField id="mos" to="/mos" disabled={!hasStores} />
+      <ButtonInsideTextField id="pvrz" to="/pvrz" disabled={!hasStores} />
+      <ButtonInsideTextField id="tis" to="/tis" disabled={!hasStores} />
+      <ButtonInsideTextField id="wed" to="/wed" disabled={!hasStores} />
       <Button
         component={RouterLink}
         to="/stores"

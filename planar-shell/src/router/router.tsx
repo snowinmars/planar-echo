@@ -12,6 +12,11 @@ const Settings = lazy(() => import('@/components/Settings'));
 const Dlg = lazy(() => import('@/components/runners/Dlg'));
 const Cre = lazy(() => import('@/components/runners/Cre'));
 const Itm = lazy(() => import('@/components/runners/Itm'));
+const Bcs = lazy(() => import('@/components/runners/Bcs'));
+const Mos = lazy(() => import('@/components/runners/Mos'));
+const Pvrz = lazy(() => import('@/components/runners/Pvrz'));
+const Tis = lazy(() => import('@/components/runners/Tis'));
+const Wed = lazy(() => import('@/components/runners/Wed'));
 const Stores = lazy(() => import('@/components/Stores'));
 
 // https://github.com/remix-run/react-router/issues/12474#issuecomment-2538281149
@@ -41,6 +46,21 @@ const router = createBrowserRouter([{
   }, {
     path: '/itm',
     element: <HelloDevs><Itm /></HelloDevs>,
+  }, {
+    path: '/bcs',
+    element: <HelloDevs><Bcs /></HelloDevs>,
+  }, {
+    path: '/mos',
+    element: <HelloDevs><Mos /></HelloDevs>,
+  }, {
+    path: '/pvrz',
+    element: <HelloDevs><Pvrz /></HelloDevs>,
+  }, {
+    path: '/tis',
+    element: <HelloDevs><Tis /></HelloDevs>,
+  }, {
+    path: '/wed',
+    element: <HelloDevs><Wed /></HelloDevs>,
   }, {
     path: '/settings',
     element: <HelloDevs><Settings /></HelloDevs>,
