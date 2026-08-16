@@ -12,14 +12,14 @@ const isResponseExtern = (response: NestedDlgResponse, resourceName: string) => 
 const formStateId = (npcLowercaseId: string, stateIndex: number): string => `${npcLowercaseId}_state${stateIndex}`;
 const formResponseId = (npcLowercaseId: string, responseIndex: number): string => `${npcLowercaseId}_response${responseIndex}`;
 
-// from: [ 'A', 'B', 'l.or(2)', 'C', 'D', 'E', 'l.or(2)', 'F', 'G', 'H' ]
+// from: [ 'A', 'B', 'or(2)', 'C', 'D', 'E', 'or(2)', 'F', 'G', 'H' ]
 // to  : [ 'A', 'B', '( C || D )'       , 'E', '( F || G )'       , 'H' ]
 const collapseOperatorOr = (parts: string[], spaces: string): string[] => {
   if (parts.length <= 2) return parts;
 
   const result: string[] = [];
   for (let i = 0; i < parts.length; i++) {
-    const hasOr = parts[i]!.startsWith('l.or(');
+    const hasOr = parts[i]!.startsWith('or(');
     if (!hasOr) {
       result.push(parts[i]!);
       continue;
