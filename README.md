@@ -6,9 +6,8 @@ Open-source tool to convert **Infinity Engine** game data files you already own 
 
 Everything runs locally on your machine.
 
-![Current dialogue state example](./_dev/promo_dlg.png)
-![Current creature state example](./_dev/promo_cre.png)
-![Current item state example](./_dev/promo_itm.png)
+![Current dialogue state example](./_dev/promo_dlg_en.png)
+![Current tis state example](./_dev/promo_tis_en.png)
 
 ## Prerequisites
 
@@ -29,7 +28,7 @@ Tech demo under active development.
 ### What works today
 
 - **Game:** Planescape: Torment Enhanced Edition only. Other Infinity Engine games are possible, but not in the nearest roadmap.
-- **Conversion** from original binaries to JSON and Ghost modules: `.cre`, `.dlg`, `.eff`, `.ids`, `.ini`, `.itm`, `.tlk`.
+- **Conversion** from original binaries to JSON and Ghost modules: `.cre`, `.dlg`, `.eff`, `.ids`, `.ini`, `.itm`, `.tlk`, `.bcs`, `.mos`, `.pvrz`, `.tis`, `.wed`.
 - **Supports all available game data localizations:** Russian, English, Czech, German, French, Korean, Polish via original game data.
 - **Planar-echo site human-localizations:** Russian, English.
 - **Planar-echo site LLM-localizations:** Czech, German, French, Korean, Polish. If these are your native language, please, verify the [translation](planar-shell/src/i18n/lang/).
@@ -41,6 +40,10 @@ Tech demo under active development.
     - 'talk' button, that respect weights and game state logic
   - items with:
     - 'talk' button, if available
+- **In-browser inspectors** (structure and images, not a playable map or script runtime):
+  - scripts (`.bcs`)
+  - mosaics (`.mos`) and tilesets (`.tis`) as PNG
+  - area geometry (`.wed`) and PVR textures (`.pvrz`)
 
 ### Close-range roadmap
 
@@ -55,7 +58,7 @@ Tech demo under active development.
 | -------------------- | ------------------------------------------------------------------------------------------ |
 | **planar-prism**     | CLI: BIFF → JSON → Ghost TypeScript; runs standalone or as a forked child process.         |
 | **planar-ghost**     | Output format and on-disk artifacts (your machine); not an npm workspace package.          |
-| **planar-shell**     | React + Zustand + MUI UI: conversion wizard, settings, runners for dialogue/creature/item. |
+| **planar-shell**     | React + Zustand + MUI UI: conversion wizard, settings, runners/inspectors |
 | **planar-asclepius** | Node server: serves Shell (production), Ghost files, REST + WebSocket; orchestrates Prism. |
 | **planar-shared**    | Shared types, IPC messages, dialogue engine, mappers.                                      |
 
@@ -64,7 +67,7 @@ Tech demo under active development.
 1. Configure WeiDU, game files path, and ghost output directory in **Shell**.
 2. Start conversion
 3. Prism writes JSON/Ghost under your ghost directory; progress streams to the UI.
-4. Open `/dialogue`, `/creature`, or `/item` in Shell.
+4. Open frontend dev server
 
 **Ports:** backend `http://localhost:3003`; frontend dev server `http://localhost:3000`.
 
