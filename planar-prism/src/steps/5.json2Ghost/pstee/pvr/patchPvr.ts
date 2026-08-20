@@ -18,6 +18,7 @@ export const patchPvr = (
       step: 'pvrz_json2ghost',
       params: {
         resourceName: pvr.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

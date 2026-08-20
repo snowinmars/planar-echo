@@ -4,7 +4,7 @@ export { gameLanguages } from './gameLanguage.js';
 export { jsonStringify, jsonParse } from './json.js';
 export { just, maybe, nothing, isNothing, either } from './maybe.js';
 export { objectEntries, objectKeys, objectValues } from './objects.js';
-export { progressSteps } from './prismIndexStartMessage.js';
+export { progressSteps } from './progress.js';
 export { registerDlg } from './dlgEngine/registerDlg.js';
 export { dlgToCres, creToDlgs } from './resourceMappers/creToDlg.js';
 export { dlgToCreOrItm } from './resourceMappers/dlgToCreOrItm.js';
@@ -20,13 +20,17 @@ export type {
 } from './maybe.js';
 export type { PartialWriteable } from './partialWriteable.js';
 export type {
-  ProgressStep,
   PrismIndexStartMessage,
   PrismIndexProgressMessage,
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
   PrismIndexReadyMessage,
 } from './prismIndexStartMessage.js';
+export type {
+  Progress,
+  ProgressStep,
+  ProgressSteps,
+} from './progress.js';
 export type { SafeError } from './safeError.js';
 export type { DlgLogic } from './dlgEngine/dlgLogic.types.js';
 export type { AlignmentId } from './dlgEngine/enums/alignment.js';

@@ -20,6 +20,7 @@ export const patchInis = (
       step: 'ini_json2ghost',
       params: {
         resourceName: ini.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

@@ -20,6 +20,7 @@ export const patchTis = (
       step: 'tis_json2ghost',
       params: {
         resourceName: tis.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

@@ -20,6 +20,7 @@ export const patchEffs = (
       step: 'eff_json2ghost',
       params: {
         resourceName: eff.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

@@ -89,6 +89,7 @@
     },
     "step6": {
       "start": "하드 디스크 공간이 충분하며 시작하겠습니다",
+      "progress": "{{currentRssMb}} mb의 ram이 사용되었습니다",
       "buildPrism": "Prism 빌드",
       "decompileBiffs": ".biff 아카이브 디컴파일",
       "ids_raw2json": ".ids → json",

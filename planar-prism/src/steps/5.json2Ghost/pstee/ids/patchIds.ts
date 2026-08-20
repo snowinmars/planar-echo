@@ -20,6 +20,7 @@ export const patchIds = (
       step: 'ids_json2ghost',
       params: {
         resourceName: ids.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

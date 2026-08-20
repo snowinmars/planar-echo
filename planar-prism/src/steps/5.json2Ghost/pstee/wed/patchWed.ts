@@ -20,6 +20,7 @@ export const patchWed = (
       step: 'wed_json2ghost',
       params: {
         resourceName: wed.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

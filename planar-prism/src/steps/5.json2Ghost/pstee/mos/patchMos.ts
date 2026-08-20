@@ -20,6 +20,7 @@ export const patchMos = (
       step: 'mos_json2ghost',
       params: {
         resourceName: mos.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

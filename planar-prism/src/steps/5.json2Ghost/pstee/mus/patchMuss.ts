@@ -20,6 +20,7 @@ export const patchMuss = (
       step: 'mus_json2ghost',
       params: {
         resourceName: mus.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

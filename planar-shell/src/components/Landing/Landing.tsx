@@ -22,6 +22,8 @@ const Landing: FC = () => {
       <Paper elevation={0} sx={{ p: 4, textAlign: 'center' }}>
         <Typography variant="h4">{t('landing.intro.1')}</Typography>
 
+        {/* TODO [snow]: require at least 6gb ram */}
+
         <Typography color="text.secondary">
           {t('landing.intro.2')}
         </Typography>

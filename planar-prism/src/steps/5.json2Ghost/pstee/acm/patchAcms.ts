@@ -20,6 +20,7 @@ export const patchAcms = (
       step: 'acm_json2ghost',
       params: {
         resourceName: acm.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

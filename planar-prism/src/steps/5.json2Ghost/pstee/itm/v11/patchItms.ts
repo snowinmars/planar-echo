@@ -24,6 +24,7 @@ export const patchItms = (
       step: 'itm_json2ghost',
       params: {
         resourceName: itm.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

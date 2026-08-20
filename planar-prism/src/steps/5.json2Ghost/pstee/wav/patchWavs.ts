@@ -20,6 +20,7 @@ export const patchWavs = (
       step: 'wav_json2ghost',
       params: {
         resourceName: wav.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

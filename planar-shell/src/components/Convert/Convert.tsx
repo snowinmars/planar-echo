@@ -120,6 +120,7 @@ const Convert: FC = () => {
           gameLanguage={store.gameLanguage}
           weiduExeDir={store.weiduExeDir}
           chitinKeyFile={store.chitinKeyFile}
+          currentRssBytes={store.currentRssBytes}
           progress={store.progress}
           biff2json={store.biff2json}
         />

@@ -2,8 +2,7 @@ import type {
   GameLanguage,
   GameName,
   Maybe,
-  PrismIndexProgressMessage,
-  ProgressStep,
+  ProgressSteps,
 } from '@planar/shared';
 import { Observable } from 'rxjs';
 import type { StateCreator } from 'zustand';
@@ -96,7 +95,8 @@ export type LandingStateStep6 = Readonly<{
   step6CommentArgs: Record<string, string>;
   step6ResultType: Maybe<'success' | 'error'>;
   step6Valid: boolean;
-  progress: Map<ProgressStep, PrismIndexProgressMessage['data']>;
+  currentRssBytes: number;
+  progress: ProgressSteps;
   biff2json: () => Observable<void>;
   step6Destroy: () => void;
 }>;

@@ -109,7 +109,10 @@ export const parseMuss = async (
       reportProgress({
         value: percent,
         step: 'mus_raw2json',
-        params: { resourceName },
+        params: {
+          resourceName,
+          rssBytes: process.memoryUsage().rss,
+        },
       });
 
       return mus;

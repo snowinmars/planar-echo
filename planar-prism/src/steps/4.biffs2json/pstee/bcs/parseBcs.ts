@@ -28,7 +28,10 @@ export const parseBcs = (
       reportProgress({
         value: percent,
         step: 'bcs_raw2json',
-        params: { resourceName },
+        params: {
+          resourceName,
+          rssBytes: process.memoryUsage().rss,
+        },
       });
 
       return bcs;

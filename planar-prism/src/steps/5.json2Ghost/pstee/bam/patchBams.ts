@@ -20,6 +20,7 @@ export const patchBams = (
       step: 'bam_json2ghost',
       params: {
         resourceName: bam.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

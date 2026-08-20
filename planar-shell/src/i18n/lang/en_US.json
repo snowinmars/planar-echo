@@ -89,6 +89,7 @@
     },
     "step6": {
       "start": "I have space on hdd and want to start",
+      "progress": "{{currentRssMb}} mb of ram consumed",
       "buildPrism": "Building Prism",
       "decompileBiffs": "Decompiling .biff archives",
       "ids_raw2json": ".ids to json",

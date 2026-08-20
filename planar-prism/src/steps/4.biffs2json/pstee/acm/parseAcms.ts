@@ -55,7 +55,10 @@ export const parseAcms = async (
       reportProgress({
         value: percent,
         step: 'acm_raw2json',
-        params: { resourceName },
+        params: {
+          resourceName,
+          rssBytes: process.memoryUsage().rss,
+        },
       });
 
       return {

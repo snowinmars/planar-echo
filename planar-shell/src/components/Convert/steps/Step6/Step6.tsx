@@ -32,30 +32,31 @@ type Step6Props = Readonly<{
   gameLanguage: LandingStateStep1['gameLanguage'];
   weiduExeDir: LandingStateStep2['weiduExeDir'];
   chitinKeyFile: LandingStateStep3['chitinKeyFile'];
+  currentRssBytes: LandingStateStep6['currentRssBytes'];
   progress: LandingStateStep6['progress'];
   biff2json: () => Observable<void>;
 }>;
 const Step6: FC<Step6Props> = (props: Step6Props) => {
   const { t } = useTranslation();
 
-  const raw2jsonLoaders = [...props.progress.values()].filter(x => x.step.endsWith('raw2json')).filter(x => x.step !== 'effV10_raw2json'); // effv10 has no usage in frontend
-  const json2ghostLoaders = [...props.progress.values()].filter(x => x.step.endsWith('json2ghost'));
+  const raw2jsonLoaders = [...Object.values(props.progress)].filter(x => x.step.endsWith('raw2json')).filter(x => x.step !== 'effV10_raw2json'); // effv10 has no usage in frontend
+  const json2ghostLoaders = [...Object.values(props.progress)].filter(x => x.step.endsWith('json2ghost'));
 
   return (
     <div>
       <Button
         fullWidth
         onClick={props.biff2json}
-        loading={props.loading}
         disabled={props.disabled || props.loading}
       >
-        {t('landing.step6.start')}
+        {props.currentRssBytes && t('landing.step6.progress', { currentRssMb: Math.round(props.currentRssBytes / (1024 * 1024)) })}
+        {!props.currentRssBytes && t('landing.step6.start')}
       </Button>
 
       <Grid container spacing="1em">
         <Grid size={{ xs: 12 }}>
-          <L item={props.progress.get('buildPrism')!} />
-          <L item={props.progress.get('decompileBiffs')!} />
+          <L item={props.progress['buildPrism']} />
+          <L item={props.progress['decompileBiffs']} />
         </Grid>
 
         <Grid size={{ xs: 6 }}>
@@ -75,7 +76,7 @@ const Step6: FC<Step6Props> = (props: Step6Props) => {
         </Grid>
 
         <Grid size={{ xs: 12 }}>
-          <L item={props.progress.get('buildGhost')!} />
+          <L item={props.progress['buildGhost']} />
         </Grid>
       </Grid>
     </div>

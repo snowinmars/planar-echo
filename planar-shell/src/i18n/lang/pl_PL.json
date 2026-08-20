@@ -89,6 +89,7 @@
     },
     "step6": {
       "start": "Mam miejsce na dysku i chcę zacząć",
+      "progress": "{{currentRssMb}} mb zużytej pamięci ram",
       "buildPrism": "Budowanie Prism",
       "decompileBiffs": "Dekompilacja archiwów .biff",
       "ids_raw2json": ".ids → json",

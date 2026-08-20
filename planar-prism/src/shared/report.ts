@@ -1,7 +1,6 @@
 import { timer, takeUntil, buffer, merge, Subject } from 'rxjs';
 import logger from './logger.js';
-
-import type { Progress } from './report.types.js';
+import type { Progress } from '@planar/shared';
 
 const latestBy = <TItem, TKey>(
   arr: TItem[],

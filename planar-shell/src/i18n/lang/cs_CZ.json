@@ -89,6 +89,7 @@
     },
     "step6": {
       "start": "Mám místo na disku a chci začít",
+      "progress": "Spotřeba {{currentRssMb}} mb ram",
       "buildPrism": "Sestavení Prism",
       "decompileBiffs": "Dekompilace .biff archivů",
       "ids_raw2json": ".ids do json",

@@ -39,7 +39,10 @@ export const parseTiss = (
     reportProgress({
       value: percent,
       step: 'tis_raw2json',
-      params: { resourceName },
+      params: {
+        resourceName,
+        rssBytes: process.memoryUsage().rss,
+      },
     });
 
     return artifacts;

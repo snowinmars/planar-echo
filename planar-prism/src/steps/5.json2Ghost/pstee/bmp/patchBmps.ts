@@ -20,6 +20,7 @@ export const patchBmps = (
       step: 'bmp_json2ghost',
       params: {
         resourceName: bmp.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

@@ -15,6 +15,7 @@ export const patchTlk = (tlk: RawTlk): string => {
     step: 'tlk_json2ghost',
     params: {
       resourceName: tlk.resourceName,
+      rssBytes: process.memoryUsage().rss,
     },
   });
 
@@ -35,6 +36,7 @@ export const patchTlk = (tlk: RawTlk): string => {
     step: 'tlk_json2ghost',
     params: {
       resourceName: tlk.resourceName,
+      rssBytes: process.memoryUsage().rss,
     },
   });
 

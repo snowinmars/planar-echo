@@ -89,6 +89,7 @@
     },
     "step6": {
       "start": "J'ai de l'espace disque et je veux commencer",
+      "progress": "{{currentRssMb}} mb de ram consommés",
       "buildPrism": "Compilation de Prism",
       "decompileBiffs": "Décompilation des archives .biff",
       "ids_raw2json": ".ids vers json",

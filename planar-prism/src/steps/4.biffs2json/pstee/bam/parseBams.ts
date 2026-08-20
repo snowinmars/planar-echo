@@ -58,7 +58,10 @@ export const parseBams = (
     reportProgress({
       value: percent,
       step: 'bam_raw2json',
-      params: { resourceName },
+      params: {
+        resourceName,
+        rssBytes: process.memoryUsage().rss,
+      },
     });
 
     return artifacts;

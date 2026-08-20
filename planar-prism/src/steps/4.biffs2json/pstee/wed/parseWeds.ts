@@ -33,7 +33,10 @@ export const parseWeds = (
     reportProgress({
       value: percent,
       step: 'wed_raw2json',
-      params: { resourceName },
+      params: {
+        resourceName,
+        rssBytes: process.memoryUsage().rss,
+      },
     });
 
     return wed;

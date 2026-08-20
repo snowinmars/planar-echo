@@ -24,7 +24,10 @@ export const parseInis = (
     reportProgress({
       value: percent,
       step: 'ini_raw2json',
-      params: { resourceName },
+      params: {
+        resourceName,
+        rssBytes: process.memoryUsage().rss,
+      },
     });
 
     return raw;

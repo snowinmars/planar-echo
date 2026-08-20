@@ -19,7 +19,10 @@ export const parseTlk = async (resourceName: string): Promise<RawTlk> => {
   reportProgress({
     value: 1,
     step: 'tlk_raw2json',
-    params: { resourceName },
+    params: {
+      resourceName,
+      rssBytes: process.memoryUsage().rss,
+    },
   });
 
   const tlk = parseTlkV1({
@@ -47,7 +50,10 @@ export const parseTlk = async (resourceName: string): Promise<RawTlk> => {
   reportProgress({
     value: 100,
     step: 'tlk_raw2json',
-    params: { resourceName },
+    params: {
+      resourceName,
+      rssBytes: process.memoryUsage().rss,
+    },
   });
 
   return {

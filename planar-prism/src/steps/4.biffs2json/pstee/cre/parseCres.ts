@@ -39,7 +39,10 @@ export const parseCres = (
         reportProgress({
           value: percent,
           step: 'cre_raw2json',
-          params: { resourceName },
+          params: {
+            resourceName,
+            rssBytes: process.memoryUsage().rss,
+          },
         });
 
         return cre;
@@ -55,7 +58,10 @@ export const parseCres = (
         reportProgress({
           value: percent,
           step: 'cre_raw2json',
-          params: { resourceName },
+          params: {
+            resourceName,
+            rssBytes: process.memoryUsage().rss,
+          },
         });
 
         return cre;

@@ -20,6 +20,7 @@ export const patchBcs = (
       step: 'bcs_json2ghost',
       params: {
         resourceName: bcs.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

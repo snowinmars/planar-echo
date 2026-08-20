@@ -17,6 +17,9 @@ export const decompileBiffs = async (paths: Paths): Promise<Map<DecompiledBiffTy
   reportProgress({
     value: 1,
     step: 'decompileBiffs',
+    params: {
+      rssBytes: process.memoryUsage().rss,
+    },
   });
 
   const hasPreviousDecompilation = await entryExists(cacheJson);
@@ -26,6 +29,9 @@ export const decompileBiffs = async (paths: Paths): Promise<Map<DecompiledBiffTy
     reportProgress({
       value: 100,
       step: 'decompileBiffs',
+      params: {
+        rssBytes: process.memoryUsage().rss,
+      },
     });
 
     return loadFromFile(cacheJson);
@@ -36,12 +42,18 @@ export const decompileBiffs = async (paths: Paths): Promise<Map<DecompiledBiffTy
     const decompiledBiffs = await decompileAndParseBiffs(paths, x => reportProgress({
       value: x,
       step: 'decompileBiffs',
+      params: {
+        rssBytes: process.memoryUsage().rss,
+      },
     }));
     await saveToFile(cacheJson, decompiledBiffs);
 
     reportProgress({
       value: 100,
       step: 'decompileBiffs',
+      params: {
+        rssBytes: process.memoryUsage().rss,
+      },
     });
 
     logger.info(`Decompiled biff archives from '${gameDir}' to '${ghostDir}' with cache at '${cacheJson}'`);

@@ -1,14 +1,14 @@
-import { just, nothing, progressSteps } from '@planar/shared';
+import { just, nothing } from '@planar/shared';
 import { Observable, Subject } from 'rxjs';
 import urlJoin from 'url-join';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { getProgressMutation, getStartingSteps } from './step6.copypaste';
 
 import type { LandingState, LandingStateStep6 } from './types';
 import type { StateCreator } from 'zustand';
 import type {
   GameName,
   GameLanguage,
-  ProgressStep,
   PrismIndexStartMessage,
   PrismIndexProgressMessage,
   PrismIndexCompleteMessage,
@@ -18,19 +18,11 @@ import type {
 
 type WebSocketMessage = PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage | PrismIndexReadyMessage;
 
-const getStartingSteps = () => new Map<ProgressStep, PrismIndexProgressMessage['data']>(progressSteps.map(x => [x, { value: 0, step: x }]));
-
 export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingStateStep6> = (set, get) => {
   const createWs = (): WebSocket => {
     const { serverUrl } = get();
     const wsUrl = serverUrl.replace('http://', 'ws://').replace('https://', 'wss://');
     const ws = new WebSocket(urlJoin(wsUrl, '/api/prism/index'));
-
-    const updateProgress = (step: ProgressStep, value: number) => {
-      const { progress } = get();
-      progress.set(step, { step, value });
-      set({ progress });
-    };
 
     ws.onerror = (error) => {
       console.error('WebSocket error:', error);
@@ -41,19 +33,24 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
 
       switch (message.type) {
         case 'progress': {
-          const matchedStep = get().progress.get(message.data.step);
-          if (matchedStep) {
-            updateProgress(message.data.step, message.data.value);
-          }
+          const { progress } = get();
+
+          set({
+            progress: {
+              ...progress,
+              [message.data.step]: getProgressMutation(message.data),
+            },
+            currentRssBytes: message.data.params.rssBytes,
+          });
           break;
         }
         case 'complete': {
-          set({ step6Loading: false, step6Valid: true });
+          set({ step6Loading: false, step6Valid: true, currentRssBytes: 0 });
           ws.close();
           break;
         }
         case 'error': {
-          set({ step6Loading: false, step6Valid: false });
+          set({ step6Loading: false, step6Valid: false, currentRssBytes: 0 });
           ws.close();
           console.error('PrismIndex error:', message.data);
           // TODO [snow]: show error
@@ -78,6 +75,7 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
     step6CommentArgs: {},
     step6ResultType: nothing(),
     step6Valid: false,
+    currentRssBytes: 0,
     progress: getStartingSteps(),
     step6Destroy: () => {},
 

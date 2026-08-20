@@ -32,7 +32,10 @@ export const parseWavs = (
     reportProgress({
       value: percent,
       step: 'wav_raw2json',
-      params: { resourceName },
+      params: {
+        resourceName,
+        rssBytes: process.memoryUsage().rss,
+      },
     });
 
     return {

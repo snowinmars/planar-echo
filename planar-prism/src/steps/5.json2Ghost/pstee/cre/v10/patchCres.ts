@@ -22,6 +22,7 @@ export const patchCres = (
       step: 'cre_json2ghost',
       params: {
         resourceName: cre.resourceName,
+        rssBytes: process.memoryUsage().rss,
       },
     });
 

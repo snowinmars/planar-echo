@@ -4,7 +4,14 @@ import { exec } from 'child_process';
 import { WebSocket } from 'ws';
 import logger from '@/shared/logger.js';
 
-import type { PrismIndexCompleteMessage, PrismIndexErrorMessage, PrismIndexProgressMessage, PrismIndexStartMessage, ProgressStep } from '@planar/shared';
+import type {
+  PrismIndexCompleteMessage,
+  PrismIndexErrorMessage,
+  PrismIndexProgressMessage,
+  PrismIndexStartMessage,
+  Progress,
+  ProgressStep,
+} from '@planar/shared';
 
 type PrismIndexResponseData = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
@@ -13,7 +20,10 @@ export const runCommand = (command: string, step: ProgressStep): Observable<Pris
     const message: PrismIndexProgressMessage['data'] = {
       value: 1,
       step,
-    };
+      params: {
+        rssBytes: process.memoryUsage().rss,
+      },
+    } as Progress; // TODO [snow]: hot to drop cast?
     subscriber.next(message);
 
     logger.debug(command);
@@ -26,7 +36,10 @@ export const runCommand = (command: string, step: ProgressStep): Observable<Pris
       const message: PrismIndexProgressMessage['data'] = {
         value: 100,
         step,
-      };
+        params: {
+          rssBytes: process.memoryUsage().rss,
+        },
+      } as Progress; // TODO [snow]: hot to drop cast?
       subscriber.next(message);
 
       subscriber.complete();

@@ -41,6 +41,7 @@ export const patchDlgs = (
           step: 'dlg_json2ghost',
           params: {
             resourceName: dlg.resourceName,
+            rssBytes: process.memoryUsage().rss,
           },
         });
 
