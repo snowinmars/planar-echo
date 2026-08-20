@@ -3,7 +3,7 @@ import { translateObject } from './translateObject.js';
 import type { RawIds } from '../../../ids/parseIds.types.js';
 import type { RawBcsObject } from '../bytecode/parseOb.types.js';
 import type { RawBcsVariableWrapper } from '../temps/createVariableWrapper.types.js';
-import type { RawBcsArg } from '../../buildBcsContext.types.js';
+import type { RawBcsArg } from '../../context/buildBcsContext.types.js';
 
 type ObjectArgForScopeProps = Readonly<{
   resourceName: string;

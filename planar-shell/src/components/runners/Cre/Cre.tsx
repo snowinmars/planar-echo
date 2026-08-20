@@ -16,7 +16,7 @@ import { mapCreToTlkRefs } from './mapCreToTlkRefs';
 
 import type { FC } from 'react';
 import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import { isNothing, type Maybe } from '@planar/shared';
 
 import styles from './Cre.module.scss';
 
@@ -70,7 +70,7 @@ const Cre: FC = () => {
       <T title={t('run.cre.hp')} value={`${currentCre.currentHp}/${currentCre.maximumHp}`} />
       <T title={t('run.cre.sex')} value={currentCre.sex} />
       <T title={t('run.cre.race')} value={currentCre.race} />
-      <T title={t('run.cre.theClass')} value={currentCre.theClass} />
+      { !isNothing(currentCre.theClass) && <T title={t('run.cre.theClass')} value={currentCre.theClass} /> }
       <T title={t('run.cre.gender')} value={currentCre.gender} />
 
       {/* TODO [snow]: render portraits */}
@@ -150,13 +150,13 @@ const Cre: FC = () => {
           <T title="murderIncrementBy" value={currentCre.murderIncrementBy} />
           <T title="turnUndeadLevel" value={currentCre.turnUndeadLevel} />
           <T title="tracking" value={currentCre.tracking} />
-          <T title="faction" value={currentCre.faction} />
-          <T title="team" value={currentCre.team} />
-          <T title="species" value={currentCre.species} />
-          <T title="dialogueActivationRange" value={currentCre.dialogueActivationRange} />
-          <T title="collisionRadius" value={currentCre.collisionRadius} />
+          { !isNothing(currentCre.faction) && <T title="faction" value={currentCre.faction} /> }
+          { !isNothing(currentCre.team) && <T title="team" value={currentCre.team} /> }
+          { !isNothing(currentCre.species) && <T title="species" value={currentCre.species} /> }
+          { !isNothing(currentCre.dialogueActivationRange) && <T title="dialogueActivationRange" value={currentCre.dialogueActivationRange} /> }
+          { !isNothing(currentCre.collisionRadius) && <T title="collisionRadius" value={currentCre.collisionRadius} /> }
           <T title="shieldFlags" value={currentCre.shieldFlags?.join(', ')} />
-          <T title="fieldOfVision" value={currentCre.fieldOfVision} />
+          { !isNothing(currentCre.fieldOfVision) && <T title="fieldOfVision" value={currentCre.fieldOfVision} /> }
           <T title="attributes" value={currentCre.attributes?.join(', ')} />
           <T title="levelFirstClass" value={currentCre.levelFirstClass} />
           <T title="levelSecondClass" value={currentCre.levelSecondClass} />
@@ -165,7 +165,7 @@ const Cre: FC = () => {
           <T title="moraleBreak" value={currentCre.moraleBreak} />
           <T title="racialEnemy" value={currentCre.racialEnemy} />
           <T title="moraleRecoveryTime" value={currentCre.moraleRecoveryTime} />
-          <T title="deity" value={currentCre.deity} />
+          { !isNothing(currentCre.deity) && <T title="deity" value={currentCre.deity} /> }
           <T title="mageType" value={currentCre.mageType?.join(', ')} />
           <T title="allegiance" value={currentCre.allegiance} />
           <T title="general" value={currentCre.general} />
@@ -260,7 +260,7 @@ const Cre: FC = () => {
           <T title="raceScriptRef" value={currentCre.raceScriptRef} />
           <T title="generalScriptRef" value={currentCre.generalScriptRef} />
           <T title="defaultScriptRef" value={currentCre.defaultScriptRef} />
-          <T title="scriptName" value={currentCre.scriptName} />
+          { !isNothing(currentCre.scriptName) && <T title="scriptName" value={currentCre.scriptName} /> }
         </AccordionDetails>
       </Accordion>
 

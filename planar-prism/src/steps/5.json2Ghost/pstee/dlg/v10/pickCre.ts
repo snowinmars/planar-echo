@@ -1,10 +1,8 @@
 import { dlgToCres, dlgToItms, nothing } from '@planar/shared';
 
-import type { Maybe } from '@planar/shared';
-import type { CreWithTlk } from '../../cre/v10/patchCres.types.js';
-import type { ItmWithTlk } from '../../itm/v11/patchItms.types.js';
+import type { GhostCre, GhostItm, Maybe } from '@planar/shared';
 
-const pickItm = (itms: Map<string, ItmWithTlk>, dlgResourceName: string): Maybe<ItmWithTlk> | 'narrator' => {
+const pickItm = (itms: Map<string, GhostItm>, dlgResourceName: string): Maybe<GhostItm> | 'narrator' => {
   try {
     const creResourceNames = dlgToItms(dlgResourceName);
     if (creResourceNames.length === 1 && creResourceNames[0] === 'narrator') return creResourceNames[0];
@@ -17,7 +15,7 @@ const pickItm = (itms: Map<string, ItmWithTlk>, dlgResourceName: string): Maybe<
   }
 };
 
-const pickCre = (cres: Map<string, CreWithTlk>, dlgResourceName: string): Maybe<CreWithTlk> | 'narrator' => {
+const pickCre = (cres: Map<string, GhostCre>, dlgResourceName: string): Maybe<GhostCre> | 'narrator' => {
   try {
     const creResourceNames = dlgToCres(dlgResourceName);
     if (creResourceNames.length === 1 && creResourceNames[0] === 'narrator') return creResourceNames[0];
@@ -31,9 +29,9 @@ const pickCre = (cres: Map<string, CreWithTlk>, dlgResourceName: string): Maybe<
 };
 
 export const pickCreOrItm = (
-  cres: Map<string, CreWithTlk>,
-  itms: Map<string, ItmWithTlk>,
-  dlgResourceName: string): CreWithTlk | ItmWithTlk | 'narrator' => {
+  cres: Map<string, GhostCre>,
+  itms: Map<string, GhostItm>,
+  dlgResourceName: string): GhostCre | GhostItm | 'narrator' => {
   const cre = pickCre(cres, dlgResourceName);
   const itm = pickItm(itms, dlgResourceName);
 

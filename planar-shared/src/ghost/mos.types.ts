@@ -46,7 +46,6 @@ export type GhostMosV1BlockMeta = Readonly<{
 
 export type GhostMosV1 = Readonly<{
   resourceName: string;
-  signature: 'mos';
   header: GhostMosV1Header;
   imageName: string;
   paletteLayout: GhostMosV1PaletteLayout;
@@ -77,7 +76,6 @@ export type GhostMosV2Block = Readonly<{
 
 export type GhostMosV2 = Readonly<{
   resourceName: string;
-  signature: 'mos';
   header: GhostMosV2Header;
   imageName: string;
   blocks: GhostMosV2Block[];

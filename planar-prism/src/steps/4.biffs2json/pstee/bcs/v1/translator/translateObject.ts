@@ -1,12 +1,12 @@
 import logger from '@/shared/logger.js';
 import { isNothing, just, nothing } from '@planar/shared';
-import { PSTEE_OBJECT_TARGET_IDS } from '../../buildBcsContext.const.js';
+import { PSTEE_OBJECT_TARGET_IDS } from '../../context/buildBcsContext.const.js';
 import { lookupIdsSymbol } from './lookupIdsSymbol.js';
 
 import type { Maybe } from '@planar/shared';
 import type { RawIds } from '../../../ids/parseIds.types.js';
 import type { RawBcsObject } from '../bytecode/parseOb.types.js';
-import type { RawBcsArg } from '../../buildBcsContext.types.js';
+import type { RawBcsArg } from '../../context/buildBcsContext.types.js';
 
 type TranslateTargetProps = Readonly<{
   resourceName: string;

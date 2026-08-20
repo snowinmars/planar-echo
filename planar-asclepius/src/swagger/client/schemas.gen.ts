@@ -76,6 +76,54 @@ export const wed_wedIdSchema = {
     example: 'ar0202.wed'
 } as const;
 
+export const acm_acmIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'baator.acm'
+} as const;
+
+export const bam_bamIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'ampnm1.bam'
+} as const;
+
+export const bmp_bmpIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'ampnm1.bmp'
+} as const;
+
+export const wav_wavIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'nam157.wav'
+} as const;
+
+export const mus_musIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'baat.mus'
+} as const;
+
+export const eff_effIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'spin103.eff'
+} as const;
+
+export const ids_idsIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'class.ids'
+} as const;
+
+export const ini_iniIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'ar0202.ini'
+} as const;
+
 export const creToDlgs_creIdSchema = {
     type: 'string',
     minLength: 1,

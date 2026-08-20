@@ -5,6 +5,7 @@ import { normalizeRef } from '@/shared/numbers.js';
 import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawCreHeaderV10 } from './1.parseHeaderV10.types.js';
 import type { RawIds } from '../../../ids/index.js';
+import type { ClassId } from '@planar/shared';
 
 type ParseHeaderV10Props = Readonly<{
   reader: BufferReader;
@@ -234,7 +235,7 @@ export const parseHeaderV10 = ({
   const allegiance = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('ea.ids')!.entries));
   const general = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('general.ids')!.entries));
   const race = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('race.ids')!.entries));
-  const theClass = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('class.ids')!.entries));
+  const theClass = reader.map.ubyte<ClassId>(x => externalOffsetMap.parseExternal(x, ids.get('class.ids')!.entries)); // TODO [snow]: entype
   const specific = reader.map.ubyte(extendMap.specific.parse);
   const gender = reader.map.ubyte(extendMap.gender.parse);
   const objectSpec1 = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('object.ids')!.entries)); // TODO [snow]: should I use ObjectIdsReferencesV10 here from docs?

@@ -13,7 +13,7 @@ import type { FC } from 'react';
 
 import styles from './Header.module.scss';
 
-type CurrentWidget = 'cre' | 'dlg' | 'itm' | 'bcs' | 'mos' | 'pvrz' | 'tis' | 'wed' | '';
+type CurrentWidget = 'cre' | 'dlg' | 'itm' | 'bcs' | 'mos' | 'pvrz' | 'tis' | 'wed' | 'acm' | 'bam' | 'bmp' | 'wav' | 'mus' | 'eff' | 'ids' | 'ini' | '';
 
 const CreWidget = lazy(() => import('./children/CreWidget/CreWidget'));
 const DlgWidget = lazy(() => import('./children/DlgWidget/DlgWidget'));
@@ -23,6 +23,14 @@ const MosWidget = lazy(() => import('./children/MosWidget/MosWidget'));
 const PvrzWidget = lazy(() => import('./children/PvrzWidget/PvrzWidget'));
 const TisWidget = lazy(() => import('./children/TisWidget/TisWidget'));
 const WedWidget = lazy(() => import('./children/WedWidget/WedWidget'));
+const AcmWidget = lazy(() => import('./children/AcmWidget/AcmWidget'));
+const BamWidget = lazy(() => import('./children/BamWidget/BamWidget'));
+const BmpWidget = lazy(() => import('./children/BmpWidget/BmpWidget'));
+const WavWidget = lazy(() => import('./children/WavWidget/WavWidget'));
+const MusWidget = lazy(() => import('./children/MusWidget/MusWidget'));
+const EffWidget = lazy(() => import('./children/EffWidget/EffWidget'));
+const IdsWidget = lazy(() => import('./children/IdsWidget/IdsWidget'));
+const IniWidget = lazy(() => import('./children/IniWidget/IniWidget'));
 
 const Header: FC = () => {
   const [currentWidget, setCurrentWidget] = useState<CurrentWidget>(() => planarLocalStorage.get<CurrentWidget>(planarLocalStorage.currentWidget, '')!);
@@ -51,6 +59,14 @@ const Header: FC = () => {
             { currentWidget === 'pvrz' && <PvrzWidget />}
             { currentWidget === 'tis' && <TisWidget />}
             { currentWidget === 'wed' && <WedWidget />}
+            { currentWidget === 'acm' && <AcmWidget />}
+            { currentWidget === 'bam' && <BamWidget />}
+            { currentWidget === 'bmp' && <BmpWidget />}
+            { currentWidget === 'wav' && <WavWidget />}
+            { currentWidget === 'mus' && <MusWidget />}
+            { currentWidget === 'eff' && <EffWidget />}
+            { currentWidget === 'ids' && <IdsWidget />}
+            { currentWidget === 'ini' && <IniWidget />}
           </Grid>
 
           <Grid size={{ xs: 0.5 }}>

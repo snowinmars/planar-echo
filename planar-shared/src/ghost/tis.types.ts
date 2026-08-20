@@ -33,7 +33,7 @@ export type GhostTisPvrzTile = Readonly<{
   page: number;
   x: number;
   y: number;
-  pvrzResourceName: Maybe<string>;
+  pvrzResourceName?: Maybe<string>;
 }>;
 
 export type GhostTisPvrz = Readonly<{

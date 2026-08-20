@@ -10,7 +10,7 @@ import type { RawBcsAction } from '../bytecode/parseAc.types.js';
 import type {
   RawBcsSignatureFunction,
   RawBcsSignatures,
-} from '../../buildBcsContext.types.js';
+} from '../../context/buildBcsContext.types.js';
 
 type ActionSignatureScore = Readonly<{
   score: number;

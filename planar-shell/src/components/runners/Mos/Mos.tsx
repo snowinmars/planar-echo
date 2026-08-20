@@ -103,7 +103,6 @@ const Mos: FC = () => {
       {!isNothing(imageUrl) && <img className={styles.image} src={imageUrl} alt={imageName ?? ''} />}
       <T title="imageName" value={currentMos.imageName} />
       <T title="resourceName" value={currentMos.resourceName} />
-      <T title="signature" value={currentMos.signature} />
       <Accordion slotProps={{ transition: { unmountOnExit: true } }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>header</Typography>
@@ -129,35 +128,46 @@ const Mos: FC = () => {
           )}
         </AccordionDetails>
       </Accordion>
-      {
-        currentMos.blocks.map((block, i) => (
-          <Accordion key={`mos_block_${i}`} slotProps={{ transition: { unmountOnExit: true } }}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>
-                block
-                {' '}
-                {i}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <T title="index" value={block.index} />
-              {'col' in block && <T title="col" value={block.col} />}
-              {'row' in block && <T title="row" value={block.row} />}
-              {'width' in block && <T title="width" value={block.width} />}
-              {'height' in block && <T title="height" value={block.height} />}
-              {'page' in block && <T title="page" value={block.page} />}
-              {'pvrzResourceName' in block && <T title="pvrzResourceName" value={block.pvrzResourceName} />}
-              {'sourceX' in block && <T title="sourceX" value={block.sourceX} />}
-              {'sourceY' in block && <T title="sourceY" value={block.sourceY} />}
-              {'targetX' in block && <T title="targetX" value={block.targetX} />}
-              {'targetY' in block && <T title="targetY" value={block.targetY} />}
-              {'paletteByteOffset' in block && <T title="paletteByteOffset" value={block.paletteByteOffset} />}
-              {'lookupOffset' in block && <T title="lookupOffset" value={block.lookupOffset} />}
-              {'pixelDataOffset' in block && <T title="pixelDataOffset" value={block.pixelDataOffset} />}
-            </AccordionDetails>
-          </Accordion>
-        ))
-      }
+      <Accordion slotProps={{ transition: { unmountOnExit: true } }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>
+            Blocks (
+            {currentMos.blocks.length}
+            )
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {
+            currentMos.blocks.map((block, i) => (
+              <Accordion key={`mos_block_${i}`} slotProps={{ transition: { unmountOnExit: true } }}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>
+                    block
+                    {' '}
+                    {i}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <T title="index" value={block.index} />
+                  {'col' in block && <T title="col" value={block.col} />}
+                  {'row' in block && <T title="row" value={block.row} />}
+                  {'width' in block && <T title="width" value={block.width} />}
+                  {'height' in block && <T title="height" value={block.height} />}
+                  {'page' in block && <T title="page" value={block.page} />}
+                  {'pvrzResourceName' in block && <T title="pvrzResourceName" value={block.pvrzResourceName} />}
+                  {'sourceX' in block && <T title="sourceX" value={block.sourceX} />}
+                  {'sourceY' in block && <T title="sourceY" value={block.sourceY} />}
+                  {'targetX' in block && <T title="targetX" value={block.targetX} />}
+                  {'targetY' in block && <T title="targetY" value={block.targetY} />}
+                  {'paletteByteOffset' in block && <T title="paletteByteOffset" value={block.paletteByteOffset} />}
+                  {'lookupOffset' in block && <T title="lookupOffset" value={block.lookupOffset} />}
+                  {'pixelDataOffset' in block && <T title="pixelDataOffset" value={block.pixelDataOffset} />}
+                </AccordionDetails>
+              </Accordion>
+            ))
+          }
+        </AccordionDetails>
+      </Accordion>
       {imageLoading && <CircularProgress />}
       {imageError && <Typography>{t('run.imageLoadError')}</Typography>}
     </div>

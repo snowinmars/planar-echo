@@ -1,6 +1,7 @@
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import buildWedSkeleton from './2.buildWedSkeleton.js';
+import buildWedSkeleton from './1.buildWedSkeleton.js';
+import { toGhost } from './2.toGhost.js';
 
 import type { RawWed } from '@/steps/4.biffs2json/pstee/wed/index.js';
 import type { GhostWedOut } from './patchWed.types.js';
@@ -11,6 +12,7 @@ export const patchWed = (
   weds,
   (wed, i) => {
     const skeleton = buildWedSkeleton(wed);
+    const ghostWed = toGhost(wed);
 
     const percent = Math.round((i + 1) * 100 / weds.length);
     reportProgress({
@@ -25,7 +27,7 @@ export const patchWed = (
     return Promise.resolve({
       resourceName: wed.resourceName,
       skeleton,
-      wed,
+      wed: ghostWed,
     });
   },
 );

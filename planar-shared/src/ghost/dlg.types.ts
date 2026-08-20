@@ -24,6 +24,7 @@ export type GhostDlgArgs = Readonly<{
 ;
 
 export type GhostDlg = Readonly<{
+  resourceName: string;
   tree: Map<StateId, GhostDlgLabel>;
   constructorsWeights: Map<StateId, number>;
 }>

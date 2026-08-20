@@ -77,14 +77,24 @@ const RunnerGuard: FC<RunnerGuardProps> = ({ hasStores }: RunnerGuardProps) => {
       <Typography>
         {t('landing.runnerGuard.or')}
       </Typography>
-      <ButtonInsideTextField id="dlg" to="/dlg" disabled={!hasStores} />
-      <ButtonInsideTextField id="cre" to="/cre" disabled={!hasStores} />
-      <ButtonInsideTextField id="itm" to="/itm" disabled={!hasStores} />
+
+      <ButtonInsideTextField id="acm" to="/acm" disabled={!hasStores} />
+      <ButtonInsideTextField id="bam" to="/bam" disabled={!hasStores} />
       <ButtonInsideTextField id="bcs" to="/bcs" disabled={!hasStores} />
+      <ButtonInsideTextField id="bmp" to="/bmp" disabled={!hasStores} />
+      <ButtonInsideTextField id="cre" to="/cre" disabled={!hasStores} />
+      <ButtonInsideTextField id="dlg" to="/dlg" disabled={!hasStores} />
+      <ButtonInsideTextField id="eff" to="/eff" disabled={!hasStores} />
+      <ButtonInsideTextField id="ids" to="/ids" disabled={!hasStores} />
+      <ButtonInsideTextField id="ini" to="/ini" disabled={!hasStores} />
+      <ButtonInsideTextField id="itm" to="/itm" disabled={!hasStores} />
       <ButtonInsideTextField id="mos" to="/mos" disabled={!hasStores} />
+      <ButtonInsideTextField id="mus" to="/mus" disabled={!hasStores} />
       <ButtonInsideTextField id="pvrz" to="/pvrz" disabled={!hasStores} />
       <ButtonInsideTextField id="tis" to="/tis" disabled={!hasStores} />
+      <ButtonInsideTextField id="wav" to="/wav" disabled={!hasStores} />
       <ButtonInsideTextField id="wed" to="/wed" disabled={!hasStores} />
+
       <Button
         component={RouterLink}
         to="/stores"

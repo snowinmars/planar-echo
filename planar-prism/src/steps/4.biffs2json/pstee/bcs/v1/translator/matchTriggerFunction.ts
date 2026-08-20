@@ -10,7 +10,7 @@ import type { RawBcsTrigger } from '../bytecode/parseTr.types.js';
 import type {
   RawBcsSignatureFunction,
   RawBcsSignatures,
-} from '../../buildBcsContext.types.js';
+} from '../../context/buildBcsContext.types.js';
 
 type FindSignaturesProps = Readonly<{
   resourceName: string;

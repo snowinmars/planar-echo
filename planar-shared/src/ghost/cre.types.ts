@@ -2,6 +2,7 @@ import type { ClassId } from '../dlgEngine/enums/class.js';
 import type { Maybe } from '../maybe.js';
 
 type BaseGhostCre = Readonly<{
+  resourceName: string;
   nameRef: number;
   tooltipRef: number;
   flags: string[];
@@ -66,13 +67,13 @@ type BaseGhostCre = Readonly<{
   goodIncrementBy: Maybe<number>;
   lawIncrementBy: Maybe<number>;
   ladyIncrementBy: Maybe<number>;
-  faction: number;
-  team: number;
-  species: string;
-  dialogueActivationRange: number;
-  collisionRadius: number;
+  faction: Maybe<number>;
+  team: Maybe<number>;
+  species: Maybe<string>;
+  dialogueActivationRange: Maybe<number>;
+  collisionRadius: Maybe<number>;
   shieldFlags: string[];
-  fieldOfVision: number;
+  fieldOfVision: Maybe<number>;
   attributes: string[];
   levelFirstClass: number;
   levelSecondClass: number;
@@ -89,7 +90,7 @@ type BaseGhostCre = Readonly<{
   moraleBreak: number;
   racialEnemy: string;
   moraleRecoveryTime: number;
-  deity: string;
+  deity: Maybe<string>;
   mageType: string[];
   overrideScriptRef: string;
   classScriptRef: string;
@@ -99,14 +100,14 @@ type BaseGhostCre = Readonly<{
   allegiance: string;
   general: string;
   race: string;
-  theClass: ClassId;
+  theClass: Maybe<ClassId>;
   specific: string;
   gender: string;
   objectSpecs: string[];
   alignment: string;
   globalIdentifier: number;
   localIdentifier: number;
-  scriptName: string;
+  scriptName: Maybe<string>;
   knownSpellsOffset: number;
   knownSpellsCount: number;
   spellMemorizationInfoOffset: number;
@@ -146,24 +147,24 @@ type GhostCreV11Extension = Readonly<{
   edgedWeaponProficiency: number;
   hammerProficiency: number;
   clubProficiency: number;
-  overlaysOffset: string;
-  overlaysSize: string;
+  overlaysOffset: number;
+  overlaysSize: number;
   characterType: string;
-  colorsCount: string;
-  color1: string;
-  color2: string;
-  color3: string;
-  color4: string;
-  color5: string;
-  color6: string;
-  color7: string;
-  color1Placement: string;
-  color2Placement: string;
-  color3Placement: string;
-  color4Placement: string;
-  color5Placement: string;
-  color6Placement: string;
-  color7Placement: string;
+  colorsCount: number;
+  colorIndex1: number;
+  colorIndex2: number;
+  colorIndex3: number;
+  colorIndex4: number;
+  colorIndex5: number;
+  colorIndex6: number;
+  colorIndex7: number;
+  color1Placement: number; // TODO [snow]: entype
+  color2Placement: number;
+  color3Placement: number;
+  color4Placement: number;
+  color5Placement: number;
+  color6Placement: number;
+  color7Placement: number;
 }>;
 
 type GhostCreSound = Readonly<{

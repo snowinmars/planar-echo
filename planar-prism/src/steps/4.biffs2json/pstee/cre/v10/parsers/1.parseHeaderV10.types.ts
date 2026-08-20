@@ -1,5 +1,5 @@
 import { extend } from '@/shared/extendedMap.js';
-import type { Maybe } from '@planar/shared';
+import type { ClassId, Maybe } from '@planar/shared';
 
 /* createGenerator().register().flags('flagsV10',{
  *   byte1:['show longname in tooltip','no corpse','keep corpse','original class was fighter','original class was mage','original class was cleric','original class was thief','original class was druid',],
@@ -639,7 +639,7 @@ export type RawCreHeaderV10 = Readonly<{
   allegiance: string;
   general: string;
   race: string;
-  theClass: string;
+  theClass: ClassId;
   specific: SpecificV10;
   gender: GenderV10;
   objectSpec1: string;

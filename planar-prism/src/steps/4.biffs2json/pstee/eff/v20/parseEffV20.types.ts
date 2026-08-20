@@ -130,7 +130,7 @@ const parentResourceTypeV20 = {
   0: 'none',
   1: 'spell',
   2: 'item',
-};
+} as const;
 type ParentResourceTypeV20 = typeof parentResourceTypeV20[keyof typeof parentResourceTypeV20];
 
 /* createGenerator().register().flags('parentResourceFlagsV20', {

@@ -27,9 +27,9 @@ import { decompileBiffs } from '@/steps/3.decompileBiffs/index.js';
 import { biffs2json } from '@/steps/4.biffs2json/index.js';
 import { json2Ghost } from '@/steps/5.json2Ghost/index.js';
 import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
+import discoverer from './discoverer.js';
 
 import type { PrismIndexStartMessage } from '@planar/shared';
-import discoverer from './discoverer.js';
 
 const isIpc = !!process.send;
 logger.warn(isIpc ? 'Run ipc mode' : 'Run cli mode');

@@ -2,7 +2,7 @@ export { DB_NAME } from './db.js';
 export { gameNames } from './gameName.js';
 export { gameLanguages } from './gameLanguage.js';
 export { jsonStringify, jsonParse } from './json.js';
-export { just, maybe, nothing, isNothing } from './maybe.js';
+export { just, maybe, nothing, isNothing, either } from './maybe.js';
 export { objectEntries, objectKeys, objectValues } from './objects.js';
 export { progressSteps } from './prismIndexStartMessage.js';
 export { registerDlg } from './dlgEngine/registerDlg.js';
@@ -117,3 +117,33 @@ export type {
   GhostWedOverlay,
   GhostWedPolygon,
 } from './ghost/wed.types.js';
+export type {
+  GhostAcm,
+  GhostAudioContainer,
+} from './ghost/acm.types.js';
+export type {
+  GhostBam,
+  GhostBamV1,
+  GhostBamV2,
+} from './ghost/bam.types.js';
+export type {
+  GhostBmp,
+  GhostBmpV1,
+  GhostBmpV5,
+} from './ghost/bmp.types.js';
+export type {
+  GhostEff,
+  GhostEffV20,
+} from './ghost/eff.types.js';
+export type { GhostIds } from './ghost/ids.types.js';
+export type {
+  GhostIni,
+  GhostIniCreatureSection,
+  GhostIniGroupSection,
+  GhostIniNumberedSection,
+} from './ghost/ini.types.js';
+export type {
+  GhostMus,
+  GhostMusSegment,
+} from './ghost/mus.types.js';
+export type { GhostWav } from './ghost/wav.types.js';

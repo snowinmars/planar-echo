@@ -1,4 +1,4 @@
-import type { RawBcsArg } from '../../buildBcsContext.types.js';
+import type { RawBcsArg } from '../../context/buildBcsContext.types.js';
 import type { RawBcsTempVariable } from './objectArgForScope.types.js';
 
 export type RawBcsIfBlock = Readonly<{

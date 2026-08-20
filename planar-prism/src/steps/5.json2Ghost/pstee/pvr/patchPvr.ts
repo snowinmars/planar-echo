@@ -1,6 +1,6 @@
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import buildPvrSkeleton from './2.buildPvrSkeleton.js';
+import { buildPvrSkeleton } from './1.buildPvrSkeleton.js';
 
 import type { RawPvr } from '@/steps/4.biffs2json/pstee/pvrz/index.js';
 import type { GhostPvrOut } from './patchPvr.types.js';

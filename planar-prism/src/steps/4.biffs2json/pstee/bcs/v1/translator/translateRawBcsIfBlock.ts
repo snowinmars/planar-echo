@@ -1,7 +1,7 @@
 import { translateCondition } from './translateCondition.js';
 import { translateResponse } from './translateResponse.js';
 
-import type { RawBcsContext } from '../../buildBcsContext.types.js';
+import type { RawBcsContext } from '../../context/buildBcsContext.types.js';
 import type { RawBcsCr } from '../bytecode/parseCr.types.js';
 import type { RawBcsIfBlock } from './translateRawBcsIfBlock.types.js';
 

@@ -1,7 +1,5 @@
 import type { RawBamV1Header } from './parsers/1.parseHeader.types.js';
-import type { RawBamV1FrameEntry } from './parsers/2.parseFrames.types.js';
 import type { RawBamV1CycleEntry } from './parsers/3.parseCycles.types.js';
-import type { BamAtlasFrame } from '../shared/buildAtlas.js';
 
 export type RawBamV1PaletteLayout = Readonly<{
   format: 'bgra';
@@ -21,13 +19,25 @@ export type RawBamV1IndicesLayout = Readonly<{
   }>[];
 }>;
 
+export type RawBamV1Frame = Readonly<{
+  index: number;
+  width: number;
+  height: number;
+  centerX: number;
+  centerY: number;
+  dataOffset: number;
+  compressed: boolean;
+  atlasX: number;
+  atlasY: number;
+}>;
+
 export type RawBamV1 = Readonly<{
   resourceName: string;
   header: RawBamV1Header;
   imageName: string;
   atlasWidth: number;
   atlasHeight: number;
-  frames: (RawBamV1FrameEntry & BamAtlasFrame)[];
+  frames: RawBamV1Frame[];
   cycles: RawBamV1CycleEntry[];
   paletteLayout: RawBamV1PaletteLayout;
   indicesLayout: RawBamV1IndicesLayout;

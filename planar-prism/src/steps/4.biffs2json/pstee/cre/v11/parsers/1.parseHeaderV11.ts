@@ -5,6 +5,7 @@ import { normalizeRef } from '@/shared/numbers.js';
 import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawCreHeaderV11 } from './1.parseHeaderV11.types.js';
 import type { RawIds } from '../../../ids/index.js';
+import type { ClassId } from '@planar/shared';
 
 type ParseHeaderV11Props = Readonly<{
   reader: BufferReader;
@@ -234,13 +235,13 @@ export const parseHeaderV11 = ({
   reader.skip.byte();
   const colorsCount = reader.ubyte();
   reader.skip.int(); // attributes
-  const color1 = reader.ushort();
-  const color2 = reader.ushort();
-  const color3 = reader.ushort();
-  const color4 = reader.ushort();
-  const color5 = reader.ushort();
-  const color6 = reader.ushort();
-  const color7 = reader.ushort();
+  const colorIndex1 = reader.ushort();
+  const colorIndex2 = reader.ushort();
+  const colorIndex3 = reader.ushort();
+  const colorIndex4 = reader.ushort();
+  const colorIndex5 = reader.ushort();
+  const colorIndex6 = reader.ushort();
+  const colorIndex7 = reader.ushort();
   reader.skip.custom(3);
   const color1Placement = reader.ubyte();
   const color2Placement = reader.ubyte();
@@ -256,7 +257,7 @@ export const parseHeaderV11 = ({
   const allegiance = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('ea.ids')!.entries));
   const general = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('general.ids')!.entries));
   const race = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('race.ids')!.entries));
-  const theClass = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('class.ids')!.entries));
+  const theClass = reader.map.ubyte<ClassId>(x => externalOffsetMap.parseExternal(x, ids.get('class.ids')!.entries));
   const specific = reader.map.ubyte(extendMap.specific.parse);
   const gender = reader.map.ubyte(extendMap.gender.parse);
   const objectSpec1 = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('object.ids')!.entries)); // TODO [snow]: should I use ObjectIdsReferencesV11 here from docs?
@@ -488,13 +489,13 @@ export const parseHeaderV11 = ({
     murderIncrementBy,
     characterType,
     colorsCount,
-    color1,
-    color2,
-    color3,
-    color4,
-    color5,
-    color6,
-    color7,
+    colorIndex1,
+    colorIndex2,
+    colorIndex3,
+    colorIndex4,
+    colorIndex5,
+    colorIndex6,
+    colorIndex7,
     color1Placement,
     color2Placement,
     color3Placement,

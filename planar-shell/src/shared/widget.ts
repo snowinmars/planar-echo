@@ -6,4 +6,12 @@ export type Widget
     | 'mos'
     | 'pvrz'
     | 'tis'
-    | 'wed';
+    | 'wed'
+    | 'acm'
+    | 'bam'
+    | 'bmp'
+    | 'wav'
+    | 'mus'
+    | 'eff'
+    | 'ids'
+    | 'ini';

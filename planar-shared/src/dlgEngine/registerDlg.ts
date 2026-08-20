@@ -28,11 +28,12 @@ const injectLogic = <T>(args: Maybe<InternalArgsProps<T>>, dlgLogic: T): GhostDl
   };
 };
 
-export const registerDlg = <T>(dlgLogic: T): { label: LabelFunction<T>; expose: () => GhostDlg } => {
+export const registerDlg = <T>(resourceName: string, dlgLogic: T): { label: LabelFunction<T>; expose: () => GhostDlg } => {
   let _label: Maybe<GhostDlgLabel> = nothing();
   let _jumpTo: Maybe<GhostDlgJump> = nothing();
   let exposed = false;
   const npcDlg: GhostDlg = {
+    resourceName,
     tree: new Map<StateId, GhostDlgLabel>(),
     constructorsWeights: new Map<StateId, number>(),
   };

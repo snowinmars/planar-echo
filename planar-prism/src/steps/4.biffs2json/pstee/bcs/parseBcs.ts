@@ -8,7 +8,7 @@ import { translateRawBcs } from './v1/translator/index.js';
 
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Paths } from '@/steps/1.createPaths/index.js';
-import type { RawBcsContext } from './buildBcsContext.types.js';
+import type { RawBcsContext } from './context/buildBcsContext.types.js';
 import type { RawBcs } from './v1/translator/translateRawBcs.types.js';
 
 export const parseBcs = (

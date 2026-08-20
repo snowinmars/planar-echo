@@ -18,7 +18,7 @@ export type PrismIndexStartMessage = Readonly<{
   type: 'start';
   data: PrismIndexProps;
 }>;
-export const progressSteps = [
+export const progressSteps = [ // TODO [snow]: entype
   'buildPrism', // value 0
   'decompileBiffs', // value 0
   'tlk_raw2json', // value: number in percent; params: {version: string, resourceName: string}
@@ -40,14 +40,22 @@ export const progressSteps = [
   'acm_raw2json', // value: number in percent; params: {version: string, resourceName: string}
   'mus_raw2json', // value: number in percent; params: {resourceName: string}
   'tlk_json2ghost', // value: number in percent; params: {index: number}
+  'ids_json2ghost', // value: number in percent; params: {resourceName: string}
   'bcs_json2ghost', // value: number in percent; params: {resourceName: string}
+  'ini_json2ghost', // value: number in percent; params: {resourceName: string}
   'cre_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'dlg_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'eff_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'itm_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'wed_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'pvrz_json2ghost', // value: number in percent; params: {resourceName: string}
   'mos_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'tis_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'bmp_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'bam_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'wav_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'acm_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
+  'mus_json2ghost', // value: number in percent; params: {resourceName: string}
   'dlg_json2ghost_build', // value: number in percent
 ] as const;
 export type ProgressStep = typeof progressSteps[number];

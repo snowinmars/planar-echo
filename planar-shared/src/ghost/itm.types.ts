@@ -2,6 +2,7 @@ import type { Maybe } from '../maybe.js';
 
 export type GhostItm = Readonly<{
   version: 'v10';
+  resourceName: string;
   unidentifiedNameRef: number;
   identifiedNameRef: number;
   unidentifiedDescriptionRef: number;

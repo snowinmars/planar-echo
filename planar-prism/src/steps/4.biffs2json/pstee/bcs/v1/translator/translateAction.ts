@@ -14,7 +14,7 @@ import type {
   RawBcsArg,
   RawBcsSignatureFunction,
   RawBcsSignatures,
-} from '../../buildBcsContext.types.js';
+} from '../../context/buildBcsContext.types.js';
 import type { RawBcsVariableWrapper } from '../temps/createVariableWrapper.types.js';
 import type { RawBcsBlockFunction } from './translateRawBcsIfBlock.types.js';
 

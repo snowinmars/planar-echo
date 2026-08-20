@@ -2,7 +2,7 @@ import { createVariableWrapper } from '../temps/createVariableWrapper.js';
 import { translateAction } from './translateAction.js';
 
 import type { RawIds } from '../../../ids/parseIds.types.js';
-import type { RawBcsSignatures } from '../../buildBcsContext.types.js';
+import type { RawBcsSignatures } from '../../context/buildBcsContext.types.js';
 import type { RawBcsAction } from '../bytecode/parseAc.types.js';
 import type { RawBcsBlockScope } from './translateRawBcsIfBlock.types.js';
 

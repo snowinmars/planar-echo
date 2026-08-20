@@ -1,6 +1,6 @@
 import { extend } from '@/shared/extendedMap.js';
 
-import type { Maybe } from '@planar/shared';
+import type { ClassId, Maybe } from '@planar/shared';
 
 /* createGenerator().register().flags('flagsV11',{
  *   byte1:['show longname in tooltip','no corpse','keep corpse','original class was fighter','original class was mage','original class was cleric','original class was thief','original class was druid',],
@@ -630,13 +630,13 @@ export type RawCreHeaderV11 = Readonly<{
   murderIncrementBy: number;
   characterType: string;
   colorsCount: number;
-  color1: number;
-  color2: number;
-  color3: number;
-  color4: number;
-  color5: number;
-  color6: number;
-  color7: number;
+  colorIndex1: number;
+  colorIndex2: number;
+  colorIndex3: number;
+  colorIndex4: number;
+  colorIndex5: number;
+  colorIndex6: number;
+  colorIndex7: number;
   color1Placement: number;
   color2Placement: number;
   color3Placement: number;
@@ -647,7 +647,7 @@ export type RawCreHeaderV11 = Readonly<{
   allegiance: string;
   general: string;
   race: string;
-  theClass: string;
+  theClass: ClassId;
   specific: SpecificV11;
   gender: GenderV11;
   objectSpec1: string;

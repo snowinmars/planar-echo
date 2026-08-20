@@ -1,38 +1,37 @@
-import { patchWithTranslation } from './1.patchTranslation.js';
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import { buildItmSkeleton } from './2.buildItmSkeleton.js';
+import { buildItmSkeleton } from './1.buildItmSkeleton.js';
+import { toGhost } from './2.toGhost.js';
 
-import type { RawTlk } from '@/steps/4.biffs2json/pstee/tlk/index.js';
 import type { RawItmV10 } from '@/steps/4.biffs2json/pstee/itm/parseItms.types.js';
 import type { DiscoverNext } from '@/discoverer.types.js';
 import type { ItmOut } from './patchItms.types.js';
 
+// TODO [snow]: in pstee itm v10 is itm v11 or something like that.
+// Write this comment as you are not dumb
 export const patchItms = (
-  cres: RawItmV10[],
-  tlk: RawTlk,
+  itms: RawItmV10[],
   discover: DiscoverNext,
 ): AsyncIterableIterator<ItmOut> => iterate<RawItmV10, ItmOut>(
-  cres,
-  (cre, i) => {
-    const tlked = patchWithTranslation(cre, tlk);
+  itms,
+  (itm, i) => {
+    const skeleton = buildItmSkeleton(itm, discover);
+    const ghostItm = toGhost(itm);
 
-    const skeleton = buildItmSkeleton(tlked, discover);
-
-    const percent = Math.round((i + 1) * 100 / cres.length);
+    const percent = Math.round((i + 1) * 100 / itms.length);
     reportProgress({
       value: percent,
       step: 'itm_json2ghost',
       params: {
-        version: cre.header.version,
-        resourceName: cre.resourceName,
+        version: itm.header.version,
+        resourceName: itm.resourceName,
       },
     });
 
     return Promise.resolve({
-      resourceName: cre.resourceName,
+      resourceName: itm.resourceName,
       skeleton,
-      itm: tlked,
+      itm: ghostItm,
     });
   },
 );
