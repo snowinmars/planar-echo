@@ -14,25 +14,10 @@
       "5": "Wymagania: node.js i oryginalne pliki gry, które posiadasz."
     },
     "runnerGuard": {
-      "dlg": "Dlg z",
-      "cre": "Cre z",
-      "itm": "Itm z",
-      "bcs": "Bcs z",
-      "mos": "Mos z",
-      "pvrz": "Pvrz z",
-      "tis": "Tis z",
-      "wed": "Wed z",
-      "acm": "Acm z",
-      "bam": "Bam z",
-      "bmp": "Bmp z",
-      "wav": "Wav z",
-      "mus": "Mus z",
-      "eff": "Eff z",
-      "ids": "Ids z",
-      "ini": "Ini z",
       "ghostDir": "Folder gry",
       "or": "lub",
       "convert": "Konwertuj",
+      "workbench": "Idź do warsztatu",
       "stores": "Magazyny danych"
     },
     "step0": {

@@ -14,25 +14,10 @@
       "5": "요구 사항: node.js 및 본인이 소유한 원본 게임 파일."
     },
     "runnerGuard": {
-      "dlg": "dlg",
-      "cre": "cre",
-      "itm": "itm",
-      "bcs": "bcs",
-      "mos": "mos",
-      "pvrz": "pvrz",
-      "tis": "tis",
-      "wed": "wed",
-      "acm": "acm",
-      "bam": "bam",
-      "bmp": "bmp",
-      "wav": "wav",
-      "mus": "mus",
-      "eff": "eff",
-      "ids": "ids",
-      "ini": "ini",
       "ghostDir": "게임 폴더",
       "or": "또는",
       "convert": "변환",
+      "workbench": "작업대로 가세요",
       "stores": "데이터 저장소"
     },
     "step0": {

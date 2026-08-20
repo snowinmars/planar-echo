@@ -14,25 +14,10 @@
       "5": "Požadavky: node.js a vlastnictví původních herních souborů."
     },
     "runnerGuard": {
-      "dlg": "Dlg od",
-      "cre": "Cre od",
-      "itm": "Itm od",
-      "bcs": "Bcs od",
-      "mos": "Mos od",
-      "pvrz": "Pvrz od",
-      "tis": "Tis od",
-      "wed": "Wed od",
-      "acm": "Acm od",
-      "bam": "Bam od",
-      "bmp": "Bmp od",
-      "wav": "Wav od",
-      "mus": "Mus od",
-      "eff": "Eff od",
-      "ids": "Ids od",
-      "ini": "Ini od",
       "ghostDir": "Složka hry",
       "or": "nebo",
       "convert": "Převést",
+      "workbench": "Jdi k pracovnímu stolu",
       "stores": "Datová úložiště"
     },
     "step0": {

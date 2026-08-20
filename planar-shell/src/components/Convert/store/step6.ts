@@ -50,13 +50,11 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
         case 'complete': {
           set({ step6Loading: false, step6Valid: true });
           ws.close();
-          planarLocalStorage.set('storesStatus', 'ready');
           break;
         }
         case 'error': {
           set({ step6Loading: false, step6Valid: false });
           ws.close();
-          planarLocalStorage.set('storesStatus', 'empty');
           console.error('PrismIndex error:', message.data);
           // TODO [snow]: show error
           break;

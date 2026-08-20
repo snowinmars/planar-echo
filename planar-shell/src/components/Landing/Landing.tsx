@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -12,7 +12,6 @@ import planarLocalStorage from '@/shared/planarLocalStorage';
 
 const Landing: FC = () => {
   const { t } = useTranslation();
-  const [status] = useState(() => planarLocalStorage.get('storesStatus'));
 
   useEffect(() => {
     planarLocalStorage.remove(planarLocalStorage.currentWidget);
@@ -50,7 +49,7 @@ const Landing: FC = () => {
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
-          <RunnerGuard hasStores={status === 'ready'} />
+          <RunnerGuard />
         </Grid>
       </Grid>
     </>

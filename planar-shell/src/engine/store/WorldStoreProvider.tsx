@@ -4,12 +4,12 @@ import { createZustandCharacter } from './characterStore';
 import { registerStores } from './saveSubject';
 import { setZustandCharacter, setZustandNarrative } from './worldStores';
 import { getDbNarrative, getDbCharacters } from '@/shared/indexedDb';
-import planarLocalStorage from '@/shared/planarLocalStorage';
 import Loading from '@/components/Loading';
 import { useTranslation } from 'react-i18next';
 import { loadInitialStores } from './loadInitialStores';
 
 import type { ReactNode } from 'react';
+
 type StoreStatus = 'loading' | 'ready' | 'empty' | 'error';
 
 type WorldStoreProviderProps = Readonly<{
@@ -19,7 +19,7 @@ type WorldStoreProviderProps = Readonly<{
 export const WorldStoreProvider = ({ children }: WorldStoreProviderProps): ReactNode => {
   const { t } = useTranslation();
 
-  const [status, setStatus] = useState<StoreStatus>(() => planarLocalStorage.get<StoreStatus>('storesStatus', 'loading')!);
+  const [status, setStatus] = useState<StoreStatus>('loading');
   const [error, setError] = useState<string | null>(null);
 
   const refreshStores = useCallback(async (): Promise<void> => {

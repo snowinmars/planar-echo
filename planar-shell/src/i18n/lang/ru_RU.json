@@ -14,25 +14,10 @@
       "5": "Требования: node.js и приобретённая оригинальная игра."
     },
     "runnerGuard": {
-      "dlg": "Dlg из",
-      "cre": "Cre из",
-      "itm": "Itm из",
-      "bcs": "Bcs из",
-      "mos": "Mos из",
-      "pvrz": "Pvrz из",
-      "tis": "Tis из",
-      "wed": "Wed из",
-      "acm": "Acm из",
-      "bam": "Bam из",
-      "bmp": "Bmp из",
-      "wav": "Wav из",
-      "mus": "Mus из",
-      "eff": "Eff из",
-      "ids": "Ids из",
-      "ini": "Ini из",
       "ghostDir": "Каталог с игрой",
       "or": "или",
       "convert": "Сконвертировать",
+      "workbench": "Подойти к верстаку",
       "stores": "Данные"
     },
     "step0": {

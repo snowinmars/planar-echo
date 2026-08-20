@@ -14,25 +14,10 @@
       "5": "Requirements: node.js and original game files you own."
     },
     "runnerGuard": {
-      "dlg": "Dlg from",
-      "cre": "Cre from",
-      "itm": "Itm from",
-      "bcs": "Bcs from",
-      "mos": "Mos from",
-      "pvrz": "Pvrz from",
-      "tis": "Tis from",
-      "wed": "Wed from",
-      "acm": "Acm from",
-      "bam": "Bam from",
-      "bmp": "Bmp from",
-      "wav": "Wav from",
-      "mus": "Mus from",
-      "eff": "Eff from",
-      "ids": "Ids from",
-      "ini": "Ini from",
       "ghostDir": "Game directory",
       "or": "or",
       "convert": "Convert",
+      "workbench": "Go to the workbench",
       "stores": "Stores"
     },
     "step0": {

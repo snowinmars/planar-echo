@@ -25,7 +25,6 @@ const L: FC<LProps> = ({ item }: LProps) => {
 };
 
 // TODO [snow]: try to reconnect websocket on component load
-// TODO [snow]: now it does not set storesStatus to 'ready' on reload, if there are stores. Do it
 type Step6Props = Readonly<{
   disabled: boolean;
   loading: LandingStateStep6['step6Loading'];

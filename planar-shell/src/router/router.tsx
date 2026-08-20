@@ -7,6 +7,7 @@ import type { FC, PropsWithChildren } from 'react';
 
 const Landing = lazy(() => import('@/components/Landing'));
 const Details = lazy(() => import('@/components/Details'));
+const Workbench = lazy(() => import('@/components/Workbench'));
 const Convert = lazy(() => import('@/components/Convert'));
 const Settings = lazy(() => import('@/components/Settings'));
 const Dlg = lazy(() => import('@/components/runners/Dlg'));
@@ -42,6 +43,9 @@ const router = createBrowserRouter([{
   }, {
     path: '/details',
     element: <HelloDevs><Details /></HelloDevs>,
+  }, {
+    path: '/workbench',
+    element: <HelloDevs><Workbench /></HelloDevs>,
   }, {
     path: '/convert',
     element: <HelloDevs><Convert /></HelloDevs>,
