@@ -1,17 +1,17 @@
 import { createStore } from 'zustand/vanilla';
 import { nothing } from '@planar/shared';
-import { createDlgStore } from '@/components/runners/Dlg/store/dlgStore';
-import { createDlgViewStore } from '@/components/runners/Dlg/store/dlgViewStore';
-import { createGameHistoryStore } from '@/components/runners/Dlg/store/gameHistoryStore';
-import { createLocalStorageStore } from '@/components/runners/Dlg/store/localStorageStore';
-import { createTlkStore } from '@/components/runners/Dlg/store/tlkStore';
+import { createDlgStore } from '@/components/Workbench/children/Dlg/store/dlgStore';
+import { createDlgViewStore } from '@/components/Workbench/children/Dlg/store/dlgViewStore';
+import { createGameHistoryStore } from '@/components/Workbench/children/Dlg/store/gameHistoryStore';
+import { createLocalStorageStore } from '@/components/Workbench/children/Dlg/store/localStorageStore';
+import { createTlkStore } from '@/components/Workbench/children/Dlg/store/tlkStore';
 import { planarStoreId } from './planarRuntime.types';
 
 import type { StoreApi } from 'zustand/vanilla';
-import type { DlgViewStore } from '@/components/runners/Dlg/store/dlgViewStore.types';
-import type { GameHistoryStore } from '@/components/runners/Dlg/store/gameHistoryStore.types';
-import type { LocalStorageStore } from '@/components/runners/Dlg/store/localStorageStore.types';
-import type { TlkStore } from '@/components/runners/Dlg/store/tlkStore.types';
+import type { DlgViewStore } from '@/components/Workbench/children/Dlg/store/dlgViewStore.types';
+import type { GameHistoryStore } from '@/components/Workbench/children/Dlg/store/gameHistoryStore.types';
+import type { LocalStorageStore } from '@/components/Workbench/children/Dlg/store/localStorageStore.types';
+import type { TlkStore } from '@/components/Workbench/children/Dlg/store/tlkStore.types';
 import type {
   DisposeFunction,
   PlanarRuntime,

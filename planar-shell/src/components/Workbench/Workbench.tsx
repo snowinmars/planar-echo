@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { FC } from 'react';
 
-import styles from './Workbench.module.scss';
+// import styles from './Workbench.module.scss';
 
 type RouteButtonProps = Readonly<{
   id: string;

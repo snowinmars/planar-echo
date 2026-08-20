@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
-import { useGameHistoryStore } from '@/components/runners/Dlg/store/di';
+import { useGameHistoryStore } from '@/components/Workbench/children/Dlg/store/di';
 import { useTlkStore } from '@/engine/store/planarRuntime';
 import { isNothing } from '@planar/shared';
 

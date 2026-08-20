@@ -16,7 +16,7 @@
     "runnerGuard": {
       "ghostDir": "Dossier du jeu",
       "or": "ou",
-      "convert": "Convertir",
+      "convert": "Reformater",
       "workbench": "Allez à l'établi",
       "stores": "Magasins de données"
     },

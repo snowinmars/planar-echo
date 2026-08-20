@@ -7,8 +7,8 @@ import clsx from 'clsx';
 import { useTlkStore } from '@/engine/store/planarRuntime';
 
 import type { FC } from 'react';
-import type { CurrentDlgView } from '@/components/runners/Dlg/store/dlgViewStore.types';
-import type { DlgStore } from '@/components/runners/Dlg/store/dlgStore.types';
+import type { CurrentDlgView } from '@/components/Workbench/children/Dlg/store/dlgViewStore.types';
+import type { DlgStore } from '@/components/Workbench/children/Dlg/store/dlgStore.types';
 
 import styles from './NarratPhrase.module.scss';
 

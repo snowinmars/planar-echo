@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import VirtualizedListbox from '@/shared/VirtualizedListbox';
 import { dlgWidgetState } from '@/shared/widgets';
-import { getStateIds } from '@/components/runners/Dlg/store/helpers';
+import { getStateIds } from '@/components/Workbench/children/Dlg/store/helpers';
 import { isNothing } from '@planar/shared';
 import { useTranslation } from 'react-i18next';
 

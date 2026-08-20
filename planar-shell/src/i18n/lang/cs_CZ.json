@@ -16,7 +16,7 @@
     "runnerGuard": {
       "ghostDir": "Složka hry",
       "or": "nebo",
-      "convert": "Převést",
+      "convert": "Přetvořit formu",
       "workbench": "Jdi k pracovnímu stolu",
       "stores": "Datová úložiště"
     },

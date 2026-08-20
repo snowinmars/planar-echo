@@ -9,7 +9,7 @@ import VirtualizedListbox from '@/shared/VirtualizedListbox';
 import { NumberField } from '@/shared/NumberField';
 import { useGridColumns } from '@/hooks/useGridColumns';
 import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
-import { reloadStoresFromDb } from '@/components/runners/Dlg/children/broadcast';
+import { reloadStoresFromDb } from '@/components/Workbench/children/Dlg/children/broadcast';
 import { useTranslation } from 'react-i18next';
 
 import type { TFunction } from 'i18next';

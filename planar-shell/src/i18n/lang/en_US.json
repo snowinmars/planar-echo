@@ -16,7 +16,7 @@
     "runnerGuard": {
       "ghostDir": "Game directory",
       "or": "or",
-      "convert": "Convert",
+      "convert": "Reshape the form",
       "workbench": "Go to the workbench",
       "stores": "Stores"
     },
