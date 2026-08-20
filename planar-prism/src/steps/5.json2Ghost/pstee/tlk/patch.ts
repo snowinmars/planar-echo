@@ -14,7 +14,7 @@ export const patchTlk = (tlk: RawTlk): string => {
     value: 1,
     step: 'tlk_json2ghost',
     params: {
-      index: '0',
+      resourceName: tlk.resourceName,
     },
   });
 
@@ -26,18 +26,17 @@ export const patchTlk = (tlk: RawTlk): string => {
 
     if (i < values.length - 1) writer.writeLine(',');
     else writer.br();
-
-    const percent = Math.round((i + 1) * 100 / values.length);
-    reportProgress({
-      value: percent,
-      step: 'tlk_json2ghost',
-      params: {
-        index: index.toString(),
-      },
-    });
   }
 
   writer.writeLine('}');
+
+  reportProgress({
+    value: 100,
+    step: 'tlk_json2ghost',
+    params: {
+      resourceName: tlk.resourceName,
+    },
+  });
 
   return writer.done();
 };

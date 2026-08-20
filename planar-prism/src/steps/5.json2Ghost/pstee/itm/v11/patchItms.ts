@@ -23,7 +23,6 @@ export const patchItms = (
       value: percent,
       step: 'itm_json2ghost',
       params: {
-        version: itm.header.version,
         resourceName: itm.resourceName,
       },
     });

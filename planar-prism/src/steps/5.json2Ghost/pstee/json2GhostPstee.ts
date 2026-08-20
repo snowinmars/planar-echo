@@ -43,7 +43,7 @@ export const json2GhostPstee = async (
   const tlk = patchTlk(allJsons.tlk);
   await paths.ghostDir.saveGhost.tlk(`${paths.gameLanguage}.json`, tlk, true);
 
-  logger.info(`Converting cres json to ghost...`);
+  logger.info(`Converting cre json to ghost...`);
   const cres = new Map<string, CreOut>();
   const cresIterator = patchCres(allJsons.cres, discover);
   for await (const cre of cresIterator) {
@@ -51,7 +51,7 @@ export const json2GhostPstee = async (
     await paths.ghostDir.saveGhost.cre(`${cre.resourceName.replaceAll(`'`, '')}.ts`, cre.skeleton, true);
   }
 
-  logger.info(`Converting itms json to ghost...`);
+  logger.info(`Converting itm json to ghost...`);
   const itms = new Map<string, ItmOut>();
   const itmsIterator = patchItms(allJsons.itms, discover);
   for await (const itm of itmsIterator) {
@@ -59,7 +59,7 @@ export const json2GhostPstee = async (
     await paths.ghostDir.saveGhost.itm(`${itm.resourceName.replaceAll(`'`, '')}.ts`, itm.skeleton, true);
   }
 
-  logger.info(`Converting dlgs json to ghost...`);
+  logger.info(`Converting dlg json to ghost...`);
   const dlgs = new Map<string, DlgOut>();
   const creMap = new Map<string, CreOut['cre']>(cres.values().map(x => [x.resourceName, x.cre]));
   const itmMap = new Map<string, ItmOut['itm']>(itms.values().map(x => [x.resourceName, x.itm]));
@@ -101,41 +101,41 @@ export const json2GhostPstee = async (
     await paths.ghostDir.saveGhost.wed(`${wed.resourceName}.ts`, wed.skeleton, true);
   }
 
-  logger.info(`Converting bmps json to ghost...`);
+  logger.info(`Converting bmp json to ghost...`);
   const bmpIterator = patchBmps(allJsons.bmps);
   for await (const bmp of bmpIterator) {
     await paths.ghostDir.saveGhost.bmp(`${bmp.resourceName}.ts`, bmp.skeleton, true);
     await copyGhostFile(paths.ghostDir.json.bmp, paths.ghostDir.ghost.bmp, bmp.bmp.imageName);
   }
 
-  logger.info(`Converting bams json to ghost...`);
+  logger.info(`Converting bam json to ghost...`);
   const bamIterator = patchBams(allJsons.bams);
   for await (const bam of bamIterator) {
     await paths.ghostDir.saveGhost.bam(`${bam.resourceName}.ts`, bam.skeleton, true);
     await copyGhostFile(paths.ghostDir.json.bam, paths.ghostDir.ghost.bam, bam.bam.imageName);
   }
 
-  logger.info(`Converting wavs json to ghost...`);
+  logger.info(`Converting wav json to ghost...`);
   const wavIterator = patchWavs(allJsons.wavs);
   for await (const wav of wavIterator) {
     await paths.ghostDir.saveGhost.wav(`${wav.resourceName}.ts`, wav.skeleton, true);
     await copyGhostFile(paths.ghostDir.json.wav, paths.ghostDir.ghost.wav, wav.wav.audioName);
   }
 
-  logger.info(`Converting acms json to ghost...`);
+  logger.info(`Converting acm json to ghost...`);
   const acmIterator = patchAcms(allJsons.acms);
   for await (const acm of acmIterator) {
     await paths.ghostDir.saveGhost.acm(`${acm.resourceName}.ts`, acm.skeleton, true);
     await copyGhostFile(paths.ghostDir.json.acm, paths.ghostDir.ghost.acm, acm.acm.audioName);
   }
 
-  logger.info(`Converting muss json to ghost...`);
+  logger.info(`Converting mus json to ghost...`);
   const musIterator = patchMuss(allJsons.muss);
   for await (const mus of musIterator) {
     await paths.ghostDir.saveGhost.mus(`${mus.resourceName}.ts`, mus.skeleton, true);
   }
 
-  logger.info(`Converting effs json to ghost...`);
+  logger.info(`Converting eff json to ghost...`);
   const effIterator = patchEffs(allJsons.effs);
   for await (const eff of effIterator) {
     await paths.ghostDir.saveGhost.eff(`${eff.resourceName}.ts`, eff.skeleton, true);
@@ -147,7 +147,7 @@ export const json2GhostPstee = async (
     await paths.ghostDir.saveGhost.ids(`${ids.resourceName}.ts`, ids.skeleton, true);
   }
 
-  logger.info(`Converting inis json to ghost...`);
+  logger.info(`Converting ini json to ghost...`);
   const iniIterator = patchInis([...allJsons.inis.values()]);
   for await (const ini of iniIterator) {
     await paths.ghostDir.saveGhost.ini(`${ini.resourceName}.ts`, ini.skeleton, true);

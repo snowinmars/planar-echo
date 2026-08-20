@@ -33,10 +33,7 @@ export const parseDlgs = (
     reportProgress({
       value: percent,
       step: 'dlg_raw2json',
-      params: {
-        version: version,
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return dlg;

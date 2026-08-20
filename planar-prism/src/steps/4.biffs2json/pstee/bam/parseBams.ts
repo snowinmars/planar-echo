@@ -58,10 +58,7 @@ export const parseBams = (
     reportProgress({
       value: percent,
       step: 'bam_raw2json',
-      params: {
-        version: artifacts.bam.header.version,
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return artifacts;

@@ -33,10 +33,7 @@ export const parseWeds = (
     reportProgress({
       value: percent,
       step: 'wed_raw2json',
-      params: {
-        version,
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return wed;

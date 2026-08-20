@@ -2,7 +2,7 @@
  * Mostly llm generated from gemrb/nearinfinity
  */
 
-import type { DecodedPcm } from './decodeAcm.js';
+import type { DecodedPcm } from './decodeAcm.types.js';
 
 export const encodePcmWav = (pcm: DecodedPcm): Buffer => {
   const blockAlign = pcm.channels * (pcm.bitsPerSample / 8);

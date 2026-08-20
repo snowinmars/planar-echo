@@ -46,10 +46,7 @@ export const parseBmps = (
     reportProgress({
       value: percent,
       step: 'bmp_raw2json',
-      params: {
-        version: artifacts.bmp.header.version,
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return artifacts;

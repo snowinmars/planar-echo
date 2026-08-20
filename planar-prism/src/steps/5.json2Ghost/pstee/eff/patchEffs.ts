@@ -20,7 +20,6 @@ export const patchEffs = (
       step: 'eff_json2ghost',
       params: {
         resourceName: eff.resourceName,
-        version: eff.version,
       },
     });
 

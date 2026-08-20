@@ -92,7 +92,7 @@
       "buildPrism": "Sestavení Prism",
       "decompileBiffs": "Dekompilace .biff archivů",
       "ids_raw2json": ".ids do json",
-      "dlg_json2ghost_build": "Kompilace ghost dialogů",
+      "buildGhost": "Kompilace ghost",
       "cre_raw2json": ".cre do json",
       "dlg_raw2json": ".dlg do json",
       "effV10_raw2json": ".eff v1.0 do json",

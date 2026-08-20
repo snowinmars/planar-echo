@@ -92,7 +92,7 @@
       "buildPrism": "Compilation de Prism",
       "decompileBiffs": "Décompilation des archives .biff",
       "ids_raw2json": ".ids vers json",
-      "dlg_json2ghost_build": "Compilation des dialogues ghost",
+      "buildGhost": "Compilation des ghost",
       "cre_raw2json": ".cre vers json",
       "dlg_raw2json": ".dlg vers json",
       "effV10_raw2json": ".eff v1.0 vers json",

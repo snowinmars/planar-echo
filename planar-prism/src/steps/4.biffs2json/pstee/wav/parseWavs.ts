@@ -32,10 +32,7 @@ export const parseWavs = (
     reportProgress({
       value: percent,
       step: 'wav_raw2json',
-      params: {
-        version: decoded.container,
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return {

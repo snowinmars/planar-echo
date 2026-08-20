@@ -34,10 +34,7 @@ export const parseItms = (
     reportProgress({
       value: percent,
       step: 'itm_raw2json',
-      params: {
-        version: version,
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return itm;

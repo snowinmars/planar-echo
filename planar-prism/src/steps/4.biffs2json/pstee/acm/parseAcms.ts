@@ -36,34 +36,31 @@ export const parseAcms = async (
 
   return iterate<AcmFile, RawAcmArtifacts>(
     files,
-    async (file, i) => {
-      const buffer = await readFile(file.absPath);
+    async ({ absPath, resourceName }, i) => {
+      const buffer = await readFile(absPath);
 
-      const decoded = await decodeAudioBuffer(buffer, file.resourceName);
+      const decodedAudioBuffer = await decodeAudioBuffer(buffer, resourceName);
 
       const acm: RawAcm = {
-        resourceName: file.resourceName,
-        container: decoded.container,
-        audioName: `${file.resourceName}.wav`,
-        channels: decoded.pcm.channels,
-        sampleRate: decoded.pcm.sampleRate,
-        bitsPerSample: decoded.pcm.bitsPerSample,
-        sampleCount: decoded.pcm.sampleCount,
+        resourceName: resourceName,
+        container: decodedAudioBuffer.container,
+        audioName: `${resourceName}.wav`,
+        channels: decodedAudioBuffer.pcm.channels,
+        sampleRate: decodedAudioBuffer.pcm.sampleRate,
+        bitsPerSample: decodedAudioBuffer.pcm.bitsPerSample,
+        sampleCount: decodedAudioBuffer.pcm.sampleCount,
       };
 
       const percent = Math.round((i + 1) * 100 / files.length);
       reportProgress({
         value: percent,
         step: 'acm_raw2json',
-        params: {
-          version: decoded.container,
-          resourceName: file.resourceName,
-        },
+        params: { resourceName },
       });
 
       return {
         acm,
-        pcmWav: decoded.wav,
+        pcmWav: decodedAudioBuffer.wav,
       };
     },
   );

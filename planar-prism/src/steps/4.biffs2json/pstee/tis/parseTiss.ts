@@ -1,4 +1,4 @@
-import { join, parse as parsePath } from 'path';
+import { join } from 'path';
 import { readFile } from 'fs/promises';
 import iterate from '@/steps/iterate.js';
 import { createReader } from '@/shared/bufferReader.js';
@@ -39,13 +39,7 @@ export const parseTiss = (
     reportProgress({
       value: percent,
       step: 'tis_raw2json',
-      params: {
-        version,
-        resourceName,
-        variant: artifacts.tis.variant,
-        atlasWidthSource: artifacts.tis.atlasWidthSource,
-        tisResRef: parsePath(resourceName).name,
-      },
+      params: { resourceName },
     });
 
     return artifacts;

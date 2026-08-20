@@ -24,9 +24,7 @@ export const parseIds = (
     reportProgress({
       value: percent,
       step: 'ids_raw2json',
-      params: {
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return ids;

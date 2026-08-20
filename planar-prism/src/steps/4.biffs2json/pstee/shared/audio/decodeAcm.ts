@@ -2,8 +2,11 @@
  * Mostly llm generated from gemrb/nearinfinity
  */
 
+import type { DecodedPcm } from './decodeAcm.types.js';
+
 const ID_ACM = 0x01032897;
 
+// TODO [snow]: what are these keys and can I publish them?
 const TABLE1 = new Int8Array([
   0, 1, 2, 4, 5, 6, 8, 9, 10, 16, 17, 18, 20, 21, 22, 24, 25, 26,
   32, 33, 34, 36, 37, 38, 40, 41, 42, 0, 1, 2, 4, 5,
@@ -584,14 +587,6 @@ class SubbandDecoder {
     }
   }
 }
-
-export type DecodedPcm = Readonly<{
-  samples: Int16Array;
-  sampleCount: number;
-  channels: number;
-  sampleRate: number;
-  bitsPerSample: 16;
-}>;
 
 export const decodeAcm = (buffer: Buffer, offset = 0): DecodedPcm => {
   if (offset + 14 > buffer.length) throw new Error('ACM buffer too small');

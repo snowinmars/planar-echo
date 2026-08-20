@@ -25,7 +25,7 @@ export const parseTlkV1 = ({
   reader,
   signature,
   version,
-}: ParseTlkV1Props): RawTlk => {
+}: ParseTlkV1Props): Omit<RawTlk, 'resourceName'> => {
   const header = parseHeaderV1({
     reader,
     signature,

@@ -20,7 +20,6 @@ export const patchWed = (
       step: 'wed_json2ghost',
       params: {
         resourceName: wed.resourceName,
-        version: wed.header.version,
       },
     });
 

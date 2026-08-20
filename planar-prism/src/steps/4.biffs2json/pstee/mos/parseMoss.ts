@@ -52,11 +52,7 @@ export const parseMoss = (
     reportProgress({
       value: percent,
       step: 'mos_raw2json',
-      params: {
-        version: artifacts.mos.header.version,
-        resourceName,
-        variant: artifacts.mos.variant,
-      },
+      params: { resourceName },
     });
 
     return artifacts;

@@ -6,11 +6,10 @@ import { decodeAcm } from './decodeAcm.js';
 import { decodeOgg } from './decodeOgg.js';
 import { encodePcmWav } from './encodePcmWav.js';
 
-import type { DecodedPcm } from './decodeAcm.js';
+import type { AudioContainer, DecodedAudioBuffer } from './decodeAudioBuffer.types.js';
+import type { DecodedPcm } from './decodeAcm.types.js';
 
 export const ID_ACM = 0x01032897;
-
-export type AudioContainer = 'wavc' | 'acm' | 'pcm' | 'ogg';
 
 export const detectAudioContainer = (buffer: Buffer): AudioContainer => {
   if (buffer.length >= 4) {
@@ -92,11 +91,7 @@ const decodeWavc = (buffer: Buffer, resourceName: string): DecodedPcm => {
   };
 };
 
-export const decodeAudioBuffer = async (buffer: Buffer, resourceName: string): Promise<Readonly<{
-  container: AudioContainer;
-  pcm: DecodedPcm;
-  wav: Buffer;
-}>> => {
+export const decodeAudioBuffer = async (buffer: Buffer, resourceName: string): Promise<DecodedAudioBuffer> => {
   let container: AudioContainer;
   try {
     container = detectAudioContainer(buffer);

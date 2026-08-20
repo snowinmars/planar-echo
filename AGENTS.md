@@ -98,7 +98,7 @@
 
 **WebSocket:** path `/api/prism/index` (`wsController/router.ts`). Сервер сразу шлёт `{ type: 'ready' }`. Клиент: `{ type: 'start', data }` с полями `weiduExeDir`, `chitinKeyFile`, `ghostDir`, `prismDir`, `gameLanguage`, `gameName`.
 
-**Оркестрация index** (`wsController/prism/runIndex.ts`): steps `buildPrism` → IPC prism → `dlg_json2ghost_build` (`build-ghost`).
+**Оркестрация index** (`wsController/prism/runIndex.ts`): steps `buildPrism` → IPC prism → `buildGhost` (`build-ghost`).
 
 После изменения REST/Zod-роутов **ПОТРЕБУЙ** у пользователя обновить api клиентов в shell вручную.
 

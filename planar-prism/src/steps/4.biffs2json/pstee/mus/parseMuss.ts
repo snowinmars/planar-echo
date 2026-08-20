@@ -99,17 +99,17 @@ export const parseMuss = async (
 
   return iterate<MusFile, RawMus>(
     files,
-    async (file, i) => {
-      const buffer = await readFile(file.absPath);
+    async ({ absPath, resourceName }, i) => {
+      const buffer = await readFile(absPath);
       const reader = createReader(buffer);
 
-      const mus = parseMusText(reader, file.resourceName);
+      const mus = parseMusText(reader, resourceName);
 
       const percent = Math.round((i + 1) * 100 / files.length);
       reportProgress({
         value: percent,
         step: 'mus_raw2json',
-        params: { resourceName: file.resourceName },
+        params: { resourceName },
       });
 
       return mus;

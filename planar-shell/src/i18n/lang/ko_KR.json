@@ -92,7 +92,7 @@
       "buildPrism": "Prism 빌드",
       "decompileBiffs": ".biff 아카이브 디컴파일",
       "ids_raw2json": ".ids → json",
-      "dlg_json2ghost_build": "고스트 대화 컴파일",
+      "buildGhost": "고스트 컴파일",
       "cre_raw2json": ".cre → json",
       "dlg_raw2json": ".dlg → json",
       "effV10_raw2json": ".eff v1.0 → json",

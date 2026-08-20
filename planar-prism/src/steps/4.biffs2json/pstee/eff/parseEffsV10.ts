@@ -31,10 +31,7 @@ export const parseEffsV10 = (
     reportProgress({
       value: percent,
       step: 'effV10_raw2json',
-      params: {
-        version: 'v1.0',
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return eff;

@@ -1,12 +1,7 @@
 import { timer, takeUntil, buffer, merge, Subject } from 'rxjs';
 import logger from './logger.js';
-import type { ProgressStep } from '@planar/shared';
 
-type Progress = Readonly<{
-  value: number;
-  step: ProgressStep;
-  params?: Record<string, string> | undefined;
-}>;
+import type { Progress } from './report.types.js';
 
 const latestBy = <TItem, TKey>(
   arr: TItem[],

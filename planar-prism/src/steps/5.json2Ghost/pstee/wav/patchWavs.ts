@@ -20,7 +20,6 @@ export const patchWavs = (
       step: 'wav_json2ghost',
       params: {
         resourceName: wav.resourceName,
-        version: wav.container,
       },
     });
 

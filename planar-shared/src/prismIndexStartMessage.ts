@@ -56,7 +56,7 @@ export const progressSteps = [ // TODO [snow]: entype
   'wav_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'acm_json2ghost', // value: number in percent; params: {version: string, resourceName: string}
   'mus_json2ghost', // value: number in percent; params: {resourceName: string}
-  'dlg_json2ghost_build', // value: number in percent
+  'buildGhost', // value: number in percent
 ] as const;
 export type ProgressStep = typeof progressSteps[number];
 

@@ -21,7 +21,6 @@ export const patchCres = (
       value: percent,
       step: 'cre_json2ghost',
       params: {
-        version: cre.header.version,
         resourceName: cre.resourceName,
       },
     });

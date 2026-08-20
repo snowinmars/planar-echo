@@ -20,7 +20,6 @@ export const patchBmps = (
       step: 'bmp_json2ghost',
       params: {
         resourceName: bmp.resourceName,
-        version: bmp.header.version,
       },
     });
 

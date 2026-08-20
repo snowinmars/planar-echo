@@ -1,6 +1,6 @@
 import { OggVorbisDecoder } from '@wasm-audio-decoders/ogg-vorbis';
 
-import type { DecodedPcm } from './decodeAcm.js';
+import type { DecodedPcm } from './decodeAcm.types.js';
 
 /**
  * Mostly llm generated from gemrb/nearinfinity

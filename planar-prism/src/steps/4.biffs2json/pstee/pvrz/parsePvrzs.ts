@@ -27,9 +27,7 @@ export const parsePvrzs = (
     reportProgress({
       value: percent,
       step: 'pvrz_raw2json',
-      params: {
-        resourceName,
-      },
+      params: { resourceName },
     });
 
     return parsed;

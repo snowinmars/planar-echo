@@ -20,7 +20,6 @@ export const patchBams = (
       step: 'bam_json2ghost',
       params: {
         resourceName: bam.resourceName,
-        version: bam.header.version,
       },
     });
 

@@ -20,7 +20,6 @@ export const patchAcms = (
       step: 'acm_json2ghost',
       params: {
         resourceName: acm.resourceName,
-        version: acm.container,
       },
     });
 

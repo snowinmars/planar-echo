@@ -40,7 +40,6 @@ export const patchDlgs = (
           value: percent,
           step: 'dlg_json2ghost',
           params: {
-            version: dlg.header.version,
             resourceName: dlg.resourceName,
           },
         });
