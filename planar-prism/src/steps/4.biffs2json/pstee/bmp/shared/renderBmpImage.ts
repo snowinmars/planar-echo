@@ -23,7 +23,7 @@ export const renderBmpImage = ({
   palette,
   indices,
   rgba,
-}: RenderBmpImageProps): Buffer => {
+}: RenderBmpImageProps): Promise<Buffer> => {
   if (bitsPerPixel <= 8) {
     if (isNothing(palette) || isNothing(indices)) throw new Error('Paletted bmp requires palette and indices');
 

@@ -24,7 +24,7 @@ export type RawBmpV1 = Readonly<{
 
 export type RawBmpV1Artifacts = Readonly<{
   bmp: RawBmpV1;
-  png: Buffer;
+  image: Buffer;
   palette?: Maybe<Buffer>;
   indices?: Maybe<Buffer>;
 }>;

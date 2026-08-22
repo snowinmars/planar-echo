@@ -20,7 +20,7 @@ export type RawTisPalette = Readonly<{
 
 export type RawTisPaletteParseResult = Readonly<{
   tis: RawTisPalette;
-  png: Buffer;
+  image: Buffer;
   palette: Buffer;
   indices: Buffer;
 }>;

@@ -28,7 +28,7 @@ export const parseTiss = (
     if (signature !== 'tis') throw new Error(`Unsupported signature '${signature}' for tis resource '${resourceName}'`);
     if (version !== 'v1') throw new Error(`Unsupported version '${version}' for tis resource '${resourceName}'`);
 
-    const artifacts = parseTisV1({
+    const artifacts = await parseTisV1({
       resourceName,
       reader,
       wedIndex,

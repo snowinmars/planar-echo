@@ -23,5 +23,5 @@ export type RawMosV2Block = Readonly<{
 
 export type RawMosV2Artifacts = Readonly<{
   mos: RawMosV2;
-  png: Buffer;
+  image: Buffer;
 }>;

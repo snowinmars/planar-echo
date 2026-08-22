@@ -43,12 +43,12 @@ type ParsePaletteTisProps = Readonly<{
   header: RawTisHeader;
   wedWidth: number | undefined;
 }>;
-export const parsePaletteTis = ({
+export const parsePaletteTis = async ({
   reader,
   resourceName,
   header,
   wedWidth,
-}: ParsePaletteTisProps): RawTisPaletteParseResult => {
+}: ParsePaletteTisProps): Promise<RawTisPaletteParseResult> => {
   if (header.tileSize !== PALETTE_TILE_SIZE) throw new Error(`Expected palette tile size '${PALETTE_TILE_SIZE}', got '${header.tileSize}' for resource '${resourceName}'`);
 
   const { columns, source } = calcAtlasColumns(header.tileCount, wedWidth);
@@ -99,7 +99,7 @@ export const parsePaletteTis = ({
 
   return {
     tis,
-    png: encodeRgbaPng(columns * TILE_DIMENSION, rows * TILE_DIMENSION, atlas),
+    image: await encodeRgbaPng(columns * TILE_DIMENSION, rows * TILE_DIMENSION, atlas),
     palette,
     indices,
   };

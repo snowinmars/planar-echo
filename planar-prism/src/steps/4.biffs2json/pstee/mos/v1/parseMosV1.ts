@@ -16,10 +16,10 @@ type ParseMosV1Props = Readonly<{
   reader: BufferReader;
   resourceName: string;
 }>;
-export const parseMosV1 = ({
+export const parseMosV1 = async ({
   reader,
   resourceName,
-}: ParseMosV1Props): RawMosV1Artifacts => {
+}: ParseMosV1Props): Promise<RawMosV1Artifacts> => {
   const header = parseHeader(reader, resourceName);
 
   // absolute position of MOS V1 Palettes section
@@ -50,7 +50,7 @@ export const parseMosV1 = ({
     start: tileDataOffset,
     lookups,
   });
-  const png = renderMosImage({
+  const image = await renderMosImage({
     header,
     palette,
     blocks: tileData.blocks,
@@ -81,7 +81,7 @@ export const parseMosV1 = ({
 
   return {
     mos,
-    png,
+    image,
     palette,
     indices: tileData.indices,
   };

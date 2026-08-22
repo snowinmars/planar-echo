@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { assetUrl } from '@/shared/assetUrl';
 import { useBamStore } from './store/bamStore';
 import { useBamWidgetBridge } from './useBamWidgetBridge';
 import { useTranslation } from 'react-i18next';
@@ -46,59 +47,30 @@ const Bam: FC = () => {
     disposeBam: state.disposeBam,
   })));
 
-  const [imageUrl, setImageUrl] = useState<Maybe<string>>(null);
-  const [imageLoading, setImageLoading] = useState(false);
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => () => disposeBam(), [disposeBam]);
 
   const imageName = currentBam?.imageName ?? null;
+  const imageUrl = imageName ? assetUrl(serverUrl, 'bam', imageName) : null;
 
   useEffect(() => {
-    if (!imageName) {
-      setImageUrl(null);
-      setImageError(false);
-      setImageLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-    let objectUrl: string | undefined;
-    setImageLoading(true);
     setImageError(false);
-    setImageUrl(null);
-
-    const filePath = encodeURIComponent(`ghost/bam/${imageName}`);
-    fetch(`${serverUrl}/api/fs/ghostDir/${filePath}`)
-      .then(async (res) => {
-        if (!res.ok) throw new Error(String(res.status));
-        return res.blob();
-      })
-      .then((blob) => {
-        if (cancelled) return;
-        objectUrl = URL.createObjectURL(blob);
-        setImageUrl(objectUrl);
-      })
-      .catch((e: unknown) => {
-        console.error(e);
-        if (!cancelled) setImageError(true);
-      })
-      .finally(() => {
-        if (!cancelled) setImageLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [imageName, serverUrl]);
+  }, [imageUrl]);
 
   if (loading && !currentBam) return <CircularProgress />;
   if (!currentBam) return null;
 
   return (
     <div>
-      {!isNothing(imageUrl) && <img className={styles.image} src={imageUrl} alt={imageName ?? ''} />}
+      {!isNothing(imageUrl) && (
+        <img
+          className={styles.image}
+          src={imageUrl}
+          alt={imageName ?? ''}
+          onError={() => setImageError(true)}
+        />
+      )}
       <T title="imageName" value={currentBam.imageName} />
       <T title="resourceName" value={currentBam.resourceName} />
       <T title="atlasWidth" value={currentBam.atlasWidth} />
@@ -191,7 +163,6 @@ const Bam: FC = () => {
           </AccordionDetails>
         </Accordion>
       )}
-      {imageLoading && <CircularProgress />}
       {imageError && <Typography>{t('run.imageLoadError')}</Typography>}
     </div>
   );

@@ -40,13 +40,13 @@ type ParsePvrzTisProps = Readonly<{
   wedWidth: number | undefined;
   pvrzRgbaIndex: Map<string, RawPvrRgbaImage>;
 }>;
-export const parsePvrzTis = ({
+export const parsePvrzTis = async ({
   reader,
   resourceName,
   header,
   wedWidth,
   pvrzRgbaIndex,
-}: ParsePvrzTisProps): RawTisPvrzParseResult => {
+}: ParsePvrzTisProps): Promise<RawTisPvrzParseResult> => {
   if (header.tileSize !== PVRZ_TILE_SIZE) throw new Error(`Expected pvrz tile size '${PVRZ_TILE_SIZE}', got '${header.tileSize}' for resource '${resourceName}'`);
 
   const { columns, source } = calcAtlasColumns(header.tileCount, wedWidth);
@@ -98,6 +98,6 @@ export const parsePvrzTis = ({
 
   return {
     tis,
-    png: encodeRgbaPng(columns * TILE_DIMENSION, rows * TILE_DIMENSION, atlas),
+    image: await encodeRgbaPng(columns * TILE_DIMENSION, rows * TILE_DIMENSION, atlas),
   };
 };

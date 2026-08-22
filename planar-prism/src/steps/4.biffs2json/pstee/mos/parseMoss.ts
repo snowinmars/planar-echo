@@ -32,14 +32,14 @@ export const parseMoss = (
 
     switch (version) {
       case 'v1': {
-        artifacts = parseMosV1({
+        artifacts = await parseMosV1({
           reader,
           resourceName,
         });
         break;
       }
       case 'v2': {
-        artifacts = parseMosV2({
+        artifacts = await parseMosV2({
           reader,
           resourceName,
           pvrzRgbaIndex,

@@ -45,11 +45,11 @@ export const parseBams = (
     let artifacts: RawBamArtifacts;
     switch (version) {
       case 'v1': {
-        artifacts = parseBamV1({ reader, resourceName });
+        artifacts = await parseBamV1({ reader, resourceName });
         break;
       }
       case 'v2': {
-        artifacts = parseBamV2({ reader, resourceName, pvrzRgbaIndex });
+        artifacts = await parseBamV2({ reader, resourceName, pvrzRgbaIndex });
         break;
       }
     }

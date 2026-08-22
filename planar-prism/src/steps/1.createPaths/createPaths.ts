@@ -45,6 +45,26 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const jsonAcm  = normalize(join(jsonRoot, 'acm'));
   const jsonMus  = normalize(join(jsonRoot, 'mus'));
 
+  const assetsRoot = normalize(join(ghostDir, 'assets'));
+  const assetsTlk  = normalize(join(assetsRoot, 'tlk'));
+  const assetsDlg  = normalize(join(assetsRoot, 'dlg'));
+  const assetsItm  = normalize(join(assetsRoot, 'itm'));
+  const assetsIds  = normalize(join(assetsRoot, 'ids'));
+  const assetsIni  = normalize(join(assetsRoot, 'ini'));
+  const assetsCre  = normalize(join(assetsRoot, 'cre'));
+  const assetsEff  = normalize(join(assetsRoot, 'eff'));
+  const assetsBcs  = normalize(join(assetsRoot, 'bcs'));
+  const assetsWed  = normalize(join(assetsRoot, 'wed'));
+  const assetsAre  = normalize(join(assetsRoot, 'are'));
+  const assetsPvrz = normalize(join(assetsRoot, 'pvrz'));
+  const assetsTis  = normalize(join(assetsRoot, 'tis'));
+  const assetsMos  = normalize(join(assetsRoot, 'mos'));
+  const assetsBmp  = normalize(join(assetsRoot, 'bmp'));
+  const assetsBam  = normalize(join(assetsRoot, 'bam'));
+  const assetsWav  = normalize(join(assetsRoot, 'wav'));
+  const assetsAcm  = normalize(join(assetsRoot, 'acm'));
+  const assetsMus  = normalize(join(assetsRoot, 'mus'));
+
   const ghostRoot   = normalize(join(ghostDir , 'ghost'));
   const ghostTlk    = normalize(join(ghostRoot, 'tlk'));
   const ghostDlg    = normalize(join(ghostRoot, 'dlg'));
@@ -66,21 +86,21 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const ghostMus    = normalize(join(ghostRoot, 'mus'));
   const ghostStores = normalize(join(ghostRoot, 'stores'));
 
-  const jsonTisPng: NamingFunction = x => `${x}.png`;
-  const jsonTisPalette: NamingFunction = x => `${x}.palette`;
-  const jsonTisIndices: NamingFunction = x => `${x}.indices`;
-  const jsonMosPng: NamingFunction = x => `${x}.png`;
-  const jsonMosPalette: NamingFunction = x => `${x}.palette`;
-  const jsonMosIndices: NamingFunction = x => `${x}.indices`;
-  const jsonBmpPng: NamingFunction = x => `${x}.png`;
-  const jsonBmpPalette: NamingFunction = x => `${x}.palette`;
-  const jsonBmpIndices: NamingFunction = x => `${x}.indices`;
-  const jsonBamPng: NamingFunction = x => `${x}.png`;
-  const jsonBamPalette: NamingFunction = x => `${x}.palette`;
-  const jsonBamIndices: NamingFunction = x => `${x}.indices`;
-  const jsonWavAudio: NamingFunction = x => `${x}.wav`;
-  const jsonAcmAudio: NamingFunction = x => `${x}.wav`;
-  const jsonAreExplored: NamingFunction = x => `${x}.explored`;
+  const assetsTisImage: NamingFunction = x => `${x}.png`;
+  const assetsTisPalette: NamingFunction = x => `${x}.palette`;
+  const assetsTisIndices: NamingFunction = x => `${x}.indices`;
+  const assetsMosImage: NamingFunction = x => `${x}.png`;
+  const assetsMosPalette: NamingFunction = x => `${x}.palette`;
+  const assetsMosIndices: NamingFunction = x => `${x}.indices`;
+  const assetsBmpImage: NamingFunction = x => `${x}.png`;
+  const assetsBmpPalette: NamingFunction = x => `${x}.palette`;
+  const assetsBmpIndices: NamingFunction = x => `${x}.indices`;
+  const assetsBamImage: NamingFunction = x => `${x}.png`;
+  const assetsBamPalette: NamingFunction = x => `${x}.palette`;
+  const assetsBamIndices: NamingFunction = x => `${x}.indices`;
+  const assetsWavAudio: NamingFunction = x => `${x}.wav`;
+  const assetsAcmAudio: NamingFunction = x => `${x}.wav`;
+  const assetsAreExplored: NamingFunction = x => `${x}.explored`;
 
   // TODO [snow]: I do not like this path, but where should it lead to?..
   const sharedEnums    = normalize(join(ghostDir, '..', 'planar-shared', 'src', 'dlgEngine', 'enums'));
@@ -123,6 +143,27 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         acm : jsonAcm,
         mus : jsonMus,
       },
+      assets: {
+        root: assetsRoot,
+        tlk : assetsTlk,
+        dlg : assetsDlg,
+        itm : assetsItm,
+        ids : assetsIds,
+        ini : assetsIni,
+        cre : assetsCre,
+        eff : assetsEff,
+        bcs : assetsBcs,
+        wed : assetsWed,
+        are : assetsAre,
+        pvrz: assetsPvrz,
+        tis : assetsTis,
+        mos : assetsMos,
+        bmp : assetsBmp,
+        bam : assetsBam,
+        wav : assetsWav,
+        acm : assetsAcm,
+        mus : assetsMus,
+      },
       saveJson: {
         tlk      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonTlk      , resourceName), entry, asIs),
         dlg      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonDlg      , resourceName), entry, asIs),
@@ -143,35 +184,35 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         acm      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonAcm      , resourceName), entry, asIs),
         mus      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonMus      , resourceName), entry, asIs),
       },
-      saveBinary: {
+      saveAssets: {
         are: {
-          explored: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonAre, jsonAreExplored(resourceName)), data),
+          explored: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsAre, assetsAreExplored(resourceName)), data),
         },
         tis: {
-          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisPng(resourceName)), data),
-          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisPalette(resourceName)), data),
-          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonTis, jsonTisIndices(resourceName)), data),
+          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsTis, assetsTisImage(resourceName)), data),
+          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsTis, assetsTisPalette(resourceName)), data),
+          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsTis, assetsTisIndices(resourceName)), data),
         },
         mos: {
-          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonMos, jsonMosPng(resourceName)), data),
-          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonMos, jsonMosPalette(resourceName)), data),
-          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonMos, jsonMosIndices(resourceName)), data),
+          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsMos, assetsMosImage(resourceName)), data),
+          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsMos, assetsMosPalette(resourceName)), data),
+          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsMos, assetsMosIndices(resourceName)), data),
         },
         bmp: {
-          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonBmp, jsonBmpPng(resourceName)), data),
-          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonBmp, jsonBmpPalette(resourceName)), data),
-          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonBmp, jsonBmpIndices(resourceName)), data),
+          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsBmp, assetsBmpImage(resourceName)), data),
+          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsBmp, assetsBmpPalette(resourceName)), data),
+          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsBmp, assetsBmpIndices(resourceName)), data),
         },
         bam: {
-          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonBam, jsonBamPng(resourceName)), data),
-          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonBam, jsonBamPalette(resourceName)), data),
-          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonBam, jsonBamIndices(resourceName)), data),
+          image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsBam, assetsBamImage(resourceName)), data),
+          palette: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsBam, assetsBamPalette(resourceName)), data),
+          indices: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsBam, assetsBamIndices(resourceName)), data),
         },
         wav: {
-          audio  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonWav, jsonWavAudio(resourceName)), data),
+          audio  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsWav, assetsWavAudio(resourceName)), data),
         },
         acm: {
-          audio  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(jsonAcm, jsonAcmAudio(resourceName)), data),
+          audio  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsAcm, assetsAcmAudio(resourceName)), data),
         },
       },
       ghost: {
@@ -243,6 +284,24 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     paths.ghostDir.json.wav,
     paths.ghostDir.json.acm,
     paths.ghostDir.json.mus,
+    paths.ghostDir.assets.tlk,
+    paths.ghostDir.assets.dlg,
+    paths.ghostDir.assets.itm,
+    paths.ghostDir.assets.ids,
+    paths.ghostDir.assets.ini,
+    paths.ghostDir.assets.cre,
+    paths.ghostDir.assets.eff,
+    paths.ghostDir.assets.bcs,
+    paths.ghostDir.assets.wed,
+    paths.ghostDir.assets.are,
+    paths.ghostDir.assets.pvrz,
+    paths.ghostDir.assets.tis,
+    paths.ghostDir.assets.mos,
+    paths.ghostDir.assets.bmp,
+    paths.ghostDir.assets.bam,
+    paths.ghostDir.assets.wav,
+    paths.ghostDir.assets.acm,
+    paths.ghostDir.assets.mus,
     paths.ghostDir.ghost.tlk,
     paths.ghostDir.ghost.dlg,
     paths.ghostDir.ghost.itm,

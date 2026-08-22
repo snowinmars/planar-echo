@@ -4,7 +4,7 @@ import type { RawTisHeader } from '../1.parseHeader.types.js';
 
 export type RawTisPvrzParseResult = Readonly<{
   tis: RawTisPvrz;
-  png: Buffer;
+  image: Buffer;
 }>;
 
 export type RawTisTile = Readonly<{

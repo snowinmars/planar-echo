@@ -34,10 +34,10 @@ type ParseBamV1Props = Readonly<{
   reader: BufferReader;
   resourceName: string;
 }>;
-export const parseBamV1 = ({
+export const parseBamV1 = async ({
   reader,
   resourceName,
-}: ParseBamV1Props): RawBamV1Artifacts => {
+}: ParseBamV1Props): Promise<RawBamV1Artifacts> => {
   const header = parseHeader(reader, resourceName);
 
   const frameEntries = parseFrames({
@@ -60,7 +60,7 @@ export const parseBamV1 = ({
     rleIndex: header.rleIndex,
   });
 
-  const atlas = buildHorizontalAtlas(frameEntries.map((frame, i) => ({
+  const atlas = await buildHorizontalAtlas(frameEntries.map((frame, i) => ({
     width: frame.width,
     height: frame.height,
     centerX: frame.centerX,
@@ -99,7 +99,7 @@ export const parseBamV1 = ({
 
   return {
     bam,
-    png: atlas.png,
+    image: atlas.image,
     palette,
     indices,
   };

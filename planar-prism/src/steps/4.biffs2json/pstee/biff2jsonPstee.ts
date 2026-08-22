@@ -181,10 +181,10 @@ const biffs2jsonPstee = async (
   for await (const artifacts of bamsIterator) {
     bams.push(artifacts.bam);
     await paths.ghostDir.saveJson.bam(artifacts.bam.resourceName, artifacts.bam);
-    await paths.ghostDir.saveBinary.bam.image(artifacts.bam.resourceName, artifacts.png);
+    await paths.ghostDir.saveAssets.bam.image(artifacts.bam.resourceName, artifacts.image);
     if (isBamV1Artifacts(artifacts)) {
-      await paths.ghostDir.saveBinary.bam.palette(artifacts.bam.resourceName, artifacts.palette);
-      await paths.ghostDir.saveBinary.bam.indices(artifacts.bam.resourceName, artifacts.indices);
+      await paths.ghostDir.saveAssets.bam.palette(artifacts.bam.resourceName, artifacts.palette);
+      await paths.ghostDir.saveAssets.bam.indices(artifacts.bam.resourceName, artifacts.indices);
     }
   }
 
@@ -196,10 +196,10 @@ const biffs2jsonPstee = async (
   for await (const artifacts of mossIterator) {
     moss.push(artifacts.mos);
     await paths.ghostDir.saveJson.mos(artifacts.mos.resourceName, artifacts.mos);
-    await paths.ghostDir.saveBinary.mos.image(artifacts.mos.resourceName, artifacts.png);
+    await paths.ghostDir.saveAssets.mos.image(artifacts.mos.resourceName, artifacts.image);
     if (isMosV1Artifacts(artifacts)) {
-      await paths.ghostDir.saveBinary.mos.palette(artifacts.mos.resourceName, artifacts.palette);
-      await paths.ghostDir.saveBinary.mos.indices(artifacts.mos.resourceName, artifacts.indices);
+      await paths.ghostDir.saveAssets.mos.palette(artifacts.mos.resourceName, artifacts.palette);
+      await paths.ghostDir.saveAssets.mos.indices(artifacts.mos.resourceName, artifacts.indices);
     }
   }
 
@@ -211,10 +211,10 @@ const biffs2jsonPstee = async (
   for await (const artifacts of tissIterator) {
     tiss.push(artifacts.tis);
     await paths.ghostDir.saveJson.tis(artifacts.tis.resourceName, artifacts.tis);
-    await paths.ghostDir.saveBinary.tis.image(artifacts.tis.resourceName, artifacts.png);
+    await paths.ghostDir.saveAssets.tis.image(artifacts.tis.resourceName, artifacts.image);
     if (isPaletteArtfact(artifacts)) {
-      await paths.ghostDir.saveBinary.tis.palette(artifacts.tis.resourceName, artifacts.palette);
-      await paths.ghostDir.saveBinary.tis.indices(artifacts.tis.resourceName, artifacts.indices);
+      await paths.ghostDir.saveAssets.tis.palette(artifacts.tis.resourceName, artifacts.palette);
+      await paths.ghostDir.saveAssets.tis.indices(artifacts.tis.resourceName, artifacts.indices);
     }
   }
 
@@ -226,10 +226,10 @@ const biffs2jsonPstee = async (
   for await (const artifacts of bmpsIterator) {
     bmps.push(artifacts.bmp);
     await paths.ghostDir.saveJson.bmp(artifacts.bmp.resourceName, artifacts.bmp);
-    await paths.ghostDir.saveBinary.bmp.image(artifacts.bmp.resourceName, artifacts.png);
+    await paths.ghostDir.saveAssets.bmp.image(artifacts.bmp.resourceName, artifacts.image);
     if (isBmpPalettedArtifacts(artifacts)) {
-      await paths.ghostDir.saveBinary.bmp.palette(artifacts.bmp.resourceName, artifacts.palette);
-      await paths.ghostDir.saveBinary.bmp.indices(artifacts.bmp.resourceName, artifacts.indices);
+      await paths.ghostDir.saveAssets.bmp.palette(artifacts.bmp.resourceName, artifacts.palette);
+      await paths.ghostDir.saveAssets.bmp.indices(artifacts.bmp.resourceName, artifacts.indices);
     }
   }
 
@@ -241,7 +241,7 @@ const biffs2jsonPstee = async (
   for await (const artifacts of wavsIterator) {
     wavs.push(artifacts.wav);
     await paths.ghostDir.saveJson.wav(artifacts.wav.resourceName, artifacts.wav);
-    await paths.ghostDir.saveBinary.wav.audio(artifacts.wav.resourceName, artifacts.pcmWav);
+    await paths.ghostDir.saveAssets.wav.audio(artifacts.wav.resourceName, artifacts.pcmWav);
   }
 
   ///
@@ -252,7 +252,7 @@ const biffs2jsonPstee = async (
   for await (const artifacts of acmsIterator) {
     acms.push(artifacts.acm);
     await paths.ghostDir.saveJson.acm(artifacts.acm.resourceName, artifacts.acm);
-    await paths.ghostDir.saveBinary.acm.audio(artifacts.acm.resourceName, artifacts.pcmWav);
+    await paths.ghostDir.saveAssets.acm.audio(artifacts.acm.resourceName, artifacts.pcmWav);
   }
 
   ///
@@ -280,7 +280,7 @@ const biffs2jsonPstee = async (
     ares.push(artifacts.are);
     await paths.ghostDir.saveJson.are(artifacts.are.resourceName, artifacts.are);
     if (!isNothing(artifacts.explored)) {
-      await paths.ghostDir.saveBinary.are.explored(artifacts.are.resourceName, artifacts.explored);
+      await paths.ghostDir.saveAssets.are.explored(artifacts.are.resourceName, artifacts.explored);
     }
   }
 

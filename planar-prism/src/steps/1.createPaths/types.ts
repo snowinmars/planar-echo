@@ -92,8 +92,9 @@ export type Paths = Readonly<{
       cacheJson: string;
     }>;
     json: OutDir;
+    assets: OutDir;
     saveJson: OutSave;
-    saveBinary: OutSaveBinary;
+    saveAssets: OutSaveBinary;
     ghost: OutDir;
     saveGhost: OutSave;
     sharedEnums: string;

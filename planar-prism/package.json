@@ -39,8 +39,8 @@
   "dependencies": {
     "@planar/shared": "workspace:*",
     "@wasm-audio-decoders/ogg-vorbis": "^0.1.20",
-    "pngjs": "^7.0.0",
     "rxjs": "^7.8.2",
+    "sharp": "^0.35.3",
     "winston": "^3.19.0"
   },
   "_devD": {
@@ -53,7 +53,6 @@
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.5.0",
-    "@types/pngjs": "^6.0.5",
     "@typescript-eslint/parser": "^8.57.1",
     "chai": "^6.2.2",
     "cpy-cli": "^7.0.0",

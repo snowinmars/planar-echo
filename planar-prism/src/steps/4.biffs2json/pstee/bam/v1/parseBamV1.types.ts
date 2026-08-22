@@ -45,7 +45,7 @@ export type RawBamV1 = Readonly<{
 
 export type RawBamV1Artifacts = Readonly<{
   bam: RawBamV1;
-  png: Buffer;
+  image: Buffer;
   palette: Buffer;
   indices: Buffer;
 }>;

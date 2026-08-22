@@ -13,10 +13,10 @@ type ParseBmpV5Props = Readonly<{
   resourceName: string;
 }>;
 
-export const parseBmpV5 = ({
+export const parseBmpV5 = async ({
   reader,
   resourceName,
-}: ParseBmpV5Props): RawBmpV5Artifacts => {
+}: ParseBmpV5Props): Promise<RawBmpV5Artifacts> => {
   const header = parseHeader(reader, resourceName);
 
   const entries = header.usedColors === 0 ? 1 << header.bitsPerPixel : header.usedColors;
@@ -46,7 +46,7 @@ export const parseBmpV5 = ({
     },
   });
 
-  const png = renderBmpImage({
+  const image = await renderBmpImage({
     width: header.width,
     height: header.height,
     bitsPerPixel: header.bitsPerPixel,
@@ -79,7 +79,7 @@ export const parseBmpV5 = ({
 
   return {
     bmp,
-    png,
+    image,
     palette,
     indices: pixels.indices,
   };

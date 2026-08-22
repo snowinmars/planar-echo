@@ -20,12 +20,12 @@ type ParseTisV1Props = Readonly<{
   wedIndex: Map<string, RawWed>;
   pvrzRgbaIndex: Map<string, RawPvrRgbaImage>;
 }>;
-export const parseTisV1 = ({
+export const parseTisV1 = async ({
   reader,
   resourceName,
   wedIndex,
   pvrzRgbaIndex,
-}: ParseTisV1Props): RawTisArtifacts => {
+}: ParseTisV1Props): Promise<RawTisArtifacts> => {
   const header = parseHeader(reader, resourceName);
 
   const wed = findWedForTis(wedIndex, resourceName, header.tileCount);
@@ -37,7 +37,7 @@ export const parseTisV1 = ({
 
   switch (header.tileSize) {
     case PALETTE_TILE_SIZE: {
-      const parsed = parsePaletteTis({
+      const parsed = await parsePaletteTis({
         reader,
         resourceName,
         header,
@@ -46,13 +46,13 @@ export const parseTisV1 = ({
 
       return {
         tis: parsed.tis,
-        png: parsed.png,
+        image: parsed.image,
         palette: parsed.palette,
         indices: parsed.indices,
       };
     }
     case PVRZ_TILE_SIZE: {
-      const parsed = parsePvrzTis({
+      const parsed = await parsePvrzTis({
         reader,
         resourceName,
         header,
@@ -62,7 +62,7 @@ export const parseTisV1 = ({
 
       return {
         tis: parsed.tis,
-        png: parsed.png,
+        image: parsed.image,
       };
     }
     default: throw new Error(`Unsupported TIS tile size '${header.tileSize}' in '${resourceName}'`); // eslint-disable-line @typescript-eslint/restrict-template-expressions

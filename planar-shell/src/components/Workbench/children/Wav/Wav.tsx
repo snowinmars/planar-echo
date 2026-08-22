@@ -4,6 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { assetUrl } from '@/shared/assetUrl';
 import { useWavStore } from './store/wavStore';
 import { useWavWidgetBridge } from './useWavWidgetBridge';
 import { useTranslation } from 'react-i18next';
@@ -42,52 +43,16 @@ const Wav: FC = () => {
     disposeWav: state.disposeWav,
   })));
 
-  const [audioUrl, setAudioUrl] = useState<Maybe<string>>(null);
-  const [audioLoading, setAudioLoading] = useState(false);
   const [audioError, setAudioError] = useState(false);
 
   useEffect(() => () => disposeWav(), [disposeWav]);
 
   const audioName = currentWav?.audioName ?? null;
+  const audioUrl = audioName ? assetUrl(serverUrl, 'wav', audioName) : null;
 
   useEffect(() => {
-    if (!audioName) {
-      setAudioUrl(null);
-      setAudioError(false);
-      setAudioLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-    let objectUrl: string | undefined;
-    setAudioLoading(true);
     setAudioError(false);
-    setAudioUrl(null);
-
-    const filePath = encodeURIComponent(`ghost/wav/${audioName}`);
-    fetch(`${serverUrl}/api/fs/ghostDir/${filePath}`)
-      .then(async (res) => {
-        if (!res.ok) throw new Error(String(res.status));
-        return res.blob();
-      })
-      .then((blob) => {
-        if (cancelled) return;
-        objectUrl = URL.createObjectURL(blob);
-        setAudioUrl(objectUrl);
-      })
-      .catch((e: unknown) => {
-        console.error(e);
-        if (!cancelled) setAudioError(true);
-      })
-      .finally(() => {
-        if (!cancelled) setAudioLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [audioName, serverUrl]);
+  }, [audioUrl]);
 
   if (loading && !currentWav) return <CircularProgress />;
   if (!currentWav) return null;
@@ -95,7 +60,7 @@ const Wav: FC = () => {
   return (
     <div>
       {!isNothing(audioUrl) && (
-        <audio className={styles.audio} controls src={audioUrl}>
+        <audio className={styles.audio} controls src={audioUrl} onError={() => setAudioError(true)}>
           <track kind="captions" />
         </audio>
       )}
@@ -106,7 +71,6 @@ const Wav: FC = () => {
       <T title="sampleRate" value={currentWav.sampleRate} />
       <T title="bitsPerSample" value={currentWav.bitsPerSample} />
       <T title="sampleCount" value={currentWav.sampleCount} />
-      {audioLoading && <CircularProgress />}
       {audioError && <Typography>{t('run.audioLoadError')}</Typography>}
     </div>
   );

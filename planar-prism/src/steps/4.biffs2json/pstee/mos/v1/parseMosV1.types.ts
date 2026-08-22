@@ -29,7 +29,7 @@ export type RawMosV1 = Readonly<{
 
 export type RawMosV1Artifacts = Readonly<{
   mos: RawMosV1;
-  png: Buffer;
+  image: Buffer;
   palette: Buffer;
   indices: Buffer;
 }>;

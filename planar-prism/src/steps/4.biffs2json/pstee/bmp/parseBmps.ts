@@ -38,8 +38,8 @@ export const parseBmps = (
     const isBmpV5 = infoHeaderSize === BMP_V3_HEADER_SIZE || infoHeaderSize === BMP_V4_HEADER_SIZE || infoHeaderSize === BMP_V5_HEADER_SIZE;
 
     let artifacts: RawBmpArtifacts;
-    if (isBmpV1) artifacts = parseBmpV1({ reader, resourceName });
-    else if (isBmpV5) artifacts = parseBmpV5({ reader, resourceName });
+    if (isBmpV1) artifacts = await parseBmpV1({ reader, resourceName });
+    else if (isBmpV5) artifacts = await parseBmpV5({ reader, resourceName });
     else throw new Error(`Unsupported bpm header size '${infoHeaderSize}' for resource '${resourceName}'`);
 
     const percent = Math.round((i + 1) * 100 / decompiledBiffs.length);

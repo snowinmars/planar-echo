@@ -1,11 +1,13 @@
-import { PNG } from 'pngjs'; // TODO [snow]: try to migrate to sharp npmjs package
+import sharp from 'sharp';
 
 import { TILE_DIMENSION } from './tisCommon.js';
 
-export const encodeRgbaPng = (width: number, height: number, rgba: Buffer): Buffer => {
-  const png = new PNG({ width, height });
-  rgba.copy(png.data, 0, 0, width * height * 4);
-  return PNG.sync.write(png);
+export const encodeRgbaPng = async (width: number, height: number, canvas: Buffer): Promise<Buffer> => {
+  if (width <= 0 || height <= 0) throw new Error(`encodeRgbaPng: width and height must be > 0, got ${width}x${height}`);
+
+  return sharp(canvas, { raw: { width, height, channels: 4 } })
+    .png({ compressionLevel: 2 })
+    .toBuffer();
 };
 
 export const createAtlasBuffer = (columns: number, rows: number): Buffer => {

@@ -63,11 +63,11 @@ type ParseMosV2Props = Readonly<{
   resourceName: string;
   pvrzRgbaIndex: Map<string, RawPvrRgbaImage>;
 }>;
-export const parseMosV2 = ({
+export const parseMosV2 = async ({
   reader,
   resourceName,
   pvrzRgbaIndex,
-}: ParseMosV2Props): RawMosV2Artifacts => {
+}: ParseMosV2Props): Promise<RawMosV2Artifacts> => {
   const header = parseHeader(reader, resourceName);
 
   const canvas = Buffer.alloc(header.width * header.height * 4, 0);
@@ -127,6 +127,6 @@ export const parseMosV2 = ({
 
   return {
     mos,
-    png: encodeRgbaPng(header.width, header.height, canvas),
+    image: await encodeRgbaPng(header.width, header.height, canvas),
   };
 };

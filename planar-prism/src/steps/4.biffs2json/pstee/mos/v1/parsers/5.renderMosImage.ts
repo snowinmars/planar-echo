@@ -78,7 +78,7 @@ export const renderMosImage = ({
   palette,
   blocks,
   indicesChunks,
-}: RenderMosImageProps): Buffer => {
+}: RenderMosImageProps): Promise<Buffer> => {
   const canvas = Buffer.alloc(header.width * header.height * 4, 0);
 
   for (let i = 0; i < blocks.length; i++) {

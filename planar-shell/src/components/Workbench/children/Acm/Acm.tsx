@@ -4,6 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { assetUrl } from '@/shared/assetUrl';
 import { useAcmStore } from './store/acmStore';
 import { useAcmWidgetBridge } from './useAcmWidgetBridge';
 import { useTranslation } from 'react-i18next';
@@ -42,52 +43,16 @@ const Acm: FC = () => {
     disposeAcm: state.disposeAcm,
   })));
 
-  const [audioUrl, setAudioUrl] = useState<Maybe<string>>(null);
-  const [audioLoading, setAudioLoading] = useState(false);
   const [audioError, setAudioError] = useState(false);
 
   useEffect(() => () => disposeAcm(), [disposeAcm]);
 
   const audioName = currentAcm?.audioName ?? null;
+  const audioUrl = audioName ? assetUrl(serverUrl, 'acm', audioName) : null;
 
   useEffect(() => {
-    if (!audioName) {
-      setAudioUrl(null);
-      setAudioError(false);
-      setAudioLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-    let objectUrl: string | undefined;
-    setAudioLoading(true);
     setAudioError(false);
-    setAudioUrl(null);
-
-    const filePath = encodeURIComponent(`ghost/acm/${audioName}`);
-    fetch(`${serverUrl}/api/fs/ghostDir/${filePath}`)
-      .then(async (res) => {
-        if (!res.ok) throw new Error(String(res.status));
-        return res.blob();
-      })
-      .then((blob) => {
-        if (cancelled) return;
-        objectUrl = URL.createObjectURL(blob);
-        setAudioUrl(objectUrl);
-      })
-      .catch((e: unknown) => {
-        console.error(e);
-        if (!cancelled) setAudioError(true);
-      })
-      .finally(() => {
-        if (!cancelled) setAudioLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [audioName, serverUrl]);
+  }, [audioUrl]);
 
   if (loading && !currentAcm) return <CircularProgress />;
   if (!currentAcm) return null;
@@ -95,7 +60,7 @@ const Acm: FC = () => {
   return (
     <div>
       {!isNothing(audioUrl) && (
-        <audio className={styles.audio} controls src={audioUrl}>
+        <audio className={styles.audio} controls src={audioUrl} onError={() => setAudioError(true)}>
           <track kind="captions" />
         </audio>
       )}
@@ -106,7 +71,6 @@ const Acm: FC = () => {
       <T title="sampleRate" value={currentAcm.sampleRate} />
       <T title="bitsPerSample" value={currentAcm.bitsPerSample} />
       <T title="sampleCount" value={currentAcm.sampleCount} />
-      {audioLoading && <CircularProgress />}
       {audioError && <Typography>{t('run.audioLoadError')}</Typography>}
     </div>
   );

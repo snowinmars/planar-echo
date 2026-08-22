@@ -1,5 +1,3 @@
-import { copyFile } from 'fs/promises';
-import { join } from 'path';
 import logger from '@/shared/logger.js';
 import { patchTlk } from './tlk/patch.js';
 import { patchCres } from './cre/v10/patchCres.js';
@@ -30,11 +28,6 @@ type AllJsons = AllPsteeJsons; // extend with new games
 
 // const ghostTsName = (resourceName: string): string => `${resourceName.replaceAll(`'`, '')}.ts`;
 
-const copyGhostFile = async (jsonDir: string, ghostDir: string, fileName: string): Promise<void> => {
-  await copyFile(join(jsonDir, fileName), join(ghostDir, fileName));
-};
-
-// TODO [snow]: не сохраняй png, wav, ... в json и ghost. Клади в отдельный каталог, куда будешь референсить json и ghost. Избежишь копирования.
 export const json2GhostPstee = async (
   allJsons: AllJsons,
   paths: Paths,
@@ -80,7 +73,6 @@ export const json2GhostPstee = async (
   const mosIterator = patchMos(allJsons.moss);
   for await (const mos of mosIterator) {
     await paths.ghostDir.saveGhost.mos(`${mos.resourceName}.ts`, mos.skeleton, true);
-    await copyGhostFile(paths.ghostDir.json.mos, paths.ghostDir.ghost.mos, mos.mos.imageName);
   }
 
   logger.info(`Converting pvrz json to ghost...`);
@@ -93,7 +85,6 @@ export const json2GhostPstee = async (
   const tisIterator = patchTis(allJsons.tiss);
   for await (const tis of tisIterator) {
     await paths.ghostDir.saveGhost.tis(`${tis.resourceName}.ts`, tis.skeleton, true);
-    await copyGhostFile(paths.ghostDir.json.tis, paths.ghostDir.ghost.tis, tis.tis.imageName);
   }
 
   logger.info(`Converting wed json to ghost...`);
@@ -106,28 +97,24 @@ export const json2GhostPstee = async (
   const bmpIterator = patchBmps(allJsons.bmps);
   for await (const bmp of bmpIterator) {
     await paths.ghostDir.saveGhost.bmp(`${bmp.resourceName}.ts`, bmp.skeleton, true);
-    await copyGhostFile(paths.ghostDir.json.bmp, paths.ghostDir.ghost.bmp, bmp.bmp.imageName);
   }
 
   logger.info(`Converting bam json to ghost...`);
   const bamIterator = patchBams(allJsons.bams);
   for await (const bam of bamIterator) {
     await paths.ghostDir.saveGhost.bam(`${bam.resourceName}.ts`, bam.skeleton, true);
-    await copyGhostFile(paths.ghostDir.json.bam, paths.ghostDir.ghost.bam, bam.bam.imageName);
   }
 
   logger.info(`Converting wav json to ghost...`);
   const wavIterator = patchWavs(allJsons.wavs);
   for await (const wav of wavIterator) {
     await paths.ghostDir.saveGhost.wav(`${wav.resourceName}.ts`, wav.skeleton, true);
-    await copyGhostFile(paths.ghostDir.json.wav, paths.ghostDir.ghost.wav, wav.wav.audioName);
   }
 
   logger.info(`Converting acm json to ghost...`);
   const acmIterator = patchAcms(allJsons.acms);
   for await (const acm of acmIterator) {
     await paths.ghostDir.saveGhost.acm(`${acm.resourceName}.ts`, acm.skeleton, true);
-    await copyGhostFile(paths.ghostDir.json.acm, paths.ghostDir.ghost.acm, acm.acm.audioName);
   }
 
   logger.info(`Converting mus json to ghost...`);

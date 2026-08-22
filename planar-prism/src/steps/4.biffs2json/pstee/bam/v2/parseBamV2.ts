@@ -34,11 +34,11 @@ type ParseBamV2Props = Readonly<{
   resourceName: string;
   pvrzRgbaIndex: Map<string, RawPvrRgbaImage>;
 }>;
-export const parseBamV2 = ({
+export const parseBamV2 = async ({
   reader,
   resourceName,
   pvrzRgbaIndex,
-}: ParseBamV2Props): RawBamV2Artifacts => {
+}: ParseBamV2Props): Promise<RawBamV2Artifacts> => {
   const header = parseHeader(reader, resourceName);
 
   const frameEntries = parseFrames({
@@ -64,7 +64,7 @@ export const parseBamV2 = ({
     pvrzRgbaIndex,
   });
 
-  const atlas = buildHorizontalAtlas(frameEntries.map((frame, i) => ({
+  const atlas = await buildHorizontalAtlas(frameEntries.map((frame, i) => ({
     width: frame.width,
     height: frame.height,
     centerX: frame.centerX,
@@ -86,6 +86,6 @@ export const parseBamV2 = ({
 
   return {
     bam,
-    png: atlas.png,
+    image: atlas.image,
   };
 };

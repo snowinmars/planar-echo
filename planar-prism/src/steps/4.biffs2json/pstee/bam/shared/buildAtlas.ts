@@ -18,13 +18,42 @@ export type BamAtlasFrame = Readonly<{
 }>;
 
 export type BamAtlas = Readonly<{
-  png: Buffer;
+  image: Buffer;
   frames: BamAtlasFrame[];
   atlasWidth: number;
   atlasHeight: number;
 }>;
 
-export const buildHorizontalAtlas = (frames: BamAtlasFrameInput[]): BamAtlas => {
+type BuildImageProps = Readonly<{
+  width: number;
+  height: number;
+  frames: BamAtlasFrameInput[];
+  placed: BamAtlasFrame[];
+}>;
+const buildImage = ({
+  width,
+  height,
+  frames,
+  placed,
+}: BuildImageProps): Buffer => {
+  const canvas = Buffer.alloc(width * height * 4, 0);
+  for (let i = 0; i < frames.length; i++) {
+    const src = frames[i]!;
+    const dst = placed[i]!;
+
+    if (dst.atlasX < 0 || !src.rgba) continue;
+
+    for (let row = 0; row < src.height; row++) {
+      const srcStart = row * src.width * 4;
+      const dstStart = (row * width + dst.atlasX) * 4;
+      src.rgba.copy(canvas, dstStart, srcStart, srcStart + src.width * 4);
+    }
+  }
+
+  return canvas;
+};
+
+export const buildHorizontalAtlas = async (frames: BamAtlasFrameInput[]): Promise<BamAtlas> => {
   const placed: BamAtlasFrame[] = [];
   let atlasWidth = 0;
   let atlasHeight = 0;
@@ -58,29 +87,24 @@ export const buildHorizontalAtlas = (frames: BamAtlasFrameInput[]): BamAtlas => 
 
   if (atlasWidth <= 0 || atlasHeight <= 0) {
     return {
-      png: encodeRgbaPng(1, 1, Buffer.alloc(4, 0)),
+      image: await encodeRgbaPng(1, 1, Buffer.alloc(4, 0)),
       frames: placed,
       atlasWidth: 1,
       atlasHeight: 1,
     };
   }
 
-  const canvas = Buffer.alloc(atlasWidth * atlasHeight * 4, 0);
-  for (let i = 0; i < frames.length; i++) {
-    const src = frames[i]!;
-    const dst = placed[i]!;
-
-    if (dst.atlasX < 0 || !src.rgba) continue;
-
-    for (let row = 0; row < src.height; row++) {
-      const srcStart = row * src.width * 4;
-      const dstStart = (row * atlasWidth + dst.atlasX) * 4;
-      src.rgba.copy(canvas, dstStart, srcStart, srcStart + src.width * 4);
-    }
-  }
-
   return {
-    png: encodeRgbaPng(atlasWidth, atlasHeight, canvas),
+    image: await encodeRgbaPng(
+      atlasWidth,
+      atlasHeight,
+      buildImage({
+        width: atlasWidth,
+        height: atlasHeight,
+        frames,
+        placed,
+      }),
+    ),
     frames: placed,
     atlasWidth,
     atlasHeight,
