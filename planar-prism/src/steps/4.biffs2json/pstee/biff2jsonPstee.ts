@@ -57,12 +57,6 @@ const biffs2jsonPstee = async (
   decompiledBiffs: Map<DecompiledBiffType, DecompiledBiff[]>,
   paths: Paths,
 ): Promise<AllPsteeJsons> => {
-  logger.info(`Converting tlk to json...`);
-  const tlk = await parseTlk(paths.tlkDir);
-  await paths.ghostDir.saveJson.tlk(`${paths.gameLanguage}.json`, tlk);
-
-  ///
-
   logger.info(`Converting ids to json...`);
   const ids = new Map<string, RawIds>();
   const idsIterator = parseIds(paths, decompiledBiffs.get('ids')!);
@@ -72,6 +66,46 @@ const biffs2jsonPstee = async (
   }
 
   for (const mustHaveId of mustHaveIds) if (!ids.has(mustHaveId)) throw new Error(`Pstee sources has '${mustHaveId}' file, but you did not pass it`);
+
+  ///
+
+  logger.info(`Converting wed to json...`);
+  const weds: RawWed[] = [];
+  const wedsIterator = parseWeds(paths, decompiledBiffs.get('wed')!);
+  for await (const wed of wedsIterator) {
+    weds.push(wed);
+    await paths.ghostDir.saveJson.wed(wed.resourceName, wed);
+  }
+  const wedIndex = new Map<string, RawWed>(weds.map(wed => [wed.resourceName, wed]));
+
+  ///
+
+  logger.info(`Converting pvrz to json...`);
+  const pvrs: RawPvr[] = [];
+  const pvrzRgbaIndex = new Map<string, RawPvrRgbaImage>();
+  const pvrsIterator = parsePvrzs(paths, decompiledBiffs.get('pvrz')!);
+  for await (const { pvr, pixelData } of pvrsIterator) {
+    pvrs.push(pvr);
+    pvrzRgbaIndex.set(pvr.resourceName, decodePvrToRgba(pvr, pixelData));
+    await paths.ghostDir.saveJson.pvrz(pvr.resourceName, pvr);
+  }
+
+  ///
+
+  logger.info(`Converting cre to json...`);
+  const cres: RawCre[] = [];
+  const cresIterator = parseCres(paths, decompiledBiffs.get('cre')!, ids);
+  for await (const cre of cresIterator) {
+    if (!cre) continue;
+    cres.push(cre);
+    await paths.ghostDir.saveJson.cre(cre.resourceName, cre);
+  }
+
+  ///
+
+  logger.info(`Converting tlk to json...`);
+  const tlk = await parseTlk(paths.tlkDir);
+  await paths.ghostDir.saveJson.tlk(`${paths.gameLanguage}.json`, tlk);
 
   ///
 
@@ -93,17 +127,6 @@ const biffs2jsonPstee = async (
     if (!ini) continue;
     inis.set(ini.resourceName, ini);
     await paths.ghostDir.saveJson.ini(ini.resourceName, ini);
-  }
-
-  ///
-
-  logger.info(`Converting cre to json...`);
-  const cres: RawCre[] = [];
-  const cresIterator = parseCres(paths, decompiledBiffs.get('cre')!, ids);
-  for await (const cre of cresIterator) {
-    if (!cre) continue;
-    cres.push(cre);
-    await paths.ghostDir.saveJson.cre(cre.resourceName, cre);
   }
 
   ///
@@ -148,29 +171,6 @@ const biffs2jsonPstee = async (
   for await (const itm of itmsIterator) {
     itms.push(itm);
     await paths.ghostDir.saveJson.itm(itm.resourceName, itm);
-  }
-
-  ///
-
-  logger.info(`Converting wed to json...`);
-  const weds: RawWed[] = [];
-  const wedsIterator = parseWeds(paths, decompiledBiffs.get('wed')!);
-  for await (const wed of wedsIterator) {
-    weds.push(wed);
-    await paths.ghostDir.saveJson.wed(wed.resourceName, wed);
-  }
-  const wedIndex = new Map<string, RawWed>(weds.map(wed => [wed.resourceName, wed]));
-
-  ///
-
-  logger.info(`Converting pvrz to json...`);
-  const pvrs: RawPvr[] = [];
-  const pvrzRgbaIndex = new Map<string, RawPvrRgbaImage>();
-  const pvrsIterator = parsePvrzs(paths, decompiledBiffs.get('pvrz')!);
-  for await (const { pvr, pixelData } of pvrsIterator) {
-    pvrs.push(pvr);
-    pvrzRgbaIndex.set(pvr.resourceName, decodePvrToRgba(pvr, pixelData));
-    await paths.ghostDir.saveJson.pvrz(pvr.resourceName, pvr);
   }
 
   ///
