@@ -25,6 +25,7 @@ export const progressSteps = [
   'effV20_raw2json',
   'itm_raw2json',
   'wed_raw2json',
+  'are_raw2json',
   'pvrz_raw2json',
   'mos_raw2json',
   'tis_raw2json',
@@ -67,6 +68,7 @@ type EffV10Raw2JsonProgress = Step<'effV10_raw2json'> & WithResource;
 type EffV20Raw2JsonProgress = Step<'effV20_raw2json'> & WithResource;
 type ItmRaw2JsonProgress    = Step<'itm_raw2json'>    & WithResource;
 type WedRaw2JsonProgress    = Step<'wed_raw2json'>    & WithResource;
+type AreRaw2JsonProgress    = Step<'are_raw2json'>    & WithResource;
 type PvrzRaw2JsonProgress   = Step<'pvrz_raw2json'>   & WithResource;
 type MosRaw2JsonProgress    = Step<'mos_raw2json'>    & WithResource;
 type TisRaw2JsonProgress    = Step<'tis_raw2json'>    & WithResource;
@@ -108,6 +110,7 @@ export type Progress
     | EffV20Raw2JsonProgress
     | ItmRaw2JsonProgress
     | WedRaw2JsonProgress
+    | AreRaw2JsonProgress
     | PvrzRaw2JsonProgress
     | MosRaw2JsonProgress
     | TisRaw2JsonProgress
@@ -149,6 +152,7 @@ export type ProgressSteps = {
   effV20_raw2json: EffV20Raw2JsonProgress;
   itm_raw2json: ItmRaw2JsonProgress;
   wed_raw2json: WedRaw2JsonProgress;
+  are_raw2json: AreRaw2JsonProgress;
   pvrz_raw2json: PvrzRaw2JsonProgress;
   mos_raw2json: MosRaw2JsonProgress;
   tis_raw2json: TisRaw2JsonProgress;

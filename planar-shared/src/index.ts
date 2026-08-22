@@ -11,6 +11,10 @@ export { dlgToCreOrItm } from './resourceMappers/dlgToCreOrItm.js';
 export { dlgToItms, itmToDlgs } from './resourceMappers/itmToDlgs.js';
 export { sleep } from './sleep.js';
 
+export type {
+  Rectangle,
+  Point,
+} from './geometry.js';
 export type { Direction } from './direction.js';
 export type { GameName } from './gameName.js';
 export type { GameLanguage } from './gameLanguage.js';

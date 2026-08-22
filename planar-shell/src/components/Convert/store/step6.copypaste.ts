@@ -17,6 +17,7 @@ export const getStartingSteps = (): ProgressSteps => ({
   effV20_raw2json: { value: 0, step: 'effV20_raw2json', params: { rssBytes: 0, resourceName: '' } },
   itm_raw2json: { value: 0, step: 'itm_raw2json', params: { rssBytes: 0, resourceName: '' } },
   wed_raw2json: { value: 0, step: 'wed_raw2json', params: { rssBytes: 0, resourceName: '' } },
+  are_raw2json: { value: 0, step: 'are_raw2json', params: { rssBytes: 0, resourceName: '' } },
   pvrz_raw2json: { value: 0, step: 'pvrz_raw2json', params: { rssBytes: 0, resourceName: '' } },
   mos_raw2json: { value: 0, step: 'mos_raw2json', params: { rssBytes: 0, resourceName: '' } },
   tis_raw2json: { value: 0, step: 'tis_raw2json', params: { rssBytes: 0, resourceName: '' } },
@@ -69,6 +70,7 @@ export const getProgressMutation = (data: Progress): ProgressSteps[ProgressStep]
     case 'effV20_raw2json':
     case 'itm_raw2json':
     case 'wed_raw2json':
+    case 'are_raw2json':
     case 'pvrz_raw2json':
     case 'mos_raw2json':
     case 'tis_raw2json':

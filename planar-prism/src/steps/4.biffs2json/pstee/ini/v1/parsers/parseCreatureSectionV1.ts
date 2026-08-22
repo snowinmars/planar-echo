@@ -1,4 +1,4 @@
-import { parseDirectionV1 } from './parseDirectionV1.js';
+import { parseDirection } from '../../../shared/parseDirection.js';
 import { parseSpawnPointsV1 } from './parseSpawnPointsV1.js';
 import { parseScopedVariableV1 } from './parseScopedVariableV1.js';
 import { parseSpecV1 } from './parseSpecV1.js';
@@ -64,7 +64,7 @@ export const parseCreatureSectionV1 = (section: RawIniSection): Maybe<RawIniCrea
       case 'spawn_point':             { tmp.spawnPoint           = parseSpawnPointsV1(entry.value);      break; }
       case 'point_select':            { tmp.pointSelect          = parsePointSelectV1(entry.value);      break; }
       case 'point_select_var':        { tmp.pointSelectVar       = parseScopedVariableV1(entry.value);   break; }
-      case 'facing':                  { tmp.facing               = parseDirectionV1(entry.value);        break; }
+      case 'facing':                  { tmp.facing               = parseDirection(entry.value);          break; }
       case 'ignore_can_see':          { tmp.ignoreCanSee         = parseBooleanV1(entry.value);          break; }
       case 'check_crowd':             { tmp.checkCrowd           = parseBooleanV1(entry.value);          break; }
       case 'find_safest_point':       { tmp.findSafestPoint      = parseBooleanV1(entry.value);          break; }

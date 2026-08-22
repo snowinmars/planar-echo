@@ -103,6 +103,7 @@
       "tlk_raw2json": ".tlk do json",
       "bcs_raw2json": ".bcs do json",
       "wed_raw2json": ".wed do json",
+      "are_raw2json": ".are do json",
       "pvrz_raw2json": ".pvrz do json",
       "tis_raw2json": ".tis do json",
       "mos_raw2json": ".mos do json",

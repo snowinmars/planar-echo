@@ -1,5 +1,5 @@
 import { parseDecOrThrow } from './shared.js';
-import { parseDirectionV1 } from './parseDirectionV1.js';
+import { parseDirection } from '../../../shared/parseDirection.js';
 
 import type { Maybe } from '@planar/shared';
 import type { RawIniCreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';
@@ -14,7 +14,7 @@ export const parseSpawnPoint = (s: string): RawIniCreatureIniSpawnPoint => {
   return {
     x,
     y,
-    direction: directionPart ? parseDirectionV1(directionPart) : '0=south',
+    direction: directionPart ? parseDirection(directionPart) : '0=south',
   };
 };
 

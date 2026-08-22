@@ -22,6 +22,7 @@ const int8Bytes = 1;
 const int16Bytes = 2;
 const int32Bytes = 4;
 const int64Bytes = 8;
+const double64Bytes = 8;
 
 type ReadNumberFunction = (maxToZero?: boolean) => number;
 type ReadBigIntFunction = (maxToZero?: boolean) => bigint;
@@ -36,6 +37,7 @@ type NumberBucket<T> = Readonly<{
   ushort: T;
   int: T;
   uint: T;
+  double: T;
 }>;
 type BigIntBucket<T> = Readonly<{
   long: T;
@@ -55,6 +57,7 @@ export type BufferReader = Readonly<{
   blob: (start: number, end?: Maybe<number>) => Buffer;
   readLineByLine: (trim?: boolean, toLower?: boolean, ignoreEmptyLines?: boolean, encoding?: BufferEncoding) => IterableIterator<string>;
   string: (length: number, asIs?: Maybe<boolean>, encoding?: Maybe<BufferEncoding>) => string;
+  nullTerminatedString: (length: number, asIs?: Maybe<boolean>, encoding?: Maybe<BufferEncoding>) => string;
   map: Readonly<{
     string: <T>(length: number, map: BufferReaderStringMapFunction<T>, asIs?: Maybe<boolean>, encoding?: Maybe<BufferEncoding>) => T;
   }> & NumberBucket<ReadNumberMapFunction> & BigIntBucket<ReadBigintMapFunction>;
@@ -89,6 +92,7 @@ const mapViewProto = {
   ushort<T>(this: ReaderView, map: BufferReaderNumberMapFunction<T>): T { return map(this._r.ushort()); },
   int<T>(this: ReaderView, map: BufferReaderNumberMapFunction<T>): T { return map(this._r.int()); },
   uint<T>(this: ReaderView, map: BufferReaderNumberMapFunction<T>): T { return map(this._r.uint()); },
+  double<T>(this: ReaderView, map: BufferReaderNumberMapFunction<T>): T { return map(this._r.double()); },
   long<T>(this: ReaderView, map: BufferReaderBigIntMapFunction<T>): T { return map(this._r.long()); },
   ulong<T>(this: ReaderView, map: BufferReaderBigIntMapFunction<T>): T { return map(this._r.ulong()); },
   string<T>(this: ReaderView, length: number, map: BufferReaderStringMapFunction<T>, asIs: Maybe<boolean> = false, encoding: Maybe<BufferEncoding> = 'utf-8'): T {
@@ -103,6 +107,7 @@ const booleanViewProto = {
   ushort(this: ReaderView, sourceName: Maybe<string> = null): boolean { return numberAsBoolean(this._r.ushort(), sourceName); },
   int(this: ReaderView, sourceName: Maybe<string> = null): boolean { return numberAsBoolean(this._r.int(), sourceName); },
   uint(this: ReaderView, sourceName: Maybe<string> = null): boolean { return numberAsBoolean(this._r.uint(), sourceName); },
+  double(this: ReaderView, sourceName: Maybe<string> = null): boolean { return numberAsBoolean(this._r.double(), sourceName); },
   long(this: ReaderView, sourceName: Maybe<string> = null): boolean { return bigintAsBoolean(this._r.long(), sourceName); },
   ulong(this: ReaderView, sourceName: Maybe<string> = null): boolean { return bigintAsBoolean(this._r.ulong(), sourceName); },
 };
@@ -114,6 +119,7 @@ const skipViewProto = {
   ushort(this: ReaderView): void { this._r.skipCustom(int16Bytes); },
   int(this: ReaderView): void { this._r.skipCustom(int32Bytes); },
   uint(this: ReaderView): void { this._r.skipCustom(int32Bytes); },
+  double(this: ReaderView): void { this._r.skipCustom(double64Bytes); },
   long(this: ReaderView): void { this._r.skipCustom(int64Bytes); },
   ulong(this: ReaderView): void { this._r.skipCustom(int64Bytes); },
   custom(this: ReaderView, bytes: number): void { this._r.skipCustom(bytes); },
@@ -206,6 +212,13 @@ class BufferReaderImpl {
     return value;
   }
 
+  double(maxToZero = false): number {
+    const value = this.#buffer.readDoubleLE(this.#offset);
+    this.#offset += double64Bytes;
+    if (maxToZero) throw new Error(`Unsupported, TODO [snow]`);
+    return value;
+  }
+
   long(maxToZero = false): bigint {
     const value = this.#buffer.readBigInt64LE(this.#offset);
     this.#offset += int64Bytes;
@@ -224,6 +237,12 @@ class BufferReaderImpl {
     const raw = this.#buffer.toString(encoding ?? 'utf-8', this.#offset, this.#offset + length);
     this.#offset += length;
     return asIs ? raw : raw.replace(/\0/g, '').trim().toLowerCase().replaceAll('\r\n', '\n');
+  }
+
+  nullTerminatedString(length: number, asIs: Maybe<boolean> = false, encoding: Maybe<BufferEncoding> = 'utf-8'): string {
+    const full = this.string(length, true, encoding);
+    const head = full.split('\0')[0]!;
+    return asIs ? head : head.trim().toLowerCase().replaceAll('\r\n', '\n');
   }
 
   customBytes(length: number): number[] {

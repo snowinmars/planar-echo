@@ -1,0 +1,41 @@
+import type { Maybe } from '@planar/shared';
+import type { RawAreHeaderV10 } from './v1.0/1.parseHeader.types.js';
+import type { RawAreActorV10 } from './v1.0/2.parseActors.types.js';
+import type { RawAreRegionV10 } from './v1.0/3.parseRegions.types.js';
+import type { RawAreSpawnPointV10 } from './v1.0/4.parseSpawnPoints.types.js';
+import type { RawAreEntranceV10 } from './v1.0/5.parseEntrances.types.js';
+import type { RawAreContainerV10 } from './v1.0/6.parseContainers.types.js';
+import type { RawAreAmbientV10 } from './v1.0/9.parseAmbients.types.js';
+import type { RawAreVariableV10 } from './v1.0/10.parseVariables.types.js';
+import type { RawAreDoorV10 } from './v1.0/12.parseDoors.types.js';
+import type { RawAreAnimationV10 } from './v1.0/13.parseAnimations.types.js';
+import type { RawAreTiledObjectV10 } from './v1.0/14.parseTiledObjects.types.js';
+import type { RawAreAutomapNoteV10 } from './v1.0/15.parseAutomapNotes.types.js';
+import type { RawAreProjectileTrapV10 } from './v1.0/16.parseProjectileTraps.types.js';
+import type { RawAreSongV10 } from './v1.0/17.parseSong.types.js';
+import type { RawAreRestInterruptionsV10 } from './v1.0/18.parseRestInterruptions.types.js';
+
+export type RawAre = Readonly<{
+  resourceName: string;
+  header: RawAreHeaderV10;
+  actors: RawAreActorV10[];
+  regions: RawAreRegionV10[];
+  spawnPoints: RawAreSpawnPointV10[];
+  entrances: RawAreEntranceV10[];
+  containers: RawAreContainerV10[];
+  ambients: RawAreAmbientV10[];
+  variables: RawAreVariableV10[];
+  exploredBitmaskName: Maybe<string>;
+  doors: RawAreDoorV10[];
+  animations: RawAreAnimationV10[];
+  automapNotes: RawAreAutomapNoteV10[];
+  tiledObjects: RawAreTiledObjectV10[];
+  projectileTraps: RawAreProjectileTrapV10[];
+  song: Maybe<RawAreSongV10>;
+  restInterruptions: Maybe<RawAreRestInterruptionsV10>;
+}>;
+
+export type RawAreArtifacts = Readonly<{
+  are: RawAre;
+  explored: Maybe<Buffer>;
+}>;

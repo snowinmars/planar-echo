@@ -34,6 +34,7 @@ const copyGhostFile = async (jsonDir: string, ghostDir: string, fileName: string
   await copyFile(join(jsonDir, fileName), join(ghostDir, fileName));
 };
 
+// TODO [snow]: не сохраняй png, wav, ... в json и ghost. Клади в отдельный каталог, куда будешь референсить json и ghost. Избежишь копирования.
 export const json2GhostPstee = async (
   allJsons: AllJsons,
   paths: Paths,

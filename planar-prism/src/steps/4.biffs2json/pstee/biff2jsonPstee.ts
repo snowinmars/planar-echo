@@ -8,6 +8,7 @@ import { parseEffsV20 } from './eff/index.js';
 import { parseItms } from './itm/index.js';
 import { buildBcsContext, parseBcs } from './bcs/index.js';
 import { parseWeds } from './wed/index.js';
+import { parseAres } from './are/index.js';
 import { parsePvrzs } from './pvrz/index.js';
 import { parseTiss } from './tis/index.js';
 import { parseMoss, isMosV1Artifacts } from './mos/index.js';
@@ -18,6 +19,7 @@ import { parseAcms } from './acm/index.js';
 import { parseMuss } from './mus/index.js';
 import { decodePvrToRgba } from './pvrz/decode/index.js';
 import { isPaletteArtfact } from './tis/v1/parseTisV1.types.js';
+import { isNothing } from '@planar/shared';
 
 import type { Paths } from '../../1.createPaths/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../../3.decompileBiffs/index.js';
@@ -29,6 +31,7 @@ import type { RawEffV20 } from './eff/index.js';
 import type { RawItmV10 } from './itm/index.js';
 import type { RawBcs } from './bcs/index.js';
 import type { RawWed } from './wed/index.js';
+import type { RawAre } from './are/index.js';
 import type { RawTis } from './tis/index.js';
 import type { RawMos } from './mos/index.js';
 import type { RawBam } from './bam/index.js';
@@ -262,6 +265,25 @@ const biffs2jsonPstee = async (
     await paths.ghostDir.saveJson.mus(mus.resourceName, mus);
   }
 
+  ///
+
+  logger.info(`Converting are to json...`);
+  const ares: RawAre[] = [];
+  const creNames = new Set(cres.map(cre => cre.resourceName.replace('.cre', '')));
+  const aresIterator = parseAres({
+    paths,
+    decompiledBiffs: decompiledBiffs.get('are') ?? [],
+    creNames,
+    ids,
+  });
+  for await (const artifacts of aresIterator) {
+    ares.push(artifacts.are);
+    await paths.ghostDir.saveJson.are(artifacts.are.resourceName, artifacts.are);
+    if (!isNothing(artifacts.explored)) {
+      await paths.ghostDir.saveBinary.are.explored(artifacts.are.resourceName, artifacts.explored);
+    }
+  }
+
   return {
     tlk,
     ids,
@@ -272,6 +294,7 @@ const biffs2jsonPstee = async (
     itms,
     bcs,
     weds,
+    ares,
     pvrs,
     moss,
     tiss,

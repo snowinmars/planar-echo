@@ -11,6 +11,7 @@ type OutDir = Readonly<{
   itm: string;
   bcs: string;
   wed: string;
+  are: string;
   pvrz: string;
   tis: string;
   mos: string;
@@ -32,6 +33,7 @@ type OutSave = Readonly<{
   itm: SaveFunction;
   bcs: SaveFunction;
   wed: SaveFunction;
+  are: SaveFunction;
   pvrz: SaveFunction;
   tis: SaveFunction;
   mos: SaveFunction;
@@ -42,6 +44,9 @@ type OutSave = Readonly<{
   mus: SaveFunction;
 }>;
 type OutSaveBinary = Readonly<{
+  are: Readonly<{
+    explored: SaveBinaryFunction;
+  }>;
   tis: Readonly<{
     image: SaveBinaryFunction;
     palette: SaveBinaryFunction;

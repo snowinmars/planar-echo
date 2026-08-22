@@ -1,7 +1,7 @@
 import { dlgToCreOrItm } from '@planar/shared';
+import { parseDirection } from '@/steps/4.biffs2json/pstee/shared/parseDirection.js';
 
 import type { DiscoverNext } from '@/discoverer.types.js';
-import type { Direction } from '@planar/shared';
 
 type Ie2tsItem = Readonly<{
   regex: RegExp;
@@ -28,18 +28,6 @@ const nativeTimeToNumber = (x: string): number => {
     case 'fourteen': return 14;
     case 'fifteen': return 15;
     default: throw new Error(`Native time '${x}' is out of range`);
-  }
-};
-
-export const parseDirection = (s: string): Direction => {
-  if (!s) throw new Error(`Cannot parse Direction from nothing`);
-
-  switch (s) {
-    case 's': return '0=south';
-    case 'w': return '4=west';
-    case 'n': return '8=north';
-    case 'e': return '12=east';
-    default: throw new Error(`Cannot parse Direction from '${s}'`);
   }
 };
 

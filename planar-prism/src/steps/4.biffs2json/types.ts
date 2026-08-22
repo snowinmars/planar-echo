@@ -10,6 +10,7 @@ import type { RawPvr } from './pstee/pvrz/index.js';
 import type { RawTis } from './pstee/tis/parseTiss.types.js';
 import type { RawTlk } from './pstee/tlk/index.js';
 import type { RawWed } from './pstee/wed/index.js';
+import type { RawAre } from './pstee/are/index.js';
 import type { RawBmp } from './pstee/bmp/index.js';
 import type { RawBam } from './pstee/bam/index.js';
 import type { RawWav } from './pstee/wav/index.js';
@@ -26,6 +27,7 @@ export type AllPsteeJsons = Readonly<{
   itms: RawItmV10[];
   bcs: RawBcs[];
   weds: RawWed[];
+  ares: RawAre[];
   pvrs: RawPvr[];
   tiss: RawTis[];
   moss: RawMos[];
