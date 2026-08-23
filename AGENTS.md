@@ -77,6 +77,8 @@
 6. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; acm, are, bam, bcs, bmp, cre, dlg, itm, mos, mus, pvrz, tis, tlk, wav, wed). После патча wav/acm, `-1` сюда не утекает
 7. `6.saveDiscovered` - метаданные обнаружения
 
+Типы Infinity Engine и прямые зависимости: [docs/ie-resource-types.md](docs/ie-resource-types.md).
+
 **Режимы**
 
 - CLI: интерактивное подтверждение (если не dev-флаги); дефолты в `planar-prism/src/index.ts`.
