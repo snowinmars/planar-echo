@@ -20,6 +20,8 @@ type OutDir = Readonly<{
   wav: string;
   acm: string;
   mus: string;
+  twoda: string;
+  src: string;
 }>;
 type SaveFunction = (resourceName: string, entry: unknown, asIs?: boolean) => Promise<void>;
 type SaveBinaryFunction = (resourceName: string, data: Buffer) => Promise<void>;
@@ -42,6 +44,8 @@ type OutSave = Readonly<{
   wav: SaveFunction;
   acm: SaveFunction;
   mus: SaveFunction;
+  twoda: SaveFunction;
+  src: SaveFunction;
 }>;
 type OutSaveBinary = Readonly<{
   are: Readonly<{

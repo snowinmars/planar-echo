@@ -17,6 +17,8 @@ export const progressSteps = [
   'decompileBiffs',
   'tlk_raw2json',
   'ids_raw2json',
+  'twoda_raw2json',
+  'src_raw2json',
   'bcs_raw2json',
   'ini_raw2json',
   'cre_raw2json',
@@ -68,6 +70,8 @@ type BuildPrismProgress     = Step<'buildPrism'>;
 type DecompileBiffsProgress = Step<'decompileBiffs'>;
 type TlkRaw2JsonProgress    = Step<'tlk_raw2json'>    & WithResource;
 type IdsRaw2JsonProgress    = Step<'ids_raw2json'>    & WithResource;
+type TwoDaRaw2JsonProgress  = Step<'twoda_raw2json'>    & WithResource;
+type SrcRaw2JsonProgress    = Step<'src_raw2json'>    & WithResource;
 type BcsRaw2JsonProgress    = Step<'bcs_raw2json'>    & WithResource;
 type IniRaw2JsonProgress    = Step<'ini_raw2json'>    & WithResource;
 type CreRaw2JsonProgress    = Step<'cre_raw2json'>    & WithResource;
@@ -118,6 +122,8 @@ export type Progress
     | DecompileBiffsProgress
     | TlkRaw2JsonProgress
     | IdsRaw2JsonProgress
+    | TwoDaRaw2JsonProgress
+    | SrcRaw2JsonProgress
     | BcsRaw2JsonProgress
     | IniRaw2JsonProgress
     | CreRaw2JsonProgress
@@ -168,6 +174,8 @@ export type ProgressSteps = {
   decompileBiffs: DecompileBiffsProgress;
   tlk_raw2json: TlkRaw2JsonProgress;
   ids_raw2json: IdsRaw2JsonProgress;
+  twoda_raw2json: TwoDaRaw2JsonProgress;
+  src_raw2json: SrcRaw2JsonProgress;
   bcs_raw2json: BcsRaw2JsonProgress;
   ini_raw2json: IniRaw2JsonProgress;
   cre_raw2json: CreRaw2JsonProgress;

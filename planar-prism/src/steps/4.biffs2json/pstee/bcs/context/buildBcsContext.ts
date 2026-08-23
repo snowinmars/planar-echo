@@ -2,12 +2,8 @@ import {
   BCS_REQUIRED_IDS,
   PST_STRING_PACKS_BY_ID,
 } from './buildBcsContext.const.js';
-import { just, nothing, sleep } from '@planar/shared';
-import {
-  entryExists,
-  loadFromFile,
-  saveToFile,
-} from '@/shared/customFs.js';
+import { just, nothing } from '@planar/shared';
+import { loadXorKey } from '@/shared/xor.js';
 
 import type {
   RawBcsContext,
@@ -152,65 +148,6 @@ const parseSignatures = (ids: RawIds): RawBcsSignatures => {
     resource: ids.resourceName,
     byId,
   };
-};
-
-const parseXorKey = (code: string): number[] => {
-  const keyBlockMatch = code.match(/KEY\s*=\s*\{([\s\S]*?)\}/);
-  if (!keyBlockMatch || !keyBlockMatch[1]) throw new Error(`Cannot find InfinityEngine xorKey from NearInfinity sources`);
-
-  const hexValues = keyBlockMatch[1].match(/0x[0-9a-fA-F]+/g);
-  if (!hexValues) throw new Error(`Cannot find hex values in the InfinityEngine xorKey from NearInfinity sources`);
-
-  const numbers = hexValues.map(hex => parseInt(hex, 16));
-  if (numbers.length !== 64 || numbers.some(x => isNaN(x))) throw new Error('Got broken value of the InfinityEngine xorKey from NearInfinity sources');
-
-  return numbers;
-};
-
-const XOR_KEY_LENGTH = 64;
-const isXorKey = (value: unknown): value is number[] =>
-  Array.isArray(value)
-  && value.length === XOR_KEY_LENGTH
-  && value.every(x => typeof x === 'number' && Number.isFinite(x));
-
-const XOR_KEY_FETCH_ATTEMPTS = 3;
-const XOR_KEY_FETCH_RETRY_DELAY_MS = 1000;
-const fetchXorKey = async (): Promise<number[]> => {
-  const url = 'https://raw.githubusercontent.com/NearInfinityBrowser/NearInfinity/master/src/org/infinity/util/StaticSimpleXorDecryptor.java';
-  let lastError: unknown = new Error('Could not load InfinityEngine xor key');
-
-  for (let attempt = 0; attempt < XOR_KEY_FETCH_ATTEMPTS; attempt++) {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Could not load InfinityEngine xorKey: HTTP '${response.status}'`);
-
-      return parseXorKey(await response.text());
-    }
-    catch (error: unknown) {
-      lastError = error;
-      const hasMoreAttempts = attempt + 1 < XOR_KEY_FETCH_ATTEMPTS;
-      if (hasMoreAttempts) await sleep(XOR_KEY_FETCH_RETRY_DELAY_MS);
-    }
-  }
-
-  throw lastError;
-};
-
-const loadXorKey = async (cachePath: string): Promise<number[]> => {
-  const cacheExists = await entryExists(cachePath);
-  if (cacheExists) {
-    try {
-      const cached = await loadFromFile<unknown>(cachePath);
-      if (isXorKey(cached)) return cached;
-    }
-    catch {
-      // Invalid cache is treated as a miss and replaced after a successful fetch.
-    }
-  }
-
-  const xorKey = await fetchXorKey();
-  await saveToFile(cachePath, xorKey);
-  return xorKey;
 };
 
 export const buildBcsContext = async (

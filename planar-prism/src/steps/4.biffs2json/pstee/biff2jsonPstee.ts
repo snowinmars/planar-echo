@@ -1,4 +1,5 @@
 import logger from '@/shared/logger.js';
+import { loadXorKey } from '@/shared/xor.js';
 import { parseTlk } from './tlk/index.js';
 import { parseIds } from './ids/index.js';
 import { parseInis } from './ini/index.js';
@@ -17,6 +18,8 @@ import { parseBmps } from './bmp/index.js';
 import { parseWavs } from './wav/index.js';
 import { collectAcmFiles, parseAcms } from './acm/index.js';
 import { parseMuss } from './mus/index.js';
+import { parse2das } from './2da/index.js';
+import { parseSrcs } from './src/index.js';
 import { join } from 'path';
 import { entryExists } from '@/shared/customFs.js';
 
@@ -38,6 +41,8 @@ import type { RawBmp } from './bmp/index.js';
 import type { RawWav } from './wav/index.js';
 import type { RawAcm } from './acm/index.js';
 import type { RawMus } from './mus/index.js';
+import type { Raw2da } from './2da/index.js';
+import type { RawSrc } from './src/index.js';
 import type { AllPsteeJsons } from '../types.js';
 import type { RawPvr } from './pvrz/index.js';
 
@@ -55,6 +60,8 @@ const biffs2jsonPstee = async (
   decompiledBiffs: Map<DecompiledBiffType, DecompiledBiff[]>,
   paths: Paths,
 ): Promise<AllPsteeJsons> => {
+  const xorKey = await loadXorKey(paths.ghostDir.cache.xorKey);
+
   logger.info(`Converting ids to json...`);
   const ids = new Map<string, RawIds>();
   const idsIterator = parseIds(paths, decompiledBiffs.get('ids')!);
@@ -260,6 +267,26 @@ const biffs2jsonPstee = async (
     await paths.ghostDir.saveJson.are(are.resourceName, are);
   }
 
+  ///
+
+  logger.info(`Converting 2da to json...`);
+  const twoda = new Map<string, Raw2da>();
+  const twodaIterator = parse2das(paths, decompiledBiffs.get('2da') ?? [], xorKey);
+  for await (const table of twodaIterator) {
+    twoda.set(table.resourceName, table);
+    await paths.ghostDir.saveJson.twoda(table.resourceName, table);
+  }
+
+  ///
+
+  logger.info(`Converting src to json...`);
+  const srcs = new Map<string, RawSrc>();
+  const srcsIterator = parseSrcs(paths, decompiledBiffs.get('src') ?? []);
+  for await (const src of srcsIterator) {
+    srcs.set(src.resourceName, src);
+    await paths.ghostDir.saveJson.src(src.resourceName, src);
+  }
+
   return {
     tlk,
     ids,
@@ -279,6 +306,8 @@ const biffs2jsonPstee = async (
     wavs,
     acms,
     muss,
+    twoda,
+    srcs,
   };
 };
 

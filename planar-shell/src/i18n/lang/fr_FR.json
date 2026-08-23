@@ -93,6 +93,8 @@
       "buildPrism": "Compilation de Prism",
       "decompileBiffs": "Décompilation des archives .biff",
       "ids_raw2json": ".ids vers json",
+      "2da_raw2json": ".2da vers json",
+      "src_raw2json": ".src vers json",
       "buildGhost": "Compilation des ghost",
       "cre_raw2json": ".cre vers json",
       "dlg_raw2json": ".dlg vers json",

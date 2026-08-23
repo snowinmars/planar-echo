@@ -44,6 +44,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const jsonWav  = normalize(join(jsonRoot, 'wav'));
   const jsonAcm  = normalize(join(jsonRoot, 'acm'));
   const jsonMus  = normalize(join(jsonRoot, 'mus'));
+  const jsonTwoda  = normalize(join(jsonRoot, '2da'));
+  const jsonSrc  = normalize(join(jsonRoot, 'src'));
 
   const assetsRoot = normalize(join(ghostDir, 'assets'));
   const assetsTlk  = normalize(join(assetsRoot, 'tlk'));
@@ -64,6 +66,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const assetsWav  = normalize(join(assetsRoot, 'wav'));
   const assetsAcm  = normalize(join(assetsRoot, 'acm'));
   const assetsMus  = normalize(join(assetsRoot, 'mus'));
+  const assetsTwoda  = normalize(join(assetsRoot, '2da'));
+  const assetsSrc  = normalize(join(assetsRoot, 'src'));
 
   const ghostRoot   = normalize(join(ghostDir , 'ghost'));
   const ghostTlk    = normalize(join(ghostRoot, 'tlk'));
@@ -84,6 +88,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const ghostWav    = normalize(join(ghostRoot, 'wav'));
   const ghostAcm    = normalize(join(ghostRoot, 'acm'));
   const ghostMus    = normalize(join(ghostRoot, 'mus'));
+  const ghostTwoda    = normalize(join(ghostRoot, '2da'));
+  const ghostSrc    = normalize(join(ghostRoot, 'src'));
   const ghostStores = normalize(join(ghostRoot, 'stores'));
 
   const assetsTisImage: NamingFunction = x => `${x}.png`;
@@ -142,6 +148,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wav : jsonWav,
         acm : jsonAcm,
         mus : jsonMus,
+        twoda: jsonTwoda,
+        src : jsonSrc,
       },
       assets: {
         root: assetsRoot,
@@ -163,6 +171,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wav : assetsWav,
         acm : assetsAcm,
         mus : assetsMus,
+        twoda: assetsTwoda,
+        src : assetsSrc,
       },
       saveJson: {
         tlk      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonTlk      , resourceName), entry, asIs),
@@ -183,6 +193,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wav      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonWav      , resourceName), entry, asIs),
         acm      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonAcm      , resourceName), entry, asIs),
         mus      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonMus      , resourceName), entry, asIs),
+        twoda    : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonTwoda      , resourceName), entry, asIs),
+        src      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(jsonSrc      , resourceName), entry, asIs),
       },
       saveAssets: {
         are: {
@@ -235,6 +247,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wav : ghostWav,
         acm : ghostAcm,
         mus : ghostMus,
+        twoda: ghostTwoda,
+        src : ghostSrc,
       },
       saveGhost: {
         tlk      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostTlk      , resourceName), entry, asIs),
@@ -255,6 +269,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
         wav      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostWav      , resourceName), entry, asIs),
         acm      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostAcm      , resourceName), entry, asIs),
         mus      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostMus      , resourceName), entry, asIs),
+        twoda    : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostTwoda      , resourceName), entry, asIs),
+        src      : (resourceName: string, entry: unknown, asIs = false) => saveToFile(join(ghostSrc      , resourceName), entry, asIs),
       },
       sharedEnums,
       stores: ghostStores,
@@ -284,6 +300,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     paths.ghostDir.json.wav,
     paths.ghostDir.json.acm,
     paths.ghostDir.json.mus,
+    paths.ghostDir.json.twoda,
+    paths.ghostDir.json.src,
     paths.ghostDir.assets.tlk,
     paths.ghostDir.assets.dlg,
     paths.ghostDir.assets.itm,
@@ -302,6 +320,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     paths.ghostDir.assets.wav,
     paths.ghostDir.assets.acm,
     paths.ghostDir.assets.mus,
+    paths.ghostDir.assets.twoda,
+    paths.ghostDir.assets.src,
     paths.ghostDir.ghost.tlk,
     paths.ghostDir.ghost.dlg,
     paths.ghostDir.ghost.itm,
@@ -320,6 +340,8 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
     paths.ghostDir.ghost.wav,
     paths.ghostDir.ghost.acm,
     paths.ghostDir.ghost.mus,
+    paths.ghostDir.ghost.twoda,
+    paths.ghostDir.ghost.src,
     paths.ghostDir.stores,
   ], props.recreate || false);
 

@@ -93,6 +93,8 @@
       "buildPrism": "Сборка Prism",
       "decompileBiffs": "Декомпиляция .biff архивов",
       "ids_raw2json": ".ids в json",
+      "2da_raw2json": ".2da в json",
+      "src_raw2json": ".src в json",
       "buildGhost": "Компиляция ghost",
       "cre_raw2json": ".cre в json",
       "dlg_raw2json": ".dlg в json",

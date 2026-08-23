@@ -9,6 +9,8 @@ export const getStartingSteps = (): ProgressSteps => ({
   decompileBiffs: { value: 0, step: 'decompileBiffs', params: { rssBytes: 0 } },
   tlk_raw2json: { value: 0, step: 'tlk_raw2json', params: { rssBytes: 0, resourceName: '' } },
   ids_raw2json: { value: 0, step: 'ids_raw2json', params: { rssBytes: 0, resourceName: '' } },
+  twoda_raw2json: { value: 0, step: '2da_raw2json', params: { rssBytes: 0, resourceName: '' } },
+  src_raw2json: { value: 0, step: 'src_raw2json', params: { rssBytes: 0, resourceName: '' } },
   bcs_raw2json: { value: 0, step: 'bcs_raw2json', params: { rssBytes: 0, resourceName: '' } },
   ini_raw2json: { value: 0, step: 'ini_raw2json', params: { rssBytes: 0, resourceName: '' } },
   cre_raw2json: { value: 0, step: 'cre_raw2json', params: { rssBytes: 0, resourceName: '' } },
@@ -70,6 +72,8 @@ export const getProgressMutation = (data: Progress): ProgressSteps[ProgressStep]
     }
     case 'tlk_raw2json':
     case 'ids_raw2json':
+    case 'twoda_raw2json':
+    case 'src_raw2json':
     case 'bcs_raw2json':
     case 'ini_raw2json':
     case 'cre_raw2json':

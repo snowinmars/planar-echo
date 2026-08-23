@@ -93,6 +93,8 @@
       "buildPrism": "Sestavení Prism",
       "decompileBiffs": "Dekompilace .biff archivů",
       "ids_raw2json": ".ids do json",
+      "2da_raw2json": ".2da do json",
+      "src_raw2json": ".src do json",
       "buildGhost": "Kompilace ghost",
       "cre_raw2json": ".cre do json",
       "dlg_raw2json": ".dlg do json",

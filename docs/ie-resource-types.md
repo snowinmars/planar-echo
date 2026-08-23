@@ -8,6 +8,8 @@
 
 WeiDU в этом репо также знает `.qsp` (`DecompiledBiffType`). В IESDP-таблице его нет — сюда не добавляли.
 
+`2da` and `twoda` are synonyms.
+
 | Extension | Description | Dependencies | Notes |
 |-----------|-------------|--------------|-------|
 | `.key` | Directory of resources, locations and types. Usually one file in the game root. | `.bif`, `.cbf` | |

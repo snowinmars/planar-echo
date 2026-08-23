@@ -93,6 +93,8 @@
       "buildPrism": "Prism 빌드",
       "decompileBiffs": ".biff 아카이브 디컴파일",
       "ids_raw2json": ".ids → json",
+      "2da_raw2json": ".2da → json",
+      "src_raw2json": ".src → json",
       "buildGhost": "고스트 컴파일",
       "cre_raw2json": ".cre → json",
       "dlg_raw2json": ".dlg → json",

@@ -72,7 +72,7 @@
 1. `1.createPaths` - context for next operations: output dirs, `weiduExe`, `chitinKey`, `gameLanguage`, `gameName`
 2. `2.validate` - WeiDU и пути игры
 3. `3.decompileBiffs` - run WeiDU, use cache
-4. `4.biffs2json` - бинарники → JSON, только структура/хедеры (`pstee/`: acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, tis, tlk, wav, wed). Без PNG/DXT/decode audio
+4. `4.biffs2json` - бинарники → JSON, только структура/хедеры (`pstee/`: 2da, acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, src, tis, tlk, wav, wed). Без PNG/DXT/decode audio
 5. `4b.raw2assets` - `allJsons` + seek в decompiled по offset → PNG/WAV/explored (`algo/` синтез; воркеры `shared/pool`). WAV/ACM: в JSON шага 4 PCM = `-1`, после decode патч `allJsons` + `saveJson`
 6. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; acm, are, bam, bcs, bmp, cre, dlg, itm, mos, mus, pvrz, tis, tlk, wav, wed). После патча wav/acm, `-1` сюда не утекает
 7. `6.saveDiscovered` - метаданные обнаружения
@@ -129,10 +129,10 @@
 
 - `index.ts` - CLI / IPC entry
 - `steps/1.createPaths` … `6.saveDiscovered`
-- `steps/4.biffs2json/pstee/` - `biff2jsonPstee.ts`, `acm/`, `are/`, `bam/`, `bcs/`, `bmp/`, `cre/`, `dlg/`, `eff/`, `ids/`, `ini/`, `itm/`, `mos/`, `mus/`, `pvrz/`, `tis/`, `tlk/`, `wav/`, `wed/`
+- `steps/4.biffs2json/pstee/` - `biff2jsonPstee.ts`, `2da/`, `acm/`, `are/`, `bam/`, `bcs/`, `bmp/`, `cre/`, `dlg/`, `eff/`, `ids/`, `ini/`, `itm/`, `mos/`, `mus/`, `pvrz/`, `src/`, `tis/`, `tlk/`, `wav/`, `wed/`
 - `steps/4b.raw2assets/` - `raw2assetsPstee.ts`, `write*`, `algo/` (DXT, blit, decodeFrames, encodePng, decodeAudio).
 - `steps/5.json2Ghost/pstee/` - `json2GhostPstee.ts`, `cre/`, `dlg/`, `itm/`, `bcs/`, `mos/`, `pvr/` (patch PVR; ghost dir `pvrz`), `tis/`, `wed/`
-- `shared/` - `report.ts`, `bufferReader.ts`, `writer.ts`, `pool/` (`runPool`, `packPvrzSab`)
+- `shared/` - `report.ts`, `bufferReader.ts`, `writer.ts`, `xor.ts`, `pool/` (`runPool`, `packPvrzSab`)
 - `discoverer.ts`, `discoverer.types.ts`
 
 ### planar-asclepius/src/
