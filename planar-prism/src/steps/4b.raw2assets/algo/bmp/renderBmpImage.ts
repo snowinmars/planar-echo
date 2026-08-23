@@ -1,5 +1,5 @@
-import { isGreenColorKey, isGreenColorKeyBgra } from '../../shared/greenColorKey.js';
-import { encodeRgbaPng } from '../../tis/shared/writePng.js';
+import { isGreenColorKey, isGreenColorKeyBgra } from '../greenColorKey.js';
+import { encodeRgbaPng } from '../encodeRgbaPng.js';
 
 import { isNothing, type Maybe } from '@planar/shared';
 

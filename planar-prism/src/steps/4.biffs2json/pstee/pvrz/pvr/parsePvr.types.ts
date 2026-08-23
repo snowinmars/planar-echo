@@ -18,8 +18,3 @@ export type RawPvr = Readonly<{
   metadataSize: number;
   pixelDataOffset: number;
 }>;
-
-export type RawPvrPixelPvr = Readonly<{
-  pvr: RawPvr;
-  pixelData: Buffer;
-}>;

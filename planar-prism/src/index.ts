@@ -25,6 +25,7 @@ import { createPaths } from '@/steps/1.createPaths/index.js';
 import { validate } from '@/steps/2.validate/index.js';
 import { decompileBiffs } from '@/steps/3.decompileBiffs/index.js';
 import { biffs2json } from '@/steps/4.biffs2json/index.js';
+import { raw2assets } from '@/steps/4b.raw2assets/index.js';
 import { json2Ghost } from '@/steps/5.json2Ghost/index.js';
 import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
 import discoverer from './discoverer.js';
@@ -52,6 +53,7 @@ const main = async (props: PrismIndexStartMessage['data']) => {
   const decompiledBiffs = await decompileBiffs(paths);
 
   const allJsons = await biffs2json(decompiledBiffs, paths);
+  await raw2assets(decompiledBiffs, paths, allJsons);
   const [discover, done] = discoverer();
   await json2Ghost(allJsons, paths, discover);
   await saveDiscovered(done(), paths, allJsons);

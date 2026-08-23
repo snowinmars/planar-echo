@@ -34,6 +34,14 @@ export const progressSteps = [
   'wav_raw2json',
   'acm_raw2json',
   'mus_raw2json',
+  'pvrz_raw2assets',
+  'bam_raw2assets',
+  'mos_raw2assets',
+  'tis_raw2assets',
+  'bmp_raw2assets',
+  'wav_raw2assets',
+  'acm_raw2assets',
+  'are_raw2assets',
   'tlk_json2ghost',
   'ids_json2ghost',
   'bcs_json2ghost',
@@ -77,6 +85,14 @@ type BamRaw2JsonProgress    = Step<'bam_raw2json'>    & WithResource;
 type WavRaw2JsonProgress    = Step<'wav_raw2json'>    & WithResource;
 type AcmRaw2JsonProgress    = Step<'acm_raw2json'>    & WithResource;
 type MusRaw2JsonProgress    = Step<'mus_raw2json'>    & WithResource;
+type PvrzRaw2AssetsProgress = Step<'pvrz_raw2assets'> & WithResource;
+type BamRaw2AssetsProgress  = Step<'bam_raw2assets'>  & WithResource;
+type MosRaw2AssetsProgress  = Step<'mos_raw2assets'>  & WithResource;
+type TisRaw2AssetsProgress  = Step<'tis_raw2assets'>  & WithResource;
+type BmpRaw2AssetsProgress  = Step<'bmp_raw2assets'>  & WithResource;
+type WavRaw2AssetsProgress  = Step<'wav_raw2assets'>  & WithResource;
+type AcmRaw2AssetsProgress  = Step<'acm_raw2assets'>  & WithResource;
+type AreRaw2AssetsProgress  = Step<'are_raw2assets'>  & WithResource;
 type TlkJson2GhostProgress  = Step<'tlk_json2ghost'>  & WithResource;
 type IdsJson2GhostProgress  = Step<'ids_json2ghost'>  & WithResource;
 type BcsJson2GhostProgress  = Step<'bcs_json2ghost'>  & WithResource;
@@ -119,6 +135,14 @@ export type Progress
     | WavRaw2JsonProgress
     | AcmRaw2JsonProgress
     | MusRaw2JsonProgress
+    | PvrzRaw2AssetsProgress
+    | BamRaw2AssetsProgress
+    | MosRaw2AssetsProgress
+    | TisRaw2AssetsProgress
+    | BmpRaw2AssetsProgress
+    | WavRaw2AssetsProgress
+    | AcmRaw2AssetsProgress
+    | AreRaw2AssetsProgress
     | TlkJson2GhostProgress
     | IdsJson2GhostProgress
     | BcsJson2GhostProgress
@@ -161,6 +185,14 @@ export type ProgressSteps = {
   wav_raw2json: WavRaw2JsonProgress;
   acm_raw2json: AcmRaw2JsonProgress;
   mus_raw2json: MusRaw2JsonProgress;
+  pvrz_raw2assets: PvrzRaw2AssetsProgress;
+  bam_raw2assets: BamRaw2AssetsProgress;
+  mos_raw2assets: MosRaw2AssetsProgress;
+  tis_raw2assets: TisRaw2AssetsProgress;
+  bmp_raw2assets: BmpRaw2AssetsProgress;
+  wav_raw2assets: WavRaw2AssetsProgress;
+  acm_raw2assets: AcmRaw2AssetsProgress;
+  are_raw2assets: AreRaw2AssetsProgress;
   tlk_json2ghost: TlkJson2GhostProgress;
   ids_json2ghost: IdsJson2GhostProgress;
   bcs_json2ghost: BcsJson2GhostProgress;

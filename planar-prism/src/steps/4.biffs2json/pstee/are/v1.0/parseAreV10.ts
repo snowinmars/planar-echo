@@ -8,7 +8,6 @@ import { parseItems } from './7.parseItems.js';
 import { parseVertices } from './8.parseVertices.js';
 import { parseAmbients } from './9.parseAmbients.js';
 import { parseVariables } from './10.parseVariables.js';
-import { parseExplored } from './11.parseExplored.js';
 import { parseDoors } from './12.parseDoors.js';
 import { parseAnimations } from './13.parseAnimations.js';
 import { parseTiledObjects } from './14.parseTiledObjects.js';
@@ -18,9 +17,9 @@ import { parseSong } from './17.parseSong.js';
 import { parseRestInterruptions } from './18.parseRestInterruptions.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawAreArtifacts } from '../parseAres.types.js';
+import type { RawAre } from '../parseAres.types.js';
 import type { RawIds } from '../../ids/index.js';
-import { isNothing, nothing } from '@planar/shared';
+import { nothing } from '@planar/shared';
 
 type ParseAreV10Props = Readonly<{
   reader: BufferReader;
@@ -33,7 +32,7 @@ export const parseAreV10 = ({
   resourceName,
   creNames,
   ids,
-}: ParseAreV10Props): RawAreArtifacts => {
+}: ParseAreV10Props): RawAre => {
   const header = parseHeader(reader);
 
   const vertices = parseVertices({
@@ -87,11 +86,9 @@ export const parseAreV10 = ({
     count: header.variablesCount,
   });
 
-  const explored = parseExplored({
-    reader: reader.fork(header.exploredBitmaskOffset),
-    size: header.exploredBitmaskSize,
-  });
-  const exploredBitmaskName = isNothing(explored) ? nothing() : `${resourceName}.explored`;
+  const exploredBitmaskName = header.exploredBitmaskSize === 0
+    ? nothing()
+    : `${resourceName}.explored`;
 
   const doors = parseDoors({
     reader: reader.fork(header.doorsOffset),
@@ -132,25 +129,22 @@ export const parseAreV10 = ({
     : parseRestInterruptions(reader.fork(header.restInterruptionsOffset));
 
   return {
-    are: {
-      resourceName,
-      header,
-      actors,
-      regions,
-      spawnPoints,
-      entrances,
-      containers,
-      ambients,
-      variables,
-      exploredBitmaskName,
-      doors,
-      animations,
-      tiledObjects,
-      automapNotes,
-      projectileTraps,
-      song,
-      restInterruptions,
-    },
-    explored,
+    resourceName,
+    header,
+    actors,
+    regions,
+    spawnPoints,
+    entrances,
+    containers,
+    ambients,
+    variables,
+    exploredBitmaskName,
+    doors,
+    animations,
+    tiledObjects,
+    automapNotes,
+    projectileTraps,
+    song,
+    restInterruptions,
   };
 };

@@ -26,6 +26,14 @@ export const getStartingSteps = (): ProgressSteps => ({
   wav_raw2json: { value: 0, step: 'wav_raw2json', params: { rssBytes: 0, resourceName: '' } },
   acm_raw2json: { value: 0, step: 'acm_raw2json', params: { rssBytes: 0, resourceName: '' } },
   mus_raw2json: { value: 0, step: 'mus_raw2json', params: { rssBytes: 0, resourceName: '' } },
+  pvrz_raw2assets: { value: 0, step: 'pvrz_raw2assets', params: { rssBytes: 0, resourceName: '' } },
+  bam_raw2assets: { value: 0, step: 'bam_raw2assets', params: { rssBytes: 0, resourceName: '' } },
+  mos_raw2assets: { value: 0, step: 'mos_raw2assets', params: { rssBytes: 0, resourceName: '' } },
+  tis_raw2assets: { value: 0, step: 'tis_raw2assets', params: { rssBytes: 0, resourceName: '' } },
+  bmp_raw2assets: { value: 0, step: 'bmp_raw2assets', params: { rssBytes: 0, resourceName: '' } },
+  wav_raw2assets: { value: 0, step: 'wav_raw2assets', params: { rssBytes: 0, resourceName: '' } },
+  acm_raw2assets: { value: 0, step: 'acm_raw2assets', params: { rssBytes: 0, resourceName: '' } },
+  are_raw2assets: { value: 0, step: 'are_raw2assets', params: { rssBytes: 0, resourceName: '' } },
   tlk_json2ghost: { value: 0, step: 'tlk_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   ids_json2ghost: { value: 0, step: 'ids_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   bcs_json2ghost: { value: 0, step: 'bcs_json2ghost', params: { rssBytes: 0, resourceName: '' } },
@@ -79,6 +87,14 @@ export const getProgressMutation = (data: Progress): ProgressSteps[ProgressStep]
     case 'wav_raw2json':
     case 'acm_raw2json':
     case 'mus_raw2json':
+    case 'pvrz_raw2assets':
+    case 'bam_raw2assets':
+    case 'mos_raw2assets':
+    case 'tis_raw2assets':
+    case 'bmp_raw2assets':
+    case 'wav_raw2assets':
+    case 'acm_raw2assets':
+    case 'are_raw2assets':
     case 'tlk_json2ghost':
     case 'ids_json2ghost':
     case 'bcs_json2ghost':

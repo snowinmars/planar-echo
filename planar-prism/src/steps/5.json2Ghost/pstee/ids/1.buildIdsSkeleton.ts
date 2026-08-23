@@ -19,7 +19,7 @@ export const buildIdsSkeleton = (ids: RawIds): string => {
 
   //
   writer.writeLine(`header: {`, 4);
-  if (ids.header.wrongSignature) writer.writeLine(`wrongSignature: ${ids.header.wrongSignature},`, 6);
+  if (ids.header.wrongSignature) writer.writeLine(`wrongSignature: '${ids.header.wrongSignature}',`, 6);
   if (ids.header.wrongEntryCount) writer.writeLine(`wrongEntryCount: ${ids.header.wrongEntryCount},`, 6);
   writer.writeLine(`},`, 4);
 

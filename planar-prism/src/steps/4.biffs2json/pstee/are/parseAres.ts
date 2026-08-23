@@ -7,7 +7,7 @@ import { parseAreV10 } from './v1.0/index.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
-import type { RawAreArtifacts } from './parseAres.types.js';
+import type { RawAre } from './parseAres.types.js';
 import type { RawIds } from '../ids/index.js';
 
 type ParseAresProps = Readonly<{
@@ -21,7 +21,7 @@ export const parseAres = ({
   decompiledBiffs,
   creNames,
   ids,
-}: ParseAresProps): AsyncIterableIterator<RawAreArtifacts> => iterate<DecompiledBiff, RawAreArtifacts>(
+}: ParseAresProps): AsyncIterableIterator<RawAre> => iterate<DecompiledBiff, RawAre>(
   decompiledBiffs,
   async ({ resourceName }, i) => {
     const buffer = await readFile(join(paths.ghostDir.decompiledBiff.root, resourceName));
@@ -33,7 +33,7 @@ export const parseAres = ({
     if (signature !== 'area') throw new Error(`Unsupported signature '${signature}' for are resource '${resourceName}'`);
     if (version !== 'v1.0') throw new Error(`Not implemented '${version}' for resource '${resourceName}'`);
 
-    const artifacts = parseAreV10({
+    const are = parseAreV10({
       reader,
       resourceName,
       creNames,
@@ -50,6 +50,6 @@ export const parseAres = ({
       },
     });
 
-    return artifacts;
+    return are;
   },
 );

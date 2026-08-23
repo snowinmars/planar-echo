@@ -9,8 +9,3 @@ export type RawAcm = Readonly<{
   bitsPerSample: number;
   sampleCount: number;
 }>;
-
-export type RawAcmArtifacts = Readonly<{
-  acm: RawAcm;
-  pcmWav: Buffer;
-}>;

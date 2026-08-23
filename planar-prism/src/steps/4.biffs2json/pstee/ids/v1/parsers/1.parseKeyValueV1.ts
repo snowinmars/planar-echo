@@ -43,7 +43,7 @@ export const parseKeyValueV1 = ({
 }: ParseKeyValueV1Props): RawIdsParsedIds => {
   const ids: RawIdsParsedIds['ids'] = [];
   let wrongSignarute: RawIdsParsedIds['wrongSignarute'] = '';
-  let wrongEntriesCount: RawIdsParsedIds['wrongEntriesCount'] = '';
+  let wrongEntriesCount: RawIdsParsedIds['wrongEntriesCount'] = 0;
 
   for (const line of lines) {
     const isEmptyLine = !line;
@@ -63,7 +63,7 @@ export const parseKeyValueV1 = ({
     const isCountLine = isCountLineRegex.test(line);
     if (isCountLine) {
       if (wrongEntriesCount) throw new Error(`WrongEntriesCount value already set to '${wrongEntriesCount}' at resource '${resourceName}'`);
-      wrongEntriesCount = line;
+      wrongEntriesCount = parseInt(line, 10);
       continue;
     }
 

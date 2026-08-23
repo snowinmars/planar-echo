@@ -1,7 +1,7 @@
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type { BitsPerPixel } from './validateBitsPerPixel.types.js';
+import type { BitsPerPixel } from '@/steps/4.biffs2json/pstee/bmp/shared/validateBitsPerPixel.types.js';
 
 type ParseBmpPaletteProps = Readonly<{
   blob: Buffer;

@@ -4,5 +4,5 @@ export type RawIdsParsedIds = Readonly<{
     value: string;
   }>[];
   wrongSignarute: string;
-  wrongEntriesCount: string;
+  wrongEntriesCount: number;
 }>;

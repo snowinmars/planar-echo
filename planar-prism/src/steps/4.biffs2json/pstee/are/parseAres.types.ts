@@ -34,8 +34,3 @@ export type RawAre = Readonly<{
   song: Maybe<RawAreSongV10>;
   restInterruptions: Maybe<RawAreRestInterruptionsV10>;
 }>;
-
-export type RawAreArtifacts = Readonly<{
-  are: RawAre;
-  explored: Maybe<Buffer>;
-}>;

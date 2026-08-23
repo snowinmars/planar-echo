@@ -1,23 +1,28 @@
-import type { RawBamV1FrameEntry } from './2.parseFrames.types.js';
+export type BamV1FramePixels = Readonly<{
+  width: number;
+  height: number;
+  dataOffset: number;
+  compressed: boolean;
+}>;
 
-export type RawBamV1DecodedFrame = Readonly<{
+export type DecodedBamV1Frame = Readonly<{
   indices: Buffer;
   rgba: Buffer;
 }>;
 
-type DecodeFramesProps = Readonly<{
+type DecodeBamV1FramesProps = Readonly<{
   src: Buffer;
-  frames: RawBamV1FrameEntry[];
+  frames: readonly BamV1FramePixels[];
   palette: Buffer;
   rleIndex: number;
 }>;
 
 const decodeFrame = (
   src: Buffer,
-  frame: RawBamV1FrameEntry,
+  frame: BamV1FramePixels,
   palette: Buffer,
   rleIndex: number,
-): RawBamV1DecodedFrame => {
+): DecodedBamV1Frame => {
   const pixelCount = frame.width * frame.height;
   const indices = Buffer.alloc(pixelCount, 0);
   const rgba = Buffer.alloc(pixelCount * 4, 0);
@@ -65,11 +70,22 @@ const decodeFrame = (
   return { indices, rgba };
 };
 
-export const decodeFrames = ({
+export const decodeBamV1Frames = ({
   src,
   frames,
   palette,
   rleIndex,
-}: DecodeFramesProps): RawBamV1DecodedFrame[] => {
-  return frames.map(frame => decodeFrame(src, frame, palette, rleIndex));
+}: DecodeBamV1FramesProps): DecodedBamV1Frame[] =>
+  frames.map(frame => decodeFrame(src, frame, palette, rleIndex));
+
+export const fixBamPalette = (src: Buffer): Buffer => {
+  const palette = Buffer.alloc(256 * 4);
+  src.copy(palette);
+
+  for (let i = 0; i < 256; i++) {
+    const a = palette[i * 4 + 3] ?? 0;
+    if (a === 0) palette[i * 4 + 3] = 255;
+  }
+
+  return palette;
 };

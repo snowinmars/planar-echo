@@ -1,15 +1,13 @@
 import { parseHeader } from './parsers/1.parseHeader.js';
 import { parseFrames } from './parsers/2.parseFrames.js';
 import { parseCycles } from './parsers/3.parseCycles.js';
-import { parsePalette } from './parsers/4.parsePalette.js';
-import { decodeFrames } from './parsers/5.decodeFrames.js';
-import { buildIndices } from './parsers/6.buildIndices.js';
-import { buildHorizontalAtlas } from '../shared/buildAtlas.js';
+import { layoutHorizontalAtlas } from '../shared/buildAtlas.js';
 
 import type { BamAtlasFrame } from '../shared/buildAtlas.js';
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawBamV1, RawBamV1Artifacts, RawBamV1Frame } from './parseBamV1.types.js';
+import type { RawBamV1, RawBamV1Frame } from './parseBamV1.types.js';
 import type { RawBamV1FrameEntry } from './parsers/2.parseFrames.types.js';
+import { parseIndicesLayoutFrames } from './parsers/5.parseIndicesLayoutFrames.js';
 
 const joinFrames = (frame: RawBamV1FrameEntry, atlasFrame: BamAtlasFrame): RawBamV1Frame => {
   if (frame.width !== atlasFrame.width) throw new Error(`Do not want to override property 'width' between RawBamV1FrameEntry '${frame.width}' and BamAtlasFrame '${atlasFrame.width}'`);
@@ -34,10 +32,11 @@ type ParseBamV1Props = Readonly<{
   reader: BufferReader;
   resourceName: string;
 }>;
-export const parseBamV1 = async ({
+
+export const parseBamV1Json = ({
   reader,
   resourceName,
-}: ParseBamV1Props): Promise<RawBamV1Artifacts> => {
+}: ParseBamV1Props): RawBamV1 => {
   const header = parseHeader(reader, resourceName);
 
   const frameEntries = parseFrames({
@@ -51,36 +50,14 @@ export const parseBamV1 = async ({
     cyclesCount: header.cyclesCount,
   });
 
-  const palette = parsePalette(reader.blob(header.paletteOffset, header.paletteOffset + 256 * 4));
+  const atlas = layoutHorizontalAtlas(frameEntries);
 
-  const decoded = decodeFrames({
-    src: reader.buffer,
-    frames: frameEntries,
-    palette,
-    rleIndex: header.rleIndex,
-  });
+  const indicesLayoutFrames = parseIndicesLayoutFrames(frameEntries);
 
-  const atlas = await buildHorizontalAtlas(frameEntries.map((frame, i) => ({
-    width: frame.width,
-    height: frame.height,
-    centerX: frame.centerX,
-    centerY: frame.centerY,
-    rgba: frame.width > 0 && frame.height > 0 ? decoded[i]!.rgba : undefined,
-  })));
-
-  const {
-    indices,
-    indicesLayoutFrames,
-  } = buildIndices({
-    frameEntries,
-    decoded,
-  });
-
-  const imageName = `${resourceName}.png`;
-  const bam: RawBamV1 = {
+  return {
     resourceName,
     header,
-    imageName,
+    imageName: `${resourceName}.png`,
     atlasWidth: atlas.atlasWidth,
     atlasHeight: atlas.atlasHeight,
     frames: frameEntries.map((frame, i) => joinFrames(frame, atlas.frames[i]!)),
@@ -95,12 +72,5 @@ export const parseBamV1 = async ({
       format: 'uint8-index',
       frames: indicesLayoutFrames,
     },
-  };
-
-  return {
-    bam,
-    image: atlas.image,
-    palette,
-    indices,
   };
 };

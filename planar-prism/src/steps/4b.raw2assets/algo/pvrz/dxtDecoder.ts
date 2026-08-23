@@ -1,30 +1,11 @@
-import type { RawPvrPixelFormat } from '../parsePvrzs.types.js';
-import type { RawPvr } from '../pvr/parsePvr.types.js';
+import type { RawPvrPixelFormat } from '@/steps/4.biffs2json/pstee/pvrz/parsePvrzs.types.js';
+import type { RawPvr } from '@/steps/4.biffs2json/pstee/pvrz/pvr/parsePvr.types.js';
 import type { RawPvrRectangle, RawPvrRgbaImage } from './dxtDecoder.types.js';
 
 /**
  * Whole algorithms here are neurogenerated.
  * Docs are dead, NearInfinity and GemRb saved the flow, so...thanks.
  */
-
-// const copyRectArgb = (
-//   src: Uint32Array,
-//   srcWidth: number,
-//   srcX: number,
-//   srcY: number,
-//   width: number,
-//   height: number,
-// ): Uint32Array => {
-//   const dst = new Uint32Array(width * height);
-//   for (let y = 0; y < height; y++) {
-//     const srcRow = (srcY + y) * srcWidth + srcX;
-//     const dstRow = y * width;
-//     for (let x = 0; x < width; x++) {
-//       dst[dstRow + x] = src[srcRow + x]!;
-//     }
-//   }
-//   return dst;
-// };
 
 const argbToRgbaBuffer = (argb: Uint32Array, width: number, height: number): Buffer => {
   const data = Buffer.alloc(width * height * 4);
@@ -318,7 +299,6 @@ const decodeDxtToArgb = (pvr: RawPvr, pixelData: Buffer): Uint32Array => {
   }
 
   throw new Error(`Aligning algorithm broke dxt in '${pvr.resourceName}'`);
-  // return copyRectArgb(aligned, rectangle.width, region.x - rectangle.x, region.y - rectangle.y, pvr.width, pvr.height);
 };
 
 const decodeParsedToArgb = (pvr: RawPvr, pixelData: Buffer): Uint32Array => {

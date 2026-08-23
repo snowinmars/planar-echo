@@ -2,7 +2,7 @@ import { PVR_SIGNATURE } from './parsePvr.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawPvrPixelFormat } from '../parsePvrzs.types.js';
-import type { RawPvrPixelPvr } from './parsePvr.types.js';
+import type { RawPvr } from './parsePvr.types.js';
 
 const DXT1_PIXEL_FORMAT = 7;
 const DXT5_PIXEL_FORMAT = 11;
@@ -25,7 +25,7 @@ const detectPixelFormat = ({
   }
 };
 
-export const parsePvr = (reader: BufferReader, resourceName: string): RawPvrPixelPvr => {
+export const parsePvr = (reader: BufferReader, resourceName: string): RawPvr => {
   const initialOffset = reader.offset;
 
   const signature = reader.uint();
@@ -73,26 +73,22 @@ export const parsePvr = (reader: BufferReader, resourceName: string): RawPvrPixe
 
   const read = reader.offset - initialOffset; // 0x34 = 52 bytes = 13 uints
   const pixelDataOffset = read + metadataSize;
-  const pixelData = reader.blob(pixelDataOffset);
   reader.skip.custom(pixelDataOffset);
 
   return {
-    pvr: {
-      resourceName,
-      signature,
-      flags,
-      pixelFormat,
-      colorSpace,
-      channelType,
-      height,
-      width,
-      depth,
-      numSurfaces,
-      numFaces,
-      mipmapCount,
-      metadataSize,
-      pixelDataOffset,
-    },
-    pixelData,
+    resourceName,
+    signature,
+    flags,
+    pixelFormat,
+    colorSpace,
+    channelType,
+    height,
+    width,
+    depth,
+    numSurfaces,
+    numFaces,
+    mipmapCount,
+    metadataSize,
+    pixelDataOffset,
   };
 };

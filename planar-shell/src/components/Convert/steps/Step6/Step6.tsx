@@ -40,6 +40,7 @@ const Step6: FC<Step6Props> = (props: Step6Props) => {
   const { t } = useTranslation();
 
   const raw2jsonLoaders = [...Object.values(props.progress)].filter(x => x.step.endsWith('raw2json')).filter(x => x.step !== 'effV10_raw2json'); // effv10 has no usage in frontend
+  const raw2assetsLoaders = [...Object.values(props.progress)].filter(x => x.step.endsWith('raw2assets'));
   const json2ghostLoaders = [...Object.values(props.progress)].filter(x => x.step.endsWith('json2ghost'));
 
   return (
@@ -59,7 +60,7 @@ const Step6: FC<Step6Props> = (props: Step6Props) => {
           <L item={props.progress['decompileBiffs']} />
         </Grid>
 
-        <Grid size={{ xs: 6 }}>
+        <Grid size={{ xs: 4 }}>
           {
             raw2jsonLoaders.map(x => (
               <L key={x.step} item={x} />
@@ -67,7 +68,15 @@ const Step6: FC<Step6Props> = (props: Step6Props) => {
           }
         </Grid>
 
-        <Grid size={{ xs: 6 }}>
+        <Grid size={{ xs: 4 }}>
+          {
+            raw2assetsLoaders.map(x => (
+              <L key={x.step} item={x} />
+            ))
+          }
+        </Grid>
+
+        <Grid size={{ xs: 4 }}>
           {
             json2ghostLoaders.map(x => (
               <L key={x.step} item={x} />

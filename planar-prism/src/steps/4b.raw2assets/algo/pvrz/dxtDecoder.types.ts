@@ -8,5 +8,5 @@ export type RawPvrRectangle = Readonly<{
 export type RawPvrRgbaImage = Readonly<{
   width: number;
   height: number;
-  data: Buffer;
+  data: Uint8Array;
 }>;

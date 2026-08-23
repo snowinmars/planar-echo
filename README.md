@@ -28,7 +28,7 @@ Tech demo under active development.
 ### What works today
 
 - **Game:** Planescape: Torment Enhanced Edition only. Other Infinity Engine games are possible, but not in the nearest roadmap.
-- **Conversion** from original binaries to JSON and Ghost modules: `.acm`, `.bam`, `.bcs`, `.bmp`, `.cre`, `.dlg`, `.eff`, `.ids`, `.ini`, `.itm`, `.mos`, `.mus`, `.pvrz`, `.tis`, `.tlk`, `.wav`, `.wed`.
+- **Conversion** from original binaries to JSON, binary assets (PNG/WAV), and Ghost modules: `.acm`, `.are`, `.bam`, `.bcs`, `.bmp`, `.cre`, `.dlg`, `.eff`, `.ids`, `.ini`, `.itm`, `.mos`, `.mus`, `.pvrz`, `.tis`, `.tlk`, `.wav`, `.wed`.
 - **Supports all available game data localizations:** Russian, English, Czech, German, French, Korean, Polish via original game data.
 - **Planar-echo site human-localizations:** Russian, English.
 - **Planar-echo site LLM-localizations:** Czech, German, French, Korean, Polish. If these are your native language, please, verify the [translation](planar-shell/src/i18n/lang/).
@@ -56,7 +56,7 @@ Tech demo under active development.
 
 | Service              | Role                                                                                       |
 | -------------------- | ------------------------------------------------------------------------------------------ |
-| **planar-prism**     | CLI: BIFF → JSON → Ghost TypeScript; runs standalone or as a forked child process.         |
+| **planar-prism**     | CLI: BIFF → JSON → assets (PNG/WAV) → Ghost TypeScript; runs standalone or as a forked child process. |
 | **planar-ghost**     | Output format and on-disk artifacts (your machine); not an npm workspace package.          |
 | **planar-shell**     | React + Zustand + MUI UI: conversion wizard, settings, runners/inspectors |
 | **planar-asclepius** | Node server: serves Shell (production), Ghost files, REST + WebSocket; orchestrates Prism. |
@@ -66,7 +66,7 @@ Tech demo under active development.
 
 1. Configure WeiDU, game files path, and ghost output directory in **Shell**.
 2. Start conversion
-3. Prism writes JSON/Ghost under your ghost directory; progress streams to the UI.
+3. Prism writes JSON, assets, and Ghost under your ghost directory; progress streams to the UI.
 4. Open frontend dev server
 
 **Ports:** backend `http://localhost:3003`; frontend dev server `http://localhost:3000`.

@@ -8,12 +8,12 @@ import { parsePvr } from './pvr/parsePvr.js';
 
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Paths } from '@/steps/1.createPaths/index.js';
-import type { RawPvrPixelPvr } from './pvr/parsePvr.types.js';
+import type { RawPvr } from './pvr/parsePvr.types.js';
 
 export const parsePvrzs = (
   paths: Paths,
   decompiledBiffs: DecompiledBiff[],
-): AsyncIterableIterator<RawPvrPixelPvr> => iterate<DecompiledBiff, RawPvrPixelPvr>(
+): AsyncIterableIterator<RawPvr> => iterate<DecompiledBiff, RawPvr>(
   decompiledBiffs,
   async ({ resourceName }, i) => {
     const buffer = await readFile(join(paths.ghostDir.decompiledBiff.root, resourceName));
@@ -21,7 +21,7 @@ export const parsePvrzs = (
     const pvrBuffer = inflateSync(buffer.subarray(sizeOfPvrSignatureInBytes));
 
     const reader = createReader(pvrBuffer);
-    const parsed = parsePvr(reader, resourceName);
+    const pvr = parsePvr(reader, resourceName);
 
     const percent = Math.round((i + 1) * 100 / decompiledBiffs.length);
     reportProgress({
@@ -33,6 +33,6 @@ export const parsePvrzs = (
       },
     });
 
-    return parsed;
+    return pvr;
   },
 );

@@ -11,15 +11,14 @@ import { parseWeds } from './wed/index.js';
 import { parseAres } from './are/index.js';
 import { parsePvrzs } from './pvrz/index.js';
 import { parseTiss } from './tis/index.js';
-import { parseMoss, isMosV1Artifacts } from './mos/index.js';
-import { parseBams, isBamV1Artifacts } from './bam/index.js';
-import { parseBmps, isBmpPalettedArtifacts } from './bmp/index.js';
+import { parseMoss } from './mos/index.js';
+import { parseBams } from './bam/index.js';
+import { parseBmps } from './bmp/index.js';
 import { parseWavs } from './wav/index.js';
-import { parseAcms } from './acm/index.js';
+import { collectAcmFiles, parseAcms } from './acm/index.js';
 import { parseMuss } from './mus/index.js';
-import { decodePvrToRgba } from './pvrz/decode/index.js';
-import { isPaletteArtfact } from './tis/v1/parseTisV1.types.js';
-import { isNothing } from '@planar/shared';
+import { join } from 'path';
+import { entryExists } from '@/shared/customFs.js';
 
 import type { Paths } from '../../1.createPaths/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '../../3.decompileBiffs/index.js';
@@ -41,7 +40,6 @@ import type { RawAcm } from './acm/index.js';
 import type { RawMus } from './mus/index.js';
 import type { AllPsteeJsons } from '../types.js';
 import type { RawPvr } from './pvrz/index.js';
-import type { RawPvrRgbaImage } from './pvrz/decode/index.js';
 
 const mustHaveIds = [
   'diety.ids', // in pstee it is diety, not deity
@@ -82,11 +80,9 @@ const biffs2jsonPstee = async (
 
   logger.info(`Converting pvrz to json...`);
   const pvrs: RawPvr[] = [];
-  const pvrzRgbaIndex = new Map<string, RawPvrRgbaImage>();
   const pvrsIterator = parsePvrzs(paths, decompiledBiffs.get('pvrz')!);
-  for await (const { pvr, pixelData } of pvrsIterator) {
+  for await (const pvr of pvrsIterator) {
     pvrs.push(pvr);
-    pvrzRgbaIndex.set(pvr.resourceName, decodePvrToRgba(pvr, pixelData));
     await paths.ghostDir.saveJson.pvrz(pvr.resourceName, pvr);
   }
 
@@ -177,45 +173,30 @@ const biffs2jsonPstee = async (
 
   logger.info(`Converting bam to json...`);
   const bams: RawBam[] = [];
-  const bamsIterator = parseBams(paths, decompiledBiffs.get('bam') ?? [], pvrzRgbaIndex);
-  for await (const artifacts of bamsIterator) {
-    bams.push(artifacts.bam);
-    await paths.ghostDir.saveJson.bam(artifacts.bam.resourceName, artifacts.bam);
-    await paths.ghostDir.saveAssets.bam.image(artifacts.bam.resourceName, artifacts.image);
-    if (isBamV1Artifacts(artifacts)) {
-      await paths.ghostDir.saveAssets.bam.palette(artifacts.bam.resourceName, artifacts.palette);
-      await paths.ghostDir.saveAssets.bam.indices(artifacts.bam.resourceName, artifacts.indices);
-    }
+  const bamsIterator = parseBams(paths, decompiledBiffs.get('bam') ?? []);
+  for await (const bam of bamsIterator) {
+    bams.push(bam);
+    await paths.ghostDir.saveJson.bam(bam.resourceName, bam);
   }
 
   ///
 
   logger.info(`Converting mos to json...`);
   const moss: RawMos[] = [];
-  const mossIterator = parseMoss(paths, decompiledBiffs.get('mos')!, pvrzRgbaIndex);
-  for await (const artifacts of mossIterator) {
-    moss.push(artifacts.mos);
-    await paths.ghostDir.saveJson.mos(artifacts.mos.resourceName, artifacts.mos);
-    await paths.ghostDir.saveAssets.mos.image(artifacts.mos.resourceName, artifacts.image);
-    if (isMosV1Artifacts(artifacts)) {
-      await paths.ghostDir.saveAssets.mos.palette(artifacts.mos.resourceName, artifacts.palette);
-      await paths.ghostDir.saveAssets.mos.indices(artifacts.mos.resourceName, artifacts.indices);
-    }
+  const mossIterator = parseMoss(paths, decompiledBiffs.get('mos')!);
+  for await (const mos of mossIterator) {
+    moss.push(mos);
+    await paths.ghostDir.saveJson.mos(mos.resourceName, mos);
   }
 
   ///
 
   logger.info(`Converting tis to json...`);
   const tiss: RawTis[] = [];
-  const tissIterator = parseTiss(paths, decompiledBiffs.get('tis')!, wedIndex, pvrzRgbaIndex);
-  for await (const artifacts of tissIterator) {
-    tiss.push(artifacts.tis);
-    await paths.ghostDir.saveJson.tis(artifacts.tis.resourceName, artifacts.tis);
-    await paths.ghostDir.saveAssets.tis.image(artifacts.tis.resourceName, artifacts.image);
-    if (isPaletteArtfact(artifacts)) {
-      await paths.ghostDir.saveAssets.tis.palette(artifacts.tis.resourceName, artifacts.palette);
-      await paths.ghostDir.saveAssets.tis.indices(artifacts.tis.resourceName, artifacts.indices);
-    }
+  const tissIterator = parseTiss(paths, decompiledBiffs.get('tis')!, wedIndex);
+  for await (const tis of tissIterator) {
+    tiss.push(tis);
+    await paths.ghostDir.saveJson.tis(tis.resourceName, tis);
   }
 
   ///
@@ -223,14 +204,9 @@ const biffs2jsonPstee = async (
   logger.info(`Converting bmp to json...`);
   const bmps: RawBmp[] = [];
   const bmpsIterator = parseBmps(paths, decompiledBiffs.get('bmp') ?? []);
-  for await (const artifacts of bmpsIterator) {
-    bmps.push(artifacts.bmp);
-    await paths.ghostDir.saveJson.bmp(artifacts.bmp.resourceName, artifacts.bmp);
-    await paths.ghostDir.saveAssets.bmp.image(artifacts.bmp.resourceName, artifacts.image);
-    if (isBmpPalettedArtifacts(artifacts)) {
-      await paths.ghostDir.saveAssets.bmp.palette(artifacts.bmp.resourceName, artifacts.palette);
-      await paths.ghostDir.saveAssets.bmp.indices(artifacts.bmp.resourceName, artifacts.indices);
-    }
+  for await (const bmp of bmpsIterator) {
+    bmps.push(bmp);
+    await paths.ghostDir.saveJson.bmp(bmp.resourceName, bmp);
   }
 
   ///
@@ -238,21 +214,24 @@ const biffs2jsonPstee = async (
   logger.info(`Converting wav to json...`);
   const wavs: RawWav[] = [];
   const wavsIterator = parseWavs(paths, decompiledBiffs.get('wav') ?? []);
-  for await (const artifacts of wavsIterator) {
-    wavs.push(artifacts.wav);
-    await paths.ghostDir.saveJson.wav(artifacts.wav.resourceName, artifacts.wav);
-    await paths.ghostDir.saveAssets.wav.audio(artifacts.wav.resourceName, artifacts.pcmWav);
+  for await (const wav of wavsIterator) {
+    wavs.push(wav);
+    await paths.ghostDir.saveJson.wav(wav.resourceName, wav);
   }
 
   ///
 
   logger.info(`Converting acm to json...`);
+  const musicDir = join(paths.gameDir, 'music');
+  const exists = await entryExists(musicDir);
+  if (!exists) throw new Error(`Music directory '${musicDir}' is not found.`);
+  const files = await collectAcmFiles(musicDir);
+
   const acms: RawAcm[] = [];
-  const acmsIterator = await parseAcms(paths);
-  for await (const artifacts of acmsIterator) {
-    acms.push(artifacts.acm);
-    await paths.ghostDir.saveJson.acm(artifacts.acm.resourceName, artifacts.acm);
-    await paths.ghostDir.saveAssets.acm.audio(artifacts.acm.resourceName, artifacts.pcmWav);
+  const acmsIterator = await parseAcms(files);
+  for await (const acm of acmsIterator) {
+    acms.push(acm);
+    await paths.ghostDir.saveJson.acm(acm.resourceName, acm);
   }
 
   ///
@@ -276,12 +255,9 @@ const biffs2jsonPstee = async (
     creNames,
     ids,
   });
-  for await (const artifacts of aresIterator) {
-    ares.push(artifacts.are);
-    await paths.ghostDir.saveJson.are(artifacts.are.resourceName, artifacts.are);
-    if (!isNothing(artifacts.explored)) {
-      await paths.ghostDir.saveAssets.are.explored(artifacts.are.resourceName, artifacts.explored);
-    }
+  for await (const are of aresIterator) {
+    ares.push(are);
+    await paths.ghostDir.saveJson.are(are.resourceName, are);
   }
 
   return {

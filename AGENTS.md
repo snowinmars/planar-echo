@@ -34,7 +34,7 @@
 | Пакет npm | Каталог | Роль |
 |-----------|---------|------|
 | `@planar/shared` | `planar-shared/` | Типы IPC, `dlgEngine`, `ghost/*`, enums игр/языков, mappers; entry `@planar/shared/node` для Node |
-| `@planar/prism` | `planar-prism/` | CLI + IPC: biff → JSON → Ghost TS |
+| `@planar/prism` | `planar-prism/` | CLI + IPC: biff → JSON → assets → Ghost TS |
 | `@planar/asclepius` | `planar-asclepius/` | Express, static Shell/Ghost, REST, WS, fork Prism |
 | `@planar/shell` | `planar-shell/` | React, Zustand, MUI, Vite |
 | - | `planar-ghost/` | Артефакт на диске пользователя; **не** Yarn workspace |
@@ -48,7 +48,7 @@
 
 ## Компоненты
 
-- **planar-prism** - Node.js CLI (TypeScript). Парсит `.biff` → JSON → Ghost TS. `yarn start` (build + `node dist/index.js`) или дочерний процесс `process.fork` с IPC.
+- **planar-prism** - Node.js CLI (TypeScript). Парсит `.biff` → JSON → assets (PNG/WAV) → Ghost TS. `yarn start` (build + `node dist/index.js`) или дочерний процесс `process.fork` с IPC.
 - **planar-ghost** - формат и каталог вывода: семантический эквивалент данных игры в открытом виде. Раздаётся Asclepius как static под `/ghost`.
 - **planar-shell** - фронтенд: мастер конверсии, просмотр ghost (диалоги/существа/предметы + инспекторы acm/bam/bcs/bmp/mos/mus/pvrz/tis/wav/wed), настройки. REST + WebSocket к Asclepius.
 - **planar-asclepius** - сервер: serve Shell на `/`, ghost-файлы, оркестрация Prism (build → fork → build-ghost), ретрансляция IPC → WebSocket.
@@ -59,7 +59,7 @@
 1. Пользователь задаёт WeiDU, CHITIN.KEY (игру), каталог ghost, язык в Shell (localStorage + REST validate).
 2. Конверсия: Shell → WebSocket `/api/prism/index`, сообщение `{ type: 'start', data }` (`PrismIndexStartMessage['data']` из `@planar/shared`).
 3. Asclepius: `yarn workspace @planar/prism build` → `fork(prism/dist/index.js)` + IPC → `yarn workspace @planar/prism build-ghost`.
-4. Prism: WeiDU extract → parse → JSON + Ghost TS; прогресс через `process.send`; логи в stdout/stderr (наследуются Asclepius).
+4. Prism: WeiDU extract → JSON → assets → Ghost TS; прогресс через `process.send`; логи в stdout/stderr (наследуются Asclepius).
 5. Asclepius шлёт клиенту `ready` | `progress` | `error` | `complete`.
 6. Просмотр: Shell → REST `/api/ghost/*` (dlg/cre/itm + инспекторы acm/bam/bcs/bmp/mos/mus/pvrz/tis/wav/wed) + `@planar/shared` `dlgEngine` / shell `engine/dlgLogic.ts`.
 
@@ -72,16 +72,17 @@
 1. `1.createPaths` - context for next operations: output dirs, `weiduExe`, `chitinKey`, `gameLanguage`, `gameName`
 2. `2.validate` - WeiDU и пути игры
 3. `3.decompileBiffs` - run WeiDU, use cache
-4. `4.biffs2json` - бинарники → JSON (`pstee/`: acm, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, tis, tlk, wav, wed)
-5. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; acm, bam, bcs, bmp, cre, dlg, itm, mos, mus, pvrz, tis, tlk, wav, wed)
-6. `6.saveDiscovered` - метаданные обнаружения
+4. `4.biffs2json` - бинарники → JSON, только структура/хедеры (`pstee/`: acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, tis, tlk, wav, wed). Без PNG/DXT/decode audio
+5. `4b.raw2assets` - `allJsons` + seek в decompiled по offset → PNG/WAV/explored (`algo/` синтез; воркеры `shared/pool`). WAV/ACM: в JSON шага 4 PCM = `-1`, после decode патч `allJsons` + `saveJson`
+6. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; acm, are, bam, bcs, bmp, cre, dlg, itm, mos, mus, pvrz, tis, tlk, wav, wed). После патча wav/acm, `-1` сюда не утекает
+7. `6.saveDiscovered` - метаданные обнаружения
 
 **Режимы**
 
 - CLI: интерактивное подтверждение (если не dev-флаги); дефолты в `planar-prism/src/index.ts`.
 - IPC: `process.on('message')`, `{ type: 'start', data }`; без confirm; прогресс `process.send`.
 
-**Прогресс:** `planar-prism/src/shared/report.ts` - RxJS `buffer` flush **250 ms**; дедупликация последнего по `ProgressStep` (`prismIndexStartMessage.ts`, `progressSteps` в shared: в т.ч. `acm|bam|bcs|bmp|cre|dlg|itm|mos|mus|pvrz|tis|tlk|wav|wed` `*_raw2json` / `*_json2ghost`).
+**Прогресс:** `planar-prism/src/shared/report.ts` - RxJS `buffer` flush **250 ms**; дедупликация последнего по `ProgressStep` (`prismIndexStartMessage.ts`, `progressSteps` в shared: `*_raw2json` / `pvrz|bam|mos|tis|bmp|wav|acm|are_raw2assets` / `*_json2ghost`).
 
 **Игры:** enum `gameName` шире списка; **реализованы парсеры pstee** (Planescape: Torment EE).
 
@@ -104,9 +105,9 @@
 
 ## Ghost на диске
 
-- Текстовые и бинарные артефакты, not a single text Domain-Specific Language: промежуточный **JSON** и **TS** на диске; runtime для движка - **bundled JS** под `planar-ghost/ghost/{cre,dlg,itm,bcs,mos,pvrz,tis,wed}/dist`. MOS/TIS: рядом копируется PNG (`imageName`).
+- Текстовые и бинарные артефакты, not a single text Domain-Specific Language: промежуточный **JSON**, **assets** (PNG/WAV/explored) и **TS** на диске; runtime для движка - **bundled JS** под `planar-ghost/ghost/{cre,dlg,itm,bcs,mos,pvrz,tis,wed}/dist`. MOS/TIS: PNG в `assets/` (`imageName`).
 - `yarn build:ghost` - esbuild по `planar-ghost/ghost/**/*.ts`, alias `@planar/shared` (`build-ghost-cres|dlgs|itms|bcs|mos|pvrz|tis|wed|stores`).
-- Каталоги вывода: `ghost/`, `json/`, `decompiledBiff/`
+- Каталоги вывода: `ghost/`, `json/`, `assets/`, `decompiledBiff/`
 
 ## planar-shared - ключевые модули
 
@@ -126,9 +127,10 @@
 
 - `index.ts` - CLI / IPC entry
 - `steps/1.createPaths` … `6.saveDiscovered`
-- `steps/4.biffs2json/pstee/` - `biff2jsonPstee.ts`, `cre/`, `dlg/`, `eff/`, `ids/`, `ini/`, `itm/`, `tlk/`, `bcs/`, `mos/`, `pvrz/`, `tis/`, `wed/`
+- `steps/4.biffs2json/pstee/` - `biff2jsonPstee.ts`, `acm/`, `are/`, `bam/`, `bcs/`, `bmp/`, `cre/`, `dlg/`, `eff/`, `ids/`, `ini/`, `itm/`, `mos/`, `mus/`, `pvrz/`, `tis/`, `tlk/`, `wav/`, `wed/`
+- `steps/4b.raw2assets/` - `raw2assetsPstee.ts`, `write*`, `algo/` (DXT, blit, decodeFrames, encodePng, decodeAudio).
 - `steps/5.json2Ghost/pstee/` - `json2GhostPstee.ts`, `cre/`, `dlg/`, `itm/`, `bcs/`, `mos/`, `pvr/` (patch PVR; ghost dir `pvrz`), `tis/`, `wed/`
-- `shared/` - `report.ts`, `bufferReader.ts`, `writer.ts`
+- `shared/` - `report.ts`, `bufferReader.ts`, `writer.ts`, `pool/` (`runPool`, `packPvrzSab`)
 - `discoverer.ts`, `discoverer.types.ts`
 
 ### planar-asclepius/src/
