@@ -1,7 +1,10 @@
-import type { Maybe } from '@planar/shared';
 import type { Writer } from '@/shared/writer.js';
 
-export const escapeSingleQuote = (x: string): string => x.replaceAll(`'`, `\\'`);
+export const escapeSingleQuote = (x: string): string => x
+  .replaceAll(`\\`, `\\\\`)
+  .replaceAll(`'`, `\\'`)
+  .replaceAll(`\r`, `\\r`)
+  .replaceAll(`\n`, `\\n`);
 
 export const writeFlags = <T extends string>(writer: Writer, flagsValues: T[], propertyName: string, offset: number) => {
   writer.writeLine(`${propertyName}: [`, offset);

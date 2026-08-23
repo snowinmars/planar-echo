@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,6 +24,7 @@ const useBamWidget = () => useSyncExternalStore(
 
 const Bams: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { loading, bams, currentBamId } = useBamWidget();
   const actions = bamWidgetState.getActions();
 
@@ -33,7 +35,7 @@ const Bams: FC<WithClassName> = ({ className }) => {
       value={currentBamId ?? ''}
       onChange={(_, bamId) => {
         if (isNothing(bamId)) throw new Error('Bam id cannot be empty here');
-        actions?.loadBam(bamId).catch(e => console.error(e));
+        navigate(`/bam/${bamId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

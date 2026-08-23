@@ -54,6 +54,12 @@ export type IdsIdsId = string;
 
 export type IniIniId = string;
 
+export type AreAreId = string;
+
+export type TwodaTwodaId = string;
+
+export type SrcSrcId = string;
+
 export type CreToDlgsCreId = string;
 
 export type DlgToCreDlgId = string;
@@ -156,6 +162,21 @@ export type IdsIdsId2 = IdsIdsId;
  * Ini id
  */
 export type IniIniId2 = IniIniId;
+
+/**
+ * Are id
+ */
+export type AreAreId2 = AreAreId;
+
+/**
+ * 2da id
+ */
+export type TwodaTwodaId2 = TwodaTwodaId;
+
+/**
+ * Src id
+ */
+export type SrcSrcId2 = SrcSrcId;
 
 /**
  * Cre id
@@ -540,6 +561,50 @@ export type GetApiFsShellDirByFilePathResponses = {
 };
 
 export type GetApiFsShellDirByFilePathResponse = GetApiFsShellDirByFilePathResponses[keyof GetApiFsShellDirByFilePathResponses];
+
+export type GetApiAssetsByFilePathData = {
+    body?: never;
+    path: {
+        /**
+         * Relative path to the file in assets directory
+         */
+        filePath: string;
+    };
+    query?: never;
+    url: '/api/assets/{filePath}';
+};
+
+export type GetApiAssetsByFilePathErrors = {
+    /**
+     * Forbidden relative path in the assets directory
+     */
+    403: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'DIRECTORY_TRAVERSE';
+        };
+    };
+    /**
+     * No such file in the assets directory
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND' | 'DIRECTORY_TRAVERSE';
+        };
+    };
+};
+
+export type GetApiAssetsByFilePathError = GetApiAssetsByFilePathErrors[keyof GetApiAssetsByFilePathErrors];
+
+export type GetApiAssetsByFilePathResponses = {
+    /**
+     * File content from assets directory
+     */
+    200: Blob | File;
+};
+
+export type GetApiAssetsByFilePathResponse = GetApiAssetsByFilePathResponses[keyof GetApiAssetsByFilePathResponses];
 
 export type GetApiPingData = {
     body?: never;
@@ -1830,6 +1895,228 @@ export type PostApiGhostIniByIniIdSkeletonResponses = {
 };
 
 export type PostApiGhostIniByIniIdSkeletonResponse = PostApiGhostIniByIniIdSkeletonResponses[keyof PostApiGhostIniByIniIdSkeletonResponses];
+
+export type PostApiGhostAreData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/are';
+};
+
+export type PostApiGhostAreErrors = {
+    /**
+     * Available ares are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostAreError = PostApiGhostAreErrors[keyof PostApiGhostAreErrors];
+
+export type PostApiGhostAreResponses = {
+    /**
+     * Available ares in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostAreResponse = PostApiGhostAreResponses[keyof PostApiGhostAreResponses];
+
+export type PostApiGhostAreByAreIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Are id
+         */
+        areId: AreAreId;
+    };
+    query?: never;
+    url: '/api/ghost/are/{areId}/skeleton';
+};
+
+export type PostApiGhostAreByAreIdSkeletonErrors = {
+    /**
+     * Are is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostAreByAreIdSkeletonError = PostApiGhostAreByAreIdSkeletonErrors[keyof PostApiGhostAreByAreIdSkeletonErrors];
+
+export type PostApiGhostAreByAreIdSkeletonResponses = {
+    /**
+     * Are skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostAreByAreIdSkeletonResponse = PostApiGhostAreByAreIdSkeletonResponses[keyof PostApiGhostAreByAreIdSkeletonResponses];
+
+export type PostApiGhostTwodaData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/twoda';
+};
+
+export type PostApiGhostTwodaErrors = {
+    /**
+     * Available 2da tables are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostTwodaError = PostApiGhostTwodaErrors[keyof PostApiGhostTwodaErrors];
+
+export type PostApiGhostTwodaResponses = {
+    /**
+     * Available 2da tables in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostTwodaResponse = PostApiGhostTwodaResponses[keyof PostApiGhostTwodaResponses];
+
+export type PostApiGhostTwodaByTwodaIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * 2da id
+         */
+        twodaId: TwodaTwodaId;
+    };
+    query?: never;
+    url: '/api/ghost/twoda/{twodaId}/skeleton';
+};
+
+export type PostApiGhostTwodaByTwodaIdSkeletonErrors = {
+    /**
+     * 2da is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostTwodaByTwodaIdSkeletonError = PostApiGhostTwodaByTwodaIdSkeletonErrors[keyof PostApiGhostTwodaByTwodaIdSkeletonErrors];
+
+export type PostApiGhostTwodaByTwodaIdSkeletonResponses = {
+    /**
+     * 2da skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostTwodaByTwodaIdSkeletonResponse = PostApiGhostTwodaByTwodaIdSkeletonResponses[keyof PostApiGhostTwodaByTwodaIdSkeletonResponses];
+
+export type PostApiGhostSrcData = {
+    body: {
+        ghostDir: string;
+        partialName?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/src';
+};
+
+export type PostApiGhostSrcErrors = {
+    /**
+     * Available srcs are not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostSrcError = PostApiGhostSrcErrors[keyof PostApiGhostSrcErrors];
+
+export type PostApiGhostSrcResponses = {
+    /**
+     * Available srcs in ghost format
+     */
+    200: Array<string>;
+};
+
+export type PostApiGhostSrcResponse = PostApiGhostSrcResponses[keyof PostApiGhostSrcResponses];
+
+export type PostApiGhostSrcBySrcIdSkeletonData = {
+    body: {
+        ghostDir: string;
+    };
+    path: {
+        /**
+         * Src id
+         */
+        srcId: SrcSrcId;
+    };
+    query?: never;
+    url: '/api/ghost/src/{srcId}/skeleton';
+};
+
+export type PostApiGhostSrcBySrcIdSkeletonErrors = {
+    /**
+     * Src is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'FILE_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostSrcBySrcIdSkeletonError = PostApiGhostSrcBySrcIdSkeletonErrors[keyof PostApiGhostSrcBySrcIdSkeletonErrors];
+
+export type PostApiGhostSrcBySrcIdSkeletonResponses = {
+    /**
+     * Src skeleton content in ghost format
+     */
+    200: {
+        data: {
+            content: string;
+        };
+    };
+};
+
+export type PostApiGhostSrcBySrcIdSkeletonResponse = PostApiGhostSrcBySrcIdSkeletonResponses[keyof PostApiGhostSrcBySrcIdSkeletonResponses];
 
 export type PostApiGhostTlkByGameLanguageData = {
     body: {

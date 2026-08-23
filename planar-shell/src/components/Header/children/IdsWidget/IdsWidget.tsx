@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,6 +24,7 @@ const useIdsWidget = () => useSyncExternalStore(
 
 const Idss: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { loading, idss, currentIdsId } = useIdsWidget();
   const actions = idsWidgetState.getActions();
 
@@ -33,7 +35,7 @@ const Idss: FC<WithClassName> = ({ className }) => {
       value={currentIdsId ?? ''}
       onChange={(_, idsId) => {
         if (isNothing(idsId)) throw new Error('Ids id cannot be empty here');
-        actions?.loadIds(idsId).catch(e => console.error(e));
+        navigate(`/ids/${idsId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

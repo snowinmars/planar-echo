@@ -7,12 +7,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { useCreStore } from './store/creStore';
 import { useCreWidgetBridge } from './useCreWidgetBridge';
 import { useTranslation } from 'react-i18next';
 import { useCreTalk } from './useCreTalk';
 import { useTlkStore } from '@/engine/store/planarRuntime';
 import { mapCreToTlkRefs } from './mapCreToTlkRefs';
+import { useShallow } from 'zustand/react/shallow';
 
 import type { FC } from 'react';
 import type { Widget } from '@/shared/widget';
@@ -38,8 +40,17 @@ const Cre: FC = () => {
   }, []);
 
   // TODO [snow]: pass loading into <T>...</T> to show loader inside TextFields
-  const currentCre = useCreStore(x => x.currentCre);
-  const disposeCre = useCreStore(x => x.disposeCre);
+  const {
+    currentCre,
+    disposeCre,
+    loadCre,
+  } = useCreStore(useShallow(state => ({
+    currentCre: state.currentCre,
+    disposeCre: state.disposeCre,
+    loadCre: state.loadCre,
+  })));
+
+  useGhostRouteId('creId', loadCre, disposeCre);
 
   const lines = useTlkStore(x => x.lines);
   const loadTlkRefs = useTlkStore(x => x.loadTlkRefs);

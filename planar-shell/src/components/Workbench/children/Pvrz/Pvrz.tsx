@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { usePvrzStore } from './store/pvrzStore';
 import { usePvrzWidgetBridge } from './usePvrzWidgetBridge';
 
@@ -34,12 +35,16 @@ const Pvrz: FC = () => {
   const {
     loading,
     currentPvrz,
+    loadPvrz,
     disposePvrz,
   } = usePvrzStore(useShallow(state => ({
     loading: state.loading,
     currentPvrz: state.currentPvrz,
+    loadPvrz: state.loadPvrz,
     disposePvrz: state.disposePvrz,
   })));
+
+  useGhostRouteId('pvrzId', loadPvrz, disposePvrz);
 
   useEffect(() => () => disposePvrz(), [disposePvrz]);
 

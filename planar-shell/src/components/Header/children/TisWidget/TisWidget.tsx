@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +20,7 @@ const useTisWidget = () => useSyncExternalStore(
 
 const Tiss: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     loading,
     tiss,
@@ -33,7 +35,7 @@ const Tiss: FC<WithClassName> = ({ className }) => {
       value={currentTisId ?? ''}
       onChange={(_, tisId) => {
         if (isNothing(tisId)) throw new Error('Tis id cannot be empty here');
-        actions?.loadTis(tisId).catch(e => console.error(e));
+        navigate(`/tis/${tisId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

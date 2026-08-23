@@ -3,6 +3,7 @@ import { useShallow } from 'zustand/react/shallow';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { useIdsStore } from './store/idsStore';
 import { useIdsWidgetBridge } from './useIdsWidgetBridge';
 
@@ -27,12 +28,16 @@ const Ids: FC = () => {
   const {
     loading,
     currentIds,
+    loadIds,
     disposeIds,
   } = useIdsStore(useShallow(state => ({
     loading: state.loading,
     currentIds: state.currentIds,
+    loadIds: state.loadIds,
     disposeIds: state.disposeIds,
   })));
+
+  useGhostRouteId('idsId', loadIds, disposeIds);
 
   useEffect(() => () => disposeIds(), [disposeIds]);
 

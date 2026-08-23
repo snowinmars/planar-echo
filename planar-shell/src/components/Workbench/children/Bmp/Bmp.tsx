@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { assetUrl } from '@/shared/assetUrl';
 import { useBmpStore } from './store/bmpStore';
 import { useBmpWidgetBridge } from './useBmpWidgetBridge';
@@ -39,13 +40,17 @@ const Bmp: FC = () => {
     loading,
     serverUrl,
     currentBmp,
+    loadBmp,
     disposeBmp,
   } = useBmpStore(useShallow(state => ({
     loading: state.loading,
     serverUrl: state.serverUrl,
     currentBmp: state.currentBmp,
+    loadBmp: state.loadBmp,
     disposeBmp: state.disposeBmp,
   })));
+
+  useGhostRouteId('bmpId', loadBmp, disposeBmp);
 
   const [imageError, setImageError] = useState(false);
 

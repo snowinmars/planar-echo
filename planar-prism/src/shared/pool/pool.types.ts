@@ -1,14 +1,14 @@
 import type { Progress } from '@planar/shared';
 
-export type PoolKind =
-  | 'pvrz'
-  | 'bam'
-  | 'mos'
-  | 'tis'
-  | 'bmp'
-  | 'wav'
-  | 'acm'
-  | 'are';
+export type PoolKind
+  = | 'pvrz'
+    | 'bam'
+    | 'mos'
+    | 'tis'
+    | 'bmp'
+    | 'wav'
+    | 'acm'
+    | 'are';
 
 export type PoolResourceStep = Extract<Progress,
   | { step: 'pvrz_raw2assets' }
@@ -18,7 +18,6 @@ export type PoolResourceStep = Extract<Progress,
   | { step: 'bmp_raw2assets' }
   | { step: 'wav_raw2assets' }
   | { step: 'acm_raw2assets' }
-  | { step: 'are_raw2assets' }
 >['step'];
 
 export type PoolJob = Readonly<{
@@ -33,14 +32,14 @@ export type PoolWorkerData = Readonly<{
   context?: unknown;
 }>;
 
-export type MainToWorker =
-  | Readonly<{ type: 'job'; resourceName: string; payload: unknown }>
-  | Readonly<{ type: 'drain' }>;
+export type MainToWorker
+  = | Readonly<{ type: 'job'; resourceName: string; payload: unknown }>
+    | Readonly<{ type: 'drain' }>;
 
-export type WorkerToMain =
-  | Readonly<{ type: 'idle' }>
-  | Readonly<{ type: 'result'; resourceName: string; value: unknown }>
-  | Readonly<{ type: 'error'; resourceName: string | null; message: string }>;
+export type WorkerToMain
+  = | Readonly<{ type: 'idle' }>
+    | Readonly<{ type: 'result'; resourceName: string; value: unknown }>
+    | Readonly<{ type: 'error'; resourceName: string | null; message: string }>;
 
 export type ParseOneProps = Readonly<{
   resourceName: string;

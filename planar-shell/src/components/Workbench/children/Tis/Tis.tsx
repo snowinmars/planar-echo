@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { assetUrl } from '@/shared/assetUrl';
 import { useTisStore } from './store/tisStore';
 import { useTisWidgetBridge } from './useTisWidgetBridge';
@@ -39,13 +40,17 @@ const Tis: FC = () => {
     loading,
     serverUrl,
     currentTis,
+    loadTis,
     disposeTis,
   } = useTisStore(useShallow(state => ({
     loading: state.loading,
     serverUrl: state.serverUrl,
     currentTis: state.currentTis,
+    loadTis: state.loadTis,
     disposeTis: state.disposeTis,
   })));
+
+  useGhostRouteId('tisId', loadTis, disposeTis);
 
   const [imageError, setImageError] = useState(false);
 

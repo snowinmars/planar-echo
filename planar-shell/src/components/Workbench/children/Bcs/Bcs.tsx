@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { useBcsStore } from './store/bcsStore';
 import { useBcsWidgetBridge } from './useBcsWidgetBridge';
 
@@ -60,12 +61,16 @@ const Bcs: FC = () => {
   const {
     loading,
     currentBcs,
+    loadBcs,
     disposeBcs,
   } = useBcsStore(useShallow(state => ({
     loading: state.loading,
     currentBcs: state.currentBcs,
+    loadBcs: state.loadBcs,
     disposeBcs: state.disposeBcs,
   })));
+
+  useGhostRouteId('bcsId', loadBcs, disposeBcs);
 
   useEffect(() => () => disposeBcs(), [disposeBcs]);
 

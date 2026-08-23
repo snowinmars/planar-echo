@@ -152,7 +152,8 @@ export async function* runPool<T>(props: RunPoolProps): AsyncGenerator<T> {
       assignIdle();
       await wait();
     }
-  } finally {
+  }
+  finally {
     await Promise.all(workers.map(w => w.terminate()));
   }
 

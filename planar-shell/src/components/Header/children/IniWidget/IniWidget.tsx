@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,6 +24,7 @@ const useIniWidget = () => useSyncExternalStore(
 
 const Inis: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { loading, inis, currentIniId } = useIniWidget();
   const actions = iniWidgetState.getActions();
 
@@ -33,7 +35,7 @@ const Inis: FC<WithClassName> = ({ className }) => {
       value={currentIniId ?? ''}
       onChange={(_, iniId) => {
         if (isNothing(iniId)) throw new Error('Ini id cannot be empty here');
-        actions?.loadIni(iniId).catch(e => console.error(e));
+        navigate(`/ini/${iniId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

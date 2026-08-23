@@ -8,6 +8,7 @@ import { patchMos } from './mos/patchMos.js';
 import { patchPvr } from './pvr/patchPvr.js';
 import { patchTis } from './tis/patchTis.js';
 import { patchWed } from './wed/patchWed.js';
+import { patchAres } from './are/patchAres.js';
 import { patchBmps } from './bmp/patchBmps.js';
 import { patchBams } from './bam/patchBams.js';
 import { patchWavs } from './wav/patchWavs.js';
@@ -15,6 +16,8 @@ import { patchAcms } from './acm/patchAcms.js';
 import { patchMuss } from './mus/patchMuss.js';
 import { patchEffs } from './eff/patchEffs.js';
 import { patchIds } from './ids/patchIds.js';
+import { patchTwodas } from './twoda/patchTwodas.js';
+import { patchSrcs } from './src/patchSrcs.js';
 import { patchInis } from './ini/patchInis.js';
 
 import type { Paths } from '../../1.createPaths/types.js';
@@ -93,6 +96,12 @@ export const json2GhostPstee = async (
     await paths.ghostDir.saveGhost.wed(`${wed.resourceName}.ts`, wed.skeleton, true);
   }
 
+  logger.info(`Converting are json to ghost...`);
+  const areIterator = patchAres(allJsons.ares);
+  for await (const are of areIterator) {
+    await paths.ghostDir.saveGhost.are(`${are.resourceName}.ts`, are.skeleton, true);
+  }
+
   logger.info(`Converting bmp json to ghost...`);
   const bmpIterator = patchBmps(allJsons.bmps);
   for await (const bmp of bmpIterator) {
@@ -133,6 +142,18 @@ export const json2GhostPstee = async (
   const idsIterator = patchIds([...allJsons.ids.values()]);
   for await (const ids of idsIterator) {
     await paths.ghostDir.saveGhost.ids(`${ids.resourceName}.ts`, ids.skeleton, true);
+  }
+
+  logger.info(`Converting twoda json to ghost...`);
+  const twodaIterator = patchTwodas([...allJsons.twoda.values()]);
+  for await (const twoda of twodaIterator) {
+    await paths.ghostDir.saveGhost.twoda(`${twoda.resourceName}.ts`, twoda.skeleton, true);
+  }
+
+  logger.info(`Converting src json to ghost...`);
+  const srcIterator = patchSrcs([...allJsons.srcs.values()]);
+  for await (const src of srcIterator) {
+    await paths.ghostDir.saveGhost.src(`${src.resourceName}.ts`, src.skeleton, true);
   }
 
   logger.info(`Converting ini json to ghost...`);

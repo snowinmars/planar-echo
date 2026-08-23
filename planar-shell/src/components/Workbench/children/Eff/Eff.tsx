@@ -3,6 +3,7 @@ import { useShallow } from 'zustand/react/shallow';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { useEffStore } from './store/effStore';
 import { useEffWidgetBridge } from './useEffWidgetBridge';
 
@@ -27,12 +28,16 @@ const Eff: FC = () => {
   const {
     loading,
     currentEff,
+    loadEff,
     disposeEff,
   } = useEffStore(useShallow(state => ({
     loading: state.loading,
     currentEff: state.currentEff,
+    loadEff: state.loadEff,
     disposeEff: state.disposeEff,
   })));
+
+  useGhostRouteId('effId', loadEff, disposeEff);
 
   useEffect(() => () => disposeEff(), [disposeEff]);
 

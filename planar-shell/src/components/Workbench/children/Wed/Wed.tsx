@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { useWedStore } from './store/wedStore';
 import { useWedWidgetBridge } from './useWedWidgetBridge';
 
@@ -34,12 +35,16 @@ const Wed: FC = () => {
   const {
     loading,
     currentWed,
+    loadWed,
     disposeWed,
   } = useWedStore(useShallow(state => ({
     loading: state.loading,
     currentWed: state.currentWed,
+    loadWed: state.loadWed,
     disposeWed: state.disposeWed,
   })));
+
+  useGhostRouteId('wedId', loadWed, disposeWed);
 
   useEffect(() => () => disposeWed(), [disposeWed]);
 

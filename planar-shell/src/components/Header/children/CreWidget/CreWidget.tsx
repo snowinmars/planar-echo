@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +20,7 @@ const useCreWidget = () => useSyncExternalStore(
 
 const Cres: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     loading,
     cres,
@@ -33,7 +35,7 @@ const Cres: FC<WithClassName> = ({ className }) => {
       value={currentCreId ?? ''}
       onChange={(_, creId) => {
         if (isNothing(creId)) throw new Error('Cre id cannot be empty here');
-        actions?.loadCre(creId).catch(e => console.error(e));
+        navigate(`/cre/${creId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

@@ -126,6 +126,27 @@ export type {
   GhostWedPolygon,
 } from './ghost/wed.types.js';
 export type {
+  GhostAre,
+  GhostAreActor,
+  GhostAreAmbient,
+  GhostAreAnimation,
+  GhostAreAutomapNote,
+  GhostAreContainer,
+  GhostAreDoor,
+  GhostAreEntrance,
+  GhostAreHeader,
+  GhostAreItem,
+  GhostAreProjectileTrap,
+  GhostAreRegion,
+  GhostAreRestInterruptions,
+  GhostAreSong,
+  GhostAreSpawnPoint,
+  GhostAreTiledObject,
+  GhostAreVariable,
+} from './ghost/are.types.js';
+export type { GhostTwoda, GhostTwodaRow } from './ghost/twoda.types.js';
+export type { GhostSrc, GhostSrcEntry } from './ghost/src.types.js';
+export type {
   GhostAcm,
   GhostAudioContainer,
 } from './ghost/acm.types.js';

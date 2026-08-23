@@ -4,6 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { assetUrl } from '@/shared/assetUrl';
 import { useWavStore } from './store/wavStore';
 import { useWavWidgetBridge } from './useWavWidgetBridge';
@@ -35,13 +36,17 @@ const Wav: FC = () => {
     loading,
     serverUrl,
     currentWav,
+    loadWav,
     disposeWav,
   } = useWavStore(useShallow(state => ({
     loading: state.loading,
     serverUrl: state.serverUrl,
     currentWav: state.currentWav,
+    loadWav: state.loadWav,
     disposeWav: state.disposeWav,
   })));
+
+  useGhostRouteId('wavId', loadWav, disposeWav);
 
   const [audioError, setAudioError] = useState(false);
 

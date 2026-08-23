@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { assetUrl } from '@/shared/assetUrl';
 import { useMosStore } from './store/mosStore';
 import { useMosWidgetBridge } from './useMosWidgetBridge';
@@ -39,13 +40,17 @@ const Mos: FC = () => {
     loading,
     serverUrl,
     currentMos,
+    loadMos,
     disposeMos,
   } = useMosStore(useShallow(state => ({
     loading: state.loading,
     serverUrl: state.serverUrl,
     currentMos: state.currentMos,
+    loadMos: state.loadMos,
     disposeMos: state.disposeMos,
   })));
+
+  useGhostRouteId('mosId', loadMos, disposeMos);
 
   const [imageError, setImageError] = useState(false);
 

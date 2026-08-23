@@ -59,6 +59,7 @@ const run = (data: PrismIndexStartMessage['data']): Observable<PrismIndexRespons
   const obs0 = runCommand(`yarn workspace @planar/prism build`, 'buildPrism'); // TODO [snow]: use dir from args
   const obs1 = runPrismScript(data.prismDir, 'index.js', data);
   const obs2 = runCommand(`yarn workspace @planar/prism build-ghost`, 'buildGhost'); // TODO [snow]: use dir from args
+  logger.info('Done');
 
   return concat(obs0, obs1, obs2);
 };

@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { assetUrl } from '@/shared/assetUrl';
 import { useBamStore } from './store/bamStore';
 import { useBamWidgetBridge } from './useBamWidgetBridge';
@@ -39,13 +40,17 @@ const Bam: FC = () => {
     loading,
     serverUrl,
     currentBam,
+    loadBam,
     disposeBam,
   } = useBamStore(useShallow(state => ({
     loading: state.loading,
     serverUrl: state.serverUrl,
     currentBam: state.currentBam,
+    loadBam: state.loadBam,
     disposeBam: state.disposeBam,
   })));
+
+  useGhostRouteId('bamId', loadBam, disposeBam);
 
   const [imageError, setImageError] = useState(false);
 

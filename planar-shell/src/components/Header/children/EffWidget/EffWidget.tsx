@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,6 +24,7 @@ const useEffWidget = () => useSyncExternalStore(
 
 const Effs: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { loading, effs, currentEffId } = useEffWidget();
   const actions = effWidgetState.getActions();
 
@@ -33,7 +35,7 @@ const Effs: FC<WithClassName> = ({ className }) => {
       value={currentEffId ?? ''}
       onChange={(_, effId) => {
         if (isNothing(effId)) throw new Error('Eff id cannot be empty here');
-        actions?.loadEff(effId).catch(e => console.error(e));
+        navigate(`/eff/${effId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

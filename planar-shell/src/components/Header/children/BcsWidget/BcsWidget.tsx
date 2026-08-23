@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +20,7 @@ const useBcsWidget = () => useSyncExternalStore(
 
 const Bcss: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     loading,
     bcss,
@@ -33,7 +35,7 @@ const Bcss: FC<WithClassName> = ({ className }) => {
       value={currentBcsId ?? ''}
       onChange={(_, bcsId) => {
         if (isNothing(bcsId)) throw new Error('Bcs id cannot be empty here');
-        actions?.loadBcs(bcsId).catch(e => console.error(e));
+        navigate(`/bcs/${bcsId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

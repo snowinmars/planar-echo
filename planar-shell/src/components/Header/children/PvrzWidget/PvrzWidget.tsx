@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +20,7 @@ const usePvrzWidget = () => useSyncExternalStore(
 
 const Pvrzs: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     loading,
     pvrzs,
@@ -33,7 +35,7 @@ const Pvrzs: FC<WithClassName> = ({ className }) => {
       value={currentPvrzId ?? ''}
       onChange={(_, pvrzId) => {
         if (isNothing(pvrzId)) throw new Error('Pvrz id cannot be empty here');
-        actions?.loadPvrz(pvrzId).catch(e => console.error(e));
+        navigate(`/pvrz/${pvrzId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

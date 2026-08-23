@@ -4,7 +4,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetApiFsGhostDirByFilePathData, GetApiFsGhostDirByFilePathErrors, GetApiFsGhostDirByFilePathResponses, GetApiFsPrismDirByFilePathData, GetApiFsPrismDirByFilePathErrors, GetApiFsPrismDirByFilePathResponses, GetApiFsShellDirByFilePathData, GetApiFsShellDirByFilePathErrors, GetApiFsShellDirByFilePathResponses, GetApiMapCreToDlgsByCreIdData, GetApiMapCreToDlgsByCreIdErrors, GetApiMapCreToDlgsByCreIdResponses, GetApiMapDlgToCresByDlgIdData, GetApiMapDlgToCresByDlgIdErrors, GetApiMapDlgToCresByDlgIdResponses, GetApiMapDlgToItmsByDlgIdData, GetApiMapDlgToItmsByDlgIdErrors, GetApiMapDlgToItmsByDlgIdResponses, GetApiMapItmToDlgsByItmIdData, GetApiMapItmToDlgsByItmIdErrors, GetApiMapItmToDlgsByItmIdResponses, GetApiPingData, GetApiPingResponses, GetApiSettingsGhostDirData, GetApiSettingsGhostDirResponses, GetApiSettingsPrismDirData, GetApiSettingsPrismDirResponses, GetApiSettingsShellDirData, GetApiSettingsShellDirResponses, PostApiFsDownloadWeiduData, PostApiFsDownloadWeiduErrors, PostApiFsDownloadWeiduResponses, PostApiFsOpenDirData, PostApiFsOpenDirErrors, PostApiFsOpenDirResponses, PostApiFsValidateChitinKeyFileData, PostApiFsValidateChitinKeyFileErrors, PostApiFsValidateChitinKeyFileResponses, PostApiFsValidateGhostDirData, PostApiFsValidateGhostDirErrors, PostApiFsValidateGhostDirResponses, PostApiFsValidateWeiduExeDirData, PostApiFsValidateWeiduExeDirErrors, PostApiFsValidateWeiduExeDirResponses, PostApiGhostAcmByAcmIdSkeletonData, PostApiGhostAcmByAcmIdSkeletonErrors, PostApiGhostAcmByAcmIdSkeletonResponses, PostApiGhostAcmData, PostApiGhostAcmErrors, PostApiGhostAcmResponses, PostApiGhostBamByBamIdSkeletonData, PostApiGhostBamByBamIdSkeletonErrors, PostApiGhostBamByBamIdSkeletonResponses, PostApiGhostBamData, PostApiGhostBamErrors, PostApiGhostBamResponses, PostApiGhostBcsByBcsIdSkeletonData, PostApiGhostBcsByBcsIdSkeletonErrors, PostApiGhostBcsByBcsIdSkeletonResponses, PostApiGhostBcsData, PostApiGhostBcsErrors, PostApiGhostBcsResponses, PostApiGhostBmpByBmpIdSkeletonData, PostApiGhostBmpByBmpIdSkeletonErrors, PostApiGhostBmpByBmpIdSkeletonResponses, PostApiGhostBmpData, PostApiGhostBmpErrors, PostApiGhostBmpResponses, PostApiGhostCreByCreIdByGameLanguageData, PostApiGhostCreByCreIdByGameLanguageErrors, PostApiGhostCreByCreIdByGameLanguageResponses, PostApiGhostCreByCreIdSkeletonData, PostApiGhostCreByCreIdSkeletonErrors, PostApiGhostCreByCreIdSkeletonResponses, PostApiGhostCreData, PostApiGhostCreErrors, PostApiGhostCreResponses, PostApiGhostDlgByDlgIdSkeletonData, PostApiGhostDlgByDlgIdSkeletonErrors, PostApiGhostDlgByDlgIdSkeletonResponses, PostApiGhostDlgData, PostApiGhostDlgErrors, PostApiGhostDlgResponses, PostApiGhostEffByEffIdSkeletonData, PostApiGhostEffByEffIdSkeletonErrors, PostApiGhostEffByEffIdSkeletonResponses, PostApiGhostEffData, PostApiGhostEffErrors, PostApiGhostEffResponses, PostApiGhostIdsByIdsIdSkeletonData, PostApiGhostIdsByIdsIdSkeletonErrors, PostApiGhostIdsByIdsIdSkeletonResponses, PostApiGhostIdsData, PostApiGhostIdsErrors, PostApiGhostIdsResponses, PostApiGhostIniByIniIdSkeletonData, PostApiGhostIniByIniIdSkeletonErrors, PostApiGhostIniByIniIdSkeletonResponses, PostApiGhostIniData, PostApiGhostIniErrors, PostApiGhostIniResponses, PostApiGhostItmByItmIdByGameLanguageData, PostApiGhostItmByItmIdByGameLanguageErrors, PostApiGhostItmByItmIdByGameLanguageResponses, PostApiGhostItmByItmIdSkeletonData, PostApiGhostItmByItmIdSkeletonErrors, PostApiGhostItmByItmIdSkeletonResponses, PostApiGhostItmData, PostApiGhostItmErrors, PostApiGhostItmResponses, PostApiGhostMosByMosIdSkeletonData, PostApiGhostMosByMosIdSkeletonErrors, PostApiGhostMosByMosIdSkeletonResponses, PostApiGhostMosData, PostApiGhostMosErrors, PostApiGhostMosResponses, PostApiGhostMusByMusIdSkeletonData, PostApiGhostMusByMusIdSkeletonErrors, PostApiGhostMusByMusIdSkeletonResponses, PostApiGhostMusData, PostApiGhostMusErrors, PostApiGhostMusResponses, PostApiGhostPvrzByPvrzIdSkeletonData, PostApiGhostPvrzByPvrzIdSkeletonErrors, PostApiGhostPvrzByPvrzIdSkeletonResponses, PostApiGhostPvrzData, PostApiGhostPvrzErrors, PostApiGhostPvrzResponses, PostApiGhostTisByTisIdSkeletonData, PostApiGhostTisByTisIdSkeletonErrors, PostApiGhostTisByTisIdSkeletonResponses, PostApiGhostTisData, PostApiGhostTisErrors, PostApiGhostTisResponses, PostApiGhostTlkByGameLanguageData, PostApiGhostTlkByGameLanguageErrors, PostApiGhostTlkByGameLanguageResponses, PostApiGhostWavByWavIdSkeletonData, PostApiGhostWavByWavIdSkeletonErrors, PostApiGhostWavByWavIdSkeletonResponses, PostApiGhostWavData, PostApiGhostWavErrors, PostApiGhostWavResponses, PostApiGhostWedByWedIdSkeletonData, PostApiGhostWedByWedIdSkeletonErrors, PostApiGhostWedByWedIdSkeletonResponses, PostApiGhostWedData, PostApiGhostWedErrors, PostApiGhostWedResponses, PostApiSettingsGhostDirData, PostApiSettingsGhostDirErrors, PostApiSettingsGhostDirResponses, PostApiSettingsPrismDirData, PostApiSettingsPrismDirErrors, PostApiSettingsPrismDirResponses, PostApiSettingsShellDirData, PostApiSettingsShellDirErrors, PostApiSettingsShellDirResponses } from './types.gen';
+import type { GetApiAssetsByFilePathData, GetApiAssetsByFilePathErrors, GetApiAssetsByFilePathResponses, GetApiFsGhostDirByFilePathData, GetApiFsGhostDirByFilePathErrors, GetApiFsGhostDirByFilePathResponses, GetApiFsPrismDirByFilePathData, GetApiFsPrismDirByFilePathErrors, GetApiFsPrismDirByFilePathResponses, GetApiFsShellDirByFilePathData, GetApiFsShellDirByFilePathErrors, GetApiFsShellDirByFilePathResponses, GetApiMapCreToDlgsByCreIdData, GetApiMapCreToDlgsByCreIdErrors, GetApiMapCreToDlgsByCreIdResponses, GetApiMapDlgToCresByDlgIdData, GetApiMapDlgToCresByDlgIdErrors, GetApiMapDlgToCresByDlgIdResponses, GetApiMapDlgToItmsByDlgIdData, GetApiMapDlgToItmsByDlgIdErrors, GetApiMapDlgToItmsByDlgIdResponses, GetApiMapItmToDlgsByItmIdData, GetApiMapItmToDlgsByItmIdErrors, GetApiMapItmToDlgsByItmIdResponses, GetApiPingData, GetApiPingResponses, GetApiSettingsGhostDirData, GetApiSettingsGhostDirResponses, GetApiSettingsPrismDirData, GetApiSettingsPrismDirResponses, GetApiSettingsShellDirData, GetApiSettingsShellDirResponses, PostApiFsDownloadWeiduData, PostApiFsDownloadWeiduErrors, PostApiFsDownloadWeiduResponses, PostApiFsOpenDirData, PostApiFsOpenDirErrors, PostApiFsOpenDirResponses, PostApiFsValidateChitinKeyFileData, PostApiFsValidateChitinKeyFileErrors, PostApiFsValidateChitinKeyFileResponses, PostApiFsValidateGhostDirData, PostApiFsValidateGhostDirErrors, PostApiFsValidateGhostDirResponses, PostApiFsValidateWeiduExeDirData, PostApiFsValidateWeiduExeDirErrors, PostApiFsValidateWeiduExeDirResponses, PostApiGhostAcmByAcmIdSkeletonData, PostApiGhostAcmByAcmIdSkeletonErrors, PostApiGhostAcmByAcmIdSkeletonResponses, PostApiGhostAcmData, PostApiGhostAcmErrors, PostApiGhostAcmResponses, PostApiGhostAreByAreIdSkeletonData, PostApiGhostAreByAreIdSkeletonErrors, PostApiGhostAreByAreIdSkeletonResponses, PostApiGhostAreData, PostApiGhostAreErrors, PostApiGhostAreResponses, PostApiGhostBamByBamIdSkeletonData, PostApiGhostBamByBamIdSkeletonErrors, PostApiGhostBamByBamIdSkeletonResponses, PostApiGhostBamData, PostApiGhostBamErrors, PostApiGhostBamResponses, PostApiGhostBcsByBcsIdSkeletonData, PostApiGhostBcsByBcsIdSkeletonErrors, PostApiGhostBcsByBcsIdSkeletonResponses, PostApiGhostBcsData, PostApiGhostBcsErrors, PostApiGhostBcsResponses, PostApiGhostBmpByBmpIdSkeletonData, PostApiGhostBmpByBmpIdSkeletonErrors, PostApiGhostBmpByBmpIdSkeletonResponses, PostApiGhostBmpData, PostApiGhostBmpErrors, PostApiGhostBmpResponses, PostApiGhostCreByCreIdByGameLanguageData, PostApiGhostCreByCreIdByGameLanguageErrors, PostApiGhostCreByCreIdByGameLanguageResponses, PostApiGhostCreByCreIdSkeletonData, PostApiGhostCreByCreIdSkeletonErrors, PostApiGhostCreByCreIdSkeletonResponses, PostApiGhostCreData, PostApiGhostCreErrors, PostApiGhostCreResponses, PostApiGhostDlgByDlgIdSkeletonData, PostApiGhostDlgByDlgIdSkeletonErrors, PostApiGhostDlgByDlgIdSkeletonResponses, PostApiGhostDlgData, PostApiGhostDlgErrors, PostApiGhostDlgResponses, PostApiGhostEffByEffIdSkeletonData, PostApiGhostEffByEffIdSkeletonErrors, PostApiGhostEffByEffIdSkeletonResponses, PostApiGhostEffData, PostApiGhostEffErrors, PostApiGhostEffResponses, PostApiGhostIdsByIdsIdSkeletonData, PostApiGhostIdsByIdsIdSkeletonErrors, PostApiGhostIdsByIdsIdSkeletonResponses, PostApiGhostIdsData, PostApiGhostIdsErrors, PostApiGhostIdsResponses, PostApiGhostIniByIniIdSkeletonData, PostApiGhostIniByIniIdSkeletonErrors, PostApiGhostIniByIniIdSkeletonResponses, PostApiGhostIniData, PostApiGhostIniErrors, PostApiGhostIniResponses, PostApiGhostItmByItmIdByGameLanguageData, PostApiGhostItmByItmIdByGameLanguageErrors, PostApiGhostItmByItmIdByGameLanguageResponses, PostApiGhostItmByItmIdSkeletonData, PostApiGhostItmByItmIdSkeletonErrors, PostApiGhostItmByItmIdSkeletonResponses, PostApiGhostItmData, PostApiGhostItmErrors, PostApiGhostItmResponses, PostApiGhostMosByMosIdSkeletonData, PostApiGhostMosByMosIdSkeletonErrors, PostApiGhostMosByMosIdSkeletonResponses, PostApiGhostMosData, PostApiGhostMosErrors, PostApiGhostMosResponses, PostApiGhostMusByMusIdSkeletonData, PostApiGhostMusByMusIdSkeletonErrors, PostApiGhostMusByMusIdSkeletonResponses, PostApiGhostMusData, PostApiGhostMusErrors, PostApiGhostMusResponses, PostApiGhostPvrzByPvrzIdSkeletonData, PostApiGhostPvrzByPvrzIdSkeletonErrors, PostApiGhostPvrzByPvrzIdSkeletonResponses, PostApiGhostPvrzData, PostApiGhostPvrzErrors, PostApiGhostPvrzResponses, PostApiGhostSrcBySrcIdSkeletonData, PostApiGhostSrcBySrcIdSkeletonErrors, PostApiGhostSrcBySrcIdSkeletonResponses, PostApiGhostSrcData, PostApiGhostSrcErrors, PostApiGhostSrcResponses, PostApiGhostTisByTisIdSkeletonData, PostApiGhostTisByTisIdSkeletonErrors, PostApiGhostTisByTisIdSkeletonResponses, PostApiGhostTisData, PostApiGhostTisErrors, PostApiGhostTisResponses, PostApiGhostTlkByGameLanguageData, PostApiGhostTlkByGameLanguageErrors, PostApiGhostTlkByGameLanguageResponses, PostApiGhostTwodaByTwodaIdSkeletonData, PostApiGhostTwodaByTwodaIdSkeletonErrors, PostApiGhostTwodaByTwodaIdSkeletonResponses, PostApiGhostTwodaData, PostApiGhostTwodaErrors, PostApiGhostTwodaResponses, PostApiGhostWavByWavIdSkeletonData, PostApiGhostWavByWavIdSkeletonErrors, PostApiGhostWavByWavIdSkeletonResponses, PostApiGhostWavData, PostApiGhostWavErrors, PostApiGhostWavResponses, PostApiGhostWedByWedIdSkeletonData, PostApiGhostWedByWedIdSkeletonErrors, PostApiGhostWedByWedIdSkeletonResponses, PostApiGhostWedData, PostApiGhostWedErrors, PostApiGhostWedResponses, PostApiSettingsGhostDirData, PostApiSettingsGhostDirErrors, PostApiSettingsGhostDirResponses, PostApiSettingsPrismDirData, PostApiSettingsPrismDirErrors, PostApiSettingsPrismDirResponses, PostApiSettingsShellDirData, PostApiSettingsShellDirErrors, PostApiSettingsShellDirResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -109,6 +109,15 @@ export const getApiFsPrismDirByFilePath = <ThrowOnError extends boolean = false>
 export const getApiFsShellDirByFilePath = <ThrowOnError extends boolean = false>(options?: Options<GetApiFsShellDirByFilePathData, ThrowOnError>) => (options?.client ?? client).get<GetApiFsShellDirByFilePathResponses, GetApiFsShellDirByFilePathErrors, ThrowOnError>({
     responseType: 'json',
     url: '/api/fs/shellDir/{filePath}',
+    ...options
+});
+
+/**
+ * Get file content from ghost assets directory by relative path
+ */
+export const getApiAssetsByFilePath = <ThrowOnError extends boolean = false>(options: Options<GetApiAssetsByFilePathData, ThrowOnError>) => (options.client ?? client).get<GetApiAssetsByFilePathResponses, GetApiAssetsByFilePathErrors, ThrowOnError>({
+    responseType: 'blob',
+    url: '/api/assets/{filePath}',
     ...options
 });
 
@@ -556,6 +565,84 @@ export const postApiGhostIni = <ThrowOnError extends boolean = false>(options: O
 export const postApiGhostIniByIniIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostIniByIniIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostIniByIniIdSkeletonResponses, PostApiGhostIniByIniIdSkeletonErrors, ThrowOnError>({
     responseType: 'json',
     url: '/api/ghost/ini/{iniId}/skeleton',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get available ares in ghost format
+ */
+export const postApiGhostAre = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostAreData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostAreResponses, PostApiGhostAreErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/are',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get skeleton of the are in ghost format
+ */
+export const postApiGhostAreByAreIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostAreByAreIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostAreByAreIdSkeletonResponses, PostApiGhostAreByAreIdSkeletonErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/are/{areId}/skeleton',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get available 2da tables in ghost format
+ */
+export const postApiGhostTwoda = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostTwodaData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostTwodaResponses, PostApiGhostTwodaErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/twoda',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get skeleton of the 2da in ghost format
+ */
+export const postApiGhostTwodaByTwodaIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostTwodaByTwodaIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostTwodaByTwodaIdSkeletonResponses, PostApiGhostTwodaByTwodaIdSkeletonErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/twoda/{twodaId}/skeleton',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get available srcs in ghost format
+ */
+export const postApiGhostSrc = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostSrcData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostSrcResponses, PostApiGhostSrcErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/src',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get skeleton of the src in ghost format
+ */
+export const postApiGhostSrcBySrcIdSkeleton = <ThrowOnError extends boolean = false>(options: Options<PostApiGhostSrcBySrcIdSkeletonData, ThrowOnError>) => (options.client ?? client).post<PostApiGhostSrcBySrcIdSkeletonResponses, PostApiGhostSrcBySrcIdSkeletonErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/ghost/src/{srcId}/skeleton',
     ...options,
     headers: {
         'Content-Type': 'application/json',

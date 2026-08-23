@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { useMusStore } from './store/musStore';
 import { useMusWidgetBridge } from './useMusWidgetBridge';
 
@@ -32,12 +33,16 @@ const Mus: FC = () => {
   const {
     loading,
     currentMus,
+    loadMus,
     disposeMus,
   } = useMusStore(useShallow(state => ({
     loading: state.loading,
     currentMus: state.currentMus,
+    loadMus: state.loadMus,
     disposeMus: state.disposeMus,
   })));
+
+  useGhostRouteId('musId', loadMus, disposeMus);
 
   useEffect(() => () => disposeMus(), [disposeMus]);
 

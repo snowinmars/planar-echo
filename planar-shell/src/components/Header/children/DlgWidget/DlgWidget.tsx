@@ -1,4 +1,5 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -21,6 +22,7 @@ const useDlgWidget = () => useSyncExternalStore(
 
 const Dlgs: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     loading,
     dlgs,
@@ -35,8 +37,7 @@ const Dlgs: FC<WithClassName> = ({ className }) => {
       value={currentDlgId ?? ''}
       onChange={(_, dlgId) => {
         if (isNothing(dlgId)) throw new Error('Dlg id cannot be empty here');
-        if (actions) actions.loadDlg(dlgId).catch(e => console.error(e));
-        else console.warn('Widget is not working properly: no actions were found');
+        navigate(`/dlg/${dlgId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

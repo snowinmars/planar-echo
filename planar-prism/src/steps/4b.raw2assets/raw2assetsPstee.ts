@@ -121,12 +121,13 @@ export const raw2assetsPstee = async (
     await paths.ghostDir.saveJson.acm(result.acm.resourceName, result.acm);
   });
 
-  logger.info(`Converting are explored to assets...`);
-  await drain(runPool({
-    kind: 'are',
-    jobs: toJobs(allJsons.ares.filter(are => !isNothing(are.exploredBitmaskName))),
-    decompiledRoot,
-    assetsRoot,
-    step: 'are_raw2assets',
-  }));
+  // TODO [snow]: where is the explored mask?
+  // logger.info(`Converting are explored to assets...`);
+  // await drain(runPool({
+  //   kind: 'are',
+  //   jobs: toJobs(allJsons.ares.filter(are => !isNothing(are.exploredBitmaskName))),
+  //   decompiledRoot,
+  //   assetsRoot,
+  //   step: 'are_raw2assets',
+  // }));
 };

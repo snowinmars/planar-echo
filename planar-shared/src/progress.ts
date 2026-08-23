@@ -43,9 +43,10 @@ export const progressSteps = [
   'bmp_raw2assets',
   'wav_raw2assets',
   'acm_raw2assets',
-  'are_raw2assets',
   'tlk_json2ghost',
   'ids_json2ghost',
+  'twoda_json2ghost',
+  'src_json2ghost',
   'bcs_json2ghost',
   'ini_json2ghost',
   'cre_json2ghost',
@@ -53,6 +54,7 @@ export const progressSteps = [
   'eff_json2ghost',
   'itm_json2ghost',
   'wed_json2ghost',
+  'are_json2ghost',
   'pvrz_json2ghost',
   'mos_json2ghost',
   'tis_json2ghost',
@@ -96,9 +98,10 @@ type TisRaw2AssetsProgress  = Step<'tis_raw2assets'>  & WithResource;
 type BmpRaw2AssetsProgress  = Step<'bmp_raw2assets'>  & WithResource;
 type WavRaw2AssetsProgress  = Step<'wav_raw2assets'>  & WithResource;
 type AcmRaw2AssetsProgress  = Step<'acm_raw2assets'>  & WithResource;
-type AreRaw2AssetsProgress  = Step<'are_raw2assets'>  & WithResource;
 type TlkJson2GhostProgress  = Step<'tlk_json2ghost'>  & WithResource;
 type IdsJson2GhostProgress  = Step<'ids_json2ghost'>  & WithResource;
+type TwoDaJson2GhostProgress = Step<'twoda_json2ghost'> & WithResource;
+type SrcJson2GhostProgress  = Step<'src_json2ghost'>  & WithResource;
 type BcsJson2GhostProgress  = Step<'bcs_json2ghost'>  & WithResource;
 type IniJson2GhostProgress  = Step<'ini_json2ghost'>  & WithResource;
 type CreJson2GhostProgress  = Step<'cre_json2ghost'>  & WithResource;
@@ -106,6 +109,7 @@ type DlgJson2GhostProgress  = Step<'dlg_json2ghost'>  & WithResource;
 type EffJson2GhostProgress  = Step<'eff_json2ghost'>  & WithResource;
 type ItmJson2GhostProgress  = Step<'itm_json2ghost'>  & WithResource;
 type WedJson2GhostProgress  = Step<'wed_json2ghost'>  & WithResource;
+type AreJson2GhostProgress  = Step<'are_json2ghost'>  & WithResource;
 type PvrzJson2GhostProgress = Step<'pvrz_json2ghost'> & WithResource;
 type MosJson2GhostProgress  = Step<'mos_json2ghost'>  & WithResource;
 type TisJson2GhostProgress  = Step<'tis_json2ghost'>  & WithResource;
@@ -151,6 +155,8 @@ export type Progress
     | AreRaw2AssetsProgress
     | TlkJson2GhostProgress
     | IdsJson2GhostProgress
+    | TwoDaJson2GhostProgress
+    | SrcJson2GhostProgress
     | BcsJson2GhostProgress
     | IniJson2GhostProgress
     | CreJson2GhostProgress
@@ -158,6 +164,7 @@ export type Progress
     | EffJson2GhostProgress
     | ItmJson2GhostProgress
     | WedJson2GhostProgress
+    | AreJson2GhostProgress
     | PvrzJson2GhostProgress
     | MosJson2GhostProgress
     | TisJson2GhostProgress
@@ -200,9 +207,10 @@ export type ProgressSteps = {
   bmp_raw2assets: BmpRaw2AssetsProgress;
   wav_raw2assets: WavRaw2AssetsProgress;
   acm_raw2assets: AcmRaw2AssetsProgress;
-  are_raw2assets: AreRaw2AssetsProgress;
   tlk_json2ghost: TlkJson2GhostProgress;
   ids_json2ghost: IdsJson2GhostProgress;
+  twoda_json2ghost: TwoDaJson2GhostProgress;
+  src_json2ghost: SrcJson2GhostProgress;
   bcs_json2ghost: BcsJson2GhostProgress;
   ini_json2ghost: IniJson2GhostProgress;
   cre_json2ghost: CreJson2GhostProgress;
@@ -210,6 +218,7 @@ export type ProgressSteps = {
   eff_json2ghost: EffJson2GhostProgress;
   itm_json2ghost: ItmJson2GhostProgress;
   wed_json2ghost: WedJson2GhostProgress;
+  are_json2ghost: AreJson2GhostProgress;
   pvrz_json2ghost: PvrzJson2GhostProgress;
   mos_json2ghost: MosJson2GhostProgress;
   tis_json2ghost: TisJson2GhostProgress;

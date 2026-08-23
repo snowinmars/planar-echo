@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,6 +24,7 @@ const useBmpWidget = () => useSyncExternalStore(
 
 const Bmps: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { loading, bmps, currentBmpId } = useBmpWidget();
   const actions = bmpWidgetState.getActions();
 
@@ -33,7 +35,7 @@ const Bmps: FC<WithClassName> = ({ className }) => {
       value={currentBmpId ?? ''}
       onChange={(_, bmpId) => {
         if (isNothing(bmpId)) throw new Error('Bmp id cannot be empty here');
-        actions?.loadBmp(bmpId).catch(e => console.error(e));
+        navigate(`/bmp/${bmpId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { useIniStore } from './store/iniStore';
 import { useIniWidgetBridge } from './useIniWidgetBridge';
 
@@ -37,12 +38,16 @@ const Ini: FC = () => {
   const {
     loading,
     currentIni,
+    loadIni,
     disposeIni,
   } = useIniStore(useShallow(state => ({
     loading: state.loading,
     currentIni: state.currentIni,
+    loadIni: state.loadIni,
     disposeIni: state.disposeIni,
   })));
+
+  useGhostRouteId('iniId', loadIni, disposeIni);
 
   useEffect(() => () => disposeIni(), [disposeIni]);
 

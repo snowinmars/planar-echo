@@ -124,6 +124,24 @@ export const ini_iniIdSchema = {
     example: 'ar0202.ini'
 } as const;
 
+export const are_areIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'ar0202.are'
+} as const;
+
+export const twoda_twodaIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: 'happy.2da'
+} as const;
+
+export const src_srcIdSchema = {
+    type: 'string',
+    minLength: 1,
+    example: '0502supe.src'
+} as const;
+
 export const creToDlgs_creIdSchema = {
     type: 'string',
     minLength: 1,

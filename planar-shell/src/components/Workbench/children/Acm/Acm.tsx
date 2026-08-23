@@ -4,6 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { assetUrl } from '@/shared/assetUrl';
 import { useAcmStore } from './store/acmStore';
 import { useAcmWidgetBridge } from './useAcmWidgetBridge';
@@ -35,13 +36,17 @@ const Acm: FC = () => {
     loading,
     serverUrl,
     currentAcm,
+    loadAcm,
     disposeAcm,
   } = useAcmStore(useShallow(state => ({
     loading: state.loading,
     serverUrl: state.serverUrl,
     currentAcm: state.currentAcm,
+    loadAcm: state.loadAcm,
     disposeAcm: state.disposeAcm,
   })));
+
+  useGhostRouteId('acmId', loadAcm, disposeAcm);
 
   const [audioError, setAudioError] = useState(false);
 

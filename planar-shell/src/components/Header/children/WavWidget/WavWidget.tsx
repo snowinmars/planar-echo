@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,6 +24,7 @@ const useWavWidget = () => useSyncExternalStore(
 
 const Wavs: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { loading, wavs, currentWavId } = useWavWidget();
   const actions = wavWidgetState.getActions();
 
@@ -33,7 +35,7 @@ const Wavs: FC<WithClassName> = ({ className }) => {
       value={currentWavId ?? ''}
       onChange={(_, wavId) => {
         if (isNothing(wavId)) throw new Error('Wav id cannot be empty here');
-        actions?.loadWav(wavId).catch(e => console.error(e));
+        navigate(`/wav/${wavId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

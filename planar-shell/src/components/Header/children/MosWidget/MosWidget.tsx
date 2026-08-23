@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +20,7 @@ const useMosWidget = () => useSyncExternalStore(
 
 const Moss: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     loading,
     moss,
@@ -33,7 +35,7 @@ const Moss: FC<WithClassName> = ({ className }) => {
       value={currentMosId ?? ''}
       onChange={(_, mosId) => {
         if (isNothing(mosId)) throw new Error('Mos id cannot be empty here');
-        actions?.loadMos(mosId).catch(e => console.error(e));
+        navigate(`/mos/${mosId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

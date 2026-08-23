@@ -13,7 +13,7 @@ import type { FC } from 'react';
 
 import styles from './Header.module.scss';
 
-type CurrentWidget = 'cre' | 'dlg' | 'itm' | 'bcs' | 'mos' | 'pvrz' | 'tis' | 'wed' | 'acm' | 'bam' | 'bmp' | 'wav' | 'mus' | 'eff' | 'ids' | 'ini' | '';
+type CurrentWidget = 'cre' | 'dlg' | 'itm' | 'bcs' | 'mos' | 'pvrz' | 'tis' | 'wed' | 'acm' | 'bam' | 'bmp' | 'wav' | 'mus' | 'eff' | 'ids' | 'ini' | 'are' | 'twoda' | 'src' | '';
 
 const CreWidget = lazy(() => import('./children/CreWidget/CreWidget'));
 const DlgWidget = lazy(() => import('./children/DlgWidget/DlgWidget'));
@@ -31,6 +31,9 @@ const MusWidget = lazy(() => import('./children/MusWidget/MusWidget'));
 const EffWidget = lazy(() => import('./children/EffWidget/EffWidget'));
 const IdsWidget = lazy(() => import('./children/IdsWidget/IdsWidget'));
 const IniWidget = lazy(() => import('./children/IniWidget/IniWidget'));
+const AreWidget = lazy(() => import('./children/AreWidget/AreWidget'));
+const TwodaWidget = lazy(() => import('./children/TwodaWidget/TwodaWidget'));
+const SrcWidget = lazy(() => import('./children/SrcWidget/SrcWidget'));
 
 const Header: FC = () => {
   const [currentWidget, setCurrentWidget] = useState<CurrentWidget>(() => planarLocalStorage.get<CurrentWidget>(planarLocalStorage.currentWidget, '')!);
@@ -67,6 +70,9 @@ const Header: FC = () => {
             { currentWidget === 'eff' && <EffWidget />}
             { currentWidget === 'ids' && <IdsWidget />}
             { currentWidget === 'ini' && <IniWidget />}
+            { currentWidget === 'are' && <AreWidget />}
+            { currentWidget === 'twoda' && <TwodaWidget />}
+            { currentWidget === 'src' && <SrcWidget />}
           </Grid>
 
           <Grid size={{ xs: 0.5 }}>

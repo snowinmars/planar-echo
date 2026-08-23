@@ -2,7 +2,7 @@ import { lazy, useEffect } from 'react';
 import { nothing } from '@planar/shared';
 import { useDlgWidgetBridge } from './useDlgWidgetBridge';
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import { useSearchParams } from 'react-router';
+import { useParams, useSearchParams } from 'react-router';
 import {
   dlgFeatureModules,
   useDlgStore,
@@ -22,16 +22,14 @@ const Dlg: FC = () => {
   useFeatureLease(dlgFeatureModules);
   useDlgWidgetBridge();
 
+  const { dlgId } = useParams();
   const [searchParams] = useSearchParams();
   const loadDlg = useDlgStore(x => x.loadDlg);
   useEffect(() => {
-    if (!searchParams.size) return;
-    const dlgId = searchParams.get('dlgId');
+    if (!dlgId) return;
     const stateId = searchParams.get('stateId') ?? nothing();
-    if (dlgId) {
-      loadDlg(dlgId, stateId as StateId, 'dlg-route').catch((e: unknown) => console.error(e)); // TODO [snow]: wrong typing, could I throw if stateId is out of type range?;
-    }
-  }, [loadDlg, searchParams]);
+    loadDlg(dlgId, stateId as StateId, 'dlg-route').catch((e: unknown) => console.error(e));
+  }, [dlgId, loadDlg, searchParams]);
 
   useEffect(() => {
     planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'dlg');

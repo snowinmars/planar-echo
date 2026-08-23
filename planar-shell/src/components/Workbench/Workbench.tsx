@@ -24,6 +24,7 @@ const RouteButton: FC<RouteButtonProps> = ({ id }: RouteButtonProps) => {
 
 const elements = [
   'acm',
+  'are',
   'bam',
   'bcs',
   'bmp',
@@ -36,7 +37,9 @@ const elements = [
   'mos',
   'mus',
   'pvrz',
+  'src',
   'tis',
+  'twoda',
   'wav',
   'wed',
 ];

@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +20,7 @@ const useItmWidget = () => useSyncExternalStore(
 
 const Itms: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     loading,
     itms,
@@ -33,7 +35,7 @@ const Itms: FC<WithClassName> = ({ className }) => {
       value={currentItmId ?? ''}
       onChange={(_, itmId) => {
         if (isNothing(itmId)) throw new Error('Itm id cannot be empty here');
-        actions?.loadItm(itmId).catch(e => console.error(e));
+        navigate(`/itm/${itmId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

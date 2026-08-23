@@ -9,7 +9,7 @@ export const getStartingSteps = (): ProgressSteps => ({
   decompileBiffs: { value: 0, step: 'decompileBiffs', params: { rssBytes: 0 } },
   tlk_raw2json: { value: 0, step: 'tlk_raw2json', params: { rssBytes: 0, resourceName: '' } },
   ids_raw2json: { value: 0, step: 'ids_raw2json', params: { rssBytes: 0, resourceName: '' } },
-  twoda_raw2json: { value: 0, step: '2da_raw2json', params: { rssBytes: 0, resourceName: '' } },
+  twoda_raw2json: { value: 0, step: 'twoda_raw2json', params: { rssBytes: 0, resourceName: '' } },
   src_raw2json: { value: 0, step: 'src_raw2json', params: { rssBytes: 0, resourceName: '' } },
   bcs_raw2json: { value: 0, step: 'bcs_raw2json', params: { rssBytes: 0, resourceName: '' } },
   ini_raw2json: { value: 0, step: 'ini_raw2json', params: { rssBytes: 0, resourceName: '' } },
@@ -35,9 +35,10 @@ export const getStartingSteps = (): ProgressSteps => ({
   bmp_raw2assets: { value: 0, step: 'bmp_raw2assets', params: { rssBytes: 0, resourceName: '' } },
   wav_raw2assets: { value: 0, step: 'wav_raw2assets', params: { rssBytes: 0, resourceName: '' } },
   acm_raw2assets: { value: 0, step: 'acm_raw2assets', params: { rssBytes: 0, resourceName: '' } },
-  are_raw2assets: { value: 0, step: 'are_raw2assets', params: { rssBytes: 0, resourceName: '' } },
   tlk_json2ghost: { value: 0, step: 'tlk_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   ids_json2ghost: { value: 0, step: 'ids_json2ghost', params: { rssBytes: 0, resourceName: '' } },
+  twoda_json2ghost: { value: 0, step: 'twoda_json2ghost', params: { rssBytes: 0, resourceName: '' } },
+  src_json2ghost: { value: 0, step: 'src_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   bcs_json2ghost: { value: 0, step: 'bcs_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   ini_json2ghost: { value: 0, step: 'ini_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   cre_json2ghost: { value: 0, step: 'cre_json2ghost', params: { rssBytes: 0, resourceName: '' } },
@@ -45,6 +46,7 @@ export const getStartingSteps = (): ProgressSteps => ({
   eff_json2ghost: { value: 0, step: 'eff_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   itm_json2ghost: { value: 0, step: 'itm_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   wed_json2ghost: { value: 0, step: 'wed_json2ghost', params: { rssBytes: 0, resourceName: '' } },
+  are_json2ghost: { value: 0, step: 'are_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   pvrz_json2ghost: { value: 0, step: 'pvrz_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   mos_json2ghost: { value: 0, step: 'mos_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   tis_json2ghost: { value: 0, step: 'tis_json2ghost', params: { rssBytes: 0, resourceName: '' } },
@@ -98,9 +100,10 @@ export const getProgressMutation = (data: Progress): ProgressSteps[ProgressStep]
     case 'bmp_raw2assets':
     case 'wav_raw2assets':
     case 'acm_raw2assets':
-    case 'are_raw2assets':
     case 'tlk_json2ghost':
     case 'ids_json2ghost':
+    case 'twoda_json2ghost':
+    case 'src_json2ghost':
     case 'bcs_json2ghost':
     case 'ini_json2ghost':
     case 'cre_json2ghost':
@@ -108,6 +111,7 @@ export const getProgressMutation = (data: Progress): ProgressSteps[ProgressStep]
     case 'eff_json2ghost':
     case 'itm_json2ghost':
     case 'wed_json2ghost':
+    case 'are_json2ghost':
     case 'pvrz_json2ghost':
     case 'mos_json2ghost':
     case 'tis_json2ghost':

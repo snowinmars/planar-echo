@@ -14,3 +14,6 @@ export { musWidgetState } from './musWidgetState';
 export { effWidgetState } from './effWidgetState';
 export { idsWidgetState } from './idsWidgetState';
 export { iniWidgetState } from './iniWidgetState';
+export { areWidgetState } from './areWidgetState';
+export { twodaWidgetState } from './twodaWidgetState';
+export { srcWidgetState } from './srcWidgetState';

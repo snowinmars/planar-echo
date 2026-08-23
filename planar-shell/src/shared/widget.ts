@@ -14,4 +14,7 @@ export type Widget
     | 'mus'
     | 'eff'
     | 'ids'
-    | 'ini';
+    | 'ini'
+    | 'are'
+    | 'twoda'
+    | 'src';

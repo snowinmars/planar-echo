@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,6 +24,7 @@ const useMusWidget = () => useSyncExternalStore(
 
 const Muss: FC<WithClassName> = ({ className }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { loading, muss, currentMusId } = useMusWidget();
   const actions = musWidgetState.getActions();
 
@@ -33,7 +35,7 @@ const Muss: FC<WithClassName> = ({ className }) => {
       value={currentMusId ?? ''}
       onChange={(_, musId) => {
         if (isNothing(musId)) throw new Error('Mus id cannot be empty here');
-        actions?.loadMus(musId).catch(e => console.error(e));
+        navigate(`/mus/${musId}`)?.catch(e => console.error(e));
       }}
       loading={loading}
       disabled={loading || !actions}

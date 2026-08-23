@@ -26,6 +26,9 @@ const Mus = lazy(() => import('@/components/Workbench/children/Mus'));
 const Eff = lazy(() => import('@/components/Workbench/children/Eff'));
 const Ids = lazy(() => import('@/components/Workbench/children/Ids'));
 const Ini = lazy(() => import('@/components/Workbench/children/Ini'));
+const Are = lazy(() => import('@/components/Workbench/children/Are'));
+const Twoda = lazy(() => import('@/components/Workbench/children/Twoda'));
+const Src = lazy(() => import('@/components/Workbench/children/Src'));
 const Stores = lazy(() => import('@/components/Stores'));
 
 // https://github.com/remix-run/react-router/issues/12474#issuecomment-2538281149
@@ -50,53 +53,62 @@ const router = createBrowserRouter([{
     path: '/convert',
     element: <HelloDevs><Convert /></HelloDevs>,
   }, {
-    path: '/dlg',
+    path: '/dlg/:dlgId?',
     element: <HelloDevs><Dlg /></HelloDevs>,
   }, {
-    path: '/cre',
+    path: '/cre/:creId?',
     element: <HelloDevs><Cre /></HelloDevs>,
   }, {
-    path: '/itm',
+    path: '/itm/:itmId?',
     element: <HelloDevs><Itm /></HelloDevs>,
   }, {
-    path: '/bcs',
+    path: '/bcs/:bcsId?',
     element: <HelloDevs><Bcs /></HelloDevs>,
   }, {
-    path: '/mos',
+    path: '/mos/:mosId?',
     element: <HelloDevs><Mos /></HelloDevs>,
   }, {
-    path: '/pvrz',
+    path: '/pvrz/:pvrzId?',
     element: <HelloDevs><Pvrz /></HelloDevs>,
   }, {
-    path: '/tis',
+    path: '/tis/:tisId?',
     element: <HelloDevs><Tis /></HelloDevs>,
   }, {
-    path: '/wed',
+    path: '/wed/:wedId?',
     element: <HelloDevs><Wed /></HelloDevs>,
   }, {
-    path: '/acm',
+    path: '/acm/:acmId?',
     element: <HelloDevs><Acm /></HelloDevs>,
   }, {
-    path: '/bam',
+    path: '/bam/:bamId?',
     element: <HelloDevs><Bam /></HelloDevs>,
   }, {
-    path: '/bmp',
+    path: '/bmp/:bmpId?',
     element: <HelloDevs><Bmp /></HelloDevs>,
   }, {
-    path: '/wav',
+    path: '/wav/:wavId?',
     element: <HelloDevs><Wav /></HelloDevs>,
   }, {
-    path: '/mus',
+    path: '/mus/:musId?',
     element: <HelloDevs><Mus /></HelloDevs>,
   }, {
-    path: '/eff',
+    path: '/eff/:effId?',
     element: <HelloDevs><Eff /></HelloDevs>,
   }, {
-    path: '/ids',
+    path: '/ids/:idsId?',
     element: <HelloDevs><Ids /></HelloDevs>,
   }, {
-    path: '/ini',
+    path: '/ini/:iniId?',
     element: <HelloDevs><Ini /></HelloDevs>,
+  }, {
+    path: '/are/:areId?',
+    element: <HelloDevs><Are /></HelloDevs>,
+  }, {
+    path: '/twoda/:twodaId?',
+    element: <HelloDevs><Twoda /></HelloDevs>,
+  }, {
+    path: '/src/:srcId?',
+    element: <HelloDevs><Src /></HelloDevs>,
   }, {
     path: '/settings',
     element: <HelloDevs><Settings /></HelloDevs>,

@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import { useItmStore } from './store/itmStore';
 import { useItmWidgetBridge } from './useItmWidgetBridge';
 import { useTranslation } from 'react-i18next';
@@ -42,6 +43,7 @@ const Itm: FC = () => {
   const {
     // loading,
     currentItm,
+    loadItm,
     disposeItm,
   } = useItmStore(useShallow(state => ({
     // loading: state.loading, // TODO [snow]: pass into <T>...</T> to show loader inside TextFields
@@ -49,6 +51,8 @@ const Itm: FC = () => {
     loadItm: state.loadItm,
     disposeItm: state.disposeItm,
   })));
+
+  useGhostRouteId('itmId', loadItm, disposeItm);
 
   const lines = useTlkStore(x => x.lines);
   const loadTlkRefs = useTlkStore(x => x.loadTlkRefs);

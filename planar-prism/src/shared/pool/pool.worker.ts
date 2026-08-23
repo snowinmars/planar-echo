@@ -33,7 +33,7 @@ const handle = async (msg: MainToWorker): Promise<void> => {
       resourceName: msg.resourceName,
       decompiledRoot: data.decompiledRoot,
       assetsRoot: data.assetsRoot,
-      context: data.context as unknown,
+      context: data.context,
       payload: msg.payload,
     });
     const out: WorkerToMain = {
@@ -44,7 +44,8 @@ const handle = async (msg: MainToWorker): Promise<void> => {
     port.postMessage(out, result.transfer ?? []);
     const idle: WorkerToMain = { type: 'idle' };
     port.postMessage(idle);
-  } catch (e: unknown) {
+  }
+  catch (e: unknown) {
     const err = e instanceof Error ? e : new Error(String(e));
     const out: WorkerToMain = {
       type: 'error',

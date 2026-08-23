@@ -50,7 +50,7 @@
 
 - **planar-prism** - Node.js CLI (TypeScript). Парсит `.biff` → JSON → assets (PNG/WAV) → Ghost TS. `yarn start` (build + `node dist/index.js`) или дочерний процесс `process.fork` с IPC.
 - **planar-ghost** - формат и каталог вывода: семантический эквивалент данных игры в открытом виде. Раздаётся Asclepius как static под `/ghost`.
-- **planar-shell** - фронтенд: мастер конверсии, просмотр ghost (диалоги/существа/предметы + инспекторы acm/bam/bcs/bmp/mos/mus/pvrz/tis/wav/wed), настройки. REST + WebSocket к Asclepius.
+- **planar-shell** - фронтенд: мастер конверсии, просмотр ghost (диалоги/существа/предметы + инспекторы acm/are/bam/bcs/bmp/eff/ids/ini/mos/mus/pvrz/src/tis/twoda/wav/wed), настройки. REST + WebSocket к Asclepius.
 - **planar-asclepius** - сервер: serve Shell на `/`, ghost-файлы, оркестрация Prism (build → fork → build-ghost), ретрансляция IPC → WebSocket.
 - **planar-shared** - общий код для Prism, Asclepius, Shell и Ghost.
 
@@ -61,7 +61,7 @@
 3. Asclepius: `yarn workspace @planar/prism build` → `fork(prism/dist/index.js)` + IPC → `yarn workspace @planar/prism build-ghost`.
 4. Prism: WeiDU extract → JSON → assets → Ghost TS; прогресс через `process.send`; логи в stdout/stderr (наследуются Asclepius).
 5. Asclepius шлёт клиенту `ready` | `progress` | `error` | `complete`.
-6. Просмотр: Shell → REST `/api/ghost/*` (dlg/cre/itm + инспекторы acm/bam/bcs/bmp/mos/mus/pvrz/tis/wav/wed) + `@planar/shared` `dlgEngine` / shell `engine/dlgLogic.ts`.
+6. Просмотр: Shell → REST `/api/ghost/*` (dlg/cre/itm + инспекторы acm/are/bam/bcs/bmp/eff/ids/ini/mos/mus/pvrz/src/tis/twoda/wav/wed) + `@planar/shared` `dlgEngine` / shell `engine/dlgLogic.ts`.
 
 Связь Asclepius ↔ Prism: **только Node IPC**, не HTTP и не разбор stdout для прогресса.
 
@@ -74,7 +74,7 @@
 3. `3.decompileBiffs` - run WeiDU, use cache
 4. `4.biffs2json` - бинарники → JSON, только структура/хедеры (`pstee/`: 2da, acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, src, tis, tlk, wav, wed). Без PNG/DXT/decode audio
 5. `4b.raw2assets` - `allJsons` + seek в decompiled по offset → PNG/WAV/explored (`algo/` синтез; воркеры `shared/pool`). WAV/ACM: в JSON шага 4 PCM = `-1`, после decode патч `allJsons` + `saveJson`
-6. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; acm, are, bam, bcs, bmp, cre, dlg, itm, mos, mus, pvrz, tis, tlk, wav, wed). После патча wav/acm, `-1` сюда не утекает
+6. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, src, tis, tlk, twoda, wav, wed). После патча wav/acm, `-1` сюда не утекает
 7. `6.saveDiscovered` - метаданные обнаружения
 
 Типы Infinity Engine и прямые зависимости: [docs/ie-resource-types.md](docs/ie-resource-types.md).
@@ -84,7 +84,7 @@
 - CLI: интерактивное подтверждение (если не dev-флаги); дефолты в `planar-prism/src/index.ts`.
 - IPC: `process.on('message')`, `{ type: 'start', data }`; без confirm; прогресс `process.send`.
 
-**Прогресс:** `planar-prism/src/shared/report.ts` - RxJS `buffer` flush **250 ms**; дедупликация последнего по `ProgressStep` (`prismIndexStartMessage.ts`, `progressSteps` в shared: `*_raw2json` / `pvrz|bam|mos|tis|bmp|wav|acm|are_raw2assets` / `*_json2ghost`).
+**Прогресс:** `planar-prism/src/shared/report.ts` - RxJS `buffer` flush **250 ms**; дедупликация последнего по `ProgressStep` (`prismIndexStartMessage.ts`, `progressSteps` в shared: `*_raw2json` / `(pvrz|bam|mos|tis|bmp|wav|acm)_raw2assets` / `*_json2ghost`).
 
 **Игры:** enum `gameName` шире списка; **реализованы парсеры pstee** (Planescape: Torment EE).
 
@@ -97,7 +97,7 @@
 - Static: production Shell - `/` (SPA fallback вне `/api`). Ghost bundles - запросы `/ghost/*` через `ghostDirAction` (не только `express.static` на один dist).
 - Swagger UI: `/api/swagger`. Live OpenAPI JSON: `GET /api/openApi`.
 
-**REST** (`planar-asclepius/src/controllers/router.ts`) - типично JSON body; ghost: `/api/ghost/cre|dlg|itm|tlk|bcs|mos|pvrz|tis|wed` (list + skeleton), map: `/api/map/creToDlgs|dlgToCre|itmToDlgs|dlgToItm`. Схема: `planar-asclepius/src/swagger/swagger.json`.
+**REST** (`planar-asclepius/src/controllers/router.ts`) - типично JSON body; ghost: `/api/ghost/cre|dlg|itm|tlk|bcs|mos|pvrz|tis|wed|are|twoda|src|ids|ini|eff|acm|bam|bmp|wav|mus` (list + skeleton), map: `/api/map/creToDlgs|dlgToCre|itmToDlgs|dlgToItm`. Схема: `planar-asclepius/src/swagger/swagger.json`. URL-сегмент **twoda** = файлы `.2da`.
 
 **WebSocket:** path `/api/prism/index` (`wsController/router.ts`). Сервер сразу шлёт `{ type: 'ready' }`. Клиент: `{ type: 'start', data }` с полями `weiduExeDir`, `chitinKeyFile`, `ghostDir`, `prismDir`, `gameLanguage`, `gameName`.
 
@@ -107,14 +107,14 @@
 
 ## Ghost на диске
 
-- Текстовые и бинарные артефакты, not a single text Domain-Specific Language: промежуточный **JSON**, **assets** (PNG/WAV/explored) и **TS** на диске; runtime для движка - **bundled JS** под `planar-ghost/ghost/{cre,dlg,itm,bcs,mos,pvrz,tis,wed}/dist`. MOS/TIS: PNG в `assets/` (`imageName`).
-- `yarn build:ghost` - esbuild по `planar-ghost/ghost/**/*.ts`, alias `@planar/shared` (`build-ghost-cres|dlgs|itms|bcs|mos|pvrz|tis|wed|stores`).
+- Текстовые и бинарные артефакты, not a single text Domain-Specific Language: промежуточный **JSON**, **assets** (PNG/WAV/explored) и **TS** на диске; runtime для движка - **bundled JS** под `planar-ghost/ghost/{cre,dlg,itm,bcs,mos,pvrz,tis,wed,are,twoda,src,ids,ini,eff,acm,bam,bmp,wav,mus}/dist`. MOS/TIS: PNG в `assets/` (`imageName`).
+- `yarn build:ghost` - esbuild по `planar-ghost/ghost/**/*.ts`, alias `@planar/shared` (`build-ghost-cres|dlgs|itms|bcs|mos|pvrz|tis|wed|are|twoda|src|stores`).
 - Каталоги вывода: `ghost/`, `json/`, `assets/`, `decompiledBiff/`
 
 ## planar-shared - ключевые модули
 
 - `src/dlgEngine/` - `registerDlg`, `dlgLogic`, enums в `dlgEngine/enums/` (prism-autogenerated)
-- `src/ghost/` - внешний контракт ghostDir: `GhostCre*`, `GhostDlg*`, `GhostItm*`, `GhostTlk`, `GhostBcs*`, `GhostMos*`, `GhostPvr*` (`pvrz` - zipped pvr; `pvr` - unzipped pvrz), `GhostTis*`, `GhostWed*`
+- `src/ghost/` - внешний контракт ghostDir: `GhostCre*`, `GhostDlg*`, `GhostItm*`, `GhostTlk`, `GhostBcs*`, `GhostMos*`, `GhostPvr*` (`pvrz` - zipped pvr; `pvr` - unzipped pvrz), `GhostTis*`, `GhostWed*`, `GhostAre*`, `GhostTwoda*`, `GhostSrc*`
 - `src/resourceMappers/` - связи cre/dlg/itm
 - `src/prismIndexStartMessage.ts` - IPC/WS типы Prism index
 - `src/gameName.ts`, `src/gameLanguage.ts`
@@ -131,7 +131,7 @@
 - `steps/1.createPaths` … `6.saveDiscovered`
 - `steps/4.biffs2json/pstee/` - `biff2jsonPstee.ts`, `2da/`, `acm/`, `are/`, `bam/`, `bcs/`, `bmp/`, `cre/`, `dlg/`, `eff/`, `ids/`, `ini/`, `itm/`, `mos/`, `mus/`, `pvrz/`, `src/`, `tis/`, `tlk/`, `wav/`, `wed/`
 - `steps/4b.raw2assets/` - `raw2assetsPstee.ts`, `write*`, `algo/` (DXT, blit, decodeFrames, encodePng, decodeAudio).
-- `steps/5.json2Ghost/pstee/` - `json2GhostPstee.ts`, `cre/`, `dlg/`, `itm/`, `bcs/`, `mos/`, `pvr/` (patch PVR; ghost dir `pvrz`), `tis/`, `wed/`
+- `steps/5.json2Ghost/pstee/` - `json2GhostPstee.ts`, `cre/`, `dlg/`, `itm/`, `bcs/`, `mos/`, `pvr/` (patch PVR; ghost dir `pvrz`), `tis/`, `wed/`, `are/`, `twoda/`, `src/`, `ids/`, `ini/`, `eff/`, `acm/`, `bam/`, `bmp/`, `mus/`, `wav/`
 - `shared/` - `report.ts`, `bufferReader.ts`, `writer.ts`, `xor.ts`, `pool/` (`runPool`, `packPvrzSab`)
 - `discoverer.ts`, `discoverer.types.ts`
 
@@ -145,10 +145,10 @@
 
 ### planar-shell/src/
 
-- `router/router.tsx` - маршруты: `/`, `/details`, `/convert`, `/dlg`, `/cre`, `/itm`, `/bcs`, `/mos`, `/pvrz`, `/tis`, `/wed`, `/settings`, `/stores`
+- `router/router.tsx` - маршруты: `/`, `/details`, `/convert`, `/dlg/:dlgId?`, `/cre/:creId?`, `/itm/:itmId?`, `/bcs/:bcsId?`, `/mos/:mosId?`, `/pvrz/:pvrzId?`, `/tis/:tisId?`, `/wed/:wedId?`, `/acm/:acmId?`, `/bam/:bamId?`, `/bmp/:bmpId?`, `/wav/:wavId?`, `/mus/:musId?`, `/eff/:effId?`, `/ids/:idsId?`, `/ini/:iniId?`, `/are/:areId?`, `/twoda/:twodaId?`, `/src/:srcId?`, `/settings`, `/stores`. URL — источник истины для выбранного ресурса (`stateId` у dlg — query).
 - `components/Convert/` - мастер конверсии; шаг 6 - WS на `{backendUrl}/api/prism/index` (`store/step6.ts`)
 - `components/runners/` - Dlg, Cre, Itm, Bcs, Mos, Pvrz, Tis, Wed; `dialogueResolution/`
-- `components/Header/` - виджеты cre/dlg/itm/bcs/mos/pvrz/tis/wed
+- `components/Header/` - виджеты cre/dlg/itm/bcs/mos/pvrz/tis/wed/acm/bam/bmp/wav/mus/eff/ids/ini/are/twoda/src (navigate `/${type}/${id}` replace)
 - `shared/widgets/` - `*WidgetState` для тех же типов
 - `components/engine/` - `dlgLogic.ts`, `store/` (Zustand world)
 - `components/Settings/children/` - BackendUrl, GhostDir, PrismDir, ShellDir, LanguageSwitcher, DialogueRendererSwitcher, …
