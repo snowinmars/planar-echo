@@ -4,9 +4,7 @@ import {
   postApiGhostBmpByBmpIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostBmp } from '@planar/shared';
-
-type Skeleton = () => GhostBmp;
+import { evalGhostFactory, type GhostBmp } from '@planar/shared';
 
 export type LoadGhostBmpProps = Readonly<{
   bmpId: string;
@@ -31,7 +29,7 @@ export const loadGhostBmp = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostBmp>(response.data.data.content);
   return skeleton();
 };
 

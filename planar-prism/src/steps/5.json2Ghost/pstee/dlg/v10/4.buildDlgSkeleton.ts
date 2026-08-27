@@ -1,5 +1,5 @@
 import createWriter from '@/shared/writer.js';
-import { just, nothing } from '@planar/shared';
+import { just, nothing, withoutExtension } from '@planar/shared';
 import ie2ts from './ie2ts/index.js';
 
 import type { Maybe } from '@planar/shared';
@@ -202,7 +202,7 @@ export const buildDlgSkeleton = ({
   npcNameRef,
   discover,
 }: BuildDlgSkeletonProps): string => {
-  const npcLowercaseId = dlg.resourceName.split('.')[0]!.replace(`'`, ``);
+  const npcLowercaseId = withoutExtension(dlg.resourceName).replace(`'`, ``);
   const who = npcId.replaceAll(`'`, `\\'`);
 
   const writer = createWriter();

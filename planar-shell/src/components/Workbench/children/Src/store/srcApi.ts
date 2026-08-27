@@ -4,9 +4,7 @@ import {
   postApiGhostSrcBySrcIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostSrc } from '@planar/shared';
-
-type Skeleton = () => GhostSrc;
+import { evalGhostFactory, type GhostSrc } from '@planar/shared';
 
 export type LoadGhostSrcProps = Readonly<{
   srcId: string;
@@ -31,7 +29,7 @@ export const loadGhostSrc = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostSrc>(response.data.data.content);
   return skeleton();
 };
 

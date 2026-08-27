@@ -278,6 +278,14 @@ export type GhostAreRestInterruptions = Readonly<{
   probabilityNight: number;
 }>;
 
+export type GhostAreWalk = Readonly<{
+  cellWidth: number;
+  cellHeight: number;
+  colsCount: number;
+  rowsCount: number;
+  walkBinName: string;
+}>;
+
 export type GhostAre = Readonly<{
   resourceName: string;
   header: GhostAreHeader;
@@ -296,4 +304,5 @@ export type GhostAre = Readonly<{
   projectileTraps: GhostAreProjectileTrap[];
   song?: Maybe<GhostAreSong>;
   restInterruptions?: Maybe<GhostAreRestInterruptions>;
+  walk: GhostAreWalk;
 }>;

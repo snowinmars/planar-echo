@@ -2,7 +2,7 @@ import createReader from '@/shared/bufferReader.js';
 import { xorDecrypt } from '@/shared/xor.js';
 import { isNothing, just, nothing } from '@planar/shared';
 
-import type { Raw2da, Raw2daRow } from '../parse2das.types.js';
+import type { RawTwoda, RawTwodaRow } from '../parse2das.types.js';
 import type { Maybe } from '@planar/shared';
 
 const tokens = (line: string): string[] => {
@@ -39,7 +39,7 @@ export const parse2daV1 = ({
   buffer,
   resourceName,
   xorKey,
-}: Parse2daV1Props): Raw2da => {
+}: Parse2daV1Props): RawTwoda => {
   const encrypted = buffer.readInt16LE(0) === -1;
   const payload = encrypted ? xorDecrypt(buffer, 2, xorKey) : buffer;
   const reader = createReader(payload);
@@ -51,7 +51,7 @@ export const parse2daV1 = ({
   const headerLine = nextUncommentLine(lines);
   const columns = isNothing(headerLine) ? [] : tokens(headerLine);
 
-  const rows: Raw2daRow[] = [];
+  const rows: RawTwodaRow[] = [];
   while (true) {
     const line = nextUncommentLine(lines);
     if (isNothing(line)) break;

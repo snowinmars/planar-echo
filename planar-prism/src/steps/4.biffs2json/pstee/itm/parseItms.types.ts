@@ -8,3 +8,5 @@ export type RawItmV10 = Readonly<{
   abilities: RawItmAbilityV10[];
   effects: RawItmEffectV10[];
 }>;
+
+export type RawItm = RawItmV10;

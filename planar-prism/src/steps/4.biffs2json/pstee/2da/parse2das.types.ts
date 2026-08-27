@@ -1,13 +1,13 @@
-export type Raw2daRow = Readonly<{
+export type RawTwodaRow = Readonly<{
   name: string;
   cells: string[];
 }>;
 
-export type Raw2da = Readonly<{
+export type RawTwoda = Readonly<{
   resourceName: string;
   encrypted: boolean;
   signature: string;
   defaultValue: string;
   columns: string[];
-  rows: Raw2daRow[];
+  rows: RawTwodaRow[];
 }>;

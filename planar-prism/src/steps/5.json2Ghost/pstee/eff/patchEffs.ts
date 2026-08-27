@@ -1,7 +1,7 @@
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import { buildEffSkeleton } from './1.buildEffSkeleton.js';
-import { toGhost } from './2.toGhost.js';
+import { toGhost } from './1.toGhost.js';
+import { buildEffSkeleton } from './2.buildEffSkeleton.js';
 
 import type { RawEffV20 } from '@/steps/4.biffs2json/pstee/eff/index.js';
 import type { GhostEffOut } from './patchEffs.types.js';
@@ -11,8 +11,8 @@ export const patchEffs = (
 ): AsyncIterableIterator<GhostEffOut> => iterate<RawEffV20, GhostEffOut>(
   effs,
   (eff, i) => {
-    const skeleton = buildEffSkeleton(eff);
     const ghostEff = toGhost(eff);
+    const skeleton = buildEffSkeleton(ghostEff);
 
     const percent = Math.round((i + 1) * 100 / effs.length);
     reportProgress({

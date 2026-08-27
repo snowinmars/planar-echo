@@ -1,6 +1,6 @@
 import type { Direction, Maybe } from '@planar/shared';
 import type { RawIniCreatureIniPointSelect } from './parsePointSelectV1.types.js';
-import type { RawIniCreatureIniScopedVariable } from './parseScopedVariableV1.types.js';
+import type { RawIniCreatureScopedVariable } from './parseScopedVariableV1.types.js';
 import type { RawIniCreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';
 import type { RawIniCreatureIniSpecArea } from './parseSpecAreaV1.types.js';
 import type { RawIniCreatureIniSpec } from './parseSpecV1.types.js';
@@ -8,7 +8,7 @@ import type { RawIniCreatureIniSpecVarOperation } from './parseSpecVarOperationV
 
 export type RawIniCreatureIniSection = Readonly<{
   name: string;
-  specVar: Maybe<RawIniCreatureIniScopedVariable>;
+  specVar: Maybe<RawIniCreatureScopedVariable>;
   spec: string | RawIniCreatureIniSpec;
   specArea: Maybe<RawIniCreatureIniSpecArea>;
   specQty: number;
@@ -53,15 +53,15 @@ export type RawIniCreatureIniSection = Readonly<{
   deathTeam?: Maybe<boolean>;
   spawnPoint?: Maybe<RawIniCreatureIniSpawnPoint[]>;
   pointSelect: Maybe<RawIniCreatureIniPointSelect>;
-  pointSelectVar?: Maybe<RawIniCreatureIniScopedVariable>;
+  pointSelectVar?: Maybe<RawIniCreatureScopedVariable>;
   facing?: Maybe<Direction>;
   ignoreCanSee?: Maybe<boolean>;
   checkCrowd?: Maybe<boolean>;
   findSafestPoint?: boolean;
-  saveSelectedPoint?: Maybe<RawIniCreatureIniScopedVariable>;
-  saveSelectedFacing?: Maybe<RawIniCreatureIniScopedVariable>;
-  spawnPointGlobal?: Maybe<RawIniCreatureIniScopedVariable>;
-  spawnFacingGlobal?: Maybe<RawIniCreatureIniScopedVariable>;
+  saveSelectedPoint?: Maybe<RawIniCreatureScopedVariable>;
+  saveSelectedFacing?: Maybe<RawIniCreatureScopedVariable>;
+  spawnPointGlobal?: Maybe<RawIniCreatureScopedVariable>;
+  spawnFacingGlobal?: Maybe<RawIniCreatureScopedVariable>;
   incSpawnPointIndex?: Maybe<boolean>;
   holdSelectedPointKey?: Maybe<boolean>;
   checkByViewPort?: Maybe<boolean>;

@@ -1,8 +1,8 @@
 import logger from '@/shared/logger.js';
 import { patchTlk } from './tlk/patch.js';
-import { patchCres } from './cre/v10/patchCres.js';
+import { patchCres } from './cre/patchCres.js';
 import { patchDlgs } from './dlg/v10/patchDlgs.js';
-import { patchItms } from './itm/v11/patchItms.js';
+import { patchItms } from './itm/patchItms.js';
 import { patchBcs } from './bcs/patchBcs.js';
 import { patchMos } from './mos/patchMos.js';
 import { patchPvr } from './pvr/patchPvr.js';
@@ -23,8 +23,8 @@ import { patchInis } from './ini/patchInis.js';
 import type { Paths } from '../../1.createPaths/types.js';
 import type { AllPsteeJsons } from '../../4.biffs2json/types.js';
 import type { DiscoverNext } from '@/discoverer.types.js';
-import type { CreOut } from './cre/v10/patchCres.types.js';
-import type { ItmOut } from './itm/v11/patchItms.types.js';
+import type { CreOut } from './cre/patchCres.types.js';
+import type { ItmOut } from './itm/patchItms.types.js';
 import type { DlgOut } from './dlg/v10/patchDlgs.types.js';
 
 type AllJsons = AllPsteeJsons; // extend with new games
@@ -97,7 +97,7 @@ export const json2GhostPstee = async (
   }
 
   logger.info(`Converting are json to ghost...`);
-  const areIterator = patchAres(allJsons.ares);
+  const areIterator = patchAres(allJsons.ares, allJsons.weds);
   for await (const are of areIterator) {
     await paths.ghostDir.saveGhost.are(`${are.resourceName}.ts`, are.skeleton, true);
   }

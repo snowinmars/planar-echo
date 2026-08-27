@@ -4,9 +4,7 @@ import {
   postApiGhostTwodaByTwodaIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostTwoda } from '@planar/shared';
-
-type Skeleton = () => GhostTwoda;
+import { evalGhostFactory, type GhostTwoda } from '@planar/shared';
 
 export type LoadGhostTwodaProps = Readonly<{
   twodaId: string;
@@ -31,7 +29,7 @@ export const loadGhostTwoda = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostTwoda>(response.data.data.content);
   return skeleton();
 };
 

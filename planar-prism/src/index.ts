@@ -23,7 +23,7 @@ import { raw2assets } from '@/steps/4b.raw2assets/index.js';
 import { json2Ghost } from '@/steps/5.json2Ghost/index.js';
 import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
 import discoverer from './discoverer.js';
-import { nothing } from '@planar/shared';
+import { dateDiffSec, nothing } from '@planar/shared';
 
 import type { Maybe, PrismIndexStartMessage } from '@planar/shared';
 
@@ -56,12 +56,11 @@ const createTimeStat = (): TimeStat => {
     doneGhost: () => ghostDone = new Date(),
     done: () => done = new Date(),
     toString: () => JSON.stringify({
-      started,
-      validated,
-      jsonDone,
-      assetsDone,
-      ghostDone,
-      done,
+      validate: dateDiffSec(validated!, started!),
+      json: dateDiffSec(jsonDone!, validated!),
+      assets: dateDiffSec(assetsDone!, jsonDone!),
+      ghost: dateDiffSec(ghostDone!, assetsDone!),
+      total: dateDiffSec(done!, started!),
     }, null, 2),
   };
 };

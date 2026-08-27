@@ -4,9 +4,7 @@ import {
   postApiGhostPvrzByPvrzIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostPvr } from '@planar/shared';
-
-type Skeleton = () => GhostPvr;
+import { evalGhostFactory, type GhostPvr } from '@planar/shared';
 
 export type LoadGhostPvrzProps = Readonly<{
   pvrzId: string;
@@ -31,7 +29,7 @@ export const loadGhostPvrz = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostPvr>(response.data.data.content);
   return skeleton();
 };
 

@@ -1,0 +1,57 @@
+{
+  "name": "@planar/kernel",
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowinmars/planar-echo.git"
+  },
+  "version": "0.0.1",
+  "description": "Dedicated CRPG kernel: apply, tables, commands. No Express, Pixi, or fs.",
+  "author": "snowinmars",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "clean": "node src/dev/clean.js",
+    "lint": "eslint",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "@planar/shared": "workspace:*"
+  },
+  "mocha": {
+    "node-option": [
+      "import=tsx"
+    ],
+    "spec": "src/**/*.spec.ts",
+    "extension": [
+      "ts"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^25.5.0",
+    "@typescript-eslint/parser": "^8.57.1",
+    "chai": "^6.2.2",
+    "eslint": "^10.1.0",
+    "mocha": "^11.7.5",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.22.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  }
+}

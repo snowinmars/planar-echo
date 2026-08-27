@@ -16,7 +16,7 @@ import type { RawBam } from './pstee/bam/index.js';
 import type { RawWav } from './pstee/wav/index.js';
 import type { RawAcm } from './pstee/acm/index.js';
 import type { RawMus } from './pstee/mus/index.js';
-import type { Raw2da } from './pstee/2da/index.js';
+import type { RawTwoda } from './pstee/2da/index.js';
 import type { RawSrc } from './pstee/src/index.js';
 
 export type AllPsteeJsons = Readonly<{
@@ -38,6 +38,6 @@ export type AllPsteeJsons = Readonly<{
   wavs: RawWav[];
   acms: RawAcm[];
   muss: RawMus[];
-  twoda: Map<string, Raw2da>;
+  twoda: Map<string, RawTwoda>;
   srcs: Map<string, RawSrc>;
 }>;

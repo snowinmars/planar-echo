@@ -5,9 +5,8 @@ import {
 } from '@/swagger/client';
 import { getDbCre, setDbCre } from '@/shared/indexedDb';
 
-import type { GhostCre } from '@planar/shared';
+import { evalGhostFactory, type GhostCre } from '@planar/shared';
 
-type Skeleton = () => GhostCre;
 export const getSkeleton = async (serverUrl: string, ghostDir: string, creId: string): Promise<string> => {
   const skeletonResponse = await postApiGhostCreByCreIdSkeleton({
     client,
@@ -37,15 +36,15 @@ export const loadGhostCre = async ({
 }: LoadGhostCreProps,
 ): Promise<GhostCre> => {
   const dbCre = await getDbCre(creId);
-  let skeleton: Skeleton;
+  let skeleton: () => GhostCre;
 
   if (dbCre) {
-    skeleton = ((0, eval)(dbCre.skeleton));
+    skeleton = evalGhostFactory<GhostCre>(dbCre.skeleton);
   }
   else {
     const skeletonContent = await getSkeleton(serverUrl, ghostDir, creId);
     await setDbCre(creId, skeletonContent);
-    skeleton = ((0, eval)(skeletonContent));
+    skeleton = evalGhostFactory<GhostCre>(skeletonContent);
   }
 
   return skeleton();

@@ -4,9 +4,7 @@ import {
   postApiGhostWavByWavIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostWav } from '@planar/shared';
-
-type Skeleton = () => GhostWav;
+import { evalGhostFactory, type GhostWav } from '@planar/shared';
 
 export type LoadGhostWavProps = Readonly<{
   wavId: string;
@@ -31,7 +29,7 @@ export const loadGhostWav = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostWav>(response.data.data.content);
   return skeleton();
 };
 

@@ -1,4 +1,4 @@
-import runPrismScript from '@/shared/runPrismScript.js';
+import { runPrismScript } from '@/shared/runPrismScript.js';
 import { concat, Observable } from 'rxjs';
 import { exec } from 'child_process';
 import { WebSocket } from 'ws';
@@ -64,7 +64,7 @@ const run = (data: PrismIndexStartMessage['data']): Observable<PrismIndexRespons
   return concat(obs0, obs1, obs2);
 };
 
-const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
+export const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
   return run(data)
     .subscribe({
       next: (data) => {
@@ -97,5 +97,3 @@ const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
       },
     });
 };
-
-export default runPrismIndex;

@@ -6,13 +6,13 @@ import { parse2daV1 } from './v1/index.js';
 
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Paths } from '@/steps/1.createPaths/index.js';
-import type { Raw2da } from './parse2das.types.js';
+import type { RawTwoda } from './parse2das.types.js';
 
 export const parse2das = (
   paths: Paths,
   decompiledBiffs: DecompiledBiff[],
   xorKey: number[],
-): AsyncIterableIterator<Raw2da> => iterate<DecompiledBiff, Raw2da>(
+): AsyncIterableIterator<RawTwoda> => iterate<DecompiledBiff, RawTwoda>(
   decompiledBiffs,
   async ({ resourceName }, i) => {
     const buffer = await readFile(join(paths.ghostDir.decompiledBiff.root, resourceName));

@@ -1,84 +1,42 @@
 import { WebSocketServer } from 'ws';
-import runPrismIndex from '../wsController/prism/runIndex.js';
-import { WebSocket } from 'ws';
+import { attachPlayWs } from '../wsController/play/attachPlayWs.js';
+import { getGhostDir } from '@/services/settings/storage.js';
+import { attachPrismIndexWs } from './prism/attachPrismIndexWs.js';
 
 import type { IncomingMessage, Server, ServerResponse } from 'http';
-import type {
-  PrismIndexStartMessage,
-  PrismIndexProgressMessage,
-  PrismIndexCompleteMessage,
-  PrismIndexErrorMessage,
-  SafeError,
-} from '@planar/shared';
-import logger from '@/shared/logger.js';
+import type { Duplex } from 'stream';
+import { just } from '@planar/shared';
 
-type Message = PrismIndexStartMessage | PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
-
-const createPrismIndexWsEndpoint = (server: Server<typeof IncomingMessage, typeof ServerResponse>) => {
-  const wss = new WebSocketServer({ server, path: '/api/prism/index' });
-
-  wss.on('connection', (ws: WebSocket) => {
-    ws.send(JSON.stringify({ type: 'ready' }));
-
-    ws.on('message', (json: string) => {
-      let msg: Message;
-      try {
-        msg = JSON.parse(json) as Message;
-      }
-      catch (e: unknown) {
-        const err = e as SafeError;
-        logger.error(err);
-
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ type: 'error', data: err.toString ? err.toString() : err }));
-        }
-        else {
-          logger.warn(`Cannot send error websocket message because its state it '${ws.readyState}'`);
-        }
-
-        return;
-      }
-
-      if (msg.type === 'start') {
-        const startMessage = msg;
-
-        if (!startMessage.data) {
-          logger.warn('data cannot be empty');
-          return;
-        }
-        if (!startMessage.data.weiduExeDir) {
-          logger.warn('data.weiduExeDir cannot be empty');
-          return;
-        }
-        if (!startMessage.data.chitinKeyFile) {
-          logger.warn('data.chitinKeyFile cannot be empty');
-          return;
-        }
-        if (!startMessage.data.ghostDir) {
-          logger.warn('data.ghostDir cannot be empty');
-          return;
-        }
-        if (!startMessage.data.prismDir) {
-          logger.warn('data.prismDir cannot be empty');
-          return;
-        }
-        if (!startMessage.data.gameLanguage) {
-          logger.warn('data.gameLanguage cannot be empty');
-          return;
-        }
-        if (!startMessage.data.gameName) {
-          logger.warn('data.gameName cannot be empty');
-          return;
-        }
-
-        runPrismIndex(ws, startMessage.data);
-      }
-    });
-  });
+// drops ?.. from url
+const pathnameOf = (req: IncomingMessage): string => {
+  const raw = just(req.url);
+  const q = raw.indexOf('?');
+  return q === -1 ? raw : raw.slice(0, q);
 };
 
-const createWsRouter = (server: Server<typeof IncomingMessage, typeof ServerResponse>) => {
-  createPrismIndexWsEndpoint(server);
+const createWsRouter = (server: Server<typeof IncomingMessage, typeof ServerResponse>): void => {
+  const ghostDir = getGhostDir();
+
+  const prismWss = new WebSocketServer({ noServer: true });
+  const playWss = new WebSocketServer({ noServer: true });
+  attachPrismIndexWs(prismWss);
+  attachPlayWs(ghostDir, playWss);
+
+  server.on('upgrade', (req: IncomingMessage, socket: Duplex, head: Buffer) => {
+    const pathname = pathnameOf(req);
+
+    if (pathname === '/api/prism/index') return prismWss
+      .handleUpgrade(req, socket, head, (ws) => {
+        prismWss.emit('connection', ws, req);
+      });
+
+    if (pathname === '/api/play') return playWss
+      .handleUpgrade(req, socket, head, (ws) => {
+        playWss.emit('connection', ws, req);
+      });
+
+    socket.destroy();
+  });
 };
 
 export default createWsRouter;

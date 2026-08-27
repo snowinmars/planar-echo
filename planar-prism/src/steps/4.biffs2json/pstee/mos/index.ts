@@ -4,4 +4,4 @@ export type { RawMos } from './parseMoss.types.js';
 
 export { parseMoss } from './parseMoss.js';
 export { isMosV1Artifacts } from './parseMoss.const.js';
-export { isMosV1 } from './isMosV1.js';
+export { isRawMosV1, isGhostMosV1 } from './isMosV1.js';

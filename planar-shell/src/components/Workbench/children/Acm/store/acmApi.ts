@@ -4,9 +4,7 @@ import {
   postApiGhostAcmByAcmIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostAcm } from '@planar/shared';
-
-type Skeleton = () => GhostAcm;
+import { evalGhostFactory, type GhostAcm } from '@planar/shared';
 
 export type LoadGhostAcmProps = Readonly<{
   acmId: string;
@@ -31,7 +29,7 @@ export const loadGhostAcm = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostAcm>(response.data.data.content);
   return skeleton();
 };
 

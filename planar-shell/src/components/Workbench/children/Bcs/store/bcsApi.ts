@@ -4,9 +4,7 @@ import {
   postApiGhostBcsByBcsIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostBcs } from '@planar/shared';
-
-type Skeleton = () => GhostBcs;
+import { evalGhostFactory, type GhostBcs } from '@planar/shared';
 
 export type LoadGhostBcsProps = Readonly<{
   bcsId: string;
@@ -31,7 +29,7 @@ export const loadGhostBcs = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostBcs>(response.data.data.content);
   return skeleton();
 };
 

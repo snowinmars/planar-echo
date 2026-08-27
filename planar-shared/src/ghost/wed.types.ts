@@ -3,10 +3,7 @@ export type GhostWedHeader = Readonly<{
   version: 'v1.3';
   overlaysCount: number;
   doorsCount: number;
-  overlaysOffset: number;
-  secondaryHeaderOffset: number;
-  doorsOffset: number;
-  doorsTileCellsOffset: number;
+  wallPolygonCount: number;
 }>;
 
 export type GhostWedTilemap = Readonly<{
@@ -24,17 +21,7 @@ export type GhostWedOverlay = Readonly<{
   tileset: string;
   uniqueTileCount: number;
   movementType: number;
-  tilemapOffset: number;
-  tileIndexLookupOffset: number;
   tilemaps: GhostWedTilemap[];
-}>;
-
-export type GhostWedSecondaryHeader = Readonly<{
-  wallPolygonCount: number;
-  polygonsOffset: number;
-  verticesOffset: number;
-  wallGroupsOffset: number;
-  polygonIndicesLookupTableOffset: number;
 }>;
 
 export type GhostWedVertex = Readonly<{
@@ -60,8 +47,6 @@ export type GhostWedDoor = Readonly<{
   doorTileCellCount: number;
   openPolygonCount: number;
   closedPolygonCount: number;
-  openPolygonsOffset: number;
-  closedPolygonsOffset: number;
   doorTileCells: number[];
   openPolygons: GhostWedPolygon[];
   closedPolygons: GhostWedPolygon[];
@@ -77,7 +62,6 @@ export type GhostWed = Readonly<{
   resourceName: string;
   header: GhostWedHeader;
   overlays: GhostWedOverlay[];
-  secondaryHeader: GhostWedSecondaryHeader;
   vertices: GhostWedVertex[];
   wallPolygons: GhostWedPolygon[];
   doors: GhostWedDoor[];

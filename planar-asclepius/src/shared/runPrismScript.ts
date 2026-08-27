@@ -15,7 +15,7 @@ import type {
 type PrismIndexMessage = PrismIndexStartMessage | PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
 type PrismIndexResponse = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
-const runPrismScript = <T>(prismDir: string, commandName: string, data: T): Observable<PrismIndexResponse> => {
+export const runPrismScript = <T>(prismDir: string, commandName: string, data: T): Observable<PrismIndexResponse> => {
   const destroy$ = new Subject<void>();
   let child: ChildProcess;
   return new Observable<PrismIndexResponse>((subscriber) => {
@@ -59,5 +59,3 @@ const runPrismScript = <T>(prismDir: string, commandName: string, data: T): Obse
     }),
   );
 };
-
-export default runPrismScript;

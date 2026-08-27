@@ -1,18 +1,18 @@
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import { buildTwodaSkeleton } from './1.buildTwodaSkeleton.js';
-import { toGhost } from './2.toGhost.js';
+import { toGhost } from './1.toGhost.js';
+import { buildTwodaSkeleton } from './2.buildTwodaSkeleton.js';
 
-import type { Raw2da } from '@/steps/4.biffs2json/pstee/2da/index.js';
+import type { RawTwoda } from '@/steps/4.biffs2json/pstee/2da/index.js';
 import type { GhostTwodaOut } from './patchTwodas.types.js';
 
 export const patchTwodas = (
-  twodas: Raw2da[],
-): AsyncIterableIterator<GhostTwodaOut> => iterate<Raw2da, GhostTwodaOut>(
+  twodas: RawTwoda[],
+): AsyncIterableIterator<GhostTwodaOut> => iterate<RawTwoda, GhostTwodaOut>(
   twodas,
   (twoda, i) => {
-    const skeleton = buildTwodaSkeleton(twoda);
     const ghostTwoda = toGhost(twoda);
+    const skeleton = buildTwodaSkeleton(ghostTwoda);
 
     const percent = Math.round((i + 1) * 100 / twodas.length);
     reportProgress({

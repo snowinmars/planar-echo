@@ -2,7 +2,7 @@ import { join } from 'path';
 import logger from '@/shared/logger.js';
 import { runPool, packPvrzSab } from '@/shared/pool/index.js';
 import { collectAcmFiles } from './collectAcmFiles.js';
-import { isNothing } from '@planar/shared';
+import { writeAreWalks } from './writeAreWalks.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff, DecompiledBiffType } from '@/steps/3.decompileBiffs/index.js';
@@ -121,13 +121,6 @@ export const raw2assetsPstee = async (
     await paths.ghostDir.saveJson.acm(result.acm.resourceName, result.acm);
   });
 
-  // TODO [snow]: where is the explored mask?
-  // logger.info(`Converting are explored to assets...`);
-  // await drain(runPool({
-  //   kind: 'are',
-  //   jobs: toJobs(allJsons.ares.filter(are => !isNothing(are.exploredBitmaskName))),
-  //   decompiledRoot,
-  //   assetsRoot,
-  //   step: 'are_raw2assets',
-  // }));
+  logger.info(`Converting are walk grids to assets...`);
+  await writeAreWalks(allJsons, paths);
 };

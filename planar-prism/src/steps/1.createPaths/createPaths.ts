@@ -107,6 +107,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const assetsWavAudio: NamingFunction = x => `${x}.wav`;
   const assetsAcmAudio: NamingFunction = x => `${x}.wav`;
   const assetsAreExplored: NamingFunction = x => `${x}.explored`;
+  const assetsAreWalk: NamingFunction = x => `${x}.walk`;
 
   // TODO [snow]: I do not like this path, but where should it lead to?..
   const sharedEnums    = normalize(join(ghostDir, '..', 'planar-shared', 'src', 'dlgEngine', 'enums'));
@@ -199,6 +200,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
       saveAssets: {
         are: {
           explored: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsAre, assetsAreExplored(resourceName)), data),
+          walk: (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsAre, assetsAreWalk(resourceName)), data),
         },
         tis: {
           image  : (resourceName: string, data: Buffer) => saveBinaryToFile(join(assetsTis, assetsTisImage(resourceName)), data),

@@ -4,9 +4,7 @@ import {
   postApiGhostTisByTisIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostTis } from '@planar/shared';
-
-type Skeleton = () => GhostTis;
+import { evalGhostFactory, type GhostTis } from '@planar/shared';
 
 export type LoadGhostTisProps = Readonly<{
   tisId: string;
@@ -31,7 +29,7 @@ export const loadGhostTis = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostTis>(response.data.data.content);
   return skeleton();
 };
 

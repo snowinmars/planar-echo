@@ -4,9 +4,7 @@ import {
   postApiGhostEffByEffIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostEff } from '@planar/shared';
-
-type Skeleton = () => GhostEff;
+import { evalGhostFactory, type GhostEff } from '@planar/shared';
 
 export type LoadGhostEffProps = Readonly<{
   effId: string;
@@ -31,7 +29,7 @@ export const loadGhostEff = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostEff>(response.data.data.content);
   return skeleton();
 };
 

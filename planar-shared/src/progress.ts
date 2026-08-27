@@ -43,6 +43,7 @@ export const progressSteps = [
   'bmp_raw2assets',
   'wav_raw2assets',
   'acm_raw2assets',
+  'are_raw2assets',
   'tlk_json2ghost',
   'ids_json2ghost',
   'twoda_json2ghost',
@@ -98,6 +99,7 @@ type TisRaw2AssetsProgress  = Step<'tis_raw2assets'>  & WithResource;
 type BmpRaw2AssetsProgress  = Step<'bmp_raw2assets'>  & WithResource;
 type WavRaw2AssetsProgress  = Step<'wav_raw2assets'>  & WithResource;
 type AcmRaw2AssetsProgress  = Step<'acm_raw2assets'>  & WithResource;
+type AreRaw2AssetsProgress  = Step<'are_raw2assets'>  & WithResource;
 type TlkJson2GhostProgress  = Step<'tlk_json2ghost'>  & WithResource;
 type IdsJson2GhostProgress  = Step<'ids_json2ghost'>  & WithResource;
 type TwoDaJson2GhostProgress = Step<'twoda_json2ghost'> & WithResource;
@@ -207,6 +209,7 @@ export type ProgressSteps = {
   bmp_raw2assets: BmpRaw2AssetsProgress;
   wav_raw2assets: WavRaw2AssetsProgress;
   acm_raw2assets: AcmRaw2AssetsProgress;
+  are_raw2assets: AreRaw2AssetsProgress;
   tlk_json2ghost: TlkJson2GhostProgress;
   ids_json2ghost: IdsJson2GhostProgress;
   twoda_json2ghost: TwoDaJson2GhostProgress;

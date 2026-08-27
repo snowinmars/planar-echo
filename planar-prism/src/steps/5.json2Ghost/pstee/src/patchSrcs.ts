@@ -1,7 +1,7 @@
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import { buildSrcSkeleton } from './1.buildSrcSkeleton.js';
-import { toGhost } from './2.toGhost.js';
+import { toGhost } from './1.toGhost.js';
+import { buildSrcSkeleton } from './2.buildSrcSkeleton.js';
 
 import type { RawSrc } from '@/steps/4.biffs2json/pstee/src/index.js';
 import type { GhostSrcOut } from './patchSrcs.types.js';
@@ -11,8 +11,8 @@ export const patchSrcs = (
 ): AsyncIterableIterator<GhostSrcOut> => iterate<RawSrc, GhostSrcOut>(
   srcs,
   (src, i) => {
-    const skeleton = buildSrcSkeleton(src);
     const ghostSrc = toGhost(src);
+    const skeleton = buildSrcSkeleton(ghostSrc);
 
     const percent = Math.round((i + 1) * 100 / srcs.length);
     reportProgress({

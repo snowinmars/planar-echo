@@ -1,4 +1,4 @@
-export type RawIniCreatureIniScopedVariable = Readonly<{
+export type RawIniCreatureScopedVariable = Readonly<{
   scope: string;
   variableName: string;
 }>;

@@ -1,0 +1,38 @@
+{
+  "name": "@planar/daemon",
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowinmars/planar-echo.git"
+  },
+  "version": "0.0.1",
+  "description": "Node host for the planar kernel: clock, IPC, loads mod data/",
+  "author": "snowinmars",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "clean": "node src/dev/clean.js",
+    "start": "tsx src/index.ts",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@planar/kernel": "workspace:*",
+    "@planar/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^25.5.0",
+    "@typescript-eslint/parser": "^8.57.1",
+    "eslint": "^10.1.0",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.22.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ]
+}

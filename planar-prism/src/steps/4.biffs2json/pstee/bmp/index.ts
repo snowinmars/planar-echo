@@ -6,4 +6,4 @@ export type { RawBmp, RawBmpArtifacts } from './parseBmps.types.js';
 
 export { parseBmps } from './parseBmps.js';
 export { isBmpPalettedArtifacts } from './parseBmps.const.js';
-export { isBmpV1 } from './isBmpV1.js';
+export { isRawBmpV1, isGhostBmpV1 } from './isBmpV1.js';

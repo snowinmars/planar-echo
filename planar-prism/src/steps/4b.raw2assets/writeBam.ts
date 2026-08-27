@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
 import { inflateSync } from 'zlib';
-import { isBamV1 } from '@/steps/4.biffs2json/pstee/bam/isBamV1.js';
+import { isRawBamV1 } from '@/steps/4.biffs2json/pstee/bam/isBamV1.js';
 import { pvrzIndexFromSab } from '@/shared/pool/index.js';
 import { encodeRgbaPng } from './algo/encodeRgbaPng.js';
 import { blitRgbaFrame, cropAndBlit } from './algo/cropAndBlit.js';
@@ -90,7 +90,7 @@ export const writeOneBam = async ({
 }: ParseOneProps): Promise<ParseOneResult<AssetOk>> => {
   const bam = payload as RawBam;
 
-  if (isBamV1(bam)) {
+  if (isRawBamV1(bam)) {
     const raw = await readFile(join(decompiledRoot, resourceName));
     const src = inflateBamcIfNeeded(raw);
     const paletteBytes = 256 * 4;

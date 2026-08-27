@@ -5,9 +5,8 @@ import {
 } from '@/swagger/client';
 import { getDbItm, setDbItm } from '@/shared/indexedDb';
 
-import type { GhostItm } from '@planar/shared';
+import { evalGhostFactory, type GhostItm } from '@planar/shared';
 
-type Skeleton = () => GhostItm;
 export const getSkeleton = async (serverUrl: string, ghostDir: string, itmId: string): Promise<string> => {
   const skeletonResponse = await postApiGhostItmByItmIdSkeleton({
     client,
@@ -37,15 +36,15 @@ export const loadGhostItm = async ({
 }: LoadGhostItmProps,
 ): Promise<GhostItm> => {
   const dbItm = await getDbItm(itmId);
-  let skeleton: Skeleton;
+  let skeleton: () => GhostItm;
 
   if (dbItm) {
-    skeleton = ((0, eval)(dbItm.skeleton));
+    skeleton = evalGhostFactory<GhostItm>(dbItm.skeleton);
   }
   else {
     const skeletonContent = await getSkeleton(serverUrl, ghostDir, itmId);
     await setDbItm(itmId, skeletonContent);
-    skeleton = ((0, eval)(skeletonContent));
+    skeleton = evalGhostFactory<GhostItm>(skeletonContent);
   }
 
   return skeleton();

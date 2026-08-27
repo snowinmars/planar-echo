@@ -4,9 +4,7 @@ import {
   postApiGhostMosByMosIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostMos } from '@planar/shared';
-
-type Skeleton = () => GhostMos;
+import { evalGhostFactory, type GhostMos } from '@planar/shared';
 
 export type LoadGhostMosProps = Readonly<{
   mosId: string;
@@ -31,7 +29,7 @@ export const loadGhostMos = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostMos>(response.data.data.content);
   return skeleton();
 };
 

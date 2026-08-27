@@ -4,9 +4,7 @@ import {
   postApiGhostIniByIniIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostIni } from '@planar/shared';
-
-type Skeleton = () => GhostIni;
+import { evalGhostFactory, type GhostIni } from '@planar/shared';
 
 export type LoadGhostIniProps = Readonly<{
   iniId: string;
@@ -31,7 +29,7 @@ export const loadGhostIni = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostIni>(response.data.data.content);
   return skeleton();
 };
 

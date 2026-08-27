@@ -4,9 +4,7 @@ import {
   postApiGhostBamByBamIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostBam } from '@planar/shared';
-
-type Skeleton = () => GhostBam;
+import { evalGhostFactory, type GhostBam } from '@planar/shared';
 
 export type LoadGhostBamProps = Readonly<{
   bamId: string;
@@ -31,7 +29,7 @@ export const loadGhostBam = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostBam>(response.data.data.content);
   return skeleton();
 };
 

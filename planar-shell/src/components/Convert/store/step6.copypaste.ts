@@ -35,6 +35,7 @@ export const getStartingSteps = (): ProgressSteps => ({
   bmp_raw2assets: { value: 0, step: 'bmp_raw2assets', params: { rssBytes: 0, resourceName: '' } },
   wav_raw2assets: { value: 0, step: 'wav_raw2assets', params: { rssBytes: 0, resourceName: '' } },
   acm_raw2assets: { value: 0, step: 'acm_raw2assets', params: { rssBytes: 0, resourceName: '' } },
+  are_raw2assets: { value: 0, step: 'are_raw2assets', params: { rssBytes: 0, resourceName: '' } },
   tlk_json2ghost: { value: 0, step: 'tlk_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   ids_json2ghost: { value: 0, step: 'ids_json2ghost', params: { rssBytes: 0, resourceName: '' } },
   twoda_json2ghost: { value: 0, step: 'twoda_json2ghost', params: { rssBytes: 0, resourceName: '' } },
@@ -100,6 +101,7 @@ export const getProgressMutation = (data: Progress): ProgressSteps[ProgressStep]
     case 'bmp_raw2assets':
     case 'wav_raw2assets':
     case 'acm_raw2assets':
+    case 'are_raw2assets':
     case 'tlk_json2ghost':
     case 'ids_json2ghost':
     case 'twoda_json2ghost':

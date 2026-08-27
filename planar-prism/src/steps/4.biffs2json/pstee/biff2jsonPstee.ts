@@ -41,7 +41,7 @@ import type { RawBmp } from './bmp/index.js';
 import type { RawWav } from './wav/index.js';
 import type { RawAcm } from './acm/index.js';
 import type { RawMus } from './mus/index.js';
-import type { Raw2da } from './2da/index.js';
+import type { RawTwoda } from './2da/index.js';
 import type { RawSrc } from './src/index.js';
 import type { AllPsteeJsons } from '../types.js';
 import type { RawPvr } from './pvrz/index.js';
@@ -270,7 +270,7 @@ const biffs2jsonPstee = async (
   ///
 
   logger.info(`Converting 2da to json...`);
-  const twoda = new Map<string, Raw2da>();
+  const twoda = new Map<string, RawTwoda>();
   const twodaIterator = parse2das(paths, decompiledBiffs.get('2da') ?? [], xorKey);
   for await (const table of twodaIterator) {
     twoda.set(table.resourceName, table);

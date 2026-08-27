@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
 import { isNothing } from '@planar/shared';
-import { isBmpV1 } from '@/steps/4.biffs2json/pstee/bmp/isBmpV1.js';
+import { isRawBmpV1 } from '@/steps/4.biffs2json/pstee/bmp/isBmpV1.js';
 import { parseBmpPalette } from './algo/bmp/parseBmpPalette.js';
 import { parseBmpPixels } from './algo/bmp/parseBmpPixels.js';
 import { renderBmpImage } from './algo/bmp/renderBmpImage.js';
@@ -33,7 +33,7 @@ export const writeOneBmp = async ({
     bitsPerPixel: header.bitsPerPixel,
   });
 
-  const pixels = isBmpV1(bmp)
+  const pixels = isRawBmpV1(bmp)
     ? parseBmpPixels({
         blob: buffer.subarray(header.rasterDataOffset),
         resourceName,

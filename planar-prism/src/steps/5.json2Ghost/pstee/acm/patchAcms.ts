@@ -1,7 +1,7 @@
 import iterate from '../../../iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import { buildAcmSkeleton } from './1.buildAcmSkeleton.js';
-import { toGhost } from './2.toGhost.js';
+import { toGhost } from './1.toGhost.js';
+import { buildAcmSkeleton } from './2.buildAcmSkeleton.js';
 
 import type { RawAcm } from '../../../4.biffs2json/pstee/acm/index.js';
 import type { GhostAcmOut } from './patchAcms.types.js';
@@ -11,8 +11,8 @@ export const patchAcms = (
 ): AsyncIterableIterator<GhostAcmOut> => iterate<RawAcm, GhostAcmOut>(
   acms,
   (acm, i) => {
-    const skeleton = buildAcmSkeleton(acm);
     const ghostAcm = toGhost(acm);
+    const skeleton = buildAcmSkeleton(ghostAcm);
 
     const percent = Math.round((i + 1) * 100 / acms.length);
     reportProgress({

@@ -7,6 +7,11 @@ export const escapeSingleQuote = (x: string): string => x
   .replaceAll(`\n`, `\\n`);
 
 export const writeFlags = <T extends string>(writer: Writer, flagsValues: T[], propertyName: string, offset: number) => {
+  if (flagsValues.length === 0) {
+    writer.writeLine(`${propertyName}: [],`, offset);
+    return;
+  }
+
   writer.writeLine(`${propertyName}: [`, offset);
   for (const flag of flagsValues) writer.writeLine(`'${escapeSingleQuote(flag)}',`, offset + 2);
   writer.writeLine('],', offset);
@@ -18,6 +23,11 @@ export const writeStringArray = (
   values: string[],
   offset: number,
 ): void => {
+  if (values.length === 0) {
+    writer.writeLine(`${propertyName}: [],`, offset);
+    return;
+  }
+
   writer.writeLine(`${propertyName}: [`, offset);
   for (const value of values) writer.writeLine(`'${escapeSingleQuote(value)}',`, offset + 2);
   writer.writeLine(`],`, offset);
@@ -29,6 +39,11 @@ export const writeNumberArray = (
   values: number[],
   offset: number,
 ): void => {
+  if (values.length === 0) {
+    writer.writeLine(`${propertyName}: [],`, offset);
+    return;
+  }
+
   writer.writeLine(`${propertyName}: [`, offset);
   for (const value of values) writer.writeLine(`${value},`, offset + 2);
   writer.writeLine(`],`, offset);

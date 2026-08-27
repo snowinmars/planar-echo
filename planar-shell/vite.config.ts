@@ -31,6 +31,7 @@ export default defineConfig(({ mode }): UserConfig => {
       alias: {
         '@': resolve(__dirname, 'src'),
         '@planar/shared': resolve(__dirname, '../planar-shared/src/index.ts'),
+        '@planar/kernel': resolve(__dirname, '../planar-kernel/src/index.ts'),
       },
     },
     server: {
@@ -41,7 +42,10 @@ export default defineConfig(({ mode }): UserConfig => {
       },
     },
     optimizeDeps: {
-      exclude: ['@planar/shared'],
+      exclude: [
+        '@planar/shared',
+        '@planar/kernel',
+      ],
       esbuildOptions: {
         format: 'esm',
       },

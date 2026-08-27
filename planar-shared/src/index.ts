@@ -10,6 +10,9 @@ export { dlgToCres, creToDlgs } from './resourceMappers/creToDlg.js';
 export { dlgToCreOrItm } from './resourceMappers/dlgToCreOrItm.js';
 export { dlgToItms, itmToDlgs } from './resourceMappers/itmToDlgs.js';
 export { sleep } from './sleep.js';
+export { evalGhostFactory } from './evalGhostFactory.js';
+export { withoutExtension } from './withoutExtension.js';
+export { dateDiffSec } from './dateDiffSec.js';
 
 export type {
   Rectangle,
@@ -95,6 +98,9 @@ export type {
   GhostItm,
   GhostItmAbility,
   GhostItmEffect,
+  GhostItmV10,
+  GhostItmAbilityV10,
+  GhostItmEffectV10,
 } from './ghost/itm.types.js';
 export type { GhostTlk } from './ghost/tlk.types.js';
 export type {
@@ -127,6 +133,7 @@ export type {
 } from './ghost/wed.types.js';
 export type {
   GhostAre,
+  GhostAreWalk,
   GhostAreActor,
   GhostAreAmbient,
   GhostAreAnimation,
@@ -143,6 +150,7 @@ export type {
   GhostAreSpawnPoint,
   GhostAreTiledObject,
   GhostAreVariable,
+  GhostAreVertex,
 } from './ghost/are.types.js';
 export type { GhostTwoda, GhostTwodaRow } from './ghost/twoda.types.js';
 export type { GhostSrc, GhostSrcEntry } from './ghost/src.types.js';
@@ -170,6 +178,7 @@ export type {
   GhostIniCreatureSection,
   GhostIniGroupSection,
   GhostIniNumberedSection,
+  GhostIniCreatureScopedVariable,
 } from './ghost/ini.types.js';
 export type {
   GhostMus,

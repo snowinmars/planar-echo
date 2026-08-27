@@ -50,6 +50,7 @@ type OutSave = Readonly<{
 type OutSaveBinary = Readonly<{
   are: Readonly<{
     explored: SaveBinaryFunction;
+    walk: SaveBinaryFunction;
   }>;
   tis: Readonly<{
     image: SaveBinaryFunction;

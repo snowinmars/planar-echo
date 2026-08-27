@@ -1,6 +1,6 @@
 import type { Maybe } from '../maybe.js';
 
-export type GhostItm = Readonly<{
+export type GhostItmV10 = Readonly<{
   version: 'v10';
   resourceName: string;
   unidentifiedNameRef: number;
@@ -37,7 +37,7 @@ export type GhostItm = Readonly<{
   effects: GhostItmEffect[];
 }>;
 
-export type GhostItmAbility = Readonly<{
+export type GhostItmAbilityV10 = Readonly<{
   attackType: string;
   typeFlags: string[];
   abilityLocation: string;
@@ -351,7 +351,7 @@ export type GhostItmEffectExtension_HitPointTransfer = BaseGhostItmEffect & Read
   opcode: 'hitPointTransfer'; amount: number; direction: number; damageType: number; spe: number;
 }>;
 
-export type GhostItmEffect
+export type GhostItmEffectV10
   = | GhostItmUntranExtensionslatedEffect_AcBonus
     | GhostItmEffect_MExtensionodifyAttacksPerRound
     | GhostItmEffect_BExtensionerserk
@@ -441,3 +441,7 @@ export type GhostItmEffect
     | GhostItmEffectExtension_Embalm
     | GhostItmEffectExtension_HitPointTransfer
 ;
+
+export type GhostItm = GhostItmV10;
+export type GhostItmAbility = GhostItmAbilityV10;
+export type GhostItmEffect = GhostItmEffectV10;

@@ -1,0 +1,40 @@
+import eslint from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin';
+
+export default defineConfig(
+  globalIgnores([
+    './dist/*',
+    './node_modules/*',
+  ]),
+  eslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  stylistic.configs.customize({
+    quotes: 'single',
+    semi: true,
+    indent: 2,
+    commaDangle: 'always-multiline',
+  }),
+  {
+    rules: {
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_+$',
+          varsIgnorePattern: '^_+$',
+        },
+      ],
+    },
+  },
+);

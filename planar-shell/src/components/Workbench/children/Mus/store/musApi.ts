@@ -4,9 +4,7 @@ import {
   postApiGhostMusByMusIdSkeleton,
 } from '@/swagger/client';
 
-import type { GhostMus } from '@planar/shared';
-
-type Skeleton = () => GhostMus;
+import { evalGhostFactory, type GhostMus } from '@planar/shared';
 
 export type LoadGhostMusProps = Readonly<{
   musId: string;
@@ -31,7 +29,7 @@ export const loadGhostMus = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = ((0, eval)(response.data.data.content)) as Skeleton;
+  const skeleton = evalGhostFactory<GhostMus>(response.data.data.content);
   return skeleton();
 };
 

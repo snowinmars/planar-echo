@@ -1,7 +1,7 @@
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import { buildBmpSkeleton } from './1.buildBmpSkeleton.js';
-import { toGhost } from './2.toGhost.js';
+import { toGhost } from './1.toGhost.js';
+import { buildBmpSkeleton } from './2.buildBmpSkeleton.js';
 
 import type { GhostBmpOut } from './patchBmps.types.js';
 import type { RawBmp } from '@/steps/4.biffs2json/pstee/bmp/index.js';
@@ -11,8 +11,8 @@ export const patchBmps = (
 ): AsyncIterableIterator<GhostBmpOut> => iterate<RawBmp, GhostBmpOut>(
   bmps,
   (bmp, i) => {
-    const skeleton = buildBmpSkeleton(bmp);
     const ghostBmp = toGhost(bmp);
+    const skeleton = buildBmpSkeleton(ghostBmp);
 
     const percent = Math.round((i + 1) * 100 / bmps.length);
     reportProgress({

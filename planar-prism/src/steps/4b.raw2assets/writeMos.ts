@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
-import { isMosV1 } from '@/steps/4.biffs2json/pstee/mos/isMosV1.js';
+import { isRawMosV1 } from '@/steps/4.biffs2json/pstee/mos/isMosV1.js';
 import { pvrzIndexFromSab } from '@/shared/pool/index.js';
 import { encodeRgbaPng } from './algo/encodeRgbaPng.js';
 import { cropAndBlit } from './algo/cropAndBlit.js';
@@ -19,12 +19,12 @@ export const writeOneMos = async ({
 }: ParseOneProps): Promise<ParseOneResult<AssetOk>> => {
   const mos = payload as RawMos;
 
-  if (isMosV1(mos)) {
+  if (isRawMosV1(mos)) {
     const buffer = await readFile(join(decompiledRoot, resourceName));
     const stride = mos.paletteLayout.blockStride;
     const paletteEnd = mos.header.paletteOffset + mos.paletteLayout.blocksCount * stride;
     const palette = buffer.subarray(mos.header.paletteOffset, paletteEnd);
-    const indicesChunks = mos.blocks.map((block) =>
+    const indicesChunks = mos.blocks.map(block =>
       buffer.subarray(block.pixelDataOffset, block.pixelDataOffset + block.width * block.height),
     );
     const image = await renderMosV1Png({

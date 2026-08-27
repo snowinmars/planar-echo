@@ -1,6 +1,7 @@
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import { buildPvrSkeleton } from './1.buildPvrSkeleton.js';
+import { buildPvrSkeleton } from './2.buildPvrSkeleton.js';
+import { toGhost } from './1.toGhost.js';
 
 import type { RawPvr } from '@/steps/4.biffs2json/pstee/pvrz/index.js';
 import type { GhostPvrOut } from './patchPvr.types.js';
@@ -10,7 +11,8 @@ export const patchPvr = (
 ): AsyncIterableIterator<GhostPvrOut> => iterate<RawPvr, GhostPvrOut>(
   pvrs,
   (pvr, i) => {
-    const skeleton = buildPvrSkeleton(pvr);
+    const ghostPvr = toGhost(pvr);
+    const skeleton = buildPvrSkeleton(ghostPvr);
 
     const percent = Math.round((i + 1) * 100 / pvrs.length);
     reportProgress({

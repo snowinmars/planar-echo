@@ -63,22 +63,7 @@ const Wed: FC = () => {
           <T title="version" value={currentWed.header.version} />
           <T title="overlaysCount" value={currentWed.header.overlaysCount} />
           <T title="doorsCount" value={currentWed.header.doorsCount} />
-          <T title="overlaysOffset" value={currentWed.header.overlaysOffset} />
-          <T title="secondaryHeaderOffset" value={currentWed.header.secondaryHeaderOffset} />
-          <T title="doorsOffset" value={currentWed.header.doorsOffset} />
-          <T title="doorsTileCellsOffset" value={currentWed.header.doorsTileCellsOffset} />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion slotProps={{ transition: { unmountOnExit: true } }}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>secondaryHeader</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <T title="wallPolygonCount" value={currentWed.secondaryHeader.wallPolygonCount} />
-          <T title="polygonsOffset" value={currentWed.secondaryHeader.polygonsOffset} />
-          <T title="verticesOffset" value={currentWed.secondaryHeader.verticesOffset} />
-          <T title="wallGroupsOffset" value={currentWed.secondaryHeader.wallGroupsOffset} />
-          <T title="polygonIndicesLookupTableOffset" value={currentWed.secondaryHeader.polygonIndicesLookupTableOffset} />
+          <T title="wallPolygonCount" value={currentWed.header.wallPolygonCount} />
         </AccordionDetails>
       </Accordion>
       {
@@ -97,8 +82,6 @@ const Wed: FC = () => {
               <T title="tileset" value={overlay.tileset} />
               <T title="uniqueTileCount" value={overlay.uniqueTileCount} />
               <T title="movementType" value={overlay.movementType} />
-              <T title="tilemapOffset" value={overlay.tilemapOffset} />
-              <T title="tileIndexLookupOffset" value={overlay.tileIndexLookupOffset} />
               <T title="tilemaps" value={JSON.stringify(overlay.tilemaps)} />
             </AccordionDetails>
           </Accordion>
@@ -121,8 +104,6 @@ const Wed: FC = () => {
               <T title="doorTileCellCount" value={door.doorTileCellCount} />
               <T title="openPolygonCount" value={door.openPolygonCount} />
               <T title="closedPolygonCount" value={door.closedPolygonCount} />
-              <T title="openPolygonsOffset" value={door.openPolygonsOffset} />
-              <T title="closedPolygonsOffset" value={door.closedPolygonsOffset} />
               <T title="doorTileCells" value={door.doorTileCells.join(', ')} />
               <T title="openPolygons" value={JSON.stringify(door.openPolygons)} />
               <T title="closedPolygons" value={JSON.stringify(door.closedPolygons)} />

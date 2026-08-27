@@ -1,7 +1,7 @@
 import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
-import { buildMosSkeleton } from './1.buildMosSkeleton.js';
-import { toGhost } from './2.toGhost.js';
+import { toGhost } from './1.toGhost.js';
+import { buildMosSkeleton } from './2.buildMosSkeleton.js';
 
 import type { RawMos } from '@/steps/4.biffs2json/pstee/mos/index.js';
 import type { GhostMosOut } from './patchMos.types.js';
@@ -11,8 +11,8 @@ export const patchMos = (
 ): AsyncIterableIterator<GhostMosOut> => iterate<RawMos, GhostMosOut>(
   moss,
   (mos, i) => {
-    const skeleton = buildMosSkeleton(mos);
     const ghostMos = toGhost(mos);
+    const skeleton = buildMosSkeleton(ghostMos);
 
     const percent = Math.round((i + 1) * 100 / moss.length);
     reportProgress({
