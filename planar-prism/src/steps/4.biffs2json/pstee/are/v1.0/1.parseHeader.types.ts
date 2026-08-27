@@ -26,7 +26,7 @@ const areaFlagsV10 = {
   // 0x2000: unused
   // 0x4000: unused
   // 0x8000: unused
-  // bit (0x80 + 0x100): "You must obtain permission to rest here." // TODO [snow]: introduce?
+  // bit (0x80 + 0x100): "You must obtain permission to rest here." Do not introduce as a separate value
 } as const;
 type AreaFlagsV10 = typeof areaFlagsV10[keyof typeof areaFlagsV10];
 

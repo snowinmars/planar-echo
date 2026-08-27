@@ -25,8 +25,6 @@ const writeCreatureSection = (writer: Writer, section: GhostIniCreatureSection):
   if (section.specVar) writeScopedVar(writer, 'specVar', section.specVar, 8);
 
   if (typeof section.spec === 'string') {
-    // logger.warn(`Found string spec '${section.spec}' when spec is expected to be RawIniCreatureIniSpec object in section name '${section.name}'`);
-    // TODO [snow]: ever hit?
     writer.writeLine(`spec: '${escapeSingleQuote(section.spec)}',`, 8);
   }
   else {

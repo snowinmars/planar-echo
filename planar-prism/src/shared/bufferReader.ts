@@ -212,10 +212,9 @@ class BufferReaderImpl {
     return value;
   }
 
-  double(maxToZero = false): number {
+  double(): number {
     const value = this.#buffer.readDoubleLE(this.#offset);
     this.#offset += double64Bytes;
-    if (maxToZero) throw new Error(`Unsupported, TODO [snow]`);
     return value;
   }
 
@@ -239,6 +238,7 @@ class BufferReaderImpl {
     return asIs ? raw : raw.replace(/\0/g, '').trim().toLowerCase().replaceAll('\r\n', '\n');
   }
 
+  // TODO [snow]: in bytecode there is tail after null terminator. Why?
   nullTerminatedString(length: number, asIs: Maybe<boolean> = false, encoding: Maybe<BufferEncoding> = 'utf-8'): string {
     const full = this.string(length, true, encoding);
     const head = full.split('\0')[0]!;

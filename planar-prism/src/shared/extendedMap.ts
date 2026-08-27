@@ -20,7 +20,7 @@ export const extend = <TKey extends number, TValue extends string>(r: Record<TKe
 
 type ExternalMap = Readonly<{
   parseExternal: <T extends string>(x: number, r: Map<number, string[]>) => T;
-  parseFlagsExternal: <T extends string>(x: number, r: Map<number, string[]>) => T[]; // TODO [snow]: why map<number, string[]>, not map<number, string>?
+  parseFlagsExternal: <T extends string>(x: number, r: Map<number, string[]>) => T[];
 }>; // TODO [snow]: add symetry between externalOffsetMap and extend
 export const externalOffsetMap: ExternalMap = {
   parseExternal: <T extends string>(x: number, r: Map<number, string[]>): T => {

@@ -1,5 +1,18 @@
 import type { Maybe } from '../maybe.js';
 
+export type GhostEffTargetTypeV20
+  = | 'none'
+    | 'self'
+    | 'projectile target'
+    | 'party'
+    | 'everyone'
+    | 'everyone except party'
+    | 'caster group'
+    | 'target group'
+    | 'everyone except self'
+    | 'original caster'
+  ;
+
 export type GhostEffTypeV20
   = | 'none'
     | 'self'
@@ -70,7 +83,7 @@ export type GhostEffV20 = Readonly<{
   externalEffectsSignature: string;
   externalEffectsVersion: string;
   type: GhostEffTypeV20;
-  target: number;
+  targetType: GhostEffTargetTypeV20;
   power: number;
   parameter1: number;
   parameter2: number;

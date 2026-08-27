@@ -13,7 +13,7 @@ const parseRegion = ({
   reader,
   vertices,
 }: ParseRegionProps): RawAreRegionV10 => {
-  const name = reader.nullTerminatedString(32); // TODO [snow]: in bytecode there is tail after null terminator. Why?
+  const name = reader.nullTerminatedString(32);
   const type = reader.map.ushort(extendMap.regionType.parse);
   const boundingBoxLeft = reader.short();
   const boundingBoxTop = reader.short();

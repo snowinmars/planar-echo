@@ -22,7 +22,7 @@ export const buildEffSkeleton = (eff: GhostEffV20): string => {
   writer.writeLine(`externalEffectsSignature: '${escapeSingleQuote(eff.externalEffectsSignature)}',`, 4);
   writer.writeLine(`externalEffectsVersion: '${escapeSingleQuote(eff.externalEffectsVersion)}',`, 4);
   writer.writeLine(`type: '${escapeSingleQuote(eff.type)}',`, 4);
-  writer.writeLine(`target: ${eff.target},`, 4);
+  writer.writeLine(`targetType: '${escapeSingleQuote(eff.targetType)}',`, 4);
   writer.writeLine(`power: ${eff.power},`, 4);
   writer.writeLine(`parameter1: ${eff.parameter1},`, 4);
   writer.writeLine(`parameter2: ${eff.parameter2},`, 4);

@@ -13,7 +13,7 @@ const parseDoor = ({
   reader,
   vertices,
 }: ParseDoorProps): RawAreDoorV10 => {
-  const name = reader.nullTerminatedString(32); // TODO [snow]: in bytecode there is tail after null terminator. Why?
+  const name = reader.nullTerminatedString(32);
   const doorId = reader.string(8);
   const flags = reader.map.uint(extendMap.doorFlags.parseFlags);
   const firstVertexIndexWhenOpened = reader.uint();

@@ -1,6 +1,24 @@
 import { extend } from '@/shared/extendedMap.js';
 import type { Maybe } from '@planar/shared';
 
+/* createGenerator().register().enum('targetTypeV10',
+ *   ['none','self','projectile target','party','everyone','everyone except party','caster group','target group','everyone except self','original caster',]
+ * ).write()
+ */
+const targetTypeV20 = {
+  0: 'none',
+  1: 'self',
+  2: 'projectile target',
+  3: 'party',
+  4: 'everyone',
+  5: 'everyone except party',
+  6: 'caster group',
+  7: 'target group',
+  8: 'everyone except self',
+  9: 'original caster',
+} as const;
+type TargetTypeV20 = typeof targetTypeV20[keyof typeof targetTypeV20];
+
 /* createGenerator().register().enum("typeV20",
  *   ['none','self','projectile target','party','everyone','everyone except party','caster group','target group','everyone except self','original caster'],
  * ).write();
@@ -166,6 +184,7 @@ const parentResourceFlagsV20 = {
 type ParentResourceFlagsV20 = typeof parentResourceFlagsV20[keyof typeof parentResourceFlagsV20];
 
 export const extendMap = {
+  targetType: extend(targetTypeV20),
   type: extend(typeV20),
   timingMode: extend(timingModeV20),
   savingThrowType: extend(savingThrowTypeV20),
@@ -181,9 +200,9 @@ export type RawEffV20 = Readonly<{
   externalEffectsSignature: string;
   externalEffectsVersion: string;
   type: TypeV20;
-  target: number; // TargetV20;
+  targetType: TargetTypeV20;
   power: number;
-  parameter1: number; // TODO [snow]: opcodes are just wow
+  parameter1: number;
   parameter2: number;
   timingMode: TimingModeV20;
   duration: number;

@@ -16,7 +16,7 @@ const parseContainer = ({
   items,
   vertices,
 }: ParseContainerProps): RawAreContainerV10 => {
-  const name = reader.nullTerminatedString(32); // TODO [snow]: should add 2da? See docs // TODO [snow]: in bytecode there is tail after null terminator. Why?
+  const name = reader.nullTerminatedString(32);
   const x = reader.ushort();
   const y = reader.ushort();
   const type = reader.map.ushort(extendMap.containerType.parse);

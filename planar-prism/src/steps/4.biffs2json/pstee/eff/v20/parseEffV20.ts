@@ -17,7 +17,7 @@ export const parseEffV20 = ({
   const externalEffectsVersion = reader.string(4);
 
   const type = reader.map.uint(extendMap.type.parse);
-  const target = reader.uint(); // TODO [snow]: to enum
+  const targetType = reader.map.uint(extendMap.targetType.parse);
   const power = reader.uint();
   const parameter1 = reader.uint();
   const parameter2 = reader.uint();
@@ -68,7 +68,7 @@ export const parseEffV20 = ({
     externalEffectsSignature,
     externalEffectsVersion,
     type,
-    target,
+    targetType,
     power,
     parameter1,
     parameter2,

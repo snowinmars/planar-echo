@@ -2,7 +2,7 @@ import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawAreRestInterruptionsV10 } from './18.parseRestInterruptions.types.js';
 
 export const parseRestInterruptions = (reader: BufferReader): RawAreRestInterruptionsV10 => {
-  const name = reader.nullTerminatedString(32);// TODO [snow]: in bytecode there is tail after null terminator. Why?
+  const name = reader.nullTerminatedString(32);
   const explanationRefs: number[] = [];
   for (let i = 0; i < 10; i++) explanationRefs.push(reader.int());
   const rawCreatures: string[] = [];

@@ -1,48 +1,55 @@
+import { nothing, type Maybe } from '@planar/shared';
+
 import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawCreItemSlotsV11 } from './7.parseItemSlotsV11.types.js';
 
 export const parseItemSlotsV11 = (reader: BufferReader): RawCreItemSlotsV11 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm
 
+  const maybeShort = (): Maybe<number> => {
+    const v = reader.short();
+    return v === -1 ? nothing() : v;
+  };
+
   // const itemSlotsSize = 80; // just to know
-  const leftEarringOrLensOrHelmet = reader.ushort(); // TODO [snow]: to enum
-  const chest = reader.ushort(true);
-  const rightLowerTattoo = reader.ushort(true);
-  const hand = reader.ushort(true);
-  const rightRing = reader.ushort(true);
-  const leftRing = reader.ushort(true);
-  const rightEarringOrEyeball = reader.ushort(true);
-  const leftTattoo = reader.ushort(true);
-  const wrist = reader.ushort(true);
-  const weapon1 = reader.ushort(true);
-  const weapon2 = reader.ushort(true);
-  const weapon3 = reader.ushort(true);
-  const weapon4 = reader.ushort(true);
-  const quiver1 = reader.ushort(true);
-  const quiver2 = reader.ushort(true);
-  const quiver3 = reader.ushort(true);
-  const quiver4 = reader.ushort(true);
-  const rightUpperRattoo = reader.ushort(true);
-  const quickItem1 = reader.ushort(true);
-  const quickItem2 = reader.ushort(true);
-  const quickItem3 = reader.ushort(true);
-  const inventoryItem1 = reader.ushort(true);
-  const inventoryItem2 = reader.ushort(true);
-  const inventoryItem3 = reader.ushort(true);
-  const inventoryItem4 = reader.ushort(true);
-  const inventoryItem5 = reader.ushort(true);
-  const inventoryItem6 = reader.ushort(true);
-  const inventoryItem7 = reader.ushort(true);
-  const inventoryItem8 = reader.ushort(true);
-  const inventoryItem9 = reader.ushort(true);
-  const inventoryItem10 = reader.ushort(true);
-  const inventoryItem11 = reader.ushort(true);
-  const inventoryItem12 = reader.ushort(true);
-  const inventoryItem13 = reader.ushort(true);
-  const inventoryItem14 = reader.ushort(true);
-  const inventoryItem15 = reader.ushort(true);
-  const inventoryItem16 = reader.ushort(true);
-  const magicWeapon = reader.ushort(true);
+  const leftEarringOrLensOrHelmet = maybeShort();
+  const chest = maybeShort();
+  const rightLowerTattoo = maybeShort();
+  const hand = maybeShort();
+  const rightRing = maybeShort();
+  const leftRing = maybeShort();
+  const rightEarringOrEyeball = maybeShort();
+  const leftTattoo = maybeShort();
+  const wrist = maybeShort();
+  const weapon1 = maybeShort();
+  const weapon2 = maybeShort();
+  const weapon3 = maybeShort();
+  const weapon4 = maybeShort();
+  const quiver1 = maybeShort();
+  const quiver2 = maybeShort();
+  const quiver3 = maybeShort();
+  const quiver4 = maybeShort();
+  const rightUpperRattoo = maybeShort();
+  const quickItem1 = maybeShort();
+  const quickItem2 = maybeShort();
+  const quickItem3 = maybeShort();
+  const inventoryItem1 = maybeShort();
+  const inventoryItem2 = maybeShort();
+  const inventoryItem3 = maybeShort();
+  const inventoryItem4 = maybeShort();
+  const inventoryItem5 = maybeShort();
+  const inventoryItem6 = maybeShort();
+  const inventoryItem7 = maybeShort();
+  const inventoryItem8 = maybeShort();
+  const inventoryItem9 = maybeShort();
+  const inventoryItem10 = maybeShort();
+  const inventoryItem11 = maybeShort();
+  const inventoryItem12 = maybeShort();
+  const inventoryItem13 = maybeShort();
+  const inventoryItem14 = maybeShort();
+  const inventoryItem15 = maybeShort();
+  const inventoryItem16 = maybeShort();
+  const magicWeapon = maybeShort();
   const selectedWeapon = reader.ushort();
   const selectedWeaponAbility = reader.ushort();
 

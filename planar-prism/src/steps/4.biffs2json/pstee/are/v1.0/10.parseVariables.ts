@@ -4,7 +4,7 @@ import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawAreVariableV10 } from './10.parseVariables.types.js';
 
 const parseVariable = (reader: BufferReader): RawAreVariableV10 => {
-  const name = reader.nullTerminatedString(32); // TODO [snow]: in bytecode there is tail after null terminator. Why?
+  const name = reader.nullTerminatedString(32);
   const type = reader.map.ushort(extendMap.variableType.parse);
   const resourceType = reader.ushort();
   const dwordValue = reader.uint();

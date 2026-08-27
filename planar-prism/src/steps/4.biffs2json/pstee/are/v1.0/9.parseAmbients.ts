@@ -4,7 +4,7 @@ import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawAreAmbientV10 } from './9.parseAmbients.types.js';
 
 const parseAmbient = (reader: BufferReader): RawAreAmbientV10 => {
-  const name = reader.nullTerminatedString(32); // TODO [snow]: in bytecode there is tail after null terminator. Why?
+  const name = reader.nullTerminatedString(32);
   const x = reader.ushort();
   const y = reader.ushort();
   const radius = reader.ushort();

@@ -12,7 +12,7 @@ const parseTiledObject = ({
   reader,
   vertices,
 }: ParseTiledObjectProps): RawAreTiledObjectV10 => {
-  const name = reader.nullTerminatedString(32);// TODO [snow]: in bytecode there is tail after null terminator. Why?
+  const name = reader.nullTerminatedString(32);
   const tileId = reader.string(8);
   const flags = reader.map.uint(extendMap.tiledObjectFlags.parseFlags);
   const firstImpededIndexWhenOpened = reader.uint();

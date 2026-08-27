@@ -5,12 +5,11 @@ import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawItmAbilityV10 } from './2.parseAbilities.types.js';
 import type { RawItmEffectV10 } from './3.parseEffects.types.js';
 
-const parseAbilityEffects = (reader: BufferReader, count: number, index: number): RawItmEffectV10[] => {
+const parseAbilityEffects = (reader: BufferReader, count: number): RawItmEffectV10[] => {
   const abilityEffects: RawItmEffectV10[] = [];
-  // TODO [snow]: I may have a bug here: choose index vs i
-  const r = reader.fork();
+
   for (let i = 0; i < count; i++) {
-    const abilityEffect = parseEffect(r);
+    const abilityEffect = parseEffect(reader);
     abilityEffects.push(abilityEffect);
   }
 
@@ -54,7 +53,7 @@ const parseAbility = (reader: BufferReader, offsetToEffects: number): RawItmAbil
 
   const sizeOfAbilityEffectBytes = 48;
   const thisAbilityEffectsOffset = offsetToEffects + sizeOfAbilityEffectBytes * firstEffectIndex;
-  const effects = parseAbilityEffects(reader.fork(thisAbilityEffectsOffset), countOfEffects, firstEffectIndex);
+  const effects = parseAbilityEffects(reader.fork(thisAbilityEffectsOffset), countOfEffects);
 
   return {
     attackType,
