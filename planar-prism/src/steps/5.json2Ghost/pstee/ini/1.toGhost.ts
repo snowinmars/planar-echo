@@ -20,6 +20,17 @@ export const toGhost = (raw: RawIni): GhostIni => {
     return {
       ...x,
       spawnPoint: either(x.spawnPoint, []),
+      ai: {
+        ea: x.aiEa,
+        faction: x.aiFaction,
+        team: x.aiTeam,
+        general: x.aiGeneral,
+        race: x.aiRace,
+        class: x.aiClass,
+        specifics: x.aiSpecifics,
+        gender: x.aiGender,
+        alignment: x.aiAlignment,
+      },
     };
   });
 

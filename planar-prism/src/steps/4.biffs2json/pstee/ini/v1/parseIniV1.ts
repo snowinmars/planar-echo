@@ -15,11 +15,14 @@ import {
 
 import type { Maybe } from '@planar/shared';
 import type { RawIni } from '../parseInis.types.js';
+import type { RawIds } from '../../ids/index.js';
 
+// Lol. That's why strong compile-time typings rules
 const patchIniSyntax = (content: string, resourceName: string): string => {
   switch (resourceName) {
     case 'ar0203.ini': return content.replace('[repetitive', '[repetitive]');
     case 'ar1600.ini': return content.replaceAll('[3898,1705:8]', '[3898.1705:8]');
+    case 'ar1601.ini': return content.replaceAll('ai_general        = 21', 'ai_specifics      = 21');
     default: return content;
   }
 };
@@ -29,10 +32,12 @@ const numberRegex = /^\d+$/;
 type ParseIniV1Props = Readonly<{
   buffer: Buffer;
   resourceName: string;
+  ids: Map<string, RawIds>;
 }>;
 export const parseIniV1 = ({
   buffer,
   resourceName,
+  ids,
 }: ParseIniV1Props): RawIni => {
   const content = patchIniSyntax(buffer.toString(), resourceName);
   const ini = parseIniFromString(content);
@@ -101,7 +106,7 @@ export const parseIniV1 = ({
 
     const isCreatureSection = entryKeys.has('spec');
     if (isCreatureSection) {
-      const creature = parseCreatureSectionV1(section);
+      const creature = parseCreatureSectionV1(section, ids);
       if (creature) creatureSections.push(creature);
       continue;
     }

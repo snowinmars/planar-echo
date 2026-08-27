@@ -7,19 +7,21 @@ import { parseSpecVarOperationV1 } from './parseSpecVarOperationV1.js';
 import { parseBooleanV1 } from './parseBooleanV1.js';
 import { parsePointSelectV1 } from './parsePointSelectV1.js';
 import { parseDecOrThrow, parseDecOrDefault } from './shared.js';
+import { resolveIniIds } from './resolveIniIds.js';
 
 import type { PartialWriteable, Maybe } from '@planar/shared';
+import type { RawIds } from '../../../ids/index.js';
 import type { RawIniCreatureIniSection } from './parseCreatureSectionV1.types.js';
 import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
 
-export const parseCreatureSectionV1 = (section: RawIniSection): Maybe<RawIniCreatureIniSection> => {
+export const parseCreatureSectionV1 = (section: RawIniSection, ids: Map<string, RawIds>): Maybe<RawIniCreatureIniSection> => {
   const tmp: PartialWriteable<RawIniCreatureIniSection> = {};
 
   for (const entry of section.entries) {
   /* eslint-disable @stylistic/no-multi-spaces */
     switch (entry.key) {
       case 'spec_var':                { tmp.specVar              = parseScopedVariableV1(entry.value);   break; }
-      case 'spec':                    { tmp.spec                 = parseSpecV1(entry.value);             break; }
+      case 'spec':                    { tmp.spec                 = parseSpecV1(entry.value, ids);        break; }
       case 'spec_area':               { tmp.specArea             = parseSpecAreaV1(entry.value);         break; }
       case 'spec_qty':                { tmp.specQty              = parseDecOrThrow(entry.value);         break; }
       case 'spec_var_inc':            { tmp.specVarInc           = parseDecOrThrow(entry.value);         break; }
@@ -31,15 +33,15 @@ export const parseCreatureSectionV1 = (section: RawIniSection): Maybe<RawIniCrea
       case 'cre_file':                { tmp.creFile              = entry.value;                          break; }
       case 'create_qty':              { tmp.createQty            = parseDecOrDefault(entry.value, 1);    break; }
       case 'script_name':             { tmp.scriptName           = entry.value;                          break; }
-      case 'ai_ea':                   { tmp.aiEa                 = parseDecOrThrow(entry.value);         break; }
-      case 'ai_general':              { tmp.aiGeneral            = parseDecOrThrow(entry.value);         break; }
-      case 'ai_race':                 { tmp.aiRace               = parseDecOrThrow(entry.value);         break; }
-      case 'ai_class':                { tmp.aiClass              = parseDecOrThrow(entry.value);         break; }
-      case 'ai_gender':               { tmp.aiGender             = parseDecOrThrow(entry.value);         break; }
-      case 'ai_specifics':            { tmp.aiSpecifics          = parseDecOrThrow(entry.value);         break; }
-      case 'ai_alignment':            { tmp.aiAlignment          = parseDecOrThrow(entry.value);         break; }
-      case 'ai_faction':              { tmp.aiFaction            = parseDecOrThrow(entry.value);         break; }
-      case 'ai_team':                 { tmp.aiTeam               = entry.value;                          break; }
+      case 'ai_ea':                   { tmp.aiEa                 = resolveIniIds(entry.value, ids.get('ea.ids')!.entries);       break; }
+      case 'ai_general':              { tmp.aiGeneral            = resolveIniIds(entry.value, ids.get('general.ids')!.entries);  break; }
+      case 'ai_race':                 { tmp.aiRace               = resolveIniIds(entry.value, ids.get('race.ids')!.entries);     break; }
+      case 'ai_class':                { tmp.aiClass              = resolveIniIds(entry.value, ids.get('class.ids')!.entries);    break; }
+      case 'ai_gender':               { tmp.aiGender             = resolveIniIds(entry.value, ids.get('gender.ids')!.entries);   break; }
+      case 'ai_specifics':            { tmp.aiSpecifics          = resolveIniIds(entry.value, ids.get('specific.ids')!.entries); break; }
+      case 'ai_alignment':            { tmp.aiAlignment          = resolveIniIds(entry.value, ids.get('align.ids')!.entries);    break; }
+      case 'ai_faction':              { tmp.aiFaction            = resolveIniIds(entry.value, ids.get('faction.ids')!.entries);  break; }
+      case 'ai_team':                 { tmp.aiTeam               = resolveIniIds(entry.value, ids.get('team.ids')!.entries);     break; }
       case 'script_override':         { tmp.scriptOverride       = entry.value;                          break; }
       case 'script_class':            { tmp.scriptClass          = entry.value;                          break; }
       case 'script_race':             { tmp.scriptRace           = entry.value;                          break; }

@@ -1,11 +1,13 @@
+import type { Maybe } from '@planar/shared';
+
 export type RawIniCreatureIniSpec = Readonly<{
-  ea: number;
-  faction: number;
-  team: number;
-  general: number;
-  race: number;
-  class: number;
-  specific: number;
-  gender: number;
-  align: number;
+  ea: Maybe<string>;
+  faction: Maybe<string>;
+  team: Maybe<string>;
+  general: Maybe<string>;
+  race: Maybe<string>;
+  class: Maybe<string>;
+  specifics: Maybe<string>;
+  gender: Maybe<string>;
+  alignment: Maybe<string>;
 }>;

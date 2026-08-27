@@ -21,15 +21,15 @@ export type RawIniCreatureIniSection = Readonly<{
   creFile: string;
   createQty?: Maybe<number>;
   scriptName?: Maybe<string>;
-  aiEa?: Maybe<number>;
-  aiGeneral?: Maybe<number>;
-  aiRace?: Maybe<number>;
-  aiClass?: Maybe<number>;
-  aiGender?: Maybe<number>;
-  aiSpecifics?: Maybe<number>;
-  aiAlignment?: Maybe<number>;
-  aiFaction?: Maybe<number>;
-  aiTeam?: Maybe<string | number>; // TODO [snow]: what type is it?
+  aiEa?: Maybe<string>;
+  aiGeneral?: Maybe<string>;
+  aiRace?: Maybe<string>;
+  aiClass?: Maybe<string>;
+  aiGender?: Maybe<string>;
+  aiSpecifics?: Maybe<string>;
+  aiAlignment?: Maybe<string>;
+  aiFaction?: Maybe<string>;
+  aiTeam?: Maybe<string>;
   scriptOverride?: Maybe<string>;
   scriptClass?: Maybe<string>;
   scriptRace?: Maybe<string>;

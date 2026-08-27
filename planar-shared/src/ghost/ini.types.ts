@@ -128,15 +128,15 @@ export type GhostIniCreatureSpecArea = Readonly<{
 }>;
 
 export type GhostIniCreatureSpec = Readonly<{
-  ea: number;
-  faction: number;
-  team: number;
-  general: number;
-  race: number;
-  class: number;
-  specific: number;
-  gender: number;
-  align: number;
+  ea?: Maybe<string>;
+  faction?: Maybe<string>;
+  team?: Maybe<string>;
+  general?: Maybe<string>;
+  race?: Maybe<string>;
+  class?: Maybe<string>;
+  specifics?: Maybe<string>;
+  gender?: Maybe<string>;
+  alignment?: Maybe<string>;
 }>;
 
 export type GhostIniCreatureSpecVarOperation
@@ -160,15 +160,7 @@ export type GhostIniCreatureSection = Readonly<{
   creFile: string;
   createQty?: Maybe<number>;
   scriptName?: Maybe<string>;
-  aiEa?: Maybe<number>;
-  aiGeneral?: Maybe<number>;
-  aiRace?: Maybe<number>;
-  aiClass?: Maybe<number>;
-  aiGender?: Maybe<number>;
-  aiSpecifics?: Maybe<number>;
-  aiAlignment?: Maybe<number>;
-  aiFaction?: Maybe<number>;
-  aiTeam?: Maybe<string | number>;
+  ai?: Maybe<GhostIniCreatureSpec>;
   scriptOverride?: Maybe<string>;
   scriptClass?: Maybe<string>;
   scriptRace?: Maybe<string>;

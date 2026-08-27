@@ -54,6 +54,11 @@ const mustHaveIds = [
   'general.ids',
   'class.ids',
   'object.ids',
+  'align.ids',
+  'faction.ids',
+  'team.ids',
+  'specific.ids',
+  'gender.ids',
 ];
 
 const biffs2jsonPstee = async (
@@ -125,7 +130,7 @@ const biffs2jsonPstee = async (
 
   logger.info(`Converting ini to json...`);
   const inis = new Map<string, RawIni>();
-  const inisIterator = parseInis(paths, decompiledBiffs.get('ini')!);
+  const inisIterator = parseInis(paths, decompiledBiffs.get('ini')!, ids);
   for await (const ini of inisIterator) {
     if (!ini) continue;
     inis.set(ini.resourceName, ini);

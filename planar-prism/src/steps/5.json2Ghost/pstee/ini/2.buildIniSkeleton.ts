@@ -29,15 +29,15 @@ const writeCreatureSection = (writer: Writer, section: GhostIniCreatureSection):
   }
   else {
     writer.writeLine(`spec: {`, 8);
-    writer.writeLine(`ea: ${section.spec.ea},`, 10);
-    writer.writeLine(`faction: ${section.spec.faction},`, 10);
-    writer.writeLine(`team: ${section.spec.team},`, 10);
-    writer.writeLine(`general: ${section.spec.general},`, 10);
-    writer.writeLine(`race: ${section.spec.race},`, 10);
-    writer.writeLine(`class: ${section.spec.class},`, 10);
-    writer.writeLine(`specific: ${section.spec.specific},`, 10);
-    writer.writeLine(`gender: ${section.spec.gender},`, 10);
-    writer.writeLine(`align: ${section.spec.align},`, 10);
+    if (section.spec.ea) writer.writeLine(`ea: '${escapeSingleQuote(section.spec.ea)}',`, 10);
+    if (section.spec.faction) writer.writeLine(`faction: '${escapeSingleQuote(section.spec.faction)}',`, 10);
+    if (section.spec.team) writer.writeLine(`team: '${escapeSingleQuote(section.spec.team)}',`, 10);
+    if (section.spec.general) writer.writeLine(`general: '${escapeSingleQuote(section.spec.general)}',`, 10);
+    if (section.spec.race) writer.writeLine(`race: '${escapeSingleQuote(section.spec.race)}',`, 10);
+    if (section.spec.class) writer.writeLine(`class: '${escapeSingleQuote(section.spec.class)}',`, 10);
+    if (section.spec.specifics) writer.writeLine(`specifics: '${escapeSingleQuote(section.spec.specifics)}',`, 10);
+    if (section.spec.gender) writer.writeLine(`gender: '${escapeSingleQuote(section.spec.gender)}',`, 10);
+    if (section.spec.alignment) writer.writeLine(`alignment: '${escapeSingleQuote(section.spec.alignment)}',`, 10);
     writer.writeLine(`},`, 8);
   }
 
@@ -62,17 +62,18 @@ const writeCreatureSection = (writer: Writer, section: GhostIniCreatureSection):
   writer.writeLine(`creFile: '${escapeSingleQuote(section.creFile)}',`, 8);
   if (section.createQty) writer.writeLine(`createQty: ${section.createQty},`, 8);
   if (section.scriptName) writer.writeLine(`scriptName: '${escapeSingleQuote(section.scriptName)}',`, 8);
-  if (section.aiEa) writer.writeLine(`aiEa: ${section.aiEa},`, 8);
-  if (section.aiGeneral) writer.writeLine(`aiGeneral: ${section.aiGeneral},`, 8);
-  if (section.aiRace) writer.writeLine(`aiRace: ${section.aiRace},`, 8);
-  if (section.aiClass) writer.writeLine(`aiClass: ${section.aiClass},`, 8);
-  if (section.aiGender) writer.writeLine(`aiGender: ${section.aiGender},`, 8);
-  if (section.aiSpecifics) writer.writeLine(`aiSpecifics: ${section.aiSpecifics},`, 8);
-  if (section.aiAlignment) writer.writeLine(`aiAlignment: ${section.aiAlignment},`, 8);
-  if (section.aiFaction) writer.writeLine(`aiFaction: ${section.aiFaction},`, 8);
-  if (section.aiTeam) {
-    if (typeof section.aiTeam === 'string') writer.writeLine(`aiTeam: '${escapeSingleQuote(section.aiTeam)}',`, 8);
-    else writer.writeLine(`aiTeam: ${section.aiTeam},`, 8);
+  if (section.ai) {
+    writer.writeLine('ai: {', 8);
+    if (section.ai.ea) writer.writeLine(`ea: '${escapeSingleQuote(section.ai.ea)}',`, 10);
+    if (section.ai.general) writer.writeLine(`general: '${escapeSingleQuote(section.ai.general)}',`, 10);
+    if (section.ai.race) writer.writeLine(`race: '${escapeSingleQuote(section.ai.race)}',`, 10);
+    if (section.ai.class) writer.writeLine(`class: '${escapeSingleQuote(section.ai.class)}',`, 10);
+    if (section.ai.gender) writer.writeLine(`gender: '${escapeSingleQuote(section.ai.gender)}',`, 10);
+    if (section.ai.specifics) writer.writeLine(`specifics: '${escapeSingleQuote(section.ai.specifics)}',`, 10);
+    if (section.ai.alignment) writer.writeLine(`alignment: '${escapeSingleQuote(section.ai.alignment)}',`, 10);
+    if (section.ai.faction) writer.writeLine(`faction: '${escapeSingleQuote(section.ai.faction)}',`, 10);
+    if (section.ai.team) writer.writeLine(`team: '${escapeSingleQuote(section.ai.team)}',`, 10);
+    writer.writeLine('},', 8);
   }
   if (section.scriptOverride) writer.writeLine(`scriptOverride: '${escapeSingleQuote(section.scriptOverride)}',`, 8);
   if (section.scriptClass) writer.writeLine(`scriptClass: '${escapeSingleQuote(section.scriptClass)}',`, 8);
