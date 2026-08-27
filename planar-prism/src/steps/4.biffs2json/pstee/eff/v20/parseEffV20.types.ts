@@ -214,7 +214,7 @@ export type RawEffV20 = Readonly<{
   savingThrowType: SavingThrowTypeV20[];
   saveBonus: number;
   special: number;
-  primaryTypeSchool: number;
+  primaryTypeSchool: Maybe<number>;
   minimumLevel: Maybe<number>;
   maximumLevel: Maybe<number>;
   dispelOrResistance: DispelOrResistanceV20[];

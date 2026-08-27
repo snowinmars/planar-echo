@@ -192,6 +192,7 @@ src/htmlcov/
 
 planar-ghost
 planar-weidu
+planar-prism/cli.defaults.json
 
 ##
 # https://habr.com/ru/articles/1029868/?ysclid=mrmldrvv8l218166405

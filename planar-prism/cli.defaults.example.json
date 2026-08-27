@@ -1,0 +1,8 @@
+{
+  "weiduExeDir": "/path/to/weidu.exe",
+  "chitinKeyFile": "/path/to/CHITIN.KEY",
+  "ghostDir": "/path/to/planar-ghost",
+  "prismDir": "/path/to/planar-prism/dist",
+  "gameLanguage": "en_US",
+  "gameName": "pstee"
+}

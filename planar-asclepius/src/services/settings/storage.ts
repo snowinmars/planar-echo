@@ -1,15 +1,14 @@
-import { join, dirname, resolve } from 'path';
-import { fileURLToPath } from 'url';
+import {
+  defaultGhostDir,
+  defaultPrismDir,
+  defaultShellDir,
+  defaultWeiduDir,
+} from '@/shared/layout.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const initialGhostDir = resolve(join(__dirname, '..', '..', '..', '..', 'planar-ghost'));
-const weiduInstallDir = resolve(join(__dirname, '..', '..', '..', '..', 'planar-weidu'));
-const initialPrismDir = resolve(join(__dirname, '..', '..', '..', '..', 'planar-prism', 'dist'));
-const initialShellDir = resolve(join(__dirname, '..', '..', '..', '..', 'planar-shell', 'dist'));
-let ghostDir = initialGhostDir;
-let prismDir = initialPrismDir;
-let shellDir = initialShellDir;
+const weiduInstallDir = defaultWeiduDir;
+let ghostDir = defaultGhostDir;
+let prismDir = defaultPrismDir;
+let shellDir = defaultShellDir;
 
 export const getGhostDir = () => ghostDir;
 export const getWeiduInstallDir = () => weiduInstallDir;

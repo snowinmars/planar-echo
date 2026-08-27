@@ -1,5 +1,6 @@
 import { join, normalize, dirname } from 'path';
 import { mkdirsIfNotExists, saveBinaryToFile, saveToFile } from '@/shared/customFs.js';
+import { packageDir } from '@planar/shared/node';
 
 import type { Maybe } from '@planar/shared';
 import type { PrismIndexStartMessage } from '@planar/shared';
@@ -109,8 +110,7 @@ export const createPaths = async (props: CreatePathsProps): Promise<Paths> => {
   const assetsAreExplored: NamingFunction = x => `${x}.explored`;
   const assetsAreWalk: NamingFunction = x => `${x}.walk`;
 
-  // TODO [snow]: I do not like this path, but where should it lead to?..
-  const sharedEnums    = normalize(join(ghostDir, '..', 'planar-shared', 'src', 'dlgEngine', 'enums'));
+  const sharedEnums    = normalize(join(packageDir('@planar/shared', import.meta.url), 'src', 'dlgEngine', 'enums'));
 
   const paths: Paths = {
     weiduExeDir  : weiduExeDir,

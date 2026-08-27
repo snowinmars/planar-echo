@@ -36,7 +36,7 @@ export const buildEffSkeleton = (eff: GhostEffV20): string => {
   writeFlags(writer, eff.savingThrowType, 'savingThrowType', 4);
   writer.writeLine(`saveBonus: ${eff.saveBonus},`, 4);
   writer.writeLine(`special: ${eff.special},`, 4);
-  writer.writeLine(`primaryTypeSchool: ${eff.primaryTypeSchool},`, 4);
+  if (eff.primaryTypeSchool) writer.writeLine(`primaryTypeSchool: ${eff.primaryTypeSchool},`, 4);
   if (eff.minimumLevel) writer.writeLine(`minimumLevel: ${eff.minimumLevel},`, 4);
   if (eff.maximumLevel) writer.writeLine(`maximumLevel: ${eff.maximumLevel},`, 4);
   writeFlags(writer, eff.dispelOrResistance, 'dispelOrResistance', 4);

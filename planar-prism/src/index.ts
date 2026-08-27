@@ -23,6 +23,7 @@ import { raw2assets } from '@/steps/4b.raw2assets/index.js';
 import { json2Ghost } from '@/steps/5.json2Ghost/index.js';
 import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
 import discoverer from './discoverer.js';
+import { loadCliDefaults } from './loadCliDefaults.js';
 import { dateDiffSec, nothing } from '@planar/shared';
 
 import type { Maybe, PrismIndexStartMessage } from '@planar/shared';
@@ -117,12 +118,5 @@ if (isIpc) {
   });
 }
 else {
-  main({
-    weiduExeDir: 'D:/Games/weidu/weidu.exe',
-    chitinKeyFile: 'D:/Games/Steam/steamapps/common/Project P/CHITIN.KEY',
-    ghostDir: 'E:/prg/snowinmars/planar-echo/planar-ghost',
-    prismDir: 'E:/prg/snowinmars/planar-echo/planar-prism/dist',
-    gameLanguage: 'ru_RU',
-    gameName: 'pstee',
-  }).catch(e => logger.error(e));
+  main(loadCliDefaults()).catch(e => logger.error(e));
 }

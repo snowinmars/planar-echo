@@ -2,6 +2,7 @@ import { extendMap } from './parseEffV20.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawEffV20 } from './parseEffV20.types.js';
+import { nothing } from '@planar/shared';
 
 type ParseEffV20Props = Readonly<{
   reader: BufferReader;
@@ -31,7 +32,7 @@ export const parseEffV20 = ({
   const savingThrowType = reader.map.uint(extendMap.savingThrowType.parseFlags);
   const saveBonus = reader.uint();
   const special = reader.uint();
-  const primaryTypeSchool = reader.uint(); // TODO [snow]: to enum
+  const _primaryTypeSchool = reader.uint(); // On the one hand, this is defaultMageTypesV10; on the other hand, this is magespec.ids; on the third hand, it is always 0 in pstee. M... Meh.
   reader.skip.uint();
   const minimumLevel = reader.uint();
   const maximumLevel = reader.uint();
@@ -82,7 +83,7 @@ export const parseEffV20 = ({
     savingThrowType,
     saveBonus,
     special,
-    primaryTypeSchool,
+    primaryTypeSchool: _primaryTypeSchool === 0 ? nothing() : _primaryTypeSchool,
     minimumLevel,
     maximumLevel,
     dispelOrResistance,

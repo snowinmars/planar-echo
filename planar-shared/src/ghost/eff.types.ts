@@ -97,7 +97,7 @@ export type GhostEffV20 = Readonly<{
   savingThrowType: GhostEffSavingThrowTypeV20[];
   saveBonus: number;
   special: number;
-  primaryTypeSchool: number;
+  primaryTypeSchool?: Maybe<number>;
   minimumLevel?: Maybe<number>;
   maximumLevel?: Maybe<number>;
   dispelOrResistance: GhostEffDispelOrResistanceV20[];

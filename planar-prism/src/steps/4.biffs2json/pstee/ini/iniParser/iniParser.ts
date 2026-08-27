@@ -255,14 +255,12 @@ export const parseIniFromString = (content: string): RawIniConfiguration => {
   for (const section of sections) {
     for (const entry of section.entries) {
       const values = entry.rawValue.split('\n');
+
       // Cleanup the values
       entry.value = values
-      // Clean up white spaces
-        .map(v => v.trim())
-      // Remove empty line entries
-        .filter(v => v.length > 0)
-      // Combine the value lines
-        .join('\n');
+        .map(v => v.trim().toLowerCase()) // Clean up white spaces
+        .filter(v => v.length > 0) // Remove empty line entries
+        .join('\n'); // Combine the value lines
     }
   }
 

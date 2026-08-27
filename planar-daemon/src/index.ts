@@ -1,16 +1,11 @@
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 import { boot } from './boot.js';
 import { send } from './shared/send.js';
+import { just, nothing } from '@planar/shared';
 
 import type { ToDaemon } from '@planar/kernel';
-import { nothing, type Maybe } from '@planar/shared';
+import type { Maybe } from '@planar/shared';
 
 const isIpc = !!process.send;
-
-const defaultGhostDir = (): string => join(
-  dirname(fileURLToPath(import.meta.url)), '..', '..', 'planar-ghost', // TODO [snow]: PATHES
-);
 
 let live: Maybe<(msg: ToDaemon) => void> = nothing();
 
@@ -34,7 +29,7 @@ if (isIpc) {
   });
 }
 else {
-  const ghostDir = process.argv[2] ?? defaultGhostDir();
+  const ghostDir = just(process.argv[2]);
   const areId = process.argv[3];
   const entracnceId = process.argv[4];
 
