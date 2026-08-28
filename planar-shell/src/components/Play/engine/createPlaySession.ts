@@ -39,6 +39,35 @@ export const createPlaySession = ({
   let wsOpen = false;
   let renderHostReady = false;
   let alive = false;
+  let followRequested = false;
+
+  const closeWs = (): void => {
+    const alreadyClosed = ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED;
+    if (!alreadyClosed) ws.close();
+  };
+
+  const onPageHide = (): void => teardown();
+
+  const teardown = (): void => {
+    if (disposed) {
+      console.warn(`Disposed, and therefore will not teardown`);
+      return;
+    }
+
+    disposed = true;
+    alive = false;
+
+    window.removeEventListener('pagehide', onPageHide);
+    window.removeEventListener('beforeunload', onPageHide);
+
+    view?.destroy();
+    view = nothing();
+
+    closeWs();
+  };
+
+  window.addEventListener('pagehide', onPageHide);
+  window.addEventListener('beforeunload', onPageHide);
 
   const sendInputCommand = (command: InputCommand): void => {
     if (disposed) {
@@ -122,7 +151,7 @@ export const createPlaySession = ({
     renderHost,
     serverUrl,
     ghostDir,
-    onClick: ({ x, y }) => {
+    onClick: ({ x, y, button }) => {
       if (disposed) {
         console.warn(`Disposed, and therefore will not open websocket`);
         return;
@@ -133,6 +162,7 @@ export const createPlaySession = ({
         seatId: SEAT_ID,
         x,
         y,
+        button,
       });
     },
     onHudUpdate: (tick, paused, areId) => {
@@ -151,6 +181,9 @@ export const createPlaySession = ({
 
     view = nextView;
     renderHostReady = true;
+
+    nextView.setFollow(followRequested);
+
     tryGoLive();
   }).catch((err: unknown) => {
     if (disposed) {
@@ -164,7 +197,7 @@ export const createPlaySession = ({
 
   ws.addEventListener('open', () => {
     if (disposed) {
-      console.warn(`Disposed, and therefore will not open websocket`);
+      closeWs();
       return;
     }
 
@@ -219,12 +252,13 @@ export const createPlaySession = ({
         paused,
       });
     },
+    setFollow: (follow) => {
+      followRequested = follow;
+      if (isNothing(view)) return;
+      view.setFollow(follow);
+    },
     destroy: () => {
-      disposed = true;
-      alive = false;
-      view?.destroy();
-      view = nothing();
-      ws.close();
+      teardown();
     },
   };
 };

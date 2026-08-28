@@ -1,15 +1,31 @@
-import { Application, Assets, Container, Graphics, Rectangle, Sprite, Texture } from 'pixi.js';
+import {
+  Application,
+  Assets,
+  Container,
+  Graphics,
+  Rectangle,
+  Sprite,
+  Texture,
+} from 'pixi.js';
+import { Viewport } from 'pixi-viewport';
 import { foldPatches, PASSABLE_WALK, paintDoorFlags } from '@planar/kernel';
 import { assetUrl } from '@/shared/assetUrl';
 import { isNothing, just, nothing } from '@planar/shared';
 import { loadPlayMapGhost } from './loadPlayMapGhost.js';
 import { PSTEE_TILE_PX } from './playTiles.js';
-
-import type { DoorView, FromDaemon, Snapshot, WalkGrid, Point } from '@planar/kernel';
-import type { GhostAre, GhostTis, GhostWed, Maybe } from '@planar/shared';
-import type { PlayView } from './types.js';
 import { doorOpenByCell } from './doorOpenByCell.js';
 import { overlayTileIndex } from './overlayTileIndex.js';
+
+import type {
+  DoorView,
+  FromDaemon,
+  Snapshot,
+  WalkGrid,
+  Point,
+} from '@planar/kernel';
+import type { GhostAre, GhostTis, GhostWed, Maybe } from '@planar/shared';
+import type { PlayView } from './types.js';
+import type { Ticker } from 'pixi.js';
 
 type MapArt = Readonly<{
   areId: string;
@@ -20,6 +36,15 @@ type MapArt = Readonly<{
   walkBase: Uint8Array;
 }>;
 
+export type PlayPointerClick = Point & Readonly<{
+  button: 'left' | 'right';
+}>;
+
+const EDGE_PX = 40;
+const PAN_CSS_PX_PER_SEC = 500;
+const MIN_ZOOM = 0.25;
+const MAX_ZOOM = 4;
+
 const mapSize = (wed: GhostWed): { w: number; h: number } => {
   const overlay = just(wed.overlays[0]);
   return { w: overlay.width * PSTEE_TILE_PX, h: overlay.height * PSTEE_TILE_PX };
@@ -29,10 +54,6 @@ const getAtlasFrame = (tileIndex: number, columns: number, tilePx: number): { x:
   x: (tileIndex % columns) * tilePx,
   y: Math.floor(tileIndex / columns) * tilePx,
 });
-
-const clamp = (value: number, min: number, max: number): number => (
-  Math.min(max, Math.max(min, value))
-);
 
 const paintedGrid = (are: GhostAre, walkBase: Uint8Array, doors: DoorView[]): WalkGrid => {
   const walk = are.walk;
@@ -83,6 +104,12 @@ const drawBodies = (layer: Graphics, snapshot: Snapshot, walk: WalkGrid): void =
   }
 };
 
+const decodeMouseButton = (button: number): Maybe<PlayPointerClick['button']> => {
+  if (button === 0) return 'left';
+  if (button === 2) return 'right';
+  return nothing();
+};
+
 // mutable
 type LastRenderedTilesState = {
   areId: Maybe<string>;
@@ -97,7 +124,7 @@ export type AttachPlayViewProps = Readonly<{
   renderHost: HTMLDivElement;
   serverUrl: string;
   ghostDir: string;
-  onClick: (dest: Point) => void;
+  onClick: (dest: PlayPointerClick) => void;
   onHudUpdate: (tick: number, paused: boolean, areId: string) => void;
 }>;
 export const attachPlayView = async ({
@@ -115,22 +142,57 @@ export const attachPlayView = async ({
   });
   renderHost.appendChild(app.canvas);
 
-  const world = new Container();
+  const viewport = new Viewport({
+    events: app.renderer.events,
+    noTicker: true,
+    screenWidth: app.screen.width,
+    screenHeight: app.screen.height,
+    worldWidth: app.screen.width,
+    worldHeight: app.screen.height,
+    passiveWheel: false,
+    disableOnContextMenu: true,
+  });
+
+  viewport
+    .wheel()
+    .clamp({ direction: 'all', underflow: 'center' })
+    .clampZoom({ minScale: MIN_ZOOM, maxScale: MAX_ZOOM });
+  viewport.eventMode = 'static';
+
+  app.stage.addChild(viewport);
+
   const tiles = new Container();
+  tiles.eventMode = 'none';
+
   const debug = new Graphics();
+  debug.eventMode = 'none';
+
   const actors = new Graphics();
-  world.addChild(tiles);
-  world.addChild(debug);
-  world.addChild(actors);
-  app.stage.addChild(world);
+  actors.eventMode = 'none';
+
+  const followMarker = new Container();
+  followMarker.eventMode = 'none';
+
+  viewport.addChild(tiles);
+  viewport.addChild(debug);
+  viewport.addChild(actors);
+  viewport.addChild(followMarker);
 
   let snapshot: Maybe<Snapshot> = nothing();
   let mapArt: Maybe<MapArt> = nothing();
   let walkGrid: Maybe<WalkGrid> = nothing();
   let loadGen = 0;
   let doorGen = 0;
-  let cameraX = 0;
-  let cameraY = 0;
+  let following = false;
+  let snappedAreId: Maybe<string> = nothing();
+  let pointerOverCanvas = false;
+  const pointerScreen = { x: 0, y: 0 };
+  const keys = {
+    left: false,
+    right: false,
+    up: false,
+    down: false,
+  };
 
   const lastRenderedTilesState: LastRenderedTilesState = {
     areId: nothing(),
@@ -148,10 +210,21 @@ export const attachPlayView = async ({
     }
   };
 
+  const syncViewportSize = (): void => {
+    if (isNothing(mapArt)) {
+      viewport.resize(app.screen.width, app.screen.height);
+      return;
+    }
+
+    const size = mapSize(mapArt.wed);
+    viewport.resize(app.screen.width, app.screen.height, size.w, size.h);
+  };
+
   const rebuildTiles = (): void => {
     if (isNothing(snapshot) || isNothing(mapArt)) return;
 
     const overlay = just(mapArt.wed.overlays[0]);
+    const bounds = viewport.getVisibleBounds();
 
     /** rectangle of visible tis: [sx,dx)×[sy,dy)
      * sx = first visible tile column
@@ -159,10 +232,10 @@ export const attachPlayView = async ({
      * dx = exclusive end column
      * dy = exclusive end row
      */
-    const sx = Math.max(Math.floor(cameraX / PSTEE_TILE_PX), 0);
-    const sy = Math.max(Math.floor(cameraY / PSTEE_TILE_PX), 0);
-    const dx = Math.min(overlay.width, Math.ceil((cameraX + app.screen.width + PSTEE_TILE_PX - 1) / PSTEE_TILE_PX));
-    const dy = Math.min(overlay.height, Math.ceil((cameraY + app.screen.height + PSTEE_TILE_PX - 1) / PSTEE_TILE_PX));
+    const sx = Math.max(Math.floor(bounds.x / PSTEE_TILE_PX), 0);
+    const sy = Math.max(Math.floor(bounds.y / PSTEE_TILE_PX), 0);
+    const dx = Math.min(overlay.width, Math.ceil((bounds.x + bounds.width) / PSTEE_TILE_PX));
+    const dy = Math.min(overlay.height, Math.ceil((bounds.y + bounds.height) / PSTEE_TILE_PX));
 
     const tilesUnchanged = mapArt.areId === lastRenderedTilesState.areId
       && sx === lastRenderedTilesState.sx
@@ -202,22 +275,45 @@ export const attachPlayView = async ({
     }
   };
 
+  const firstActorPos = (): Maybe<{ x: number; y: number }> => {
+    if (isNothing(snapshot)) return nothing();
+
+    const first = snapshot.bodies[0];
+    if (!first) return nothing();
+
+    return first[1].pos;
+  };
+
   const layoutCamera = (): void => {
     if (isNothing(snapshot) || isNothing(mapArt)) return;
 
-    const size = mapSize(mapArt.wed);
-    // TODO [snow]: camera should follow player, not first entry
-    // introduce seatId to createWorld -> bodies and search by it here
-    const first = just(snapshot.bodies[0]);
-    const actor = just(first[1]);
-    const focusX = actor.pos.x;
-    const focusY = actor.pos.y;
-    const maxX = Math.max(0, size.w - app.screen.width);
-    const maxY = Math.max(0, size.h - app.screen.height);
-    cameraX = clamp(focusX - app.screen.width / 2, 0, maxX);
-    cameraY = clamp(focusY - app.screen.height / 2, 0, maxY);
-    world.position.set(-cameraX, -cameraY); // TODO [snow]: to pixi-viewport
-    world.hitArea = new Rectangle(0, 0, size.w, size.h);
+    syncViewportSize();
+
+    const pos = firstActorPos();
+    if (isNothing(pos)) return;
+
+    followMarker.position.set(pos.x, pos.y);
+
+    const areaChanged = snappedAreId !== mapArt.areId;
+    if (areaChanged) {
+      snappedAreId = mapArt.areId;
+      viewport.moveCenter(pos.x, pos.y);
+    }
+  };
+
+  const applyFollow = (): void => {
+    if (!following) {
+      viewport.plugins.pause('follow');
+      return;
+    }
+
+    const pos = firstActorPos();
+    if (!isNothing(pos)) {
+      followMarker.position.set(pos.x, pos.y);
+      viewport.moveCenter(pos.x, pos.y);
+    }
+
+    viewport.follow(followMarker);
   };
 
   const paint = (): void => {
@@ -231,11 +327,21 @@ export const attachPlayView = async ({
     rebuildTiles();
 
     if (!isNothing(walkGrid)) {
-      drawUnpassableTiles(debug, walkGrid, cameraX, cameraY, app.screen.width, app.screen.height);
+      const bounds = viewport.getVisibleBounds();
+      drawUnpassableTiles(debug, walkGrid, bounds.x, bounds.y, bounds.width, bounds.height);
       drawBodies(actors, snapshot, walkGrid);
     }
 
     onHudUpdate(snapshot.tick, snapshot.paused, snapshot.areId);
+  };
+
+  const paintVisible = (): void => {
+    rebuildTiles();
+
+    if (isNothing(walkGrid)) return;
+
+    const bounds = viewport.getVisibleBounds();
+    drawUnpassableTiles(debug, walkGrid, bounds.x, bounds.y, bounds.width, bounds.height);
   };
 
   const loadArt = (areId: string): void => {
@@ -267,13 +373,102 @@ export const attachPlayView = async ({
       });
   };
 
-  world.eventMode = 'static';
-  world.on('pointerdown', (event) => {
-    const local = world.toLocal(event.global);
-    onClick({ x: Math.floor(local.x), y: Math.floor(local.y) });
+  const panCamera = (ticker: Ticker): void => {
+    if (following) return;
+    if (!pointerOverCanvas) return;
+
+    let sx = 0;
+    let sy = 0;
+    if (keys.left) sx -= 1;
+    if (keys.right) sx += 1;
+    if (keys.up) sy -= 1;
+    if (keys.down) sy += 1;
+    if (pointerScreen.x < EDGE_PX) sx -= 1;
+    if (pointerScreen.x > viewport.screenWidth - EDGE_PX) sx += 1;
+    if (pointerScreen.y < EDGE_PX) sy -= 1;
+    if (pointerScreen.y > viewport.screenHeight - EDGE_PX) sy += 1;
+    if (sx === 0 && sy === 0) return;
+
+    const dist = Math.hypot(sx, sy);
+    const dt = ticker.deltaMS / 1000;
+    const scale = viewport.scaled;
+    const worldDx = ((sx / dist) * PAN_CSS_PX_PER_SEC * dt) / scale;
+    const worldDy = ((sy / dist) * PAN_CSS_PX_PER_SEC * dt) / scale;
+    const center = viewport.center;
+    viewport.moveCenter(center.x + worldDx, center.y + worldDy);
+    viewport.plugins.get('clamp')?.update();
+
+    paintVisible();
+  };
+
+  const onKeyDown = (event: KeyboardEvent): void => {
+    if (!pointerOverCanvas) return;
+
+    if (event.code === 'ArrowLeft') {
+      keys.left = true;
+      event.preventDefault();
+    }
+    if (event.code === 'ArrowRight') {
+      keys.right = true;
+      event.preventDefault();
+    }
+    if (event.code === 'ArrowUp') {
+      keys.up = true;
+      event.preventDefault();
+    }
+    if (event.code === 'ArrowDown') {
+      keys.down = true;
+      event.preventDefault();
+    }
+  };
+
+  const onKeyUp = (event: KeyboardEvent): void => {
+    if (event.code === 'ArrowLeft') keys.left = false;
+    if (event.code === 'ArrowRight') keys.right = false;
+    if (event.code === 'ArrowUp') keys.up = false;
+    if (event.code === 'ArrowDown') keys.down = false;
+  };
+
+  const onPointerEnter = (): void => {
+    pointerOverCanvas = true;
+  };
+
+  const onPointerLeave = (): void => {
+    pointerOverCanvas = false;
+  };
+
+  const onTick = (ticker: Ticker): void => {
+    viewport.update(ticker.elapsedMS);
+    panCamera(ticker);
+  };
+
+  viewport.on('pointerdown', (event) => {
+    const button = decodeMouseButton(event.button);
+    if (isNothing(button)) return;
+    const local = viewport.toWorld(event.global);
+    onClick({ x: Math.floor(local.x), y: Math.floor(local.y), button });
   });
 
+  viewport.on('globalpointermove', (event) => {
+    pointerScreen.x = event.global.x;
+    pointerScreen.y = event.global.y;
+  });
+
+  viewport.on('moved', () => {
+    paintVisible();
+  });
+  viewport.on('zoomed', () => {
+    paintVisible();
+  });
+
+  app.ticker.add(onTick);
+  window.addEventListener('keydown', onKeyDown);
+  window.addEventListener('keyup', onKeyUp);
+  app.canvas.addEventListener('pointerenter', onPointerEnter);
+  app.canvas.addEventListener('pointerleave', onPointerLeave);
+
   app.renderer.on('resize', () => {
+    syncViewportSize();
     paint();
   });
 
@@ -317,9 +512,25 @@ export const attachPlayView = async ({
 
   return {
     handleFromDaemon,
+    setFollow: (on) => {
+      following = on;
+      applyFollow();
+    },
     destroy: () => {
       loadGen += 1;
+      app.ticker.remove(onTick);
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
+      app.canvas.removeEventListener('pointerenter', onPointerEnter);
+      app.canvas.removeEventListener('pointerleave', onPointerLeave);
+      if (document.fullscreenElement === renderHost) {
+        document.exitFullscreen().catch((err: unknown) => {
+          console.error(err);
+        });
+      }
       clearTiles();
+      if (viewport.parent) viewport.parent.removeChild(viewport);
+      viewport.destroy({ children: true });
       app.destroy(true, { children: true, texture: true });
     },
   };

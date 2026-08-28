@@ -71,7 +71,7 @@ export type TickCommand = Readonly<{
 
 export type InputCommand
   = | Readonly<{ type: 'actor/move'; seatId: SeatId; actorId: EntityId; dest: Point }>
-    | Readonly<{ type: 'pointer/click'; seatId: SeatId; x: number; y: number }>
+    | Readonly<{ type: 'pointer/click'; seatId: SeatId; x: number; y: number; button: 'left' | 'right' }>
     | Readonly<{ type: 'session/pause'; seatId: SeatId; paused: boolean }>
     | Readonly<{ type: 'session/loadArea'; seatId: SeatId; are: string; entrance?: Maybe<string> }>;
 

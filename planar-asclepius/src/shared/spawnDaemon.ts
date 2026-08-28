@@ -17,7 +17,7 @@ export const spawnDaemon = (ghostDir: string): ChildProcess => {
   child.stdout?.pipe(process.stdout);
   child.stderr?.pipe(process.stderr);
 
-  logger.info(`daemon fork ${distEntry} ghost=${ghostDir}`);
+  logger.info(`daemon fork ${distEntry} pid=${child.pid} ghost=${ghostDir}`);
   child.send({ type: 'start', data: { ghostDir, are: DEFAULT_ARE } });
 
   return child;

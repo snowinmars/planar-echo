@@ -28,6 +28,8 @@ export const applyPointer = (
   if (isNothing(door)) return setActorDest(world, actorId, point);
 
   const approach = closerPoint(body.pos, door.openLocation, door.closeLocation);
+  const rightClick = command.button === 'right';
+  if (rightClick) return setActorDest(world, actorId, approach);
 
   const closeEnough = worldDist(body.pos, approach) <= PST_OPERATING_DISTANCE;
   if (closeEnough) return toggleDoor(world, door.doorId.trim(), actorId);

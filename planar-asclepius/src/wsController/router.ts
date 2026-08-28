@@ -15,12 +15,10 @@ const pathnameOf = (req: IncomingMessage): string => {
 };
 
 const createWsRouter = (server: Server<typeof IncomingMessage, typeof ServerResponse>): void => {
-  const ghostDir = getGhostDir();
-
   const prismWss = new WebSocketServer({ noServer: true });
   const playWss = new WebSocketServer({ noServer: true });
   attachPrismIndexWs(prismWss);
-  attachPlayWs(ghostDir, playWss);
+  attachPlayWs(getGhostDir, playWss);
 
   server.on('upgrade', (req: IncomingMessage, socket: Duplex, head: Buffer) => {
     const pathname = pathnameOf(req);

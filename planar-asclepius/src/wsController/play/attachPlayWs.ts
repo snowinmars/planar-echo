@@ -1,23 +1,35 @@
 import { WebSocket } from 'ws';
 import logger from '@/shared/logger.js';
 import { spawnDaemon } from '@/shared/spawnDaemon.js';
-import { nothing } from '@planar/shared';
 
 import type { ChildProcess, Serializable } from 'child_process';
-import type { Maybe } from '@planar/shared';
 import type { WebSocketServer } from 'ws';
 
-type PlaySession = {
-  child: ChildProcess; // daemon ipc (server)
-  clients: Set<WebSocket>; // wss (pixi clients)
-  ready: boolean;
+type Session = {
+  child: ChildProcess;
+  clients: Set<WebSocket>;
+  syncRequired: boolean;
+  onMessage: (msg: unknown) => void;
+  onError: (err: Error) => void;
+  onExit: () => void;
 };
 
-export const attachPlayWs = (ghostDir: string, wss: WebSocketServer): void => {
-  let session: Maybe<PlaySession>;
+type State
+  = | { tag: 'idle' }
+    | { tag: 'live'; session: Session }
+    | { tag: 'dying'; child: ChildProcess; joiningWs: Set<WebSocket> };
 
-  const broadcastTo = (target: PlaySession, payload: unknown): void => {
+const isWsAttachable = (ws: WebSocket): boolean => {
+  const attachable = ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING;
+  return attachable;
+};
+
+export const attachPlayWs = (getGhostDir: () => string, wss: WebSocketServer): void => {
+  let state: State = { tag: 'idle' };
+
+  const broadcastTo = (target: Session, payload: unknown): void => {
     const json = JSON.stringify(payload);
+
     for (const client of target.clients) {
       if (client.readyState === WebSocket.OPEN) {
         client.send(json);
@@ -25,83 +37,143 @@ export const attachPlayWs = (ghostDir: string, wss: WebSocketServer): void => {
     }
   };
 
-  const dropSession = (target: Maybe<PlaySession>): void => {
-    if (!target) return;
+  const finishDying = (): void => {
+    if (state.tag !== 'dying') return;
 
-    // TODO [snow]: unsub?
-    // target.child.off('message', target.onMessage);
-    // target.child.off('exit', target.onExit);
-    // target.child.off('error', target.onError);
+    const joining = [...state.joiningWs];
+    state.joiningWs.clear();
+
+    const attachable = joining.filter(isWsAttachable); // TODO [snow]: I do think, that I can just stop and drop everything, if I want to kill the daemon
+    const nobodyWaiting = attachable.length === 0;
+    if (nobodyWaiting) {
+      state = { tag: 'idle' };
+      return;
+    }
+
+    const session = spawnFresh();
+    state = { tag: 'live', session };
+    for (const ws of attachable) {
+      attachClient(ws, session);
+    }
+  };
+
+  const onChildExit = (session: Session): void => {
+    session.child.off('message', session.onMessage);
+    session.child.off('error', session.onError);
+    session.child.off('exit', session.onExit);
+
+    const crashed = state.tag === 'live' && state.session === session;
+    if (crashed) {
+      state = { tag: 'idle' };
+      for (const ws of session.clients) ws.close();
+      session.clients.clear();
+      return;
+    }
+
+    const dyingThis = state.tag === 'dying' && state.child === session.child;
+    if (dyingThis) {
+      finishDying();
+    }
+  };
+
+  const beginDie = (target: Session): void => {
+    target.child.off('message', target.onMessage);
+    target.child.off('error', target.onError);
+
+    state = { tag: 'dying', child: target.child, joiningWs: new Set<WebSocket>() };
+
+    const alreadyExited = target.child.exitCode !== null || target.child.signalCode !== null;
+    if (alreadyExited) {
+      target.child.off('exit', target.onExit);
+      finishDying();
+      return;
+    }
 
     if (!target.child.killed) {
       target.child.kill();
     }
-
-    if (session === target) {
-      session = nothing();
-    }
   };
 
-  const ensureSession = (ghostDir: string): PlaySession => {
-    if (session) return session;
+  const spawnFresh = (): Session => {
+    const child = spawnDaemon(getGhostDir());
 
-    session = {
-      child: spawnDaemon(ghostDir),
-      clients: new Set(),
-      ready: false,
+    const session: Session = {
+      child,
+      clients: new Set<WebSocket>(),
+      syncRequired: false, // at least one message was delivered
+      onMessage: (msg: unknown): void => {
+        session.syncRequired = true;
+        broadcastTo(session, msg);
+      },
+      onError: (err: Error): void => {
+        logger.error(err);
+      },
+      onExit: (): void => {
+        onChildExit(session);
+      },
     };
 
-    const onMessage = (msg: unknown): void => {
-      if (!session) return;
-
-      session.ready = true;
-      broadcastTo(session, msg);
-    };
-
-    const onExit = (): void => {
-      if (!session) return;
-
-      session.child.off('message', onMessage);
-      session.child.off('error', onError);
-      session = nothing();
-    };
-
-    const onError = (err: Error): void => {
-      logger.error(err);
-    };
-
-    session.child.on('message', onMessage);
-    session.child.once('exit', onExit);
-    session.child.on('error', onError);
+    child.on('message', session.onMessage);
+    child.on('error', session.onError);
+    child.on('exit', session.onExit);
 
     return session;
   };
 
-  wss.on('connection', (ws: WebSocket) => {
-    session = ensureSession(ghostDir);
+  const attachClient = (ws: WebSocket, target: Session): void => {
+    target.clients.add(ws);
 
-    session.clients.add(ws);
-
-    if (session.ready) session.child.send({ type: 'sync' });
+    if (target.syncRequired) target.child.send({ type: 'sync' });
 
     ws.on('message', (raw: Buffer) => {
-      if (!session) return;
+      const msg: unknown = JSON.parse(raw.toString());
 
-      const msg = JSON.parse(raw.toString());
-
-      if (session.child.connected) {
-        session.child.send(msg as Serializable);
-      }
+      if (target.child.connected) target.child.send(msg as Serializable);
+      // else throw error to websocket, that world is dead
     });
 
     ws.on('close', () => {
-      if (!session) return;
+      logger.info(`close websocket for session`);
 
-      session.clients.delete(ws);
+      target.clients.delete(ws);
 
-      if (session.clients.size === 0) {
-        dropSession(session);
+      const lastOfThisLive = state.tag === 'live'
+        && state.session === target
+        && target.clients.size === 0;
+      if (lastOfThisLive) {
+        beginDie(target);
       }
     });
+  };
+
+  const queueJoiningWs = (ws: WebSocket): void => {
+    if (state.tag !== 'dying') throw new Error('Impossible');
+
+    state.joiningWs.add(ws);
+    ws.on('close', () => {
+      if (state.tag !== 'dying') return;
+      state.joiningWs.delete(ws);
+    });
+  };
+
+  wss.on('connection', (ws: WebSocket) => {
+    const tag = state.tag;
+    switch (tag) {
+      case 'idle': {
+        const session = spawnFresh();
+        state = { tag: 'live', session };
+        attachClient(ws, session);
+        break;
+      }
+      case 'live': {
+        attachClient(ws, state.session);
+        break;
+      }
+      case 'dying': {
+        queueJoiningWs(ws);
+        break;
+      }
+      default: throw new Error(`State tag '${tag}' is out of range`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+    }
   });
 };

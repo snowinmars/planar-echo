@@ -17,6 +17,7 @@ export type UsePlaySessionResponse = Readonly<{
   errorText: Maybe<string>;
   areId: Maybe<string>;
   setPaused: (paused: boolean) => void;
+  setFollow: (follow: boolean) => void;
 }>;
 export const usePlaySession = (
   renderHostRef: RefObject<HTMLDivElement | null>,
@@ -59,6 +60,10 @@ export const usePlaySession = (
     playSessionApiRef.current?.setPaused(nextPaused);
   }, [playSessionApiRef.current]);
 
+  const setFollow = useMemo(() => (nextFollow: boolean): void => {
+    playSessionApiRef.current?.setFollow(nextFollow);
+  }, [playSessionApiRef.current]);
+
   return {
     tick,
     ticksPaused,
@@ -66,5 +71,6 @@ export const usePlaySession = (
     errorText,
     areId,
     setPaused,
+    setFollow,
   };
 };

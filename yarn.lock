@@ -1774,7 +1774,10 @@ __metadata:
     "@asteasolutions/zod-to-openapi": "npm:^8.4.3"
     "@eslint/js": "npm:^10.0.1"
     "@hey-api/openapi-ts": "npm:^0.94.3"
+    "@planar/daemon": "workspace:*"
+    "@planar/prism": "workspace:*"
     "@planar/shared": "workspace:*"
+    "@planar/shell": "workspace:*"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/cors": "npm:^2.8.19"
     "@types/express": "npm:^5.0.6"
@@ -1811,7 +1814,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@planar/daemon@workspace:planar-daemon":
+"@planar/daemon@workspace:*, @planar/daemon@workspace:planar-daemon":
   version: 0.0.0-use.local
   resolution: "@planar/daemon@workspace:planar-daemon"
   dependencies:
@@ -1850,12 +1853,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@planar/prism@workspace:planar-prism":
+"@planar/prism@workspace:*, @planar/prism@workspace:planar-prism":
   version: 0.0.0-use.local
   resolution: "@planar/prism@workspace:planar-prism"
   dependencies:
     "@eslint/js": "npm:^10.0.1"
-    "@planar/kernel": "workspace:*"
     "@planar/shared": "workspace:*"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/chai": "npm:^5.2.3"
@@ -1896,7 +1898,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@planar/shell@workspace:planar-shell":
+"@planar/shell@workspace:*, @planar/shell@workspace:planar-shell":
   version: 0.0.0-use.local
   resolution: "@planar/shell@workspace:planar-shell"
   dependencies:
@@ -1936,6 +1938,7 @@ __metadata:
     jsdom: "npm:^29.0.1"
     lint-staged: "npm:^16.4.0"
     lru-cache: "npm:^11.5.2"
+    pixi-viewport: "npm:^6"
     pixi.js: "npm:^8.14.0"
     prettier: "npm:^3.8.1"
     react: "npm:^19.2.4"
@@ -6797,6 +6800,15 @@ __metadata:
   version: 4.0.4
   resolution: "picomatch@npm:4.0.4"
   checksum: 10c0/e2c6023372cc7b5764719a5ffb9da0f8e781212fa7ca4bd0562db929df8e117460f00dff3cb7509dacfc06b86de924b247f504d0ce1806a37fac4633081466b0
+  languageName: node
+  linkType: hard
+
+"pixi-viewport@npm:^6":
+  version: 6.0.3
+  resolution: "pixi-viewport@npm:6.0.3"
+  peerDependencies:
+    pixi.js: ">=8"
+  checksum: 10c0/5895b4527e2bc55c00cf70b6adfbb423bd4fb6cf1c1a3678dc1cf7c94642ec62206fef3c64c160b3d4028329a2836046f5a01f7fcbf7ee9b6c59abb02a63bceb
   languageName: node
   linkType: hard
 

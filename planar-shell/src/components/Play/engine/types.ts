@@ -5,10 +5,12 @@ export type PlaySocketState = 'connecting' | 'open' | 'closed' | 'error';
 export type PlaySessionApi = Readonly<{
   loadArea: (are: string, entrance: Maybe<string>) => void;
   setPaused: (paused: boolean) => void;
+  setFollow: (follow: boolean) => void;
   destroy: () => void;
 }>;
 
 export type PlayView = Readonly<{
   handleFromDaemon: (fromDaemon: FromDaemon) => Maybe<Snapshot>;
+  setFollow: (follow: boolean) => void;
   destroy: () => void;
 }>;

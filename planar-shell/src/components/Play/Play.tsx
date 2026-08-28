@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -8,6 +8,8 @@ import { usePlaySession } from './engine/usePlaySession.js';
 import { playBootFromSearchParams } from './engine/playBootFromSearchParams.js';
 
 import type { FC } from 'react';
+
+import styles from './Play.module.scss';
 
 const Play: FC = () => {
   const renderHostRef = useRef<HTMLDivElement>(null);
@@ -20,10 +22,26 @@ const Play: FC = () => {
     errorText,
     areId,
     setPaused,
+    setFollow,
   } = usePlaySession(renderHostRef, boot);
+  const [follow, setFollowState] = useState(false);
 
   const togglePause = (): void => {
     setPaused(!ticksPaused);
+  };
+
+  const toggleFollow = (): void => {
+    const next = !follow;
+    setFollowState(next);
+    setFollow(next);
+  };
+
+  const openFullscreen = (): void => {
+    const host = renderHostRef.current;
+    if (!host) return;
+    host.requestFullscreen().catch((err: unknown) => {
+      console.error(err);
+    });
   };
 
   return (
@@ -31,6 +49,14 @@ const Play: FC = () => {
       <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
         <Button onClick={togglePause} nativeButton={false}>
           {ticksPaused ? 'Resume' : 'Pause'}
+        </Button>
+
+        <Button onClick={toggleFollow} nativeButton={false}>
+          {follow ? 'Unfollow' : 'Follow'}
+        </Button>
+
+        <Button onClick={openFullscreen} nativeButton={false}>
+          Fullscreen
         </Button>
 
         <Typography sx={{ fontFamily: 'Monospace' }}>
@@ -46,7 +72,10 @@ const Play: FC = () => {
         { !isNothing(areId) && <Typography color="text.secondary">{areId}</Typography> }
       </Stack>
 
-      <div ref={renderHostRef} style={{ flex: 1, minHeight: 320, width: '100%' }} />
+      <div
+        ref={renderHostRef}
+        className={styles.renderHost}
+      />
     </Stack>
   );
 };
