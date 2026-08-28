@@ -179,6 +179,8 @@ export type {
   GhostIniGroupSection,
   GhostIniNumberedSection,
   GhostIniCreatureScopedVariable,
+  GhostIniMonsterPlanescapeSection,
+  GhostIniSoundsSection,
 } from './ghost/ini.types.js';
 export type {
   GhostMus,

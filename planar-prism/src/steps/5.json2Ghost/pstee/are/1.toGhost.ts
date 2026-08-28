@@ -131,7 +131,7 @@ const toAmbient = (ambient: RawAreAmbientV10): GhostAreAmbient => ({
   pitchVariation: ambient.pitchVariation,
   volumeVariation: ambient.volumeVariation,
   volume: ambient.volume,
-  sounds: [...ambient.sounds],
+  sounds: [...ambient.sounds.map(x => `${x}.wav`)],
   intervalBase: ambient.intervalBase,
   intervalVariation: ambient.intervalVariation,
   presentedAt: [...ambient.presentedAt],
