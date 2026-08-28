@@ -20,6 +20,7 @@ export {
 
 export type {
   Actor,
+  AreaTravel,
   ApplyResult,
   Body,
   Point,
@@ -35,6 +36,7 @@ export type {
   Patch,
   SeatId,
   Snapshot,
+  TravelRegion,
   WalkGrid,
   World,
 } from './types.js';

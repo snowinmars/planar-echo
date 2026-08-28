@@ -44,11 +44,24 @@ export type Actor = Readonly<{
   exists: true;
 }>;
 
+export type TravelRegion = Readonly<{
+  name: string;
+  vertices: Point[];
+  destinationArea: string;
+  entranceName: string;
+}>;
+
+export type AreaTravel = Readonly<{
+  are: string;
+  entrance: Maybe<string>;
+}>;
+
 export type MetaPatchRow = Readonly<{
   tickHz: typeof TICK_HZ;
   paused: boolean;
   nextId: number;
   areId: string;
+  canCloseDoors: boolean;
 }>;
 
 export type Meta = MetaPatchRow & Readonly<{
@@ -61,6 +74,8 @@ export type World = {
   walkGrid: WalkGrid;
   doors: Map<string, GhostAreDoor>;
   doorOpen: Map<string, boolean>;
+  travelRegions: readonly TravelRegion[];
+  travelInside: Map<EntityId, Set<string>>;
   bodies: Map<EntityId, Body>;
   actors: Map<EntityId, Actor>;
 };
@@ -91,6 +106,7 @@ export type Snapshot = Readonly<{
   paused: boolean;
   nextId: number;
   areId: string;
+  canCloseDoors: boolean;
   doors: DoorView[]; // TODO [snow]: to map
   bodies: [EntityId, Body][];// TODO [snow]: to map
   actors: [EntityId, Actor][];// TODO [snow]: to map
@@ -117,4 +133,5 @@ export type FromDaemon
 
 export type ApplyResult = Readonly<{
   events: Patch[];
+  travel?: AreaTravel;
 }>;

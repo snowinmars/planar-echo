@@ -27,12 +27,16 @@ export const applyPointer = (
   const door = hitDoor(world.doors.values(), world.doorOpen, point);
   if (isNothing(door)) return setActorDest(world, actorId, point);
 
+  const doorId = door.doorId;
+  const open = world.doorOpen.get(door.doorId) ?? world.doorOpen.get(doorId) ?? false;
+  if (open && !world.meta.canCloseDoors) return setActorDest(world, actorId, point);
+
   const approach = closerPoint(body.pos, door.openLocation, door.closeLocation);
   const rightClick = command.button === 'right';
   if (rightClick) return setActorDest(world, actorId, approach);
 
   const closeEnough = worldDist(body.pos, approach) <= PST_OPERATING_DISTANCE;
-  if (closeEnough) return toggleDoor(world, door.doorId.trim(), actorId);
+  if (closeEnough) return toggleDoor(world, doorId, actorId);
 
-  return setActorDest(world, actorId, approach, door.doorId.trim());
+  return setActorDest(world, actorId, approach, doorId);
 };

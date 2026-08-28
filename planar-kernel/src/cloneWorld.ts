@@ -23,6 +23,7 @@ export const cloneWorld = (world: World, seq: number): Snapshot => ({
   paused: world.meta.paused,
   nextId: world.meta.nextId,
   areId: world.meta.areId,
+  canCloseDoors: world.meta.canCloseDoors,
   doors: [...world.doors.keys()].map(id => doorView(id, world.doorOpen.get(id) ?? false)), // TODO [snow]: to map
   bodies: [...world.bodies.entries()].map(([id, body]) => [id, cloneBody(body)] as const), // TODO [snow]: to map with body.id to string
   actors: [...world.actors.entries()].map(([id, actor]) => [id, actor] as const), // TODO [snow]: to map, after all is done - to structuredClone

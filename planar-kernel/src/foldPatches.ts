@@ -28,6 +28,7 @@ export const foldPatches = (snapshot: Snapshot, patches: readonly Patch[]): Snap
         paused: patch.row.paused,
         nextId: patch.row.nextId,
         areId: patch.row.areId,
+        canCloseDoors: patch.row.canCloseDoors,
       };
       continue;
     }

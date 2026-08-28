@@ -56,7 +56,7 @@ const toRegion = (region: RawAreRegionV10): GhostAreRegion => ({
   vertices: region.vertices.map(v => ({ x: v.x, y: v.y })),
   triggerValue: region.triggerValue,
   cursorIndex: region.cursorIndex,
-  destinationArea: region.destinationArea,
+  destinationArea: `${region.destinationArea}.are`,
   entranceName: region.entranceName,
   flags: [...region.flags],
   infoPointTextRef: region.infoPointTextRef,

@@ -1,6 +1,7 @@
 import { TICK_HZ, DEFAULT_SPEED_PX_PER_TICK } from './types.js';
 import { paintAllDoors } from './paintDoors.js';
 import { firstPassableCenter } from './spawn.js';
+import { seedTravelInside, toTravelRegions } from './travel.js';
 
 import type { GhostAre, GhostAreDoor, Maybe } from '@planar/shared';
 import type { Actor, Body, World, Point } from './types.js';
@@ -42,6 +43,7 @@ export const createWorld = (
       paused: false,
       nextId: 2,
       areId: are.resourceName,
+      canCloseDoors: false,
     },
     walkBase: Uint8Array.from(grid),
     walkGrid: {
@@ -53,6 +55,8 @@ export const createWorld = (
     },
     doors,
     doorOpen,
+    travelRegions: toTravelRegions(are),
+    travelInside: new Map(),
     bodies: new Map<number, Body>(),
     actors: new Map<number, Actor>(),
   };
@@ -66,6 +70,7 @@ export const createWorld = (
 
   world.actors.set(1, { exists: true });
   paintAllDoors(world);
+  seedTravelInside(world, 1, pos);
 
   return world;
 };

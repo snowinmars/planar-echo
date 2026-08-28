@@ -15,6 +15,7 @@ export const applyPause = (world: World, command: Extract<InputCommand, { type: 
         paused: world.meta.paused,
         nextId: world.meta.nextId,
         areId: world.meta.areId,
+        canCloseDoors: world.meta.canCloseDoors,
       },
     }],
   };

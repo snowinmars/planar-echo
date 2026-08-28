@@ -6,13 +6,14 @@ import {
 } from '@planar/kernel';
 import { loadAreaWalk } from './loadAreaWalk.js';
 
-import type { InputCommand, Patch, ToDaemon, World } from '@planar/kernel';
+import type { AreaTravel, InputCommand, Patch, ToDaemon, World } from '@planar/kernel';
 import type { Maybe } from '@planar/shared';
 import { send } from './shared/send.js';
 
 type Session = {
   ghostDir: string;
   world: World;
+  blocked: boolean;
   nextSeq: () => number;
   emitTick: () => void;
   emitPatches: (patches: Patch[]) => void;
@@ -58,6 +59,7 @@ const createSession = (ghostDir: string, world: World): Session => {
   const session: Session = {
     ghostDir,
     world,
+    blocked: false,
     nextSeq,
     emitTick,
     emitPatches,
@@ -67,24 +69,69 @@ const createSession = (ghostDir: string, world: World): Session => {
   return session;
 };
 
-const onCommand = (session: Session, command: InputCommand, clientSeq: number): void => {
-  if (command.type === 'session/loadArea') {
-    loadAreaWalk(session.ghostDir, command.are, command.entrance)
-      .then((world) => {
-        session.world = world;
-        session.emitSnapshot();
-      }).catch((err: unknown) => {
-        session.emitPatches([{
-          op: 'command/rejected',
-          seq: clientSeq,
-          reason: err instanceof Error ? err.message : String(err),
-        }]);
-      });
+const replaceWorld = async (
+  session: Session,
+  are: string,
+  entrance: Maybe<string>,
+): Promise<void> => {
+  const world = await loadAreaWalk(session.ghostDir, are, entrance);
+  session.world = world;
+  session.emitSnapshot();
+};
 
+const blockWhile = (
+  session: Session,
+  work: () => Promise<void>,
+  onError: (err: unknown) => void,
+): void => {
+  session.blocked = true;
+  work()
+    .catch(onError)
+    .finally(() => {
+      session.blocked = false;
+    });
+};
+
+const rejectCommand = (session: Session, clientSeq: number, err: unknown): void => {
+  session.emitPatches([{
+    op: 'command/rejected',
+    seq: clientSeq,
+    reason: err instanceof Error ? err.message : String(err),
+  }]);
+};
+
+const startAreaTravel = (session: Session, travel: AreaTravel, onError: (err: unknown) => void): void => {
+  blockWhile(
+    session,
+    () => replaceWorld(session, travel.are, travel.entrance),
+    onError,
+  );
+};
+
+const onCommand = (session: Session, command: InputCommand, clientSeq: number): void => {
+  if (session.blocked) return;
+
+  if (command.type === 'session/loadArea') {
+    startAreaTravel(
+      session,
+      { are: command.are, entrance: command.entrance },
+      (err: unknown) => rejectCommand(session, clientSeq, err),
+    );
     return;
   }
 
   const result = apply(session.world, command);
+
+  if (result.travel) {
+    startAreaTravel(
+      session,
+      result.travel,
+      (err: unknown) => {
+        send({ type: 'error', message: err instanceof Error ? err.message : String(err) });
+      },
+    );
+    return;
+  }
 
   session.emitPatches(result.events.map(event => (
     event.op === 'command/rejected' ? { ...event, seq: clientSeq } : event
@@ -104,9 +151,22 @@ export const boot = async (
   session.emitSnapshot();
 
   const clock = setInterval(() => {
+    if (session.blocked) return;
     if (session.world.meta.paused) return;
 
     const result = apply(session.world, { type: 'clock/tick' });
+
+    if (result.travel) {
+      startAreaTravel(
+        session,
+        result.travel,
+        (err: unknown) => {
+          send({ type: 'error', message: err instanceof Error ? err.message : String(err) });
+        },
+      );
+      return;
+    }
+
     if (result.events.length === 0) {
       session.emitTick();
       return;

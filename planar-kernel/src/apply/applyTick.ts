@@ -3,6 +3,7 @@ import { cloneBody } from '../cloneWorld.js';
 import { closerPoint, worldDist } from '../hitTest.js';
 import { toggleDoor } from './applyDoor.js';
 import { PST_OPERATING_DISTANCE } from '../types.js';
+import { resolveTravelAfterMove } from '../travel.js';
 
 import type { ApplyResult, Body, Point, Patch, World } from '../types.js';
 
@@ -87,6 +88,7 @@ export const applyTick = (world: World): ApplyResult => {
 
   for (const [id, body] of world.bodies) {
     let next = body;
+    const prevPos = body.pos;
     if (body.path && body.path.length > 0) {
       next = advanceBody(body, world.walkGrid);
       world.bodies.set(id, next);
@@ -96,6 +98,12 @@ export const applyTick = (world: World): ApplyResult => {
     if (next.pendingDoorId) {
       events.push(...resolvePendingDoor(world, id, next));
     }
+
+    const moved = next.pos.x !== prevPos.x || next.pos.y !== prevPos.y;
+    if (!moved) continue;
+
+    const travel = resolveTravelAfterMove(world, id, next.pos);
+    if (travel) return { events, travel };
   }
 
   return { events };

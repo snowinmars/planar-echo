@@ -494,6 +494,7 @@ export const attachPlayView = async ({
         seq: fromDaemon.seq,
       };
       onHudUpdate(snapshot.tick, snapshot.paused, snapshot.areId);
+
       return snapshot;
     }
 
@@ -507,6 +508,7 @@ export const attachPlayView = async ({
 
       return snapshot;
     }
+
     return snapshot;
   };
 
