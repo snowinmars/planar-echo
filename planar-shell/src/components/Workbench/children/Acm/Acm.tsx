@@ -12,8 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { isNothing } from '@planar/shared';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import type { GhostType, Maybe } from '@planar/shared';
 
 import styles from './Acm.module.scss';
 
@@ -28,7 +27,7 @@ const Acm: FC = () => {
   useAcmWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'acm');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'acm');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

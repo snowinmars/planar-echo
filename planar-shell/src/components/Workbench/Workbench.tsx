@@ -1,6 +1,9 @@
 import Button from '@mui/material/Button';
 import { Link as RouterLink } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import planarLocalStorage from '@/shared/planarLocalStorage';
+import { ghostTypes, type Maybe } from '@planar/shared';
 
 import type { FC } from 'react';
 
@@ -22,34 +25,17 @@ const RouteButton: FC<RouteButtonProps> = ({ id }: RouteButtonProps) => {
   );
 };
 
-const elements = [
-  'acm',
-  'are',
-  'bam',
-  'bcs',
-  'bmp',
-  'cre',
-  'dlg',
-  'eff',
-  'ids',
-  'ini',
-  'itm',
-  'mos',
-  'mus',
-  'pvrz',
-  'src',
-  'tis',
-  'twoda',
-  'wav',
-  'wed',
-];
-
 const Workbench: FC = () => {
   const { t } = useTranslation();
 
+  useEffect(() => {
+    planarLocalStorage.set<Maybe<'workbench'>>(planarLocalStorage.currentWidget, 'workbench');
+    return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
+  }, []);
+
   return (
     <>
-      { elements.map(x => <RouteButton id={x} />) }
+      { ghostTypes.map(x => <RouteButton id={x} />) }
 
       <Button
         component={RouterLink}

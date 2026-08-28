@@ -13,8 +13,7 @@ import { useWedStore } from './store/wedStore';
 import { useWedWidgetBridge } from './useWedWidgetBridge';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import type { Maybe, GhostType } from '@planar/shared';
 
 // import styles from './Wed.module.scss';
 
@@ -28,7 +27,7 @@ const Wed: FC = () => {
   useWedWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'wed');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'wed');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

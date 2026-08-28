@@ -18,8 +18,7 @@ import { useTlkStore } from '@/engine/store/planarRuntime';
 import { mapItmToTlkRefs } from './mapItmToTlkRefs';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import type { Maybe, GhostType } from '@planar/shared';
 
 import styles from './Itm.module.scss';
 
@@ -36,7 +35,7 @@ const Itm: FC = () => {
   const [canTalk, setCanTalk] = useState(false);
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'itm');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'itm');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

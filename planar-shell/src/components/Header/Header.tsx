@@ -12,8 +12,9 @@ import planarLocalStorage from '@/shared/planarLocalStorage';
 import type { FC } from 'react';
 
 import styles from './Header.module.scss';
+import type { GhostType } from '@planar/shared';
 
-type CurrentWidget = 'cre' | 'dlg' | 'itm' | 'bcs' | 'mos' | 'pvrz' | 'tis' | 'wed' | 'acm' | 'bam' | 'bmp' | 'wav' | 'mus' | 'eff' | 'ids' | 'ini' | 'are' | 'twoda' | 'src' | '';
+type CurrentWidget = GhostType | 'workbench' | '';
 
 const CreWidget = lazy(() => import('./children/CreWidget/CreWidget'));
 const DlgWidget = lazy(() => import('./children/DlgWidget/DlgWidget'));
@@ -34,6 +35,7 @@ const IniWidget = lazy(() => import('./children/IniWidget/IniWidget'));
 const AreWidget = lazy(() => import('./children/AreWidget/AreWidget'));
 const TwodaWidget = lazy(() => import('./children/TwodaWidget/TwodaWidget'));
 const SrcWidget = lazy(() => import('./children/SrcWidget/SrcWidget'));
+const WorkbenchWidget = lazy(() => import('./children/WorkbenchWidget/WorkbenchWidget'));
 
 const Header: FC = () => {
   const [currentWidget, setCurrentWidget] = useState<CurrentWidget>(() => planarLocalStorage.get<CurrentWidget>(planarLocalStorage.currentWidget, '')!);
@@ -73,6 +75,7 @@ const Header: FC = () => {
             { currentWidget === 'are' && <AreWidget />}
             { currentWidget === 'twoda' && <TwodaWidget />}
             { currentWidget === 'src' && <SrcWidget />}
+            { currentWidget === 'workbench' && <WorkbenchWidget />}
           </Grid>
 
           <Grid size={{ xs: 0.5 }}>

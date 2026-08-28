@@ -8,8 +8,7 @@ import { useTwodaStore } from './store/twodaStore';
 import { useTwodaWidgetBridge } from './useTwodaWidgetBridge';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import type { Maybe, GhostType } from '@planar/shared';
 
 type TProps = Readonly<{
   title: string;
@@ -21,7 +20,7 @@ const Twoda: FC = () => {
   useTwodaWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'twoda');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'twoda');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

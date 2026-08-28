@@ -15,10 +15,10 @@ import { useCreTalk } from './useCreTalk';
 import { useTlkStore } from '@/engine/store/planarRuntime';
 import { mapCreToTlkRefs } from './mapCreToTlkRefs';
 import { useShallow } from 'zustand/react/shallow';
+import { isNothing } from '@planar/shared';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import { isNothing, type Maybe } from '@planar/shared';
+import type { Maybe, GhostType } from '@planar/shared';
 
 import styles from './Cre.module.scss';
 
@@ -35,7 +35,7 @@ const Cre: FC = () => {
   const { startTalk, talking } = useCreTalk();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'cre');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'cre');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

@@ -13,6 +13,7 @@ export { sleep } from './sleep.js';
 export { evalGhostFactory } from './evalGhostFactory.js';
 export { withoutExtension } from './withoutExtension.js';
 export { dateDiffSec } from './dateDiffSec.js';
+export { ghostTypes } from './ghostTypes.js';
 
 export type {
   Rectangle,
@@ -187,3 +188,4 @@ export type {
   GhostMusSegment,
 } from './ghost/mus.types.js';
 export type { GhostWav } from './ghost/wav.types.js';
+export type { GhostType } from './ghostTypes.js';

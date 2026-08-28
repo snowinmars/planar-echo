@@ -13,8 +13,7 @@ import { useIniStore } from './store/iniStore';
 import { useIniWidgetBridge } from './useIniWidgetBridge';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import type { Maybe, GhostType } from '@planar/shared';
 
 type TProps = Readonly<{
   title: string;
@@ -31,7 +30,7 @@ const Ini: FC = () => {
   useIniWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'ini');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'ini');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

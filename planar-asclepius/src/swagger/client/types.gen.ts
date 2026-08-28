@@ -2118,6 +2118,42 @@ export type PostApiGhostSrcBySrcIdSkeletonResponses = {
 
 export type PostApiGhostSrcBySrcIdSkeletonResponse = PostApiGhostSrcBySrcIdSkeletonResponses[keyof PostApiGhostSrcBySrcIdSkeletonResponses];
 
+export type PostApiGhostSearchData = {
+    body: {
+        ghostDir: string;
+        partialName: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/ghost/search';
+};
+
+export type PostApiGhostSearchErrors = {
+    /**
+     * Ghost directory is not found by this path
+     */
+    404: {
+        error: {
+            message: string;
+            code: 'DIRECTORY_NOT_FOUND';
+        };
+    };
+};
+
+export type PostApiGhostSearchError = PostApiGhostSearchErrors[keyof PostApiGhostSearchErrors];
+
+export type PostApiGhostSearchResponses = {
+    /**
+     * Matching ghost files (max 20), sorted by id
+     */
+    200: Array<{
+        type: 'acm' | 'are' | 'bam' | 'bcs' | 'bmp' | 'cre' | 'dlg' | 'eff' | 'ids' | 'ini' | 'itm' | 'mos' | 'mus' | 'pvrz' | 'src' | 'tis' | 'twoda' | 'wav' | 'wed';
+        id: string;
+    }>;
+};
+
+export type PostApiGhostSearchResponse = PostApiGhostSearchResponses[keyof PostApiGhostSearchResponses];
+
 export type PostApiGhostTlkByGameLanguageData = {
     body: {
         ghostDir: string;

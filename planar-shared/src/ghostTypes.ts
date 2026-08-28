@@ -1,0 +1,22 @@
+export const ghostTypes = [
+  'acm',
+  'are',
+  'bam',
+  'bcs',
+  'bmp',
+  'cre',
+  'dlg',
+  'eff',
+  'ids',
+  'ini',
+  'itm',
+  'mos',
+  'mus',
+  'pvrz',
+  'src',
+  'tis',
+  'twoda',
+  'wav',
+  'wed',
+] as const;
+export type GhostType = (typeof ghostTypes)[number];

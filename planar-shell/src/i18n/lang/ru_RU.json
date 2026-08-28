@@ -164,6 +164,7 @@
     "srcLabel": "Src (всего {{amount}})",
     "areLabel": "Are (всего {{amount}})",
     "iniLabel": "Ini (всего {{amount}})",
+    "workbenchSearchLabel": "Ghost (всего {{amount}})",
     "imageLoadError": "Не удалось загрузить картинку",
     "audioLoadError": "Не удалось загрузить звук",
     "statesLabel": "Метка (всего {{amount}})",

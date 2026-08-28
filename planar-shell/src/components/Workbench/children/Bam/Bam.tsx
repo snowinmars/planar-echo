@@ -16,8 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { isNothing } from '@planar/shared';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import type { Maybe, GhostType } from '@planar/shared';
 
 import styles from './Bam.module.scss';
 
@@ -32,7 +31,7 @@ const Bam: FC = () => {
   useBamWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'bam');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'bam');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

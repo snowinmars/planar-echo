@@ -8,8 +8,7 @@ import { useSrcStore } from './store/srcStore';
 import { useSrcWidgetBridge } from './useSrcWidgetBridge';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import type { Maybe, GhostType } from '@planar/shared';
 
 type TProps = Readonly<{
   title: string;
@@ -21,7 +20,7 @@ const Src: FC = () => {
   useSrcWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'src');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'src');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

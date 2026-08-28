@@ -164,6 +164,7 @@
     "srcLabel": "Src (총 {{amount}})",
     "areLabel": "Are (총 {{amount}})",
     "iniLabel": "Ini (총 {{amount}})",
+    "workbenchSearchLabel": "Ghost (총 {{amount}})",
     "imageLoadError": "이미지를 불러오지 못했습니다",
     "audioLoadError": "오디오를 불러오지 못했습니다",
     "statesLabel": "상태 (총 {{amount}}개)",

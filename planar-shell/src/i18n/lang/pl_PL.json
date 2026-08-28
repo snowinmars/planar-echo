@@ -164,6 +164,7 @@
     "srcLabel": "Src (łącznie {{amount}})",
     "areLabel": "Are (łącznie {{amount}})",
     "iniLabel": "Ini (łącznie {{amount}})",
+    "workbenchSearchLabel": "Ghost (łącznie {{amount}})",
     "imageLoadError": "Nie udało się wczytać obrazu",
     "audioLoadError": "Nie udało się wczytać dźwięku",
     "statesLabel": "Stan (łącznie {{amount}})",

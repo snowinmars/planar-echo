@@ -13,8 +13,7 @@ import { usePvrzStore } from './store/pvrzStore';
 import { usePvrzWidgetBridge } from './usePvrzWidgetBridge';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { Maybe } from '@planar/shared';
+import type { Maybe, GhostType } from '@planar/shared';
 
 // import styles from './Pvrz.module.scss';
 
@@ -28,7 +27,7 @@ const Pvrz: FC = () => {
   usePvrzWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'pvrz');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'pvrz');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

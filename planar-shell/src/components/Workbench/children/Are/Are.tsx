@@ -12,10 +12,10 @@ import { useGhostRouteId } from '@/shared/useGhostRouteId';
 import ResrefLink from '@/shared/ResrefLink';
 import { useAreStore } from './store/areStore';
 import { useAreWidgetBridge } from './useAreWidgetBridge';
+import { isNothing } from '@planar/shared';
 
 import type { FC, ReactNode } from 'react';
-import type { Widget } from '@/shared/widget';
-import { isNothing, type Maybe, type Point, type Rectangle } from '@planar/shared';
+import type { GhostType, Maybe, Point, Rectangle } from '@planar/shared';
 
 type TProps = Readonly<{
   title: string;
@@ -59,7 +59,7 @@ const Are: FC = () => {
   useAreWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'are');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'are');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

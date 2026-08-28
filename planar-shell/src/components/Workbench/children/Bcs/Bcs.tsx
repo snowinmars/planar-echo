@@ -13,8 +13,7 @@ import { useBcsStore } from './store/bcsStore';
 import { useBcsWidgetBridge } from './useBcsWidgetBridge';
 
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
-import type { GhostBcsBlockScope, Maybe } from '@planar/shared';
+import type { GhostBcsBlockScope, GhostType, Maybe } from '@planar/shared';
 
 // import styles from './Bcs.module.scss';
 
@@ -54,7 +53,7 @@ const Bcs: FC = () => {
   useBcsWidgetBridge();
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'bcs');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'bcs');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 

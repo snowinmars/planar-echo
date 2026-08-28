@@ -9,9 +9,8 @@ import {
 } from './store/di';
 import { useFeatureLease, useLocalStorageStore } from '@/engine/store/planarRuntime';
 
-import type { StateId, Maybe } from '@planar/shared';
+import type { StateId, Maybe, GhostType } from '@planar/shared';
 import type { FC } from 'react';
-import type { Widget } from '@/shared/widget';
 
 import styles from './Dlg.module.scss';
 
@@ -32,7 +31,7 @@ const Dlg: FC = () => {
   }, [dlgId, loadDlg, searchParams]);
 
   useEffect(() => {
-    planarLocalStorage.set<Maybe<Widget>>(planarLocalStorage.currentWidget, 'dlg');
+    planarLocalStorage.set<Maybe<GhostType>>(planarLocalStorage.currentWidget, 'dlg');
     return () => planarLocalStorage.remove(planarLocalStorage.currentWidget);
   }, []);
 
