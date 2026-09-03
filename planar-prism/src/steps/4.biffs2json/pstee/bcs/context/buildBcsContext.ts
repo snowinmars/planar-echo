@@ -1,10 +1,13 @@
+import { just, nothing } from '@planar/shared';
+
+import { loadXorKey } from '@/shared/xor.js';
+
 import {
   BCS_REQUIRED_IDS,
   PST_STRING_PACKS_BY_ID,
 } from './buildBcsContext.const.js';
-import { just, nothing } from '@planar/shared';
-import { loadXorKey } from '@/shared/xor.js';
 
+import type { RawIds } from '../../ids/index.js';
 import type {
   RawBcsContext,
   RawBcsFunctionParam,
@@ -12,7 +15,6 @@ import type {
   RawBcsSignatureFunction,
   RawBcsSignatures,
 } from './buildBcsContext.types.js';
-import type { RawIds } from '../../ids/index.js';
 
 /**
  * Stamp each signature string parameter (s) with how it is stored in BCS bytecode.

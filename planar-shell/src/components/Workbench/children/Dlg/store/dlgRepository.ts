@@ -1,12 +1,13 @@
-import { client } from '@/swagger/client/client.gen';
+import { createDlgLogic } from '@/engine/dlgLogic';
+import { getDbDlg, setDbDlg } from '@/shared/indexedDb';
 import {
   postApiGhostDlgByDlgIdSkeleton,
   postApiGhostTlkByGameLanguage,
 } from '@/swagger/client';
-import { getDbDlg, setDbDlg } from '@/shared/indexedDb';
-import { createDlgLogic } from '@/engine/dlgLogic';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostDlg } from '@planar/shared';
+
 import type {
   DlgRepository,
   GetSkeletonProps,

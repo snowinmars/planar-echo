@@ -3,6 +3,7 @@ import { parseAbilities } from './2.parseAbilities.js';
 import { parseEffects } from './3.parseEffects.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawItmV10 } from '../parseItms.types.js';
 
 type ParseItmV10Props = Readonly<{

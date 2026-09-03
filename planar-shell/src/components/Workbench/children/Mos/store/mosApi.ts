@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostMos,
   postApiGhostMosByMosIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostMos } from '@planar/shared';
+import type { GhostMos } from '@planar/shared';
 
 export type LoadGhostMosProps = Readonly<{
   mosId: string;

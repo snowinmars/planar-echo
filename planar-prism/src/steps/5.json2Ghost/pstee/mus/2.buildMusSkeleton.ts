@@ -1,9 +1,11 @@
-import createWriter from '@/shared/writer.js';
-import { escapeSingleQuote } from '@/steps/5.json2Ghost/shared.js';
 import { isNothing, withoutExtension } from '@planar/shared';
 
-import type { Writer } from '@/shared/writer.js';
+import createWriter from '@/shared/writer.js';
+import { escapeSingleQuote } from '@/steps/5.json2Ghost/shared.js';
+
 import type { GhostMus, GhostMusSegment } from '@planar/shared';
+
+import type { Writer } from '@/shared/writer.js';
 
 const writeSegment = (writer: Writer, segment: GhostMusSegment): void => {
   writer.writeLine(`{`, 6);

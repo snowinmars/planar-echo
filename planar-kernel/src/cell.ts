@@ -1,7 +1,8 @@
 import { isNothing } from '@planar/shared';
+
 import { PASSABLE_WALK } from './types.js';
 
-import type { WalkGrid, Point } from './types.js';
+import type { Point, WalkGrid } from './types.js';
 
 export const cellIndex = (grid: WalkGrid, cell: Point): number => cell.y * grid.colsCount + cell.x;
 

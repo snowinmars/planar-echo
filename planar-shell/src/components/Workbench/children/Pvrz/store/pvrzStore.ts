@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostPvrz, loadGhostPvrz } from './pvrzApi';
 
-import type { Maybe, GhostPvr } from '@planar/shared';
+import type { GhostPvr, Maybe } from '@planar/shared';
 
 export type PvrzStore = Readonly<{
   serverUrl: string;

@@ -1,19 +1,22 @@
 import {
-  normalize,
   basename,
   dirname,
   extname,
+  normalize,
 } from 'path';
+
 import { nothing } from '@planar/shared';
 import { execConsole } from '@planar/shared/node';
 
+import logger from '@/shared/logger.js';
+
 import type { Maybe } from '@planar/shared';
+
 import type {
+  DecompileBiffsProps,
   DecompiledBiff,
   DecompiledBiffType,
-  DecompileBiffsProps,
 } from './types.js';
-import logger from '@/shared/logger.js';
 
 const detectDecompiledBiffType = (extension: string): DecompiledBiffType => {
   switch (extension) {
@@ -52,7 +55,7 @@ const detectDecompiledBiffType = (extension: string): DecompiledBiffType => {
   }
 };
 const decompileBiffsRegex = /\[(.*?)\] created from \[(.*?)\]/;
-const parseDecompiledBiff = (line: string, i: number): Maybe<DecompiledBiff> => {
+const parseDecompiledBiff = (line: string): Maybe<DecompiledBiff> => {
   const noMatches = line.startsWith('No matches for');
   if (noMatches) logger.warn(`It may be ok, but: '${line}'`);
 

@@ -1,3 +1,2 @@
 export { decodePvrToRgba } from './dxtDecoder.js';
-
-export type { RawPvrRgbaImage, RawPvrRectangle } from './dxtDecoder.types.js';
+export type { RawPvrRectangle, RawPvrRgbaImage } from './dxtDecoder.types.js';

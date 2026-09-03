@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import { useShallow } from 'zustand/react/shallow';
-import { useCreStore } from './store/creStore';
+
 import { resolveCreDlg } from '../dlgResolution/resolveCreDlg';
+import { useCreStore } from './store/creStore';
 
 export const useCreTalk = (): Readonly<{
   startTalk: () => Promise<void>;

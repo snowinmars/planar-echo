@@ -1,6 +1,9 @@
-import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
 import Step0 from './steps/Step0';
 import Step1 from './steps/Step1';
 import Step2 from './steps/Step2';
@@ -9,8 +12,6 @@ import Step4 from './steps/Step4';
 import Step5 from './steps/Step5';
 import Step6 from './steps/Step6';
 import { useLandingStore } from './store';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import type { FC } from 'react';
 

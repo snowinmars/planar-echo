@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
-import Typography from '@mui/material/Typography';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import NarrativeTab from './children/NarrativeTab';
-import CharactersTab from './children/CharactersTab';
-import { useTranslation } from 'react-i18next';
 import Divider from '@mui/material/Divider';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
 import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import type {FC } from 'react';
+import CharactersTab from './children/CharactersTab';
+import NarrativeTab from './children/NarrativeTab';
+
+import type { FC } from 'react';
 
 import styles from './Stores.module.scss';
 

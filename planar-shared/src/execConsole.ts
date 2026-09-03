@@ -24,7 +24,7 @@ export const execConsole = async <T>(
     });
 
     // Close stdin so WeiDU autopause ("Press ENTER") gets EOF instead of hanging.
-    // Do not use stdio 'ignore' for stdin — some WeiDU builds then exit before doing work.
+    // Do not use stdio 'ignore' for stdin - some WeiDU builds then exit before doing work.
     if (proc.stdin) {
       proc.stdin.on('error', (e) => {
         console.warn(e);

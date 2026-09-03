@@ -1,3 +1,5 @@
+import { nothing } from '@planar/shared';
+
 import { parseHeader } from './1.parseHeader.js';
 import { parseActors } from './2.parseActors.js';
 import { parseRegions } from './3.parseRegions.js';
@@ -17,9 +19,9 @@ import { parseSong } from './17.parseSong.js';
 import { parseRestInterruptions } from './18.parseRestInterruptions.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawAre } from '../parseAres.types.js';
+
 import type { RawIds } from '../../ids/index.js';
-import { nothing } from '@planar/shared';
+import type { RawAre } from '../parseAres.types.js';
 
 type ParseAreV10Props = Readonly<{
   reader: BufferReader;

@@ -1,8 +1,8 @@
-import type { Maybe } from '../maybe.js';
-import type { StateId } from '../dlgEngine/enums/state.js';
-import type { ResponseId } from '../dlgEngine/enums/response.js';
-import type { WhoId } from '../dlgEngine/enums/who.js';
 import type { ItmId } from '../dlgEngine/enums/itm.js';
+import type { ResponseId } from '../dlgEngine/enums/response.js';
+import type { StateId } from '../dlgEngine/enums/state.js';
+import type { WhoId } from '../dlgEngine/enums/who.js';
+import type { Maybe } from '../maybe.js';
 
 export type GhostDlgEngineInstructionPlaySound = Readonly<{
   id: 'playSound';

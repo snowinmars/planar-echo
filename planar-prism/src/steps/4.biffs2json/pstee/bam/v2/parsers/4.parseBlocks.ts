@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawBamV2DataBlock } from './4.parseBlocks.types.js';
 
 type ParseBlocksProps = Readonly<{

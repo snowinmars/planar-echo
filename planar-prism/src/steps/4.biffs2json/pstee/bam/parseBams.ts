@@ -1,14 +1,17 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
+import { join } from 'path';
 import { inflateSync } from 'zlib';
-import iterate from '@/steps/iterate.js';
+
 import { createReader } from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { parseBamV1Json } from './v1/parseBamV1.js';
 import { parseBamV2Json } from './v2/parseBamV2.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawBam } from './parseBams.types.js';
 
 const inflateBamc = (buffer: Buffer): Buffer => Buffer.from(inflateSync(buffer.subarray(12)));

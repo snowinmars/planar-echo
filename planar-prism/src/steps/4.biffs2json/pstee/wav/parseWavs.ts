@@ -1,11 +1,14 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
-import { detectAudioContainer } from '../shared/audio/index.js';
+import { join } from 'path';
+
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
+import { detectAudioContainer } from '../shared/audio/index.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawWav } from './parseWavs.types.js';
 
 export const parseWavs = (

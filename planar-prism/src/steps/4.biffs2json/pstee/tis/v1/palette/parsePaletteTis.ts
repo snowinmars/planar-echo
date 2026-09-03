@@ -1,6 +1,7 @@
 import { calcAtlasColumns, calcAtlasRows, PALETTE_TILE_SIZE } from '../../shared/tisCommon.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawTisHeader } from '../1.parseHeader.types.js';
 import type { RawTisPalette } from './parsePaletteTis.types.js';
 

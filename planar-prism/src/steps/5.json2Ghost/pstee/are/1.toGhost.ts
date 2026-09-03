@@ -1,15 +1,5 @@
 import { isNothing } from '@planar/shared';
 
-import type { RawAre } from '@/steps/4.biffs2json/pstee/are/parseAres.types.js';
-import type { RawAreActorV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/2.parseActors.types.js';
-import type { RawAreRegionV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/3.parseRegions.types.js';
-import type { RawAreSpawnPointV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/4.parseSpawnPoints.types.js';
-import type { RawAreContainerV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/6.parseContainers.types.js';
-import type { RawAreAmbientV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/9.parseAmbients.types.js';
-import type { RawAreDoorV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/12.parseDoors.types.js';
-import type { RawAreAnimationV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/13.parseAnimations.types.js';
-import type { RawAreTiledObjectV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/14.parseTiledObjects.types.js';
-import type { RawAreRestInterruptionsV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/18.parseRestInterruptions.types.js';
 import type {
   GhostAre,
   GhostAreActor,
@@ -23,6 +13,17 @@ import type {
   GhostAreTiledObject,
   GhostAreWalk,
 } from '@planar/shared';
+
+import type { RawAre } from '@/steps/4.biffs2json/pstee/are/parseAres.types.js';
+import type { RawAreActorV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/2.parseActors.types.js';
+import type { RawAreRegionV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/3.parseRegions.types.js';
+import type { RawAreSpawnPointV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/4.parseSpawnPoints.types.js';
+import type { RawAreContainerV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/6.parseContainers.types.js';
+import type { RawAreAmbientV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/9.parseAmbients.types.js';
+import type { RawAreDoorV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/12.parseDoors.types.js';
+import type { RawAreAnimationV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/13.parseAnimations.types.js';
+import type { RawAreTiledObjectV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/14.parseTiledObjects.types.js';
+import type { RawAreRestInterruptionsV10 } from '@/steps/4.biffs2json/pstee/are/v1.0/18.parseRestInterruptions.types.js';
 
 const toActor = (actor: RawAreActorV10): GhostAreActor => ({
   name: actor.name,

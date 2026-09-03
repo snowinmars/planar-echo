@@ -1,6 +1,7 @@
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
+
 import type { BitsPerPixel } from './validateBitsPerPixel.types.js';
 
 export const validateBitsPerPixel = (x: number): Maybe<BitsPerPixel> => {

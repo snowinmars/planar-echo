@@ -1,10 +1,14 @@
-import createWriter from '@/shared/writer.js';
 import { just, nothing, withoutExtension } from '@planar/shared';
+
+import createWriter from '@/shared/writer.js';
+
 import ie2ts from './ie2ts/index.js';
 
 import type { Maybe } from '@planar/shared';
-import type { NestedDlg, NestedDlgResponse, NestedDlgState } from './2.nestDlg.types.js';
+
 import type { DiscoverNext } from '@/discoverer.types.js';
+
+import type { NestedDlg, NestedDlgResponse, NestedDlgState } from './2.nestDlg.types.js';
 
 const isResponseDesctructor = (response: NestedDlgResponse) => !response.nextDlg;
 const isResponseExtern = (response: NestedDlgResponse, resourceName: string) => response.nextDlg && `${response.nextDlg}.dlg` !== resourceName;

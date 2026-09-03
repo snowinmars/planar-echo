@@ -1,8 +1,8 @@
+import { parseRe } from './parseRe.js';
 import {
   RE_TOKEN,
   RS_TOKEN,
 } from './tokens.js';
-import { parseRe } from './parseRe.js';
 
 import type { RawBcsStream } from '../bcsStream.types.js';
 import type { RawBcsResponse } from './parseRe.types.js';

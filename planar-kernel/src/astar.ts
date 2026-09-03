@@ -1,8 +1,10 @@
 import { nothing } from '@planar/shared';
+
 import { cellKey, inBounds, isPassable } from './cell.js';
 
-import type { Point, WalkGrid } from './types.js';
 import type { Maybe } from '@planar/shared';
+
+import type { Point, WalkGrid } from './types.js';
 
 /**
  * Mostly llm-generated

@@ -1,12 +1,14 @@
+import { withoutExtension } from '@planar/shared';
+
 import createWriter from '@/shared/writer.js';
 import {
   escapeSingleQuote,
   writeStringArray,
 } from '@/steps/5.json2Ghost/shared.js';
-import { withoutExtension } from '@planar/shared';
+
+import type { GhostIni, GhostIniCreatureScopedVariable, GhostIniCreatureSection } from '@planar/shared';
 
 import type { Writer } from '@/shared/writer.js';
-import type { GhostIni, GhostIniCreatureScopedVariable, GhostIniCreatureSection } from '@planar/shared';
 
 const writePoint = (writer: Writer, propertyName: string, point: [number, number], offset: number): void => {
   writer.writeLine(`${propertyName}: [${point[0]}, ${point[1]}],`, offset);

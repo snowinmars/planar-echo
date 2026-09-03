@@ -1,6 +1,9 @@
+import { normalizeRef } from '@/shared/numbers.js';
+
 import { extendMap } from './3.parseEffects.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type {
   RawItmAbstractEffectV10,
   RawItmEffectOpCode0V10,
@@ -93,7 +96,6 @@ import type {
   RawItmEffectOpCode383V10,
   RawItmEffectV10,
 } from './3.parseEffects.types.js';
-import { normalizeRef } from '@/shared/numbers.js';
 
 export const parseEffect = (reader: BufferReader): RawItmEffectV10 => {
   // https://gibberlings3.github.io/iesdp/file_formats/ie_formats/itm_v1.1.htm

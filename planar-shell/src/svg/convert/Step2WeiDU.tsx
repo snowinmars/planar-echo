@@ -1,5 +1,6 @@
-import type { WithClassName } from '@/types/fcWithClassName';
 import type { FC, JSX, SVGAttributes } from 'react';
+
+import type { WithClassName } from '@/types/fcWithClassName';
 
 import styles from './Step2WeiDU.module.scss';
 

@@ -1,13 +1,15 @@
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import InputLabel from '@mui/material/InputLabel';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { FC } from 'react';
+
 import type { WithClassName } from '@/types/fcWithClassName';
 
 // import styles from './DlgRendererSwitcher.module.scss';

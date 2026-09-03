@@ -1,4 +1,5 @@
 import { extend } from '@/shared/extendedMap.js';
+
 import type { Direction, Maybe, Point } from '@planar/shared';
 
 /* createGenerator().register().flags('actorFlagsV10', {

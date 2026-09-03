@@ -1,15 +1,17 @@
-import express from 'express';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
+import express from 'express';
 import { createServer } from 'http';
-import swaggerSpec from './swagger/swagger.json' with { type: 'json' };
-import router from './controllers/router.js';
-import createWsRouter from './wsController/router.js';
+import swaggerUi from 'swagger-ui-express';
+
 import ghostDirAction from '@/services/fs/ghostDir/action.js';
 import shellDirAction from '@/services/fs/shellDir/action.js';
 
-import type { JsonObject } from 'swagger-ui-express';
+import router from './controllers/router.js';
 import logger from './shared/logger.js';
+import swaggerSpec from './swagger/swagger.json' with { type: 'json' };
+import createWsRouter from './wsController/router.js';
+
+import type { JsonObject } from 'swagger-ui-express';
 
 const app = express();
 app.use(express.json());

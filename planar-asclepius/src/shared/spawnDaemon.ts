@@ -1,6 +1,7 @@
 import { fork } from 'child_process';
-import logger from '@/shared/logger.js';
+
 import { defaultDaemonCwd, defaultDaemonEntry } from '@/shared/layout.js';
+import logger from '@/shared/logger.js';
 
 import type { ChildProcess } from 'child_process';
 

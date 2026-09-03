@@ -4,8 +4,9 @@ import {
 } from '../../parseMoss.const.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawMosV1IndicesBlockLayout, RawMosV1BlockMeta } from './4.parseTileData.types.js';
+
 import type { RawMosV1Header } from './1.parseHeader.types.js';
+import type { RawMosV1BlockMeta, RawMosV1IndicesBlockLayout } from './4.parseTileData.types.js';
 
 const getBlockWidth = (col: number, columns: number, width: number): number => {
   if (col < columns - 1) return MOS_BLOCK_DIMENSION;

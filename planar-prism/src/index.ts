@@ -1,6 +1,20 @@
+import { dateDiffSec, nothing } from '@planar/shared';
+
+import { createPaths } from '@/steps/1.createPaths/index.js';
+import { validate } from '@/steps/2.validate/index.js';
+import { decompileBiffs } from '@/steps/3.decompileBiffs/index.js';
+import { biffs2json } from '@/steps/4.biffs2json/index.js';
+import { raw2assets } from '@/steps/4b.raw2assets/index.js';
+import { json2Ghost } from '@/steps/5.json2Ghost/index.js';
+
+import discoverer from './discoverer.js';
+import { loadCliDefaults } from './loadCliDefaults.js';
 import { confirm } from './node-ask/index.js';
 import logger from './shared/logger.js';
 import { disposeReports, reportComplete, reportError } from './shared/report.js';
+import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
+
+import type { Maybe, PrismIndexStartMessage } from '@planar/shared';
 
 // import convertChu from './pipes/convertChu/convertChu.js';
 // import convertGlsl from './pipes/convertGlsl/convertGlsl.js';
@@ -14,19 +28,6 @@ import { disposeReports, reportComplete, reportError } from './shared/report.js'
 // import convertVvc from './pipes/convertVvc/convertVvc.js';
 // import convertWbm from './pipes/convertWbm/convertWbm.js';
 // import convertWmp from './pipes/convertWmp/convertWmp.js';
-
-import { createPaths } from '@/steps/1.createPaths/index.js';
-import { validate } from '@/steps/2.validate/index.js';
-import { decompileBiffs } from '@/steps/3.decompileBiffs/index.js';
-import { biffs2json } from '@/steps/4.biffs2json/index.js';
-import { raw2assets } from '@/steps/4b.raw2assets/index.js';
-import { json2Ghost } from '@/steps/5.json2Ghost/index.js';
-import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
-import discoverer from './discoverer.js';
-import { loadCliDefaults } from './loadCliDefaults.js';
-import { dateDiffSec, nothing } from '@planar/shared';
-
-import type { Maybe, PrismIndexStartMessage } from '@planar/shared';
 
 const isIpc = !!process.send;
 logger.warn(isIpc ? 'Run ipc mode' : 'Run cli mode');

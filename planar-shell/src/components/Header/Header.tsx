@@ -1,18 +1,20 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import { Link as RouterLink } from 'react-router';
-import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
-import TranslationSvg from '@/svg/translation';
+import AppBar from '@mui/material/AppBar';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import Toolbar from '@mui/material/Toolbar';
 import { lazy, useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import TranslationSvg from '@/svg/translation';
 
 import type { FC } from 'react';
 
-import styles from './Header.module.scss';
 import type { GhostType } from '@planar/shared';
+
+import styles from './Header.module.scss';
 
 type CurrentWidget = GhostType | 'workbench' | '';
 

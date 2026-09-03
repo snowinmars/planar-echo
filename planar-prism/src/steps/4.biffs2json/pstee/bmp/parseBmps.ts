@@ -1,8 +1,10 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+
 import { createReader } from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import {
   BMP_V1_HEADER_SIZE,
   BMP_V3_HEADER_SIZE,
@@ -14,6 +16,7 @@ import { parseBmpV5Json } from './v5/parseBmpV5.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawBmp } from './parseBmps.types.js';
 
 export const parseBmps = (

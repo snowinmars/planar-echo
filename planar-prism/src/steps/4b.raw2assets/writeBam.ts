@@ -1,16 +1,19 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
+import { join } from 'path';
 import { inflateSync } from 'zlib';
-import { isRawBamV1 } from '@/steps/4.biffs2json/pstee/bam/isBamV1.js';
+
 import { pvrzIndexFromSab } from '@/shared/pool/index.js';
-import { encodeRgbaPng } from './algo/encodeRgbaPng.js';
+import { isRawBamV1 } from '@/steps/4.biffs2json/pstee/bam/isBamV1.js';
+
 import { blitRgbaFrame, cropAndBlit } from './algo/cropAndBlit.js';
 import { decodeBamV1Frames, fixBamPalette } from './algo/decodeBamV1Frames.js';
+import { encodeRgbaPng } from './algo/encodeRgbaPng.js';
 import { writeAssetFile } from './writeAssetFile.js';
 
-import type { ParseOneProps, ParseOneResult, PackedPvrz, AssetOk } from '@/shared/pool/index.js';
+import type { AssetOk, PackedPvrz, ParseOneProps, ParseOneResult } from '@/shared/pool/index.js';
 import type { RawBam } from '@/steps/4.biffs2json/pstee/bam/index.js';
 import type { RawBamV2 } from '@/steps/4.biffs2json/pstee/bam/v2/parseBamV2.types.js';
+
 import type { RawPvrRgbaImage } from './algo/pvrz/index.js';
 
 const inflateBamcIfNeeded = (raw: Buffer): Buffer => {

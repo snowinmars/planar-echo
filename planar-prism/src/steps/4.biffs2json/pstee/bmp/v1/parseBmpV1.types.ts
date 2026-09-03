@@ -1,4 +1,5 @@
 import type { Maybe } from '@planar/shared';
+
 import type { RawBmpV1Header } from './parsers/1.parseHeader.types.js';
 
 export type RawBmpV1PaletteLayout = Readonly<{

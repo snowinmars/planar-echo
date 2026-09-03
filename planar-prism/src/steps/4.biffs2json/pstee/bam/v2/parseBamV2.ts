@@ -1,10 +1,12 @@
+import { layoutHorizontalAtlas } from '../shared/buildAtlas.js';
 import { parseHeader } from './parsers/1.parseHeader.js';
 import { parseFrames } from './parsers/2.parseEntries.js';
 import { parseCycles } from './parsers/3.parseCycles.js';
 import { parseBlocks } from './parsers/4.parseBlocks.js';
-import { layoutHorizontalAtlas, type BamAtlasFrame } from '../shared/buildAtlas.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
+import type { BamAtlasFrame } from '../shared/buildAtlas.js';
 import type { RawBamV2, RawBamV2Frame } from './parseBamV2.types.js';
 import type { RawBamV2FrameEntry } from './parsers/2.parseEntries.types.js';
 

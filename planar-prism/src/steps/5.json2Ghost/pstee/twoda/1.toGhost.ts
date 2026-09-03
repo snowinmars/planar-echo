@@ -1,5 +1,6 @@
-import type { RawTwoda } from '@/steps/4.biffs2json/pstee/2da/parse2das.types.js';
 import type { GhostTwoda } from '@planar/shared';
+
+import type { RawTwoda } from '@/steps/4.biffs2json/pstee/2da/parse2das.types.js';
 
 export const toGhost = (raw: RawTwoda): GhostTwoda => ({
   resourceName: raw.resourceName,

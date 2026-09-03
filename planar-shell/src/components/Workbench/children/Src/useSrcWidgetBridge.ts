@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { srcWidgetState } from '@/shared/widgets';
+
 import { useSrcStore } from './store/srcStore';
 
 import type { SrcStore } from './store/srcStore';

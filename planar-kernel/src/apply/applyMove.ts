@@ -1,16 +1,19 @@
-import { nothing, orientFromDelta, type Maybe } from '@planar/shared';
+import { nothing, orientFromDelta } from '@planar/shared';
+
 import { astar, closestReachable, reachableFrom } from '../astar.js';
 import { cellCenter, cellKey, worldToCell } from '../cell.js';
 import { cloneBody } from '../cloneWorld.js';
 import { walkGridForPath } from '../rebuildWalk.js';
 
+import type { Maybe } from '@planar/shared';
+
 import type {
   ApplyResult,
+  Body,
   EntityId,
   InputCommand,
-  World,
   Point,
-  Body,
+  World,
 } from '../types.js';
 
 export const setActorDest = (

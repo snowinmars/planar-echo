@@ -1,12 +1,15 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+
 import { createReader } from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { parseWedV13 } from './v1.3/index.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawWed } from './parseWeds.types.js';
 
 export const parseWeds = (

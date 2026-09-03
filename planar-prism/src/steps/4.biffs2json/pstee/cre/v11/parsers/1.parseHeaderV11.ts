@@ -1,11 +1,14 @@
 import { externalOffsetMap } from '@/shared/extendedMap.js';
-import { extendMap } from './1.parseHeaderV11.types.js';
 import { normalizeRef } from '@/shared/numbers.js';
 
-import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawCreHeaderV11 } from './1.parseHeaderV11.types.js';
-import type { RawIds } from '../../../ids/index.js';
+import { extendMap } from './1.parseHeaderV11.types.js';
+
 import type { ClassId } from '@planar/shared';
+
+import type { BufferReader } from '@/shared/bufferReader.js';
+
+import type { RawIds } from '../../../ids/index.js';
+import type { RawCreHeaderV11 } from './1.parseHeaderV11.types.js';
 
 type ParseHeaderV11Props = Readonly<{
   reader: BufferReader;

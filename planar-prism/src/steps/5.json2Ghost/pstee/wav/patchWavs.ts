@@ -1,9 +1,11 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { toGhost } from './1.toGhost.js';
 import { buildWavSkeleton } from './2.buildWavSkeleton.js';
 
 import type { RawWav } from '@/steps/4.biffs2json/pstee/wav/index.js';
+
 import type { GhostWavOut } from './patchWavs.types.js';
 
 export const patchWavs = (

@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { dlgWidgetState } from '@/shared/widgets';
+
 import { useDlgStoreApi } from './store/di';
 
 import type { DlgStore } from './store/dlgStore.types';

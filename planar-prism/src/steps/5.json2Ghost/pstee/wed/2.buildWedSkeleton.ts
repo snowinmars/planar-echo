@@ -1,9 +1,11 @@
-import createWriter from '@/shared/writer.js';
-import { escapeSingleQuote, writeFlags } from '@/steps/5.json2Ghost/shared.js';
 import { withoutExtension } from '@planar/shared';
 
-import type { Writer } from '@/shared/writer.js';
+import createWriter from '@/shared/writer.js';
+import { escapeSingleQuote, writeFlags } from '@/steps/5.json2Ghost/shared.js';
+
 import type { GhostWed, GhostWedPolygon } from '@planar/shared';
+
+import type { Writer } from '@/shared/writer.js';
 
 const writeNumberArray = (writer: Writer, propertyName: string, values: number[], offset: number): void => {
   writer.writeLine(`${propertyName}: [`, offset);

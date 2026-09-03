@@ -1,8 +1,8 @@
-import {
-  SC_TOKEN,
-  CR_TOKEN,
-} from './tokens.js';
 import { parseCr } from './parseCr.js';
+import {
+  CR_TOKEN,
+  SC_TOKEN,
+} from './tokens.js';
 
 import type { RawBcsStream } from '../bcsStream.types.js';
 import type { RawBcsCr } from './parseCr.types.js';

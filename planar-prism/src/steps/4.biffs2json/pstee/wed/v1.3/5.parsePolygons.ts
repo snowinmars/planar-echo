@@ -1,6 +1,7 @@
 import { extendMap } from './5.parsePolygons.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawWedPolygon } from './5.parsePolygons.types.js';
 
 const parsePolygon = (reader: BufferReader): RawWedPolygon => {

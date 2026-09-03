@@ -1,7 +1,8 @@
 import { getWorldState, setWorldState } from './crud';
 
+import type { BooleanVariableId, KeyId, Maybe, NumberVariableId } from '@planar/shared';
+
 import type { WorldStateItem } from './crud';
-import type { Maybe, NumberVariableId, BooleanVariableId, KeyId } from '@planar/shared';
 
 export type NarrativeState = Record<NumberVariableId, number> & Record<BooleanVariableId, number> & Record<KeyId, number>;
 

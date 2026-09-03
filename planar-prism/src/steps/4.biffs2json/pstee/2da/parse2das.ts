@@ -1,11 +1,14 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { parse2daV1 } from './v1/index.js';
 
-import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Paths } from '@/steps/1.createPaths/index.js';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawTwoda } from './parse2das.types.js';
 
 export const parse2das = (

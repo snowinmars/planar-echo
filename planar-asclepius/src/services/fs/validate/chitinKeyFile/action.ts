@@ -1,5 +1,7 @@
-import { dirname, normalize, basename } from 'path';
+import { basename, dirname, normalize } from 'path';
+
 import { fileExists } from '@planar/shared/node';
+
 import listBiffs from './listBiffs.js';
 
 import type { Command, Result } from './types.js';

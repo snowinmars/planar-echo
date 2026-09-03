@@ -1,4 +1,6 @@
-import { isNothing, type Maybe } from '@planar/shared';
+import { isNothing } from '@planar/shared';
+
+import type { Maybe } from '@planar/shared';
 
 export const BMP_FILE_HEADER_SIZE = 14;
 export const BMP_V1_HEADER_SIZE = 40;

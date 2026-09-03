@@ -1,6 +1,7 @@
 import { extendMap } from './10.parseVariables.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreVariableV10 } from './10.parseVariables.types.js';
 
 const parseVariable = (reader: BufferReader): RawAreVariableV10 => {

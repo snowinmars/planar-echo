@@ -1,27 +1,31 @@
-import {
-  appendGameHistory,
-  gameHistoryChanged$,
-  getGameHistoryPage,
-} from '@/shared/indexedDb';
+import { Subscription } from 'rxjs';
+
+import { planarStoreId } from '@/engine/store/planarRuntime.types';
 import {
   gameHistorySettingsKeys,
   getGameHistoryBrowsedPages,
   getGameHistoryPageSize,
 } from '@/shared/gameHistorySettings';
+import {
+  appendGameHistory,
+  gameHistoryChanged$,
+  getGameHistoryPage,
+} from '@/shared/indexedDb';
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import { planarStoreId } from '@/engine/store/planarRuntime.types';
-import { mapTlkRefs } from './helpers';
-import { Subscription } from 'rxjs';
 
+import { mapTlkRefs } from './helpers';
+
+import type { StateCreator } from 'zustand/vanilla';
+
+import type { PlanarRuntime } from '@/engine/store/planarRuntime.types';
 import type {
   GameHistoryChange,
   GameHistoryPage,
 } from '@/shared/indexedDb';
+
 import type { GameHistoryStore } from './gameHistoryStore.types';
-import type { StateCreator } from 'zustand/vanilla';
-import type { PlanarRuntime } from '@/engine/store/planarRuntime.types';
-import type { TlkStore } from './tlkStore.types';
 import type { DisposeFunction } from './helpers';
+import type { TlkStore } from './tlkStore.types';
 
 const getMaxEntries = (): number => (
   // TODO [snow]: wrong: use indexedDb

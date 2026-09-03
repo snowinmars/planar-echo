@@ -1,8 +1,10 @@
+import { nothing } from '@planar/shared';
+
 import { extendMap } from './parseEffV20.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawEffV20 } from './parseEffV20.types.js';
-import { nothing } from '@planar/shared';
 
 type ParseEffV20Props = Readonly<{
   reader: BufferReader;

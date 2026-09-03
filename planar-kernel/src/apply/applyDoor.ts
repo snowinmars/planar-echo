@@ -1,4 +1,5 @@
 import { nothing } from '@planar/shared';
+
 import { cloneBody, doorView } from '../cloneWorld.js';
 import { rebuildWalk } from '../rebuildWalk.js';
 

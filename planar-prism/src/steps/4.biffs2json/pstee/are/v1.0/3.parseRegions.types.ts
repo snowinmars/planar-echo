@@ -1,7 +1,8 @@
 import { extend } from '@/shared/extendedMap.js';
 
+import type { Maybe, Point, Rectangle } from '@planar/shared';
+
 import type { RawAreVertexV10 } from './8.parseVertices.types.js';
-import type { Rectangle, Point, Maybe } from '@planar/shared';
 
 /* createGenerator().register().enum('regionTypeV10',
  *    ['proximity trigger','info point','travel region', ],

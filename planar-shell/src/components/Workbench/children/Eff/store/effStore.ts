@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostEff, loadGhostEff } from './effApi';
 
-import type { Maybe, GhostEff } from '@planar/shared';
+import type { GhostEff, Maybe } from '@planar/shared';
 
 export type EffStore = Readonly<{
   serverUrl: string;

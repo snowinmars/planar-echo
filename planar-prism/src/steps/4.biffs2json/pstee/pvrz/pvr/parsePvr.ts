@@ -1,6 +1,7 @@
 import { PVR_SIGNATURE } from './parsePvr.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawPvrPixelFormat } from '../parsePvrzs.types.js';
 import type { RawPvr } from './parsePvr.types.js';
 

@@ -1,18 +1,20 @@
 import { just, nothing } from '@planar/shared';
+
 import {
-  parseHeaderV11,
-  parseKnownSpellsV11,
-  parseSpellMemorizationInfosV11,
-  parseMemorizedSpellsTableV11,
+  parseCreItemsV11,
   parseEffectsV10,
   parseEffectsV20,
-  parseCreItemsV11,
+  parseHeaderV11,
   parseItemSlotsV11,
+  parseKnownSpellsV11,
+  parseMemorizedSpellsTableV11,
+  parseSpellMemorizationInfosV11,
 } from './parsers/index.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawCreV11 } from '../parseCres.types.js';
+
 import type { RawIds } from '../../ids/index.js';
+import type { RawCreV11 } from '../parseCres.types.js';
 
 type ParseCreV11Props = Readonly<{
   reader: BufferReader;

@@ -1,9 +1,12 @@
-import { join, normalize, dirname } from 'path';
-import { mkdirsIfNotExists, saveBinaryToFile, saveToFile } from '@/shared/customFs.js';
+import { dirname, join, normalize } from 'path';
+
 import { packageDir } from '@planar/shared/node';
+
+import { mkdirsIfNotExists, saveBinaryToFile, saveToFile } from '@/shared/customFs.js';
 
 import type { Maybe } from '@planar/shared';
 import type { PrismIndexStartMessage } from '@planar/shared';
+
 import type { Paths } from './types.js';
 
 type CreatePathsProps = PrismIndexStartMessage['data'] & Readonly<{

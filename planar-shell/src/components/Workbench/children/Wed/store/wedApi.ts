@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostWed,
   postApiGhostWedByWedIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostWed } from '@planar/shared';
+import type { GhostWed } from '@planar/shared';
 
 export type LoadGhostWedProps = Readonly<{
   wedId: string;

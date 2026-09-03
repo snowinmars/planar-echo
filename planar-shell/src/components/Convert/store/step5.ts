@@ -1,7 +1,8 @@
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
-import type { LandingState, LandingStateStep5 } from './types';
 import type { StateCreator } from 'zustand';
+
+import type { LandingState, LandingStateStep5 } from './types';
 
 export const useLandingStoreStep5: StateCreator<LandingState, [], [], LandingStateStep5> = (set) => {
   const ownGame = planarLocalStorage.get<boolean>('ownGame', false)!;

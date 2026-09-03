@@ -1,5 +1,6 @@
-import iterate from '../../../iterate.js';
 import { reportProgress } from '@/shared/report.js';
+
+import iterate from '../../../iterate.js';
 import { toGhost } from './1.toGhost.js';
 import { buildBamSkeleton } from './2.buildBamSkeleton.js';
 

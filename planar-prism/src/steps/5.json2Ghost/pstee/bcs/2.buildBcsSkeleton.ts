@@ -1,9 +1,11 @@
-import createWriter from '@/shared/writer.js';
-import { escapeSingleQuote } from '@/steps/5.json2Ghost/shared.js';
 import { withoutExtension } from '@planar/shared';
 
-import type { Writer } from '@/shared/writer.js';
+import createWriter from '@/shared/writer.js';
+import { escapeSingleQuote } from '@/steps/5.json2Ghost/shared.js';
+
 import type { GhostBcs, GhostBcsArg, GhostBcsBlockScope } from '@planar/shared';
+
+import type { Writer } from '@/shared/writer.js';
 
 const writeArgFields = (writer: Writer, arg: GhostBcsArg, offset: number): void => {
   switch (arg.kind) {

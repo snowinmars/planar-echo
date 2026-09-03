@@ -1,13 +1,14 @@
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { gameNames, objectEntries } from '@planar/shared';
-import { useTranslation } from 'react-i18next';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
+
+import { gameNames, objectEntries } from '@planar/shared';
 
 import type { FC } from 'react';
-import type { GameName, GameLanguage } from '@planar/shared';
+
 import type { LandingStateStep1 } from '@/components/Convert/store/types';
 import type { NativeLang } from '@/shared/getNativeLangNames';
 
@@ -34,7 +35,7 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
           disabled={props.disabled}
           value={props.gameName}
           onChange={(e) => {
-            props.setGameName(e.target.value as GameName);
+            props.setGameName(e.target.value);
           }}
           label={t('landing.step1.gameName')}
           labelId="landing-step1-gameName-label"
@@ -59,7 +60,7 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
           disabled={props.disabled}
           value={props.gameLanguage}
           onChange={(e) => {
-            props.setGameLanguage(e.target.value as GameLanguage);
+            props.setGameLanguage(e.target.value);
           }}
           label={t('landing.step1.gameLanguage')}
           labelId="landing-step1-gameLanguage-label"

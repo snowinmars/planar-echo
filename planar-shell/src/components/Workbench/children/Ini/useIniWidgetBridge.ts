@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { iniWidgetState } from '@/shared/widgets';
+
 import { useIniStore } from './store/iniStore';
 
 import type { IniStore } from './store/iniStore';

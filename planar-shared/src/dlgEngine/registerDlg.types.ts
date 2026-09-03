@@ -1,5 +1,5 @@
-import type { Maybe } from '../maybe.js';
 import type { GhostDlgEngineInstruction } from '../ghost/dlg.types.js';
+import type { Maybe } from '../maybe.js';
 
 export type InternalConditionCallback<T> = (logic: T) => boolean;
 export type InternalActionCallback<T> = (logic: T) => Maybe<GhostDlgEngineInstruction>;

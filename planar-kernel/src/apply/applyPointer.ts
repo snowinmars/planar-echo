@@ -1,8 +1,9 @@
-import { setActorDest } from './applyMove.js';
-import { toggleDoor } from './applyDoor.js';
+import { isNothing } from '@planar/shared';
+
 import { closerPoint, hitDoor, worldDist } from '../hitTest.js';
 import { PLAYER_ACTOR_ID, PST_OPERATING_DISTANCE } from '../types.js';
-import { isNothing } from '@planar/shared';
+import { toggleDoor } from './applyDoor.js';
+import { setActorDest } from './applyMove.js';
 
 import type { ApplyResult, InputCommand, World } from '../types.js';
 

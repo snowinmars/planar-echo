@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostAcm,
   postApiGhostAcmByAcmIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostAcm } from '@planar/shared';
+import type { GhostAcm } from '@planar/shared';
 
 export type LoadGhostAcmProps = Readonly<{
   acmId: string;

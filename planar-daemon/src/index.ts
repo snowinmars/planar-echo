@@ -1,6 +1,7 @@
+import { just, nothing } from '@planar/shared';
+
 import { boot } from './boot.js';
 import { send } from './shared/send.js';
-import { just, nothing } from '@planar/shared';
 
 import type { ToDaemon } from '@planar/kernel';
 import type { Maybe } from '@planar/shared';

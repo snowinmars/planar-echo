@@ -1,7 +1,9 @@
-import { createReader } from '@/shared/bufferReader.js';
 import { readFile } from 'fs/promises';
-import { parseTlkV1 } from './v1/index.js';
+
+import { createReader } from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+
+import { parseTlkV1 } from './v1/index.js';
 
 import type { RawTlk } from './types.js';
 import type { RawTlkItem } from './v1/parsers/2.parseItemsV1.types.js';

@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { bamWidgetState } from '@/shared/widgets';
+
 import { useBamStore } from './store/bamStore';
 
 import type { BamStore } from './store/bamStore';

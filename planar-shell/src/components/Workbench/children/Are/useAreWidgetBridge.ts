@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { areWidgetState } from '@/shared/widgets';
+
 import { useAreStore } from './store/areStore';
 
 import type { AreStore } from './store/areStore';

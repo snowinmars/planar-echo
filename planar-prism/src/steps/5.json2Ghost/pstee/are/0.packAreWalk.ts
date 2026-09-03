@@ -1,10 +1,11 @@
 import {
-  PSTEE_SEARCH_CELL_WIDTH,
   PSTEE_SEARCH_CELL_HEIGHT,
+  PSTEE_SEARCH_CELL_WIDTH,
   searchmapPropsize,
 } from '@/steps/4b.raw2assets/psteeSearchmap.js';
 
 import type { GhostAreWalk } from '@planar/shared';
+
 import type { RawAre } from '@/steps/4.biffs2json/pstee/are/parseAres.types.js';
 import type { RawWed } from '@/steps/4.biffs2json/pstee/wed/parseWeds.types.js';
 

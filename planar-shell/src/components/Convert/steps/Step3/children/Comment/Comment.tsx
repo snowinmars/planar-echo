@@ -1,14 +1,16 @@
-import { useTranslation } from 'react-i18next';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import Steam from '@/svg/steam';
-import Gog from '@/svg/gog';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
+
+import Gog from '@/svg/gog';
+import Steam from '@/svg/steam';
 
 import type { TypographyOwnProps } from '@mui/material/Typography';
-import type { LandingStateStep3 } from '@/components/Convert/store/types';
 import type { FC } from 'react';
+
+import type { LandingStateStep3 } from '@/components/Convert/store/types';
 
 import styles from './Comment.module.scss';
 

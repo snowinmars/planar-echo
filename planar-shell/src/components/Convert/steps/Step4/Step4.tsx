@@ -1,13 +1,17 @@
-import { clsx } from 'clsx';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { clsx } from 'clsx';
+
+import Step4Folder from '@/svg/convert/Step4Folder';
+
 import StepLoader from '../../StepLoader';
 import Comment from './children/Comment/Comment';
 import Content from './children/Content/Content';
-import Step4Folder from '@/svg/convert/Step4Folder';
 
 import type { FC } from 'react';
+
 import type { WithClassName } from '@/types/fcWithClassName';
+
 import type { LandingStateStep4 } from '../../store/types';
 
 import styles from './Step4.module.scss';

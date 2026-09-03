@@ -1,12 +1,16 @@
+import { debounce, interval, Subject } from 'rxjs';
+
 import { nothing } from '@planar/shared';
-import { client } from '@/swagger/client/client.gen';
-import { postApiFsOpenDir, postApiFsValidateGhostDir } from '@/swagger/client';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { postApiFsOpenDir, postApiFsValidateGhostDir } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
+
+import type { StateCreator } from 'zustand';
+
+import type { PostApiFsOpenDirErrors, PostApiFsValidateGhostDirErrors } from '@/swagger/client';
 
 import type { LandingState, LandingStateStep4, ZustandGetType, ZustandSetType } from './types';
-import type { StateCreator } from 'zustand';
-import type { PostApiFsOpenDirErrors, PostApiFsValidateGhostDirErrors } from '@/swagger/client';
-import { debounce, interval, Subject } from 'rxjs';
 
 type FormErrorStateProps = PostApiFsValidateGhostDirErrors[404 | 406];
 const translateErrorState = (error: FormErrorStateProps): string => {

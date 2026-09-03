@@ -1,6 +1,7 @@
 import { extendMap } from './2.parseOverlay.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawWedOverlay, RawWedTilemap } from './2.parseOverlay.types.js';
 
 type ParseTilemapProps = Readonly<{

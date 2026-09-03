@@ -1,9 +1,11 @@
-import logger from '@/shared/logger.js';
 import { entryExists, loadFromFile, saveToFile } from '@/shared/customFs.js';
+import logger from '@/shared/logger.js';
 import { reportProgress } from '@/shared/report.js';
+
 import decompileAndParseBiffs from './decompileAndParseBiffs.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
+
 import type {
   DecompiledBiff,
   DecompiledBiffType,

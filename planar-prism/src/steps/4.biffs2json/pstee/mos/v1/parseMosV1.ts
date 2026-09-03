@@ -1,13 +1,14 @@
-import { parseHeader } from './parsers/1.parseHeader.js';
-import { parseLookups } from './parsers/3.parseLookups.js';
-import { parseTileData } from './parsers/4.parseTileData.js';
 import {
   MOS_PALETTE_BLOCK_STRIDE,
   MOS_PALETTE_ENTRIES,
   MOS_PALETTE_ENTRY_BYTES,
 } from '../parseMoss.const.js';
+import { parseHeader } from './parsers/1.parseHeader.js';
+import { parseLookups } from './parsers/3.parseLookups.js';
+import { parseTileData } from './parsers/4.parseTileData.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawMosV1 } from './parseMosV1.types.js';
 
 type ParseMosV1Props = Readonly<{

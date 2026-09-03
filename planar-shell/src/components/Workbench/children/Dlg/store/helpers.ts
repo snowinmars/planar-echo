@@ -1,10 +1,11 @@
+import { isNothing, just, nothing } from '@planar/shared';
+
 import type {
   GhostDlg,
-  StateId,
-  ResponseId,
   Maybe,
+  ResponseId,
+  StateId,
 } from '@planar/shared';
-import { isNothing, just, nothing } from '@planar/shared';
 
 export type DisposeFunction = () => void;
 

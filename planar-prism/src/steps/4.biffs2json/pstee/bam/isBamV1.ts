@@ -1,4 +1,5 @@
 import type { GhostBam, GhostBamV1 } from '@planar/shared';
+
 import type { RawBam } from './parseBams.types.js';
 import type { RawBamV1 } from './v1/parseBamV1.types.js';
 

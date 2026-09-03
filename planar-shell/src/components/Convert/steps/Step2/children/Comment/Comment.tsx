@@ -1,10 +1,11 @@
-import { useTranslation } from 'react-i18next';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 import type { TypographyOwnProps } from '@mui/material/Typography';
 import type { FC } from 'react';
+
 import type { LandingStateStep2 } from '@/components/Convert/store/types';
 
 import styles from './Comment.module.scss';

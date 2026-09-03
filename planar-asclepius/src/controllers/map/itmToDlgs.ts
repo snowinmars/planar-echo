@@ -1,10 +1,12 @@
-import { Router } from 'express';
 import validate from 'express-zod-safe';
-import { z, ZodObject, ZodString } from 'zod';
-import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
+import { z } from 'zod';
+
 import action from '@/services/map/itmToDlgs/action.js';
 
+import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
+import type { Router } from 'express';
+import type { ZodObject, ZodString } from 'zod';
 
 const registerItmIdParam = (registry: OpenAPIRegistry): ZodString => {
   return registry.registerParameter(

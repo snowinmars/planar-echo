@@ -1,9 +1,11 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { toGhost } from './1.toGhost.js';
 import { buildIniSkeleton } from './2.buildIniSkeleton.js';
 
 import type { RawIni } from '@/steps/4.biffs2json/pstee/ini/index.js';
+
 import type { GhostIniOut } from './patchInis.types.js';
 
 export const patchInis = (

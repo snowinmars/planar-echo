@@ -1,4 +1,5 @@
 import type { Paths } from '@/steps/1.createPaths/index.js';
+
 import type { ValidationResult } from './types.js';
 
 const throwIfInvalid = (paths: Paths, validateResult: ValidationResult): void => {

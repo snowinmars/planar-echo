@@ -8,26 +8,31 @@ import {
   Texture,
 } from 'pixi.js';
 import { Viewport } from 'pixi-viewport';
-import { foldPatches, PASSABLE_WALK, paintDoorFlags, PLAYER_ACTOR_ID } from '@planar/kernel';
-import { assetUrl } from '@/shared/assetUrl';
+
+import { foldPatches, paintDoorFlags, PASSABLE_WALK, PLAYER_ACTOR_ID } from '@planar/kernel';
 import { isNothing, just, nothing } from '@planar/shared';
-import { loadPlayMapGhost } from './loadPlayMapGhost.js';
-import { PSTEE_TILE_PX } from './playTiles.js';
+
+import { assetUrl } from '@/shared/assetUrl';
+
 import { doorOpenByCell } from './doorOpenByCell.js';
-import { overlayTileIndex } from './overlayTileIndex.js';
 import { createCreArtCache, ensureCreArt } from './loadCreArt.js';
+import { loadPlayMapGhost } from './loadPlayMapGhost.js';
+import { overlayTileIndex } from './overlayTileIndex.js';
+import { PSTEE_TILE_PX } from './playTiles.js';
 import { clearCreSprites, syncCreSprites } from './syncCreSprites.js';
+
+import type { Ticker } from 'pixi.js';
 
 import type {
   DoorView,
   FromDaemon,
+  Point,
   Snapshot,
   WalkGrid,
-  Point,
 } from '@planar/kernel';
 import type { GhostAre, GhostTis, GhostWed, Maybe } from '@planar/shared';
+
 import type { PlayView } from './types.js';
-import type { Ticker } from 'pixi.js';
 
 type MapArt = Readonly<{
   areId: string;

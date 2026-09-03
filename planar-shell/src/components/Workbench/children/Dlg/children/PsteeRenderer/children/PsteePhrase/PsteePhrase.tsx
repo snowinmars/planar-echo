@@ -1,14 +1,17 @@
-import { useEffect } from 'react';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 import clsx from 'clsx';
+import { useEffect } from 'react';
+
 import { isNothing } from '@planar/shared';
+
 import { useTlkStore } from '@/engine/store/planarRuntime';
 
 import type { FC } from 'react';
-import type { CurrentDlgView } from '@/components/Workbench/children/Dlg/store/dlgViewStore.types';
+
 import type { DlgStore } from '@/components/Workbench/children/Dlg/store/dlgStore.types';
+import type { CurrentDlgView } from '@/components/Workbench/children/Dlg/store/dlgViewStore.types';
 
 import styles from './PsteePhrase.module.scss';
 

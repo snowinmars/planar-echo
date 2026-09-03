@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { mosWidgetState } from '@/shared/widgets';
+
 import { useMosStore } from './store/mosStore';
 
 import type { MosStore } from './store/mosStore';

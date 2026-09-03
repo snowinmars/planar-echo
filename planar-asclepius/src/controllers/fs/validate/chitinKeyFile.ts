@@ -1,12 +1,15 @@
-import { Router } from 'express';
 import validate from 'express-zod-safe';
 import { z } from 'zod';
-import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
-import action from '@/services/fs/validate/chitinKeyFile/action.js';
+
 import { gameLanguages, objectKeys } from '@planar/shared';
 
-import type { GameLanguage } from '@planar/shared';
+import action from '@/services/fs/validate/chitinKeyFile/action.js';
+
+import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
+import type { Router } from 'express';
+
+import type { GameLanguage } from '@planar/shared';
 
 const body = z.object({
   weiduExeDir: z.string().min(1, 'Weidu directory path is required'),

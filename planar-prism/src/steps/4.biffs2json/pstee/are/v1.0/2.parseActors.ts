@@ -1,11 +1,14 @@
 import { nothing } from '@planar/shared';
-import { parseDirection } from '../../shared/parseDirection.js';
-import { extendMap } from './2.parseActors.types.js';
+
 import { externalOffsetMap } from '@/shared/extendedMap.js';
 
+import { parseDirection } from '../../shared/parseDirection.js';
+import { extendMap } from './2.parseActors.types.js';
+
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawAreActorV10 } from './2.parseActors.types.js';
+
 import type { RawIds } from '../../ids/index.js';
+import type { RawAreActorV10 } from './2.parseActors.types.js';
 
 type ParseActorProps = Readonly<{
   reader: BufferReader;

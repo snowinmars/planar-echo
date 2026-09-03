@@ -1,7 +1,9 @@
 import { nothing } from '@planar/shared';
+
 import { extendMap, tlkItemLengthBytes } from './2.parseItemsV1.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawTlkItem } from './2.parseItemsV1.types.js';
 
 const parseTlkItem = (i: number, reader: BufferReader): Omit<RawTlkItem, 'text'> => {

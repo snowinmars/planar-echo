@@ -1,16 +1,13 @@
+export type { CharactersState } from './characters';
+export { getDbCharacters, setDbCharacters } from './characters';
 export { getDbCre, setDbCre } from './cre';
 export { getDbDlg, setDbDlg } from './dlgs';
-export { getDbItm, setDbItm } from './itms';
-export { getDbNarrative, setDbNarrative } from './narrative';
-export { getDbCharacters, setDbCharacters } from './characters';
 export {
   appendGameHistory,
   applyGameHistoryStorageLimit,
   gameHistoryChanged$,
   getGameHistoryPage,
 } from './gameHistory';
-export type { NarrativeState } from './narrative';
-export type { CharactersState } from './characters';
 export type {
   GameHistoryChange,
   GameHistoryEntry,
@@ -18,3 +15,6 @@ export type {
   GameHistoryKind,
   GameHistoryPage,
 } from './gameHistory.types';
+export { getDbItm, setDbItm } from './itms';
+export type { NarrativeState } from './narrative';
+export { getDbNarrative, setDbNarrative } from './narrative';

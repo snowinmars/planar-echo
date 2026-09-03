@@ -1,15 +1,19 @@
-import { allCategories } from '@/discoverer.types.js';
-import createWriter from '@/shared/writer.js';
 import { join } from 'path';
-import { saveToFile } from '@/shared/customFs.js';
+
 import { nothing } from '@planar/shared';
+
+import { allCategories } from '@/discoverer.types.js';
+import { saveToFile } from '@/shared/customFs.js';
 import logger from '@/shared/logger.js';
+import createWriter from '@/shared/writer.js';
+
+import type { CharacterNarrativeProps, Maybe } from '@planar/shared';
 
 import type { Discovered, StoreDiscoveredType, VariableInfo } from '@/discoverer.types.js';
+
 import type { Paths } from '../1.createPaths/index.js';
-import type { CharacterNarrativeProps, ClassId, Maybe } from '@planar/shared';
-import type { AllPsteeJsons } from '../4.biffs2json/types.js';
 import type { RawCre } from '../4.biffs2json/pstee/cre/parseCres.types.js';
+import type { AllPsteeJsons } from '../4.biffs2json/types.js';
 
 const isNpc = (x: string): boolean => {
   switch (x) {
@@ -402,7 +406,7 @@ const serializeCres = (cres: RawCre[]) => {
       levelFirstClass: cre.header.levelFirstClass,
       levelSecondClass: cre.header.levelSecondClass,
       levelThirdClass: cre.header.levelThirdClass,
-      theClass: cre.header.theClass as ClassId,
+      theClass: cre.header.theClass,
     })},`, 4);
     initialStoreWriter.writeLine(`levelFirstClass: ${cre.header.levelFirstClass},`, 4);
     initialStoreWriter.writeLine(`levelSecondClass: ${cre.header.levelSecondClass},`, 4);

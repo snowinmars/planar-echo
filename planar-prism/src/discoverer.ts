@@ -1,8 +1,11 @@
 import { Subject } from 'rxjs';
-import { allCategories } from './discoverer.types.js';
+
 import { isNothing } from '@planar/shared';
 
+import { allCategories } from './discoverer.types.js';
+
 import type { Maybe } from '@planar/shared';
+
 import type {
   Discovered,
   DiscoveredEvent,

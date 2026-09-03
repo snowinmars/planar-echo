@@ -1,5 +1,5 @@
-import { isGreenColorKeyBgra } from './greenColorKey.js';
 import { encodeRgbaPng } from './encodeRgbaPng.js';
+import { isGreenColorKeyBgra } from './greenColorKey.js';
 
 export const TILE_DIMENSION = 64;
 

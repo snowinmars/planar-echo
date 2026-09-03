@@ -1,17 +1,19 @@
-import { useState, useMemo, useEffect, useCallback, useSyncExternalStore, useRef } from 'react';
 import TextField from '@mui/material/TextField';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Grid } from 'react-window';
-import { getZustandNarrative } from '@/engine/store/worldStores';
+
+import { reloadStoresFromDb } from '@/components/Workbench/children/Dlg/children/broadcast';
 import { triggerSave } from '@/engine/store/saveSubject';
 import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
-import { reloadStoresFromDb } from '@/components/Workbench/children/Dlg/children/broadcast';
-import { NumberField } from '@/shared/NumberField';
-import { useTranslation } from 'react-i18next';
+import { getZustandNarrative } from '@/engine/store/worldStores';
 import { useGridColumns } from '@/hooks/useGridColumns';
+import { NumberField } from '@/shared/NumberField';
 
-import type { NumberVariableId, BooleanVariableId } from '@planar/shared';
+import type { FC, ReactElement } from 'react';
 import type { CellComponentProps } from 'react-window';
-import type { ReactElement, FC } from 'react';
+
+import type { BooleanVariableId, NumberVariableId } from '@planar/shared';
 
 import styles from './NarrativeTab.module.scss';
 

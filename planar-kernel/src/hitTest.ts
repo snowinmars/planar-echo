@@ -1,4 +1,5 @@
 import type { GhostAreDoor } from '@planar/shared';
+
 import type { Point } from './types.js';
 
 export const pointInPoly = (point: Point, poly: Point[]): boolean => {

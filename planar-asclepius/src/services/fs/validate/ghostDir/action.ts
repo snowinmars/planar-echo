@@ -1,6 +1,7 @@
-import { normalize } from 'path';
-import { fileExists } from '@planar/shared/node';
 import { readdir } from 'fs/promises';
+import { normalize } from 'path';
+
+import { fileExists } from '@planar/shared/node';
 
 import type { Command, Result } from './types.js';
 

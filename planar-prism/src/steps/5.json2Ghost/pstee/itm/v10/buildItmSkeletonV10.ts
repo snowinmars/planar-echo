@@ -1,10 +1,12 @@
+import { withoutExtension } from '@planar/shared';
+
 import createWriter from '@/shared/writer.js';
 import { escapeSingleQuote, writeFlags } from '@/steps/5.json2Ghost/shared.js';
-import { withoutExtension } from '@planar/shared';
+
+import type { GhostItmAbilityV10, GhostItmEffectV10, GhostItmV10 } from '@planar/shared';
 
 import type { DiscoverNext } from '@/discoverer.types.js';
 import type { Writer } from '@/shared/writer.js';
-import type { GhostItmV10, GhostItmEffectV10, GhostItmAbilityV10 } from '@planar/shared';
 
 const createLowercaseId = (resourceName: string): string => {
   const candidate = withoutExtension(resourceName).replace(`'`, ``);

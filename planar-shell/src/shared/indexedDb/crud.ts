@@ -1,7 +1,9 @@
-import { connect } from './db';
 import { nothing } from '@planar/shared';
 
+import { connect } from './db';
+
 import type { Maybe } from '@planar/shared';
+
 import type { StoreName } from './db';
 
 export type CachedSkeletonItem = Readonly<{

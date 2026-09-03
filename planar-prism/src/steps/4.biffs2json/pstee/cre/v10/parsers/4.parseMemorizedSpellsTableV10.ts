@@ -1,6 +1,7 @@
 import { extendMap } from './4.parseMemorizedSpellsTableV10.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawCreMemorizedSpellV10 } from './4.parseMemorizedSpellsTableV10.types.js';
 
 const parse = (reader: BufferReader): RawCreMemorizedSpellV10 => {

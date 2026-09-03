@@ -1,13 +1,16 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
+import { join } from 'path';
+
 import { isNothing } from '@planar/shared';
+
 import { isRawBmpV1 } from '@/steps/4.biffs2json/pstee/bmp/isBmpV1.js';
+
 import { parseBmpPalette } from './algo/bmp/parseBmpPalette.js';
 import { parseBmpPixels } from './algo/bmp/parseBmpPixels.js';
 import { renderBmpImage } from './algo/bmp/renderBmpImage.js';
 import { writeAssetFile } from './writeAssetFile.js';
 
-import type { ParseOneProps, ParseOneResult, AssetOk } from '@/shared/pool/index.js';
+import type { AssetOk, ParseOneProps, ParseOneResult } from '@/shared/pool/index.js';
 import type { RawBmp } from '@/steps/4.biffs2json/pstee/bmp/index.js';
 
 const BMP_FILE_HEADER_SIZE = 14;

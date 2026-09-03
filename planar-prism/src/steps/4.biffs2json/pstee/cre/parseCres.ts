@@ -1,13 +1,16 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+
 import { createReader } from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { parseCreV10 } from './v10/parseCreV10.js';
 import { parseCreV11 } from './v11/parseCreV11.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawIds } from '../ids/index.js';
 import type { RawCre } from './parseCres.types.js';
 

@@ -1,7 +1,9 @@
-import { parseHeader } from './parsers/1.parseHeader.js';
 import { nothing } from '@planar/shared';
 
+import { parseHeader } from './parsers/1.parseHeader.js';
+
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawBmpV1 } from './parseBmpV1.types.js';
 
 type ParseBmpV1Props = Readonly<{

@@ -1,6 +1,9 @@
-import { nothing, type Maybe } from '@planar/shared';
+import { nothing } from '@planar/shared';
+
+import type { Maybe } from '@planar/shared';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawCreItemSlotsV10 } from './7.parseItemSlotsV10.types.js';
 
 export const parseItemSlotsV10 = (reader: BufferReader): RawCreItemSlotsV10 => {

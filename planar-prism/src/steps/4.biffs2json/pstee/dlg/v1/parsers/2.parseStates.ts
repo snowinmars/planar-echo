@@ -1,6 +1,7 @@
 import { normalizeRef } from '@/shared/numbers.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawDlgState } from './2.parseStates.types.js';
 
 const parse = (reader: BufferReader, index: number): RawDlgState => {

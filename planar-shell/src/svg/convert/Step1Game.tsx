@@ -1,8 +1,10 @@
-import type { WithClassName } from '@/types/fcWithClassName';
+import clsx from 'clsx';
+
 import type { FC, JSX, SVGAttributes } from 'react';
 
+import type { WithClassName } from '@/types/fcWithClassName';
+
 import styles from './Step1Game.module.scss';
-import clsx from 'clsx';
 
 type LineProps = WithClassName & Readonly<{
   x: number;

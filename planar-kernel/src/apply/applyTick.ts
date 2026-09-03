@@ -1,13 +1,14 @@
 import { orientFromDelta } from '@planar/shared';
+
 import { cellCenter } from '../cell.js';
 import { cloneBody } from '../cloneWorld.js';
 import { closerPoint, worldDist } from '../hitTest.js';
-import { toggleDoor } from './applyDoor.js';
-import { PST_OPERATING_DISTANCE } from '../types.js';
-import { resolveTravelAfterMove } from '../travel.js';
 import { rebuildWalk } from '../rebuildWalk.js';
+import { resolveTravelAfterMove } from '../travel.js';
+import { PST_OPERATING_DISTANCE } from '../types.js';
+import { toggleDoor } from './applyDoor.js';
 
-import type { ApplyResult, Body, Point, Patch, World } from '../types.js';
+import type { ApplyResult, Body, Patch, Point, World } from '../types.js';
 
 const stepToward = (from: number, to: number, budget: number): { next: number; used: number } => {
   const delta = to - from;

@@ -1,9 +1,11 @@
-import createWriter from '@/shared/writer.js';
-import { escapeSingleQuote, writeFlags } from '@/steps/5.json2Ghost/shared.js';
 import { withoutExtension } from '@planar/shared';
 
-import type { DiscoverNext } from '@/discoverer.types.js';
+import createWriter from '@/shared/writer.js';
+import { escapeSingleQuote, writeFlags } from '@/steps/5.json2Ghost/shared.js';
+
 import type { GhostCreV10 } from '@planar/shared';
+
+import type { DiscoverNext } from '@/discoverer.types.js';
 
 const createNpcLowercaseId = (resourceName: string): string => {
   const candidate = withoutExtension(resourceName).replace(`'`, ``);

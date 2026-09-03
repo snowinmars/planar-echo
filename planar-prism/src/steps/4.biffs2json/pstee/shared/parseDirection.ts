@@ -1,4 +1,6 @@
-import { isNothing, type Direction, type Maybe } from '@planar/shared';
+import { isNothing } from '@planar/shared';
+
+import type { Direction, Maybe } from '@planar/shared';
 
 export const parseDirection = (s: Maybe<string | number>): Direction => {
   if (isNothing(s)) throw new Error(`Cannot parse Direction from nothing`);

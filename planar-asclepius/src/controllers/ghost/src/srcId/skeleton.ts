@@ -1,10 +1,11 @@
-import { z } from 'zod';
 import validate from 'express-zod-safe';
+import { z } from 'zod';
+
 import action from '@/services/ghost/src/srcId/skeleton/action.js';
 
-import type { ZodObject, ZodString } from 'zod';
 import type { OpenAPIRegistry, RouteConfig } from '@asteasolutions/zod-to-openapi';
 import type { Router } from 'express';
+import type { ZodObject, ZodString } from 'zod';
 
 const registerSrcIdParam = (registry: OpenAPIRegistry): ZodString => {
   return registry.registerParameter(

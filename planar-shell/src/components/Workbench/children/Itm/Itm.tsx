@@ -1,24 +1,27 @@
-import { useEffect, useState } from 'react';
-import { useShallow } from 'zustand/react/shallow';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Button from '@mui/material/Button';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useShallow } from 'zustand/react/shallow';
+
+import { useTlkStore } from '@/engine/store/planarRuntime';
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { useGhostRouteId } from '@/shared/useGhostRouteId';
-import { useItmStore } from './store/itmStore';
-import { useItmWidgetBridge } from './useItmWidgetBridge';
-import { useTranslation } from 'react-i18next';
-import { useItmTalk } from './useItmTalk';
-import Grid from '@mui/material/Grid';
-import { useTlkStore } from '@/engine/store/planarRuntime';
+
 import { mapItmToTlkRefs } from './mapItmToTlkRefs';
+import { useItmStore } from './store/itmStore';
+import { useItmTalk } from './useItmTalk';
+import { useItmWidgetBridge } from './useItmWidgetBridge';
 
 import type { FC } from 'react';
-import type { Maybe, GhostType } from '@planar/shared';
+
+import type { GhostType, Maybe } from '@planar/shared';
 
 import styles from './Itm.module.scss';
 

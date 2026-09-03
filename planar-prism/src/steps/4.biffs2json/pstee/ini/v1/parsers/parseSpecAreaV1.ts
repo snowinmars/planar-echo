@@ -1,6 +1,7 @@
 import { parseDecOrNothing } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
+
 import type { RawIniCreatureIniSpecArea } from './parseSpecAreaV1.types.js';
 
 export const parseSpecAreaV1 = (s: Maybe<string>): RawIniCreatureIniSpecArea => {

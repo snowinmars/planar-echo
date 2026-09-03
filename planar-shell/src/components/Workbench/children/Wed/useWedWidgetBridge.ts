@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { wedWidgetState } from '@/shared/widgets';
+
 import { useWedStore } from './store/wedStore';
 
 import type { WedStore } from './store/wedStore';

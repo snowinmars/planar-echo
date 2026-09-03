@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { isNothing } from '@planar/shared';
+
 import { triggerSave } from './saveSubject';
 
-import type { UseBoundStore, StoreApi } from 'zustand';
-import type { BooleanVariableId, NumberVariableId, Maybe } from '@planar/shared';
+import type { StoreApi, UseBoundStore } from 'zustand';
+
+import type { BooleanVariableId, Maybe, NumberVariableId } from '@planar/shared';
 import type { EnvId, KeyId, VariableId } from '@planar/shared';
 
 export type DbNarrative = Record<NumberVariableId, number> & Record<BooleanVariableId, number> & Record<KeyId, number>;

@@ -1,6 +1,7 @@
 import { just } from '@planar/shared';
-import { isGreenColorKeyBgra } from './greenColorKey.js';
+
 import { encodeRgbaPng } from './encodeRgbaPng.js';
+import { isGreenColorKeyBgra } from './greenColorKey.js';
 
 const MOS_BLOCK_DIMENSION = 64;
 

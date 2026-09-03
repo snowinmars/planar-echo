@@ -1,9 +1,12 @@
-import planarLocalStorage from '@/shared/planarLocalStorage';
 import { Subscription } from 'rxjs';
 
-import type { LocalStorageStore } from './localStorageStore.types';
+import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import type { StateCreator } from 'zustand/vanilla';
+
 import type { GameLanguage } from '@planar/shared';
+
+import type { LocalStorageStore } from './localStorageStore.types';
 
 const getValues = () => ({
   serverUrl: planarLocalStorage.get<string>('serverUrl', 'http://localhost:3003')!,

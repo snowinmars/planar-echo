@@ -1,7 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
+
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
+
 import type { BmpWidgetActions, BmpWidgetState } from './bmpWidgetState.types';
 
 const emptyState: BmpWidgetState = {

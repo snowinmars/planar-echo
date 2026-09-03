@@ -1,7 +1,8 @@
-import { useSyncExternalStore, useEffect } from 'react';
-import { getDbNarrative, getDbCharacters } from '@/shared/indexedDb';
-import { getZustandNarrative, getZustandCharacter } from '@/engine/store/worldStores';
+import { useEffect, useSyncExternalStore } from 'react';
+
 import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
+import { getZustandCharacter, getZustandNarrative } from '@/engine/store/worldStores';
+import { getDbCharacters, getDbNarrative } from '@/shared/indexedDb';
 
 export const reloadStoresFromDb = async (): Promise<void> => {
   const narrative = getZustandNarrative()!;

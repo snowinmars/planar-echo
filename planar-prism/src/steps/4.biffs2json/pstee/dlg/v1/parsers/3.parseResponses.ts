@@ -1,9 +1,13 @@
 import { nothing } from '@planar/shared';
+
 import { normalizeRef } from '@/shared/numbers.js';
+
 import { extendMap } from './3.parseResponses.types.js';
 
 import type { Maybe } from '@planar/shared';
+
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawDlgResponse } from './3.parseResponses.types.js';
 
 const parse = (reader: BufferReader, index: number): RawDlgResponse => {

@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawWedSecondaryHeader } from './3.parseSecondaryHeader.types.js';
 
 export const parseSecondaryHeader = (reader: BufferReader): RawWedSecondaryHeader => {

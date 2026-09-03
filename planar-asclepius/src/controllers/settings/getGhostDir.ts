@@ -1,9 +1,10 @@
-import { Router } from 'express';
 import { z } from 'zod';
-import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
+
 import action from '@/services/settings/getGhost/action.js';
 
+import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
+import type { Router } from 'express';
 
 const responseOk = z.object({
   ghostDir: z.string(),

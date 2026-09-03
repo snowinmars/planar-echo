@@ -1,14 +1,13 @@
+import FormControl from '@mui/material/FormControl';
+import Grid from '@mui/material/Grid';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Grid from '@mui/material/Grid';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import TranslationSvg from '@/svg/translation';
-import styles from './LanguageSwitcher.module.scss';
+
 import getNativeLangNames from '@/shared/getNativeLangNames';
-import InputLabel from '@mui/material/InputLabel';
 import FlagCz from '@/svg/flags/cz';
 import FlagDe from '@/svg/flags/de';
 import FlagEn from '@/svg/flags/en';
@@ -16,11 +15,16 @@ import FlagFr from '@/svg/flags/fr';
 import FlagKo from '@/svg/flags/ko';
 import FlagPl from '@/svg/flags/pl';
 import FlagRu from '@/svg/flags/ru';
+import TranslationSvg from '@/svg/translation';
+
+import type { FC } from 'react';
+
+import type { GameLanguage } from '@planar/shared';
 
 import type { NativeLang } from '@/shared/getNativeLangNames';
-import type { FC } from 'react';
 import type { WithClassName } from '@/types/fcWithClassName';
-import type { GameLanguage } from '@planar/shared';
+
+import styles from './LanguageSwitcher.module.scss';
 
 const LangWithFlag: FC<NativeLang & WithClassName> = ({ code, name, className }: NativeLang & WithClassName) => {
   return (

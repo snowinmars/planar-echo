@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawWedVertex } from './4.parseVertices.types.js';
 
 const parseVertex = (reader: BufferReader): RawWedVertex => ({

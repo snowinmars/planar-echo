@@ -1,5 +1,6 @@
-import type { WithClassName } from '@/types/fcWithClassName';
 import type { FC, JSX } from 'react';
+
+import type { WithClassName } from '@/types/fcWithClassName';
 
 // https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg
 const Steam: FC<WithClassName> = ({ className }): JSX.Element => (

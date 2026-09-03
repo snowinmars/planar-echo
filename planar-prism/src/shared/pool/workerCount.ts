@@ -1,4 +1,5 @@
 import { availableParallelism } from 'os';
+
 import logger from '../logger.js';
 
 export const workerCount = (): number => {

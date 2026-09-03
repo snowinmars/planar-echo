@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import DownloadIcon from '@mui/icons-material/Download';
 import ReplayIcon from '@mui/icons-material/Replay';
 import IconButton from '@mui/material/IconButton';
@@ -7,8 +5,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { FC, MouseEvent } from 'react';
+
 import type { LandingStateStep2, WeiduDownloadPlatform } from '@/components/Convert/store/types';
 
 import styles from './Content.module.scss';

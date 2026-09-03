@@ -1,15 +1,17 @@
 import { fork } from 'child_process';
 import { dirname, join } from 'path';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, finalize } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
+
 import logger from '@/shared/logger.js';
 
 import type { ChildProcess } from 'child_process';
+
 import type {
-  PrismIndexStartMessage,
-  PrismIndexProgressMessage,
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
+  PrismIndexProgressMessage,
+  PrismIndexStartMessage,
 } from '@planar/shared';
 
 type PrismIndexMessage = PrismIndexStartMessage | PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;

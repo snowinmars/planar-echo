@@ -1,13 +1,14 @@
+import { layoutHorizontalAtlas } from '../shared/buildAtlas.js';
 import { parseHeader } from './parsers/1.parseHeader.js';
 import { parseFrames } from './parsers/2.parseFrames.js';
 import { parseCycles } from './parsers/3.parseCycles.js';
-import { layoutHorizontalAtlas } from '../shared/buildAtlas.js';
+import { parseIndicesLayoutFrames } from './parsers/5.parseIndicesLayoutFrames.js';
+
+import type { BufferReader } from '@/shared/bufferReader.js';
 
 import type { BamAtlasFrame } from '../shared/buildAtlas.js';
-import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawBamV1, RawBamV1Frame } from './parseBamV1.types.js';
 import type { RawBamV1FrameEntry } from './parsers/2.parseFrames.types.js';
-import { parseIndicesLayoutFrames } from './parsers/5.parseIndicesLayoutFrames.js';
 
 const joinFrames = (frame: RawBamV1FrameEntry, atlasFrame: BamAtlasFrame): RawBamV1Frame => {
   if (frame.width !== atlasFrame.width) throw new Error(`Do not want to override property 'width' between RawBamV1FrameEntry '${frame.width}' and BamAtlasFrame '${atlasFrame.width}'`);

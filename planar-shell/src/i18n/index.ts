@@ -2,13 +2,13 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import ru_RU from './lang/ru_RU.json';
-import en_US from './lang/en_US.json';
 import cs_CZ from './lang/cs_CZ.json';
 import de_DE from './lang/de_DE.json';
+import en_US from './lang/en_US.json';
 import fr_FR from './lang/fr_FR.json';
 import ko_KR from './lang/ko_KR.json';
 import pl_PL from './lang/pl_PL.json';
+import ru_RU from './lang/ru_RU.json';
 
 i18n
   .use(LanguageDetector)

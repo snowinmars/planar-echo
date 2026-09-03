@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { twodaWidgetState } from '@/shared/widgets';
+
 import { useTwodaStore } from './store/twodaStore';
 
 import type { TwodaStore } from './store/twodaStore';

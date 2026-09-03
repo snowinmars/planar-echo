@@ -1,8 +1,9 @@
-import planarLocalStorage from '@/shared/planarLocalStorage';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { deleteDb } from '@/shared/indexedDb/db';
+import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { FC } from 'react';
 

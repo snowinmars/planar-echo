@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostTis, loadGhostTis } from './tisApi';
 
-import type { Maybe, GhostTis } from '@planar/shared';
+import type { GhostTis, Maybe } from '@planar/shared';
 
 export type TisStore = Readonly<{
   serverUrl: string;

@@ -1,5 +1,7 @@
-import type { WithClassName } from '@/types/fcWithClassName';
 import type { FC, JSX, SVGAttributes } from 'react';
+
+import type { WithClassName } from '@/types/fcWithClassName';
+
 import styles from './Step4Folder.module.scss';
 
 type FileProps = Readonly<{

@@ -1,11 +1,13 @@
-import { client } from '@/swagger/client/client.gen';
-import {
-  postApiGhostCreByCreIdSkeleton,
-  getApiMapCreToDlgsByCreId,
-} from '@/swagger/client';
-import { getDbCre, setDbCre } from '@/shared/indexedDb';
+import { evalGhostFactory } from '@planar/shared';
 
-import { evalGhostFactory, type GhostCre } from '@planar/shared';
+import { getDbCre, setDbCre } from '@/shared/indexedDb';
+import {
+  getApiMapCreToDlgsByCreId,
+  postApiGhostCreByCreIdSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
+
+import type { GhostCre } from '@planar/shared';
 
 export const getSkeleton = async (serverUrl: string, ghostDir: string, creId: string): Promise<string> => {
   const skeletonResponse = await postApiGhostCreByCreIdSkeleton({

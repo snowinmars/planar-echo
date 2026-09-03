@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostSrc,
   postApiGhostSrcBySrcIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostSrc } from '@planar/shared';
+import type { GhostSrc } from '@planar/shared';
 
 export type LoadGhostSrcProps = Readonly<{
   srcId: string;

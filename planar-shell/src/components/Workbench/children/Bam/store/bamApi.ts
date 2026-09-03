@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostBam,
   postApiGhostBamByBamIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostBam } from '@planar/shared';
+import type { GhostBam } from '@planar/shared';
 
 export type LoadGhostBamProps = Readonly<{
   bamId: string;

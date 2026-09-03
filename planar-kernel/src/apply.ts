@@ -3,7 +3,7 @@ import { applyPause } from './apply/applyPause.js';
 import { applyPointer } from './apply/applyPointer.js';
 import { applyTick } from './apply/applyTick.js';
 
-import type { ApplyResult, AppliableCommand, World } from './types.js';
+import type { AppliableCommand, ApplyResult, World } from './types.js';
 
 export const apply = (world: World, command: AppliableCommand): ApplyResult => {
   const type = command.type;

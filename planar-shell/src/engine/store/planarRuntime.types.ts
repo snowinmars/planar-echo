@@ -1,5 +1,6 @@
-import type { Maybe } from '@planar/shared';
 import type { StoreApi } from 'zustand/vanilla';
+
+import type { Maybe } from '@planar/shared';
 
 export type DisposeFunction = () => void;
 

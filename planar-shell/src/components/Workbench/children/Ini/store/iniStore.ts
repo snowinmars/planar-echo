@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostIni, loadGhostIni } from './iniApi';
 
-import type { Maybe, GhostIni } from '@planar/shared';
+import type { GhostIni, Maybe } from '@planar/shared';
 
 export type IniStore = Readonly<{
   serverUrl: string;

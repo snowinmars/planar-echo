@@ -1,5 +1,6 @@
-import type { RawItmV10 } from '@/steps/4.biffs2json/pstee/itm/parseItms.types.js';
 import type { GhostItm, GhostItmV10 } from '@planar/shared';
+
+import type { RawItmV10 } from '@/steps/4.biffs2json/pstee/itm/parseItms.types.js';
 
 export const toGhostV10 = (raw: RawItmV10): GhostItmV10 => {
   const ghostItm: GhostItm = {

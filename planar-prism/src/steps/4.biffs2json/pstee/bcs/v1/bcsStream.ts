@@ -1,6 +1,7 @@
 import { isNothing, nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
+
 import type { RawBcsStream } from './bcsStream.types.js';
 
 const WHITESPACES = ' \t\r\n\f';

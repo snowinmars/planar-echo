@@ -1,10 +1,11 @@
-import { Router } from 'express';
 import validate from 'express-zod-safe';
 import { z } from 'zod';
-import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
+
 import action from '@/services/settings/setPrism/action.js';
 
+import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
+import type { Router } from 'express';
 
 const body = z.object({
   prismDir: z.string().min(1, 'Prism directory path is required'),

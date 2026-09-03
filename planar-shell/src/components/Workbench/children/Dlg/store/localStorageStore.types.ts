@@ -1,4 +1,5 @@
 import type { GameLanguage, Maybe } from '@planar/shared';
+
 import type { DisposeFunction } from './helpers';
 
 export type LocalStorageStore = Readonly<{

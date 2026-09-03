@@ -1,14 +1,16 @@
-import { join } from 'path';
 import { readdir } from 'fs/promises';
-import { fileExists } from '@planar/shared/node';
+import { join } from 'path';
+
 import { ghostTypes } from '@planar/shared';
+import { fileExists } from '@planar/shared/node';
+
+import type { GhostType } from '@planar/shared';
 
 import type {
   Command,
   GhostSearchHit,
   Result,
 } from './types.js';
-import type { GhostType } from '@planar/shared';
 
 const jsExtensionLength = '.js'.length;
 const minQueryLength = 2;

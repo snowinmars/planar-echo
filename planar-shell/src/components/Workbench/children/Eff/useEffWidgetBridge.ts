@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { effWidgetState } from '@/shared/widgets';
+
 import { useEffStore } from './store/effStore';
 
 import type { EffStore } from './store/effStore';

@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostBmp, loadGhostBmp } from './bmpApi';
 
-import type { Maybe, GhostBmp } from '@planar/shared';
+import type { GhostBmp, Maybe } from '@planar/shared';
 
 export type BmpStore = Readonly<{
   serverUrl: string;

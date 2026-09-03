@@ -1,7 +1,8 @@
 import { either, nothing } from '@planar/shared';
 
-import type { RawIni } from '@/steps/4.biffs2json/pstee/ini/parseInis.types.js';
 import type { GhostIni, GhostIniMonsterPlanescapeSection, GhostIniSoundsSection, Maybe } from '@planar/shared';
+
+import type { RawIni } from '@/steps/4.biffs2json/pstee/ini/parseInis.types.js';
 
 const extendWithExtension = (x: Maybe<string>, e: string): Maybe<string> => x ? `${x}.${e}` : nothing();
 const extendWithBamExtension = (x: Maybe<string>): Maybe<string> => extendWithExtension(x, 'bam');

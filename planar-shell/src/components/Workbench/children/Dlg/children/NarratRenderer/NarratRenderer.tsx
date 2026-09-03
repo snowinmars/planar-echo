@@ -1,13 +1,16 @@
+import clsx from 'clsx';
+
+import { useTlkStore } from '@/engine/store/planarRuntime';
+
 import {
   useDlgStore,
   useDlgViewStore,
 } from '../../store/di';
-import { useTlkStore } from '@/engine/store/planarRuntime';
 import NarratHistory from './children/NarratHistory';
 import NarratPhrase from './children/NarratPhrase';
-import clsx from 'clsx';
 
 import type { FC } from 'react';
+
 import type { WithClassName } from '@/types/fcWithClassName';
 
 import styles from './NarratRenderer.module.scss';

@@ -1,21 +1,23 @@
 import { nothing } from '@planar/shared';
+
 import { parseIniFromString } from '../iniParser/iniParser.js';
 import {
-  parseNamelessSectionV1,
-  parseNamelessvarSectionV1,
-  parseLocalsSectionV1,
-  parseSpawnMainSectionV1,
+  parseCreatureSectionV1,
   parseGeneralSectionV1,
   parseGroupSectionV1,
-  parseCreatureSectionV1,
+  parseLocalsSectionV1,
   parseMonsterPlanescapeIniSectionV1,
-  parseSoundsSectionV1,
+  parseNamelessSectionV1,
+  parseNamelessvarSectionV1,
   parseNumberedSectionV1,
+  parseSoundsSectionV1,
+  parseSpawnMainSectionV1,
 } from './parsers/index.js';
 
 import type { Maybe } from '@planar/shared';
-import type { RawIni } from '../parseInis.types.js';
+
 import type { RawIds } from '../../ids/index.js';
+import type { RawIni } from '../parseInis.types.js';
 
 // Lol. That's why strong compile-time typings rules
 const patchIniSyntax = (content: string, resourceName: string): string => {

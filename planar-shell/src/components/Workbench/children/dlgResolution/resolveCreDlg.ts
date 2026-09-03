@@ -1,7 +1,8 @@
+import { getZustandCharacter, getZustandNarrative } from '@/engine/store/worldStores';
+
 import { getCurrentDlgs } from '../Cre/store/creApi';
 import { dlgRepository } from '../Dlg/store/dlgRepository';
 import { pickMatchingConstructorStateId } from '../Dlg/store/helpers';
-import { getZustandNarrative, getZustandCharacter } from '@/engine/store/worldStores';
 
 import type { GameLanguage, StateId } from '@planar/shared';
 

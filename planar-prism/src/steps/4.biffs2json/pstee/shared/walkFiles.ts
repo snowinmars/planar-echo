@@ -1,5 +1,5 @@
-import { join } from 'path';
 import { readdir } from 'fs/promises';
+import { join } from 'path';
 
 export const walkFiles = async (dir: string): Promise<string[]> => {
   const out: string[] = [];

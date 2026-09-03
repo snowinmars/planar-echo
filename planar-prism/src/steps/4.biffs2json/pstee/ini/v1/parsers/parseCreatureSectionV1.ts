@@ -1,18 +1,19 @@
 import { parseDirection } from '../../../shared/parseDirection.js';
-import { parseSpawnPointsV1 } from './parseSpawnPointsV1.js';
-import { parseScopedVariableV1 } from './parseScopedVariableV1.js';
-import { parseSpecV1 } from './parseSpecV1.js';
-import { parseSpecAreaV1 } from './parseSpecAreaV1.js';
-import { parseSpecVarOperationV1 } from './parseSpecVarOperationV1.js';
 import { parseBooleanV1 } from './parseBooleanV1.js';
 import { parsePointSelectV1 } from './parsePointSelectV1.js';
-import { parseDecOrThrow, parseDecOrDefault } from './shared.js';
+import { parseScopedVariableV1 } from './parseScopedVariableV1.js';
+import { parseSpawnPointsV1 } from './parseSpawnPointsV1.js';
+import { parseSpecAreaV1 } from './parseSpecAreaV1.js';
+import { parseSpecV1 } from './parseSpecV1.js';
+import { parseSpecVarOperationV1 } from './parseSpecVarOperationV1.js';
 import { resolveIniIds } from './resolveIniIds.js';
+import { parseDecOrDefault, parseDecOrThrow } from './shared.js';
 
-import type { PartialWriteable, Maybe } from '@planar/shared';
+import type { Maybe, PartialWriteable } from '@planar/shared';
+
 import type { RawIds } from '../../../ids/index.js';
-import type { RawIniCreatureIniSection } from './parseCreatureSectionV1.types.js';
 import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
+import type { RawIniCreatureIniSection } from './parseCreatureSectionV1.types.js';
 
 export const parseCreatureSectionV1 = (section: RawIniSection, ids: Map<string, RawIds>): Maybe<RawIniCreatureIniSection> => {
   const tmp: PartialWriteable<RawIniCreatureIniSection> = {};

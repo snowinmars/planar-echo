@@ -1,5 +1,5 @@
-import { join } from 'path';
 import { writeFile } from 'fs/promises';
+import { join } from 'path';
 
 export const writeAssetFile = (
   assetsRoot: string,

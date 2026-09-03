@@ -1,17 +1,19 @@
+import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Header from '../Header';
-import Footer from '../Footer';
-import Loading from '../Loading';
+import { Outlet } from 'react-router-dom';
+
+import planarLocalStorage from '@/shared/planarLocalStorage';
 import {
   getApiSettingsGhostDir,
   getApiSettingsPrismDir,
   getApiSettingsShellDir,
 } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
-import planarLocalStorage from '@/shared/planarLocalStorage';
-import { isAxiosError } from 'axios';
+
+import Footer from '../Footer';
+import Header from '../Header';
+import Loading from '../Loading';
 
 import type { FC } from 'react';
 

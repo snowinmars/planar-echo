@@ -1,6 +1,7 @@
-import planarLocalStorage from '@/shared/planarLocalStorage';
 import { DEFAULT_ARE } from '@planar/kernel';
 import { nothing } from '@planar/shared';
+
+import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { Maybe } from '@planar/shared';
 

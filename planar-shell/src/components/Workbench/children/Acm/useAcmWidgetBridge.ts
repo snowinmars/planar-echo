@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { acmWidgetState } from '@/shared/widgets';
+
 import { useAcmStore } from './store/acmStore';
 
 import type { AcmStore } from './store/acmStore';

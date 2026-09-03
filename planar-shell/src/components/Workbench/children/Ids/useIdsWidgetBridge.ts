@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { idsWidgetState } from '@/shared/widgets';
+
 import { useIdsStore } from './store/idsStore';
 
 import type { IdsStore } from './store/idsStore';

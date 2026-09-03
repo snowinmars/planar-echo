@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostSrc, loadGhostSrc } from './srcApi';
 
-import type { Maybe, GhostSrc } from '@planar/shared';
+import type { GhostSrc, Maybe } from '@planar/shared';
 
 export type SrcStore = Readonly<{
   serverUrl: string;

@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostTwoda, loadGhostTwoda } from './twodaApi';
 
-import type { Maybe, GhostTwoda } from '@planar/shared';
+import type { GhostTwoda, Maybe } from '@planar/shared';
 
 export type TwodaStore = Readonly<{
   serverUrl: string;

@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostWav,
   postApiGhostWavByWavIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostWav } from '@planar/shared';
+import type { GhostWav } from '@planar/shared';
 
 export type LoadGhostWavProps = Readonly<{
   wavId: string;

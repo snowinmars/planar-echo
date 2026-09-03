@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { pvrzWidgetState } from '@/shared/widgets';
+
 import { usePvrzStore } from './store/pvrzStore';
 
 import type { PvrzStore } from './store/pvrzStore';

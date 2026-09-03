@@ -1,11 +1,13 @@
-import { client } from '@/swagger/client/client.gen';
-import {
-  postApiGhostItmByItmIdSkeleton,
-  getApiMapItmToDlgsByItmId,
-} from '@/swagger/client';
-import { getDbItm, setDbItm } from '@/shared/indexedDb';
+import { evalGhostFactory } from '@planar/shared';
 
-import { evalGhostFactory, type GhostItm } from '@planar/shared';
+import { getDbItm, setDbItm } from '@/shared/indexedDb';
+import {
+  getApiMapItmToDlgsByItmId,
+  postApiGhostItmByItmIdSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
+
+import type { GhostItm } from '@planar/shared';
 
 export const getSkeleton = async (serverUrl: string, ghostDir: string, itmId: string): Promise<string> => {
   const skeletonResponse = await postApiGhostItmByItmIdSkeleton({

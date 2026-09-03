@@ -1,7 +1,8 @@
 import { nothing } from '@planar/shared';
 
-import type { BufferReader } from '@/shared/bufferReader.js';
 import type { Maybe } from '@planar/shared';
+
+import type { BufferReader } from '@/shared/bufferReader.js';
 
 type ParseExploredProps = Readonly<{
   reader: BufferReader;

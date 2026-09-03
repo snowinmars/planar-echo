@@ -1,4 +1,5 @@
 import type { Maybe } from '@planar/shared';
+
 import type { RawIniCreatureIniSpecVarOperation } from './parseSpecVarOperationV1.types.js';
 
 export const parseSpecVarOperationV1 = (s: Maybe<string>): RawIniCreatureIniSpecVarOperation => {

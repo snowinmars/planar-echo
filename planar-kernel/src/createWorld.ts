@@ -1,11 +1,13 @@
 import { facingFromDirection, isNothing } from '@planar/shared';
-import { TICK_HZ, DEFAULT_SPEED_PX_PER_TICK, PLAYER_ACTOR_ID } from './types.js';
+
 import { rebuildWalk } from './rebuildWalk.js';
 import { firstPassableCenter } from './spawn.js';
 import { seedTravelInside, toTravelRegions } from './travel.js';
+import { DEFAULT_SPEED_PX_PER_TICK, PLAYER_ACTOR_ID, TICK_HZ } from './types.js';
 
 import type { GhostAre, GhostAreDoor, Maybe } from '@planar/shared';
-import type { Body, NpcSpawn, PlayerSpawn, World, Point } from './types.js';
+
+import type { Body, NpcSpawn, PlayerSpawn, Point, World } from './types.js';
 
 const makeBody = (pos: Point, facing: number): Body => ({
   pos: { x: pos.x, y: pos.y },

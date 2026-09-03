@@ -1,11 +1,11 @@
 import { nothing } from '@planar/shared';
 
 import type {
-  NumberVariableId,
   BooleanVariableId,
+  CharacterNarrativeProps,
   KeyId,
   Maybe,
-  CharacterNarrativeProps,
+  NumberVariableId,
 } from '@planar/shared';
 
 export type InitialStores = Readonly<{

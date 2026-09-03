@@ -1,12 +1,15 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+
 import { createReader } from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { parseEffV10 } from './v10/parseEffV10.js';
 
-import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Paths } from '@/steps/1.createPaths/index.js';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawEffV10 } from './v10/parseEffV10.types.js';
 
 // There are no header for effV10, so

@@ -1,5 +1,8 @@
+import { extendMap } from './15.parseAutomapNotes.types.js';
+
 import type { BufferReader } from '@/shared/bufferReader.js';
-import { extendMap, type RawAreAutomapNoteV10 } from './15.parseAutomapNotes.types.js';
+
+import type { RawAreAutomapNoteV10 } from './15.parseAutomapNotes.types.js';
 
 const toStrrefLocation = (x: number): RawAreAutomapNoteV10['strrefLocation'] => {
   switch (x) {

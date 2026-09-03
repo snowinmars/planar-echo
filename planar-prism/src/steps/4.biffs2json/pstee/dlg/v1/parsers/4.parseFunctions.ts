@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawDlgFunction } from './4.parseFunctions.types.js';
 
 const parse = (reader: BufferReader, index: number): RawDlgFunction => {

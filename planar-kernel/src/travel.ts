@@ -1,6 +1,7 @@
 import { pointInPoly } from './hitTest.js';
 
 import type { GhostAre } from '@planar/shared';
+
 import type { AreaTravel, EntityId, Point, TravelRegion, World } from './types.js';
 
 export const toTravelRegions = (are: GhostAre): TravelRegion[] => (

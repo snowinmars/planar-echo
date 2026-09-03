@@ -1,6 +1,9 @@
 import { normalize } from 'path';
+
 import { fileExists } from '@planar/shared/node';
+
 import logger from '@/shared/logger.js';
+
 import getVersion from './getVersion.js';
 
 import type { Command, Result } from './types.js';

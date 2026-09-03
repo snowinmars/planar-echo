@@ -1,6 +1,7 @@
 import type { GameLanguage, GhostDlg } from '@planar/shared';
-import type { ZustandNarrative } from '@/engine/store/narrativeStore';
+
 import type { ZustandCharacter } from '@/engine/store/characterStore';
+import type { ZustandNarrative } from '@/engine/store/narrativeStore';
 
 export type GetSkeletonProps = Readonly<{
   serverUrl: string;

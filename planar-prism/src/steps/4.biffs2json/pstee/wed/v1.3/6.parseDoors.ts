@@ -1,6 +1,8 @@
-import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawWedDoor } from './6.parseDoors.types.js';
 import { parsePolygons } from './5.parsePolygons.js';
+
+import type { BufferReader } from '@/shared/bufferReader.js';
+
+import type { RawWedDoor } from './6.parseDoors.types.js';
 
 type ParseDoorProps = Readonly<{
   reader: BufferReader;

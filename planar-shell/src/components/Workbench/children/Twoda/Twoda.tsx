@@ -1,14 +1,17 @@
-import { useEffect } from 'react';
-import { useShallow } from 'zustand/react/shallow';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
+import { useEffect } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { useGhostRouteId } from '@/shared/useGhostRouteId';
+
 import { useTwodaStore } from './store/twodaStore';
 import { useTwodaWidgetBridge } from './useTwodaWidgetBridge';
 
 import type { FC } from 'react';
-import type { Maybe, GhostType } from '@planar/shared';
+
+import type { GhostType, Maybe } from '@planar/shared';
 
 type TProps = Readonly<{
   title: string;

@@ -1,6 +1,7 @@
 import { extendMap } from './3.parseSpellMemorizationInfosV10.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type {
   RawCreSpellMemorizationInfoV10,
 } from './3.parseSpellMemorizationInfosV10.types.js';

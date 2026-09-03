@@ -2,7 +2,8 @@
 
 import { ConsoleIO } from './io.js';
 import { QuestionEngine } from './questions.js';
-import type { Question, Answers } from './types.js';
+
+import type { Answers, Question } from './types.js';
 
 const defaultEngine = new QuestionEngine(new ConsoleIO());
 
@@ -19,4 +20,4 @@ export const multiline = (message: string): Promise<string> =>
   defaultEngine['promptMultiline'](message);
 
 export { ConsoleIO, QuestionEngine };
-export type { Question, Answers };
+export type { Answers, Question };

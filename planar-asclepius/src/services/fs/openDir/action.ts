@@ -1,6 +1,7 @@
 import { spawn } from 'child_process';
 import { stat } from 'fs/promises';
 import { normalize } from 'path';
+
 import logger from '@/shared/logger.js';
 
 import type { Command, Result } from './types.js';

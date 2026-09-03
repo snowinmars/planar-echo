@@ -1,6 +1,7 @@
 import { extendMap } from './4.parseSpawnPoints.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreSpawnPointV10 } from './4.parseSpawnPoints.types.js';
 
 const parseSpawnPoint = (reader: BufferReader): RawAreSpawnPointV10 => {

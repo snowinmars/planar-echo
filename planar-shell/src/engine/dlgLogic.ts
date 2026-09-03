@@ -1,8 +1,10 @@
-import type { DlgLogic } from '@planar/shared';
-import type { ZustandNarrative } from './store/narrativeStore';
-import type { ZustandCharacter } from './store/characterStore';
-import { getNarrativeActions } from './store/narrativeStore';
 import { getCharacterActions } from './store/characterStore';
+import { getNarrativeActions } from './store/narrativeStore';
+
+import type { DlgLogic } from '@planar/shared';
+
+import type { ZustandCharacter } from './store/characterStore';
+import type { ZustandNarrative } from './store/narrativeStore';
 
 type DlgLogicStores = Readonly<{
   narrative: ZustandNarrative;

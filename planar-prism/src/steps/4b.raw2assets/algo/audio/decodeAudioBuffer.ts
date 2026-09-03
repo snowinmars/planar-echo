@@ -6,8 +6,8 @@ import { decodeAcm } from './decodeAcm.js';
 import { decodeOgg } from './decodeOgg.js';
 import { encodePcmWav } from './encodePcmWav.js';
 
-import type { AudioContainer, DecodedAudioBuffer } from './decodeAudioBuffer.types.js';
 import type { DecodedPcm } from './decodeAcm.types.js';
+import type { AudioContainer, DecodedAudioBuffer } from './decodeAudioBuffer.types.js';
 
 export const ID_ACM = 0x01032897;
 

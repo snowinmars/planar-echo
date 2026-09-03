@@ -1,9 +1,11 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { toGhost } from './1.toGhost.js';
 import { buildTisSkeleton } from './2.buildTisSkeleton.js';
 
 import type { RawTis } from '@/steps/4.biffs2json/pstee/tis/parseTiss.types.js';
+
 import type { GhostTisOut } from './patchTis.types.js';
 
 export const patchTis = (

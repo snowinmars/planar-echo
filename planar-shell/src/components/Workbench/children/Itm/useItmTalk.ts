@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import { useShallow } from 'zustand/react/shallow';
-import { useItmStore } from './store/itmStore';
+
 import { resolveItmDlg } from '../dlgResolution/resolveItmDlg';
+import { useItmStore } from './store/itmStore';
 
 export const useItmTalk = (): Readonly<{
   startTalk: () => Promise<void>;

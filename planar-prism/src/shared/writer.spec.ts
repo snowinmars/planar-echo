@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+
 import createWriter from './writer.js';
 
 describe('Writer', () => {
@@ -57,7 +58,7 @@ describe('Writer', () => {
     });
 
     it('should write chars on chars input', () => {
-      const char = '¯\_(ツ)_/¯';
+      const char = '¯\\_(ツ)_/¯';
       const writer = createWriter();
 
       writer.write(char);
@@ -67,7 +68,7 @@ describe('Writer', () => {
 
     it('should write chars with offset on chars input with offset', () => {
       const offset = 2;
-      const char = '¯\_(ツ)_/¯';
+      const char = '¯\\_(ツ)_/¯';
       const writer = createWriter();
 
       writer.write(char, offset);
@@ -114,7 +115,7 @@ describe('Writer', () => {
     });
 
     it('should write chars with new line on chars input', () => {
-      const char = '¯\_(ツ)_/¯';
+      const char = '¯\\_(ツ)_/¯';
       const writer = createWriter();
 
       writer.writeLine(char);
@@ -124,7 +125,7 @@ describe('Writer', () => {
 
     it('should write chars with new line and offset on chars input with offset', () => {
       const offset = 2;
-      const char = '¯\_(ツ)_/¯';
+      const char = '¯\\_(ツ)_/¯';
       const writer = createWriter();
 
       writer.writeLine(char, offset);
@@ -148,7 +149,7 @@ describe('Writer', () => {
     it('should not cache result', () => {
       const writer = createWriter();
 
-      writer.writeLine('¯\_(ツ)_/¯').done();
+      writer.writeLine('¯\\_(ツ)_/¯').done();
 
       expect(writer.done().length).equals(0);
     });

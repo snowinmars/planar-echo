@@ -1,8 +1,10 @@
-import type { WithClassName } from '@/types/fcWithClassName';
+import clsx from 'clsx';
+
 import type { FC, JSX, SVGAttributes } from 'react';
 
+import type { WithClassName } from '@/types/fcWithClassName';
+
 import styles from './Step0Server.module.scss';
-import clsx from 'clsx';
 
 type LedProps = WithClassName & Readonly<{
   x: number;

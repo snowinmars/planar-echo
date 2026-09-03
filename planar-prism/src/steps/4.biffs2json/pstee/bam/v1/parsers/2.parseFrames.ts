@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawBamV1FrameEntry } from './2.parseFrames.types.js';
 
 type ParseFramesProps = Readonly<{

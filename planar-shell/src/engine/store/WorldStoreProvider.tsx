@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
-import { createZustandNarrative } from './narrativeStore';
+import { useTranslation } from 'react-i18next';
+
+import Loading from '@/components/Loading';
+import { getDbCharacters, getDbNarrative } from '@/shared/indexedDb';
+
 import { createZustandCharacter } from './characterStore';
+import { loadInitialStores } from './loadInitialStores';
+import { createZustandNarrative } from './narrativeStore';
 import { registerStores } from './saveSubject';
 import { setZustandCharacter, setZustandNarrative } from './worldStores';
-import { getDbNarrative, getDbCharacters } from '@/shared/indexedDb';
-import Loading from '@/components/Loading';
-import { useTranslation } from 'react-i18next';
-import { loadInitialStores } from './loadInitialStores';
 
 import type { ReactNode } from 'react';
 

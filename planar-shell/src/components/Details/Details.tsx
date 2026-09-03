@@ -14,7 +14,7 @@ const Details: FC = () => {
         Проприетарные форматы гниют. Planar-echo - проект мигрирации игр с InfinityEngine в открытые форматы.
       </Typography>
       <Typography>
-        Доступность и читаемость — навсегда.
+        Доступность и читаемость - навсегда.
       </Typography>
 
       <Typography className={styles.h5} variant="h5">Способ - свободный код</Typography>

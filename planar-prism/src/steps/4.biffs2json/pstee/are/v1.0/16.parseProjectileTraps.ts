@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreProjectileTrapV10 } from './16.parseProjectileTraps.types.js';
 
 const parseProjectileTrap = (reader: BufferReader): RawAreProjectileTrapV10 => {

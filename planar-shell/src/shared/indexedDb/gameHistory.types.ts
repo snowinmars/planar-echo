@@ -1,4 +1,4 @@
-import type { Maybe, WhoId, ItmId } from '@planar/shared';
+import type { ItmId, Maybe, WhoId } from '@planar/shared';
 
 type GameHistoryTextEvent = Readonly<{
   tlkRef: Maybe<number>;

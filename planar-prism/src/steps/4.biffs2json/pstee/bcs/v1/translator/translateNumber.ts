@@ -1,9 +1,10 @@
 import { isNothing } from '@planar/shared';
+
+import { BITWISE_IDS } from '../../context/buildBcsContext.const.js';
 import { lookupIdsSymbol } from './lookupIdsSymbol.js';
 
 import type { RawIds } from '../../../ids/parseIds.types.js';
 import type { RawBcsArg, RawBcsFunctionParam } from '../../context/buildBcsContext.types.js';
-import { BITWISE_IDS } from '../../context/buildBcsContext.const.js';
 
 type BcsIntArg = Extract<RawBcsArg, { kind: 'int' }>;
 type TranslateNumberProps = Readonly<{

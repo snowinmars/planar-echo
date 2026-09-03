@@ -1,6 +1,7 @@
 import { MOS_BLOCK_DIMENSION } from '../../parseMoss.const.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawMosV1Header } from './1.parseHeader.types.js';
 
 const MOS_V1_HEADER_SIZE = 24;

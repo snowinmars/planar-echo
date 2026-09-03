@@ -1,4 +1,5 @@
 import type { Maybe } from '@planar/shared';
+
 import type { RawIniCreatureScopedVariable } from './parseScopedVariableV1.types.js';
 
 export const parseScopedVariableV1 = (s: Maybe<string>): RawIniCreatureScopedVariable => {

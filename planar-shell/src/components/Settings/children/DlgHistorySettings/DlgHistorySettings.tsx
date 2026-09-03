@@ -1,29 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import QuestionMark from '@mui/icons-material/QuestionMark';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Checkbox from '@mui/material/Checkbox';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Grow from '@mui/material/Grow';
+import Paper from '@mui/material/Paper';
+import Popper from '@mui/material/Popper';
 import Stack from '@mui/material/Stack';
-import { applyGameHistoryStorageLimit } from '@/shared/indexedDb';
+import Typography from '@mui/material/Typography';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { isNothing, nothing } from '@planar/shared';
+
 import {
   gameHistorySettingsKeys,
-  getGameHistoryPageSize,
   getGameHistoryBrowsedPages,
+  getGameHistoryPageSize,
   getGameHistoryStoredPages,
   initialGameHistorySettings,
 } from '@/shared/gameHistorySettings';
-import planarLocalStorage from '@/shared/planarLocalStorage';
-import { isNothing, nothing } from '@planar/shared';
+import { applyGameHistoryStorageLimit } from '@/shared/indexedDb';
 import { NumberField } from '@/shared/NumberField';
-import Popper from '@mui/material/Popper';
-import QuestionMark from '@mui/icons-material/QuestionMark';
-import Typography from '@mui/material/Typography';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import type { FC } from 'react';
+
 import type { Maybe } from '@planar/shared';
 
 import styles from './DlgHistorySettings.module.scss';

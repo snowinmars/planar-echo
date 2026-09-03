@@ -1,6 +1,7 @@
 import { extendMap } from './7.parseItems.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreItemV10 } from './7.parseItems.types.js';
 
 const parseItem = (reader: BufferReader): RawAreItemV10 => {

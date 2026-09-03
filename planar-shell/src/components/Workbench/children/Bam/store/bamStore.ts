@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostBam, loadGhostBam } from './bamApi';
 
-import type { Maybe, GhostBam } from '@planar/shared';
+import type { GhostBam, Maybe } from '@planar/shared';
 
 export type BamStore = Readonly<{
   serverUrl: string;

@@ -1,6 +1,7 @@
 import CircularProgress from '@mui/material/CircularProgress';
 
 import type { FC } from 'react';
+
 import type { Maybe } from '@planar/shared';
 
 import styles from './Loading.module.scss';

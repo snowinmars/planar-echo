@@ -1,20 +1,24 @@
-import { useEffect } from 'react';
-import { useShallow } from 'zustand/react/shallow';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import CircularProgress from '@mui/material/CircularProgress';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import planarLocalStorage from '@/shared/planarLocalStorage';
-import { useGhostRouteId } from '@/shared/useGhostRouteId';
-import ResrefLink from '@/shared/ResrefLink';
-import { useAreStore } from './store/areStore';
-import { useAreWidgetBridge } from './useAreWidgetBridge';
+import { useEffect } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+
 import { isNothing } from '@planar/shared';
 
+import planarLocalStorage from '@/shared/planarLocalStorage';
+import ResrefLink from '@/shared/ResrefLink';
+import { useGhostRouteId } from '@/shared/useGhostRouteId';
+
+import { useAreStore } from './store/areStore';
+import { useAreWidgetBridge } from './useAreWidgetBridge';
+
 import type { FC, ReactNode } from 'react';
+
 import type { GhostType, Maybe, Point, Rectangle } from '@planar/shared';
 
 type TProps = Readonly<{

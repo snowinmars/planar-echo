@@ -1,13 +1,16 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
+import { join } from 'path';
+
 import { isNothing } from '@planar/shared';
+
 import { pvrzIndexFromSab } from '@/shared/pool/index.js';
-import { encodeRgbaPng } from './algo/encodeRgbaPng.js';
+
 import { cropAndBlit } from './algo/cropAndBlit.js';
-import { TILE_DIMENSION, blitTisTileRgba, createTisAtlasBuffer, renderTisPalettePng } from './algo/renderTisPalette.js';
+import { encodeRgbaPng } from './algo/encodeRgbaPng.js';
+import { blitTisTileRgba, createTisAtlasBuffer, renderTisPalettePng, TILE_DIMENSION } from './algo/renderTisPalette.js';
 import { writeAssetFile } from './writeAssetFile.js';
 
-import type { ParseOneProps, ParseOneResult, PackedPvrz, AssetOk } from '@/shared/pool/index.js';
+import type { AssetOk, PackedPvrz, ParseOneProps, ParseOneResult } from '@/shared/pool/index.js';
 import type { RawTis } from '@/steps/4.biffs2json/pstee/tis/index.js';
 
 export const writeOneTis = async ({

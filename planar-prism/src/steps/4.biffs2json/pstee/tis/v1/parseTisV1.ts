@@ -1,11 +1,12 @@
 import { findWedForTis } from '../../wed/index.js';
 import { PALETTE_TILE_SIZE, PVRZ_TILE_SIZE } from '../shared/tisCommon.js';
+import { parseHeader } from './1.parseHeader.js';
 import { parsePaletteTisJson } from './palette/parsePaletteTis.js';
 import { parsePvrzTisJson } from './pvrz/parsePvrzTis.js';
-import { parseHeader } from './1.parseHeader.js';
+
+import type { BufferReader } from '@/shared/bufferReader.js';
 
 import type { RawWed } from '../../wed/index.js';
-import type { BufferReader } from '@/shared/bufferReader.js';
 import type { RawTis } from '../parseTiss.types.js';
 
 const knownTisWithoutWed = [

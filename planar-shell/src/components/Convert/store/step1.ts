@@ -1,8 +1,10 @@
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
+import type { StateCreator } from 'zustand';
+
 import type { GameLanguage, GameName } from '@planar/shared';
 
 import type { LandingState, LandingStateStep1 } from './types';
-import type { StateCreator } from 'zustand';
 
 export const useLandingStoreStep1: StateCreator<LandingState, [], [], LandingStateStep1> = (set, get) => {
   const gameLanguage = planarLocalStorage.get<GameLanguage | ''>('gameLanguage', '')!;

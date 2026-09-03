@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostIni,
   postApiGhostIniByIniIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostIni } from '@planar/shared';
+import type { GhostIni } from '@planar/shared';
 
 export type LoadGhostIniProps = Readonly<{
   iniId: string;

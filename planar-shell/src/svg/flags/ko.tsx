@@ -1,5 +1,6 @@
-import type { WithClassName } from '@/types/fcWithClassName';
 import type { FC, JSX } from 'react';
+
+import type { WithClassName } from '@/types/fcWithClassName';
 
 const FlagKo: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg

@@ -15,19 +15,21 @@ const importGroups = [
   // simple-import-sort:
   // side-effect path is `\0…`,
   // type path is `…\0`.
+  // longest match wins; equal length → earlier group
   ['^\\u0000'], // side-effect: import './polyfill'
   ['^node:.*[^\\u0000]$'], // value: node:fs
   ['^(?!@planar/)@?\\w.*[^\\u0000]$'], // value: npm, not @planar/*
   ['^@planar/.*[^\\u0000]$'], // value: @planar/shared
-  ['^@/.*[^\\u0000]$'], // value: tsconfig alias @/…
-  ['^\\..*[^\\u0000]$'], // value: ./ and ../
-  ['^[^\\u0000]+$'], // value leftover (must sit before all type groups)
+  ['^@/(?!.*\\.scss$).*[^\\u0000]$'], // value: tsconfig alias @/…, not .scss
+  ['^\\.(?!.*\\.scss$).*[^\\u0000]$'], // value: ./ and ../, not .scss
+  ['^(?!.*\\.scss$)[^\\u0000]+$'], // value leftover (must sit before all type groups)
   ['^node:.*\\u0000$'], // type: node:fs
   ['^(?!@planar/)@?\\w.*\\u0000$'], // type: npm, not @planar/*
   ['^@planar/.*\\u0000$'], // type: @planar/shared
   ['^@/.*\\u0000$'], // type: @/…
   ['^\\..*\\u0000$'], // type: ./ and ../
   ['\\u0000$'], // type leftover
+  ['\\.scss$'], // value: import styles from './Component.module.scss' - after value and type
 ]
 
 export const importSortRules = {

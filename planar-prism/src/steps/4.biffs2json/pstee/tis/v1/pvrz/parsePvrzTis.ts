@@ -1,4 +1,5 @@
 import { nothing } from '@planar/shared';
+
 import {
   calcAtlasColumns,
   calcAtlasRows,
@@ -7,6 +8,7 @@ import {
 } from '../../shared/tisCommon.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawTisHeader } from '../1.parseHeader.types.js';
 import type { RawTisPvrz, RawTisTile } from './parsePvrzTis.types.js';
 

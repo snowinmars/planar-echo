@@ -1,21 +1,23 @@
-import { useState, useMemo, useEffect, useCallback, useSyncExternalStore, useRef } from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { Grid } from 'react-window';
 import Autocomplete from '@mui/material/Autocomplete';
-import { getZustandCharacter } from '@/engine/store/worldStores';
-import { triggerSave } from '@/engine/store/saveSubject';
-import VirtualizedListbox from '@/shared/VirtualizedListbox';
-import { NumberField } from '@/shared/NumberField';
-import { useGridColumns } from '@/hooks/useGridColumns';
-import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
-import { reloadStoresFromDb } from '@/components/Workbench/children/Dlg/children/broadcast';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Grid } from 'react-window';
+
+import { reloadStoresFromDb } from '@/components/Workbench/children/Dlg/children/broadcast';
+import { triggerSave } from '@/engine/store/saveSubject';
+import { listenWorldStoreBroadcast } from '@/engine/store/worldBroadcast';
+import { getZustandCharacter } from '@/engine/store/worldStores';
+import { useGridColumns } from '@/hooks/useGridColumns';
+import { NumberField } from '@/shared/NumberField';
+import VirtualizedListbox from '@/shared/VirtualizedListbox';
 
 import type { TFunction } from 'i18next';
-import type { CharacterNarrativeProps, WhoId } from '@planar/shared';
-import type { CellComponentProps } from 'react-window';
 import type { FC, ReactElement } from 'react';
+import type { CellComponentProps } from 'react-window';
+
+import type { CharacterNarrativeProps, WhoId } from '@planar/shared';
 
 import styles from './CharactersTab.module.scss';
 

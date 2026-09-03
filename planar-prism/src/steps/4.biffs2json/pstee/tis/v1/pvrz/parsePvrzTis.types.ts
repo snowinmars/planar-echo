@@ -1,4 +1,5 @@
 import type { Maybe } from '@planar/shared';
+
 import type { RawTisAtlasWidthSource } from '../../parseTiss.types.js';
 import type { RawTisHeader } from '../1.parseHeader.types.js';
 

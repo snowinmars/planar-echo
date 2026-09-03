@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { bmpWidgetState } from '@/shared/widgets';
+
 import { useBmpStore } from './store/bmpStore';
 
 import type { BmpStore } from './store/bmpStore';

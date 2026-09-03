@@ -1,7 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
+
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
+
 import type { ItmWidgetActions, ItmWidgetState } from './itmWidgetState.types';
 
 const emptyState: ItmWidgetState = {

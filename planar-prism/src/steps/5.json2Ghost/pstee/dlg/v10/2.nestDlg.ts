@@ -1,8 +1,9 @@
-import { nothing, isNothing } from '@planar/shared';
+import { isNothing, nothing } from '@planar/shared';
+
+import type { RawDlgState } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/2.parseStates.types.js';
+import type { RawDlgResponse } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/3.parseResponses.types.js';
 
 import type { WeightedDlg } from './1.attachWeights.types.js';
-import type { RawDlgResponse } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/3.parseResponses.types.js';
-import type { RawDlgState } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/2.parseStates.types.js';
 import type { NestedDlg, NestedDlgResponse, NestedDlgState } from './2.nestDlg.types.js';
 
 const formTrigger = ({

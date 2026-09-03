@@ -1,9 +1,12 @@
-import { parseHeader } from './parsers/1.parseHeader.js';
 import { nothing } from '@planar/shared';
 
-import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawMosV2, RawMosV2Block } from './parseMosV2.types.js';
+import { parseHeader } from './parsers/1.parseHeader.js';
+
 import type { Maybe } from '@planar/shared';
+
+import type { BufferReader } from '@/shared/bufferReader.js';
+
+import type { RawMosV2, RawMosV2Block } from './parseMosV2.types.js';
 
 const pvrzFileNameForMosPage = (page: number): Maybe<string> => {
   if (page < 0 || page >= 100000) return nothing();

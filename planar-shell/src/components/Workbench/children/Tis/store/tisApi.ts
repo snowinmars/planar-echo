@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostTis,
   postApiGhostTisByTisIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostTis } from '@planar/shared';
+import type { GhostTis } from '@planar/shared';
 
 export type LoadGhostTisProps = Readonly<{
   tisId: string;

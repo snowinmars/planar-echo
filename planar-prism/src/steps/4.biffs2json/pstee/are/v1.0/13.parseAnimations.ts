@@ -1,6 +1,7 @@
 import { extendMap } from './13.parseAnimations.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreAnimationV10 } from './13.parseAnimations.types.js';
 
 const parseAnimation = (reader: BufferReader): RawAreAnimationV10 => {

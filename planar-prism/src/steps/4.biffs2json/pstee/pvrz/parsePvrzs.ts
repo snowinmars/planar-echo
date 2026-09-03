@@ -1,13 +1,16 @@
-import { createReader } from '@/shared/bufferReader.js';
-import { inflateSync } from 'zlib';
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+import { inflateSync } from 'zlib';
+
+import { createReader } from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { parsePvr } from './pvr/parsePvr.js';
 
-import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Paths } from '@/steps/1.createPaths/index.js';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawPvr } from './pvr/parsePvr.types.js';
 
 export const parsePvrzs = (

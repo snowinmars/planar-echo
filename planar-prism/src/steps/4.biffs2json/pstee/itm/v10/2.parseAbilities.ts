@@ -2,6 +2,7 @@ import { extendMap } from './2.parseAbilities.types.js';
 import { parseEffect } from './3.parseEffects.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawItmAbilityV10 } from './2.parseAbilities.types.js';
 import type { RawItmEffectV10 } from './3.parseEffects.types.js';
 

@@ -1,7 +1,10 @@
 import { existsSync, readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import { nothing, type Maybe } from './maybe.js';
+
+import { nothing } from './maybe.js';
+
+import type { Maybe } from './maybe.js';
 
 type PackageNameField = Readonly<{
   name?: string;

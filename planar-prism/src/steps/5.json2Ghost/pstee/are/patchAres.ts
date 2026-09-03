@@ -1,12 +1,14 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { packAreWalk } from './0.packAreWalk.js';
 import { toGhost } from './1.toGhost.js';
 import { buildAreSkeleton } from './2.buildAreSkeleton.js';
 
 import type { RawAre } from '@/steps/4.biffs2json/pstee/are/index.js';
-import type { GhostAreOut } from './patchAres.types.js';
 import type { RawWed } from '@/steps/4.biffs2json/pstee/wed/parseWeds.types.js';
+
+import type { GhostAreOut } from './patchAres.types.js';
 
 export const patchAres = (
   ares: RawAre[],

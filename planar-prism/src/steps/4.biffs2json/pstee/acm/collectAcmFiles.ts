@@ -1,4 +1,5 @@
 import { basename } from 'path';
+
 import { walkFiles } from '../shared/walkFiles.js';
 
 export type AcmFile = Readonly<{

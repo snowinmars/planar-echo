@@ -2,15 +2,17 @@ import {
   isNothing,
   nothing,
 } from '@planar/shared';
-import { splitHalfOfAreaStrings } from './splitHalfOfAreaStrings.js';
+
 import { isEmptyObject } from './isEmptyObject.js';
+import { splitHalfOfAreaStrings } from './splitHalfOfAreaStrings.js';
 
 import type { Maybe } from '@planar/shared';
-import type { RawBcsTrigger } from '../bytecode/parseTr.types.js';
+
 import type {
   RawBcsSignatureFunction,
   RawBcsSignatures,
 } from '../../context/buildBcsContext.types.js';
+import type { RawBcsTrigger } from '../bytecode/parseTr.types.js';
 
 type FindSignaturesProps = Readonly<{
   resourceName: string;

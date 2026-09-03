@@ -1,6 +1,7 @@
 import { extendMap } from './parseEffV10.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawEffV10 } from './parseEffV10.types.js';
 
 type ParseEffV10Props = Readonly<{

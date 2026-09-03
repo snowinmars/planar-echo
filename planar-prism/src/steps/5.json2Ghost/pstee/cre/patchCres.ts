@@ -1,10 +1,12 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { buildCreSkeleton } from './1.buildCreSkeleton.js';
 import { toGhost } from './2.toGhost.js';
 
-import type { RawCre } from '@/steps/4.biffs2json/pstee/cre/index.js';
 import type { DiscoverNext } from '@/discoverer.types.js';
+import type { RawCre } from '@/steps/4.biffs2json/pstee/cre/index.js';
+
 import type { CreOut } from './patchCres.types.js';
 
 export const patchCres = (

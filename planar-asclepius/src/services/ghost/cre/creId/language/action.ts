@@ -1,6 +1,8 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
+import { join } from 'path';
+
 import { fileExists } from '@planar/shared/node';
+
 import type { Command, Result } from './types.js';
 
 export default async ({

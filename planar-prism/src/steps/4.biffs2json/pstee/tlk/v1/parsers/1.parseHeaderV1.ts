@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawTlkHeader } from './1.parseHeaderV1.types.js';
 
 type ParseHeaderV1Props = Readonly<{

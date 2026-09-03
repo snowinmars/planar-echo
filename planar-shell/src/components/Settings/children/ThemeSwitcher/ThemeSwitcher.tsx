@@ -1,15 +1,17 @@
+import PaletteIcon from '@mui/icons-material/Palette';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Box from '@mui/material/Box';
+
 import { useTheme } from '@/theme/context';
-import PaletteIcon from '@mui/icons-material/Palette';
-import clsx from 'clsx';
-import InputLabel from '@mui/material/InputLabel';
 
 import type { FC } from 'react';
+
 import type { ThemeMode } from '@/theme/types';
 import type { WithClassName } from '@/types/fcWithClassName';
 

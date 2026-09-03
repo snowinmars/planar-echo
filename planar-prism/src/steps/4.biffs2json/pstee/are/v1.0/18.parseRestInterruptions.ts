@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreRestInterruptionsV10 } from './18.parseRestInterruptions.types.js';
 
 export const parseRestInterruptions = (reader: BufferReader): RawAreRestInterruptionsV10 => {

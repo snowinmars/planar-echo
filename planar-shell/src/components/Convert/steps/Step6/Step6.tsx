@@ -1,12 +1,15 @@
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import { Observable } from 'rxjs';
 import { useTranslation } from 'react-i18next';
+
 import Loader from './children/Loader/Loader';
 
 import type { FC } from 'react';
-import type { LandingStateStep1, LandingStateStep2, LandingStateStep3, LandingStateStep6 } from '../../store/types';
+import type { Observable } from 'rxjs';
+
 import type { PrismIndexProgressMessage } from '@planar/shared';
+
+import type { LandingStateStep1, LandingStateStep2, LandingStateStep3, LandingStateStep6 } from '../../store/types';
 
 type LProps = Readonly<{ item: PrismIndexProgressMessage['data'] }>;
 const L: FC<LProps> = ({ item }: LProps) => {

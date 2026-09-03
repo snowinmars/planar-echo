@@ -1,8 +1,10 @@
+import { nothing } from '@planar/shared';
+
 import { extendMap } from './1.parseHeader.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreHeaderV10 } from './1.parseHeader.types.js';
-import { nothing } from '@planar/shared';
 
 export const parseHeader = (reader: BufferReader): RawAreHeaderV10 => {
   const wed = reader.string(8);

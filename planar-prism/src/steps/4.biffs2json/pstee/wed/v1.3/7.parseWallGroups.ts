@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawWedWallGroup } from './7.parseWallGroups.types.js';
 
 type WallGroupLookup = Omit<RawWedWallGroup, 'polygonIndices'>;

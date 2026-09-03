@@ -1,9 +1,11 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { toGhost } from './1.toGhost.js';
 import { buildSrcSkeleton } from './2.buildSrcSkeleton.js';
 
 import type { RawSrc } from '@/steps/4.biffs2json/pstee/src/index.js';
+
 import type { GhostSrcOut } from './patchSrcs.types.js';
 
 export const patchSrcs = (

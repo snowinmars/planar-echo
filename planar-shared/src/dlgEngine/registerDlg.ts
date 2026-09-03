@@ -1,17 +1,17 @@
 import { just, nothing } from '../maybe.js';
 
-import type { Maybe } from '../maybe.js';
 import type {
-  GhostDlgArgs,
   GhostDlg,
-  GhostDlgLabel,
+  GhostDlgArgs,
   GhostDlgJump,
+  GhostDlgLabel,
 } from '../ghost/dlg.types.js';
-import type { InternalArgsProps } from './registerDlg.types.js';
+import type { Maybe } from '../maybe.js';
 import type { ItmId } from './enums/itm.js';
 import type { ResponseId } from './enums/response.js';
 import type { StateId } from './enums/state.js';
 import type { WhoId } from './enums/who.js';
+import type { InternalArgsProps } from './registerDlg.types.js';
 
 type LabelFunction<T> = (stateId: StateId, args?: Maybe<InternalArgsProps<T>>) => Readonly<{ say: SayFunction<T> }>;
 type SayFunction<T> = (whoId: WhoId | ItmId, whoIdRef: number, textRef: number, args?: Maybe<InternalArgsProps<T>>) => Readonly<{ say: SayFunction<T>; response: ResponseFunction<T>; jump: JumpFunction<T> }>;

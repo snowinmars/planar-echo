@@ -1,14 +1,17 @@
+import '@/i18n/index';
+
+import CssBaseline from '@mui/material/CssBaseline';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@/i18n/index';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeContextProvider } from './theme/context';
-import { WorldStoreProvider } from '@/engine/store/WorldStoreProvider';
+import { RouterProvider } from 'react-router-dom';
+
 import { PlanarRuntimeProvider } from '@/engine/store/PlanarRuntimeProvider';
+import { WorldStoreProvider } from '@/engine/store/WorldStoreProvider';
+import router from '@/router';
+
+import { ThemeContextProvider } from './theme/context';
 
 import './index.scss';
-import { RouterProvider } from 'react-router-dom';
-import router from '@/router';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -1,6 +1,7 @@
-import type { RawTlk } from '@/steps/4.biffs2json/pstee/tlk/index.js';
 import { reportProgress } from '@/shared/report.js';
 import createWriter from '@/shared/writer.js';
+
+import type { RawTlk } from '@/steps/4.biffs2json/pstee/tlk/index.js';
 
 export const patchTlk = (tlk: RawTlk): string => {
   const writer = createWriter();

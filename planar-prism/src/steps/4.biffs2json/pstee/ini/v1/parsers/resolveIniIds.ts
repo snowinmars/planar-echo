@@ -1,5 +1,6 @@
-import { externalOffsetMap } from '@/shared/extendedMap.js';
 import { isNothing, nothing } from '@planar/shared';
+
+import { externalOffsetMap } from '@/shared/extendedMap.js';
 
 import type { Maybe } from '@planar/shared';
 

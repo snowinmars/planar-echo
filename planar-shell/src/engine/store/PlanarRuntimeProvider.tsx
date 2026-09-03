@@ -1,7 +1,7 @@
 import {
   appPlanarRuntime,
-  PlanarRuntimeContext,
   planarCoreModules,
+  PlanarRuntimeContext,
   useFeatureLease,
 } from './planarRuntime';
 

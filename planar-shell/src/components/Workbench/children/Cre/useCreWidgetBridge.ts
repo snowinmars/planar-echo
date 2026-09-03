@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { creWidgetState } from '@/shared/widgets';
+
 import { useCreStore } from './store/creStore';
 
 import type { CreStore } from './store/creStore';

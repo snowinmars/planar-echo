@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { bcsWidgetState } from '@/shared/widgets';
+
 import { useBcsStore } from './store/bcsStore';
 
 import type { BcsStore } from './store/bcsStore';

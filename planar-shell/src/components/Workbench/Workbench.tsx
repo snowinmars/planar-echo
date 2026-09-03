@@ -1,11 +1,15 @@
 import Button from '@mui/material/Button';
-import { Link as RouterLink } from 'react-router';
-import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router';
+
+import { ghostTypes } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import { ghostTypes, type Maybe } from '@planar/shared';
 
 import type { FC } from 'react';
+
+import type { Maybe } from '@planar/shared';
 
 // import styles from './Workbench.module.scss';
 

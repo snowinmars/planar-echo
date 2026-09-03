@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawWedHeader } from './1.parseHeader.types.js';
 
 export const parseHeader = (reader: BufferReader): RawWedHeader => {

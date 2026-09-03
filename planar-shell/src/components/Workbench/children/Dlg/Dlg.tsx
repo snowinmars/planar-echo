@@ -1,16 +1,20 @@
 import { lazy, useEffect } from 'react';
-import { nothing } from '@planar/shared';
-import { useDlgWidgetBridge } from './useDlgWidgetBridge';
-import planarLocalStorage from '@/shared/planarLocalStorage';
 import { useParams, useSearchParams } from 'react-router';
+
+import { nothing } from '@planar/shared';
+
+import { useFeatureLease, useLocalStorageStore } from '@/engine/store/planarRuntime';
+import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import {
   dlgFeatureModules,
   useDlgStore,
 } from './store/di';
-import { useFeatureLease, useLocalStorageStore } from '@/engine/store/planarRuntime';
+import { useDlgWidgetBridge } from './useDlgWidgetBridge';
 
-import type { StateId, Maybe, GhostType } from '@planar/shared';
 import type { FC } from 'react';
+
+import type { GhostType, Maybe, StateId } from '@planar/shared';
 
 import styles from './Dlg.module.scss';
 

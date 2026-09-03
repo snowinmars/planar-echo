@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
+
 import { packageDir } from '@planar/shared/node';
 
 import type { PrismIndexStartMessage } from '@planar/shared';

@@ -1,8 +1,9 @@
 import { extendMap } from './14.parseTiledObjects.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawAreTiledObjectV10 } from './14.parseTiledObjects.types.js';
+
 import type { RawAreVertexV10 } from './8.parseVertices.types.js';
+import type { RawAreTiledObjectV10 } from './14.parseTiledObjects.types.js';
 
 type ParseTiledObjectProps = Readonly<{
   reader: BufferReader;

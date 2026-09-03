@@ -1,13 +1,16 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
-import { parseIniV1 } from './v1/index.js';
-import { reportProgress } from '@/shared/report.js';
+import { join } from 'path';
 
-import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
+import { parseIniV1 } from './v1/index.js';
+
 import type { Paths } from '@/steps/1.createPaths/index.js';
-import type { RawIni } from './parseInis.types.js';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawIds } from '../ids/index.js';
+import type { RawIni } from './parseInis.types.js';
 
 export const parseInis = (
   paths: Paths,

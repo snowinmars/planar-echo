@@ -1,8 +1,9 @@
 import { extend } from '@/shared/extendedMap.js';
 
+import type { Maybe, Point, Rectangle } from '@planar/shared';
+
 import type { RawAreItemV10 } from './7.parseItems.types.js';
 import type { RawAreVertexV10 } from './8.parseVertices.types.js';
-import type { Rectangle, Point, Maybe } from '@planar/shared';
 
 /* createGenerator().register().enum('containerTypeV10',
  *   ['n/a','bag','chest','drawer','pile','table','shelf','altar','nonvisible','spellbook','body','barrel','crate',]

@@ -1,13 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+
 import { just, nothing } from '@planar/shared';
+
 import { createPlaySession } from './createPlaySession.js';
 
 import type { RefObject } from 'react';
+
 import type { Maybe } from '@planar/shared';
+
 import type { PlayBoot } from './playBootFromSearchParams.js';
 import type {
-  PlaySocketState,
   PlaySessionApi,
+  PlaySocketState,
 } from './types.js';
 
 export type UsePlaySessionResponse = Readonly<{

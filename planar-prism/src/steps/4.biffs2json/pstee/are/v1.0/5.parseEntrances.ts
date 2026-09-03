@@ -1,6 +1,7 @@
 import { parseDirection } from '../../shared/parseDirection.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreEntranceV10 } from './5.parseEntrances.types.js';
 
 const parseEntrance = (reader: BufferReader): RawAreEntranceV10 => {

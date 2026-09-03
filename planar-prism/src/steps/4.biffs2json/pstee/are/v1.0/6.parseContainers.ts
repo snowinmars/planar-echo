@@ -1,10 +1,12 @@
+import { nothing } from '@planar/shared';
+
 import { extendMap } from './6.parseContainers.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreContainerV10 } from './6.parseContainers.types.js';
 import type { RawAreItemV10 } from './7.parseItems.types.js';
 import type { RawAreVertexV10 } from './8.parseVertices.types.js';
-import { nothing } from '@planar/shared';
 
 type ParseContainerProps = Readonly<{
   reader: BufferReader;

@@ -1,31 +1,33 @@
 import logger from '@/shared/logger.js';
-import { patchTlk } from './tlk/patch.js';
+
+import { patchAcms } from './acm/patchAcms.js';
+import { patchAres } from './are/patchAres.js';
+import { patchBams } from './bam/patchBams.js';
+import { patchBcs } from './bcs/patchBcs.js';
+import { patchBmps } from './bmp/patchBmps.js';
 import { patchCres } from './cre/patchCres.js';
 import { patchDlgs } from './dlg/v10/patchDlgs.js';
-import { patchItms } from './itm/patchItms.js';
-import { patchBcs } from './bcs/patchBcs.js';
-import { patchMos } from './mos/patchMos.js';
-import { patchPvr } from './pvr/patchPvr.js';
-import { patchTis } from './tis/patchTis.js';
-import { patchWed } from './wed/patchWed.js';
-import { patchAres } from './are/patchAres.js';
-import { patchBmps } from './bmp/patchBmps.js';
-import { patchBams } from './bam/patchBams.js';
-import { patchWavs } from './wav/patchWavs.js';
-import { patchAcms } from './acm/patchAcms.js';
-import { patchMuss } from './mus/patchMuss.js';
 import { patchEffs } from './eff/patchEffs.js';
 import { patchIds } from './ids/patchIds.js';
-import { patchTwodas } from './twoda/patchTwodas.js';
-import { patchSrcs } from './src/patchSrcs.js';
 import { patchInis } from './ini/patchInis.js';
+import { patchItms } from './itm/patchItms.js';
+import { patchMos } from './mos/patchMos.js';
+import { patchMuss } from './mus/patchMuss.js';
+import { patchPvr } from './pvr/patchPvr.js';
+import { patchSrcs } from './src/patchSrcs.js';
+import { patchTis } from './tis/patchTis.js';
+import { patchTlk } from './tlk/patch.js';
+import { patchTwodas } from './twoda/patchTwodas.js';
+import { patchWavs } from './wav/patchWavs.js';
+import { patchWed } from './wed/patchWed.js';
+
+import type { DiscoverNext } from '@/discoverer.types.js';
 
 import type { Paths } from '../../1.createPaths/types.js';
 import type { AllPsteeJsons } from '../../4.biffs2json/types.js';
-import type { DiscoverNext } from '@/discoverer.types.js';
 import type { CreOut } from './cre/patchCres.types.js';
-import type { ItmOut } from './itm/patchItms.types.js';
 import type { DlgOut } from './dlg/v10/patchDlgs.types.js';
+import type { ItmOut } from './itm/patchItms.types.js';
 
 type AllJsons = AllPsteeJsons; // extend with new games
 

@@ -1,12 +1,15 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+
 import createReader from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { parseDlgV1 } from './v1/parseDlgV1.js';
 
-import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Paths } from '@/steps/1.createPaths/index.js';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawDlg } from './parseDlgs.types.js';
 
 export const parseDlgs = (

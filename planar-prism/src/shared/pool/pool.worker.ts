@@ -1,6 +1,6 @@
 import { parentPort, workerData } from 'worker_threads';
 
-import type { PoolWorkerData, MainToWorker, WorkerToMain, ParseOne } from './pool.types.js';
+import type { MainToWorker, ParseOne, PoolWorkerData, WorkerToMain } from './pool.types.js';
 
 if (!parentPort) throw new Error('pool.worker must run as a worker thread');
 

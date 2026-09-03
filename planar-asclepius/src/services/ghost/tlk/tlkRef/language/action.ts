@@ -1,10 +1,13 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
+import { join } from 'path';
+
 import { fileExists } from '@planar/shared/node';
+
 import logger from '@/shared/logger.js';
 
-import type { Command, Result, TlkItem } from './types.js';
 import type { GameLanguage } from '@planar/shared';
+
+import type { Command, Result, TlkItem } from './types.js';
 
 const tlks: Map<GameLanguage, string[]> = new Map<GameLanguage, string[]>();
 

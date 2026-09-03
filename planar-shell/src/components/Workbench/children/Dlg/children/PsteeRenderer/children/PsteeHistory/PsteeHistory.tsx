@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react';
-import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
+import { useEffect, useRef } from 'react';
+
+import { isNothing } from '@planar/shared';
+
 import { useGameHistoryStore } from '@/components/Workbench/children/Dlg/store/di';
 import { useTlkStore } from '@/engine/store/planarRuntime';
-import { isNothing } from '@planar/shared';
 
 import type { FC, UIEvent } from 'react';
 

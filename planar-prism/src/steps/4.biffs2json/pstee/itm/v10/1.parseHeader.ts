@@ -1,7 +1,9 @@
-import { extendMap } from './1.parseHeader.types.js';
 import { normalizeRef } from '@/shared/numbers.js';
 
+import { extendMap } from './1.parseHeader.types.js';
+
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawItmHeaderV10 } from './1.parseHeader.types.js';
 
 export const parseHeader = (reader: BufferReader): RawItmHeaderV10 => {

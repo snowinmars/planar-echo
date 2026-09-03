@@ -1,5 +1,6 @@
-import type { WithClassName } from '@/types/fcWithClassName';
 import type { FC, JSX } from 'react';
+
+import type { WithClassName } from '@/types/fcWithClassName';
 
 // https://upload.wikimedia.org/wikipedia/commons/7/7e/Hammer_and_sickle.svg
 { /* <metadata id="metadata5">

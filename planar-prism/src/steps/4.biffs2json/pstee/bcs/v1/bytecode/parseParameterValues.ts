@@ -3,8 +3,8 @@ import { parseNumber } from './parseNumber.js';
 import { parseOb } from './parseOb.js';
 import { parseString } from './parseString.js';
 
-import type { RawBcsParsedParameters } from './parseParameterValues.types.js';
 import type { RawBcsStream } from '../bcsStream.types.js';
+import type { RawBcsParsedParameters } from './parseParameterValues.types.js';
 
 type RawBcsParseParameterValuesProps = Readonly<{
   stream: RawBcsStream;

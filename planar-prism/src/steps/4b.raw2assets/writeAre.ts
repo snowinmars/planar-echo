@@ -1,8 +1,9 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
+import { join } from 'path';
+
 import { writeAssetFile } from './writeAssetFile.js';
 
-import type { ParseOneProps, ParseOneResult, AssetOk } from '@/shared/pool/index.js';
+import type { AssetOk, ParseOneProps, ParseOneResult } from '@/shared/pool/index.js';
 import type { RawAre } from '@/steps/4.biffs2json/pstee/are/index.js';
 
 export const writeOneAre = async ({

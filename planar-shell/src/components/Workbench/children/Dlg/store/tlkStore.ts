@@ -1,13 +1,17 @@
 import { LRUCache } from 'lru-cache';
-import { dlgRepository } from './dlgRepository';
-import { planarStoreId } from '@/engine/store/planarRuntime.types';
-import planarLocalStorage from '@/shared/planarLocalStorage';
 import { Subscription } from 'rxjs';
 
-import type { TlkStore } from './tlkStore.types';
+import { planarStoreId } from '@/engine/store/planarRuntime.types';
+import planarLocalStorage from '@/shared/planarLocalStorage';
+
+import { dlgRepository } from './dlgRepository';
+
 import type { StateCreator } from 'zustand/vanilla';
+
 import type { PlanarRuntime } from '@/engine/store/planarRuntime.types';
+
 import type { LocalStorageStore } from './localStorageStore.types';
+import type { TlkStore } from './tlkStore.types';
 
 export const createTlkStore = (runtime: PlanarRuntime): StateCreator<TlkStore> => (set) => {
   const tlkCacheMaxLines = runtime

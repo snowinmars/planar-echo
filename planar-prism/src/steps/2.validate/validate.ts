@@ -1,15 +1,19 @@
-import type { Paths } from '@/steps/1.createPaths/index.js';
 import throwIfInvalid from './throwIfInvalid.js';
+
+import type { Paths } from '@/steps/1.createPaths/index.js';
+
 import type {
   GameDirValidateResult,
   ValidationResult,
   WeiduExeDirValidateResult,
 } from './types.js';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const weiduIsOk = async (weiduExeDir: string): Promise<boolean> => {
   return true;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const binariesAreOk = async (chitinKeyFile: string): Promise<boolean> => {
   return true;
 };

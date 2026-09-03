@@ -1,6 +1,7 @@
 import { extendMap } from './9.parseAmbients.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreAmbientV10 } from './9.parseAmbients.types.js';
 
 const parseAmbient = (reader: BufferReader): RawAreAmbientV10 => {

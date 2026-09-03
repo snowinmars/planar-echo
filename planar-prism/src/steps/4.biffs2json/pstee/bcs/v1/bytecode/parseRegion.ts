@@ -1,4 +1,5 @@
 import { just } from '@planar/shared';
+
 import { parseNumber } from './parseNumber.js';
 
 import type { RawBcsStream } from '../bcsStream.types.js';

@@ -1,15 +1,19 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
-import { client } from '@/swagger/client/client.gen';
-import { postApiGhostCre } from '@/swagger/client';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { postApiGhostCre } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
+
 import { loadGhostCre } from './creApi';
 
 import type {
-  Maybe,
   GhostCreV10,
   GhostCreV11,
+  Maybe,
 } from '@planar/shared';
+
 import type { GameLanguage } from '@/swagger/client';
 
 type GhostCre = GhostCreV10 | GhostCreV11;

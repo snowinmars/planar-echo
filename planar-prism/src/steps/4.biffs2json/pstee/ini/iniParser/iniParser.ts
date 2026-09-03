@@ -1,6 +1,6 @@
 // https://github.com/PMarinov1994/cool-ini-parser-js/blob/master/src/parser.ts
 
-import type { RawIniSection, RawIniSectionEntry, RawIniConfiguration } from './iniParserTypes.js';
+import type { RawIniConfiguration, RawIniSection, RawIniSectionEntry } from './iniParserTypes.js';
 
 const SYMBOL_SECTION_START = '[';
 const SYMBOL_SECTION_END = ']';

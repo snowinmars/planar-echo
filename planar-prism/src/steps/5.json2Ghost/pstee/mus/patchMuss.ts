@@ -1,9 +1,11 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { toGhost } from './1.toGhost.js';
 import { buildMusSkeleton } from './2.buildMusSkeleton.js';
 
 import type { RawMus } from '@/steps/4.biffs2json/pstee/mus/index.js';
+
 import type { GhostMusOut } from './patchMuss.types.js';
 
 export const patchMuss = (

@@ -1,11 +1,12 @@
+import type { Observable } from 'rxjs';
+import type { StateCreator } from 'zustand';
+
 import type {
   GameLanguage,
   GameName,
   Maybe,
   ProgressSteps,
 } from '@planar/shared';
-import { Observable } from 'rxjs';
-import type { StateCreator } from 'zustand';
 
 export type ZustandSetType<T> = Parameters<StateCreator<T>>[0];
 export type ZustandGetType<T> = Parameters<StateCreator<T>>[1];

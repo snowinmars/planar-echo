@@ -1,13 +1,17 @@
-import clsx from 'clsx';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Content from './children/Content/Content';
-import Comment from './children/Comment/Comment';
-import StepLoader from '../../StepLoader';
+import clsx from 'clsx';
+
 import Step0Server from '@/svg/convert/Step0Server';
 
+import StepLoader from '../../StepLoader';
+import Comment from './children/Comment/Comment';
+import Content from './children/Content/Content';
+
 import type { FC } from 'react';
+
 import type { WithClassName } from '@/types/fcWithClassName';
+
 import type { LandingStateStep0 } from '../../store/types';
 
 import styles from './Step0.module.scss';

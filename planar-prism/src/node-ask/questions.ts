@@ -1,6 +1,5 @@
-import { ConsoleIO } from './io.js';
-
-import type { Question, Answers } from './types.js';
+import type { ConsoleIO } from './io.js';
+import type { Answers, Question } from './types.js';
 
 export class QuestionEngine {
   constructor(private io: ConsoleIO) {}

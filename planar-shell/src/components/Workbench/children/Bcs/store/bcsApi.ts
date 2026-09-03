@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostBcs,
   postApiGhostBcsByBcsIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostBcs } from '@planar/shared';
+import type { GhostBcs } from '@planar/shared';
 
 export type LoadGhostBcsProps = Readonly<{
   bcsId: string;

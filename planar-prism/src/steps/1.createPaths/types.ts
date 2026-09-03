@@ -1,4 +1,4 @@
-import type { GameName, GameLanguage } from '@planar/shared';
+import type { GameLanguage, GameName } from '@planar/shared';
 
 type OutDir = Readonly<{
   root: string;

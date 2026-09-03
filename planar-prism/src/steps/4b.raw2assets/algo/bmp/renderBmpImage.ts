@@ -1,7 +1,9 @@
-import { isGreenColorKey, isGreenColorKeyBgra } from '../greenColorKey.js';
-import { encodeRgbaPng } from '../encodeRgbaPng.js';
+import { isNothing } from '@planar/shared';
 
-import { isNothing, type Maybe } from '@planar/shared';
+import { encodeRgbaPng } from '../encodeRgbaPng.js';
+import { isGreenColorKey, isGreenColorKeyBgra } from '../greenColorKey.js';
+
+import type { Maybe } from '@planar/shared';
 
 /**
  * Mostly llm generated from gemrb/nearinfinity

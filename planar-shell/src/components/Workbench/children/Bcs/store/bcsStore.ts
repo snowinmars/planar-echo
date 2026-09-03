@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostBcs, loadGhostBcs } from './bcsApi';
 
-import type { Maybe, GhostBcs } from '@planar/shared';
+import type { GhostBcs, Maybe } from '@planar/shared';
 
 export type BcsStore = Readonly<{
   serverUrl: string;

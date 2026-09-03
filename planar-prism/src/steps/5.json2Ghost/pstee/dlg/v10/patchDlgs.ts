@@ -1,14 +1,17 @@
+import { reportProgress } from '@/shared/report.js';
 import iterate from '@/steps/iterate.js';
+
 import attachWeights from './1.attachWeights.js';
 import nestDlg from './2.nestDlg.js';
 import extendWithEmptyResponses from './3.extendWithEmptyResponses.js';
 import { buildDlgSkeleton } from './4.buildDlgSkeleton.js';
 import { pickCreOrItm } from './pickCre.js';
-import { reportProgress } from '@/shared/report.js';
 
 import type { GhostCre, GhostItm, WhoId } from '@planar/shared';
-import type { RawDlg } from '@/steps/4.biffs2json/pstee/dlg/index.js';
+
 import type { DiscoverNext } from '@/discoverer.types.js';
+import type { RawDlg } from '@/steps/4.biffs2json/pstee/dlg/index.js';
+
 import type { DlgOut } from './patchDlgs.types.js';
 
 export const patchDlgs = (

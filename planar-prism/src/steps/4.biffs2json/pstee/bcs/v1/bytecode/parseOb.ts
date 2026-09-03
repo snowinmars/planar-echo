@@ -1,11 +1,13 @@
 import { isNothing, nothing } from '@planar/shared';
+
 import { determineParamType } from './determineParamType.js';
 import { parseNumber } from './parseNumber.js';
+import { parseRegion } from './parseRegion.js';
 import { parseString } from './parseString.js';
 import { OB_TOKEN } from './tokens.js';
-import { parseRegion } from './parseRegion.js';
 
 import type { Maybe } from '@planar/shared';
+
 import type { RawBcsStream } from '../bcsStream.types.js';
 import type { RawBcsObject } from './parseOb.types.js';
 import type { RawBcsRegion } from './parseRegion.types.js';

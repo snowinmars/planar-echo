@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawBamV1CycleEntry } from './3.parseCycles.types.js';
 
 type ParseCyclesProps = Readonly<{

@@ -1,14 +1,18 @@
-import { join, basename } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { basename, join } from 'path';
+
+import { just, nothing } from '@planar/shared';
+
+import createReader from '@/shared/bufferReader.js';
 import { entryExists } from '@/shared/customFs.js';
 import { reportProgress } from '@/shared/report.js';
-import { just, nothing } from '@planar/shared';
-import createReader from '@/shared/bufferReader.js';
+import iterate from '@/steps/iterate.js';
+
 import { walkFiles } from '../shared/walkFiles.js';
 
-import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { BufferReader } from '@/shared/bufferReader.js';
+import type { Paths } from '@/steps/1.createPaths/index.js';
+
 import type { RawMus, RawMusSegment } from './parseMuss.types.js';
 
 const silenceAcm = 'spc1';

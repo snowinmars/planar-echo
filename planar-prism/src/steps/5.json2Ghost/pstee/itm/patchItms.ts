@@ -1,10 +1,12 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { toGhost } from './1.toGhost.js';
 import { buildItmSkeleton } from './2.buildItmSkeleton.js';
 
-import type { RawItmV10 } from '@/steps/4.biffs2json/pstee/itm/parseItms.types.js';
 import type { DiscoverNext } from '@/discoverer.types.js';
+import type { RawItmV10 } from '@/steps/4.biffs2json/pstee/itm/parseItms.types.js';
+
 import type { ItmOut } from './patchItms.types.js';
 
 // TODO [snow]: in pstee itm v10 is itm v11 or something like that.

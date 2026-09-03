@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostEff,
   postApiGhostEffByEffIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostEff } from '@planar/shared';
+import type { GhostEff } from '@planar/shared';
 
 export type LoadGhostEffProps = Readonly<{
   effId: string;

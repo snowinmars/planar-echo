@@ -1,4 +1,5 @@
 import type { Maybe } from '@planar/shared';
+
 import type { RawIniCreatureIniPointSelect } from './parsePointSelectV1.types.js';
 
 export const parsePointSelectV1 = (s: Maybe<string>): RawIniCreatureIniPointSelect => {

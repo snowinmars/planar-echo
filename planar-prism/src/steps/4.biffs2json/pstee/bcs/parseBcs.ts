@@ -1,13 +1,16 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+
 import { reportProgress } from '@/shared/report.js';
-import { loadBcsBytecode } from './v1/loadBcsBytecode.js';
+import iterate from '@/steps/iterate.js';
+
 import { parseBytecode } from './v1/bytecode/index.js';
+import { loadBcsBytecode } from './v1/loadBcsBytecode.js';
 import { translateRawBcs } from './v1/translator/index.js';
 
-import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
 import type { Paths } from '@/steps/1.createPaths/index.js';
+import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
+
 import type { RawBcsContext } from './context/buildBcsContext.types.js';
 import type { RawBcs } from './v1/translator/translateRawBcs.types.js';
 

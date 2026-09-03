@@ -1,8 +1,9 @@
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type { ZustandNarrative } from './narrativeStore';
+
 import type { ZustandCharacter } from './characterStore';
+import type { ZustandNarrative } from './narrativeStore';
 
 let _zustandNarrative: Maybe<ZustandNarrative> = nothing();
 let _zustandCharacter: Maybe<ZustandCharacter> = nothing();

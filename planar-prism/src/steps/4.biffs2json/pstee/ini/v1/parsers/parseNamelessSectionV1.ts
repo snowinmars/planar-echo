@@ -1,10 +1,12 @@
 import { nothing } from '@planar/shared';
+
 import { parseCoordsV1 } from './parseCoordsV1.js';
 import { findEntry } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
-import type { RawIniNamelessIniSection } from './parseNamelessSectionV1.types.js';
+
 import type { RawIniSection } from '../../iniParser/iniParserTypes.js';
+import type { RawIniNamelessIniSection } from './parseNamelessSectionV1.types.js';
 
 export const parseNamelessSectionV1 = (section: RawIniSection): Maybe<RawIniNamelessIniSection> => {
   if (section.name !== 'nameless') throw new Error(`Expect section '${section.name}' to be 'nameless' section`);

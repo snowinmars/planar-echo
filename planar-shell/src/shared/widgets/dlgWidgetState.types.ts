@@ -1,4 +1,4 @@
-import type { Maybe, StateId, GhostDlg } from '@planar/shared';
+import type { GhostDlg, Maybe, StateId } from '@planar/shared';
 
 export type DlgWidgetState = Readonly<{
   loading: boolean;

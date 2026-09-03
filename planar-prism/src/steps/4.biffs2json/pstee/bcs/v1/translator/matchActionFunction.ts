@@ -3,14 +3,16 @@ import {
   just,
   nothing,
 } from '@planar/shared';
+
 import { splitHalfOfAreaStrings } from './splitHalfOfAreaStrings.js';
 
 import type { Maybe } from '@planar/shared';
-import type { RawBcsAction } from '../bytecode/parseAc.types.js';
+
 import type {
   RawBcsSignatureFunction,
   RawBcsSignatures,
 } from '../../context/buildBcsContext.types.js';
+import type { RawBcsAction } from '../bytecode/parseAc.types.js';
 
 type ActionSignatureScore = Readonly<{
   score: number;

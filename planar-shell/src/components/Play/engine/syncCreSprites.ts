@@ -1,4 +1,6 @@
 import { Rectangle, Sprite, Texture } from 'pixi.js';
+
+import { DEFAULT_SPEED_PX_PER_TICK, TICK_HZ } from '@planar/kernel';
 import {
   bamCycleIndex,
   bamEastMirror,
@@ -7,11 +9,12 @@ import {
   nothing,
   pstStanceFromMotion,
 } from '@planar/shared';
-import { DEFAULT_SPEED_PX_PER_TICK, TICK_HZ } from '@planar/kernel';
 
 import type { Container } from 'pixi.js';
+
 import type { Snapshot } from '@planar/kernel';
 import type { GhostBam, Maybe, PstAnimStance } from '@planar/shared';
+
 import type { CreAnimSet, CreArtCache, LoadedBam } from './loadCreArt.js';
 
 const frameOf = (bam: GhostBam, index: number): Maybe<GhostBam['frames'][number]> => (

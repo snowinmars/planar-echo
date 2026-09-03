@@ -5,6 +5,7 @@ import {
 } from '../shared/tisCommon.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawTisHeader } from './1.parseHeader.types.js';
 
 export const parseHeader = (reader: BufferReader, resourceName: string): RawTisHeader => {

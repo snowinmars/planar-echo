@@ -1,7 +1,7 @@
 import type {
+  GhostDlg,
   GhostDlgResponse,
   Maybe,
-  GhostDlg,
   StateId,
 } from '@planar/shared';
 

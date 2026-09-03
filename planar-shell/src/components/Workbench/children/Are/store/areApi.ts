@@ -1,9 +1,10 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostAre,
   postApiGhostAreByAreIdSkeleton,
 } from '@/swagger/client';
-import { evalGhostFactory } from '@planar/shared';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostAre } from '@planar/shared';
 

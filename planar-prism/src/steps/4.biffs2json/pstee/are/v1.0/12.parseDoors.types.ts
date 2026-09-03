@@ -1,6 +1,8 @@
 import { extend } from '@/shared/extendedMap.js';
-import type { RawAreVertexV10 } from './8.parseVertices.types.js';
+
 import type { Maybe, Point, Rectangle } from '@planar/shared';
+
+import type { RawAreVertexV10 } from './8.parseVertices.types.js';
 
 /* createGenerator().register().flags('doorFlagsV10', {
  *   byte1:['door open','door locked','reset trap','trap detectable','broken','ca not close','linked','door hidden',],

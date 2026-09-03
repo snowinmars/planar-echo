@@ -1,3 +1,2 @@
 export { decompileBiffs } from './decompileBiffs.js';
-
-export type { DecompiledBiffType, DecompiledBiff } from './types.js';
+export type { DecompiledBiff, DecompiledBiffType } from './types.js';

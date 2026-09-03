@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, useLocation } from 'react-router-dom';
+
 import Layout from '@/components/Layout/Layout';
 import Loading from '@/components/Loading';
 

@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { musWidgetState } from '@/shared/widgets';
+
 import { useMusStore } from './store/musStore';
 
 import type { MusStore } from './store/musStore';

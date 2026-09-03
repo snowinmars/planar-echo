@@ -1,5 +1,5 @@
-import { join } from 'path';
 import { readdir } from 'fs/promises';
+import { join } from 'path';
 import { basename } from 'path';
 
 export type AcmFile = Readonly<{
@@ -22,7 +22,7 @@ export const collectAcmFiles = async (musicDir: string): Promise<AcmFile[]> => {
   const files = await walkFiles(musicDir);
   return files
     .filter(path => path.toLowerCase().endsWith('.acm'))
-    .map((absPath) => ({
+    .map(absPath => ({
       resourceName: basename(absPath),
       absPath,
     }));

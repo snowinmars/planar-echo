@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostPvrz,
   postApiGhostPvrzByPvrzIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostPvr } from '@planar/shared';
+import type { GhostPvr } from '@planar/shared';
 
 export type LoadGhostPvrzProps = Readonly<{
   pvrzId: string;

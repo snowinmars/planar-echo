@@ -1104,4 +1104,3 @@ export type CharacterStore = Readonly<{
   'zommbou': CharacterNarrativeProps;
   'zommbou2': CharacterNarrativeProps;
 }>;
-

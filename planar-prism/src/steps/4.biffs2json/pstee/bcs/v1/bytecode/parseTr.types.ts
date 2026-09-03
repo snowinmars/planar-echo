@@ -1,4 +1,5 @@
 import type { Maybe } from '@planar/shared';
+
 import type { RawBcsObject } from './parseOb.types.js';
 
 export type RawBcsTrigger = Readonly<{

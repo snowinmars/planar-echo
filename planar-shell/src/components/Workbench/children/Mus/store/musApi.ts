@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostMus,
   postApiGhostMusByMusIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostMus } from '@planar/shared';
+import type { GhostMus } from '@planar/shared';
 
 export type LoadGhostMusProps = Readonly<{
   musId: string;

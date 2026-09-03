@@ -1,4 +1,5 @@
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from './planarLocalStorage';
 
 import type { Maybe } from '@planar/shared';

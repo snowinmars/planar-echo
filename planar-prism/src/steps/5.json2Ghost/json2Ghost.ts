@@ -1,8 +1,9 @@
 import { json2GhostPstee } from './pstee/json2GhostPstee.js';
 
+import type { DiscoverNext } from '@/discoverer.types.js';
+
 import type { Paths } from '../1.createPaths/types.js';
 import type { AllPsteeJsons } from '../4.biffs2json/types.js';
-import type { DiscoverNext } from '@/discoverer.types.js';
 
 type AllJsons = AllPsteeJsons; // extend with new games
 

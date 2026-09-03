@@ -1,22 +1,28 @@
 import { nothing } from '@planar/shared';
+
+import { planarStoreId } from '@/engine/store/planarRuntime.types';
 import {
   getZustandCharacter,
   getZustandNarrative,
 } from '@/engine/store/worldStores';
-import { getExternDlgId, isDestructor, mapTlkRefs, type DisposeFunction } from './helpers';
-import { planarStoreId } from '@/engine/store/planarRuntime.types';
+
+import { getExternDlgId, isDestructor, mapTlkRefs } from './helpers';
 
 import type { StateCreator, StoreApi } from 'zustand/vanilla';
-import type { Maybe, GhostDlg, StateId } from '@planar/shared';
+
+import type { GhostDlg, Maybe, StateId } from '@planar/shared';
+
 import type { PlanarRuntime } from '@/engine/store/planarRuntime.types';
+
 import type { DlgStore } from './dlgStore.types';
-import type { LocalStorageStore } from './localStorageStore.types';
-import type { TlkStore } from './tlkStore.types';
 import type {
   CurrentDlgView,
   DlgViewResponse,
   DlgViewStore,
 } from './dlgViewStore.types';
+import type { DisposeFunction } from './helpers';
+import type { LocalStorageStore } from './localStorageStore.types';
+import type { TlkStore } from './tlkStore.types';
 
 const createView = (
   tree: GhostDlg,

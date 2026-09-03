@@ -3,20 +3,22 @@ import {
   just,
   nothing,
 } from '@planar/shared';
-import { matchTriggerFunction } from './matchTriggerFunction.js';
-import { splitHalfOfAreaStrings } from './splitHalfOfAreaStrings.js';
+
 import { createVariableWrapper } from '../temps/createVariableWrapper.js';
+import { matchTriggerFunction } from './matchTriggerFunction.js';
 import { objectArgForScope } from './objectArgForScope.js';
+import { splitHalfOfAreaStrings } from './splitHalfOfAreaStrings.js';
 import { translateNumber } from './translateNumber.js';
 
 import type { Maybe } from '@planar/shared';
+
 import type { RawIds } from '../../../ids/parseIds.types.js';
-import type { RawBcsTrigger } from '../bytecode/parseTr.types.js';
 import type {
   RawBcsArg,
   RawBcsSignatureFunction,
   RawBcsSignatures,
 } from '../../context/buildBcsContext.types.js';
+import type { RawBcsTrigger } from '../bytecode/parseTr.types.js';
 import type { RawBcsVariableWrapper } from '../temps/createVariableWrapper.types.js';
 import type { RawBcsBlockFunction, RawBcsBlockScope } from './translateRawBcsIfBlock.types.js';
 

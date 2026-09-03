@@ -1,14 +1,17 @@
-import { useSyncExternalStore } from 'react';
-import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
+import TextField from '@mui/material/TextField';
+import { useSyncExternalStore } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+
+import { isNothing } from '@planar/shared';
+
 import VirtualizedListbox from '@/shared/VirtualizedListbox';
 import { areWidgetState } from '@/shared/widgets';
-import { isNothing } from '@planar/shared';
-import { useTranslation } from 'react-i18next';
 
 import type { FC } from 'react';
+
 import type { WithClassName } from '@/types/fcWithClassName';
 
 import styles from './AreWidget.module.scss';

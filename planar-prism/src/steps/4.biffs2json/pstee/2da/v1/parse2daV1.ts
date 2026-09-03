@@ -1,9 +1,11 @@
-import createReader from '@/shared/bufferReader.js';
-import { xorDecrypt } from '@/shared/xor.js';
 import { isNothing, just, nothing } from '@planar/shared';
 
-import type { RawTwoda, RawTwodaRow } from '../parse2das.types.js';
+import createReader from '@/shared/bufferReader.js';
+import { xorDecrypt } from '@/shared/xor.js';
+
 import type { Maybe } from '@planar/shared';
+
+import type { RawTwoda, RawTwodaRow } from '../parse2das.types.js';
 
 const tokens = (line: string): string[] => {
   if (!line) return [];

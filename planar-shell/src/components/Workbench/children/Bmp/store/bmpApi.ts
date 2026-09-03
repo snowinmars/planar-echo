@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostBmp,
   postApiGhostBmpByBmpIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostBmp } from '@planar/shared';
+import type { GhostBmp } from '@planar/shared';
 
 export type LoadGhostBmpProps = Readonly<{
   bmpId: string;

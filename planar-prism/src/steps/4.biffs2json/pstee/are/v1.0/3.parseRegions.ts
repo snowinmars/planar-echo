@@ -1,9 +1,11 @@
+import { nothing } from '@planar/shared';
+
 import { extendMap } from './3.parseRegions.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawAreRegionV10 } from './3.parseRegions.types.js';
 import type { RawAreVertexV10 } from './8.parseVertices.types.js';
-import { nothing } from '@planar/shared';
 
 type ParseRegionProps = Readonly<{
   reader: BufferReader;

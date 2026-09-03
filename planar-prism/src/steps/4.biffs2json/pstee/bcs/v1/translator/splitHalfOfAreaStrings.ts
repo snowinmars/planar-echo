@@ -1,6 +1,7 @@
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
+
 import type { RawBcsSignatureFunction } from '../../context/buildBcsContext.types.js';
 
 type SplitHalfOfAreaStringsProps = Readonly<{

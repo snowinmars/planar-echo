@@ -1,7 +1,8 @@
-import Link from '@mui/material/Link';
 import EmailIcon from '@mui/icons-material/Email';
-import Telegram from '@/svg/telegram';
+import Link from '@mui/material/Link';
+
 import Github from '@/svg/github';
+import Telegram from '@/svg/telegram';
 
 import type { FC } from 'react';
 

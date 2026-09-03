@@ -1,7 +1,9 @@
 import { readFile } from 'fs/promises';
-import { detectAudioContainer } from '../shared/audio/index.js';
-import iterate from '@/steps/iterate.js';
+
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
+import { detectAudioContainer } from '../shared/audio/index.js';
 
 import type { AcmFile } from './collectAcmFiles.js';
 import type { RawAcm } from './parseAcms.types.js';

@@ -1,6 +1,7 @@
-import { getGhostDir } from '../../settings/storage.js';
-import { join, resolve } from 'path';
 import { existsSync, statSync } from 'fs';
+import { join, resolve } from 'path';
+
+import { getGhostDir } from '../../settings/storage.js';
 
 import type { Command, Result } from './types.js';
 

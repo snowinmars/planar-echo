@@ -1,8 +1,9 @@
 import { isNothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
-import type { RawBcsRegion } from '../bytecode/parseRegion.types.js';
+
 import type { RawBcsObject } from '../bytecode/parseOb.types.js';
+import type { RawBcsRegion } from '../bytecode/parseRegion.types.js';
 
 const isEmptyRegion = (region: Maybe<RawBcsRegion>): boolean => {
   if (isNothing(region)) return true;

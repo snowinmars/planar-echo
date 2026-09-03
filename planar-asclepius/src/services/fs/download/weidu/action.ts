@@ -1,13 +1,16 @@
-import { chmod, mkdir, readdir, rm, stat, unlink, writeFile } from 'fs/promises';
-import { join, resolve } from 'path';
-import { tmpdir } from 'os';
 import extractZip from 'extract-zip';
-import logger from '@/shared/logger.js';
-import { getWeiduInstallDir } from '@/services/settings/storage.js';
+import { chmod, mkdir, readdir, rm, stat, unlink, writeFile } from 'fs/promises';
+import { tmpdir } from 'os';
+import { join, resolve } from 'path';
+
 import { nothing } from '@planar/shared';
 
-import type { Command, Result, WeiduPlatform } from './types.js';
+import { getWeiduInstallDir } from '@/services/settings/storage.js';
+import logger from '@/shared/logger.js';
+
 import type { Maybe } from '@planar/shared';
+
+import type { Command, Result, WeiduPlatform } from './types.js';
 
 const weiduUrls: Record<WeiduPlatform, string> = {
   windows: 'https://github.com/WeiDUorg/weidu/releases/download/v251.00/WeiDU-Windows-251.zip',

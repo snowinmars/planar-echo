@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
-import { Link as RouterLink } from 'react-router';
-import { useTranslation } from 'react-i18next';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router';
 
 import type { FC } from 'react';
 

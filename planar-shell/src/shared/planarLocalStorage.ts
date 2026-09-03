@@ -1,7 +1,10 @@
+import { filter, fromEvent, map, merge, Subject } from 'rxjs';
+
 import { isNothing, maybe, nothing } from '@planar/shared';
 
+import type { Observable } from 'rxjs';
+
 import type { Maybe } from '@planar/shared';
-import { filter, fromEvent, map, merge, Observable, Subject } from 'rxjs';
 
 const NAMESPACE = 'planar-echo' as const;
 const CURRENT_WIDGET = 'current-widget';

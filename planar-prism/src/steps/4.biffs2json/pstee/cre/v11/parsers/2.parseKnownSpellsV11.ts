@@ -1,6 +1,7 @@
 import { extendMap } from './2.parseKnownSpellsV11.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawCreKnownSpellV11 } from './2.parseKnownSpellsV11.types.js';
 
 const parse = (reader: BufferReader): RawCreKnownSpellV11 => {

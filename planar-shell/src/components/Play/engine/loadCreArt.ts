@@ -1,4 +1,5 @@
-import { Assets, Texture } from 'pixi.js';
+import { Assets } from 'pixi.js';
+
 import {
   animationIdToIniId,
   isNothing,
@@ -6,10 +7,13 @@ import {
   pstBamCandidates,
   pstSlotResref,
 } from '@planar/shared';
-import { assetUrl } from '@/shared/assetUrl';
+
 import { loadGhostBam } from '@/components/Workbench/children/Bam/store/bamApi';
 import { loadGhostCre } from '@/components/Workbench/children/Cre/store/creApi';
 import { loadGhostIni } from '@/components/Workbench/children/Ini/store/iniApi';
+import { assetUrl } from '@/shared/assetUrl';
+
+import type { Texture } from 'pixi.js';
 
 import type { GhostBam, GhostIni, Maybe, PstAnimStance } from '@planar/shared';
 

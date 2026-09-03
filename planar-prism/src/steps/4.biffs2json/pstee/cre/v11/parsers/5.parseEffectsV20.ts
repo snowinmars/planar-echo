@@ -1,6 +1,7 @@
 import { extendMap } from './5.parseEffectsV20.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawCreEffectV20 } from './5.parseEffectsV20.types.js';
 
 const parse = (reader: BufferReader): RawCreEffectV20 => {

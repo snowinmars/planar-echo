@@ -1,4 +1,6 @@
-import { just, type GhostWedOverlay } from '@planar/shared';
+import { just } from '@planar/shared';
+
+import type { GhostWedOverlay } from '@planar/shared';
 
 type OverlayTilemap = GhostWedOverlay['tilemaps'][number];
 

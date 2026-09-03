@@ -1,5 +1,6 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
+
 import { createWorld, DEFAULT_ARE, DEFAULT_PLAYER_CRE } from '@planar/kernel';
 import {
   animationIdToIniId,

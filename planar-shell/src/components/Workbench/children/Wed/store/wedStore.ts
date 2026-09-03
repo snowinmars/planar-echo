@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostWed, loadGhostWed } from './wedApi';
 
-import type { Maybe, GhostWed } from '@planar/shared';
+import type { GhostWed, Maybe } from '@planar/shared';
 
 export type WedStore = Readonly<{
   serverUrl: string;

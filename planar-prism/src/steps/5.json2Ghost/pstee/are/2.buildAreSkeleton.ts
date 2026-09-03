@@ -1,5 +1,6 @@
-import createWriter from '@/shared/writer.js';
 import { isNothing, withoutExtension } from '@planar/shared';
+
+import createWriter from '@/shared/writer.js';
 import {
   escapeSingleQuote,
   writeFlags,
@@ -7,7 +8,6 @@ import {
   writeStringArray,
 } from '@/steps/5.json2Ghost/shared.js';
 
-import type { Writer } from '@/shared/writer.js';
 import type {
   GhostAre,
   GhostAreActor,
@@ -29,6 +29,8 @@ import type {
   Point,
   Rectangle,
 } from '@planar/shared';
+
+import type { Writer } from '@/shared/writer.js';
 
 const writePoint = (writer: Writer, propertyName: string, point: Point, offset: number): void => {
   writer.writeLine(`${propertyName}: { x: ${point.x}, y: ${point.y} },`, offset);

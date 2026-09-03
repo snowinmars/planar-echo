@@ -1,6 +1,6 @@
 import type {
-  ProgressStep,
   Progress,
+  ProgressStep,
   ProgressSteps,
 } from '@planar/shared';
 

@@ -1,5 +1,5 @@
-import type { Maybe } from '../maybe.js';
 import type { Direction } from '../direction.js';
+import type { Maybe } from '../maybe.js';
 import type { AlignmentId } from './enums/alignment.js';
 import type { AnimationId } from './enums/animation.js';
 import type { ClassId } from './enums/class.js';
@@ -13,7 +13,6 @@ import type { KeyId } from './enums/key.js';
 import type { LocationId } from './enums/location.js';
 import type { MessageId } from './enums/message.js';
 import type { MovieId } from './enums/movie.js';
-import type { NumberVariableId, BooleanVariableId } from './enums/variable.js';
 import type { PortalId } from './enums/portal.js';
 import type { ProficiencyId } from './enums/proficiency.js';
 import type { SceneId } from './enums/scene.js';
@@ -26,6 +25,7 @@ import type { StatId } from './enums/stat.js';
 import type { TimeMeasureId } from './enums/timeMeasure.js';
 import type { TimerId } from './enums/timer.js';
 import type { TriggerId } from './enums/trigger.js';
+import type { BooleanVariableId, NumberVariableId } from './enums/variable.js';
 import type { WhoId } from './enums/who.js';
 
 export type DlgLogic = Readonly<{

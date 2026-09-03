@@ -1,14 +1,17 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
-import iterate from '@/steps/iterate.js';
+import { join } from 'path';
+
 import { createReader } from '@/shared/bufferReader.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { parseAreV10 } from './v1.0/index.js';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
 import type { DecompiledBiff } from '@/steps/3.decompileBiffs/index.js';
-import type { RawAre } from './parseAres.types.js';
+
 import type { RawIds } from '../ids/index.js';
+import type { RawAre } from './parseAres.types.js';
 
 type ParseAresProps = Readonly<{
   paths: Paths;

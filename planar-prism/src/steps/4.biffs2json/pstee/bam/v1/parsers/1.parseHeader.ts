@@ -1,4 +1,5 @@
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawBamV1Header } from './1.parseHeader.types.js';
 
 const BAM_V1_HEADER_SIZE = 24;

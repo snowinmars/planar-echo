@@ -1,4 +1,5 @@
 import type { Direction, Maybe } from '@planar/shared';
+
 import type { RawIniCreatureIniPointSelect } from './parsePointSelectV1.types.js';
 import type { RawIniCreatureScopedVariable } from './parseScopedVariableV1.types.js';
 import type { RawIniCreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';

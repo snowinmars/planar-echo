@@ -1,20 +1,26 @@
-import { just, nothing } from '@planar/shared';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import urlJoin from 'url-join';
+
+import { just, nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { getProgressMutation, getStartingSteps } from './step6.copypaste';
 
-import type { LandingState, LandingStateStep6 } from './types';
+import type { Observable } from 'rxjs';
 import type { StateCreator } from 'zustand';
+
 import type {
-  GameName,
   GameLanguage,
-  PrismIndexStartMessage,
-  PrismIndexProgressMessage,
+  GameName,
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
+  PrismIndexProgressMessage,
   PrismIndexReadyMessage,
+  PrismIndexStartMessage,
 } from '@planar/shared';
+
+import type { LandingState, LandingStateStep6 } from './types';
 
 type WebSocketMessage = PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage | PrismIndexReadyMessage;
 

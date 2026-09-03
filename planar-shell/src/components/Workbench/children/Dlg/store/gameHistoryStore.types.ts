@@ -2,6 +2,7 @@ import type {
   GameHistoryEvent,
   GameHistoryPage,
 } from '@/shared/indexedDb';
+
 import type { DisposeFunction } from './helpers';
 
 export type GameHistoryStore = GameHistoryPage & Readonly<{

@@ -1,8 +1,10 @@
 import { isNothing, nothing } from '@planar/shared';
+
 import { attachPlayView } from './attachPlayView.js';
 
 import type { FromDaemon, InputCommand, Patch, SeatId, ToDaemon } from '@planar/kernel';
 import type { Maybe } from '@planar/shared';
+
 import type { PlaySessionApi, PlaySocketState, PlayView } from './types.js';
 
 const SEAT_ID: SeatId = 1;

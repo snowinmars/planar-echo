@@ -1,6 +1,7 @@
 import { openDB } from 'idb';
-import { DB_NAME } from '@planar/shared';
 import { deleteDB } from 'idb';
+
+import { DB_NAME } from '@planar/shared';
 
 import type { IDBPDatabase } from 'idb';
 

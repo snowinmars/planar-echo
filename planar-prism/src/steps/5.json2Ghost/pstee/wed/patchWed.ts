@@ -1,9 +1,11 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { toGhost } from './1.toGhost.js';
 import { buildWedSkeleton } from './2.buildWedSkeleton.js';
 
 import type { RawWed } from '@/steps/4.biffs2json/pstee/wed/index.js';
+
 import type { GhostWedOut } from './patchWed.types.js';
 
 export const patchWed = (

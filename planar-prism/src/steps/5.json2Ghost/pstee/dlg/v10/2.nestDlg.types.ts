@@ -1,7 +1,8 @@
+import type { Maybe } from '@planar/shared';
+
 import type { RawDlgHeader } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/1.parseHeader.types.js';
 import type { RawDlgResponse } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/3.parseResponses.types.js';
 import type { RawDlgFunction } from '@/steps/4.biffs2json/pstee/dlg/v1/parsers/4.parseFunctions.types.js';
-import type { Maybe } from '@planar/shared';
 
 export type NestedDlgHeader = RawDlgHeader;
 export type NestedDlgFunction = Pick<RawDlgFunction, 'index' | 'text'>;

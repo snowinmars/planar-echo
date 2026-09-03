@@ -1,16 +1,20 @@
-import { useTranslation } from 'react-i18next';
-import { clsx } from 'clsx';
-import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Ussr from '@/svg/ussr';
-import StepLoader from '../../StepLoader';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Typography from '@mui/material/Typography';
+import { clsx } from 'clsx';
+import { useTranslation } from 'react-i18next';
+
 import Step5Shield from '@/svg/convert/Step5Shield';
+import Ussr from '@/svg/ussr';
+
+import StepLoader from '../../StepLoader';
 
 import type { FC } from 'react';
+
 import type { WithClassName } from '@/types/fcWithClassName';
+
 import type { LandingStateStep5 } from '../../store/types';
 
 import styles from './Step5.module.scss';

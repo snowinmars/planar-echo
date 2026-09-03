@@ -1,8 +1,17 @@
 import { Worker } from 'worker_threads';
+
 import { reportProgress } from '@/shared/report.js';
+
 import { workerCount } from './workerCount.js';
 
-import type { PoolKind, PoolResourceStep, PoolWorkerData, PoolJob, MainToWorker, WorkerToMain } from './pool.types.js';
+import type {
+  MainToWorker,
+  PoolJob,
+  PoolKind,
+  PoolResourceStep,
+  PoolWorkerData,
+  WorkerToMain,
+} from './pool.types.js';
 
 type RunPoolProps = Readonly<{
   kind: PoolKind;

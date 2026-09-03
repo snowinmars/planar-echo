@@ -1,8 +1,10 @@
-import planarLocalStorage from '@/shared/planarLocalStorage';
 import { nothing } from '@planar/shared';
 
-import type { LandingState, LandingStateStep0 } from './types';
+import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import type { StateCreator } from 'zustand';
+
+import type { LandingState, LandingStateStep0 } from './types';
 
 export const useLandingStoreStep0: StateCreator<LandingState, [], [], LandingStateStep0> = (set) => {
   const serverUrl = planarLocalStorage.get<string>('serverUrl', 'http://localhost:3003')!;

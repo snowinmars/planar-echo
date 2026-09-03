@@ -1,4 +1,5 @@
 import type { GhostBmp, GhostBmpV1 } from '@planar/shared';
+
 import type { RawBmp } from './parseBmps.types.js';
 import type { RawBmpV1 } from './v1/parseBmpV1.types.js';
 

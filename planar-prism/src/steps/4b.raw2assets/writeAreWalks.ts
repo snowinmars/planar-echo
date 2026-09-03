@@ -1,17 +1,20 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
+
+import { just } from '@planar/shared';
+import { withoutExtension } from '@planar/shared';
+
 import logger from '@/shared/logger.js';
+import { reportProgress } from '@/shared/report.js';
+
 import {
   searchmapPropsize,
 } from './psteeSearchmap.js';
-import { just } from '@planar/shared';
-import { reportProgress } from '@/shared/report.js';
-import { withoutExtension } from '@planar/shared';
 
 import type { Paths } from '@/steps/1.createPaths/index.js';
-import type { AllPsteeJsons } from '@/steps/4.biffs2json/types.js';
 import type { RawAre } from '@/steps/4.biffs2json/pstee/are/parseAres.types.js';
 import type { RawWed } from '@/steps/4.biffs2json/pstee/wed/parseWeds.types.js';
+import type { AllPsteeJsons } from '@/steps/4.biffs2json/types.js';
 
 /**
  * GemRB hardcoded PathMapFlags PASSABLE bit when terrain.2da is missing.

@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostIds, loadGhostIds } from './idsApi';
 
-import type { Maybe, GhostIds } from '@planar/shared';
+import type { GhostIds, Maybe } from '@planar/shared';
 
 export type IdsStore = Readonly<{
   serverUrl: string;

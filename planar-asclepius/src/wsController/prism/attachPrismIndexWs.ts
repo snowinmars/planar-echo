@@ -1,12 +1,16 @@
-import { WebSocketServer, WebSocket } from 'ws';
-import { runPrismIndex } from './runIndex.js';
+import { WebSocket } from 'ws';
+
 import logger from '@/shared/logger.js';
 
+import { runPrismIndex } from './runIndex.js';
+
+import type { WebSocketServer } from 'ws';
+
 import type {
-  PrismIndexStartMessage,
-  PrismIndexProgressMessage,
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
+  PrismIndexProgressMessage,
+  PrismIndexStartMessage,
   SafeError,
 } from '@planar/shared';
 

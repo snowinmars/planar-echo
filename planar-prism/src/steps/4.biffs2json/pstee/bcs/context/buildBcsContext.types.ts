@@ -1,4 +1,5 @@
 import type { Maybe } from '@planar/shared';
+
 import type { RawIds } from '../../ids/parseIds.types.js';
 
 export type RawBcsParamType = 'a' | 't' | 'i' | 'o' | 'p' | 's';

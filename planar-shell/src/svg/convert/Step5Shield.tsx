@@ -1,5 +1,7 @@
-import type { WithClassName } from '@/types/fcWithClassName';
 import type { FC, JSX } from 'react';
+
+import type { WithClassName } from '@/types/fcWithClassName';
+
 import styles from './Step5Shield.module.scss';
 
 const Step5Shield: FC<WithClassName> = ({ className }): JSX.Element => (

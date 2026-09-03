@@ -1,4 +1,9 @@
+import type { RawTwoda } from './pstee/2da/index.js';
+import type { RawAcm } from './pstee/acm/index.js';
+import type { RawAre } from './pstee/are/index.js';
+import type { RawBam } from './pstee/bam/index.js';
 import type { RawBcs } from './pstee/bcs/index.js';
+import type { RawBmp } from './pstee/bmp/index.js';
 import type { RawCre } from './pstee/cre/parseCres.types.js';
 import type { RawDlg } from './pstee/dlg/index.js';
 import type { RawEffV20 } from './pstee/eff/index.js';
@@ -6,18 +11,13 @@ import type { RawIds } from './pstee/ids/index.js';
 import type { RawIni } from './pstee/ini/index.js';
 import type { RawItmV10 } from './pstee/itm/parseItms.types.js';
 import type { RawMos } from './pstee/mos/index.js';
+import type { RawMus } from './pstee/mus/index.js';
 import type { RawPvr } from './pstee/pvrz/index.js';
+import type { RawSrc } from './pstee/src/index.js';
 import type { RawTis } from './pstee/tis/parseTiss.types.js';
 import type { RawTlk } from './pstee/tlk/index.js';
-import type { RawWed } from './pstee/wed/index.js';
-import type { RawAre } from './pstee/are/index.js';
-import type { RawBmp } from './pstee/bmp/index.js';
-import type { RawBam } from './pstee/bam/index.js';
 import type { RawWav } from './pstee/wav/index.js';
-import type { RawAcm } from './pstee/acm/index.js';
-import type { RawMus } from './pstee/mus/index.js';
-import type { RawTwoda } from './pstee/2da/index.js';
-import type { RawSrc } from './pstee/src/index.js';
+import type { RawWed } from './pstee/wed/index.js';
 
 export type AllPsteeJsons = Readonly<{
   tlk: RawTlk;

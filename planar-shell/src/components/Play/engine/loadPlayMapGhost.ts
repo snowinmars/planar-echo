@@ -1,9 +1,11 @@
-import { assetUrl } from '@/shared/assetUrl';
-import { loadGhostAre } from '@/components/Workbench/children/Are/store/areApi';
-import { loadGhostWed } from '@/components/Workbench/children/Wed/store/wedApi';
-import { loadGhostTis } from '@/components/Workbench/children/Tis/store/tisApi';
+import { just } from '@planar/shared';
 
-import { just, type GhostAre, type GhostTis, type GhostWed } from '@planar/shared';
+import { loadGhostAre } from '@/components/Workbench/children/Are/store/areApi';
+import { loadGhostTis } from '@/components/Workbench/children/Tis/store/tisApi';
+import { loadGhostWed } from '@/components/Workbench/children/Wed/store/wedApi';
+import { assetUrl } from '@/shared/assetUrl';
+
+import type { GhostAre, GhostTis, GhostWed } from '@planar/shared';
 
 export type PlayMapGhost = Readonly<{
   are: GhostAre;

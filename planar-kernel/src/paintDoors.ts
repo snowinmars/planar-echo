@@ -1,6 +1,7 @@
 import { cellIndex, inBounds } from './cell.js';
 
 import type { GhostAreDoor } from '@planar/shared';
+
 import type { WalkGrid, World } from './types.js';
 
 export const paintDoorFlags = (

@@ -1,11 +1,12 @@
-import { useTranslation } from 'react-i18next';
 import FolderIcon from '@mui/icons-material/Folder';
 import ReplayIcon from '@mui/icons-material/Replay';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import { useTranslation } from 'react-i18next';
 
 import type { FC } from 'react';
+
 import type { LandingStateStep4 } from '@/components/Convert/store/types';
 
 import styles from './Content.module.scss';

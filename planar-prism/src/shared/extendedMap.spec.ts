@@ -1,17 +1,12 @@
 import { expect } from 'chai';
-import { extend, externalOffsetMap } from './extendedMap.js';
+
+import { extend } from './extendedMap.js';
 
 const simpleRecord = {
   1: 'one',
   2: 'two',
   4: 'four',
 } as const;
-
-const simpleMap = new Map<number, string[]>([
-  [1, ['hello']],
-  [2, ['world']],
-  [4, ['foo', 'bar']],
-]);
 
 describe('extend()', () => {
   describe('basic functionality', () => {

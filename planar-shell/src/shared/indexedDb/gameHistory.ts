@@ -1,10 +1,17 @@
 import { bufferTime, filter, share, Subject } from 'rxjs';
-import { connect } from './db';
+
+import { isNothing, nothing } from '@planar/shared';
+
 import {
-  getGameHistoryPageSize,
   getGameHistoryBrowsedPages,
+  getGameHistoryPageSize,
 } from '../gameHistorySettings';
+import { connect } from './db';
 import { historyRetentionPolicyStoreId } from './gameHistory.types';
+
+import type { IDBPObjectStore } from 'idb';
+
+import type { Maybe } from '@planar/shared';
 
 import type {
   GameHistoryChange,
@@ -14,8 +21,6 @@ import type {
   GetGameHistoryPageProps,
   HistoryRetentionPolicy,
 } from './gameHistory.types';
-import { isNothing, nothing, type Maybe } from '@planar/shared';
-import type { IDBPObjectStore } from 'idb';
 
 const historyChangedSubject = new Subject<GameHistoryChange>();
 export const gameHistoryChanged$ = historyChangedSubject.pipe(

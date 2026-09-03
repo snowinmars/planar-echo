@@ -1,8 +1,10 @@
 import { isNothing } from '@planar/shared';
+
 import { validateBitsPerPixel } from '../../shared/validateBitsPerPixel.js';
 import { validateCompression } from '../../shared/validateCompression.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawBmpV1Header } from './1.parseHeader.types.js';
 
 export const parseHeader = (reader: BufferReader, resourceName: string): RawBmpV1Header => {

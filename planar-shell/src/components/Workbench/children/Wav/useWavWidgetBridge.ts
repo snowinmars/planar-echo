@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { wavWidgetState } from '@/shared/widgets';
+
 import { useWavStore } from './store/wavStore';
 
 import type { WavStore } from './store/wavStore';

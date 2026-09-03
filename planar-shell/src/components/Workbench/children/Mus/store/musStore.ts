@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+
 import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+
 import { listGhostMus, loadGhostMus } from './musApi';
 
-import type { Maybe, GhostMus } from '@planar/shared';
+import type { GhostMus, Maybe } from '@planar/shared';
 
 export type MusStore = Readonly<{
   serverUrl: string;

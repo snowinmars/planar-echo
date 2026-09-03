@@ -1,7 +1,9 @@
-import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawAreSongV10 } from './17.parseSong.types.js';
 import { externalOffsetMap } from '@/shared/extendedMap.js';
+
+import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawIds } from '../../ids/index.js';
+import type { RawAreSongV10 } from './17.parseSong.types.js';
 
 type ParseSongProps = Readonly<{
   reader: BufferReader;

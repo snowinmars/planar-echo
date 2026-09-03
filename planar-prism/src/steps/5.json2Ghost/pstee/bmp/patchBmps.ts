@@ -1,10 +1,12 @@
-import iterate from '@/steps/iterate.js';
 import { reportProgress } from '@/shared/report.js';
+import iterate from '@/steps/iterate.js';
+
 import { toGhost } from './1.toGhost.js';
 import { buildBmpSkeleton } from './2.buildBmpSkeleton.js';
 
-import type { GhostBmpOut } from './patchBmps.types.js';
 import type { RawBmp } from '@/steps/4.biffs2json/pstee/bmp/index.js';
+
+import type { GhostBmpOut } from './patchBmps.types.js';
 
 export const patchBmps = (
   bmps: RawBmp[],

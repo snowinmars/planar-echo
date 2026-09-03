@@ -1,19 +1,22 @@
-import { useEffect } from 'react';
-import { useShallow } from 'zustand/react/shallow';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import CircularProgress from '@mui/material/CircularProgress';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { useEffect } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import { useGhostRouteId } from '@/shared/useGhostRouteId';
+
 import { useMusStore } from './store/musStore';
 import { useMusWidgetBridge } from './useMusWidgetBridge';
 
 import type { FC } from 'react';
-import type { Maybe, GhostType } from '@planar/shared';
+
+import type { GhostType, Maybe } from '@planar/shared';
 
 type TProps = Readonly<{
   title: string;

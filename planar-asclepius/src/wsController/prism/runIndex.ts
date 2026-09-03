@@ -1,8 +1,9 @@
-import { runPrismScript } from '@/shared/runPrismScript.js';
-import { concat, Observable } from 'rxjs';
 import { exec } from 'child_process';
+import { concat, Observable } from 'rxjs';
 import { WebSocket } from 'ws';
+
 import logger from '@/shared/logger.js';
+import { runPrismScript } from '@/shared/runPrismScript.js';
 
 import type {
   PrismIndexCompleteMessage,

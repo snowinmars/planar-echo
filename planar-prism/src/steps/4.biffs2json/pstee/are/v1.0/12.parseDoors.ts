@@ -1,9 +1,11 @@
+import { nothing } from '@planar/shared';
+
 import { extendMap } from './12.parseDoors.types.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
-import type { RawAreDoorV10 } from './12.parseDoors.types.js';
+
 import type { RawAreVertexV10 } from './8.parseVertices.types.js';
-import { nothing } from '@planar/shared';
+import type { RawAreDoorV10 } from './12.parseDoors.types.js';
 
 type ParseDoorProps = Readonly<{
   reader: BufferReader;

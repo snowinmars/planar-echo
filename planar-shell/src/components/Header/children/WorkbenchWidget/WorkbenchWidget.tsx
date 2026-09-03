@@ -1,19 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import { Subject, debounceTime } from 'rxjs';
+import TextField from '@mui/material/TextField';
 import { isAxiosError } from 'axios';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import { debounceTime, Subject } from 'rxjs';
+
 import { isNothing } from '@planar/shared';
-import VirtualizedListbox from '@/shared/VirtualizedListbox';
-import { client } from '@/swagger/client/client.gen';
-import { postApiGhostSearch } from '@/swagger/client';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import VirtualizedListbox from '@/shared/VirtualizedListbox';
+import { postApiGhostSearch } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
+
+import type { FC } from 'react';
 
 import type { GhostType } from '@planar/shared';
-import type { FC } from 'react';
 
 import styles from './WorkbenchWidget.module.scss';
 

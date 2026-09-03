@@ -1,7 +1,8 @@
-import { parseDecOrThrow } from './shared.js';
 import { parseDirection } from '../../../shared/parseDirection.js';
+import { parseDecOrThrow } from './shared.js';
 
 import type { Maybe } from '@planar/shared';
+
 import type { RawIniCreatureIniSpawnPoint } from './parseSpawnPointsV1.types.js';
 
 export const parseSpawnPoint = (s: string): RawIniCreatureIniSpawnPoint => {

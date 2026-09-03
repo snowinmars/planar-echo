@@ -1,4 +1,5 @@
 import type { Maybe } from '@planar/shared';
+
 import type { BitsPerPixel } from '@/steps/4.biffs2json/pstee/bmp/shared/validateBitsPerPixel.types.js';
 import type { Compression } from '@/steps/4.biffs2json/pstee/bmp/shared/validateCompression.types.js';
 

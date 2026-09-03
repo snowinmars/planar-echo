@@ -1,5 +1,6 @@
-import { join } from 'path';
 import { readFile } from 'fs/promises';
+import { join } from 'path';
+
 import { decodeAudioBuffer } from './algo/audio/index.js';
 import { writeAssetFile } from './writeAssetFile.js';
 

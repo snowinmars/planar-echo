@@ -4,11 +4,12 @@ import {
   DEFAULT_ARE,
   TICK_HZ,
 } from '@planar/kernel';
+
 import { loadAreaWalk } from './loadAreaWalk.js';
+import { send } from './shared/send.js';
 
 import type { AreaTravel, InputCommand, Patch, ToDaemon, World } from '@planar/kernel';
 import type { Maybe } from '@planar/shared';
-import { send } from './shared/send.js';
 
 type Session = {
   ghostDir: string;

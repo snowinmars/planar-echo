@@ -1,14 +1,17 @@
+import TextField from '@mui/material/TextField';
+import { isAxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { nothing } from '@planar/shared';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import TextField from '@mui/material/TextField';
 import { getApiSettingsShellDir, postApiSettingsShellDir } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
-import { nothing } from '@planar/shared';
-import { isAxiosError } from 'axios';
 
-import type { FC } from 'react';
 import type { BaseTextFieldProps } from '@mui/material/TextField';
+import type { FC } from 'react';
+
 import type { Maybe } from '@planar/shared';
 
 import styles from './ShellDir.module.scss';

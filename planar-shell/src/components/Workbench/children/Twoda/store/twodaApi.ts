@@ -1,10 +1,12 @@
-import { client } from '@/swagger/client/client.gen';
+import { evalGhostFactory } from '@planar/shared';
+
 import {
   postApiGhostTwoda,
   postApiGhostTwodaByTwodaIdSkeleton,
 } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { evalGhostFactory, type GhostTwoda } from '@planar/shared';
+import type { GhostTwoda } from '@planar/shared';
 
 export type LoadGhostTwodaProps = Readonly<{
   twodaId: string;

@@ -1,17 +1,18 @@
-import { useTranslation } from 'react-i18next';
-import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import ThemeSwitcher from './children/ThemeSwitcher';
-import LanguageSwitcher from './children/LanguageSwitcher';
-import DlgRendererSwitcher from './children/DlgRendererSwitcher';
+import { useTranslation } from 'react-i18next';
+
+import BackendUrl from './children/BackendUrl';
 import DlgHistorySettings from './children/DlgHistorySettings/DlgHistorySettings';
 import DlgMarks from './children/DlgMarks';
-import LocalData from './children/LocalData';
-import BackendUrl from './children/BackendUrl';
-import ShellDir from './children/ShellDir/ShellDir';
+import DlgRendererSwitcher from './children/DlgRendererSwitcher';
 import GhostDir from './children/GhostDir/GhostDir';
+import LanguageSwitcher from './children/LanguageSwitcher';
+import LocalData from './children/LocalData';
 import PrismDir from './children/PrismDir/PrismDir';
+import ShellDir from './children/ShellDir/ShellDir';
+import ThemeSwitcher from './children/ThemeSwitcher';
 
 import type { FC } from 'react';
 

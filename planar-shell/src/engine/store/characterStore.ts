@@ -1,8 +1,10 @@
 import { create } from 'zustand';
+
 import { triggerSave } from './saveSubject';
 
-import type { UseBoundStore, StoreApi } from 'zustand';
-import type { WhoId, StatId, CharacterNarrativeProps } from '@planar/shared';
+import type { StoreApi, UseBoundStore } from 'zustand';
+
+import type { CharacterNarrativeProps, StatId, WhoId } from '@planar/shared';
 
 export type DbCharacter = Record<string, CharacterNarrativeProps>;
 export type ZustandCharacter = UseBoundStore<StoreApi<DbCharacter>>;

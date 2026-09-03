@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { itmWidgetState } from '@/shared/widgets';
+
 import { useItmStore } from './store/itmStore';
 
 import type { ItmStore } from './store/itmStore';

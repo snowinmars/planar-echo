@@ -1,8 +1,9 @@
-import { useTranslation } from 'react-i18next';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 import type { TypographyOwnProps } from '@mui/material/Typography';
 import type { FC } from 'react';
+
 import type { LandingStateStep3 } from '@/components/Convert/store/types';
 
 import styles from './Comment.module.scss';

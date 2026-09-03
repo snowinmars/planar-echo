@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { tisWidgetState } from '@/shared/widgets';
+
 import { useTisStore } from './store/tisStore';
 
 import type { TisStore } from './store/tisStore';

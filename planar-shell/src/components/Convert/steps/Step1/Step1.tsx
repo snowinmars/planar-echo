@@ -1,16 +1,20 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import clsx from 'clsx';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import getNativeLangNames from '@/shared/getNativeLangNames';
-import Content from './children/Content/Content';
-import Comment from './children/Comment/Comment';
-import StepLoader from '../../StepLoader';
 import Step1Game from '@/svg/convert/Step1Game';
 
+import StepLoader from '../../StepLoader';
+import Comment from './children/Comment/Comment';
+import Content from './children/Content/Content';
+
 import type { FC } from 'react';
+
 import type { WithClassName } from '@/types/fcWithClassName';
+
 import type { LandingStateStep1 } from '../../store/types';
 
 import styles from './Step1.module.scss';

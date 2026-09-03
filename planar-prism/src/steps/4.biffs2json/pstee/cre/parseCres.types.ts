@@ -1,13 +1,11 @@
-import type { RawCreEffectV10 } from './v10/parsers/5.parseEffectsV10.types.js';
-import type { RawCreEffectV20 } from './v10/parsers/5.parseEffectsV20.types.js';
-
 import type { RawCreHeaderV10 } from './v10/parsers/1.parseHeaderV10.types.js';
 import type { RawCreKnownSpellV10 } from './v10/parsers/2.parseKnownSpellsV10.types.js';
 import type { RawCreSpellMemorizationInfoPsteeV10, RawCreSpellMemorizationInfoV10 } from './v10/parsers/3.parseSpellMemorizationInfosV10.types.js';
 import type { RawCreMemorizedSpellV10 } from './v10/parsers/4.parseMemorizedSpellsTableV10.types.js';
+import type { RawCreEffectV10 } from './v10/parsers/5.parseEffectsV10.types.js';
+import type { RawCreEffectV20 } from './v10/parsers/5.parseEffectsV20.types.js';
 import type { RawCreItemV10 } from './v10/parsers/6.parseCreItemsV10.types.js';
 import type { RawCreItemSlotsV10 } from './v10/parsers/7.parseItemSlotsV10.types.js';
-
 import type { RawCreHeaderV11 } from './v11/parsers/1.parseHeaderV11.types.js';
 import type { RawCreKnownSpellV11 } from './v11/parsers/2.parseKnownSpellsV11.types.js';
 import type { RawCreSpellMemorizationInfoPsteeV11, RawCreSpellMemorizationInfoV11 } from './v11/parsers/3.parseSpellMemorizationInfosV11.types.js';

@@ -7,6 +7,7 @@ import { parseDoors } from './6.parseDoors.js';
 import { parseWallGroups } from './7.parseWallGroups.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawWed } from '../parseWeds.types.js';
 import type { RawWedVertex } from './4.parseVertices.types.js';
 

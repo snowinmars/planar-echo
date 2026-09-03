@@ -4,6 +4,7 @@ import { parseResponses } from './parsers/index.js';
 import { parseFunction } from './parsers/index.js';
 
 import type { BufferReader } from '@/shared/bufferReader.js';
+
 import type { RawDlg } from '../parseDlgs.types.js';
 
 type ParseDlgV1Props = Readonly<{

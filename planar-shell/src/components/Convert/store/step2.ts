@@ -1,7 +1,14 @@
+import { debounce, interval, Subject } from 'rxjs';
+
 import { nothing } from '@planar/shared';
-import { client } from '@/swagger/client/client.gen';
-import { postApiFsDownloadWeidu, postApiFsValidateWeiduExeDir } from '@/swagger/client';
+
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import { postApiFsDownloadWeidu, postApiFsValidateWeiduExeDir } from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
+
+import type { StateCreator } from 'zustand';
+
+import type { PostApiFsDownloadWeiduErrors, PostApiFsValidateWeiduExeDirErrors } from '@/swagger/client';
 
 import type {
   LandingState,
@@ -11,9 +18,6 @@ import type {
   ZustandGetType,
   ZustandSetType,
 } from './types';
-import type { StateCreator } from 'zustand';
-import type { PostApiFsDownloadWeiduErrors, PostApiFsValidateWeiduExeDirErrors } from '@/swagger/client';
-import { debounce, interval, Subject } from 'rxjs';
 
 type FormErrorStateProps = PostApiFsValidateWeiduExeDirErrors[400 | 404];
 const translateErrorState = (error: FormErrorStateProps): string => {

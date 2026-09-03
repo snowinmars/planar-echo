@@ -1,6 +1,7 @@
 import { nothing } from '@planar/shared';
 
 import type { Maybe } from '@planar/shared';
+
 import type { Compression } from './validateCompression.types.js';
 
 export const validateCompression = (x: number): Maybe<Compression> => {

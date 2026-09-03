@@ -1,7 +1,7 @@
-import { useRef, createContext, useContext } from 'react';
+import { createContext, useContext, useRef } from 'react';
 
 import type { JSX } from 'react';
-import type { UseBoundStore, StoreApi } from 'zustand';
+import type { StoreApi, UseBoundStore } from 'zustand';
 
 type UseData<TData> = UseBoundStore<StoreApi<TData>>;
 type Store<TData, TFunctions> = Readonly<{
