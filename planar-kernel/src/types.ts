@@ -10,9 +10,15 @@ export const TICK_HZ = 30;
 
 export const DEFAULT_ARE = 'ar0202.are';
 
+export const PLAYER_ACTOR_ID = 1;
+
+export const DEFAULT_PLAYER_CRE = 'nameless';
+
 export const PST_OPERATING_DISTANCE = 120;
 
 export const DEFAULT_SPEED_PX_PER_TICK = 16;
+
+export const MAX_PERSONAL_SPACE = 8;
 
 export type Point = Readonly<{
   x: number;
@@ -35,6 +41,7 @@ export type DoorView = Readonly<{
 export type Body = Readonly<{
   pos: Point;
   speedPxPerTick: number;
+  facing: number;
   dest?: Maybe<Point>;
   path: Point[];
   pendingDoorId?: Maybe<string>;
@@ -42,6 +49,20 @@ export type Body = Readonly<{
 
 export type Actor = Readonly<{
   exists: true;
+  cre: string;
+  personalSpace: number;
+}>;
+
+export type PlayerSpawn = Readonly<{
+  cre: string;
+  personalSpace: number;
+}>;
+
+export type NpcSpawn = Readonly<{
+  cre: string;
+  personalSpace: number;
+  pos: Point;
+  facing: number;
 }>;
 
 export type TravelRegion = Readonly<{

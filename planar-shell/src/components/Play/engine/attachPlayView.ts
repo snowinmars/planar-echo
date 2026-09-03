@@ -8,13 +8,15 @@ import {
   Texture,
 } from 'pixi.js';
 import { Viewport } from 'pixi-viewport';
-import { foldPatches, PASSABLE_WALK, paintDoorFlags } from '@planar/kernel';
+import { foldPatches, PASSABLE_WALK, paintDoorFlags, PLAYER_ACTOR_ID } from '@planar/kernel';
 import { assetUrl } from '@/shared/assetUrl';
 import { isNothing, just, nothing } from '@planar/shared';
 import { loadPlayMapGhost } from './loadPlayMapGhost.js';
 import { PSTEE_TILE_PX } from './playTiles.js';
 import { doorOpenByCell } from './doorOpenByCell.js';
 import { overlayTileIndex } from './overlayTileIndex.js';
+import { createCreArtCache, ensureCreArt } from './loadCreArt.js';
+import { clearCreSprites, syncCreSprites } from './syncCreSprites.js';
 
 import type {
   DoorView,
@@ -93,17 +95,6 @@ const drawUnpassableTiles = (
   }
 };
 
-const drawBodies = (layer: Graphics, snapshot: Snapshot, walk: WalkGrid): void => {
-  layer.clear();
-  const sorted = [...snapshot.bodies].sort((a, b) => a[1].pos.y - b[1].pos.y);
-  const w = Math.max(8, Math.floor(walk.cellWidth / 2));
-  const h = Math.max(10, Math.floor(walk.cellHeight / 2));
-  for (const [, body] of sorted) {
-    layer.rect(body.pos.x - w / 2, body.pos.y - h / 2, w, h);
-    layer.fill({ color: 0xd4c27a });
-  }
-};
-
 const decodeMouseButton = (button: number): Maybe<PlayPointerClick['button']> => {
   if (button === 0) return 'left';
   if (button === 2) return 'right';
@@ -167,8 +158,9 @@ export const attachPlayView = async ({
   const debug = new Graphics();
   debug.eventMode = 'none';
 
-  const actors = new Graphics();
+  const actors = new Container();
   actors.eventMode = 'none';
+  actors.sortableChildren = true;
 
   const followMarker = new Container();
   followMarker.eventMode = 'none';
@@ -184,8 +176,11 @@ export const attachPlayView = async ({
   let loadGen = 0;
   let doorGen = 0;
   let following = false;
+  let viewAlive = true;
   let snappedAreId: Maybe<string> = nothing();
   let pointerOverCanvas = false;
+  const creArt = createCreArtCache();
+  const creSprites = new Map<number, Sprite>();
   const pointerScreen = { x: 0, y: 0 };
   const keys = {
     left: false,
@@ -278,10 +273,10 @@ export const attachPlayView = async ({
   const firstActorPos = (): Maybe<{ x: number; y: number }> => {
     if (isNothing(snapshot)) return nothing();
 
-    const first = snapshot.bodies[0];
-    if (!first) return nothing();
+    const found = snapshot.bodies.find(([id]) => id === PLAYER_ACTOR_ID);
+    if (!found) return nothing();
 
-    return first[1].pos;
+    return found[1].pos;
   };
 
   const layoutCamera = (): void => {
@@ -316,6 +311,25 @@ export const attachPlayView = async ({
     viewport.follow(followMarker);
   };
 
+  const paintCres = (): void => {
+    if (!viewAlive) return;
+    if (isNothing(snapshot)) return;
+
+    syncCreSprites(actors, creSprites, snapshot, creArt);
+
+    for (const [, actor] of snapshot.actors) {
+      if (creArt.cre.has(actor.cre) || creArt.inflight.has(actor.cre)) continue;
+
+      ensureCreArt(creArt, actor.cre, serverUrl, ghostDir)
+        .then(() => {
+          paintCres();
+        })
+        .catch((err: unknown) => {
+          console.error(err);
+        });
+    }
+  };
+
   const paint = (): void => {
     if (isNothing(snapshot)) return;
 
@@ -329,9 +343,9 @@ export const attachPlayView = async ({
     if (!isNothing(walkGrid)) {
       const bounds = viewport.getVisibleBounds();
       drawUnpassableTiles(debug, walkGrid, bounds.x, bounds.y, bounds.width, bounds.height);
-      drawBodies(actors, snapshot, walkGrid);
     }
 
+    paintCres();
     onHudUpdate(snapshot.tick, snapshot.paused, snapshot.areId);
   };
 
@@ -480,7 +494,10 @@ export const attachPlayView = async ({
       snapshot = fromDaemon.snapshot;
 
       const areaChanged = snapshot.areId !== prevAre;
-      if (areaChanged) loadArt(snapshot.areId); // TODO [snow]: that's a race
+      if (areaChanged) {
+        clearCreSprites(actors, creSprites);
+        loadArt(snapshot.areId); // TODO [snow]: that's a race
+      }
 
       paint();
 
@@ -493,6 +510,7 @@ export const attachPlayView = async ({
         tick: fromDaemon.tick,
         seq: fromDaemon.seq,
       };
+      paintCres();
       onHudUpdate(snapshot.tick, snapshot.paused, snapshot.areId);
 
       return snapshot;
@@ -519,6 +537,7 @@ export const attachPlayView = async ({
       applyFollow();
     },
     destroy: () => {
+      viewAlive = false;
       loadGen += 1;
       app.ticker.remove(onTick);
       window.removeEventListener('keydown', onKeyDown);
@@ -531,6 +550,7 @@ export const attachPlayView = async ({
         });
       }
       clearTiles();
+      clearCreSprites(actors, creSprites);
       if (viewport.parent) viewport.parent.removeChild(viewport);
       viewport.destroy({ children: true });
       app.destroy(true, { children: true, texture: true });

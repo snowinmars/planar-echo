@@ -15,6 +15,7 @@
 - Код: SOLID. Без гонок данных (fork/IPC, WebSocket, общий mutable state, RxJS-потоки).
 - Все пути к игре, WeiDU и ghost - на машине пользователя; в git игровых ассетов быть не должно.
 - Функциональный стиль, но без фанатизма.
+- Do use monads from planar-shared\src\maybe.ts instead of `T | null | undefined` pattern.
 
 ## Запрещённые паттерны
 
@@ -34,9 +35,11 @@
 | Пакет npm | Каталог | Роль |
 |-----------|---------|------|
 | `@planar/shared` | `planar-shared/` | Типы IPC, `dlgEngine`, `ghost/*`, enums игр/языков, mappers; entry `@planar/shared/node` для Node |
-| `@planar/prism` | `planar-prism/` | CLI + IPC: biff → JSON → assets → Ghost TS |
-| `@planar/asclepius` | `planar-asclepius/` | Express, static Shell/Ghost, REST, WS, fork Prism |
-| `@planar/shell` | `planar-shell/` | React, Zustand, MUI, Vite |
+| `@planar/kernel` | `planar-kernel/` | apply, WalkGrid, GhostAre двери, A*; без Express/Pixi/fs |
+| `@planar/daemon` | `planar-daemon/` | 30 Hz clock, IPC, eval ghost ARE + `{ghostDir}/assets/are/{are}.walk` |
+| `@planar/prism` | `planar-prism/` | CLI + IPC: biff → JSON → assets → Ghost TS (ARE walk binary в `assets/are`) |
+| `@planar/asclepius` | `planar-asclepius/` | Express, static Shell/Ghost, REST, WS, fork Prism/daemon |
+| `@planar/shell` | `planar-shell/` | React, Zustand, MUI, Vite; `/play` |
 | - | `planar-ghost/` | Артефакт на диске пользователя; **не** Yarn workspace |
 
 - Менеджер: Yarn 4 (`packageManager` в корневом `package.json`).
@@ -73,8 +76,8 @@
 2. `2.validate` - WeiDU и пути игры
 3. `3.decompileBiffs` - run WeiDU, use cache
 4. `4.biffs2json` - бинарники → JSON, только структура/хедеры (`pstee/`: 2da, acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, src, tis, tlk, wav, wed). Без PNG/DXT/decode audio
-5. `4b.raw2assets` - `allJsons` + seek в decompiled по offset → PNG/WAV/explored (`algo/` синтез; воркеры `shared/pool`). WAV/ACM: в JSON шага 4 PCM = `-1`, после decode патч `allJsons` + `saveJson`
-6. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, src, tis, tlk, twoda, wav, wed). После патча wav/acm, `-1` сюда не утекает
+5. `4b.raw2assets` - `allJsons` + seek в decompiled по offset → PNG/WAV/explored (`algo/` синтез; воркеры `shared/pool`). WAV/ACM: в JSON шага 4 PCM = `-1`, после decode патч `allJsons` + `saveJson`. ARE walk: SR indices + WED overlay0 + `terrain.2da` → `{ghostDir}/assets/are/{are}.walk`
+6. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; 2da, acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, src, tis, tlk, wav, wed). После патча wav/acm, `-1` сюда не утекает. ARE: `GhostAre.walk` ссылается на `{are}.walk`
 7. `6.saveDiscovered` - метаданные обнаружения
 
 Типы Infinity Engine и прямые зависимости: [docs/ie-resource-types.md](docs/ie-resource-types.md).
@@ -99,7 +102,7 @@
 
 **REST** (`planar-asclepius/src/controllers/router.ts`) - типично JSON body; ghost: `/api/ghost/cre|dlg|itm|tlk|bcs|mos|pvrz|tis|wed|are|twoda|src|ids|ini|eff|acm|bam|bmp|wav|mus` (list + skeleton), map: `/api/map/creToDlgs|dlgToCre|itmToDlgs|dlgToItm`. Схема: `planar-asclepius/src/swagger/swagger.json`. URL-сегмент **twoda** = файлы `.2da`.
 
-**WebSocket:** path `/api/prism/index` (`wsController/router.ts`). Сервер сразу шлёт `{ type: 'ready' }`. Клиент: `{ type: 'start', data }` с полями `weiduExeDir`, `chitinKeyFile`, `ghostDir`, `prismDir`, `gameLanguage`, `gameName`.
+**WebSocket:** один `server.on('upgrade')` в `wsController/router.ts`, оба endpoint — `WebSocketServer({ noServer: true })`. Не вешать два `WebSocketServer({ server, path })` на один HTTP: `ws` v8 на несовпавшем path делает `abortHandshake(400)`. Index: `/api/prism/index` — сразу `{ type: 'ready' }`; клиент `{ type: 'start', data }` (`weiduExeDir`, `chitinKeyFile`, `ghostDir`, `prismDir`, `gameLanguage`, `gameName`). Play: `/api/play` — opaque relay на `@planar/daemon` (не `apply`).
 
 **Оркестрация index** (`wsController/prism/runIndex.ts`): steps `buildPrism` → IPC prism → `buildGhost` (`build-ghost`).
 
@@ -107,7 +110,7 @@
 
 ## Ghost на диске
 
-- Текстовые и бинарные артефакты, not a single text Domain-Specific Language: промежуточный **JSON**, **assets** (PNG/WAV/explored) и **TS** на диске; runtime для движка - **bundled JS** под `planar-ghost/ghost/{cre,dlg,itm,bcs,mos,pvrz,tis,wed,are,twoda,src,ids,ini,eff,acm,bam,bmp,wav,mus}/dist`. MOS/TIS: PNG в `assets/` (`imageName`).
+- Текстовые и бинарные артефакты, not a single text Domain-Specific Language: промежуточный **JSON**, **assets** (PNG/WAV/explored, ARE walk `assets/are/{are}.walk`) и **TS** на диске; runtime для движка - **bundled JS** под `planar-ghost/ghost/{cre,dlg,itm,bcs,mos,pvrz,tis,wed,are,twoda,src,ids,ini,eff,acm,bam,bmp,wav,mus}/dist`. MOS/TIS: PNG в `assets/` (`imageName`). ARE: `GhostAre.walk.walkBinName`.
 - `yarn build:ghost` - esbuild по `planar-ghost/ghost/**/*.ts`, alias `@planar/shared` (`build-ghost-cres|dlgs|itms|bcs|mos|pvrz|tis|wed|are|twoda|src|stores`).
 - Каталоги вывода: `ghost/`, `json/`, `assets/`, `decompiledBiff/`
 
@@ -130,7 +133,7 @@
 - `index.ts` - CLI / IPC entry
 - `steps/1.createPaths` … `6.saveDiscovered`
 - `steps/4.biffs2json/pstee/` - `biff2jsonPstee.ts`, `2da/`, `acm/`, `are/`, `bam/`, `bcs/`, `bmp/`, `cre/`, `dlg/`, `eff/`, `ids/`, `ini/`, `itm/`, `mos/`, `mus/`, `pvrz/`, `src/`, `tis/`, `tlk/`, `wav/`, `wed/`
-- `steps/4b.raw2assets/` - `raw2assetsPstee.ts`, `write*`, `algo/` (DXT, blit, decodeFrames, encodePng, decodeAudio).
+- `steps/4b.raw2assets/` - `raw2assetsPstee.ts`, `write*` (`writeAreWalk.ts` — searchmap flags), `algo/` (DXT, blit, decodeFrames, encodePng, decodeAudio).
 - `steps/5.json2Ghost/pstee/` - `json2GhostPstee.ts`, `cre/`, `dlg/`, `itm/`, `bcs/`, `mos/`, `pvr/` (patch PVR; ghost dir `pvrz`), `tis/`, `wed/`, `are/`, `twoda/`, `src/`, `ids/`, `ini/`, `eff/`, `acm/`, `bam/`, `bmp/`, `mus/`, `wav/`
 - `shared/` - `report.ts`, `bufferReader.ts`, `writer.ts`, `xor.ts`, `pool/` (`runPool`, `packPvrzSab`)
 - `discoverer.ts`, `discoverer.types.ts`
@@ -139,7 +142,7 @@
 
 - `index.ts` - Express + HTTP server + WS
 - `controllers/` - REST (см. таблицу); `fs/validate/`, `ghost/`, `map/`, `settings/`, `ping/`
-- `wsController/router.ts`, `wsController/prism/runIndex.ts`
+- `wsController/router.ts`, `wsController/prism/runIndex.ts`, `wsController/play/runPlay.ts`
 - `services/fs|ghost|map|settings/`
 - `swagger/` - сгенерированный spec; `dev/copy-client.js` для Shell
 
@@ -177,7 +180,7 @@ Execute in repo root.
 | Оба (workspace) | `yarn start` |
 | Prism CLI | `yarn start:prism` |
 | Docker | `docker compose build && docker compose up` → http://localhost:3003 |
-| Тесты | `yarn test` (prism Mocha + shell Vitest) |
+| Тесты | `yarn test` (kernel Mocha + prism Mocha + shell Vitest). Не гонять без просьбы. |
 
 ## Правила при изменении кода
 

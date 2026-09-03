@@ -1,9 +1,11 @@
+import { orientFromDelta } from '@planar/shared';
 import { cellCenter } from '../cell.js';
 import { cloneBody } from '../cloneWorld.js';
 import { closerPoint, worldDist } from '../hitTest.js';
 import { toggleDoor } from './applyDoor.js';
 import { PST_OPERATING_DISTANCE } from '../types.js';
 import { resolveTravelAfterMove } from '../travel.js';
+import { rebuildWalk } from '../rebuildWalk.js';
 
 import type { ApplyResult, Body, Point, Patch, World } from '../types.js';
 
@@ -22,6 +24,7 @@ const advanceBody = (body: Body, grid: World['walkGrid']): Body => {
   let x = body.pos.x;
   let y = body.pos.y;
   let remaining = body.speedPxPerTick;
+  let facing = body.facing;
   const nextPath: Point[] = body.path.map(cell => ({ x: cell.x, y: cell.y }));
 
   while (remaining > 0 && nextPath.length > 0) {
@@ -29,6 +32,10 @@ const advanceBody = (body: Body, grid: World['walkGrid']): Body => {
     if (!waypoint) break;
 
     const center = cellCenter(grid, waypoint);
+    if (x !== center.x || y !== center.y) {
+      facing = orientFromDelta({ x, y }, center);
+    }
+
     const stepX = stepToward(x, center.x, remaining);
     x = stepX.next;
     remaining -= stepX.used;
@@ -47,6 +54,7 @@ const advanceBody = (body: Body, grid: World['walkGrid']): Body => {
     return {
       pos: { x, y },
       speedPxPerTick: body.speedPxPerTick,
+      facing,
       ...(body.pendingDoorId ? { pendingDoorId: body.pendingDoorId } : {}),
       path: [],
     };
@@ -55,6 +63,7 @@ const advanceBody = (body: Body, grid: World['walkGrid']): Body => {
   return {
     pos: { x, y },
     speedPxPerTick: body.speedPxPerTick,
+    facing,
     ...(body.dest ? { dest: { x: body.dest.x, y: body.dest.y } } : {}),
     path: nextPath,
     ...(body.pendingDoorId ? { pendingDoorId: body.pendingDoorId } : {}),
@@ -85,6 +94,7 @@ export const applyTick = (world: World): ApplyResult => {
   };
 
   const events: Patch[] = [];
+  let anyMoved = false;
 
   for (const [id, body] of world.bodies) {
     let next = body;
@@ -102,9 +112,13 @@ export const applyTick = (world: World): ApplyResult => {
     const moved = next.pos.x !== prevPos.x || next.pos.y !== prevPos.y;
     if (!moved) continue;
 
+    anyMoved = true;
+
     const travel = resolveTravelAfterMove(world, id, next.pos);
     if (travel) return { events, travel };
   }
+
+  if (anyMoved) rebuildWalk(world);
 
   return { events };
 };

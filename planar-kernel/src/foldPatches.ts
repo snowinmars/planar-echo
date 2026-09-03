@@ -1,4 +1,4 @@
-import { cloneBody } from './cloneWorld.js';
+import { cloneActor, cloneBody } from './cloneWorld.js';
 
 import type { Actor, Body, DoorView, Patch, Snapshot } from './types.js';
 
@@ -9,7 +9,7 @@ const upsertBody = (snapshot: Snapshot, id: number, row: Body): Snapshot => ({
 
 const upsertActor = (snapshot: Snapshot, id: number, row: Actor): Snapshot => ({
   ...snapshot,
-  actors: [...snapshot.actors.filter(([actorId]) => actorId !== id), [id, row]],
+  actors: [...snapshot.actors.filter(([actorId]) => actorId !== id), [id, cloneActor(row)]],
 });
 
 const upsertDoor = (snapshot: Snapshot, id: string, row: DoorView): Snapshot => ({

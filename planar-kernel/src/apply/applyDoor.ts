@@ -1,6 +1,6 @@
 import { nothing } from '@planar/shared';
 import { cloneBody, doorView } from '../cloneWorld.js';
-import { paintAllDoors } from '../paintDoors.js';
+import { rebuildWalk } from '../rebuildWalk.js';
 
 import type { ApplyResult, EntityId, Patch, World } from '../types.js';
 
@@ -10,7 +10,7 @@ export const toggleDoor = (world: World, doorId: string, actorId?: EntityId): Ap
   const nextOpen = !(world.doorOpen.get(doorId) ?? false);
   world.doorOpen.set(doorId, nextOpen);
 
-  paintAllDoors(world);
+  rebuildWalk(world);
 
   const events: Patch[] = [
     { table: 'doors', id: doorId, op: 'upsert', row: doorView(doorId, nextOpen) },
@@ -24,6 +24,7 @@ export const toggleDoor = (world: World, doorId: string, actorId?: EntityId): Ap
       const cleared = {
         pos: { x: body.pos.x, y: body.pos.y },
         speedPxPerTick: body.speedPxPerTick,
+        facing: body.facing,
         dest: nothing(),
         path: [],
         pendingDoorId: nothing(),

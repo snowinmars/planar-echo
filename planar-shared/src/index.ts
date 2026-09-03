@@ -13,6 +13,17 @@ export { sleep } from './sleep.js';
 export { evalGhostFactory } from './evalGhostFactory.js';
 export { withoutExtension } from './withoutExtension.js';
 export { dateDiffSec } from './dateDiffSec.js';
+export {
+  animationIdToIniId,
+  bamCycleIndex,
+  bamEastMirror,
+  CRE_ANIM_FPS,
+  facingFromDirection,
+  orientFromDelta,
+  pstBamCandidates,
+  pstSlotResref,
+  pstStanceFromMotion,
+} from './creAnimation.js';
 export { ghostTypes } from './ghostTypes.js';
 
 export type {
@@ -20,6 +31,7 @@ export type {
   Point,
 } from './geometry.js';
 export type { Direction } from './direction.js';
+export type { PstAnimStance } from './creAnimation.js';
 export type { GameName } from './gameName.js';
 export type { GameLanguage } from './gameLanguage.js';
 export type {
