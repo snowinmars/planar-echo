@@ -1,0 +1,16 @@
+{
+  "eslint.workingDirectories": [
+    "planar-asclepius",
+    "planar-daemon",
+    "planar-kernel",
+    "planar-prism",
+    "planar-shared",
+    "planar-shell"
+  ],
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}

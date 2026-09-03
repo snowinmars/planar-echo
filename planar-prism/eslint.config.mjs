@@ -1,13 +1,14 @@
 import eslint from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+import importX from 'eslint-plugin-import-x';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
-import stylistic from '@stylistic/eslint-plugin';
-// import eslintImport from 'eslint-plugin-import'; // https://github.com/import-js/eslint-plugin-import/issues/3227
+import { files, ignores, importSortRules } from '../eslint.shared.mjs';
 
 export default defineConfig(
   globalIgnores([
-    './dist/*',
-    './node_modules/*',
+    ...ignores,
   ]),
   eslint.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
@@ -25,8 +26,14 @@ export default defineConfig(
     indent: 2,
     commaDangle: 'always-multiline',
   }),
-  // eslintImport.flatConfigs.recommended,
-  // eslintImport.flatConfigs.typescript,
+  {
+    files,
+    plugins: {
+      'import-x': importX,
+      'simple-import-sort': simpleImportSort,
+    },
+    rules: importSortRules,
+  },
   {
     rules: {
       '@stylistic/max-statements-per-line': ['error', { max: 1, ignoredNodes: ['BreakStatement', 'IfStatement', 'SwitchStatement', 'ThrowStatement'] }],
@@ -39,32 +46,6 @@ export default defineConfig(
           "varsIgnorePattern": "^_+$",
         }
       ],
-      // 'sort-imports': ['error', {
-      //   ignoreCase: true,
-      //   ignoreDeclarationSort: false,
-      //   ignoreMemberSort: false,
-      //   memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
-      //   allowSeparatedGroups: false,
-      // }],
-      // 'import/no-unresolved': 'error',
-      // 'import/order': [
-      //   'error',
-      //   {
-      //     groups: [
-      //       'builtin',
-      //       'external',
-      //       'internal',
-      //       ['sibling', 'parent'],
-      //       'index',
-      //       'unknown',
-      //     ],
-      //     'newlines-between': 'always',
-      //     alphabetize: {
-      //       order: 'asc',
-      //       caseInsensitive: true,
-      //     },
-      //   },
-      // ],
     }
   }
 );

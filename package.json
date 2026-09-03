@@ -24,7 +24,7 @@
     "start:asclepius": "yarn workspace @planar/asclepius start",
     "start:shell": "yarn workspace @planar/shell start",
     "start:prism": "yarn workspace @planar/prism start",
-    "lint": "yarn workspaces foreach -A run lint"
+    "lint": "yarn workspaces foreach -Apt run lint"
   },
   "packageManager": "yarn@4.16.0",
   "devDependencies": {

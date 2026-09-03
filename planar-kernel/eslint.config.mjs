@@ -1,12 +1,14 @@
 import eslint from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+import importX from 'eslint-plugin-import-x';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
-import stylistic from '@stylistic/eslint-plugin';
+import { files, ignores, importSortRules } from '../eslint.shared.mjs';
 
 export default defineConfig(
   globalIgnores([
-    './dist/*',
-    './node_modules/*',
+    ...ignores,
   ]),
   eslint.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
@@ -24,6 +26,14 @@ export default defineConfig(
     indent: 2,
     commaDangle: 'always-multiline',
   }),
+  {
+    files,
+    plugins: {
+      'import-x': importX,
+      'simple-import-sort': simpleImportSort,
+    },
+    rules: importSortRules,
+  },
   {
     rules: {
       '@stylistic/max-statements-per-line': ['error', { max: 1, ignoredNodes: ['BreakStatement', 'IfStatement', 'SwitchStatement', 'ThrowStatement'] }],
