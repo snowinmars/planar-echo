@@ -1,13 +1,9 @@
 import { existsSync, statSync } from 'fs';
 import { join, resolve } from 'path';
 
-import { getShellDir } from '../../settings/storage.js';
-
 import type { Command, Result } from './types.js';
 
-export default ({ path }: Command): Promise<Result> => {
-  const shellDir = getShellDir();
-
+export default ({ path, shellDir }: Command): Promise<Result> => {
   const indexHtmlRequest = !path || !path.length || path === '/' || path === '/index.html';
   if (indexHtmlRequest) return Promise.resolve({
     ok: true,

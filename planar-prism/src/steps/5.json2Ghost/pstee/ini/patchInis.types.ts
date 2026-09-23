@@ -1,7 +1,7 @@
-import type { GhostIni } from '@planar/shared';
+import type { GhostIniFile } from './1.toGhost.js';
 
 export type GhostIniOut = Readonly<{
   resourceName: string;
   skeleton: string;
-  ini: GhostIni;
+  ini: GhostIniFile;
 }>;

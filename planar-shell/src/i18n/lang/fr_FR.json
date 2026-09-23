@@ -4,21 +4,21 @@
   },
   "landing": {
     "intro": {
-      "techdemo": "Démo technique",
-      "details": "En savoir plus",
+      "techdemo": "Version préliminaire",
       "convert": "Reformater",
-      "1": "Bonjour.",
-      "2": "Ceci est planar-echo : un outil open source pour redonner une forme moderne aux jeux Infinity Engine.",
-      "3": "En bref.",
-      "4": "Planar echo reconstruit les données propriétaires du jeu dans un format ouvert, permettant ainsi un moteur personnalisé qui fonctionne nativement sur Linux, Android, Web et Windows.",
-      "5": "Prérequis : node.js et les fichiers de jeu originaux que vous possédez."
+      "1": "Explorez PST:EE localement.",
+      "2": "planar-echo convertit une installation de PST:EE obtenue légalement en données consultables dans un atelier local accessible par navigateur.",
+      "3": "Produit actuel et direction.",
+      "4": "La conversion et Workbench sont disponibles. Play et Mods sont des outils expérimentaux servant à vérifier le moteur en cours de développement.",
+      "5": "L’objectif est un moteur indépendant compatible avec Infinity Engine. Seul PST:EE est actuellement pris en charge."
     },
     "runnerGuard": {
       "ghostDir": "Dossier du jeu",
       "or": "ou",
       "convert": "Reformater",
       "workbench": "Allez à l'établi",
-      "play": "Jouer",
+      "play": "Jouer (expérimental)",
+      "mods": "Mods (expérimental)",
       "stores": "Magasins de données"
     },
     "step0": {
@@ -85,8 +85,9 @@
       }
     },
     "step5": {
-      "ownGame": "Je convertis ce qui m'appartient.",
-      "comment": "Je ne viole pas les droits d'auteur - je stimule gratuitement les ventes de l'original."
+      "ownGame": "J’utilise une copie de PST:EE obtenue légalement.",
+      "comment": "Il m’appartient de respecter les conditions applicables à ma copie et le droit en vigueur.",
+      "legal": "Politique juridique et de contenu"
     },
     "step6": {
       "start": "J'ai de l'espace disque et je veux commencer",
@@ -221,6 +222,9 @@
   "settings": {
     "gameInterfaceSettings": "Paramètres de l'interface du jeu",
     "serverSettings": "Paramètres du serveur",
+    "saveDefaultsToJson": "Enregistrer les chemins dans asclepius.defaults.json",
+    "saveDefaultsSaved": "Écrit dans json",
+    "saveDefaultsFailed": "Échec écriture json, voir F12",
     "backendUrl": {
       "title": "URL du serveur",
       "pinging": "Vérification",
@@ -243,6 +247,13 @@
     },
     "shellDir": {
       "title": "Répertoire planar-shell",
+      "loading": "Chargement...",
+      "saving": "Vérification...",
+      "saved": "Enregistré",
+      "failed": "Erreur, appuyez sur F12"
+    },
+    "modsDir": {
+      "title": "Répertoire mods",
       "loading": "Chargement...",
       "saving": "Vérification...",
       "saved": "Enregistré",
@@ -303,6 +314,19 @@
         "ravel": "Ravel"
       }
     }
+  },
+  "mods": {
+    "title": "Mods",
+    "hint": "Autosaves active.json after 300ms. Restart /play. Not live.",
+    "missingActive": "active.json is missing. Asclepius seeds factory on start if dist exists.",
+    "installDefaults": "Install default mods",
+    "installing": "Building mods…",
+    "copied": "copied: {{ids}}",
+    "slots": "Radio slots",
+    "enabled": "Enabled",
+    "serverHooks": "Server hook order",
+    "clientHooks": "Client hook order",
+    "queries": "Query order"
   },
   "themes": {
     "light": "Clair",

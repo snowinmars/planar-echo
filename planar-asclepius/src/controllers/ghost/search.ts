@@ -11,9 +11,10 @@ import type { Router } from 'express';
 
 const ghostType = z.enum(ghostTypes);
 
-const body = z.object({
-  ghostDir: z.string().min(1, 'Ghost directory path is required'),
-  partialName: z.string(),
+const query = z.object({
+  partialName: z.string().optional().openapi({
+    example: 'morte',
+  }),
 });
 const responseOk = z.array(z.object({
   type: ghostType,
@@ -26,19 +27,12 @@ const responseError = z.object({
   }),
 });
 const routeConfig = (): RouteConfig => ({
-  method: 'post',
-  path: '/api/ghost/search',
-  tags: ['ghostSearch'],
-  description: 'Search ghost skeleton filenames across workbench resource types',
+  method: 'get',
+  path: '/api/ghost',
+  tags: ['ghost'],
+  description: 'Search ghost skeleton filenames across workbench resource types. Empty query matches all, anyway - cap 20',
   request: {
-    body: {
-      required: true,
-      content: {
-        'application/json': {
-          schema: body,
-        },
-      },
-    },
+    query,
   },
   responses: {
     200: {
@@ -63,12 +57,12 @@ const routeConfig = (): RouteConfig => ({
 export default (registry: OpenAPIRegistry, router: Router): void => {
   registry.registerPath(routeConfig());
 
-  router.post('/api/ghost/search',
-    validate({ body }),
+  router.get('/api/ghost',
+    validate({ query }),
     async (req, res) => {
       const result = await action({
-        ghostDir: req.body.ghostDir,
-        partialName: req.body.partialName.trim().toLowerCase(),
+        ghostDir: req.planarPaths.ghost.root,
+        partialName: req.query.partialName?.trim().toLowerCase(),
       });
 
       if (result.ok) {

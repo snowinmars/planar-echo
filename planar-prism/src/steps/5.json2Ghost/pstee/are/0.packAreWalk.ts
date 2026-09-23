@@ -11,7 +11,7 @@ import type { RawWed } from '@/steps/4.biffs2json/pstee/wed/parseWeds.types.js';
 
 export const packAreWalk = (
   are: RawAre,
-  weds: readonly RawWed[],
+  weds: RawWed[],
 ): GhostAreWalk => {
   const areId = are.resourceName;
   const wedName = are.header.wed;

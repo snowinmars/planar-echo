@@ -6,7 +6,9 @@ import {
 } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
-import type { GhostIni } from '@planar/shared';
+import type { GhostIniAnimation, GhostIniArea, GhostIniResdata } from '@planar/shared';
+
+export type LoadedGhostIni = GhostIniResdata | GhostIniAnimation | GhostIniArea;
 
 export type LoadGhostIniProps = Readonly<{
   iniId: string;
@@ -18,7 +20,7 @@ export const loadGhostIni = async ({
   iniId,
   serverUrl,
   ghostDir,
-}: LoadGhostIniProps): Promise<GhostIni> => {
+}: LoadGhostIniProps): Promise<LoadedGhostIni> => {
   const response = await postApiGhostIniByIniIdSkeleton({
     client,
     baseURL: serverUrl,
@@ -31,7 +33,7 @@ export const loadGhostIni = async ({
     throw new Error(response.error.error.message);
   }
 
-  const skeleton = evalGhostFactory<GhostIni>(response.data.data.content);
+  const skeleton = evalGhostFactory<LoadedGhostIni>(response.data.data.content);
   return skeleton();
 };
 

@@ -2,7 +2,11 @@ import type { FC, JSX } from 'react';
 
 import type { WithClassName } from '@/types/fcWithClassName';
 
-// https://upload.wikimedia.org/wikipedia/commons/7/7e/Hammer_and_sickle.svg
+/*
+ * Adapted from Wikimedia Commons "Hammer and sickle.svg", marked public domain.
+ * Symbol restrictions may apply independently of copyright.
+ * See THIRD_PARTY_NOTICES.md for source and status details.
+ */
 { /* <metadata id="metadata5">
   <rdf:RDF>
     <cc:Work rdf:about="">

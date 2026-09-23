@@ -6,6 +6,12 @@ import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 import type { Router } from 'express';
 
+const params = z.object({
+  filePath: z.string().min(1).openapi({
+    example: 'index.js',
+    description: 'Relative path to the file relative to prism dist directory, can include lower slashes',
+  }),
+});
 const responseOk = z.string();
 const responseError = z.object({
   error: z.object({
@@ -18,15 +24,9 @@ const routeConfig = (): RouteConfig => ({
   path: '/api/fs/prismDir/{filePath}',
   tags: ['fs'],
   description: 'Get file content from prism directory by relative path',
-  parameters: [
-    {
-      in: 'path',
-      name: 'filePath',
-      required: true,
-      schema: { type: 'string' },
-      description: 'Relative path to the file relative to prism directory, can include lower slashes',
-    },
-  ],
+  request: {
+    params,
+  },
   responses: {
     200: {
       description: 'File content from prism directory',
@@ -62,7 +62,7 @@ export default (registry: OpenAPIRegistry, router: Router): void => {
     async (req, res) => {
       // changing this code change index.ts middleware
       const { filePath } = req.params;
-      const result = await action({ path: filePath });
+      const result = await action({ path: filePath, prismDir: req.planarPaths.prism.dist });
 
       if (result.ok) return res.status(200).sendFile(result.data.fullPath);
 

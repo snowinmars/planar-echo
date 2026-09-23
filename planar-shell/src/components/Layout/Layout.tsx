@@ -1,15 +1,8 @@
-import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
-import planarLocalStorage from '@/shared/planarLocalStorage';
-import {
-  getApiSettingsGhostDir,
-  getApiSettingsPrismDir,
-  getApiSettingsShellDir,
-} from '@/swagger/client';
-import { client } from '@/swagger/client/client.gen';
+import { fetchDefaults, writeLocalDirs } from '@/shared/defaultsApi';
 
 import Footer from '../Footer';
 import Header from '../Header';
@@ -21,66 +14,17 @@ import styles from './Layout.module.scss';
 
 type Status = 'ready' | 'loading' | 'error';
 
-// TODO [snow]: I am tired of refactoring this function.
-// The issue is that three api calls returns different models, so I do not know, how to nicely write it
-// The obivious choice - write proper backend api endpoint - I do not accept for now
 const setupInitialSettingsFromServer = async (abortController: AbortController): Promise<Status> => {
-  const existingGhostDir = planarLocalStorage.get('ghostDir');
-  if (!existingGhostDir) {
-    const ghostDirResponse = await getApiSettingsGhostDir({
-      client,
-      signal: abortController.signal,
-    });
-
-    if (isAxiosError(ghostDirResponse)) {
-      if (ghostDirResponse.code !== 'ERR_CANCELED') {
-        console.error(ghostDirResponse.error);
-        return 'error';
-      }
-
-      return 'loading';
-    }
-
-    planarLocalStorage.set('ghostDir', ghostDirResponse.data.ghostDir);
+  try {
+    const dirs = await fetchDefaults(abortController.signal);
+    writeLocalDirs(dirs);
+    return 'ready';
   }
-
-  const existingPrismDir = planarLocalStorage.get('prismDir');
-  if (!existingPrismDir) {
-    const prismDirResponse = await getApiSettingsPrismDir({
-      client,
-      signal: abortController.signal,
-    });
-    if (isAxiosError(prismDirResponse)) {
-      if (prismDirResponse.code !== 'ERR_CANCELED') {
-        console.error(prismDirResponse.error);
-        return 'error';
-      }
-
-      return 'loading';
-    }
-    planarLocalStorage.set('prismDir', prismDirResponse.data.prismDir);
+  catch (err: unknown) {
+    if (err instanceof DOMException && err.name === 'AbortError') return 'loading';
+    console.error(err);
+    return 'error';
   }
-
-  const existingShellDir = planarLocalStorage.get('shellDir');
-  if (!existingShellDir) {
-    const shellDirResponse = await getApiSettingsShellDir({
-      client,
-      signal: abortController.signal,
-    });
-
-    if (isAxiosError(shellDirResponse)) {
-      if (shellDirResponse.code !== 'ERR_CANCELED') {
-        console.error(shellDirResponse.error);
-        return 'error';
-      }
-
-      return 'loading';
-    }
-
-    planarLocalStorage.set('shellDir', shellDirResponse.data.shellDir);
-  }
-
-  return 'ready';
 };
 
 const Layout: FC = () => {

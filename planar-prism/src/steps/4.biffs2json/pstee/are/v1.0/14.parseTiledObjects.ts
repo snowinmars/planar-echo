@@ -7,7 +7,7 @@ import type { RawAreTiledObjectV10 } from './14.parseTiledObjects.types.js';
 
 type ParseTiledObjectProps = Readonly<{
   reader: BufferReader;
-  vertices: readonly RawAreVertexV10[];
+  vertices: RawAreVertexV10[];
 }>;
 const parseTiledObject = ({
   reader,
@@ -39,7 +39,7 @@ const parseTiledObject = ({
 type ParseTiledObjectsProps = Readonly<{
   reader: BufferReader;
   count: number;
-  vertices: readonly RawAreVertexV10[];
+  vertices: RawAreVertexV10[];
 }>;
 export const parseTiledObjects = ({
   reader,

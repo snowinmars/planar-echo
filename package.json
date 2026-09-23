@@ -1,13 +1,26 @@
 {
   "name": "planar-echo",
+  "description": "Local PST:EE conversion pipeline and browser workbench with an experimental Infinity Engine-compatible runtime",
   "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowinmars/planar-echo.git"
+  },
+  "keywords": [
+    "pstee",
+    "planescape-torment",
+    "infinity-engine",
+    "game-data",
+    "browser-workbench"
+  ],
   "workspaces": [
     "planar-shared",
     "planar-kernel",
     "planar-daemon",
     "planar-prism",
     "planar-asclepius",
-    "planar-shell"
+    "planar-shell",
+    "planar-mods"
   ],
   "scripts": {
     "build": "yarn gen && yarn workspaces foreach -Apt run build",
@@ -17,8 +30,11 @@
     "start": "yarn workspaces foreach -Api --include @planar/asclepius --include @planar/shell run start",
     "serve": "yarn workspace @planar/asclepius serve",
     "build:asclepius": "yarn workspace @planar/asclepius build",
-    "build:prism": "yarn workspace @planar/prism build",
+    "build:daemon": "yarn workspace @planar/daemon build",
     "build:ghost": "yarn workspace @planar/prism build-ghost",
+    "build:kernel": "yarn workspace @planar/kernel build",
+    "build:mods": "yarn workspace @planar/mods build",
+    "build:prism": "yarn workspace @planar/prism build",
     "build:shared": "yarn workspace @planar/shared build",
     "build:shell": "yarn workspace @planar/shell build",
     "start:asclepius": "yarn workspace @planar/asclepius start",

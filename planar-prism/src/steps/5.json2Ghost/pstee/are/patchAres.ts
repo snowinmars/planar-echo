@@ -12,7 +12,7 @@ import type { GhostAreOut } from './patchAres.types.js';
 
 export const patchAres = (
   ares: RawAre[],
-  weds: readonly RawWed[],
+  weds: RawWed[],
 ): AsyncIterableIterator<GhostAreOut> => iterate<RawAre, GhostAreOut>(
   ares,
   (are, i) => {

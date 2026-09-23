@@ -8,13 +8,15 @@ import type { RawIniNumberedSection } from './parseNumberedSectionV1.types.js';
 const numberRegex = /^\d+$/;
 
 export const parseNumberedSectionV1 = (section: RawIniSection): Maybe<RawIniNumberedSection> => {
-  const isNumberedSection = numberRegex.test(section.name);
-  if (!isNumberedSection) throw new Error(`Expect section '${section.name}' to have number as a section name`);
+  const name = section.name;
+
+  const isNumberedSection = numberRegex.test(name);
+  if (!isNumberedSection) throw new Error(`Expect section '${name}' to have number as a section name`);
 
   /* eslint-disable @stylistic/no-multi-spaces */
-  const hitsound      = findEntry(section.entries, 'hitsound').stringOrNothing();
+  const hitSound      = findEntry(section.entries, 'hitsound').stringOrNothing();
   const hitframe      = findEntry(section.entries, 'hitframe').decOrNothing();
-  const dfbsound      = findEntry(section.entries, 'dfbsound').stringOrNothing();
+  const dfbSound      = findEntry(section.entries, 'dfbsound').stringOrNothing();
   const dfbframe      = findEntry(section.entries, 'dfbframe').decOrNothing();
   const at1Sound      = findEntry(section.entries, 'At1Sound').stringOrNothing(); // upper case
   const at1frame      = findEntry(section.entries, 'At1frame').decOrNothing();    // upper case
@@ -45,9 +47,10 @@ export const parseNumberedSectionV1 = (section: RawIniSection): Maybe<RawIniNumb
   /* eslint-enable */
 
   return {
-    hitsound: hitsound?.split(',') ?? [],
+    name,
+    hitSound,
     hitframe,
-    dfbsound,
+    dfbSound,
     dfbframe,
     at1Sound,
     at1frame,

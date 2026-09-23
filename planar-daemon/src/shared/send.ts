@@ -1,4 +1,4 @@
-import type { FromDaemon } from '@planar/kernel';
+import type { FromDaemon } from '@planar/shared';
 
 export const send = (fromDaemon: FromDaemon): void => {
   if (typeof process.send === 'function') {

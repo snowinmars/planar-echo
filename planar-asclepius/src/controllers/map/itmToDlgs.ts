@@ -6,22 +6,12 @@ import action from '@/services/map/itmToDlgs/action.js';
 import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 import type { Router } from 'express';
-import type { ZodObject, ZodString } from 'zod';
 
-const registerItmIdParam = (registry: OpenAPIRegistry): ZodString => {
-  return registry.registerParameter(
-    'itmToDlgs_itmId',
-    z.string().min(1, 'Itm id is required').openapi({
-      param: {
-        name: 'itmId',
-        in: 'path',
-        description: 'Itm id',
-      },
-      example: 'cube.itm',
-    }),
-  );
-};
-
+const params = z.object({
+  itmId: z.string().min(1, 'Itm id is required').openapi({
+    example: 'cube.itm',
+  }),
+});
 const responseOk = z.array(z.string());
 const responseError = z.object({
   error: z.object({
@@ -29,7 +19,7 @@ const responseError = z.object({
     code: z.enum(['DLGS_NOT_FOUND']),
   }),
 });
-const routeConfig = (params: ZodObject): RouteConfig => ({
+const routeConfig = (): RouteConfig => ({
   method: 'get',
   path: '/api/map/itmToDlgs/{itmId}',
   tags: ['map'],
@@ -58,12 +48,10 @@ const routeConfig = (params: ZodObject): RouteConfig => ({
 });
 
 export default (registry: OpenAPIRegistry, router: Router): void => {
-  const itmId = registerItmIdParam(registry);
-
-  registry.registerPath(routeConfig(z.object({ itmId })));
+  registry.registerPath(routeConfig());
 
   router.get('/api/map/itmToDlgs/:itmId',
-    validate({ params: { itmId } }),
+    validate({ params }),
     async (req, res) => {
       const result = await action({
         itmId: req.params.itmId,

@@ -10,8 +10,8 @@ import type { RawAreVertexV10 } from './8.parseVertices.types.js';
 
 type ParseContainerProps = Readonly<{
   reader: BufferReader;
-  items: readonly RawAreItemV10[];
-  vertices: readonly RawAreVertexV10[];
+  items: RawAreItemV10[];
+  vertices: RawAreVertexV10[];
 }>;
 const parseContainer = ({
   reader,

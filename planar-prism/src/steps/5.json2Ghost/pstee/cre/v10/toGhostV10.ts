@@ -1,4 +1,4 @@
-import { either } from '@planar/shared';
+import { optional } from '@planar/shared';
 
 import type { GhostCreV10 } from '@planar/shared';
 
@@ -87,9 +87,9 @@ export const toGhostV10 = (raw: RawCreV10): GhostCreV10 => {
     species: raw.header.species,
     dialogueActivationRange: raw.header.dialogueActivationRange,
     collisionRadius: raw.header.collisionRadius,
-    shieldFlags: either(raw.header.shieldFlags, []),
+    shieldFlags: optional(raw.header.shieldFlags, []),
     fieldOfVision: raw.header.fieldOfVision,
-    attributes: either(raw.header.attributes, []),
+    attributes: optional(raw.header.attributes, []),
     levelFirstClass: raw.header.levelFirstClass,
     levelSecondClass: raw.header.levelSecondClass,
     levelThirdClass: raw.header.levelThirdClass,

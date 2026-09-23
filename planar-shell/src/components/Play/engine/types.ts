@@ -1,4 +1,4 @@
-import type { FromDaemon, Snapshot } from '@planar/kernel';
+import type { FromDaemon, Snapshot } from '@planar/shared';
 import type { Maybe } from '@planar/shared';
 
 export type PlaySocketState = 'connecting' | 'open' | 'closed' | 'error';

@@ -6,7 +6,9 @@ import planarLocalStorage from '@/shared/planarLocalStorage';
 
 import { listGhostIni, loadGhostIni } from './iniApi';
 
-import type { GhostIni, Maybe } from '@planar/shared';
+import type { Maybe } from '@planar/shared';
+
+import type { LoadedGhostIni } from './iniApi';
 
 export type IniStore = Readonly<{
   serverUrl: string;
@@ -14,7 +16,7 @@ export type IniStore = Readonly<{
   loading: boolean;
   inis: string[];
   currentIniId: Maybe<string>;
-  currentIni: Maybe<GhostIni>;
+  currentIni: Maybe<LoadedGhostIni>;
   loadInis: () => Promise<void>;
   loadIni: (iniId: string) => Promise<void>;
   disposeIni: () => void;

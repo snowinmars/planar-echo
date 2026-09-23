@@ -51,7 +51,7 @@ const createView = (
         response,
         index,
         kind: 'extern',
-        marker: settings.dlgMarks.markExterns ? `→ ${externDlgId}` : '',
+        marker: settings.dlgMarks.markExterns ? `-> ${externDlgId}` : '',
       };
     }
 

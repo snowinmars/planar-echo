@@ -2,7 +2,11 @@ import type { FC, JSX } from 'react';
 
 import type { WithClassName } from '@/types/fcWithClassName';
 
-// https://icons.getbootstrap.com/icons/translate/
+/*
+ * Adapted from Bootstrap Icons "translate".
+ * Copyright (c) 2019-2024 The Bootstrap Authors. MIT License.
+ * See THIRD_PARTY_NOTICES.md for source and license details.
+ */
 const Translation: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg
     className={className}

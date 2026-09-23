@@ -4,7 +4,7 @@ import importX from 'eslint-plugin-import-x';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
-import { files, ignores, importSortRules } from '../eslint.shared.mjs';
+import { chaiFriendlyConfig, files, ignores, importSortRules } from '../eslint.shared.mjs';
 
 export default defineConfig(
   globalIgnores([
@@ -41,4 +41,5 @@ export default defineConfig(
       '@typescript-eslint/no-unsafe-assignment': 'off'
     },
   },
+  chaiFriendlyConfig,
 );

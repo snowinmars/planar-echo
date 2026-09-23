@@ -51,7 +51,7 @@ type RenderMosV1Props = Readonly<{
   height: number;
   palette: Buffer;
   paletteBlockStride: number;
-  blocks: readonly MosV1Block[];
+  blocks: MosV1Block[];
   indicesChunks: Buffer[];
 }>;
 

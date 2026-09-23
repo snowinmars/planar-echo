@@ -7,7 +7,6 @@ import Loading from '@/components/Loading';
 import type { FC, PropsWithChildren } from 'react';
 
 const Landing = lazy(() => import('@/components/Landing'));
-const Details = lazy(() => import('@/components/Details'));
 const Workbench = lazy(() => import('@/components/Workbench'));
 const Convert = lazy(() => import('@/components/Convert'));
 const Settings = lazy(() => import('@/components/Settings'));
@@ -32,6 +31,7 @@ const Twoda = lazy(() => import('@/components/Workbench/children/Twoda'));
 const Src = lazy(() => import('@/components/Workbench/children/Src'));
 const Stores = lazy(() => import('@/components/Stores'));
 const Play = lazy(() => import('@/components/Play'));
+const Mods = lazy(() => import('@/components/Mods'));
 
 // https://github.com/remix-run/react-router/issues/12474#issuecomment-2538281149
 const HelloDevs: FC<PropsWithChildren> = ({ children }) => {
@@ -45,9 +45,6 @@ const router = createBrowserRouter([{
   children: [{
     path: '/',
     element: <HelloDevs><Landing /></HelloDevs>,
-  }, {
-    path: '/details',
-    element: <HelloDevs><Details /></HelloDevs>,
   }, {
     path: '/workbench',
     element: <HelloDevs><Workbench /></HelloDevs>,
@@ -114,6 +111,9 @@ const router = createBrowserRouter([{
   }, {
     path: '/play',
     element: <HelloDevs><Play /></HelloDevs>,
+  }, {
+    path: '/mods',
+    element: <HelloDevs><Mods /></HelloDevs>,
   }, {
     path: '/settings',
     element: <HelloDevs><Settings /></HelloDevs>,

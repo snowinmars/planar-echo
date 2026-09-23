@@ -3,4 +3,4 @@ name: if
 description: Extract if conditions to variables
 ---
 
-If I want to extract conditions into a variables from this if, how should I name it?
+I want to extract conditions into variables from this `if`. How should I name it?

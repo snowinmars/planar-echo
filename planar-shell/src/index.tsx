@@ -8,10 +8,13 @@ import { RouterProvider } from 'react-router-dom';
 import { PlanarRuntimeProvider } from '@/engine/store/PlanarRuntimeProvider';
 import { WorldStoreProvider } from '@/engine/store/WorldStoreProvider';
 import router from '@/router';
+import { client } from '@/swagger/client/client.gen';
 
 import { ThemeContextProvider } from './theme/context';
 
 import './index.scss';
+
+client.setConfig({ withCredentials: true });
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

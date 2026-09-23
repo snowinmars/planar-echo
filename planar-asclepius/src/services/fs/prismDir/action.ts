@@ -1,13 +1,9 @@
 import { existsSync, statSync } from 'fs';
 import { join, resolve } from 'path';
 
-import { getPrismDir } from '../../settings/storage.js';
-
 import type { Command, Result } from './types.js';
 
-export default ({ path }: Command): Promise<Result> => {
-  const prismDir = getPrismDir();
-
+export default ({ path, prismDir }: Command): Promise<Result> => {
   const fullPath = resolve(join(prismDir, path));
   if (!fullPath.startsWith(prismDir)) {
     // this if should never fire, but I want to double check for now

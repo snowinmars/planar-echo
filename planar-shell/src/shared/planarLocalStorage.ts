@@ -1,6 +1,6 @@
 import { filter, fromEvent, map, merge, Subject } from 'rxjs';
 
-import { isNothing, maybe, nothing } from '@planar/shared';
+import { maybe, nothing } from '@planar/shared';
 
 import type { Observable } from 'rxjs';
 
@@ -13,9 +13,9 @@ const buildKey = (key: string): string => `${NAMESPACE}-${key}`;
 const key$ = new Subject<string>();
 
 const planarLocalStorage = {
-  get: <T = string>(key: string, either: Maybe<T> = nothing()): Maybe<T> => {
+  get: <T = string>(key: string, other: Maybe<T> = nothing()): Maybe<T> => {
     const value = localStorage.getItem(buildKey(key));
-    if (!value) return isNothing(either) ? nothing() : either;
+    if (!value) return other;
     return maybe(JSON.parse(value) as T);
   },
 

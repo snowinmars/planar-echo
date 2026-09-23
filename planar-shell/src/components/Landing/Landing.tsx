@@ -1,10 +1,8 @@
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
 
@@ -48,8 +46,6 @@ const Landing: FC = () => {
           <Typography color="text.secondary">
             {t('landing.intro.5')}
           </Typography>
-
-          <Link component={RouterLink} to="/details">{t('landing.intro.details')}</Link>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>

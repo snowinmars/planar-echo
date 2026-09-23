@@ -14,7 +14,7 @@ import type { LandingStateStep2, WeiduDownloadPlatform } from '@/components/Conv
 
 import styles from './Content.module.scss';
 
-const platforms: readonly WeiduDownloadPlatform[] = ['windows', 'linux', 'mac'];
+const platforms: WeiduDownloadPlatform[] = ['windows', 'linux', 'mac'];
 
 type ContentProps = Readonly<{
   disabled: boolean;

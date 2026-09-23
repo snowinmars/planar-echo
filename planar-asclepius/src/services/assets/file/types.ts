@@ -1,5 +1,6 @@
 export type Command = Readonly<{
   path: string;
+  ghostDir: string;
 }>;
 
 export type Result

@@ -1,13 +1,10 @@
 import TextField from '@mui/material/TextField';
-import { isAxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { nothing } from '@planar/shared';
 
-import planarLocalStorage from '@/shared/planarLocalStorage';
-import { getApiSettingsGhostDir, postApiSettingsGhostDir } from '@/swagger/client';
-import { client } from '@/swagger/client/client.gen';
+import { patchLocalDir, readLocalDirs } from '@/shared/defaultsApi';
 
 import type { BaseTextFieldProps } from '@mui/material/TextField';
 import type { FC } from 'react';
@@ -18,13 +15,7 @@ import styles from './GhostDir.module.scss';
 
 const ANIMATION_TIME_MS = 3000;
 
-type Status
-  = | 'nothing'
-    | 'loading'
-    | 'saving'
-    | 'saved'
-    | 'failed'
-;
+type Status = 'nothing' | 'loading' | 'saving' | 'saved' | 'failed';
 
 const statusToColor = (status: Status): BaseTextFieldProps['color'] => {
   switch (status) {
@@ -48,41 +39,19 @@ const statusToHelperText = (status: Status): string => {
 
 const GhostDir: FC = () => {
   const { t } = useTranslation();
-
-  const [ghostDir, setGhostDir] = useState<string>(() => planarLocalStorage.get('ghostDir', '')!);
-  const [status, setStatus] = useState<Status>('loading');
+  const [ghostDir, setGhostDir] = useState<string>(() => readLocalDirs().ghostDir);
+  const [status, setStatus] = useState<Status>('nothing');
   const [color, setColor] = useState(() => statusToColor(status));
   const [helperText, setHelperText] = useState<string>(() => statusToHelperText(status));
   const saveTimeout = useRef<Maybe<NodeJS.Timeout>>(nothing());
   const saveAbortController = useRef<AbortController>(new AbortController());
 
   useEffect(() => {
-    getApiSettingsGhostDir({
-      client,
-      signal: saveAbortController.current.signal,
-    })
-      .then(({ error, data }): void => {
-        if (error) {
-          console.error(error);
-          setGhostDir(planarLocalStorage.get('ghostDir', '')!);
-        }
-        else {
-          setGhostDir(data!.ghostDir); // TODO [snow]: why '!'?
-        }
-      })
-      .catch(e => console.error(e))
-      .finally(() => {
-        setStatus('nothing');
-      });
-  }, []);
-
-  useEffect(() => {
     setColor(statusToColor(status));
-
     const translationId = statusToHelperText(status);
     if (translationId) setHelperText(t(translationId));
     else setHelperText('');
-  }, [status]);
+  }, [status, t]);
 
   return (
     <div>
@@ -104,35 +73,21 @@ const GhostDir: FC = () => {
           const value = e.target.value;
           setGhostDir(value);
           setStatus('saving');
-          planarLocalStorage.set('ghostDir', value);
 
-          postApiSettingsGhostDir({
-            client,
-            signal: saveAbortController.current.signal,
-            body: {
-              ghostDir: value,
-            },
-          })
-            .then((response) => {
-              if (response.error && isAxiosError(response)) {
-                if (response.code !== 'ERR_CANCELED') {
-                  console.error(response);
-                  setStatus('failed');
-                }
-                return;
-              }
-
+          patchLocalDir('ghostDir', value, saveAbortController.current.signal)
+            .then(() => {
               setStatus('saved');
               saveTimeout.current = setTimeout(() => {
                 setStatus('nothing');
               }, ANIMATION_TIME_MS);
-            }).catch((e: unknown) => {
-              console.error(e);
+            })
+            .catch((err: unknown) => {
+              if (err instanceof DOMException && err.name === 'AbortError') return;
+              console.error(err);
               setStatus('failed');
             });
         }}
-      >
-      </TextField>
+      />
     </div>
   );
 };

@@ -2,6 +2,7 @@ export type WeiduPlatform = 'windows' | 'linux' | 'mac';
 
 export type Command = Readonly<{
   platform: WeiduPlatform;
+  weiduDir: string;
 }>;
 
 export type Result

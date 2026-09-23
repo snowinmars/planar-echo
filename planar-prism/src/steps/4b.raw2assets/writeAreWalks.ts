@@ -1,3 +1,9 @@
+/*
+ * The default terrain mapping is adapted from GemRB (GPL-2.0-or-later).
+ * planar-echo changes are GPL-3.0-or-later.
+ * See THIRD_PARTY_NOTICES.md for source and license details.
+ */
+
 import { readFile } from 'fs/promises';
 import { join } from 'path';
 
@@ -19,7 +25,7 @@ import type { AllPsteeJsons } from '@/steps/4.biffs2json/types.js';
 /**
  * GemRB hardcoded PathMapFlags PASSABLE bit when terrain.2da is missing.
  * Ask gemrb team of what does they mean
- * https://github.com/gemrb/gemrb/blob/master/gemrb/unhardcoded/pst/terrain.2da
+ * https://github.com/gemrb/gemrb/blob/04eba1cb28b71325a014d41a94d8e334b0a465b2/gemrb/unhardcoded/pst/terrain.2da
  */
 const UNPASSABLE_WALK = 0; // TODO [snow]: these const uses in kernel, join
 const PASSABLE_WALK = 1;

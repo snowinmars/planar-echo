@@ -1,8 +1,14 @@
 import { Worker } from 'worker_threads';
 
+import { nothing } from '@planar/shared';
+
 import { reportProgress } from '@/shared/report.js';
 
 import { workerCount } from './workerCount.js';
+
+import type { WorkerOptions } from 'worker_threads';
+
+import type { Maybe } from '@planar/shared';
 
 import type {
   MainToWorker,
@@ -44,12 +50,12 @@ export async function* runPool<T>(props: RunPoolProps): AsyncGenerator<T> {
   const idle = new Set<number>();
   const inFlight = new Set<number>();
   const pending: Pending[] = [];
-  let failed: Error | null = null;
-  let notify: (() => void) | null = null;
+  let failed: Maybe<Error> = nothing();
+  let notify: Maybe<() => void> = nothing();
 
   const wake = (): void => {
     const fn = notify;
-    notify = null;
+    notify = nothing();
     fn?.();
   };
 
@@ -84,7 +90,7 @@ export async function* runPool<T>(props: RunPoolProps): AsyncGenerator<T> {
     const worker = new Worker(workerUrl, {
       workerData,
       type: 'module',
-    } as import('worker_threads').WorkerOptions);
+    } as WorkerOptions);
     workers.push(worker);
 
     let chain = Promise.resolve();
@@ -138,7 +144,7 @@ export async function* runPool<T>(props: RunPoolProps): AsyncGenerator<T> {
 
   try {
     while (completed < jobs.length) {
-      if (failed) throw failed;
+      if (failed) throw failed as Error; // failed may be changed from workers
 
       if (pending.length > 0) {
         const item = pending.shift();
@@ -166,5 +172,5 @@ export async function* runPool<T>(props: RunPoolProps): AsyncGenerator<T> {
     await Promise.all(workers.map(w => w.terminate()));
   }
 
-  if (failed) throw failed;
+  if (failed) throw failed as Error; // failed may be changed from workers
 }

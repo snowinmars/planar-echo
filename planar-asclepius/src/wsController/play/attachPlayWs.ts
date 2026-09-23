@@ -1,10 +1,17 @@
 import { WebSocket } from 'ws';
 
+import { nothing } from '@planar/shared';
+
 import logger from '@/shared/logger.js';
 import { spawnDaemon } from '@/shared/spawnDaemon.js';
 
 import type { ChildProcess, Serializable } from 'child_process';
+import type { IncomingMessage } from 'http';
 import type { WebSocketServer } from 'ws';
+
+import type { Maybe } from '@planar/shared';
+
+import type { Paths } from '@/shared/createPaths.types.js';
 
 type Session = {
   child: ChildProcess;
@@ -25,8 +32,12 @@ const isWsAttachable = (ws: WebSocket): boolean => {
   return attachable;
 };
 
-export const attachPlayWs = (getGhostDir: () => string, wss: WebSocketServer): void => {
+export const attachPlayWs = (
+  getPaths: (req: IncomingMessage) => Paths,
+  wss: WebSocketServer,
+): void => {
   let state: State = { tag: 'idle' };
+  let lastPaths: Maybe<Paths> = nothing();
 
   const broadcastTo = (target: Session, payload: unknown): void => {
     const json = JSON.stringify(payload);
@@ -51,7 +62,12 @@ export const attachPlayWs = (getGhostDir: () => string, wss: WebSocketServer): v
       return;
     }
 
-    const session = spawnFresh();
+    if (!lastPaths) {
+      state = { tag: 'idle' };
+      return;
+    }
+
+    const session = spawnFresh(lastPaths);
     state = { tag: 'live', session };
     for (const ws of attachable) {
       attachClient(ws, session);
@@ -95,8 +111,10 @@ export const attachPlayWs = (getGhostDir: () => string, wss: WebSocketServer): v
     }
   };
 
-  const spawnFresh = (): Session => {
-    const child = spawnDaemon(getGhostDir());
+  const spawnFresh = (paths: Paths): Session => {
+    lastPaths = paths;
+
+    const child = spawnDaemon(paths.ghost.root, paths.modsRuntime.root, paths.daemon.dist);
 
     const session: Session = {
       child,
@@ -157,11 +175,11 @@ export const attachPlayWs = (getGhostDir: () => string, wss: WebSocketServer): v
     });
   };
 
-  wss.on('connection', (ws: WebSocket) => {
+  wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
     const tag = state.tag;
     switch (tag) {
       case 'idle': {
-        const session = spawnFresh();
+        const session = spawnFresh(getPaths(req));
         state = { tag: 'live', session };
         attachClient(ws, session);
         break;

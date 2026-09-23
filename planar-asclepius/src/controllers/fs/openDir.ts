@@ -8,7 +8,9 @@ import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 import type { Router } from 'express';
 
 const body = z.object({
-  dir: z.string().min(1, 'Directory path is required'),
+  dir: z.string().min(1, 'Directory path is required').openapi({
+    example: '/abs/any/folder',
+  }),
 });
 const responseOk = z.object({});
 const responseError = z.object({

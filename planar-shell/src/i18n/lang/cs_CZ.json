@@ -4,21 +4,21 @@
   },
   "landing": {
     "intro": {
-      "techdemo": "Technologická ukázka",
-      "details": "Více informací",
+      "techdemo": "Předběžná verze",
       "convert": "Přetvořit formu",
-      "1": "Ahoj.",
-      "2": "Toto je planar-echo: open-source nástroj pro převedení her na Infinity Engine do moderní podoby.",
-      "3": "Stručně řečeno.",
-      "4": "Planar echo převádí proprietární herní data do otevřeného formátu, čímž umožňuje spouštění ve vlastním enginu nativně na Linuxu, Androidu, Webu a Windows.",
-      "5": "Požadavky: node.js a vlastnictví původních herních souborů."
+      "1": "Prozkoumejte PST:EE lokálně.",
+      "2": "planar-echo převádí legálně získanou instalaci PST:EE na data, která lze zkoumat v místním prohlížečovém pracovním prostředí.",
+      "3": "Současný produkt a směr.",
+      "4": "Nyní jsou k dispozici převod a Workbench. Play a Mods jsou experimentální nástroje pro ověřování vyvíjeného běhového prostředí.",
+      "5": "Cílem je nezávislé běhové prostředí kompatibilní s Infinity Engine. Dnes je podporováno pouze PST:EE."
     },
     "runnerGuard": {
       "ghostDir": "Složka hry",
       "or": "nebo",
       "convert": "Přetvořit formu",
       "workbench": "Jdi k pracovnímu stolu",
-      "play": "Hrát",
+      "play": "Hrát (experimentální)",
+      "mods": "Mody (experimentální)",
       "stores": "Datová úložiště"
     },
     "step0": {
@@ -85,8 +85,9 @@
       }
     },
     "step5": {
-      "ownGame": "Převádím to, co vlastním.",
-      "comment": "Neporušuji autorská práva - bezplatně podporuji prodej originálu."
+      "ownGame": "Používám legálně získanou kopii PST:EE.",
+      "comment": "Odpovídám za dodržení podmínek vztahujících se na mou kopii a platných právních předpisů.",
+      "legal": "Právní zásady a zásady obsahu"
     },
     "step6": {
       "start": "Mám místo na disku a chci začít",
@@ -221,6 +222,9 @@
   "settings": {
     "gameInterfaceSettings": "Nastavení herního rozhraní",
     "serverSettings": "Nastavení serveru",
+    "saveDefaultsToJson": "Uložit cesty do asclepius.defaults.json",
+    "saveDefaultsSaved": "Zapsáno do json",
+    "saveDefaultsFailed": "Zápis json selhal, viz F12",
     "backendUrl": {
       "title": "URL serveru",
       "pinging": "Kontrola",
@@ -243,6 +247,13 @@
     },
     "shellDir": {
       "title": "Adresář planar-shell",
+      "loading": "Načítání...",
+      "saving": "Kontrola...",
+      "saved": "Uloženo",
+      "failed": "Chyba, viz F12"
+    },
+    "modsDir": {
+      "title": "Adresář mods",
       "loading": "Načítání...",
       "saving": "Kontrola...",
       "saved": "Uloženo",
@@ -303,6 +314,19 @@
         "ravel": "Ravel"
       }
     }
+  },
+  "mods": {
+    "title": "Mods",
+    "hint": "Autosaves active.json after 300ms. Restart /play. Not live.",
+    "missingActive": "active.json is missing. Asclepius seeds factory on start if dist exists.",
+    "installDefaults": "Install default mods",
+    "installing": "Building mods…",
+    "copied": "copied: {{ids}}",
+    "slots": "Radio slots",
+    "enabled": "Enabled",
+    "serverHooks": "Server hook order",
+    "clientHooks": "Client hook order",
+    "queries": "Query order"
   },
   "themes": {
     "light": "Světlý",

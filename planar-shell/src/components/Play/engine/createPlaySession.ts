@@ -2,8 +2,7 @@ import { isNothing, nothing } from '@planar/shared';
 
 import { attachPlayView } from './attachPlayView.js';
 
-import type { FromDaemon, InputCommand, Patch, SeatId, ToDaemon } from '@planar/kernel';
-import type { Maybe } from '@planar/shared';
+import type { FromDaemon, InputCommand, Maybe, Patch, SeatId, ToDaemon } from '@planar/shared';
 
 import type { PlaySessionApi, PlaySocketState, PlayView } from './types.js';
 
@@ -11,8 +10,8 @@ const SEAT_ID: SeatId = 1;
 
 const wsUrlFromHttp = (httpUrl: string): string => `${httpUrl.replace(/^http/u, 'ws')}/api/play`; // TODO [snow]: generate websocket client
 
-const isRejectedPatch = (patch: Patch): patch is Extract<Patch, { op: 'command/rejected' }> => (
-  patch.op === 'command/rejected'
+const isRejectedPatch = (patch: Patch): patch is Extract<Patch, { type: 'command/rejected' }> => (
+  patch.type === 'command/rejected'
 );
 
 export type CreatePlaySessionProps = Readonly<{

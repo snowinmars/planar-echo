@@ -1244,4 +1244,5 @@ export type BooleanVariableId
     | 'zm782_dead_kaputz'
     | 'zombie_chaotic'
 ;
+
 export type VariableId = NumberVariableId | BooleanVariableId;

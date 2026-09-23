@@ -1,79 +1,140 @@
-import { either, nothing } from '@planar/shared';
+import {
+  GHOST_INI_ANIMATION_SLOT_KEYS,
+  GHOST_INI_FIVE_CYCLE_SLOTS,
+  isHex4Ini,
+  isNothing,
+  isResdataIni,
+  maybeMap,
+  nothing,
+  optional,
+} from '@planar/shared';
 
-import type { GhostIni, GhostIniMonsterPlanescapeSection, GhostIniSoundsSection, Maybe } from '@planar/shared';
+import type {
+  FacingCycle,
+  GhostIniAnimation,
+  GhostIniAnimationSlot,
+  GhostIniAnimationSlotKey,
+  GhostIniArea,
+  GhostIniMonsterPlanescapeSection,
+  GhostIniNumberedSection,
+  GhostIniResdata,
+  GhostIniSoundsSection,
+  Maybe,
+} from '@planar/shared';
 
 import type { RawIni } from '@/steps/4.biffs2json/pstee/ini/parseInis.types.js';
 
-const extendWithExtension = (x: Maybe<string>, e: string): Maybe<string> => x ? `${x}.${e}` : nothing();
-const extendWithBamExtension = (x: Maybe<string>): Maybe<string> => extendWithExtension(x, 'bam');
-const extendWithWavExtension = (x: Maybe<string>): Maybe<string> => extendWithExtension(x, 'wav');
+export type GhostIniFile = GhostIniResdata | GhostIniAnimation | GhostIniArea;
 
-export const toGhost = (raw: RawIni): GhostIni => {
-  const numberedSections = raw.numberedSections.map((x) => {
-    return {
-      ...x,
-      hitsound: either(x.hitsound, []),
-    };
-  });
+const extendWithExtension = (x: string, e: string): string => `${x}.${e}`;
+const extendWithBamExtension = (x: string): string => extendWithExtension(x, 'bam');
+const extendWithWavExtension = (x: string): string => extendWithExtension(x, 'wav');
 
-  const sounds: Maybe<GhostIniSoundsSection> = raw.sounds
-    ? {
-        ...raw.sounds,
-        dfbsound: extendWithWavExtension(raw.sounds.dfbsound),
-        at1Sound: extendWithWavExtension(raw.sounds.at1Sound),
-        at2Sound: extendWithWavExtension(raw.sounds.at2Sound),
-        cf1Sound: extendWithWavExtension(raw.sounds.cf1Sound),
-        hitsound: either(raw.sounds.hitsound, []).map(extendWithWavExtension) as string[], // TODO [snow]: it is ok to force type, but...
-      }
-    : nothing();
+const soundsOf = (raw: RawIni): Maybe<GhostIniSoundsSection> => (raw.sounds
+  ? {
+      ...raw.sounds,
+      dfbSounds: optional(maybeMap(raw.sounds.dfbSound, x => x.split(',').map(extendWithWavExtension)), []),
+      at1Sounds: optional(maybeMap(raw.sounds.at1Sound, x => x.split(',').map(extendWithWavExtension)), []),
+      at2Sounds: optional(maybeMap(raw.sounds.at2Sound, x => x.split(',').map(extendWithWavExtension)), []),
+      cf1Sounds: optional(maybeMap(raw.sounds.cf1Sound, x => x.split(',').map(extendWithWavExtension)), []),
+      hitSounds: optional(maybeMap(raw.sounds.hitSound, x => x.split(',').map(extendWithWavExtension)), []),
+    }
+  : nothing());
 
-  const creatureSections = raw.creatureSections.map((x) => {
-    return {
-      ...x,
-      spawnPoint: either(x.spawnPoint, []),
-      ai: {
-        ea: x.aiEa,
-        faction: x.aiFaction,
-        team: x.aiTeam,
-        general: x.aiGeneral,
-        race: x.aiRace,
-        class: x.aiClass,
-        specifics: x.aiSpecifics,
-        gender: x.aiGender,
-        alignment: x.aiAlignment,
-      },
-    };
-  });
+const numberedOf = (raw: RawIni): GhostIniNumberedSection[] => raw.numberedSections.map(x => ({
+  ...x,
+  dfbSounds: optional(maybeMap(x.dfbSound, x => x.split(',').map(extendWithWavExtension)), []),
+  at1Sounds: optional(maybeMap(x.at1Sound, x => x.split(',').map(extendWithWavExtension)), []),
+  at2Sounds: optional(maybeMap(x.at2Sound, x => x.split(',').map(extendWithWavExtension)), []),
+  cf1Sounds: optional(maybeMap(x.cf1Sound, x => x.split(',').map(extendWithWavExtension)), []),
+  hitSounds: optional(maybeMap(x.hitSound, x => x.split(',').map(extendWithWavExtension)), []),
+}));
 
-  const monsterPlanescape: Maybe<GhostIniMonsterPlanescapeSection> = raw.monsterPlanescape
-    ? {
-        attack1: extendWithBamExtension(raw.monsterPlanescape.attack1),
-        attack2: extendWithBamExtension(raw.monsterPlanescape.attack2),
-        stance2stand: extendWithBamExtension(raw.monsterPlanescape.stance2stand),
-        stancefidget1: extendWithBamExtension(raw.monsterPlanescape.stancefidget1),
-        diebackward: extendWithBamExtension(raw.monsterPlanescape.diebackward),
-        getup: extendWithBamExtension(raw.monsterPlanescape.getup),
-        gethit: extendWithBamExtension(raw.monsterPlanescape.gethit),
-        run: extendWithBamExtension(raw.monsterPlanescape.run),
-        stand2stance: extendWithBamExtension(raw.monsterPlanescape.stand2stance),
-        standfidget1: extendWithBamExtension(raw.monsterPlanescape.standfidget1),
-        spell1: extendWithBamExtension(raw.monsterPlanescape.spell1),
-        spell2: extendWithBamExtension(raw.monsterPlanescape.spell2),
-        stance: extendWithBamExtension(raw.monsterPlanescape.stance),
-        stand: extendWithBamExtension(raw.monsterPlanescape.stand),
-        talk1: extendWithBamExtension(raw.monsterPlanescape.talk1),
-        walk: extendWithBamExtension(raw.monsterPlanescape.walk),
-        runscale: raw.monsterPlanescape.runscale,
-        bestiary: raw.monsterPlanescape.bestiary,
-        armor: raw.monsterPlanescape.armor,
-      }
-    : nothing();
+const creatureSectionsOf = (raw: RawIni): GhostIniArea['creatureSections'] => raw.creatureSections.map(x => ({
+  ...x,
+  spawnPoint: optional(x.spawnPoint, []),
+  ai: {
+    ea: x.aiEa,
+    faction: x.aiFaction,
+    team: x.aiTeam,
+    general: x.aiGeneral,
+    race: x.aiRace,
+    class: x.aiClass,
+    specifics: x.aiSpecifics,
+    gender: x.aiGender,
+    alignment: x.aiAlignment,
+  },
+}));
+
+const slotOf = (bam: Maybe<string>, facingCycle: FacingCycle): Maybe<GhostIniAnimationSlot> => {
+  if (typeof bam !== 'string' || bam === '') return nothing();
 
   return {
-    ...raw,
-    numberedSections,
-    sounds,
-    creatureSections,
-    monsterPlanescape,
+    bam: extendWithBamExtension(bam),
+    facingCycle,
   };
+};
+
+const monsterPlanescapeOf = (raw: RawIni): GhostIniMonsterPlanescapeSection => {
+  const monster = raw.monsterPlanescape;
+  if (isNothing(monster)) throw new Error(`Ini '${raw.resourceName}' cannot be converted to animation because it has no 'monster' section`);
+
+  const slots: {
+    [K in GhostIniAnimationSlotKey]?: GhostIniAnimationSlot;
+  } & {
+    runscale?: Maybe<number>;
+    bestiary?: Maybe<number>;
+    armor?: Maybe<number>;
+  } = {
+    runscale: monster.runscale,
+    bestiary: monster.bestiary,
+    armor: monster.armor,
+  };
+
+  for (const key of GHOST_INI_ANIMATION_SLOT_KEYS) {
+    const facingCycle: FacingCycle = GHOST_INI_FIVE_CYCLE_SLOTS.has(key) ? 'five' : 'nine';
+
+    const slot = slotOf(monster[key], facingCycle);
+    if (!isNothing(slot)) slots[key] = slot;
+  }
+
+  const walk = slots.walk;
+  if (isNothing(slots.run) && !isNothing(walk)) slots.run = walk;
+
+  return slots;
+};
+
+const toResdata = (raw: RawIni): GhostIniResdata => ({
+  resourceName: raw.resourceName,
+  numberedSections: numberedOf(raw),
+});
+
+const toAnimation = (raw: RawIni): GhostIniAnimation => {
+  const general = raw.general;
+  if (isNothing(general)) {
+    throw new Error(`Ini '${raw.resourceName}' cannot be converted to animation because it has no 'general' section`);
+  }
+
+  return {
+    resourceName: raw.resourceName,
+    general,
+    monsterPlanescape: monsterPlanescapeOf(raw),
+    sounds: soundsOf(raw),
+  };
+};
+
+const toArea = (raw: RawIni): GhostIniArea => ({
+  resourceName: raw.resourceName,
+  nameless: raw.nameless,
+  namelessvar: raw.namelessvar,
+  locals: raw.locals,
+  spawnMain: raw.spawnMain,
+  groupSections: raw.groupSections,
+  creatureSections: creatureSectionsOf(raw),
+});
+
+export const toGhost = (raw: RawIni): GhostIniFile => {
+  if (isResdataIni(raw.resourceName)) return toResdata(raw);
+  if (isHex4Ini(raw.resourceName)) return toAnimation(raw);
+  return toArea(raw);
 };

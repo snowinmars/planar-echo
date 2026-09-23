@@ -8,7 +8,9 @@ import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 import type { Router } from 'express';
 
 const body = z.object({
-  weiduExeDir: z.string().min(1, 'Weidu directory path is required'),
+  weiduExeDir: z.string().min(1, 'Weidu directory path is required').openapi({
+    example: '/abs/weidu',
+  }),
 });
 const responseOk = z.object({
   data: z.object({

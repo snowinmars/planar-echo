@@ -12,7 +12,7 @@ export type DecodedBamV1Frame = Readonly<{
 
 type DecodeBamV1FramesProps = Readonly<{
   src: Buffer;
-  frames: readonly BamV1FramePixels[];
+  frames: BamV1FramePixels[];
   palette: Buffer;
   rleIndex: number;
 }>;

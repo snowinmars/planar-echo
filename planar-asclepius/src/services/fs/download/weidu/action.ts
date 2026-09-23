@@ -5,7 +5,6 @@ import { join, resolve } from 'path';
 
 import { nothing } from '@planar/shared';
 
-import { getWeiduInstallDir } from '@/services/settings/storage.js';
 import logger from '@/shared/logger.js';
 
 import type { Maybe } from '@planar/shared';
@@ -38,9 +37,9 @@ const findWeiduBinary = async (root: string, platform: WeiduPlatform): Promise<M
 
 export default async ({
   platform,
+  weiduDir,
 }: Command): Promise<Result> => {
   const url = weiduUrls[platform];
-  const destDir = getWeiduInstallDir();
   const zipPath = join(tmpdir(), `weidu-${platform}-${Date.now()}.zip`);
 
   try {
@@ -76,9 +75,9 @@ export default async ({
   }
 
   try {
-    await rm(destDir, { recursive: true, force: true });
-    await mkdir(destDir, { recursive: true });
-    await extractZip(zipPath, { dir: destDir });
+    await rm(weiduDir, { recursive: true, force: true });
+    await mkdir(weiduDir, { recursive: true });
+    await extractZip(zipPath, { dir: weiduDir });
   }
   catch (e: unknown) {
     logger.error(e);
@@ -95,13 +94,13 @@ export default async ({
     await unlink(zipPath).catch((e: unknown) => logger.error(e));
   }
 
-  const weiduExeDir = await findWeiduBinary(destDir, platform);
+  const weiduExeDir = await findWeiduBinary(weiduDir, platform);
   if (!weiduExeDir) {
     return {
       ok: false,
       error: {
         code: 'BINARY_NOT_FOUND',
-        message: `WeiDU binary '${binaryName(platform)}' was not found in '${destDir}'`,
+        message: `WeiDU binary '${binaryName(platform)}' was not found in '${weiduDir}'`,
         status: 404,
       },
     };

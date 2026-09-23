@@ -1,13 +1,9 @@
 import { existsSync, statSync } from 'fs';
 import { join, resolve } from 'path';
 
-import { getGhostDir } from '../../settings/storage.js';
-
 import type { Command, Result } from './types.js';
 
-export default ({ path }: Command): Promise<Result> => {
-  const ghostDir = getGhostDir();
-
+export default ({ path, ghostDir }: Command): Promise<Result> => {
   const fullPath = resolve(join(ghostDir, path));
   if (!fullPath.startsWith(ghostDir)) {
     // this if should never fire, but I want to double check for now

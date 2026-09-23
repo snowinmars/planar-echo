@@ -10,12 +10,15 @@ alwaysApply: true
 lean-ctx shadow mode: native file/search/shell calls auto-route to ctx_* — no tool-mapping needed.
 Exclusive tools (no native trigger): ctx_compose (understand code, call first), ctx_search(action=symbol) (exact symbol), ctx_search(action=semantic) (by meaning), ctx_callgraph (callers), ctx_knowledge / ctx_session (memory).
 
-OUTPUT: never echo tool output, no narration comments, show only changed code.
 <!-- lean-ctx-compression -->
-OUTPUT STYLE: concise
-- Bullet points over paragraphs
-- Skip filler words and hedging ("I think", "probably", "it seems")
-- 1-sentence explanations max, then code/action
-- No repeating what the user said
+## Communication
+
+- Never echo raw tool output; synthesize only the evidence relevant to the task.
+- Keep progress updates concise and limited to meaningful changes, findings, or blockers.
+- Match the final response to the task:
+  - Audits, plans, reviews, diagnoses, and explanations may use structured prose.
+  - Edit tasks summarize the files changed and the verification performed.
+- Prefer concise bullets when they improve readability.
+- Avoid filler, unnecessary hedging, and repetition of the user's request.
 <!-- /lean-ctx-compression -->
 <!-- /lean-ctx-rules -->

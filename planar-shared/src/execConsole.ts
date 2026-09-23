@@ -6,7 +6,7 @@ import type { Maybe } from './maybe.js';
 
 export type ExecConsoleProps = Readonly<{
   file: string;
-  args: readonly string[];
+  args: string[];
   cwd?: string;
 }>;
 

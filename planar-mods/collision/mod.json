@@ -1,0 +1,13 @@
+{
+  "id": "collision",
+  "version": "1.0.0",
+  "description": {
+    "ru": "Путь огибает живых существ.",
+    "en": "Paths go around the living creatures."
+  },
+  "sides": ["server", "client"],
+  "slots": ["collision"],
+  "hooks": ["onAreaLoad", "onPatches", "onFrame"],
+  "queries": ["occupancy"],
+  "requiredModIds": []
+}

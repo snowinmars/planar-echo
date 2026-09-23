@@ -1,4 +1,4 @@
-import type { GhostType } from '@planar/shared';
+import type { GhostType, Maybe } from '@planar/shared';
 
 export type GhostSearchHit = Readonly<{
   type: GhostType;
@@ -7,7 +7,7 @@ export type GhostSearchHit = Readonly<{
 
 export type Command = Readonly<{
   ghostDir: string;
-  partialName: string;
+  partialName?: Maybe<string>;
 }>;
 
 export type Result

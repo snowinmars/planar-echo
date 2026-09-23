@@ -1,3 +1,5 @@
+import pluginChaiFriendly from 'eslint-plugin-chai-friendly'
+
 export const files = ['**/*.ts', '**/*.tsx']
 
 export const ignores = [
@@ -44,4 +46,14 @@ export const importSortRules = {
   'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
   'simple-import-sort/imports': ['error', { groups: importGroups }],
   'simple-import-sort/exports': 'error',
+}
+
+export const chaiFriendlyConfig = {
+  files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.test.ts', '**/*.test.tsx'],
+  plugins: { 'chai-friendly': pluginChaiFriendly },
+  rules: {
+    'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-expressions': 'off',
+    'chai-friendly/no-unused-expressions': 'error',
+  },
 }

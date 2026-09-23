@@ -1,3 +1,9 @@
+/*
+ * Refactored from intervalia/node-ask.
+ * Copyright (c) 2014-2015 Michael Glen Collins. MIT License.
+ * See THIRD_PARTY_NOTICES.md for source and license details.
+ */
+
 export class ConsoleIO {
   constructor(
     private stdin: NodeJS.ReadStream = process.stdin,

@@ -20,6 +20,15 @@ const Footer: FC = () => (
     </Link>
 
     <Link
+      className={styles.license}
+      href="https://github.com/snowinmars/planar-echo/blob/master/LEGAL.md"
+      target="_blank"
+      rel="noopener"
+    >
+      Legal
+    </Link>
+
+    <Link
       href="mailto:snowinmars@yandex.ru"
       target="_blank"
       rel="noopener"

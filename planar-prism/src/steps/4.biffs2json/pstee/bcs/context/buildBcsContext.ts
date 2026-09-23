@@ -1,3 +1,9 @@
+/*
+ * String-packing behavior adapted from Near Infinity (LGPL-2.1).
+ * This GPL-3.0-or-later work uses the option in LGPL 2.1 section 3.
+ * See THIRD_PARTY_NOTICES.md for source and license details.
+ */
+
 import { just, nothing } from '@planar/shared';
 
 import { loadXorKey } from '@/shared/xor.js';
@@ -25,7 +31,7 @@ import type {
  *
  * For many global-related functions the engine stores
  * "area" and "name" in *one* slot: a fixed 6-character area prefix plus the variable
- * name (e.g. "LOCALS" + "cd_int_0" → one field "LOCALScd_int_0"). The IDS line does not
+ * name (e.g. "LOCALS" + "cd_int_0" -> one field "LOCALScd_int_0"). The IDS line does not
  * say which functions pack strings this way; that ruleset is hardcoded per function id
  * (Near Infinity: ScriptInfo.functionConcatMap + Parameter.isCombinedString).
  *

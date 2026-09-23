@@ -1,4 +1,4 @@
-import { isNothing, just, nothing } from '@planar/shared';
+import { isNothing, just, maybeMap, nothing, optional } from '@planar/shared';
 
 import createReader from '@/shared/bufferReader.js';
 import { xorDecrypt } from '@/shared/xor.js';
@@ -51,7 +51,7 @@ export const parse2daV1 = ({
   const defaultValue = just(tokens(next(lines)!)[0]);
 
   const headerLine = nextUncommentLine(lines);
-  const columns = isNothing(headerLine) ? [] : tokens(headerLine);
+  const columns = optional(maybeMap(headerLine, tokens), []);
 
   const rows: RawTwodaRow[] = [];
   while (true) {

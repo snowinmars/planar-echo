@@ -1,14 +1,11 @@
 export type { PstAnimStance } from './creAnimation.js';
 export {
-  animationIdToIniId,
-  bamCycleIndex,
+  bamCycleIndexForFacingCycle,
   bamEastMirror,
   CRE_ANIM_FPS,
   facingFromDirection,
   orientFromDelta,
   pstBamCandidates,
-  pstSlotResref,
-  pstStanceFromMotion,
 } from './creAnimation.js';
 export { dateDiffSec } from './dateDiffSec.js';
 export { DB_NAME } from './db.js';
@@ -125,16 +122,33 @@ export type {
   GhostEff,
   GhostEffV20,
 } from './ghost/eff.types.js';
+export { getGhostIniAnimationSlot } from './ghost/getGhostIniAnimationSlot.js';
 export type { GhostIds } from './ghost/ids.types.js';
 export type {
-  GhostIni,
+  FacingCycle,
+  GhostIniAnimation,
+  GhostIniAnimationSlot,
+  GhostIniArea,
+  GhostIniGeneralSection,
+  GhostIniMonsterPlanescapeSection,
+  GhostIniNamelessSection,
+  GhostIniResdata,
+  GhostIniSpawnMainSection,
+} from './ghost/ini.types.js';
+export type {
   GhostIniCreatureScopedVariable,
   GhostIniCreatureSection,
   GhostIniGroupSection,
-  GhostIniMonsterPlanescapeSection,
   GhostIniNumberedSection,
   GhostIniSoundsSection,
 } from './ghost/ini.types.js';
+export type { GhostIniAnimationSlotKey } from './ghost/iniKind.js';
+export {
+  GHOST_INI_ANIMATION_SLOT_KEYS,
+  GHOST_INI_FIVE_CYCLE_SLOTS,
+  isHex4Ini,
+  isResdataIni,
+} from './ghost/iniKind.js';
 export type {
   GhostItm,
   GhostItmAbility,
@@ -156,14 +170,20 @@ export type {
   GhostPvr,
   GhostPvrPixelFormat,
 } from './ghost/pvr.types.js';
-export type { GhostSrc, GhostSrcEntry } from './ghost/src.types.js';
+export type {
+  GhostSrc,
+  GhostSrcEntry,
+} from './ghost/src.types.js';
 export type {
   GhostTis,
   GhostTisPalette,
   GhostTisPvrz,
 } from './ghost/tis.types.js';
 export type { GhostTlk } from './ghost/tlk.types.js';
-export type { GhostTwoda, GhostTwodaRow } from './ghost/twoda.types.js';
+export type {
+  GhostTwoda,
+  GhostTwodaRow,
+} from './ghost/twoda.types.js';
 export type { GhostWav } from './ghost/wav.types.js';
 export type {
   GhostWed,
@@ -178,9 +198,102 @@ export type {
   Maybe,
   Nothing,
 } from './maybe.js';
-export { either, isNothing, just, maybe, nothing } from './maybe.js';
+export { isNothing, just, maybe, maybeMap, nothing, optional } from './maybe.js';
 export { objectEntries, objectKeys, objectValues } from './objects.js';
 export type { PartialWriteable } from './partialWriteable.js';
+export { animationIdToHex4 } from './play/animationIdToHex4.js';
+export type {
+  AssetAtlas,
+  AssetKey,
+  AssetValueOf,
+  ClientAssets,
+  LoadedBamArt,
+  LoadedTisArt,
+} from './play/assets.js';
+export {
+  DEFAULT_ARE,
+  DEFAULT_PERSONAL_SPACE,
+  DEFAULT_PLAYER_CRE,
+  DEFAULT_SPEED_PX_PER_TICK,
+  MAX_PERSONAL_SPACE,
+  PASSABLE_WALK,
+  PLAYER_ACTOR_ID,
+  TICK_HZ,
+  UNPASSABLE_WALK,
+} from './play/constants.js';
+export type { Envelope, EnvelopePatch } from './play/envelope.js';
+export type {
+  ClientGhostReader,
+  ClientLayerName,
+  ClientModExports,
+  ClientModHost,
+  ClientOnAreaLoadCtx,
+  ClientOnAreaUnloadCtx,
+  ClientOnFrameCtx,
+  ClientOnPatchesCtx,
+  ModBag,
+  ServerFloorOverlayCtx,
+  ServerGhostReader,
+  ServerModExports,
+  ServerModHost,
+  ServerOccupancyCtx,
+  ServerOnAreaLoadCtx,
+  ServerOnAreaUnloadCtx,
+  ServerOnCommandCtx,
+  ServerOnTickCtx,
+  VisibleBounds,
+} from './play/host.js';
+export type { MemoStore } from './play/memoLoad.js';
+export { createMemoStore } from './play/memoLoad.js';
+export type {
+  ActiveJsonMods,
+  ClientHookName,
+  ComposedQueryName,
+  HookName,
+  ModManifest,
+  ModSide,
+  QueryCardinality,
+  QueryName,
+  RadioSlot,
+  ServerHookName,
+  SlotBoundQueryName,
+} from './play/modManifest.js';
+export {
+  CLIENT_HOOKS,
+  COMPOSED_QUERY_NAMES,
+  isClientHookName,
+  isComposedQueryName,
+  isServerHookName,
+  isSlotBoundQueryName,
+  MOD_SIDES,
+  queryCardinalityOf,
+  RADIO_SLOTS,
+  REQUIRED_CLIENT_SLOTS,
+  SERVER_HOOKS,
+  SERVER_QUERIES,
+  SERVER_QUERY_NAMES,
+  SLOT_BOUND_QUERY_NAMES,
+  slotOfQuery,
+} from './play/modManifest.js';
+export { parseModManifest } from './play/parseModManifest.js';
+export type {
+  EntityId,
+  FromDaemon,
+  InputCommand,
+  Meta,
+  MetaPatchRow,
+  Patch,
+  SeatId,
+  Snapshot,
+  ToDaemon,
+  WalkGrid,
+} from './play/protocol.js';
+export { validateActiveJsonMods } from './play/validateActiveJsonMods.js';
+export type {
+  ConsumableHookEffects,
+  HookEffects,
+  WorldEffect,
+} from './play/worldEffect.js';
 export type {
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,

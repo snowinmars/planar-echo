@@ -192,7 +192,9 @@ src/htmlcov/
 
 planar-ghost
 planar-weidu
-planar-prism/cli.defaults.json
+planar-mods-runtime
+planar-prism/prism.defaults.json
+planar-asclepius/asclepius.defaults.json
 
 ##
 # https://habr.com/ru/articles/1029868/?ysclid=mrmldrvv8l218166405
@@ -200,3 +202,7 @@ planar-prism/cli.defaults.json
 ai-tools
 .cursor/plans
 .mimocode/plans
+
+# Local-only third-party reference and game-derived promo captures
+.cursor/skills/hacker/article.md
+_dev/promo_*.png

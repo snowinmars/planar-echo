@@ -1,5 +1,7 @@
 /**
- * Mostly llm generated from gemrb/nearinfinity
+ * Portions adapted from GemRB's ACM unpacker (GPL-2.0-or-later).
+ * planar-echo changes are GPL-3.0-or-later.
+ * See THIRD_PARTY_NOTICES.md for source and license details.
  */
 
 import type { DecodedPcm } from './decodeAcm.types.js';
@@ -7,7 +9,8 @@ import type { DecodedPcm } from './decodeAcm.types.js';
 const ID_ACM = 0x01032897;
 
 /**
- * Packed amplitude-digit LUTs for ACM "t" fillers (https://github.com/gemrb/gemrb/blob/master/gemrb/plugins/ACMReader/unpacker.cpp).
+ * Packed amplitude-digit LUTs for ACM "t" fillers
+ * (https://github.com/gemrb/gemrb/blob/master/gemrb/plugins/ACMReader/unpacker.cpp).
  * Not crypto keys: Interplay ACM bitstream dictionaries. GPL-2.0-or-later (GemRB).
  *
  * TABLE1: 3 digits in {0,1,2} as 2-bit fields (a + 4b + 16c). 3³=27. t1_5bits: −1/0/+1 triplets.

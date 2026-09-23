@@ -6,22 +6,12 @@ import action from '@/services/map/dlgToCres/action.js';
 import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 import type { Router } from 'express';
-import type { ZodObject, ZodString } from 'zod';
 
-const registerDlgIdParam = (registry: OpenAPIRegistry): ZodString => {
-  return registry.registerParameter(
-    'dlgToCre_dlgId',
-    z.string().min(1, 'Dlg id is required').openapi({
-      param: {
-        name: 'dlgId',
-        in: 'path',
-        description: 'Dlg id',
-      },
-      example: 'dmorte1.dlg',
-    }),
-  );
-};
-
+const params = z.object({
+  dlgId: z.string().min(1, 'Dlg id is required').openapi({
+    example: 'dmorte1.dlg',
+  }),
+});
 const responseOk = z.array(z.string());
 const responseError = z.object({
   error: z.object({
@@ -29,7 +19,7 @@ const responseError = z.object({
     code: z.enum(['CRE_NOT_FOUND']),
   }),
 });
-const routeConfig = (params: ZodObject): RouteConfig => ({
+const routeConfig = (): RouteConfig => ({
   method: 'get',
   path: '/api/map/dlgToCres/{dlgId}',
   tags: ['map'],
@@ -58,12 +48,10 @@ const routeConfig = (params: ZodObject): RouteConfig => ({
 });
 
 export default (registry: OpenAPIRegistry, router: Router): void => {
-  const dlgId = registerDlgIdParam(registry);
-
-  registry.registerPath(routeConfig(z.object({ dlgId })));
+  registry.registerPath(routeConfig());
 
   router.get('/api/map/dlgToCres/:dlgId',
-    validate({ params: { dlgId } }),
+    validate({ params }),
     async (req, res) => {
       const result = await action({
         dlgId: req.params.dlgId,

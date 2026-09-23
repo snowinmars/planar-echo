@@ -3,8 +3,7 @@ import { just, nothing } from '@planar/shared';
 import { boot } from './boot.js';
 import { send } from './shared/send.js';
 
-import type { ToDaemon } from '@planar/kernel';
-import type { Maybe } from '@planar/shared';
+import type { Maybe, ToDaemon } from '@planar/shared';
 
 const isIpc = !!process.send;
 
@@ -17,10 +16,11 @@ if (isIpc) {
     if (msg.type !== 'start') return;
 
     const ghostDir = msg.data.ghostDir;
+    const modsDir = msg.data.modsDir;
     const areId = msg.data.are;
-    const entracnceId = msg.data.entrance;
+    const entranceId = msg.data.entrance;
 
-    boot(ghostDir, areId, entracnceId)
+    boot(ghostDir, modsDir, areId, entranceId)
       .then((x) => {
         live = x;
       })
@@ -31,10 +31,11 @@ if (isIpc) {
 }
 else {
   const ghostDir = just(process.argv[2]);
-  const areId = process.argv[3];
-  const entracnceId = process.argv[4];
+  const modsDir = just(process.argv[3]);
+  const areId = process.argv[4];
+  const entranceId = process.argv[5];
 
-  boot(ghostDir, areId, entracnceId)
+  boot(ghostDir, modsDir, areId, entranceId)
     .then((x) => {
       live = x;
     })

@@ -1,5 +1,4 @@
-import { DEFAULT_ARE } from '@planar/kernel';
-import { nothing } from '@planar/shared';
+import { DEFAULT_ARE, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
 

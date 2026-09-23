@@ -2,12 +2,12 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 import Step5Shield from '@/svg/convert/Step5Shield';
-import Ussr from '@/svg/ussr';
 
 import StepLoader from '../../StepLoader';
 
@@ -18,6 +18,8 @@ import type { WithClassName } from '@/types/fcWithClassName';
 import type { LandingStateStep5 } from '../../store/types';
 
 import styles from './Step5.module.scss';
+
+const LEGAL_URL = 'https://github.com/snowinmars/planar-echo/blob/master/LEGAL.md';
 
 type Step5Props = WithClassName & Readonly<{
   disabled: boolean;
@@ -45,14 +47,11 @@ const Step5: FC<Step5Props> = (props: Step5Props) => {
 
         <FormControlLabel
           disabled={props.disabled}
-          value={props.ownGame}
           control={(
             <Checkbox
-              className={styles.checkbox}
               disabled={props.disabled}
-              value={props.ownGame}
               onChange={e => props.setOwnGame(e.target.checked)}
-              checkedIcon={<Ussr className={styles.checkboxIcon} />}
+              checked={props.ownGame}
             />
           )}
           label={t('landing.step5.ownGame')}
@@ -60,6 +59,14 @@ const Step5: FC<Step5Props> = (props: Step5Props) => {
 
         <Typography>
           {t('landing.step5.comment')}
+          {' '}
+          <Link
+            href={LEGAL_URL}
+            target="_blank"
+            rel="noopener"
+          >
+            {t('landing.step5.legal')}
+          </Link>
         </Typography>
       </CardContent>
     </Card>

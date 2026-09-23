@@ -1,3 +1,9 @@
+/*
+ * Mage-type mapping adapted from Near Infinity (LGPL-2.1).
+ * This GPL-3.0-or-later work uses the option in LGPL 2.1 section 3.
+ * See THIRD_PARTY_NOTICES.md for source and license details.
+ */
+
 import { extend } from '@/shared/extendedMap.js';
 
 import type { ClassId, Maybe } from '@planar/shared';

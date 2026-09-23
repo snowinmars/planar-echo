@@ -1,0 +1,20 @@
+---
+description: Intent-based context retrieval and tool-use workflow.
+globs: **/*
+alwaysApply: true
+---
+
+# Context and Tool Workflow
+
+- Choose tools by intent and the evidence needed, not by habit.
+- To understand unfamiliar behavior, begin with composition or semantic retrieval; avoid blind text search as behavioral discovery.
+- When the path is known, read the file directly.
+- For an exact symbol or string, use a focused symbol or text search.
+- After locating the authoritative source, stop rediscovering it and work from focused reads.
+- Inspect tool descriptors when needed and follow their schemas exactly; do not invent arguments.
+- Prefer focused reads and batch independent reads when that reduces round trips without broadening output.
+- Do not reread unchanged files unless a specific unanswered question requires it.
+- Narrow large outputs by path, symbol, range, file type, or result count before reading more.
+- Manage context adaptively according to relevance and expected output size. Do not impose fixed token, cache-percentage, or reread-count caps.
+- Do not rely on undefined workflow labels such as "Stage A."
+- Keep lean-ctx mode and tool-catalog details in `lean-ctx.mdc`; do not duplicate them here.

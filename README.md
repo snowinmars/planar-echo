@@ -1,125 +1,89 @@
 # planar-echo
 
-[\[Русский\]](README.ru.md) \[English\]
+[\[Русский\]](README.ru.md) · **English**
 
-Open-source tool to convert **Infinity Engine** game data files you already own into an open format and run them in a browser.
+planar-echo is an independent, open-source tech preview for locally converting and inspecting PST:EE data. The current product is the conversion pipeline and browser workbench; the experimental runtime is the strategic direction toward an Infinity Engine-compatible platform.
 
-Everything runs locally on your machine.
+This is an active, source-built tech preview, not a complete replacement game. **Planescape: Torment: Enhanced Edition (PST:EE) is the only current and reference profile.** Other Infinity Engine games need dedicated adapters and are not currently supported.
 
-![Current dialogue state example](./_dev/promo_dlg_en.png)
-![Current tis state example](./_dev/promo_tis_en.png)
+## Available now
 
-## Prerequisites
+- Convert a legally obtained PST:EE installation locally with Prism and WeiDU into Ghost data, generated modules, and browser-ready assets.
+- Browse and search converted resources in the browser workbench, inspect game structures and media, and explore dialogue paths.
+- Try the experimental [`/play`](http://localhost:3000/play) runtime. It demonstrates current area rendering and runtime work; it is not a complete playthrough experience.
+- Install the default replaceable PST:EE mods and edit the active composition through the experimental [`/mods`](http://localhost:3000/mods) screen.
+- Keep source game files and converted output on your own machine; planar-echo does not upload them.
 
-- You **must own** the original game (legally purchased files).
-- [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) (Yarn 4, see root `packageManager`).
-- [WeiDU](https://github.com/WeiDU/weidu) installed locally (used by the conversion pipeline).
+## Current limitations
 
-No game assets are stored in this repository.
+- Complete vanilla behavioral parity and full playability have not been reached.
+- Multiplayer is not available.
+- Play and mods are experimental. Mod changes are not applied live and may require restarting `/play`.
+- There are no packaged installers; the preview must be built from source.
+- Docker files exist for development, but Docker is not currently a supported player path.
+- PST:EE is the only game profile. Other Infinity Engine games are not supported yet.
 
-## Legal
+## Direction
 
-Using planar-echo is legal if you own the game. Data never leaves your PC. The project, like an emulator, does not distribute copyrighted content.
+These are goals, not claims about the current build:
 
-## Status
+- Observable vanilla behavioral parity; differences within verified coverage are treated as bugs.
+- A minimally playable vanilla composition supplied through replaceable required-slot mods.
+- Every required mod replaceable without editing the engine.
+- Future networked multiplayer with server-authoritative sessions and server-pinned mod IDs, versions, and hashes. Matching artifacts establishes identity, not safety.
+- More Infinity Engine profiles through explicit adapters.
+- Packaged releases when the project is ready for them.
 
-Tech demo under active development.
+## Requirements
 
-### What works today
+- **Platform:** Windows is the primary development and player environment. Linux and macOS are best-effort and experimental.
+- A legally obtained PST:EE installation containing `CHITIN.KEY`.
+- [Node.js 24 LTS](https://nodejs.org/) recommended.
+- Corepack and the repository-pinned Yarn 4 release.
+- [WeiDU](https://github.com/WeiDU/weidu); provide a local executable or use the conversion screen's downloader.
+- A modern browser and enough local disk space for dependencies, conversion caches, and Ghost output.
+- Git, if you are obtaining the source from the repository.
 
-- **Game:** Planescape: Torment Enhanced Edition only. Other Infinity Engine games are possible, but not in the nearest roadmap.
-- **Conversion** from original binaries to JSON, binary assets (PNG/WAV), and Ghost modules: `.acm`, `.are`, `.bam`, `.bcs`, `.bmp`, `.cre`, `.dlg`, `.eff`, `.ids`, `.ini`, `.itm`, `.mos`, `.mus`, `.pvrz`, `.tis`, `.tlk`, `.wav`, `.wed`.
-- **Supports all available game data localizations:** Russian, English, Czech, German, French, Korean, Polish via original game data.
-- **Planar-echo site human-localizations:** Russian, English.
-- **Planar-echo site LLM-localizations:** Czech, German, French, Korean, Polish. If these are your native language, please, verify the [translation](planar-shell/src/i18n/lang/).
-- **In-browser viewing** of:
-  - dialogues with:
-    - history
-    - game state logic
-  - creatures with:
-    - 'talk' button, that respect weights and game state logic
-  - items with:
-    - 'talk' button, if available
-- **In-browser inspectors** (structure and images, not a playable map or script runtime):
-  - scripts (`.bcs`)
-  - images (`.bam`, `.bmp`, `.mos`, `.tis` ) as PNG
-  - area geometry (`.wed`) and PVR textures (`.pvrz`)
-  - sounds (`.acm`, `.mus`, `.wav`)
+## Source quick start
 
-### Close-range roadmap
-
-- Community validation for cs, de, fr, ko, pl shell locales.
-- Rendering area in pixi.
-- Ship `.sh` / `.exe` / `.apk` artifacts with preconverted content.
-
-## Architecture (five parts)
-
-| Service              | Role                                                                                       |
-| -------------------- | ------------------------------------------------------------------------------------------ |
-| **planar-prism**     | CLI: BIFF → JSON → assets (PNG/WAV) → Ghost TypeScript; runs standalone or as a forked child process. |
-| **planar-ghost**     | Output format and on-disk artifacts (your machine); not an npm workspace package.          |
-| **planar-shell**     | React + Zustand + MUI UI: conversion wizard, settings, runners/inspectors |
-| **planar-asclepius** | Node server: serves Shell (production), Ghost files, REST + WebSocket; orchestrates Prism. |
-| **planar-shared**    | Shared types, IPC messages, dialogue engine, mappers.                                      |
-
-**Typical flow**
-
-1. Configure WeiDU, game files path, and ghost output directory in **Shell**.
-2. Start conversion
-3. Prism writes JSON, assets, and Ghost under your ghost directory; progress streams to the UI.
-4. Open frontend dev server
-
-**Ports:** backend `http://localhost:3003`; frontend dev server `http://localhost:3000`.
-
-### Licensing
-
-Repository license is GPL-3.0-or-later.
-
-| Name             | Description             | License                                                |
-| :--------------- | :---------------------- | :----------------------------------------------------- |
-| planar-asclepius | Backend                 | Repository license                                     |
-| planar-prism     | Parser                  | Repository license                                     |
-| planar-shared    | Shared library          | Repository license                                     |
-| planar-shell     | Frontend                | Repository license                                     |
-| planar-ghost     | Built game data on disk | Original game license; not covered by the repo license |
-
-**Do not commit copyrighted game files or contents of your local `planar-ghost` output directory.**
-
-## How to run
-
-### Docker
+From the repository root:
 
 ```bash
-docker compose build
-docker compose up
-```
-
-Open [http://localhost:3003](http://localhost:3003). Mount game and WeiDU paths via `docker-compose.yaml` volumes when you wire your environment.
-
-### Without Docker
-
-1. Install dependencies and build from the repo root:
-
-```bash
+corepack enable
 yarn
 yarn build
 yarn start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) (UI talks to backend at `http://localhost:3003` by default).
+Open the UI at [http://localhost:3000](http://localhost:3000). The local backend runs at [http://localhost:3003](http://localhost:3003).
 
-## How to contribute
+1. Open **Convert**. Select PST:EE and its language, choose the WeiDU executable, point to the game's `CHITIN.KEY`, and select an empty output directory.
+2. Confirm that you are using a legally obtained copy and start conversion. Leave the process running until the UI reports completion.
+3. If paths do not resolve, open **Settings** and verify the backend URL, Ghost output directory, and mods directory.
+4. Use **Workbench** for resource and dialogue exploration. Use **Play** and **Mods** only as experimental surfaces; restart `/play` after changing the active mod composition.
 
-Issues and PRs: [GitHub](https://github.com/snowinmars/planar-echo/).
+Docker is not currently a supported alternative to this player flow.
 
-### Regenerate the Shell API client
+## Mods and trust
 
-After changing REST routes or Zod schemas in **planar-asclepius**:
+Runtime mods are executable JavaScript, not data-only packages. `client.js` and `server.js` run without a sandbox; server mods inherit the local daemon's Node.js permissions, while client mods run with the application's browser-origin privileges. **Install only mods from sources you trust.**
 
-1. `yarn`
-1. `yarn build:shared`
-1. `yarn start:asclepius`
-1. Open `http://localhost:3003/api/swagger/`
-1. Copy its content to `./planar-asclepius/src/swagger/swagger.json`
-1. Stop planar-asclepius
-1. `yarn workspace @planar/asclepius gen`
+The current runtime keeps authoritative World mutation in the local daemon. That boundary is not a claim of hardened security or multiplayer readiness.
+
+Mods distributed for use with planar-echo are expected to use GPL-compatible license terms and preserve applicable third-party notices.
+
+## Languages
+
+The current UI and PST:EE conversion language selector expose Czech, English, French, German, Korean, Polish, and Russian.
+
+## Legal
+
+planar-echo is independent and is not affiliated with or endorsed by the owners, publishers, or developers of Infinity Engine games. The repository and project releases do not ship the original game's data or asset files; users supply their own legally acquired copy.
+
+The maintainer currently does not sell planar-echo or operate a paid planar-echo service. This is a project practice, not a restriction on the rights granted by the GPL, which permits commercial redistribution under its terms.
+
+The GNU GPL applies to planar-echo project source, not to third-party game content or locally generated output. Third-party rights remain with their respective owners. See [LEGAL.md](LEGAL.md) for the full project and content policy.
+
+---
+
+[Contributing](CONTRIBUTING.md) · [License](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Legal and content policy](LEGAL.md) · [Security](SECURITY.md) · [Issues](https://github.com/snowinmars/planar-echo/issues)

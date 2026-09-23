@@ -1,0 +1,9 @@
+{
+  "shellDir": "ABSOLUTE/PATH/TO/planar-shell/dist",
+  "prismDir": "ABSOLUTE/PATH/TO/planar-prism/dist",
+  "daemonDir": "ABSOLUTE/PATH/TO/planar-daemon",
+  "modsDist": "ABSOLUTE/PATH/TO/planar-mods/dist",
+  "ghostDir": "ABSOLUTE/PATH/TO/planar-ghost",
+  "modsRuntimeDir": "ABSOLUTE/PATH/TO/planar-mods-runtime",
+  "weiduDir": "ABSOLUTE/PATH/TO/planar-weidu"
+}

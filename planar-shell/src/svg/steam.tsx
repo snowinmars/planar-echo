@@ -2,7 +2,11 @@ import type { FC, JSX } from 'react';
 
 import type { WithClassName } from '@/types/fcWithClassName';
 
-// https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg
+/*
+ * Adapted from Wikimedia Commons "Steam icon logo.svg", marked public domain.
+ * Steam and its logo remain trademarks of Valve Corporation.
+ * See THIRD_PARTY_NOTICES.md for source and status details.
+ */
 const Steam: FC<WithClassName> = ({ className }): JSX.Element => (
   <svg
     className={className}

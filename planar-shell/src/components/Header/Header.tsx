@@ -53,7 +53,7 @@ const Header: FC = () => {
         <Grid container spacing={1} sx={{ width: '100%' }}>
           <Grid size={{ xs: 1.5 }}>
             <Link component={RouterLink} to="/">
-              Planar echo
+              planar-echo
             </Link>
           </Grid>
 

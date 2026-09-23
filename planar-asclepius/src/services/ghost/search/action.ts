@@ -4,7 +4,7 @@ import { join } from 'path';
 import { ghostTypes } from '@planar/shared';
 import { fileExists } from '@planar/shared/node';
 
-import type { GhostType } from '@planar/shared';
+import { skeletonExt } from '@/services/ghost/skeletonExt.js';
 
 import type {
   Command,
@@ -15,8 +15,6 @@ import type {
 const jsExtensionLength = '.js'.length;
 const minQueryLength = 2;
 const resultCap = 20;
-
-const skeletonExt = (type: GhostType): string => type === 'twoda' ? '.2da.js' : `.${type}.js`;
 
 export default async ({ ghostDir, partialName }: Command): Promise<Result> => {
   const ghostRoot = join(ghostDir, 'ghost');
@@ -33,7 +31,7 @@ export default async ({ ghostDir, partialName }: Command): Promise<Result> => {
     };
   }
 
-  const isQueryTooShort = partialName.length < minQueryLength;
+  const isQueryTooShort = partialName && partialName.length < minQueryLength;
   if (isQueryTooShort) {
     return {
       ok: true,
@@ -43,12 +41,10 @@ export default async ({ ghostDir, partialName }: Command): Promise<Result> => {
 
   const data: GhostSearchHit[] = [];
 
-  typeLoop: for (const type of ghostTypes) {
+  mainLoop: for (const type of ghostTypes) {
     const concreteGhostDir = join(ghostRoot, type, 'dist');
     const typeFound = await fileExists(concreteGhostDir);
-    if (!typeFound) {
-      continue;
-    }
+    if (!typeFound) continue;
 
     const skeletonExtension = skeletonExt(type);
     const filesEntries = await readdir(concreteGhostDir, { encoding: 'utf8', recursive: false, withFileTypes: true });
@@ -56,11 +52,9 @@ export default async ({ ghostDir, partialName }: Command): Promise<Result> => {
     for (const x of filesEntries) {
       const isEngine = x.name.startsWith('_');
       const isSkeleton = x.name.endsWith(skeletonExtension);
-      const matchFilter = x.name.includes(partialName);
+      const matchFilter = partialName ? x.name.includes(partialName) : true;
       const isMatch = x.isFile() && !isEngine && isSkeleton && matchFilter;
-      if (!isMatch) {
-        continue;
-      }
+      if (!isMatch) continue;
 
       data.push({
         type,
@@ -68,16 +62,12 @@ export default async ({ ghostDir, partialName }: Command): Promise<Result> => {
       });
 
       const hasEnoughHits = data.length >= resultCap;
-      if (hasEnoughHits) {
-        break typeLoop;
-      }
+      if (hasEnoughHits) break mainLoop;
     }
   }
 
-  data.sort((a, b) => a.id.localeCompare(b.id));
-
   return {
     ok: true,
-    data,
+    data: data.sort((a, b) => a.id.localeCompare(b.id)),
   };
 };

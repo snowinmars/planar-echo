@@ -12,9 +12,15 @@ import type { Router } from 'express';
 import type { GameLanguage } from '@planar/shared';
 
 const body = z.object({
-  weiduExeDir: z.string().min(1, 'Weidu directory path is required'),
-  chitinKeyFile: z.string().min(1, 'CHITIN.key file path is required'),
-  gameLanguage: z.enum<GameLanguage[]>(objectKeys(gameLanguages)),
+  weiduExeDir: z.string().min(1, 'Weidu directory path is required').openapi({
+    example: '/abs/weidu',
+  }),
+  chitinKeyFile: z.string().min(1, 'CHITIN.key file path is required').openapi({
+    example: '/abs/CHITIN.key',
+  }),
+  gameLanguage: z.enum<GameLanguage[]>(objectKeys(gameLanguages)).openapi({
+    example: 'ru_RU' as GameLanguage,
+  }),
 });
 const responseOk = z.object({
   data: z.object({

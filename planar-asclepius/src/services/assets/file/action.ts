@@ -1,12 +1,9 @@
 import { existsSync, statSync } from 'fs';
 import { join, resolve } from 'path';
 
-import { getGhostDir } from '../../settings/storage.js';
-
 import type { Command, Result } from './types.js';
 
-export default ({ path }: Command): Promise<Result> => {
-  const ghostDir = getGhostDir();
+export default ({ path, ghostDir }: Command): Promise<Result> => {
   const assetsRoot = resolve(join(ghostDir, 'assets'));
 
   const fullPath = resolve(join(assetsRoot, path));

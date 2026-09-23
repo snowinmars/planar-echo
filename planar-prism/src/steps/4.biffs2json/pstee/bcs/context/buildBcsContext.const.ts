@@ -1,3 +1,9 @@
+/*
+ * PST string-packing rules adapted from Near Infinity (LGPL-2.1).
+ * This GPL-3.0-or-later work uses the option in LGPL 2.1 section 3.
+ * See THIRD_PARTY_NOTICES.md for source and license details.
+ */
+
 import type { RawBcsPstStringPack } from './buildBcsContext.types.js';
 
 export const BCS_REQUIRED_IDS = [
@@ -13,20 +19,20 @@ export const BCS_REQUIRED_IDS = [
   'trigger.ids',
 ] as const;
 
-const PST_STRING_PACKS_A: readonly RawBcsPstStringPack[] = [
+const PST_STRING_PACKS_A: RawBcsPstStringPack[] = [
   'halfOfArea6',
   'halfOfArea6',
   'plain',
 ];
 
-const PST_STRING_PACKS_B: readonly RawBcsPstStringPack[] = [
+const PST_STRING_PACKS_B: RawBcsPstStringPack[] = [
   'halfOfArea6',
   'halfOfArea6',
   'halfOfArea6',
   'halfOfArea6',
 ];
 
-export const PST_STRING_PACKS_BY_ID = new Map<number, readonly RawBcsPstStringPack[]>([
+export const PST_STRING_PACKS_BY_ID = new Map<number, RawBcsPstStringPack[]>([
   [0x400F, PST_STRING_PACKS_A],
   [0x4034, PST_STRING_PACKS_A],
   [0x4035, PST_STRING_PACKS_A],

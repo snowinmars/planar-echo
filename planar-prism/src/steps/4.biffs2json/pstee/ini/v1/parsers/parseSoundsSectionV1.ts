@@ -11,9 +11,9 @@ export const parseSoundsSectionV1 = (section: RawIniSection): Maybe<RawIniSounds
   if (section.name !== 'sounds') throw new Error(`Expect section '${section.name}' to be 'sounds' section`);
 
   /* eslint-disable @stylistic/no-multi-spaces */
-  const hitsound = findEntry(section.entries, 'hitsound').stringOrNothing();
+  const hitSound = findEntry(section.entries, 'hitsound').stringOrNothing();
   const hitframe = findEntry(section.entries, 'hitframe').decOrNothing();
-  const dfbsound = findEntry(section.entries, 'dfbsound').stringOrNothing();
+  const dfbSound = findEntry(section.entries, 'dfbsound').stringOrNothing();
   const dfbframe = findEntry(section.entries, 'dfbframe').decOrNothing();
   const at1Sound = findEntry(section.entries, 'At1Sound').stringOrNothing(); // upper case
   const at1frame = findEntry(section.entries, 'At1frame').decOrNothing();    // upper case
@@ -24,9 +24,9 @@ export const parseSoundsSectionV1 = (section: RawIniSection): Maybe<RawIniSounds
   /* eslint-enable */
 
   return {
-    hitsound: hitsound?.split(',') ?? nothing(),
+    hitSound,
     hitframe,
-    dfbsound,
+    dfbSound,
     dfbframe,
     at1Sound,
     at1frame,

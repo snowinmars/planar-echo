@@ -15,7 +15,8 @@
     "clean": "node src/dev/clean.js",
     "serve": "node dist/index.js",
     "lint": "eslint .",
-    "gen": "yarn openapi && yarn add-ts-nocheck && yarn push-client",
+    "gen": "yarn dumpOpenApi && yarn openapi && yarn add-ts-nocheck && yarn push-client",
+    "dumpOpenApi": "tsx ./src/dev/dumpOpenApi.ts",
     "openapi": "openapi-ts -f ./openapi-ts.config.ts",
     "add-ts-nocheck": "node ./src/dev/addTsNoCheck.js",
     "push-client": "node ./src/dev/copy-client.js"
@@ -23,6 +24,7 @@
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.4.3",
     "@planar/daemon": "workspace:*",
+    "@planar/mods": "workspace:*",
     "@planar/prism": "workspace:*",
     "@planar/shared": "workspace:*",
     "@planar/shell": "workspace:*",
@@ -50,6 +52,7 @@
     "@typescript-eslint/parser": "^8.57.1",
     "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-chai-friendly": "^1.2.1",
     "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-simple-import-sort": "^14.0.0",

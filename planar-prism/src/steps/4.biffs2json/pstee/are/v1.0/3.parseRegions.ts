@@ -9,7 +9,7 @@ import type { RawAreVertexV10 } from './8.parseVertices.types.js';
 
 type ParseRegionProps = Readonly<{
   reader: BufferReader;
-  vertices: readonly RawAreVertexV10[];
+  vertices: RawAreVertexV10[];
 }>;
 const parseRegion = ({
   reader,

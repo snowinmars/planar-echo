@@ -10,7 +10,9 @@ import type { Router } from 'express';
 const weiduPlatforms = ['windows', 'linux', 'mac'] as const;
 
 const body = z.object({
-  platform: z.enum(weiduPlatforms),
+  platform: z.enum(weiduPlatforms).openapi({
+    example: 'linux',
+  }),
 });
 const responseOk = z.object({
   data: z.object({
@@ -82,6 +84,7 @@ export default (registry: OpenAPIRegistry, router: Router): void => {
     async (req, res) => {
       const result = await action({
         platform: req.body.platform.toLowerCase() as typeof weiduPlatforms[number],
+        weiduDir: req.planarPaths.weidu.root,
       });
 
       if (result.ok) {

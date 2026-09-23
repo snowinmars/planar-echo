@@ -5,11 +5,7 @@ import { fileExists } from '@planar/shared/node';
 
 import type { Command, Result } from './types.js';
 
-function isDirectoryEmpty(path: string) {
-  return readdir(path).then((files) => {
-    return files.length === 0;
-  });
-}
+const isDirectoryEmpty = (path: string): Promise<boolean> => readdir(path).then(x => x.length === 0);
 
 export default async ({
   ghostDir,

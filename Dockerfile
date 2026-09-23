@@ -10,6 +10,8 @@ RUN npm install -g corepack && corepack enable && corepack prepare yarn@4.16.0 -
 FROM base AS deps
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY planar-shared/package.json    ./planar-shared/
+COPY planar-kernel/package.json    ./planar-kernel/
+COPY planar-daemon/package.json    ./planar-daemon/
 COPY planar-prism/package.json     ./planar-prism/
 COPY planar-asclepius/package.json ./planar-asclepius/
 COPY planar-shell/package.json     ./planar-shell/
@@ -17,6 +19,8 @@ RUN yarn install --immutable
 
 FROM deps AS build
 COPY planar-shared    ./planar-shared
+COPY planar-kernel    ./planar-kernel
+COPY planar-daemon    ./planar-daemon
 COPY planar-prism     ./planar-prism
 COPY planar-asclepius ./planar-asclepius
 COPY planar-shell     ./planar-shell
@@ -35,15 +39,25 @@ ENV COREPACK_DEFAULT_ACQUIRE_TIMEOUT=180000
 RUN npm install -g corepack && corepack enable && corepack prepare yarn@4.16.0 --activate
 
 COPY --from=build /app/package.json /app/yarn.lock /app/.yarnrc.yml ./
-# COPY --from=build /app/node_modules ./node_modules
-# COPY --from=build /app/planar-shared ./planar-shared
+COPY --from=build /app/node_modules ./node_modules
+
+COPY --from=build /app/planar-shared/package.json ./planar-shared/
+COPY --from=build /app/planar-shared/dist/ ./planar-shared/dist/
+COPY --from=build /app/planar-shared/src/ ./planar-shared/src/
+
+COPY --from=build /app/planar-kernel/package.json ./planar-kernel/
+COPY --from=build /app/planar-kernel/dist/ ./planar-kernel/dist/
+
+COPY --from=build /app/planar-daemon/package.json ./planar-daemon/
+COPY --from=build /app/planar-daemon/dist/ ./planar-daemon/dist/
 
 COPY --from=build /app/planar-prism/package.json ./planar-prism/
-COPY --from=build /app/planar-asclepius/package.json ./planar-asclepius/
-COPY --from=build /app/planar-shell/package.json ./planar-shell/
-
 COPY --from=build /app/planar-prism/dist/ ./planar-prism/dist/
+
+COPY --from=build /app/planar-asclepius/package.json ./planar-asclepius/
 COPY --from=build /app/planar-asclepius/dist/ ./planar-asclepius/dist/
+
+COPY --from=build /app/planar-shell/package.json ./planar-shell/
 COPY --from=build /app/planar-shell/dist/ ./planar-shell/dist/
 
 COPY --from=build /app/planar-ghost/ ./planar-ghost/

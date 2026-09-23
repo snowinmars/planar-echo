@@ -1,5 +1,6 @@
 export type Command = Readonly<{
   path: string;
+  prismDir: string;
 }>;
 
 export type Result

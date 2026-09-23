@@ -1,5 +1,8 @@
 import type { Direction } from '../direction.js';
 import type { Maybe } from '../maybe.js';
+import type { GhostIniAnimationSlotKey } from './iniKind.js';
+
+export type FacingCycle = 'five' | 'nine';
 
 export type GhostIniNamelessSection = Readonly<{
   destare: string;
@@ -26,51 +29,43 @@ export type GhostIniGeneralSection = Readonly<{
   castFrame: number;
 }>;
 
-export type GhostIniMonsterPlanescapeSection = Readonly<{
-  attack1?: Maybe<string>;
-  attack2?: Maybe<string>;
-  stance2stand?: Maybe<string>;
-  stancefidget1?: Maybe<string>;
-  diebackward?: Maybe<string>;
-  getup?: Maybe<string>;
-  gethit?: Maybe<string>;
-  run?: Maybe<string>;
-  stand2stance?: Maybe<string>;
-  standfidget1?: Maybe<string>;
-  spell1?: Maybe<string>;
-  spell2?: Maybe<string>;
-  stance?: Maybe<string>;
-  stand?: Maybe<string>;
-  talk1?: Maybe<string>;
-  walk?: Maybe<string>;
-  runscale?: Maybe<number>;
-  bestiary?: Maybe<number>;
-  armor?: Maybe<number>;
+export type GhostIniAnimationSlot = Readonly<{
+  bam: string;
+  facingCycle: FacingCycle;
 }>;
 
+export type GhostIniMonsterPlanescapeSection = Readonly<
+  { [K in GhostIniAnimationSlotKey]?: Maybe<GhostIniAnimationSlot> } & {
+    runscale?: Maybe<number>;
+    bestiary?: Maybe<number>;
+    armor?: Maybe<number>;
+  }
+>;
+
 export type GhostIniSoundsSection = Readonly<{
-  hitsound: string[];
+  hitSounds: string[];
   hitframe?: Maybe<number>;
-  dfbsound?: Maybe<string>;
+  dfbSounds: string[];
   dfbframe?: Maybe<number>;
-  at1Sound?: Maybe<string>;
+  at1Sounds: string[];
   at1frame?: Maybe<number>;
-  at2Sound?: Maybe<string>;
+  at2Sounds: string[];
   at2frame?: Maybe<number>;
-  cf1Sound?: Maybe<string>;
+  cf1Sounds: string[];
   cf1frame?: Maybe<number>;
 }>;
 
 export type GhostIniNumberedSection = Readonly<{
-  hitsound: string[];
+  name: string;
+  hitSounds: string[];
   hitframe?: Maybe<number>;
-  dfbsound?: Maybe<string>;
+  dfbSounds: string[];
   dfbframe?: Maybe<number>;
-  at1Sound?: Maybe<string>;
+  at1Sounds: string[];
   at1frame?: Maybe<number>;
-  at2Sound?: Maybe<string>;
+  at2Sounds: string[];
   at2frame?: Maybe<number>;
-  cf1Sound?: Maybe<string>;
+  cf1Sounds: string[];
   cf1frame?: Maybe<number>;
   attack1?: Maybe<string>;
   attack2?: Maybe<string>;
@@ -202,16 +197,24 @@ export type GhostIniCreatureSection = Readonly<{
   disableRenderer?: Maybe<boolean>;
 }>;
 
-export type GhostIni = Readonly<{
+export type GhostIniResdata = Readonly<{
+  resourceName: string;
+  numberedSections: GhostIniNumberedSection[];
+}>;
+
+export type GhostIniAnimation = Readonly<{
+  resourceName: string;
+  general: GhostIniGeneralSection;
+  monsterPlanescape: GhostIniMonsterPlanescapeSection;
+  sounds?: Maybe<GhostIniSoundsSection>;
+}>;
+
+export type GhostIniArea = Readonly<{
   resourceName: string;
   nameless?: Maybe<GhostIniNamelessSection>;
   namelessvar?: Maybe<Map<string, number>>;
   locals?: Maybe<Map<string, string>>;
   spawnMain?: Maybe<GhostIniSpawnMainSection>;
-  general?: Maybe<GhostIniGeneralSection>;
-  monsterPlanescape?: Maybe<GhostIniMonsterPlanescapeSection>;
-  sounds?: Maybe<GhostIniSoundsSection>;
-  numberedSections: GhostIniNumberedSection[];
   groupSections: GhostIniGroupSection[];
   creatureSections: GhostIniCreatureSection[];
 }>;

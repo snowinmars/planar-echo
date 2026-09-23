@@ -1,198 +1,83 @@
-# planar-echo
+# planar-echo agent guide
 
-Документ только для LLM-агентов при написании кода в этом монорепозитории. Обзор для людей: [README.md](README.md). Вызов инструментов контекста (rag-code, lean-ctx): [.cursor/rules/](.cursor/rules/) - здесь не дублировать.
+## Scope and authority
 
-## If you are llm agent
+- This file applies repository-wide. An `AGENTS.md` applies to its directory subtree; the closest file is authoritative for package-local guidance while this root file supplies universal policy.
+- For volatile details such as routes, DTOs, schemas, paths, and exports, current manifests and implementation are authoritative.
+- [Modular runtime architecture](docs/architecture/modular-runtime.md) owns stable package boundaries, authority rules, and target invariants.
+- Keep **VERIFIED CURRENT STATE** separate from **NORMATIVE TARGET ARCHITECTURE**. A target is not evidence of implementation or coverage.
 
-- Language: TypeScript, ESM, Node.js
-- Build: `yarn && yarn build`
-- Test: `yarn test` (don't run without asking)
+## Purpose and status
 
-## Обязательное поведение
+- **VERIFIED CURRENT STATE:** planar-echo is a GPL-3.0-or-later, local-first TypeScript monorepo that converts user-owned game data (currently PST:EE only) and runs a browser-based runtime.
+- **VERIFIED CURRENT STATE:** it is an active tech preview; Prism currently implements PST:EE only.
+- **NORMATIVE TARGET ARCHITECTURE:** it is an independent Infinity Engine-compatible platform with PST:EE as the reference profile and replaceable game policy.
+- Adding an enum value or target statement does not add parser support, parity, or verified coverage.
 
-- Не создавать git-коммиты без явной просьбы пользователя.
-- Не запускать тесты самостоятельно. Сообщить пользователю команды: `yarn test`, `yarn workspace @planar/prism test`, `yarn workspace @planar/shell test`.
-- Код: SOLID. Без гонок данных (fork/IPC, WebSocket, общий mutable state, RxJS-потоки).
-- Все пути к игре, WeiDU и ghost - на машине пользователя; в git игровых ассетов быть не должно.
-- Функциональный стиль, но без фанатизма.
-- Do use monads from planar-shared\src\maybe.ts instead of `T | null | undefined` pattern.
+## Workspace index
 
-## Запрещённые паттерны
+- [`@planar/shared`](planar-shared/AGENTS.md) — browser-safe contracts plus an explicit Node export.
+- [`@planar/kernel`](planar-kernel/AGENTS.md) — policy-free World data and deterministic transforms.
+- [`@planar/daemon`](planar-daemon/AGENTS.md) — authoritative 30 Hz World owner and server-mod host.
+- [`@planar/mods`](planar-mods/AGENTS.md) — replaceable default PST:EE client/server mod composition.
+- [`@planar/prism`](planar-prism/AGENTS.md) — standalone conversion CLI and fork/IPC worker.
+- [`@planar/asclepius`](planar-asclepius/AGENTS.md) — HTTP, WebSocket, artifacts, defaults, and child-process orchestration.
+- [`@planar/shell`](planar-shell/AGENTS.md) — React UI, replicated view, rendering, input, and client mods.
 
-| Запрет | Требование |
-|--------|------------|
-| Повторное чтение одного файла | Один проход на задачу (включая разные offset) |
-| `ctx_tree` без пути | Только с явным путём от пользователя |
-| `hybrid_search` при известном пути к файлу | `ctx_read` или точечный поиск по известному пути |
-| Вывод тестов/логов >500 строк | Спросить разрешение до загрузки в контекст |
-| Коммит `planar-ghost/**` | Запрещено (конвертированные данные, возможный копирайт игры) |
-| Коммит оригинальных игровых файлов | Запрещено |
-| void foo() | foo().catch((e: unknown) => console.error(e)) |
-| Subscribe without unsubscription | Always unsubscribe when subscribe |
+## Local non-workspace directories
 
-## Монорепозиторий
+- `planar-ghost/` is generated Ghost data and assets from the user's game.
+- `planar-mods-runtime/` is the installed, locally mutable mod runtime.
+- `planar-weidu/` is the user's local WeiDU installation.
+- These directories, original game files, generated game-derived assets, local defaults, and machine-specific paths must not be committed.
+- Do not add `AGENTS.md` files or implementation source under artifact directories.
 
-| Пакет npm | Каталог | Роль |
-|-----------|---------|------|
-| `@planar/shared` | `planar-shared/` | Типы IPC, `dlgEngine`, `ghost/*`, enums игр/языков, mappers; entry `@planar/shared/node` для Node |
-| `@planar/kernel` | `planar-kernel/` | apply, WalkGrid, GhostAre двери, A*; без Express/Pixi/fs |
-| `@planar/daemon` | `planar-daemon/` | 30 Hz clock, IPC, eval ghost ARE + `{ghostDir}/assets/are/{are}.walk` |
-| `@planar/prism` | `planar-prism/` | CLI + IPC: biff → JSON → assets → Ghost TS (ARE walk binary в `assets/are`) |
-| `@planar/asclepius` | `planar-asclepius/` | Express, static Shell/Ghost, REST, WS, fork Prism/daemon |
-| `@planar/shell` | `planar-shell/` | React, Zustand, MUI, Vite; `/play` |
-| - | `planar-ghost/` | Артефакт на диске пользователя; **не** Yarn workspace |
+## Universal implementation policy
 
-- Менеджер: Yarn 4 (`packageManager` в корневом `package.json`).
-- Зависимость: `"@planar/shared": "workspace:*"` в потребителях.
-- Сборка из корня: `yarn` → `yarn build`.
-- `@planar/shared` собирается до prism/asclepius через граф workspace.
-- ESM: `"type": "module"`, TypeScript, `tsc-alias`.
-- Лицензия исходников репозитория: GPL-3.0-or-later. Контент Ghost - лицензия оригинальной игры.
+- Use TypeScript, ESM, and Node.js conventions already established by the owning package; retain `.js` specifiers in TypeScript ESM imports.
+- Use Yarn 4 workspaces and `workspace:*` for internal package dependencies.
+- Keep changes SOLID and focused; prefer explicit data flow over hidden mutable state.
+- Follow the repository [Maybe rule](.cursor/rules/maybe.mdc) for project-owned optional values without sweeping unrelated code.
+- Use exhaustive `switch` handling for discriminated unions and multi-branch protocol logic.
+- Catch errors as `unknown`, normalize intentionally, and do not discard rejected promises; use an explicit `.catch(...)` where work is intentionally detached.
+- Prevent races across fork/IPC, WebSocket, timers, async boot, and shared mutable state. Serialize lifecycle transitions or guard them with explicit state.
+- Every subscription, listener, timer, socket, child process, and Pixi/browser resource must have a matching cleanup path.
 
-## Компоненты
+## Cross-package invariants
 
-- **planar-prism** - Node.js CLI (TypeScript). Парсит `.biff` → JSON → assets (PNG/WAV) → Ghost TS. `yarn start` (build + `node dist/index.js`) или дочерний процесс `process.fork` с IPC.
-- **planar-ghost** - формат и каталог вывода: семантический эквивалент данных игры в открытом виде. Раздаётся Asclepius как static под `/ghost`.
-- **planar-shell** - фронтенд: мастер конверсии, просмотр ghost (диалоги/существа/предметы + инспекторы acm/are/bam/bcs/bmp/eff/ids/ini/mos/mus/pvrz/src/tis/twoda/wav/wed), настройки. REST + WebSocket к Asclepius.
-- **planar-asclepius** - сервер: serve Shell на `/`, ghost-файлы, оркестрация Prism (build → fork → build-ghost), ретрансляция IPC → WebSocket.
-- **planar-shared** - общий код для Prism, Asclepius, Shell и Ghost.
+- Asclepius starts Prism and daemon through `process.fork` and structured IPC; stdout/stderr are human logs, not protocol.
+- Daemon is the sole authoritative live `World` owner and writer. Asclepius relays play traffic and must not simulate.
+- Server mods request mutation through `WorldEffect`; daemon validates and applies effects at that boundary.
+- Client mods may render, present UI, collect input, and form commands; they never mutate authoritative state.
+- Default PST:EE behavior belongs in replaceable mods, not privileged kernel or daemon policy.
+- Kernel stays deterministic, policy-free, and free of process, filesystem, HTTP, WebSocket, and renderer concerns.
+- Prism remains usable without Asclepius.
+- User-owned game data, WeiDU, Ghost output, and runtime mods remain local.
 
-## Поток данных
+## API and schema changes
 
-1. Пользователь задаёт WeiDU, CHITIN.KEY (игру), каталог ghost, язык в Shell (localStorage + REST validate).
-2. Конверсия: Shell → WebSocket `/api/prism/index`, сообщение `{ type: 'start', data }` (`PrismIndexStartMessage['data']` из `@planar/shared`).
-3. Asclepius: `yarn workspace @planar/prism build` → `fork(prism/dist/index.js)` + IPC → `yarn workspace @planar/prism build-ghost`.
-4. Prism: WeiDU extract → JSON → assets → Ghost TS; прогресс через `process.send`; логи в stdout/stderr (наследуются Asclepius).
-5. Asclepius шлёт клиенту `ready` | `progress` | `error` | `complete`.
-6. Просмотр: Shell → REST `/api/ghost/*` (dlg/cre/itm + инспекторы acm/are/bam/bcs/bmp/eff/ids/ini/mos/mus/pvrz/src/tis/twoda/wav/wed) + `@planar/shared` `dlgEngine` / shell `engine/dlgLogic.ts`.
+- REST and Zod changes are atomic across implementation/shared types, runtime validation, OpenAPI output, generated Shell client, and all call sites.
+- Generate clients with `yarn gen`; do not hand-edit generated files.
+- Exact API payloads and endpoint paths are active migration surfaces: verify source instead of copying inventories into documentation.
 
-Связь Asclepius ↔ Prism: **только Node IPC**, не HTTP и не разбор stdout для прогресса.
+## Commands
 
-## Prism - pipeline
+- Install: `yarn`
+- Full generation and build: `yarn build`
+- Generate OpenAPI client: `yarn gen`
+- Start backend and frontend: `yarn start`
+- Start one surface: `yarn start:asclepius`, `yarn start:shell`, or `yarn start:prism`
+- Serve built Asclepius: `yarn serve`
 
-Порядок шагов (`planar-prism/src/steps/`):
+## Tests and commits
 
-1. `1.createPaths` - context for next operations: output dirs, `weiduExe`, `chitinKey`, `gameLanguage`, `gameName`
-2. `2.validate` - WeiDU и пути игры
-3. `3.decompileBiffs` - run WeiDU, use cache
-4. `4.biffs2json` - бинарники → JSON, только структура/хедеры (`pstee/`: 2da, acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, src, tis, tlk, wav, wed). Без PNG/DXT/decode audio
-5. `4b.raw2assets` - `allJsons` + seek в decompiled по offset → PNG/WAV/explored (`algo/` синтез; воркеры `shared/pool`). WAV/ACM: в JSON шага 4 PCM = `-1`, после decode патч `allJsons` + `saveJson`. ARE walk: SR indices + WED overlay0 + `terrain.2da` → `{ghostDir}/assets/are/{are}.walk`
-6. `5.json2Ghost` - JSON → TS Ghost (`discoverer` регистрирует ресурсы; 2da, acm, are, bam, bcs, bmp, cre, dlg, eff, ids, ini, itm, mos, mus, pvrz, src, tis, tlk, wav, wed). После патча wav/acm, `-1` сюда не утекает. ARE: `GhostAre.walk` ссылается на `{are}.walk`
-7. `6.saveDiscovered` - метаданные обнаружения
+- Do not create commits unless the user explicitly asks.
+- Do not run tests without user permission.
+- Handoff commands: `yarn test`, `yarn workspace @planar/kernel test`, `yarn workspace @planar/prism test`, and `yarn workspace @planar/shell test`.
 
-Типы Infinity Engine и прямые зависимости: [docs/ie-resource-types.md](docs/ie-resource-types.md).
+## Documentation roles
 
-**Режимы**
-
-- CLI: интерактивное подтверждение (если не dev-флаги); дефолты в `planar-prism/src/index.ts`.
-- IPC: `process.on('message')`, `{ type: 'start', data }`; без confirm; прогресс `process.send`.
-
-**Прогресс:** `planar-prism/src/shared/report.ts` - RxJS `buffer` flush **250 ms**; дедупликация последнего по `ProgressStep` (`prismIndexStartMessage.ts`, `progressSteps` в shared: `*_raw2json` / `(pvrz|bam|mos|tis|bmp|wav|acm)_raw2assets` / `*_json2ghost`).
-
-**Игры:** enum `gameName` шире списка; **реализованы парсеры pstee** (Planescape: Torment EE).
-
-Точка входа: `planar-prism/src/index.ts`. Обнаружение: `discoverer.ts`. Бинарное I/O: `shared/bufferReader.ts`, `shared/writer.ts`.
-
-## Asclepius - оркестратор
-
-- Порт: `process.env.PORT` или **3003**. Shell dev (Vite): **3000**; CORS origin `http://localhost:3000`.
-- Fork: `planar-asclepius/src/shared/runPrismScript.ts`.
-- Static: production Shell - `/` (SPA fallback вне `/api`). Ghost bundles - запросы `/ghost/*` через `ghostDirAction` (не только `express.static` на один dist).
-- Swagger UI: `/api/swagger`. Live OpenAPI JSON: `GET /api/openApi`.
-
-**REST** (`planar-asclepius/src/controllers/router.ts`) - типично JSON body; ghost: `/api/ghost/cre|dlg|itm|tlk|bcs|mos|pvrz|tis|wed|are|twoda|src|ids|ini|eff|acm|bam|bmp|wav|mus` (list + skeleton), map: `/api/map/creToDlgs|dlgToCre|itmToDlgs|dlgToItm`. Схема: `planar-asclepius/src/swagger/swagger.json`. URL-сегмент **twoda** = файлы `.2da`.
-
-**WebSocket:** один `server.on('upgrade')` в `wsController/router.ts`, оба endpoint — `WebSocketServer({ noServer: true })`. Не вешать два `WebSocketServer({ server, path })` на один HTTP: `ws` v8 на несовпавшем path делает `abortHandshake(400)`. Index: `/api/prism/index` — сразу `{ type: 'ready' }`; клиент `{ type: 'start', data }` (`weiduExeDir`, `chitinKeyFile`, `ghostDir`, `prismDir`, `gameLanguage`, `gameName`). Play: `/api/play` — opaque relay на `@planar/daemon` (не `apply`).
-
-**Оркестрация index** (`wsController/prism/runIndex.ts`): steps `buildPrism` → IPC prism → `buildGhost` (`build-ghost`).
-
-После изменения REST/Zod-роутов **ПОТРЕБУЙ** у пользователя обновить api клиентов в shell вручную.
-
-## Ghost на диске
-
-- Текстовые и бинарные артефакты, not a single text Domain-Specific Language: промежуточный **JSON**, **assets** (PNG/WAV/explored, ARE walk `assets/are/{are}.walk`) и **TS** на диске; runtime для движка - **bundled JS** под `planar-ghost/ghost/{cre,dlg,itm,bcs,mos,pvrz,tis,wed,are,twoda,src,ids,ini,eff,acm,bam,bmp,wav,mus}/dist`. MOS/TIS: PNG в `assets/` (`imageName`). ARE: `GhostAre.walk.walkBinName`.
-- `yarn build:ghost` - esbuild по `planar-ghost/ghost/**/*.ts`, alias `@planar/shared` (`build-ghost-cres|dlgs|itms|bcs|mos|pvrz|tis|wed|are|twoda|src|stores`).
-- Каталоги вывода: `ghost/`, `json/`, `assets/`, `decompiledBiff/`
-
-## planar-shared - ключевые модули
-
-- `src/dlgEngine/` - `registerDlg`, `dlgLogic`, enums в `dlgEngine/enums/` (prism-autogenerated)
-- `src/ghost/` - внешний контракт ghostDir: `GhostCre*`, `GhostDlg*`, `GhostItm*`, `GhostTlk`, `GhostBcs*`, `GhostMos*`, `GhostPvr*` (`pvrz` - zipped pvr; `pvr` - unzipped pvrz), `GhostTis*`, `GhostWed*`, `GhostAre*`, `GhostTwoda*`, `GhostSrc*`
-- `src/resourceMappers/` - связи cre/dlg/itm
-- `src/prismIndexStartMessage.ts` - IPC/WS типы Prism index
-- `src/gameName.ts`, `src/gameLanguage.ts`
-- `src/db.ts` - IndexedDB (Shell)
-- `@planar/shared/node` - `fileExists` и др. только для Node (Asclepius/Prism)
-
-Собирать shared перед зависимыми пакетами при ручной сборке: `yarn workspace @planar/shared build`.
-
-## Навигация по исходникам
-
-### planar-prism/src/
-
-- `index.ts` - CLI / IPC entry
-- `steps/1.createPaths` … `6.saveDiscovered`
-- `steps/4.biffs2json/pstee/` - `biff2jsonPstee.ts`, `2da/`, `acm/`, `are/`, `bam/`, `bcs/`, `bmp/`, `cre/`, `dlg/`, `eff/`, `ids/`, `ini/`, `itm/`, `mos/`, `mus/`, `pvrz/`, `src/`, `tis/`, `tlk/`, `wav/`, `wed/`
-- `steps/4b.raw2assets/` - `raw2assetsPstee.ts`, `write*` (`writeAreWalk.ts` — searchmap flags), `algo/` (DXT, blit, decodeFrames, encodePng, decodeAudio).
-- `steps/5.json2Ghost/pstee/` - `json2GhostPstee.ts`, `cre/`, `dlg/`, `itm/`, `bcs/`, `mos/`, `pvr/` (patch PVR; ghost dir `pvrz`), `tis/`, `wed/`, `are/`, `twoda/`, `src/`, `ids/`, `ini/`, `eff/`, `acm/`, `bam/`, `bmp/`, `mus/`, `wav/`
-- `shared/` - `report.ts`, `bufferReader.ts`, `writer.ts`, `xor.ts`, `pool/` (`runPool`, `packPvrzSab`)
-- `discoverer.ts`, `discoverer.types.ts`
-
-### planar-asclepius/src/
-
-- `index.ts` - Express + HTTP server + WS
-- `controllers/` - REST (см. таблицу); `fs/validate/`, `ghost/`, `map/`, `settings/`, `ping/`
-- `wsController/router.ts`, `wsController/prism/runIndex.ts`, `wsController/play/runPlay.ts`
-- `services/fs|ghost|map|settings/`
-- `swagger/` - сгенерированный spec; `dev/copy-client.js` для Shell
-
-### planar-shell/src/
-
-- `router/router.tsx` - маршруты: `/`, `/details`, `/convert`, `/dlg/:dlgId?`, `/cre/:creId?`, `/itm/:itmId?`, `/bcs/:bcsId?`, `/mos/:mosId?`, `/pvrz/:pvrzId?`, `/tis/:tisId?`, `/wed/:wedId?`, `/acm/:acmId?`, `/bam/:bamId?`, `/bmp/:bmpId?`, `/wav/:wavId?`, `/mus/:musId?`, `/eff/:effId?`, `/ids/:idsId?`, `/ini/:iniId?`, `/are/:areId?`, `/twoda/:twodaId?`, `/src/:srcId?`, `/settings`, `/stores`. URL — источник истины для выбранного ресурса (`stateId` у dlg — query).
-- `components/Convert/` - мастер конверсии; шаг 6 - WS на `{backendUrl}/api/prism/index` (`store/step6.ts`)
-- `components/runners/` - Dlg, Cre, Itm, Bcs, Mos, Pvrz, Tis, Wed; `dialogueResolution/`
-- `components/Header/` - виджеты cre/dlg/itm/bcs/mos/pvrz/tis/wed/acm/bam/bmp/wav/mus/eff/ids/ini/are/twoda/src (navigate `/${type}/${id}` replace)
-- `shared/widgets/` - `*WidgetState` для тех же типов
-- `components/engine/` - `dlgLogic.ts`, `store/` (Zustand world)
-- `components/Settings/children/` - BackendUrl, GhostDir, PrismDir, ShellDir, LanguageSwitcher, DialogueRendererSwitcher, …
-- `components/Stores/` - CharactersTab, NarrativeTab
-- `swagger/` - сгенерированный axios-клиент
-- `i18n/` - en_US, ru_RU, cs_CZ, de_DE, fr_FR, ko_KR, pl_PL
-- Default backend URL: `http://localhost:3003`
-
-Рендереры диалогов (localStorage `dialogueRenderer`): pstee, pstee-two-columns, narrat.
-
-### planar-ghost/
-
-Только пользовательский вывод. В репозитории - минимальные примеры; не индексировать для правок логики.
-
-## Команды (справочник; тесты - только пользователь)
-
-Execute in repo root.
-
-| Действие | Команда |
-|----------|---------|
-| Установка | `yarn` |
-| Полная сборка | `yarn build` |
-| OpenAPI → Shell client | `yarn gen` |
-| Backend | `yarn start:asclepius` |
-| Frontend dev | `yarn start:shell` |
-| Оба (workspace) | `yarn start` |
-| Prism CLI | `yarn start:prism` |
-| Docker | `docker compose build && docker compose up` → http://localhost:3003 |
-| Тесты | `yarn test` (kernel Mocha + prism Mocha + shell Vitest). Не гонять без просьбы. |
-
-## Правила при изменении кода
-
-- Меняешь REST или Zod-контракты в Asclepius → **ТРЕБУЕШЬ** у пользователя обновить api клиентов в shell вручную.
-- Prism остаётся автономным CLI; не вшивать обязательную зависимость от Asclepius внутри prism.
-- Прогресс Prism: structured IPC; человекочитаемые логи - stdout/stderr.
-- WeiDU должен быть установлен у пользователя; пути передаются из UI/CLI, не из репозитория.
-- Не добавлять copyrighted game data в git.
-
-## Ключевые решения (не нарушать)
-
-- Asclepius ↔ Prism: `process.fork` + IPC (`process.send` / `message`).
-- Прогресс Prism: throttle/dedupe 250 ms (RxJS).
-- Shell: WebSocket для index pipeline; REST для ghost API и validate.
-- Платформа: Node.js; кроссплатформенность на стороне оркестрации, не в бинарных парсерах игры.
+- [README](README.md) and player-facing docs describe status, setup, and user behavior.
+- Human contribution workflow lives in [CONTRIBUTING.md](CONTRIBUTING.md).
+- `AGENTS.md` files contain operational guidance for coding agents, not product promises or frozen API documentation.
+- Tooling and context rules live in [`.cursor/rules/`](.cursor/rules/); do not duplicate them here.

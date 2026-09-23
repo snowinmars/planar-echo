@@ -9,39 +9,20 @@ import {
 } from 'pixi.js';
 import { Viewport } from 'pixi-viewport';
 
-import { foldPatches, paintDoorFlags, PASSABLE_WALK, PLAYER_ACTOR_ID } from '@planar/kernel';
-import { isNothing, just, nothing } from '@planar/shared';
+import { foldPatches } from '@planar/kernel';
+import { isNothing, nothing, PLAYER_ACTOR_ID } from '@planar/shared';
 
-import { assetUrl } from '@/shared/assetUrl';
-
-import { doorOpenByCell } from './doorOpenByCell.js';
-import { createCreArtCache, ensureCreArt } from './loadCreArt.js';
-import { loadPlayMapGhost } from './loadPlayMapGhost.js';
-import { overlayTileIndex } from './overlayTileIndex.js';
-import { PSTEE_TILE_PX } from './playTiles.js';
-import { clearCreSprites, syncCreSprites } from './syncCreSprites.js';
+import { bootClientMods, clientHookOrder } from '../mods/bootClientMods.js';
+import { createAssetPump } from '../mods/createAssetPump.js';
+import { bagOf, createClientHost, wipeClientStorage } from '../mods/createClientHost.js';
+import { createClientGhostReader } from '../mods/ghostReader.js';
 
 import type { Ticker } from 'pixi.js';
 
-import type {
-  DoorView,
-  FromDaemon,
-  Point,
-  Snapshot,
-  WalkGrid,
-} from '@planar/kernel';
-import type { GhostAre, GhostTis, GhostWed, Maybe } from '@planar/shared';
+import type { FromDaemon, Maybe, Patch, Point, Snapshot } from '@planar/shared';
 
+import type { ClientSession } from '../mods/createClientHost.js';
 import type { PlayView } from './types.js';
-
-type MapArt = Readonly<{
-  areId: string;
-  are: GhostAre;
-  wed: GhostWed;
-  tis: GhostTis;
-  atlas: Texture;
-  walkBase: Uint8Array;
-}>;
 
 export type PlayPointerClick = Point & Readonly<{
   button: 'left' | 'right';
@@ -52,68 +33,10 @@ const PAN_CSS_PX_PER_SEC = 500;
 const MIN_ZOOM = 0.25;
 const MAX_ZOOM = 4;
 
-const mapSize = (wed: GhostWed): { w: number; h: number } => {
-  const overlay = just(wed.overlays[0]);
-  return { w: overlay.width * PSTEE_TILE_PX, h: overlay.height * PSTEE_TILE_PX };
-};
-
-const getAtlasFrame = (tileIndex: number, columns: number, tilePx: number): { x: number; y: number } => ({
-  x: (tileIndex % columns) * tilePx,
-  y: Math.floor(tileIndex / columns) * tilePx,
-});
-
-const paintedGrid = (are: GhostAre, walkBase: Uint8Array, doors: DoorView[]): WalkGrid => {
-  const walk = are.walk;
-  const open = new Map(doors.map(door => [door.id, door.open]));
-  const grid = paintDoorFlags(walkBase, walk, are.doors, open);
-  return {
-    cellWidth: walk.cellWidth,
-    cellHeight: walk.cellHeight,
-    colsCount: walk.colsCount,
-    rowsCount: walk.rowsCount,
-    grid,
-  };
-};
-
-const drawUnpassableTiles = (
-  layer: Graphics,
-  walk: WalkGrid,
-  viewX: number,
-  viewY: number,
-  viewW: number,
-  viewH: number,
-): void => {
-  layer.clear();
-
-  const sx = Math.max(Math.floor(viewX / walk.cellWidth), 0);
-  const sy = Math.max(Math.floor(viewY / walk.cellHeight), 0);
-  const dx = Math.min(walk.colsCount, Math.ceil((viewX + viewW) / walk.cellWidth));
-  const dy = Math.min(walk.rowsCount, Math.ceil((viewY + viewH) / walk.cellHeight));
-  for (let cy = sy; cy < dy; cy += 1) {
-    for (let cx = sx; cx < dx; cx += 1) {
-      const flag = walk.grid[cy * walk.colsCount + cx] ?? 0;
-      const passable = (flag & PASSABLE_WALK) === PASSABLE_WALK;
-      if (passable) continue;
-      layer.rect(cx * walk.cellWidth, cy * walk.cellHeight, walk.cellWidth, walk.cellHeight);
-      layer.fill({ color: 0xff3355, alpha: 0.28 });
-    }
-  }
-};
-
 const decodeMouseButton = (button: number): Maybe<PlayPointerClick['button']> => {
   if (button === 0) return 'left';
   if (button === 2) return 'right';
   return nothing();
-};
-
-// mutable
-type LastRenderedTilesState = {
-  areId: Maybe<string>;
-  sx: Maybe<number>;
-  sy: Maybe<number>;
-  dx: Maybe<number>;
-  dy: Maybe<number>;
-  doorGen: number;
 };
 
 export type AttachPlayViewProps = Readonly<{
@@ -123,6 +46,7 @@ export type AttachPlayViewProps = Readonly<{
   onClick: (dest: PlayPointerClick) => void;
   onHudUpdate: (tick: number, paused: boolean, areId: string) => void;
 }>;
+
 export const attachPlayView = async ({
   renderHost,
   serverUrl,
@@ -157,35 +81,55 @@ export const attachPlayView = async ({
 
   app.stage.addChild(viewport);
 
-  const tiles = new Container();
-  tiles.eventMode = 'none';
-
-  const debug = new Graphics();
-  debug.eventMode = 'none';
-
-  const actors = new Container();
-  actors.eventMode = 'none';
-  actors.sortableChildren = true;
-
+  const area = new Container();
+  area.eventMode = 'none';
+  const bodies = new Container();
+  bodies.eventMode = 'none';
+  bodies.sortableChildren = true;
+  const overlay = new Graphics();
+  overlay.eventMode = 'none';
   const followMarker = new Container();
   followMarker.eventMode = 'none';
 
-  viewport.addChild(tiles);
-  viewport.addChild(debug);
-  viewport.addChild(actors);
+  viewport.addChild(area);
+  viewport.addChild(bodies);
+  viewport.addChild(overlay);
   viewport.addChild(followMarker);
 
-  let snapshot: Maybe<Snapshot> = nothing();
-  let mapArt: Maybe<MapArt> = nothing();
-  let walkGrid: Maybe<WalkGrid> = nothing();
-  let loadGen = 0;
-  let doorGen = 0;
+  const session = {
+    snapshot: nothing(),
+    mapWidth: 0,
+    mapHeight: 0,
+    bags: new Map(),
+  } as unknown as ClientSession;
+
+  const pixi = { Sprite, Texture, Rectangle, Assets, Container, Graphics };
+  const ghost = createClientGhostReader(serverUrl, ghostDir, () => (
+    isNothing(session.snapshot) ? '' : session.snapshot.areId
+  ));
+  const pump = createAssetPump({
+    ghost,
+    serverUrl,
+    pixiAssets: Assets,
+  });
+
+  session.host = createClientHost({
+    session,
+    layers: { area, bodies, overlay },
+    pixi,
+    assets: pump.assets,
+    viewport,
+    app,
+  });
+
+  const { active, mods } = await bootClientMods({
+    serverUrl,
+  });
+
+  let areaReady = false;
   let following = false;
-  let viewAlive = true;
   let snappedAreId: Maybe<string> = nothing();
   let pointerOverCanvas = false;
-  const creArt = createCreArtCache();
-  const creSprites = new Map<number, Sprite>();
   const pointerScreen = { x: 0, y: 0 };
   const keys = {
     left: false,
@@ -194,109 +138,31 @@ export const attachPlayView = async ({
     down: false,
   };
 
-  const lastRenderedTilesState: LastRenderedTilesState = {
-    areId: nothing(),
-    sx: nothing(),
-    sy: nothing(),
-    dx: nothing(),
-    dy: nothing(),
-    doorGen: 0,
-  };
-
-  const clearTiles = (): void => {
-    const removed = tiles.removeChildren();
-    for (const child of removed) {
-      child.destroy();
-    }
+  const playerPos = (): Maybe<{ x: number; y: number }> => {
+    if (isNothing(session.snapshot)) return nothing();
+    const found = session.snapshot.entities.find(row => row.id === PLAYER_ACTOR_ID);
+    if (!found) return nothing();
+    return found.pos;
   };
 
   const syncViewportSize = (): void => {
-    if (isNothing(mapArt)) {
-      viewport.resize(app.screen.width, app.screen.height);
-      return;
-    }
-
-    const size = mapSize(mapArt.wed);
-    viewport.resize(app.screen.width, app.screen.height, size.w, size.h);
-  };
-
-  const rebuildTiles = (): void => {
-    if (isNothing(snapshot) || isNothing(mapArt)) return;
-
-    const overlay = just(mapArt.wed.overlays[0]);
-    const bounds = viewport.getVisibleBounds();
-
-    /** rectangle of visible tis: [sx,dx)×[sy,dy)
-     * sx = first visible tile column
-     * sy = first visible tile row
-     * dx = exclusive end column
-     * dy = exclusive end row
-     */
-    const sx = Math.max(Math.floor(bounds.x / PSTEE_TILE_PX), 0);
-    const sy = Math.max(Math.floor(bounds.y / PSTEE_TILE_PX), 0);
-    const dx = Math.min(overlay.width, Math.ceil((bounds.x + bounds.width) / PSTEE_TILE_PX));
-    const dy = Math.min(overlay.height, Math.ceil((bounds.y + bounds.height) / PSTEE_TILE_PX));
-
-    const tilesUnchanged = mapArt.areId === lastRenderedTilesState.areId
-      && sx === lastRenderedTilesState.sx
-      && sy === lastRenderedTilesState.sy
-      && dx === lastRenderedTilesState.dx
-      && dy === lastRenderedTilesState.dy
-      && doorGen === lastRenderedTilesState.doorGen;
-    if (tilesUnchanged) return;
-
-    lastRenderedTilesState.areId = mapArt.areId;
-    lastRenderedTilesState.sx = sx;
-    lastRenderedTilesState.sy = sy;
-    lastRenderedTilesState.dx = dx;
-    lastRenderedTilesState.dy = dy;
-    lastRenderedTilesState.doorGen = doorGen;
-
-    clearTiles();
-
-    const doorOpenByCellMap = doorOpenByCell(overlay.width, overlay.height, mapArt.wed.doors, snapshot.doors);
-    for (let y = sy; y < dy; y += 1) {
-      for (let x = sx; x < dx; x += 1) {
-        const cell = y * overlay.width + x;
-        const tilemap = overlay.tilemaps[cell];
-        if (tilemap === undefined) continue; // TODO [snow]: seems valid continue, but...
-
-        const tileIndex = overlayTileIndex(tilemap, doorOpenByCellMap.get(cell));
-        const frame = getAtlasFrame(tileIndex, mapArt.tis.columns, PSTEE_TILE_PX);
-        const texture = new Texture({
-          source: mapArt.atlas.source,
-          frame: new Rectangle(frame.x, frame.y, PSTEE_TILE_PX, PSTEE_TILE_PX),
-        });
-        const sprite = new Sprite(texture);
-        sprite.x = x * PSTEE_TILE_PX;
-        sprite.y = y * PSTEE_TILE_PX;
-        tiles.addChild(sprite);
-      }
-    }
-  };
-
-  const firstActorPos = (): Maybe<{ x: number; y: number }> => {
-    if (isNothing(snapshot)) return nothing();
-
-    const found = snapshot.bodies.find(([id]) => id === PLAYER_ACTOR_ID);
-    if (!found) return nothing();
-
-    return found[1].pos;
+    viewport.resize(
+      app.screen.width,
+      app.screen.height,
+      session.mapWidth || app.screen.width,
+      session.mapHeight || app.screen.height,
+    );
   };
 
   const layoutCamera = (): void => {
-    if (isNothing(snapshot) || isNothing(mapArt)) return;
-
+    if (isNothing(session.snapshot)) return;
     syncViewportSize();
-
-    const pos = firstActorPos();
+    const pos = playerPos();
     if (isNothing(pos)) return;
-
     followMarker.position.set(pos.x, pos.y);
-
-    const areaChanged = snappedAreId !== mapArt.areId;
+    const areaChanged = snappedAreId !== session.snapshot.areId;
     if (areaChanged) {
-      snappedAreId = mapArt.areId;
+      snappedAreId = session.snapshot.areId;
       viewport.moveCenter(pos.x, pos.y);
     }
   };
@@ -306,90 +172,70 @@ export const attachPlayView = async ({
       viewport.plugins.pause('follow');
       return;
     }
-
-    const pos = firstActorPos();
+    const pos = playerPos();
     if (!isNothing(pos)) {
       followMarker.position.set(pos.x, pos.y);
       viewport.moveCenter(pos.x, pos.y);
     }
-
     viewport.follow(followMarker);
   };
 
-  const paintCres = (): void => {
-    if (!viewAlive) return;
-    if (isNothing(snapshot)) return;
-
-    syncCreSprites(actors, creSprites, snapshot, creArt);
-
-    for (const [, actor] of snapshot.actors) {
-      if (creArt.cre.has(actor.cre) || creArt.inflight.has(actor.cre)) continue;
-
-      ensureCreArt(creArt, actor.cre, serverUrl, ghostDir)
-        .then(() => {
-          paintCres();
-        })
-        .catch((err: unknown) => {
-          console.error(err);
-        });
+  const runHook = (hook: 'onAreaUnload' | 'onPatches' | 'onFrame', patches?: Patch[]): void => {
+    for (const mod of clientHookOrder(active, mods, hook)) {
+      const bag = bagOf(session, mod.manifest.id);
+      switch (hook) {
+        case 'onAreaUnload':
+          mod.exports.onAreaUnload?.(session.host, { bag })?.catch((err: unknown) => {
+            console.error(err);
+          });
+          break;
+        case 'onPatches':
+          mod.exports.onPatches?.(session.host, { bag, patches: patches ?? [] });
+          break;
+        case 'onFrame': {
+          const result: unknown = mod.exports.onFrame?.(session.host, { bag });
+          const thenable = result !== undefined && result !== null && typeof result === 'object' && 'then' in result;
+          if (thenable) {
+            console.error(`mod '${mod.manifest.id}' onFrame returned a Promise`);
+          }
+          break;
+        }
+      }
     }
   };
 
-  const paint = (): void => {
-    if (isNothing(snapshot)) return;
+  const drainAssets = async (): Promise<void> => {
+    await pump.assets.waitAllLoadings();
+  };
 
-    if (!isNothing(mapArt)) {
-      walkGrid = paintedGrid(mapArt.are, mapArt.walkBase, snapshot.doors);
+  const hud = (): void => {
+    if (isNothing(session.snapshot)) return;
+    onHudUpdate(session.snapshot.tick, session.snapshot.paused, session.snapshot.areId);
+  };
+
+  const onArea = async (): Promise<void> => {
+    areaReady = false;
+    runHook('onAreaUnload');
+    pump.unloadAll();
+    wipeClientStorage(session);
+    overlay.clear();
+    for (const mod of clientHookOrder(active, mods, 'onAreaLoad')) {
+      await mod.exports.onAreaLoad?.(session.host, { bag: bagOf(session, mod.manifest.id) });
     }
-
+    await drainAssets();
+    if (!isNothing(session.snapshot)) {
+      const published: Patch[] = Object.entries(session.snapshot.mods).map(([modId, row]) => ({
+        type: 'mod/upsert',
+        modId,
+        row,
+      }));
+      if (published.length > 0) runHook('onPatches', published);
+      await drainAssets();
+    }
+    areaReady = true;
     layoutCamera();
-    rebuildTiles();
-
-    if (!isNothing(walkGrid)) {
-      const bounds = viewport.getVisibleBounds();
-      drawUnpassableTiles(debug, walkGrid, bounds.x, bounds.y, bounds.width, bounds.height);
-    }
-
-    paintCres();
-    onHudUpdate(snapshot.tick, snapshot.paused, snapshot.areId);
-  };
-
-  const paintVisible = (): void => {
-    rebuildTiles();
-
-    if (isNothing(walkGrid)) return;
-
-    const bounds = viewport.getVisibleBounds();
-    drawUnpassableTiles(debug, walkGrid, bounds.x, bounds.y, bounds.width, bounds.height);
-  };
-
-  const loadArt = (areId: string): void => {
-    loadGen += 1;
-    const gen = loadGen;
-
-    mapArt = nothing();
-    walkGrid = nothing();
-
-    clearTiles();
-
-    loadPlayMapGhost(areId, serverUrl, ghostDir)
-      .then(async (ghost) => {
-        const url = assetUrl(serverUrl, 'tis', ghost.tis.imageName);
-        const atlas = await Assets.load(url);
-        const stale = gen !== loadGen;
-        if (stale) return;
-        mapArt = {
-          areId,
-          are: ghost.are,
-          wed: ghost.wed,
-          tis: ghost.tis,
-          atlas,
-          walkBase: ghost.walkBase,
-        };
-        paint();
-      }).catch((err: unknown) => {
-        console.error(err);
-      });
+    applyFollow();
+    hud();
   };
 
   const panCamera = (ticker: Ticker): void => {
@@ -416,13 +262,10 @@ export const attachPlayView = async ({
     const center = viewport.center;
     viewport.moveCenter(center.x + worldDx, center.y + worldDy);
     viewport.plugins.get('clamp')?.update();
-
-    paintVisible();
   };
 
   const onKeyDown = (event: KeyboardEvent): void => {
     if (!pointerOverCanvas) return;
-
     if (event.code === 'ArrowLeft') {
       keys.left = true;
       event.preventDefault();
@@ -459,6 +302,9 @@ export const attachPlayView = async ({
   const onTick = (ticker: Ticker): void => {
     viewport.update(ticker.elapsedMS);
     panCamera(ticker);
+    overlay.clear();
+    if (!areaReady) return;
+    runHook('onFrame');
   };
 
   viewport.on('pointerdown', (event) => {
@@ -473,13 +319,6 @@ export const attachPlayView = async ({
     pointerScreen.y = event.global.y;
   });
 
-  viewport.on('moved', () => {
-    paintVisible();
-  });
-  viewport.on('zoomed', () => {
-    paintVisible();
-  });
-
   app.ticker.add(onTick);
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
@@ -488,51 +327,48 @@ export const attachPlayView = async ({
 
   app.renderer.on('resize', () => {
     syncViewportSize();
-    paint();
   });
 
   const handleFromDaemon = (fromDaemon: FromDaemon): Maybe<Snapshot> => {
-    if (fromDaemon.type === 'error') return snapshot;
+    if (fromDaemon.type === 'error') return session.snapshot;
 
     if (fromDaemon.type === 'snapshot') {
-      const prevAre = isNothing(snapshot) ? nothing() : snapshot.areId;
-      snapshot = fromDaemon.snapshot;
-
-      const areaChanged = snapshot.areId !== prevAre;
+      const prevAre = isNothing(session.snapshot) ? nothing() : session.snapshot.areId;
+      session.snapshot = fromDaemon.snapshot;
+      const areaChanged = session.snapshot.areId !== prevAre;
       if (areaChanged) {
-        clearCreSprites(actors, creSprites);
-        loadArt(snapshot.areId); // TODO [snow]: that's a race
+        onArea().catch((err: unknown) => console.error(err));
       }
-
-      paint();
-
-      return snapshot;
+      else {
+        layoutCamera();
+        hud();
+      }
+      return session.snapshot;
     }
 
-    if (fromDaemon.type === 'tick' && !isNothing(snapshot)) {
-      snapshot = {
-        ...snapshot,
+    if (fromDaemon.type === 'tick' && !isNothing(session.snapshot)) {
+      session.snapshot = {
+        ...session.snapshot,
         tick: fromDaemon.tick,
         seq: fromDaemon.seq,
       };
-      paintCres();
-      onHudUpdate(snapshot.tick, snapshot.paused, snapshot.areId);
-
-      return snapshot;
+      hud();
+      return session.snapshot;
     }
 
-    if (fromDaemon.type === 'patches' && !isNothing(snapshot)) {
-      snapshot = { ...foldPatches(snapshot, fromDaemon.patches), seq: fromDaemon.seq, tick: fromDaemon.tick };
-
-      const doorsChanged = fromDaemon.patches.some(patch => patch.op !== 'command/rejected' && patch.table === 'doors');
-      if (doorsChanged) doorGen += 1;
-
-      paint();
-
-      return snapshot;
+    if (fromDaemon.type === 'patches' && !isNothing(session.snapshot)) {
+      session.snapshot = {
+        ...foldPatches(session.snapshot, fromDaemon.patches),
+        seq: fromDaemon.seq,
+        tick: fromDaemon.tick,
+      };
+      runHook('onPatches', fromDaemon.patches);
+      layoutCamera();
+      hud();
+      return session.snapshot;
     }
 
-    return snapshot;
+    return session.snapshot;
   };
 
   return {
@@ -542,8 +378,8 @@ export const attachPlayView = async ({
       applyFollow();
     },
     destroy: () => {
-      viewAlive = false;
-      loadGen += 1;
+      areaReady = false;
+      pump.unloadAll();
       app.ticker.remove(onTick);
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
@@ -554,8 +390,6 @@ export const attachPlayView = async ({
           console.error(err);
         });
       }
-      clearTiles();
-      clearCreSprites(actors, creSprites);
       if (viewport.parent) viewport.parent.removeChild(viewport);
       viewport.destroy({ children: true });
       app.destroy(true, { children: true, texture: true });

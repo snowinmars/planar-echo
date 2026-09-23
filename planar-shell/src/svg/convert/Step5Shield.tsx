@@ -1,3 +1,9 @@
+/*
+ * The complex path is adapted from Ivan Bogachev's "Magic sphere" CodePen.
+ * Public CodePen source is licensed under MIT; the surrounding shield is original.
+ * See THIRD_PARTY_NOTICES.md for source and license details.
+ */
+
 import type { FC, JSX } from 'react';
 
 import type { WithClassName } from '@/types/fcWithClassName';
@@ -18,7 +24,6 @@ const Step5Shield: FC<WithClassName> = ({ className }): JSX.Element => (
       className={styles.shield}
     />
 
-    {/* https://habr.com/ru/articles/349988/ */}
     <path
       className={styles.flag}
       fill="none"
