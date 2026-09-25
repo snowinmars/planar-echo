@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostPvrz, loadGhostPvrz } from './pvrzApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostPvr, Maybe } from '@planar/shared';
 
 export type PvrzStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
 
   pvrzs: string[];
@@ -24,7 +26,6 @@ export type PvrzStore = Readonly<{
 
 export const usePvrzStore = create<PvrzStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
 
   pvrzs: [],
@@ -35,9 +36,14 @@ export const usePvrzStore = create<PvrzStore>((set, get) => ({
     set({ loading: true });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const data = await listGhostPvrz(serverUrl, ghostDir);
-      set({ pvrzs: data });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'pvrz' },
+        throwOnError: true,
+      });
+      set({ pvrzs: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -52,11 +58,17 @@ export const usePvrzStore = create<PvrzStore>((set, get) => ({
     set({ loading: true });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const t = await loadGhostPvrz({ serverUrl, ghostDir, pvrzId });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'pvrz', resourceName: pvrzId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostPvr>(skeletonResponse.data.data.content);
       set({
         currentPvrzId: pvrzId,
-        currentPvrz: t,
+        currentPvrz: skeleton(),
       });
     }
     catch (e: unknown) {

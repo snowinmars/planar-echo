@@ -1,48 +1,48 @@
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import { dirname } from 'path';
+import { existsSync, mkdirSync, readFileSync } from 'fs';
 
-import { fileExists } from '@planar/shared/node';
-
-import { createPaths } from './createPaths.js';
 import { pathsSchema } from './createPaths.types.js';
-import logger from './logger.js';
 
 import type { Paths } from './createPaths.types.js';
 
-// TODO [snow]: drop class, create function factory
-export class PathsStore {
-  current: Paths;
+const missingRoot = (dir: string): string => `Directory '${dir}' does not exist`;
 
-  constructor(private readonly filePath: string) {
-    this.current = createPaths();
-    this.load().catch(logger.error); // TODO [snow]: meh...
-  }
+const missingDist = (dir: string): string => `Directory '${dir}' does not exist. Run 'yarn build' then restart.`;
 
-  async load(): Promise<Paths> {
-    const found = await fileExists(this.filePath);
+const requireDir = (dir: string, message: (dir: string) => string): void => {
+  if (!existsSync(dir)) throw new Error(message(dir));
+};
 
-    if (!found) {
-      logger.info(`Create paths from '${this.filePath}'`);
-      return this.save(createPaths());
-    }
+const ensureDir = (dir: string): void => {
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+};
 
-    const raw = await readFile(this.filePath, { encoding: 'utf8' });
+export const loadPaths = (filePath: string): Paths => {
+  if (!existsSync(filePath)) throw new Error(`Paths file is missing: '${filePath}'. Copy asclepius.defaults.example.json to that path.`);
 
-    const parsed: unknown = JSON.parse(raw);
-    const paths = pathsSchema.parse(parsed);
-    this.current = paths;
+  const raw = readFileSync(filePath, { encoding: 'utf8' });
+  const parsed = JSON.parse(raw);
+  const paths = pathsSchema.parse(parsed);
 
-    return this.current;
-  }
+  requireDir(paths.repository.root, missingRoot);
+  requireDir(paths.asclepius.root, missingRoot);
+  requireDir(paths.daemon.root, missingRoot);
+  requireDir(paths.kernel.root, missingRoot);
+  requireDir(paths.mods.root, missingRoot);
+  requireDir(paths.prism.root, missingRoot);
+  requireDir(paths.shared.root, missingRoot);
+  requireDir(paths.shell.root, missingRoot);
 
-  async save(paths: Paths): Promise<Paths> {
-    const parsed = pathsSchema.parse(paths);
+  requireDir(paths.asclepius.dist, missingDist);
+  requireDir(paths.daemon.dist, missingDist);
+  requireDir(paths.kernel.dist, missingDist);
+  requireDir(paths.mods.dist, missingDist);
+  requireDir(paths.prism.dist, missingDist);
+  requireDir(paths.shared.dist, missingDist);
+  requireDir(paths.shell.dist, missingDist);
 
-    await mkdir(dirname(this.filePath), { recursive: true });
-    await writeFile(this.filePath, `${JSON.stringify(parsed, null, 2)}\n`, { encoding: 'utf8' });
+  ensureDir(paths.ghost.root);
+  ensureDir(paths.weidu.root);
+  ensureDir(paths.modsRuntime.root);
 
-    this.current = parsed;
-
-    return this.current;
-  }
-}
+  return paths;
+};

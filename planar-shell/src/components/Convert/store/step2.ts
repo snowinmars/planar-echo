@@ -2,9 +2,11 @@ import { debounce, interval, Subject } from 'rxjs';
 
 import { nothing } from '@planar/shared';
 
-import planarLocalStorage from '@/shared/planarLocalStorage';
-import { postApiFsDownloadWeidu, postApiFsValidateWeiduExeDir } from '@/swagger/client';
+import { backendUrl } from '@/shared/backendUrl';
+import { getApiPaths, postApiFsDownloadWeidu, postApiFsValidateWeiduExeDir } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
+
+import { getAxiosApiErrorBody } from './shared';
 
 import type { StateCreator } from 'zustand';
 
@@ -45,8 +47,8 @@ const translateDownloadError = (error: DownloadErrorStateProps): string => {
 const downloadWeidu = async (
   serverUrl: string,
   platform: WeiduDownloadPlatform,
-  setWeiduExeDir: (weiduExeDir: string) => void,
   set: ZustandSetType<LandingStateStep2>,
+  get: ZustandGetType<LandingStateStep2>,
 ): Promise<void> => {
   set({
     step2Loading: true,
@@ -57,30 +59,26 @@ const downloadWeidu = async (
   });
 
   try {
-    const { data, error } = await postApiFsDownloadWeidu({
+    await postApiFsDownloadWeidu({
       client,
       baseURL: serverUrl,
       body: { platform },
+      throwOnError: true,
     });
 
-    if (error) {
-      set({
-        step2Loading: false,
-        step2Comment: translateDownloadError(error),
-        step2CommentArgs: {},
-        step2ResultType: 'error',
-        step2Valid: false,
-      });
-      return;
-    }
-
-    setWeiduExeDir(data.data.weiduExeDir);
+    const paths = await getApiPaths({
+      client,
+      baseURL: backendUrl(),
+      throwOnError: true,
+    });
+    set({ weiduExeDir: paths.data.weidu.exe });
+    await validate(serverUrl, set, get);
   }
   catch (e: unknown) {
     console.error(e);
     set({
       step2Loading: false,
-      step2Comment: 'landing.step2.comments.unknown',
+      step2Comment: translateDownloadError(getAxiosApiErrorBody(e)),
       step2CommentArgs: {},
       step2ResultType: 'error',
       step2Valid: false,
@@ -111,35 +109,25 @@ const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep2
   });
 
   try {
-    const { data, error } = await postApiFsValidateWeiduExeDir({
+    const { data } = await postApiFsValidateWeiduExeDir({
       client,
       baseURL: serverUrl,
-      body: { weiduExeDir },
+      throwOnError: true,
     });
 
-    set({ step2Loading: false });
-
-    if (error) {
-      set({
-        step2Comment: translateErrorState(error),
-        step2CommentArgs: {},
-        step2ResultType: 'error',
-        step2Valid: false,
-      });
-    }
-    else {
-      set({
-        step2Comment: 'landing.step2.comments.weiduExeVersion',
-        step2CommentArgs: { version: data.data.version },
-        step2ResultType: 'success',
-        step2Valid: true,
-      });
-    }
+    set({
+      step2Loading: false,
+      step2Comment: 'landing.step2.comments.weiduExeVersion',
+      step2CommentArgs: { version: data.data.version },
+      step2ResultType: 'success',
+      step2Valid: true,
+    });
   }
   catch (e: unknown) {
     console.error(e);
     set({
-      step2Comment: 'landing.step2.comments.unknown',
+      step2Loading: false,
+      step2Comment: translateErrorState(getAxiosApiErrorBody(e)),
       step2CommentArgs: {},
       step2ResultType: 'error',
       step2Valid: false,
@@ -171,16 +159,19 @@ export const useLandingStoreStep2: StateCreator<LandingState, [], [], LandingSta
         .catch(e => console.error(e));
     });
 
-  const weiduExeDir = planarLocalStorage.get<string>('weiduExeDir', '')!;
-  validate$.next();
+  getApiPaths({
+    client,
+    baseURL: backendUrl(),
+    throwOnError: true,
+  })
+    .then((paths) => {
+      set({ weiduExeDir: paths.data.weidu.exe });
+      validate$.next();
+    })
+    .catch((e: unknown) => console.error(e));
 
   return {
-    weiduExeDir,
-    setWeiduExeDir: (weiduExeDir: string): void => {
-      set({ weiduExeDir });
-      planarLocalStorage.set('weiduExeDir', weiduExeDir);
-      validate$.next();
-    },
+    weiduExeDir: '',
 
     step2Valid: false,
     step2Loading: false,
@@ -193,11 +184,8 @@ export const useLandingStoreStep2: StateCreator<LandingState, [], [], LandingSta
       return validate(serverUrl, set, get);
     },
     step2DownloadWeidu: (platform: WeiduDownloadPlatform) => {
-      const {
-        serverUrl,
-        setWeiduExeDir,
-      } = get();
-      return downloadWeidu(serverUrl, platform, setWeiduExeDir, set);
+      const { serverUrl } = get();
+      return downloadWeidu(serverUrl, platform, set, get);
     },
     step2Destroy: () => {
       subscription.unsubscribe();

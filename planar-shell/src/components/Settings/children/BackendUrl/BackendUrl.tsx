@@ -89,18 +89,11 @@ export const BackendUrl: FC = () => {
             client,
             baseURL: value,
             signal: pingAbortController.current.signal,
+            throwOnError: true,
           })
             .then((response) => {
-              if (response.error && isAxiosError(response)) {
-                if (response.code !== 'ERR_CANCELED') {
-                  console.error(response);
-                  setStatus('pingFailed');
-                }
-                return;
-              }
-
               if (response.data !== 'pong asclepius') {
-                console.error(response.error);
+                console.error(response.data);
                 setStatus('pingFailed');
                 return;
               }
@@ -110,6 +103,7 @@ export const BackendUrl: FC = () => {
                 setStatus('nothing');
               }, ANIMATION_TIME_MS);
             }).catch((e: unknown) => {
+              if (isAxiosError(e) && e.code === 'ERR_CANCELED') return;
               console.error(e);
               setStatus('pingFailed');
             });

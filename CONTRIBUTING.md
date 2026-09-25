@@ -25,27 +25,30 @@ yarn start
 ```
 
 The UI runs at `http://localhost:3000` and the backend at `http://localhost:3003`.
+Conversion, Workbench, stores, and settings are the current product surface.
+Play and mod composition are explicitly unavailable during the runtime rebuild.
 
 ## Workspace map
 
 The [modular runtime architecture](docs/architecture/modular-runtime.md) is the canonical source for stable boundaries, current-state labels, and target invariants. Follow the closest package guide:
 
-- [`@planar/shared`](planar-shared/AGENTS.md) — browser-safe contracts and the explicit Node export.
-- [`@planar/kernel`](planar-kernel/AGENTS.md) — policy-free World data and deterministic transforms.
-- [`@planar/daemon`](planar-daemon/AGENTS.md) — authoritative World owner and server-mod host.
-- [`@planar/mods`](planar-mods/AGENTS.md) — replaceable default PST:EE client/server mod composition.
-- [`@planar/prism`](planar-prism/AGENTS.md) — standalone conversion CLI and fork/IPC worker.
-- [`@planar/asclepius`](planar-asclepius/AGENTS.md) — HTTP, WebSocket, artifacts, defaults, and child-process orchestration.
-- [`@planar/shell`](planar-shell/AGENTS.md) — browser UI, replicated view, rendering, input, and client mods.
+- [`@planar/shared`](planar-shared/AGENTS.md) - browser-safe contracts and the explicit Node export.
+- [`@planar/ie`](planar-ie/AGENTS.md) - IE/Ghost contracts, transforms, and reusable format libraries.
+- [`@planar/kernel`](planar-kernel/AGENTS.md) - reserved policy-free deterministic runtime core.
+- [`@planar/daemon`](planar-daemon/AGENTS.md) - reserved authoritative session host.
+- [`@planar/mods`](planar-mods/AGENTS.md) - reserved first-party conformance and PST modpacks.
+- [`@planar/prism`](planar-prism/AGENTS.md) - standalone conversion CLI and fork/IPC worker.
+- [`@planar/asclepius`](planar-asclepius/AGENTS.md) - HTTP, Prism WebSocket, artifacts, defaults, and child-process orchestration.
+- [`@planar/shell`](planar-shell/AGENTS.md) - conversion, Workbench, stores, and settings UI.
 
 ## Root commands
 
-- `yarn build` — run `yarn gen`, then build every workspace.
-- `yarn start` — start the Asclepius and Shell development processes.
-- `yarn lint` — run each workspace's lint script.
-- `yarn test` — run the Kernel, Prism, and Shell test suites.
-- `yarn gen` — regenerate and copy the Shell client from the maintained OpenAPI input.
-- `yarn serve` — serve an already built Asclepius application.
+- `yarn build` - run `yarn gen`, then build every workspace.
+- `yarn start` - start the Asclepius and Shell development processes.
+- `yarn lint` - run each workspace's lint script.
+- `yarn test` - run the currently available Prism and Shell test suites.
+- `yarn gen` - regenerate and copy the Shell client from the maintained OpenAPI input.
+- `yarn serve` - serve an already built Asclepius application.
 
 Package-specific build, start, lint, and test commands are listed in each package guide and manifest.
 
@@ -55,7 +58,6 @@ Human contributors may run the relevant tests whenever useful:
 
 ```bash
 yarn test
-yarn workspace @planar/kernel test
 yarn workspace @planar/prism test
 yarn workspace @planar/shell test
 ```
@@ -94,9 +96,16 @@ Preserve copyright, license, and provenance notices when adapting third-party ma
 
 ## Mods and trust
 
-Runtime `client.js` and `server.js` bundles are trusted executable code with no sandbox. Server mods inherit the daemon's ambient Node.js permissions; client mods run with the Shell origin's browser privileges. Review mod sources, install only trusted mods, and do not describe manifest validation, versions, or hashes as proof of safety.
+The target mod runtime executes trusted code with no sandbox. Server mods
+inherit the daemon's ambient Node.js permissions; client mods run with the Shell
+origin's browser privileges. Review mod sources, install only trusted mods, and
+do not describe manifests, versions, signatures, or hashes as proof of safety.
 
-Keep authoritative World mutation in the daemon through validated `WorldEffect` requests. Default PST:EE behavior belongs in replaceable mods rather than privileged engine code.
+Milestone 0 ships no runtime mod bundles. The replacement uses frozen modpack
+locks, protocol tables/resources, and validated atomic transactions; it has no
+compatibility with legacy hooks, queries, `WorldEffect`, or `active.json`.
+Default PST:EE behavior belongs in replaceable mods rather than privileged
+engine code.
 
 Distributed mods intended for planar-echo must use GPL-compatible license terms and preserve applicable third-party notices. Manifest validation does not validate licenses.
 

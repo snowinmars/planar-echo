@@ -20,7 +20,6 @@ type Step4Props = WithClassName & Readonly<{
   disabled: boolean;
   valid: boolean;
   ghostDir: LandingStateStep4['ghostDir'];
-  setGhostDir: LandingStateStep4['setGhostDir'];
   loading: LandingStateStep4['step4Loading'];
   comment: LandingStateStep4['step4Comment'];
   commentArgs: LandingStateStep4['step4CommentArgs'];
@@ -47,7 +46,6 @@ const Step4: FC<Step4Props> = (props: Step4Props) => {
         <Content
           disabled={props.disabled}
           ghostDir={props.ghostDir}
-          setGhostDir={props.setGhostDir}
           loading={props.loading}
           validate={props.validate}
           openDir={props.openDir}

@@ -53,7 +53,7 @@ const Step6: FC<Step6Props> = (props: Step6Props) => {
         onClick={props.biff2json}
         disabled={props.disabled || props.loading}
       >
-        {props.currentRssBytes && t('landing.step6.progress', { currentRssMb: Math.round(props.currentRssBytes / (1024 * 1024)) })}
+        {!!props.currentRssBytes && t('landing.step6.progress', { currentRssMb: Math.round(props.currentRssBytes / (1024 * 1024)) })}
         {!props.currentRssBytes && t('landing.step6.start')}
       </Button>
 

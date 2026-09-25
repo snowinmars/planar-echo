@@ -1,9 +1,7 @@
 import { Subject } from 'rxjs';
 import urlJoin from 'url-join';
 
-import { just, nothing } from '@planar/shared';
-
-import planarLocalStorage from '@/shared/planarLocalStorage';
+import { nothing } from '@planar/shared';
 
 import { getProgressMutation, getStartingSteps } from './step6.copypaste';
 
@@ -100,22 +98,15 @@ export const useLandingStoreStep6: StateCreator<LandingState, [], [], LandingSta
 
       ws.onopen = () => {
         const {
-          weiduExeDir,
           chitinKeyFile,
-          ghostDir,
           gameLanguage,
           gameName,
         } = get();
 
-        const prismDir = just(planarLocalStorage.get('prismDir'));
-
         const startMsg: PrismIndexStartMessage = {
           type: 'start',
           data: {
-            weiduExeDir,
             chitinKeyFile,
-            ghostDir,
-            prismDir,
             gameLanguage: gameLanguage as GameLanguage,
             gameName: gameName as GameName,
           },

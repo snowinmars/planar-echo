@@ -1,8 +1,8 @@
 import { createDlgLogic } from '@/engine/dlgLogic';
 import { getDbDlg, setDbDlg } from '@/shared/indexedDb';
 import {
-  postApiGhostDlgByDlgIdSkeleton,
-  postApiGhostTlkByGameLanguage,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+  getApiGhostTlkByGameLanguage,
 } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
@@ -10,64 +10,32 @@ import type { GhostDlg } from '@planar/shared';
 
 import type {
   DlgRepository,
-  GetSkeletonProps,
   LoadDlgTreeProps,
   LoadTlkLinesProps,
   Skeleton,
   TlkItems,
 } from './dlgRepository.types';
 
-const getSkeleton = async ({
-  serverUrl,
-  ghostDir,
-  dlgId,
-}: GetSkeletonProps): Promise<string> => {
-  const skeletonResponse = await postApiGhostDlgByDlgIdSkeleton({
-    client,
-    baseURL: serverUrl,
-    body: { ghostDir },
-    path: { dlgId: dlgId },
-  });
-
-  if (skeletonResponse.error) {
-    console.error(skeletonResponse.error);
-    throw new Error(skeletonResponse.error.error.message);
-  }
-  else {
-    return skeletonResponse.data.data.content;
-  }
-};
-
 const loadTlkLines = async ({
   serverUrl,
-  ghostDir,
   gameLanguage,
   tlkRefs,
 }: LoadTlkLinesProps): Promise<TlkItems> => {
-  const response = await postApiGhostTlkByGameLanguage({
+  const response = await getApiGhostTlkByGameLanguage({
     client,
     baseURL: serverUrl,
-    body: {
-      ghostDir,
-      tlkRefs,
-    },
     path: { gameLanguage },
+    query: { tlkRefs },
+    throwOnError: true,
   });
 
-  if (response.error) {
-    console.error(response.error);
-    throw new Error(response.error.error.message);
-  }
-
   const content = response.data.data.content;
-
   return new Map(content.map(({ ref, line }) => [ref, line]));
 };
 
 const loadDlgTree = async ({
   dlgId,
   serverUrl,
-  ghostDir,
   narrative,
   character,
 }: LoadDlgTreeProps,
@@ -79,11 +47,13 @@ const loadDlgTree = async ({
     skeleton = ((0, eval)(dbDlg.skeleton));
   }
   else {
-    const skeletonContent = await getSkeleton({
-      serverUrl,
-      ghostDir,
-      dlgId,
+    const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+      client,
+      baseURL: serverUrl,
+      path: { resourceType: 'dlg', resourceName: dlgId },
+      throwOnError: true,
     });
+    const skeletonContent = skeletonResponse.data.data.content;
     await setDbDlg(dlgId, skeletonContent);
     skeleton = ((0, eval)(skeletonContent));
   }

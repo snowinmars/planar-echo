@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostBmp, loadGhostBmp } from './bmpApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostBmp, Maybe } from '@planar/shared';
 
 export type BmpStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   bmps: string[];
   currentBmpId: Maybe<string>;
@@ -22,7 +24,6 @@ export type BmpStore = Readonly<{
 
 export const useBmpStore = create<BmpStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   bmps: [],
   currentBmpId: nothing(),
@@ -30,8 +31,14 @@ export const useBmpStore = create<BmpStore>((set, get) => ({
   loadBmps: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ bmps: await listGhostBmp(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'bmp' },
+        throwOnError: true,
+      });
+      set({ bmps: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -44,8 +51,18 @@ export const useBmpStore = create<BmpStore>((set, get) => ({
   loadBmp: async (bmpId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentBmpId: bmpId, currentBmp: await loadGhostBmp({ serverUrl, ghostDir, bmpId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'bmp', resourceName: bmpId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostBmp>(skeletonResponse.data.data.content);
+      set({
+        currentBmpId: bmpId,
+        currentBmp: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

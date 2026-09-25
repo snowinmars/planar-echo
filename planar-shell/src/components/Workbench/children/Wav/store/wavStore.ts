@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostWav, loadGhostWav } from './wavApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostWav, Maybe } from '@planar/shared';
 
 export type WavStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   wavs: string[];
   currentWavId: Maybe<string>;
@@ -22,7 +24,6 @@ export type WavStore = Readonly<{
 
 export const useWavStore = create<WavStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   wavs: [],
   currentWavId: nothing(),
@@ -30,8 +31,14 @@ export const useWavStore = create<WavStore>((set, get) => ({
   loadWavs: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ wavs: await listGhostWav(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'wav' },
+        throwOnError: true,
+      });
+      set({ wavs: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -44,8 +51,18 @@ export const useWavStore = create<WavStore>((set, get) => ({
   loadWav: async (wavId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentWavId: wavId, currentWav: await loadGhostWav({ serverUrl, ghostDir, wavId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'wav', resourceName: wavId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostWav>(skeletonResponse.data.data.content);
+      set({
+        currentWavId: wavId,
+        currentWav: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

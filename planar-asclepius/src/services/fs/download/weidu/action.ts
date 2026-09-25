@@ -1,9 +1,9 @@
 import extractZip from 'extract-zip';
-import { chmod, mkdir, readdir, rm, stat, unlink, writeFile } from 'fs/promises';
+import { chmod, mkdir, readdir, rename, rm, rmdir, stat, unlink, writeFile } from 'fs/promises';
 import { tmpdir } from 'os';
 import { join, resolve } from 'path';
 
-import { nothing } from '@planar/shared';
+import { just, nothing } from '@planar/shared';
 
 import logger from '@/shared/logger.js';
 
@@ -33,6 +33,23 @@ const findWeiduBinary = async (root: string, platform: WeiduPlatform): Promise<M
   }
 
   return nothing();
+};
+
+const moveFromSubfolder = async (weiduDir: string): Promise<void> => {
+  const entries = await readdir(weiduDir, { withFileTypes: true });
+
+  const subfolderName = just(entries[0]).name;
+  const subfolder = join(weiduDir, subfolderName);
+
+  const children = await readdir(subfolder);
+  for (const child of children) {
+    const from = join(subfolder, child);
+    const to = join(weiduDir, child);
+
+    await rename(from, to);
+  }
+
+  await rmdir(subfolder);
 };
 
 export default async ({
@@ -78,6 +95,7 @@ export default async ({
     await rm(weiduDir, { recursive: true, force: true });
     await mkdir(weiduDir, { recursive: true });
     await extractZip(zipPath, { dir: weiduDir });
+    await moveFromSubfolder(weiduDir);
   }
   catch (e: unknown) {
     logger.error(e);

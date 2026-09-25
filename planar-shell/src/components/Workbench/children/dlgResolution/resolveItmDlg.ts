@@ -14,14 +14,12 @@ export type ResolvedItmDlg = Readonly<{
 export type ResolveItmDlgParams = Readonly<{
   itmId: string;
   serverUrl: string;
-  ghostDir: string;
   gameLanguage: GameLanguage;
 }>;
 
 export const resolveItmDlg = async ({
   itmId,
   serverUrl,
-  ghostDir,
 }: ResolveItmDlgParams): Promise<ResolvedItmDlg> => {
   const narrative = getZustandNarrative();
   const character = getZustandCharacter();
@@ -36,7 +34,6 @@ export const resolveItmDlg = async ({
     const tree = await dlgRepository.loadDlgTree({
       dlgId,
       serverUrl,
-      ghostDir,
       narrative,
       character,
     });

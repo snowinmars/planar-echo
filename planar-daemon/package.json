@@ -7,17 +7,13 @@
     "url": "https://github.com/snowinmars/planar-echo.git"
   },
   "version": "0.0.1",
-  "description": "Node host: 30 Hz clock, World mutations, IPC, loads mods",
+  "description": "Reserved authoritative session daemon; runtime currently unavailable",
   "author": "snowinmars",
   "scripts": {
     "build": "tsc && tsc-alias",
     "clean": "node src/dev/clean.js",
     "start": "tsx src/index.ts",
     "lint": "eslint ."
-  },
-  "dependencies": {
-    "@planar/kernel": "workspace:*",
-    "@planar/shared": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

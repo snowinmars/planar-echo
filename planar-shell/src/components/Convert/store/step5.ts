@@ -10,7 +10,7 @@ export const useLandingStoreStep5: StateCreator<LandingState, [], [], LandingSta
   return {
     ownGame,
     step5Loading: false,
-    step5Valid: false,
+    step5Valid: ownGame,
 
     setOwnGame: (ownGame: boolean) => {
       set({ ownGame });

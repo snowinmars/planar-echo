@@ -93,9 +93,9 @@ WeiDU's `COPYING` contains GNU GPL version 2 and an additional permission allowi
 
 The following retained brand artwork has no open-license grant recorded in this repository. No GPL, MIT, or public-domain status is claimed for it:
 
-- `planar-shell/src/svg/gog.tsx` — GOG wordmark;
-- `planar-shell/src/svg/telegram.tsx` — Telegram logo;
-- `planar-shell/src/svg/weidu.tsx` — a trace based on the WeiDU website favicon.
+- `planar-shell/src/svg/gog.tsx` - GOG wordmark;
+- `planar-shell/src/svg/telegram.tsx` - Telegram logo;
+- `planar-shell/src/svg/weidu.tsx` - a trace based on the WeiDU website favicon.
 
 These names and marks belong to their respective owners. Primary brand-kit, license, or permission records are still required.
 

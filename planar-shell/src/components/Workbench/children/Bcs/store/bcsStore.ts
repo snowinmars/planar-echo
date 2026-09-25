@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostBcs, loadGhostBcs } from './bcsApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostBcs, Maybe } from '@planar/shared';
 
 export type BcsStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
 
   bcss: string[];
@@ -24,7 +26,6 @@ export type BcsStore = Readonly<{
 
 export const useBcsStore = create<BcsStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
 
   bcss: [],
@@ -35,9 +36,14 @@ export const useBcsStore = create<BcsStore>((set, get) => ({
     set({ loading: true });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const data = await listGhostBcs(serverUrl, ghostDir);
-      set({ bcss: data });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'bcs' },
+        throwOnError: true,
+      });
+      set({ bcss: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -52,11 +58,17 @@ export const useBcsStore = create<BcsStore>((set, get) => ({
     set({ loading: true });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const t = await loadGhostBcs({ serverUrl, ghostDir, bcsId });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'bcs', resourceName: bcsId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostBcs>(skeletonResponse.data.data.content);
       set({
         currentBcsId: bcsId,
-        currentBcs: t,
+        currentBcs: skeleton(),
       });
     }
     catch (e: unknown) {

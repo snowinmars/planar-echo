@@ -10,7 +10,6 @@ import type { LocalStorageStore } from './localStorageStore.types';
 
 const getValues = () => ({
   serverUrl: planarLocalStorage.get<string>('serverUrl', 'http://localhost:3003')!,
-  ghostDir: planarLocalStorage.get<string>('ghostDir'),
   gameLanguage: planarLocalStorage.get<GameLanguage>('gameLanguage'),
   dlgRenderer: planarLocalStorage.get<string>('dlgRenderer', 'pstee')!,
   dlgMarks: {
@@ -30,11 +29,6 @@ export const createLocalStorageStore: StateCreator<LocalStorageStore> = (set) =>
       masterSubscription.add(
         planarLocalStorage.onKeyChange('serverUrl').subscribe(() => {
           set({ serverUrl: planarLocalStorage.get<string>('serverUrl')! });
-        }),
-      );
-      masterSubscription.add(
-        planarLocalStorage.onKeyChange('ghostDir').subscribe(() => {
-          set({ ghostDir: planarLocalStorage.get<string>('ghostDir')! });
         }),
       );
       masterSubscription.add(

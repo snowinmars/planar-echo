@@ -15,9 +15,14 @@ const distSchemaWithDefaultJson = distSchema.extend({
   defaultsJson: z.string().min(1),
 });
 
+const exeSchema = rootSchema.extend({
+  exe: z.string().min(1),
+});
+
 const absRoot = (pkg: string) => `/abs/${pkg}`;
 const absDist = (pkg: string) => `/abs/${pkg}/dist`;
 const absDefaultsJson = (pkg: string) => `/abs/${pkg}/asclepius.defaults.json`;
+const absExe = (pkg: string) => `/abs/${pkg}/run.exe`;
 
 export const pathsSchema = z.object({
   asclepius: distSchemaWithDefaultJson,
@@ -30,7 +35,7 @@ export const pathsSchema = z.object({
   prism: distSchemaWithDefaultJson,
   shared: distSchema,
   shell: distSchema,
-  weidu: rootSchema,
+  weidu: exeSchema,
 }).openapi({
   example: {
     asclepius: { root: absRoot('asclepius'), dist: absDist('asclepius'), defaultsJson: absDefaultsJson('asclepius') },
@@ -43,7 +48,7 @@ export const pathsSchema = z.object({
     prism: { root: absRoot('prism'), dist: absDist('prism'), defaultsJson: absDefaultsJson('prism') },
     shared: { root: absRoot('shared'), dist: absDist('shared') },
     shell: { root: absRoot('shell'), dist: absDist('shell') },
-    weidu: { root: absRoot('weidu') },
+    weidu: { root: absRoot('weidu'), exe: absExe('weidu') },
   },
 });
 

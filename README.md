@@ -2,7 +2,10 @@
 
 [\[Русский\]](README.ru.md) · **English**
 
-planar-echo is an independent, open-source tech preview for locally converting and inspecting PST:EE data. The current product is the conversion pipeline and browser workbench; the experimental runtime is the strategic direction toward an Infinity Engine-compatible platform.
+planar-echo is an independent, open-source tech preview for locally converting
+and inspecting PST:EE data. The current product is the conversion pipeline and
+browser workbench. The multiplayer mod runtime is being rebuilt from a clean
+architecture and is not currently available.
 
 This is an active, source-built tech preview, not a complete replacement game. **Planescape: Torment: Enhanced Edition (PST:EE) is the only current and reference profile.** Other Infinity Engine games need dedicated adapters and are not currently supported.
 
@@ -10,15 +13,14 @@ This is an active, source-built tech preview, not a complete replacement game. *
 
 - Convert a legally obtained PST:EE installation locally with Prism and WeiDU into Ghost data, generated modules, and browser-ready assets.
 - Browse and search converted resources in the browser workbench, inspect game structures and media, and explore dialogue paths.
-- Try the experimental [`/play`](http://localhost:3000/play) runtime. It demonstrates current area rendering and runtime work; it is not a complete playthrough experience.
-- Install the default replaceable PST:EE mods and edit the active composition through the experimental [`/mods`](http://localhost:3000/mods) screen.
+- See the explicit rebuild status at [`/play`](http://localhost:3000/play) and [`/mods`](http://localhost:3000/mods); neither route currently runs a game or manages mods.
 - Keep source game files and converted output on your own machine; planar-echo does not upload them.
 
 ## Current limitations
 
 - Complete vanilla behavioral parity and full playability have not been reached.
 - Multiplayer is not available.
-- Play and mods are experimental. Mod changes are not applied live and may require restarting `/play`.
+- Play, the daemon runtime, and mod composition are unavailable during the clean-slate rebuild.
 - There are no packaged installers; the preview must be built from source.
 - Docker files exist for development, but Docker is not currently a supported player path.
 - PST:EE is the only game profile. Other Infinity Engine games are not supported yet.
@@ -27,10 +29,11 @@ This is an active, source-built tech preview, not a complete replacement game. *
 
 These are goals, not claims about the current build:
 
-- Observable vanilla behavioral parity; differences within verified coverage are treated as bugs.
-- A minimally playable vanilla composition supplied through replaceable required-slot mods.
-- Every required mod replaceable without editing the engine.
-- Future networked multiplayer with server-authoritative sessions and server-pinned mod IDs, versions, and hashes. Matching artifacts establishes identity, not safety.
+- Server-authoritative multiplayer sessions with one daemon and one frozen exact modpack lock.
+- Mod-defined, versioned protocol tables/resources and atomic transactions instead of fixed game-specific core entities.
+- Replaceable commands, systems, capabilities, presentation, and game policy without changing kernel, daemon, gateway, or base Shell.
+- Locally installed client code and game artifacts for remote sessions; a remote server never supplies executable bundles or original game content.
+- A permanent multiplayer conformance modpack followed by the Mortuary-to-Sigil IE proof flow.
 - More Infinity Engine profiles through explicit adapters.
 - Packaged releases when the project is ready for them.
 
@@ -59,16 +62,18 @@ Open the UI at [http://localhost:3000](http://localhost:3000). The local backend
 
 1. Open **Convert**. Select PST:EE and its language, choose the WeiDU executable, point to the game's `CHITIN.KEY`, and select an empty output directory.
 2. Confirm that you are using a legally obtained copy and start conversion. Leave the process running until the UI reports completion.
-3. If paths do not resolve, open **Settings** and verify the backend URL, Ghost output directory, and mods directory.
-4. Use **Workbench** for resource and dialogue exploration. Use **Play** and **Mods** only as experimental surfaces; restart `/play` after changing the active mod composition.
+3. If paths do not resolve, open **Settings** and verify the backend URL and Ghost output directory.
+4. Use **Workbench** for resource and dialogue exploration. **Play** and **Mods** currently show the runtime-rebuild status only.
 
 Docker is not currently a supported alternative to this player flow.
 
 ## Mods and trust
 
-Runtime mods are executable JavaScript, not data-only packages. `client.js` and `server.js` run without a sandbox; server mods inherit the local daemon's Node.js permissions, while client mods run with the application's browser-origin privileges. **Install only mods from sources you trust.**
-
-The current runtime keeps authoritative World mutation in the local daemon. That boundary is not a claim of hardened security or multiplayer readiness.
+The target runtime executes mod JavaScript without a sandbox: server code will
+inherit daemon Node.js permissions and client code will run with the Shell
+origin's browser privileges. **Install only mods from sources you trust.**
+Versions, signatures, and hashes can identify artifacts but cannot make them
+safe. Milestone 0 ships no runtime mod bundles.
 
 Mods distributed for use with planar-echo are expected to use GPL-compatible license terms and preserve applicable third-party notices.
 

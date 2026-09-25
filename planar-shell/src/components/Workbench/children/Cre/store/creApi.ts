@@ -2,39 +2,20 @@ import { evalGhostFactory } from '@planar/shared';
 
 import { getDbCre, setDbCre } from '@/shared/indexedDb';
 import {
+  getApiGhostByResourceTypeByResourceNameSkeleton,
   getApiMapCreToDlgsByCreId,
-  postApiGhostCreByCreIdSkeleton,
 } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
 import type { GhostCre } from '@planar/shared';
 
-export const getSkeleton = async (serverUrl: string, ghostDir: string, creId: string): Promise<string> => {
-  const skeletonResponse = await postApiGhostCreByCreIdSkeleton({
-    client,
-    baseURL: serverUrl,
-    body: { ghostDir: ghostDir },
-    path: { creId },
-  });
-
-  if (skeletonResponse.error) {
-    console.error(skeletonResponse.error);
-    throw new Error(skeletonResponse.error.error.message);
-  }
-  else {
-    return skeletonResponse.data.data.content;
-  }
-};
-
 export type LoadGhostCreProps = Readonly<{
   creId: string;
   serverUrl: string;
-  ghostDir: string;
 }>;
 export const loadGhostCre = async ({
   creId,
   serverUrl,
-  ghostDir,
 }: LoadGhostCreProps,
 ): Promise<GhostCre> => {
   const dbCre = await getDbCre(creId);
@@ -44,7 +25,13 @@ export const loadGhostCre = async ({
     skeleton = evalGhostFactory<GhostCre>(dbCre.skeleton);
   }
   else {
-    const skeletonContent = await getSkeleton(serverUrl, ghostDir, creId);
+    const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+      client,
+      baseURL: serverUrl,
+      path: { resourceType: 'cre', resourceName: creId },
+      throwOnError: true,
+    });
+    const skeletonContent = skeletonResponse.data.data.content;
     await setDbCre(creId, skeletonContent);
     skeleton = evalGhostFactory<GhostCre>(skeletonContent);
   }
@@ -57,13 +44,8 @@ export const getCurrentDlgs = async (serverUrl: string, creId: string): Promise<
     client,
     baseURL: serverUrl,
     path: { creId },
+    throwOnError: true,
   });
 
-  if (currentDlgsResponse.error) {
-    console.error(currentDlgsResponse.error);
-    throw new Error(currentDlgsResponse.error.error.message);
-  }
-  else {
-    return currentDlgsResponse.data;
-  }
+  return currentDlgsResponse.data;
 };

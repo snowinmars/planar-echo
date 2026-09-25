@@ -8,7 +8,6 @@ export type ClientOptions = {
 
 export type PostApiFsValidateChitinKeyFileData = {
     body: {
-        weiduExeDir: string;
         chitinKeyFile: string;
         gameLanguage: 'ru_RU' | 'en_US' | 'cs_CZ' | 'de_DE' | 'fr_FR' | 'ko_KR' | 'pl_PL';
     };
@@ -45,9 +44,7 @@ export type PostApiFsValidateChitinKeyFileResponses = {
 export type PostApiFsValidateChitinKeyFileResponse = PostApiFsValidateChitinKeyFileResponses[keyof PostApiFsValidateChitinKeyFileResponses];
 
 export type PostApiFsValidateGhostDirData = {
-    body: {
-        ghostDir: string;
-    };
+    body?: never;
     path?: never;
     query?: never;
     url: '/api/fs/validate/ghostDir';
@@ -88,9 +85,7 @@ export type PostApiFsValidateGhostDirResponses = {
 export type PostApiFsValidateGhostDirResponse = PostApiFsValidateGhostDirResponses[keyof PostApiFsValidateGhostDirResponses];
 
 export type PostApiFsValidateModsDirData = {
-    body: {
-        modsDir: string;
-    };
+    body?: never;
     path?: never;
     query?: never;
     url: '/api/fs/validate/modsDir';
@@ -122,9 +117,7 @@ export type PostApiFsValidateModsDirResponses = {
 export type PostApiFsValidateModsDirResponse = PostApiFsValidateModsDirResponses[keyof PostApiFsValidateModsDirResponses];
 
 export type PostApiFsValidateWeiduExeDirData = {
-    body: {
-        weiduExeDir: string;
-    };
+    body?: never;
     path?: never;
     query?: never;
     url: '/api/fs/validate/weiduExeDir';
@@ -747,14 +740,14 @@ export type GetApiMapDlgToItmsByDlgIdResponses = {
 
 export type GetApiMapDlgToItmsByDlgIdResponse = GetApiMapDlgToItmsByDlgIdResponses[keyof GetApiMapDlgToItmsByDlgIdResponses];
 
-export type GetApiDefaultsData = {
+export type GetApiPathsData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/defaults';
+    url: '/api/paths';
 };
 
-export type GetApiDefaultsResponses = {
+export type GetApiPathsResponses = {
     /**
      * Resolved directories
      */
@@ -800,403 +793,9 @@ export type GetApiDefaultsResponses = {
         };
         weidu: {
             root: string;
+            exe: string;
         };
     };
 };
 
-export type GetApiDefaultsResponse = GetApiDefaultsResponses[keyof GetApiDefaultsResponses];
-
-export type PatchApiDefaultsData = {
-    body: {
-        asclepius: {
-            root: string;
-            dist: string;
-            defaultsJson: string;
-        };
-        repository: {
-            root: string;
-        };
-        daemon: {
-            root: string;
-            dist: string;
-        };
-        ghost: {
-            root: string;
-        };
-        kernel: {
-            root: string;
-            dist: string;
-        };
-        mods: {
-            root: string;
-            dist: string;
-        };
-        modsRuntime: {
-            root: string;
-        };
-        prism: {
-            root: string;
-            dist: string;
-            defaultsJson: string;
-        };
-        shared: {
-            root: string;
-            dist: string;
-        };
-        shell: {
-            root: string;
-            dist: string;
-        };
-        weidu: {
-            root: string;
-        };
-    };
-    path?: never;
-    query?: never;
-    url: '/api/defaults';
-};
-
-export type PatchApiDefaultsResponses = {
-    /**
-     * Cookie directories
-     */
-    200: {
-        asclepius: {
-            root: string;
-            dist: string;
-            defaultsJson: string;
-        };
-        repository: {
-            root: string;
-        };
-        daemon: {
-            root: string;
-            dist: string;
-        };
-        ghost: {
-            root: string;
-        };
-        kernel: {
-            root: string;
-            dist: string;
-        };
-        mods: {
-            root: string;
-            dist: string;
-        };
-        modsRuntime: {
-            root: string;
-        };
-        prism: {
-            root: string;
-            dist: string;
-            defaultsJson: string;
-        };
-        shared: {
-            root: string;
-            dist: string;
-        };
-        shell: {
-            root: string;
-            dist: string;
-        };
-        weidu: {
-            root: string;
-        };
-    };
-};
-
-export type PatchApiDefaultsResponse = PatchApiDefaultsResponses[keyof PatchApiDefaultsResponses];
-
-export type PutApiDefaultsData = {
-    body: {
-        asclepius: {
-            root: string;
-            dist: string;
-            defaultsJson: string;
-        };
-        repository: {
-            root: string;
-        };
-        daemon: {
-            root: string;
-            dist: string;
-        };
-        ghost: {
-            root: string;
-        };
-        kernel: {
-            root: string;
-            dist: string;
-        };
-        mods: {
-            root: string;
-            dist: string;
-        };
-        modsRuntime: {
-            root: string;
-        };
-        prism: {
-            root: string;
-            dist: string;
-            defaultsJson: string;
-        };
-        shared: {
-            root: string;
-            dist: string;
-        };
-        shell: {
-            root: string;
-            dist: string;
-        };
-        weidu: {
-            root: string;
-        };
-    };
-    path?: never;
-    query?: never;
-    url: '/api/defaults';
-};
-
-export type PutApiDefaultsErrors = {
-    /**
-     * Failed to write json
-     */
-    500: {
-        error: {
-            message: string;
-            code: 'WRITE_FAILED';
-        };
-    };
-};
-
-export type PutApiDefaultsError = PutApiDefaultsErrors[keyof PutApiDefaultsErrors];
-
-export type PutApiDefaultsResponses = {
-    /**
-     * Saved directories
-     */
-    200: {
-        asclepius: {
-            root: string;
-            dist: string;
-            defaultsJson: string;
-        };
-        repository: {
-            root: string;
-        };
-        daemon: {
-            root: string;
-            dist: string;
-        };
-        ghost: {
-            root: string;
-        };
-        kernel: {
-            root: string;
-            dist: string;
-        };
-        mods: {
-            root: string;
-            dist: string;
-        };
-        modsRuntime: {
-            root: string;
-        };
-        prism: {
-            root: string;
-            dist: string;
-            defaultsJson: string;
-        };
-        shared: {
-            root: string;
-            dist: string;
-        };
-        shell: {
-            root: string;
-            dist: string;
-        };
-        weidu: {
-            root: string;
-        };
-    };
-};
-
-export type PutApiDefaultsResponse = PutApiDefaultsResponses[keyof PutApiDefaultsResponses];
-
-export type GetApiModsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/mods';
-};
-
-export type GetApiModsErrors = {
-    /**
-     * modsDir missing
-     */
-    404: {
-        error: {
-            message: string;
-            code: 'DIRECTORY_NOT_FOUND';
-        };
-    };
-};
-
-export type GetApiModsError = GetApiModsErrors[keyof GetApiModsErrors];
-
-export type GetApiModsResponses = {
-    /**
-     * Mods on disk
-     */
-    200: {
-        modsDir: string;
-        mods: Array<{
-            manifests: Array<{
-                id: string;
-                version: string;
-                sides: Array<'client' | 'server'>;
-                slots: Array<'actorRender' | 'areaRender' | 'pathing' | 'populate' | 'travel'>;
-                hooks: Array<'onAreaLoad' | 'onCommand' | 'onTick' | 'onPatches' | 'onFrame'>;
-                requiredModIds: Array<string>;
-            }>;
-        }>;
-    };
-};
-
-export type GetApiModsResponse = GetApiModsResponses[keyof GetApiModsResponses];
-
-export type GetApiModsActiveJsonData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/mods/activeJson';
-};
-
-export type GetApiModsActiveJsonErrors = {
-    /**
-     * active.json missing
-     */
-    404: {
-        error: {
-            message: string;
-            code: 'NOT_FOUND';
-        };
-    };
-};
-
-export type GetApiModsActiveJsonError = GetApiModsActiveJsonErrors[keyof GetApiModsActiveJsonErrors];
-
-export type GetApiModsActiveJsonResponses = {
-    /**
-     * active.json
-     */
-    200: {
-        slots: {
-            [key: string]: string | null;
-        };
-        enabled: {
-            [key: string]: boolean;
-        };
-        serverHooks: {
-            onAreaLoad?: Array<string>;
-            onAreaUnload?: Array<string>;
-            onCommand?: Array<string>;
-            onTick?: Array<string>;
-        };
-        clientHooks: {
-            onAreaLoad?: Array<string>;
-            onAreaUnload?: Array<string>;
-            onPatches?: Array<string>;
-            onFrame?: Array<string>;
-        };
-        queries: {
-            [key: string]: Array<string>;
-        };
-    };
-};
-
-export type GetApiModsActiveJsonResponse = GetApiModsActiveJsonResponses[keyof GetApiModsActiveJsonResponses];
-
-export type PutApiModsActiveJsonData = {
-    body: {
-        slots: {
-            [key: string]: string | null;
-        };
-        enabled: {
-            [key: string]: boolean;
-        };
-        serverHooks: {
-            onAreaLoad?: Array<string>;
-            onAreaUnload?: Array<string>;
-            onCommand?: Array<string>;
-            onTick?: Array<string>;
-        };
-        clientHooks: {
-            onAreaLoad?: Array<string>;
-            onAreaUnload?: Array<string>;
-            onPatches?: Array<string>;
-            onFrame?: Array<string>;
-        };
-        queries: {
-            [key: string]: Array<string>;
-        };
-    };
-    path?: never;
-    query?: never;
-    url: '/api/mods/activeJson';
-};
-
-export type PutApiModsActiveJsonErrors = {
-    /**
-     * Fail-closed validation errors; disk unchanged
-     */
-    400: {
-        errors: Array<string>;
-    };
-};
-
-export type PutApiModsActiveJsonError = PutApiModsActiveJsonErrors[keyof PutApiModsActiveJsonErrors];
-
-export type PutApiModsActiveJsonResponses = {
-    /**
-     * Saved
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type PutApiModsActiveJsonResponse = PutApiModsActiveJsonResponses[keyof PutApiModsActiveJsonResponses];
-
-export type PostApiModsInstallDefaultsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/mods/install-defaults';
-};
-
-export type PostApiModsInstallDefaultsErrors = {
-    /**
-     * Yarn build failed; no copy
-     */
-    500: {
-        error: {
-            message: string;
-            code: 'FILE_NOT_FOUND';
-        };
-    };
-};
-
-export type PostApiModsInstallDefaultsError = PostApiModsInstallDefaultsErrors[keyof PostApiModsInstallDefaultsErrors];
-
-export type PostApiModsInstallDefaultsResponses = {
-    /**
-     * Copied mods ids
-     */
-    200: {
-        copied: Array<string>;
-    };
-};
-
-export type PostApiModsInstallDefaultsResponse = PostApiModsInstallDefaultsResponses[keyof PostApiModsInstallDefaultsResponses];
+export type GetApiPathsResponse = GetApiPathsResponses[keyof GetApiPathsResponses];

@@ -1,16 +1,7 @@
-export {
-  cellIndex,
-  cellKey,
-  cellPxToWorldPx,
-  firstPassableCenter,
-  inBounds,
-  isPassable,
-  paintCell,
-  pointInPoly,
-  rewriteWalkGrid,
-  worldPxToCellPx,
-} from './cell/math.js';
-export { createWorld } from './world/createWorld.js';
-export { foldPatches } from './world/foldPatches.js';
-export { snapshotWorld } from './world/snapshotWorld.js';
-export type { World } from './world/types.js';
+/**
+ * Reserved for the policy-free deterministic runtime core.
+ *
+ * The pre-reset World API was removed in Milestone 0. New protocol and
+ * execution primitives will be introduced from the canonical architecture.
+ */
+export {};

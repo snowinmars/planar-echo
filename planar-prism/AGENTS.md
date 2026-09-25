@@ -9,6 +9,8 @@ Scope: this file is the closest guidance for `planar-prism/**`; inherit reposito
 - Current verified parser/profile support is PST:EE only.
 - A broader `GameName` type or a new enum member is not implemented game support.
 - Own Ghost discovery metadata and Ghost bundle tooling generated from conversion output.
+- Ghost contracts currently come from `@planar/shared`; their normative owner
+  is `@planar/ie`, and that migration must preserve standalone CLI operation.
 
 ## Conversion pipeline
 
@@ -52,7 +54,8 @@ The current order in [`src/index.ts`](src/index.ts) is mandatory:
 - Asset decoding: [`src/steps/4b.raw2assets/`](src/steps/4b.raw2assets/).
 - Ghost writers: [`src/steps/5.json2Ghost/pstee/`](src/steps/5.json2Ghost/pstee/).
 - Discovery: [`src/discoverer.ts`](src/discoverer.ts).
-- Shared Ghost and IPC contracts: [`@planar/shared`](../planar-shared/AGENTS.md).
+- Current Ghost and IPC contracts: [`@planar/shared`](../planar-shared/AGENTS.md).
+- Target IE/Ghost owner: [`@planar/ie`](../planar-ie/AGENTS.md).
 
 ## Workflow
 
@@ -64,9 +67,11 @@ The current order in [`src/index.ts`](src/index.ts) is mandatory:
 
 ## Cross-package impact checklist
 
-- For Ghost shape changes, update shared types plus daemon, Asclepius, and Shell readers.
+- For Ghost shape changes, update current shared types plus Asclepius and Shell
+  readers; after migration, coordinate through `@planar/ie`.
 - For progress/start-message changes, update shared contracts and Asclepius orchestration.
-- For output layout changes, update daemon loaders, Asclepius file delivery, and Shell asset/Ghost readers.
+- For output layout changes, update Asclepius file delivery and Shell
+  asset/Ghost readers. No runtime currently consumes Ghost.
 - For a new resource or game adapter, update all dependent conversion stages and verified support documentation.
 
 ## Migration hazards

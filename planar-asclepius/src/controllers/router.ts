@@ -5,9 +5,6 @@ import {
 import express from 'express';
 
 import registerAssetsFile from './assets/file.js';
-import registerDefaultsGet from './defaults/get.js';
-import registerDefaultsPatch from './defaults/patch.js';
-import registerDefaultsPut from './defaults/put.js';
 import registerFsDownloadWeidu from './fs/download/weidu.js';
 import registerFsGhostDir from './fs/ghostDir.js';
 import registerFsOpenDir from './fs/openDir.js';
@@ -25,10 +22,7 @@ import registerCreToDlgs from './map/creToDlgs.js';
 import registerDlgToCres from './map/dlgToCres.js';
 import registerDlgToItms from './map/dlgToItms.js';
 import registerItmToDlgs from './map/itmToDlgs.js';
-import registerModsGetActiveJson from './mods/activeJson/get.js';
-import registerModsPutActiveJson from './mods/activeJson/set.js';
-import registerModsInstallDefaults from './mods/installDefaults.js';
-import registerModsList from './mods/list.js';
+import registerPathsGet from './paths/get.js';
 import registerPing from './ping/ping.js';
 
 import type { OpenAPIObject } from 'openapi3-ts/oas30';
@@ -64,13 +58,7 @@ registerCreToDlgs(registry, router);
 registerDlgToCres(registry, router);
 registerItmToDlgs(registry, router);
 registerDlgToItms(registry, router);
-registerDefaultsGet(registry, router);
-registerDefaultsPatch(registry, router);
-registerDefaultsPut(registry, router);
-registerModsList(registry, router);
-registerModsGetActiveJson(registry, router);
-registerModsPutActiveJson(registry, router);
-registerModsInstallDefaults(registry, router);
+registerPathsGet(registry, router);
 
 const getOpenApiDocumentation = (registry: OpenAPIRegistry): OpenAPIObject => {
   const generator = new OpenApiGeneratorV3(registry.definitions);

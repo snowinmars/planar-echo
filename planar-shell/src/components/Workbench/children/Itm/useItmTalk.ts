@@ -16,12 +16,10 @@ export const useItmTalk = (): Readonly<{
   const {
     currentItmId,
     serverUrl,
-    ghostDir,
     gameLanguage,
   } = useItmStore(useShallow(state => ({
     currentItmId: state.currentItmId,
     serverUrl: state.serverUrl,
-    ghostDir: state.ghostDir,
     gameLanguage: state.gameLanguage,
   })));
 
@@ -32,7 +30,6 @@ export const useItmTalk = (): Readonly<{
     try {
       const { dlgId, stateId } = await resolveItmDlg({
         serverUrl,
-        ghostDir,
         gameLanguage,
         itmId: currentItmId,
       });
@@ -51,7 +48,7 @@ export const useItmTalk = (): Readonly<{
     finally {
       setTalking(false);
     }
-  }, [currentItmId, talking, serverUrl, ghostDir, gameLanguage, navigate]);
+  }, [currentItmId, talking, serverUrl, gameLanguage, navigate]);
 
   const checkCanTalk = useCallback(async () => {
     if (!currentItmId) return false;
@@ -59,7 +56,6 @@ export const useItmTalk = (): Readonly<{
     try {
       await resolveItmDlg({
         serverUrl,
-        ghostDir,
         gameLanguage,
         itmId: currentItmId,
       });
@@ -69,7 +65,7 @@ export const useItmTalk = (): Readonly<{
     catch {
       return false;
     }
-  }, [currentItmId, talking, serverUrl, ghostDir, gameLanguage, navigate]);
+  }, [currentItmId, talking, serverUrl, gameLanguage, navigate]);
 
   return { startTalk, checkCanTalk, talking };
 };

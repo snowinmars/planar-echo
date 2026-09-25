@@ -194,7 +194,7 @@ planar-ghost
 planar-weidu
 planar-mods-runtime
 planar-prism/prism.defaults.json
-planar-asclepius/asclepius.defaults.json
+planar-asclepius/src/asclepius.defaults.json
 
 ##
 # https://habr.com/ru/articles/1029868/?ysclid=mrmldrvv8l218166405

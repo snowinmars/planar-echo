@@ -1,4 +1,3 @@
-import validate from 'express-zod-safe';
 import { z } from 'zod';
 
 import action from '@/services/fs/validate/weiduExeDir/action.js';
@@ -7,11 +6,6 @@ import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 import type { Router } from 'express';
 
-const body = z.object({
-  weiduExeDir: z.string().min(1, 'Weidu directory path is required').openapi({
-    example: '/abs/weidu',
-  }),
-});
 const responseOk = z.object({
   data: z.object({
     version: z.string(),
@@ -27,17 +21,7 @@ const routeConfig = (): RouteConfig => ({
   method: 'post',
   path: '/api/fs/validate/weiduExeDir',
   tags: ['fs'],
-  description: 'Validates weidu.exe access',
-  request: {
-    body: {
-      required: true,
-      content: {
-        'application/json': {
-          schema: body,
-        },
-      },
-    },
-  },
+  description: 'Validates weidu.exe in the configured weidu directory',
   responses: {
     200: {
       description: 'Weidu.exe version',
@@ -70,10 +54,9 @@ export default (registry: OpenAPIRegistry, router: Router): void => {
   registry.registerPath(routeConfig());
 
   router.post('/api/fs/validate/weiduExeDir',
-    validate({ body }),
     async (req, res) => {
       const result = await action({
-        weiduExeDir: req.body.weiduExeDir,
+        weiduExeDir: req.planarPaths.weidu.exe,
       });
 
       if (result.ok) {

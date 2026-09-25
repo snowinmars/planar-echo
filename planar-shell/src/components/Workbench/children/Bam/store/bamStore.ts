@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostBam, loadGhostBam } from './bamApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostBam, Maybe } from '@planar/shared';
 
 export type BamStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   bams: string[];
   currentBamId: Maybe<string>;
@@ -22,7 +24,6 @@ export type BamStore = Readonly<{
 
 export const useBamStore = create<BamStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   bams: [],
   currentBamId: nothing(),
@@ -30,8 +31,14 @@ export const useBamStore = create<BamStore>((set, get) => ({
   loadBams: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ bams: await listGhostBam(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'bam' },
+        throwOnError: true,
+      });
+      set({ bams: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -44,8 +51,18 @@ export const useBamStore = create<BamStore>((set, get) => ({
   loadBam: async (bamId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentBamId: bamId, currentBam: await loadGhostBam({ serverUrl, ghostDir, bamId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'bam', resourceName: bamId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostBam>(skeletonResponse.data.data.content);
+      set({
+        currentBamId: bamId,
+        currentBam: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

@@ -9,7 +9,7 @@
       "1": "Explorez PST:EE localement.",
       "2": "planar-echo convertit une installation de PST:EE obtenue légalement en données consultables dans un atelier local accessible par navigateur.",
       "3": "Produit actuel et direction.",
-      "4": "La conversion et Workbench sont disponibles. Play et Mods sont des outils expérimentaux servant à vérifier le moteur en cours de développement.",
+      "4": "La conversion et Workbench sont disponibles.",
       "5": "L’objectif est un moteur indépendant compatible avec Infinity Engine. Seul PST:EE est actuellement pris en charge."
     },
     "runnerGuard": {
@@ -17,8 +17,6 @@
       "or": "ou",
       "convert": "Reformater",
       "workbench": "Allez à l'établi",
-      "play": "Jouer (expérimental)",
-      "mods": "Mods (expérimental)",
       "stores": "Magasins de données"
     },
     "step0": {
@@ -39,7 +37,7 @@
       }
     },
     "step2": {
-      "weiduExeDir": "Chemin vers weidu.exe",
+      "weiduExeDir": "Chemin vers weidu",
       "comments": {
         "default": "Télécharger weidu",
         "weiduExeVersion": "Version trouvée de weidu.exe : {{version}}",
@@ -314,19 +312,6 @@
         "ravel": "Ravel"
       }
     }
-  },
-  "mods": {
-    "title": "Mods",
-    "hint": "Autosaves active.json after 300ms. Restart /play. Not live.",
-    "missingActive": "active.json is missing. Asclepius seeds factory on start if dist exists.",
-    "installDefaults": "Install default mods",
-    "installing": "Building mods…",
-    "copied": "copied: {{ids}}",
-    "slots": "Radio slots",
-    "enabled": "Enabled",
-    "serverHooks": "Server hook order",
-    "clientHooks": "Client hook order",
-    "queries": "Query order"
   },
   "themes": {
     "light": "Clair",

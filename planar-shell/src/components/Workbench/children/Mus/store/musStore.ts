@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostMus, loadGhostMus } from './musApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostMus, Maybe } from '@planar/shared';
 
 export type MusStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   muss: string[];
   currentMusId: Maybe<string>;
@@ -22,7 +24,6 @@ export type MusStore = Readonly<{
 
 export const useMusStore = create<MusStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   muss: [],
   currentMusId: nothing(),
@@ -30,8 +31,14 @@ export const useMusStore = create<MusStore>((set, get) => ({
   loadMuss: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ muss: await listGhostMus(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'mus' },
+        throwOnError: true,
+      });
+      set({ muss: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -44,8 +51,18 @@ export const useMusStore = create<MusStore>((set, get) => ({
   loadMus: async (musId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentMusId: musId, currentMus: await loadGhostMus({ serverUrl, ghostDir, musId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'mus', resourceName: musId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostMus>(skeletonResponse.data.data.content);
+      set({
+        currentMusId: musId,
+        currentMus: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

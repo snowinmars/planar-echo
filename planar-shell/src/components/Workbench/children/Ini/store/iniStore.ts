@@ -1,18 +1,20 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
-import { listGhostIni, loadGhostIni } from './iniApi';
+import type { GhostIniAnimation, GhostIniArea, GhostIniResdata, Maybe } from '@planar/shared';
 
-import type { Maybe } from '@planar/shared';
-
-import type { LoadedGhostIni } from './iniApi';
+type LoadedGhostIni = GhostIniResdata | GhostIniAnimation | GhostIniArea;
 
 export type IniStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   inis: string[];
   currentIniId: Maybe<string>;
@@ -24,7 +26,6 @@ export type IniStore = Readonly<{
 
 export const useIniStore = create<IniStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   inis: [],
   currentIniId: nothing(),
@@ -32,8 +33,14 @@ export const useIniStore = create<IniStore>((set, get) => ({
   loadInis: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ inis: await listGhostIni(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'ini' },
+        throwOnError: true,
+      });
+      set({ inis: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -46,8 +53,18 @@ export const useIniStore = create<IniStore>((set, get) => ({
   loadIni: async (iniId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentIniId: iniId, currentIni: await loadGhostIni({ serverUrl, ghostDir, iniId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'ini', resourceName: iniId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<LoadedGhostIni>(skeletonResponse.data.data.content);
+      set({
+        currentIniId: iniId,
+        currentIni: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

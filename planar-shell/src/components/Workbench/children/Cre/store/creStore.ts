@@ -3,23 +3,21 @@ import { create } from 'zustand';
 import { nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import { postApiGhostCre } from '@/swagger/client';
+import { getApiGhostByResourceType } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
 import { loadGhostCre } from './creApi';
 
 import type {
+  GameLanguage,
   GhostCreV10,
   GhostCreV11,
   Maybe,
 } from '@planar/shared';
 
-import type { GameLanguage } from '@/swagger/client';
-
 type GhostCre = GhostCreV10 | GhostCreV11;
 export type CreStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   gameLanguage: GameLanguage;
   loading: boolean;
 
@@ -34,7 +32,6 @@ export type CreStore = Readonly<{
 
 export const useCreStore = create<CreStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   gameLanguage: planarLocalStorage.get<GameLanguage>('gameLanguage')!,
   loading: false,
 
@@ -48,24 +45,15 @@ export const useCreStore = create<CreStore>((set, get) => ({
     });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const { error, data } = await postApiGhostCre({
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
         client,
         baseURL: serverUrl,
-        body: { ghostDir: ghostDir }, // may use server filter here, but nah
+        path: { resourceType: 'cre' },
+        throwOnError: true,
       });
 
-      if (error) {
-        console.error(error);
-        set({
-          cres: [],
-        });
-      }
-      else {
-        set({
-          cres: data,
-        });
-      }
+      set({ cres: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -83,13 +71,9 @@ export const useCreStore = create<CreStore>((set, get) => ({
     });
 
     try {
-      const {
-        serverUrl,
-        ghostDir,
-      } = get();
+      const { serverUrl } = get();
       const t = await loadGhostCre({
         serverUrl,
-        ghostDir,
         creId: creId,
       });
 

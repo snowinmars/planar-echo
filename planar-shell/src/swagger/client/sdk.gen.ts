@@ -4,7 +4,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetApiAssetsByFilePathData, GetApiAssetsByFilePathErrors, GetApiAssetsByFilePathResponses, GetApiDefaultsData, GetApiDefaultsResponses, GetApiFsGhostDirByFilePathData, GetApiFsGhostDirByFilePathErrors, GetApiFsGhostDirByFilePathResponses, GetApiFsPrismDirByFilePathData, GetApiFsPrismDirByFilePathErrors, GetApiFsPrismDirByFilePathResponses, GetApiFsShellDirByFilePathData, GetApiFsShellDirByFilePathErrors, GetApiFsShellDirByFilePathResponses, GetApiGhostByResourceTypeByResourceNameSkeletonData, GetApiGhostByResourceTypeByResourceNameSkeletonErrors, GetApiGhostByResourceTypeByResourceNameSkeletonResponses, GetApiGhostByResourceTypeData, GetApiGhostByResourceTypeErrors, GetApiGhostByResourceTypeResponses, GetApiGhostData, GetApiGhostErrors, GetApiGhostResponses, GetApiGhostTlkByGameLanguageData, GetApiGhostTlkByGameLanguageErrors, GetApiGhostTlkByGameLanguageResponses, GetApiMapCreToDlgsByCreIdData, GetApiMapCreToDlgsByCreIdErrors, GetApiMapCreToDlgsByCreIdResponses, GetApiMapDlgToCresByDlgIdData, GetApiMapDlgToCresByDlgIdErrors, GetApiMapDlgToCresByDlgIdResponses, GetApiMapDlgToItmsByDlgIdData, GetApiMapDlgToItmsByDlgIdErrors, GetApiMapDlgToItmsByDlgIdResponses, GetApiMapItmToDlgsByItmIdData, GetApiMapItmToDlgsByItmIdErrors, GetApiMapItmToDlgsByItmIdResponses, GetApiModsActiveJsonData, GetApiModsActiveJsonErrors, GetApiModsActiveJsonResponses, GetApiModsData, GetApiModsErrors, GetApiModsResponses, GetApiPingData, GetApiPingResponses, PatchApiDefaultsData, PatchApiDefaultsResponses, PostApiFsDownloadWeiduData, PostApiFsDownloadWeiduErrors, PostApiFsDownloadWeiduResponses, PostApiFsOpenDirData, PostApiFsOpenDirErrors, PostApiFsOpenDirResponses, PostApiFsValidateChitinKeyFileData, PostApiFsValidateChitinKeyFileErrors, PostApiFsValidateChitinKeyFileResponses, PostApiFsValidateGhostDirData, PostApiFsValidateGhostDirErrors, PostApiFsValidateGhostDirResponses, PostApiFsValidateModsDirData, PostApiFsValidateModsDirErrors, PostApiFsValidateModsDirResponses, PostApiFsValidateWeiduExeDirData, PostApiFsValidateWeiduExeDirErrors, PostApiFsValidateWeiduExeDirResponses, PostApiModsInstallDefaultsData, PostApiModsInstallDefaultsErrors, PostApiModsInstallDefaultsResponses, PutApiDefaultsData, PutApiDefaultsErrors, PutApiDefaultsResponses, PutApiModsActiveJsonData, PutApiModsActiveJsonErrors, PutApiModsActiveJsonResponses } from './types.gen';
+import type { GetApiAssetsByFilePathData, GetApiAssetsByFilePathErrors, GetApiAssetsByFilePathResponses, GetApiFsGhostDirByFilePathData, GetApiFsGhostDirByFilePathErrors, GetApiFsGhostDirByFilePathResponses, GetApiFsPrismDirByFilePathData, GetApiFsPrismDirByFilePathErrors, GetApiFsPrismDirByFilePathResponses, GetApiFsShellDirByFilePathData, GetApiFsShellDirByFilePathErrors, GetApiFsShellDirByFilePathResponses, GetApiGhostByResourceTypeByResourceNameSkeletonData, GetApiGhostByResourceTypeByResourceNameSkeletonErrors, GetApiGhostByResourceTypeByResourceNameSkeletonResponses, GetApiGhostByResourceTypeData, GetApiGhostByResourceTypeErrors, GetApiGhostByResourceTypeResponses, GetApiGhostData, GetApiGhostErrors, GetApiGhostResponses, GetApiGhostTlkByGameLanguageData, GetApiGhostTlkByGameLanguageErrors, GetApiGhostTlkByGameLanguageResponses, GetApiMapCreToDlgsByCreIdData, GetApiMapCreToDlgsByCreIdErrors, GetApiMapCreToDlgsByCreIdResponses, GetApiMapDlgToCresByDlgIdData, GetApiMapDlgToCresByDlgIdErrors, GetApiMapDlgToCresByDlgIdResponses, GetApiMapDlgToItmsByDlgIdData, GetApiMapDlgToItmsByDlgIdErrors, GetApiMapDlgToItmsByDlgIdResponses, GetApiMapItmToDlgsByItmIdData, GetApiMapItmToDlgsByItmIdErrors, GetApiMapItmToDlgsByItmIdResponses, GetApiPathsData, GetApiPathsResponses, GetApiPingData, GetApiPingResponses, PostApiFsDownloadWeiduData, PostApiFsDownloadWeiduErrors, PostApiFsDownloadWeiduResponses, PostApiFsOpenDirData, PostApiFsOpenDirErrors, PostApiFsOpenDirResponses, PostApiFsValidateChitinKeyFileData, PostApiFsValidateChitinKeyFileErrors, PostApiFsValidateChitinKeyFileResponses, PostApiFsValidateGhostDirData, PostApiFsValidateGhostDirErrors, PostApiFsValidateGhostDirResponses, PostApiFsValidateModsDirData, PostApiFsValidateModsDirErrors, PostApiFsValidateModsDirResponses, PostApiFsValidateWeiduExeDirData, PostApiFsValidateWeiduExeDirErrors, PostApiFsValidateWeiduExeDirResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -34,42 +34,30 @@ export const postApiFsValidateChitinKeyFile = <ThrowOnError extends boolean = fa
 });
 
 /**
- * Validates ghost output access
+ * Validates the configured ghost directory
  */
-export const postApiFsValidateGhostDir = <ThrowOnError extends boolean = false>(options: Options<PostApiFsValidateGhostDirData, ThrowOnError>) => (options.client ?? client).post<PostApiFsValidateGhostDirResponses, PostApiFsValidateGhostDirErrors, ThrowOnError>({
+export const postApiFsValidateGhostDir = <ThrowOnError extends boolean = false>(options?: Options<PostApiFsValidateGhostDirData, ThrowOnError>) => (options?.client ?? client).post<PostApiFsValidateGhostDirResponses, PostApiFsValidateGhostDirErrors, ThrowOnError>({
     responseType: 'json',
     url: '/api/fs/validate/ghostDir',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
+    ...options
 });
 
 /**
- * Validates mods directory exists
+ * Validates the configured mods runtime directory
  */
-export const postApiFsValidateModsDir = <ThrowOnError extends boolean = false>(options: Options<PostApiFsValidateModsDirData, ThrowOnError>) => (options.client ?? client).post<PostApiFsValidateModsDirResponses, PostApiFsValidateModsDirErrors, ThrowOnError>({
+export const postApiFsValidateModsDir = <ThrowOnError extends boolean = false>(options?: Options<PostApiFsValidateModsDirData, ThrowOnError>) => (options?.client ?? client).post<PostApiFsValidateModsDirResponses, PostApiFsValidateModsDirErrors, ThrowOnError>({
     responseType: 'json',
     url: '/api/fs/validate/modsDir',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
+    ...options
 });
 
 /**
- * Validates weidu.exe access
+ * Validates weidu.exe in the configured weidu directory
  */
-export const postApiFsValidateWeiduExeDir = <ThrowOnError extends boolean = false>(options: Options<PostApiFsValidateWeiduExeDirData, ThrowOnError>) => (options.client ?? client).post<PostApiFsValidateWeiduExeDirResponses, PostApiFsValidateWeiduExeDirErrors, ThrowOnError>({
+export const postApiFsValidateWeiduExeDir = <ThrowOnError extends boolean = false>(options?: Options<PostApiFsValidateWeiduExeDirData, ThrowOnError>) => (options?.client ?? client).post<PostApiFsValidateWeiduExeDirResponses, PostApiFsValidateWeiduExeDirErrors, ThrowOnError>({
     responseType: 'json',
     url: '/api/fs/validate/weiduExeDir',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
+    ...options
 });
 
 /**
@@ -216,76 +204,10 @@ export const getApiMapDlgToItmsByDlgId = <ThrowOnError extends boolean = false>(
 });
 
 /**
- * Cookie paths if present, otherwise asclepius.defaults.json. Plants Set-Cookie when cookie was empty
+ * Returns frozen paths snapshot, loaded at process start
  */
-export const getApiDefaults = <ThrowOnError extends boolean = false>(options?: Options<GetApiDefaultsData, ThrowOnError>) => (options?.client ?? client).get<GetApiDefaultsResponses, unknown, ThrowOnError>({
+export const getApiPaths = <ThrowOnError extends boolean = false>(options?: Options<GetApiPathsData, ThrowOnError>) => (options?.client ?? client).get<GetApiPathsResponses, unknown, ThrowOnError>({
     responseType: 'json',
-    url: '/api/defaults',
-    ...options
-});
-
-/**
- * Set-Cookie only. Does not write asclepius.defaults.json
- */
-export const patchApiDefaults = <ThrowOnError extends boolean = false>(options: Options<PatchApiDefaultsData, ThrowOnError>) => (options.client ?? client).patch<PatchApiDefaultsResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/api/defaults',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Write asclepius.defaults.json and Set-Cookie
- */
-export const putApiDefaults = <ThrowOnError extends boolean = false>(options: Options<PutApiDefaultsData, ThrowOnError>) => (options.client ?? client).put<PutApiDefaultsResponses, PutApiDefaultsErrors, ThrowOnError>({
-    responseType: 'json',
-    url: '/api/defaults',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * List installed mods in modsDir
- */
-export const getApiMods = <ThrowOnError extends boolean = false>(options?: Options<GetApiModsData, ThrowOnError>) => (options?.client ?? client).get<GetApiModsResponses, GetApiModsErrors, ThrowOnError>({
-    responseType: 'json',
-    url: '/api/mods',
-    ...options
-});
-
-/**
- * Read modsDir/active.json
- */
-export const getApiModsActiveJson = <ThrowOnError extends boolean = false>(options?: Options<GetApiModsActiveJsonData, ThrowOnError>) => (options?.client ?? client).get<GetApiModsActiveJsonResponses, GetApiModsActiveJsonErrors, ThrowOnError>({
-    responseType: 'json',
-    url: '/api/mods/activeJson',
-    ...options
-});
-
-/**
- * Validate then write modsDir/active.json. No write when preview has errors
- */
-export const putApiModsActiveJson = <ThrowOnError extends boolean = false>(options: Options<PutApiModsActiveJsonData, ThrowOnError>) => (options.client ?? client).put<PutApiModsActiveJsonResponses, PutApiModsActiveJsonErrors, ThrowOnError>({
-    responseType: 'json',
-    url: '/api/mods/activeJson',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Build planar-mods, then force-copy dist folders into modsDir. Does not overwrite active.json
- */
-export const postApiModsInstallDefaults = <ThrowOnError extends boolean = false>(options?: Options<PostApiModsInstallDefaultsData, ThrowOnError>) => (options?.client ?? client).post<PostApiModsInstallDefaultsResponses, PostApiModsInstallDefaultsErrors, ThrowOnError>({
-    responseType: 'json',
-    url: '/api/mods/install-defaults',
+    url: '/api/paths',
     ...options
 });

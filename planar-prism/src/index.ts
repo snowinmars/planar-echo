@@ -14,7 +14,7 @@ import logger from './shared/logger.js';
 import { disposeReports, reportComplete, reportError } from './shared/report.js';
 import saveDiscovered from './steps/6.saveDiscovered/saveDiscovered.js';
 
-import type { Maybe, PrismIndexStartMessage } from '@planar/shared';
+import type { Maybe, PrismIndexRunMessage } from '@planar/shared';
 
 // import convertChu from './pipes/convertChu/convertChu.js';
 // import convertGlsl from './pipes/convertGlsl/convertGlsl.js';
@@ -67,7 +67,7 @@ const createTimeStat = (): TimeStat => {
   };
 };
 
-const main = async (props: PrismIndexStartMessage['data']) => {
+const main = async (props: PrismIndexRunMessage['data']) => {
   logger.info('Starting...');
   const timeStat = createTimeStat();
   timeStat.start();
@@ -108,7 +108,7 @@ const main = async (props: PrismIndexStartMessage['data']) => {
 };
 
 if (isIpc) {
-  process.on('message', (msg: PrismIndexStartMessage) => {
+  process.on('message', (msg: PrismIndexRunMessage) => {
     if (msg.type === 'start') {
       logger.debug(JSON.stringify(msg));
       main(msg.data).catch((e: unknown) => {

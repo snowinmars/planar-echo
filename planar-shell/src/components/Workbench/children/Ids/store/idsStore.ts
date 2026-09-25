@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostIds, loadGhostIds } from './idsApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostIds, Maybe } from '@planar/shared';
 
 export type IdsStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   idss: string[];
   currentIdsId: Maybe<string>;
@@ -22,7 +24,6 @@ export type IdsStore = Readonly<{
 
 export const useIdsStore = create<IdsStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   idss: [],
   currentIdsId: nothing(),
@@ -30,8 +31,14 @@ export const useIdsStore = create<IdsStore>((set, get) => ({
   loadIdss: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ idss: await listGhostIds(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'ids' },
+        throwOnError: true,
+      });
+      set({ idss: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -44,8 +51,18 @@ export const useIdsStore = create<IdsStore>((set, get) => ({
   loadIds: async (idsId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentIdsId: idsId, currentIds: await loadGhostIds({ serverUrl, ghostDir, idsId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'ids', resourceName: idsId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostIds>(skeletonResponse.data.data.content);
+      set({
+        currentIdsId: idsId,
+        currentIds: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

@@ -6,6 +6,8 @@ import planarLocalStorage from '@/shared/planarLocalStorage';
 import { postApiFsValidateChitinKeyFile } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
+import { getAxiosApiErrorBody } from './shared';
+
 import type { StateCreator } from 'zustand';
 
 import type { GameLanguage } from '@planar/shared';
@@ -47,35 +49,26 @@ const validate = async (serverUrl: string, gameLanguage: GameLanguage, weiduExeD
   });
 
   try {
-    const { data, error } = await postApiFsValidateChitinKeyFile({
+    const { data } = await postApiFsValidateChitinKeyFile({
       client,
       baseURL: serverUrl,
-      body: { weiduExeDir, gameLanguage, chitinKeyFile },
+      body: { gameLanguage, chitinKeyFile },
+      throwOnError: true,
     });
 
-    set({ step3Loading: false });
-
-    if (error) {
-      set({
-        step3Comment: translateErrorState(error),
-        step3CommentArgs: {},
-        step3ResultType: 'error',
-        step3Valid: false,
-      });
-    }
-    else {
-      set({
-        step3Comment: 'landing.step3.comments.biffsCount',
-        step3CommentArgs: { biffsCount: data.data.biffsCount.toString() },
-        step3ResultType: 'success',
-        step3Valid: true,
-      });
-    }
+    set({
+      step3Loading: false,
+      step3Comment: 'landing.step3.comments.biffsCount',
+      step3CommentArgs: { biffsCount: data.data.biffsCount.toString() },
+      step3ResultType: 'success',
+      step3Valid: true,
+    });
   }
   catch (e: unknown) {
     console.error(e);
     set({
-      step3Comment: 'landing.step3.comments.unknown',
+      step3Loading: false,
+      step3Comment: translateErrorState(getAxiosApiErrorBody(e)),
       step3CommentArgs: {},
       step3ResultType: 'error',
       step3Valid: false,

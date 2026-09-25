@@ -86,360 +86,360 @@ type BaseGhostItmEffect = Readonly<{
   savingThrowBonus: number;
 }>;
 
-export type GhostItmUntranExtensionslatedEffect_AcBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_AcBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'acBonus'; acvalue: number; bonusTo: number; spe: number;
 }>;
-export type GhostItmEffect_MExtensionodifyAttacksPerRound = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_ModifyAttacksPerRound = BaseGhostItmEffect & Readonly<{
   opcode: 'modifyAttacksPerRound'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffect_BExtensionerserk = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_Berserk = BaseGhostItmEffect & Readonly<{
   opcode: 'berserk'; berserkType: number; spe: number;
 }>;
-export type GhostItmEffect_CExtensionharismaBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_CharismaBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'charismaBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffect_SExtensionetColor = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_SetColor = BaseGhostItmEffect & Readonly<{
   opcode: 'setColor'; color: number; location: number; spe: number;
 }>;
-export type GhostItmEffect_SExtensionetColorGlowPulse = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_SetColorGlowPulse = BaseGhostItmEffect & Readonly<{
   opcode: 'setColorGlowPulse'; color: number; location: number; cycleSpeed: number;
   spe: number;
 }>;
-export type GhostItmEffec_ExtensionConsitutionBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_ConsitutionBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'consitutionBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionCurePoison = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_CurePoison = BaseGhostItmEffect & Readonly<{
   opcode: 'curePoison'; spe: number;
 }>;
-export type GhostItmEffec_ExtensionDamage = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Damage = BaseGhostItmEffect & Readonly<{
   opcode: 'damage'; amount: number; mode: number; damageType: number; flags: number;
 }>;
-export type GhostItmEffec_ExtensionDexterityBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_DexterityBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'dexterityBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionHaste = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Haste = BaseGhostItmEffect & Readonly<{
   opcode: 'haste'; hasteType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionCurrentHpBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_CurrentHpBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'currentHpBonus'; value: number; modifierType: number; healFlags: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionMaximumHpBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_MaximumHpBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'maximumHpBonus'; value: number; modifierType: number; mode: number;
 }>;
-export type GhostItmEffec_ExtensionIntelligenceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_IntelligenceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'intelligenceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionInvisibility = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Invisibility = BaseGhostItmEffect & Readonly<{
   opcode: 'invisibility'; invisibilityType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionLoreBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_LoreBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'loreBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionLuckBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_LuckBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'luckBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionMoraleBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_MoraleBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'moraleBonus'; mode: number;
 }>;
-export type GhostItmEffec_ExtensionPanic = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Panic = BaseGhostItmEffect & Readonly<{
   opcode: 'panic'; panicType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionPoison = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Poison = BaseGhostItmEffect & Readonly<{
   opcode: 'poison'; amount: number; poisonType: number; icon: number;
 }>;
-export type GhostItmEffec_ExtensionAcidResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_AcidResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'acidResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionColdResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_ColdResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'coldResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionElectricityResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_ElectricityResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'electricityResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionFireResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_FireResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'fireResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionSaveVsDeathBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_SaveVsDeathBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'saveVsDeathBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionSaveVsWandBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_SaveVsWandBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'saveVsWandBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionSaveVsPolymorphBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_SaveVsPolymorphBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'saveVsPolymorphBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionSaveVsBreathBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_SaveVsBreathBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'saveVsBreathBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionSaveVsSpellBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_SaveVsSpellBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'saveVsSpellBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionSilence = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Silence = BaseGhostItmEffect & Readonly<{
   opcode: 'silence'; spe: number;
 }>;
-export type GhostItmEffec_ExtensionSparkle = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Sparkle = BaseGhostItmEffect & Readonly<{
   opcode: 'sparkle'; amount: number; particleEffect: number; resource: string; spe: number;
 }>;
-export type GhostItmEffec_ExtensionBonusWizardSpell = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_BonusWizardSpell = BaseGhostItmEffect & Readonly<{
   opcode: 'bonusWizardSpell'; amountSpellsToAdd: number; spellLevels: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionStrengthBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_StrengthBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'strengthBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionStun = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Stun = BaseGhostItmEffect & Readonly<{
   opcode: 'stun'; spe: number;
 }>;
-export type GhostItmEffec_ExtensionWisdomBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_WisdomBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'wisdomBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionBaseThac0Bonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_BaseThac0Bonus = BaseGhostItmEffect & Readonly<{
   opcode: 'baseThac0Bonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionMoveSilentlyBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_MoveSilentlyBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'moveSilentlyBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionBonusPriestSpell = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_BonusPriestSpell = BaseGhostItmEffect & Readonly<{
   opcode: 'bonusPriestSpell'; amountSpellsToAdd: number; spellLevels: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionBlur = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Blur = BaseGhostItmEffect & Readonly<{
   opcode: 'blur'; spe: number;
 }>;
-export type GhostItmEffec_ExtensionTranslucency = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Translucency = BaseGhostItmEffect & Readonly<{
   opcode: 'translucency'; fadeAmount: number; visualEffect: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionAttackDamageBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_AttackDamageBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'attackDamageBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionBlindness = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Blindness = BaseGhostItmEffect & Readonly<{
   opcode: 'blindness'; spe: number;
 }>;
-export type GhostItmEffec_ExtensionImmunityToProjectile = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_ImmunityToProjectile = BaseGhostItmEffect & Readonly<{
   opcode: 'immunityToProjectile'; projectile: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionMagicalFireResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_MagicalFireResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'magicalFireResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionMagicalColdResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_MagicalColdResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'magicalColdResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionSlashingResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_SlashingResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'slashingResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionCrushingResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_CrushingResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'crushingResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionPiercingResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_PiercingResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'piercingResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionMissileResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_MissileResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'missileResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionOpenLockBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_OpenLockBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'openLockBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionFindTrapBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_FindTrapBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'findTrapBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionPickPocketBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_PickPocketBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'pickPocketBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionFatigueBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_FatigueBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'fatigueBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionIntoxicationBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_IntoxicationBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'intoxicationBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionExceptionalStrengthBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_ExceptionalStrengthBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'exceptionalStrengthBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffec_ExtensionRegeneration = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffec_Regeneration = BaseGhostItmEffect & Readonly<{
   opcode: 'regeneration'; value: number; regenerationType: number; icon: number;
 }>;
-export type GhostItmEffectExtension_ImmunityToEffect = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_ImmunityToEffect = BaseGhostItmEffect & Readonly<{
   opcode: 'immunityToEffect'; effect: number; spe: number;
 }>;
-export type GhostItmEffectExtension_XpBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_XpBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'xpBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffectExtension_RemoveGold = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_RemoveGold = BaseGhostItmEffect & Readonly<{
   opcode: 'removeGold'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffectExtension_MoraleBreak = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_MoraleBreak = BaseGhostItmEffect & Readonly<{
   opcode: 'moraleBreak'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffectExtension_Paralyze = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_Paralyze = BaseGhostItmEffect & Readonly<{
   opcode: 'paralyze'; idsValue: number; idsTarget: number; effect: number;
 }>;
-export type GhostItmEffectExtension_ImmunityToWeapons = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_ImmunityToWeapons = BaseGhostItmEffect & Readonly<{
   opcode: 'immunityToWeapons'; maximumEnchantment: number; weaponType: number; spe: number;
 }>;
-export type GhostItmEffectExtension_Confusion = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_Confusion = BaseGhostItmEffect & Readonly<{
   opcode: 'confusion'; spe: number;
 }>;
-export type GhostItmEffectExtension_SetAnimationSequence = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_SetAnimationSequence = BaseGhostItmEffect & Readonly<{
   opcode: 'setAnimationSequence'; sequence: number; spe: number;
 }>;
-export type GhostItmEffectExtension_CastSpell = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_CastSpell = BaseGhostItmEffect & Readonly<{
   opcode: 'castSpell'; castAtLevel: number; mode: number; resource: string; spe: number;
 }>;
-export type GhostItmEffectExtension_LearnSpell = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_LearnSpell = BaseGhostItmEffect & Readonly<{
   opcode: 'learnSpell'; resource: string; spe: number;
 }>;
-export type GhostItmEffectExtension_CastSpellAtPoint = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_CastSpellAtPoint = BaseGhostItmEffect & Readonly<{
   opcode: 'castSpellAtPoint'; castAtLevel: number; mode: number; resource: string; spe: number;
 }>;
-export type GhostItmEffectExtension_MirrorImageEffect = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_MirrorImageEffect = BaseGhostItmEffect & Readonly<{
   opcode: 'mirrorImageEffect'; imagesCount: number; spe: number;
 }>;
-export type GhostItmEffectExtension_RemoveFear = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_RemoveFear = BaseGhostItmEffect & Readonly<{
   opcode: 'removeFear'; spe: number;
 }>;
-export type GhostItmEffectExtension_MagicResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_MagicResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'magicResistanceBonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffectExtension_PreventPortraitIcon = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_PreventPortraitIcon = BaseGhostItmEffect & Readonly<{
   opcode: 'preventPortraitIcon'; icon: number; spe: number;
 }>;
-export type GhostItmEffectExtension_PoisonResistanceBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_PoisonResistanceBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'poisonResistanceBonus'; value: number; spe: number; }>;
-export type GhostItmEffectExtension_PlaySound = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_PlaySound = BaseGhostItmEffect & Readonly<{
   opcode: 'playSound'; resource: string; spe: number;
 }>;
-export type GhostItmEffectExtension_ProtectionmFromSpell = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_ProtectionmFromSpell = BaseGhostItmEffect & Readonly<{
   opcode: 'protectionmFromSpell'; stringTlk: string; resource: string; spe: number;
 }>;
-export type GhostItmEffectExtension_MinimumHp = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_MinimumHp = BaseGhostItmEffect & Readonly<{
   opcode: 'minimumHp'; hpAmount: number; spe: number;
 }>;
-export type GhostItmEffectExtension_PlayVisualEffect = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_PlayVisualEffect = BaseGhostItmEffect & Readonly<{
   opcode: 'playVisualEffect'; playwhere: number; resource: string; spe: number;
 }>;
-export type GhostItmEffectExtension_DisableDisplayString = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_DisableDisplayString = BaseGhostItmEffect & Readonly<{
   opcode: 'disableDisplayString'; stringTlk: string; spe: number;
 }>;
-export type GhostItmEffectExtension_ShakeScreen = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_ShakeScreen = BaseGhostItmEffect & Readonly<{
   opcode: 'shakeScreen'; strength: number; spe: number;
 }>;
-export type GhostItmEffectExtension_Thac0Bonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_Thac0Bonus = BaseGhostItmEffect & Readonly<{
   opcode: 'thac0Bonus'; value: number; modifierType: number; spe: number;
 }>;
-export type GhostItmEffectExtension_ImmunityToSpecificAnimation = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_ImmunityToSpecificAnimation = BaseGhostItmEffect & Readonly<{
   opcode: 'immunityToSpecificAnimation'; resource: string; spe: number;
 }>;
-export type GhostItmEffectExtension_ImmunityToTurnUndead = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_ImmunityToTurnUndead = BaseGhostItmEffect & Readonly<{
   opcode: 'immunityToTurnUndead'; statValue: number; spe: number;
 }>;
-export type GhostItmEffectExtension_CriticalHitBonus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_CriticalHitBonus = BaseGhostItmEffect & Readonly<{
   opcode: 'criticalHitBonus'; value: number; condition: number; attackType: number;
 }>;
-export type GhostItmEffectExtension_RestrictItem = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_RestrictItem = BaseGhostItmEffect & Readonly<{
   opcode: 'restrictItem'; idsTarget: number; descriptionNoteTlk: string;
 }>;
-export type GhostItmEffectExtension_FlashScreen = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_FlashScreen = BaseGhostItmEffect & Readonly<{
   opcode: 'flashScreen'; spe: number;
 }>;
-export type GhostItmEffectExtension_SoulExodus = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_SoulExodus = BaseGhostItmEffect & Readonly<{
   opcode: 'soulExodus'; spe: number;
 }>;
-export type GhostItmEffectExtension_PlayBamFile = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_PlayBamFile = BaseGhostItmEffect & Readonly<{
   opcode: 'playBamFile'; color: number; method: number; resource: string; spe: number;
 }>;
-export type GhostItmEffectExtension_Embalm = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_Embalm = BaseGhostItmEffect & Readonly<{
   opcode: 'embalm'; embalmingType: number; spe: number;
 }>;
-export type GhostItmEffectExtension_HitPointTransfer = BaseGhostItmEffect & Readonly<{
+export type GhostItmEffect_HitPointTransfer = BaseGhostItmEffect & Readonly<{
   opcode: 'hitPointTransfer'; amount: number; direction: number; damageType: number; spe: number;
 }>;
 
 export type GhostItmEffectV10
-  = | GhostItmUntranExtensionslatedEffect_AcBonus
-    | GhostItmEffect_MExtensionodifyAttacksPerRound
-    | GhostItmEffect_BExtensionerserk
-    | GhostItmEffect_CExtensionharismaBonus
-    | GhostItmEffect_SExtensionetColor
-    | GhostItmEffect_SExtensionetColorGlowPulse
-    | GhostItmEffec_ExtensionConsitutionBonus
-    | GhostItmEffec_ExtensionCurePoison
-    | GhostItmEffec_ExtensionDamage
-    | GhostItmEffec_ExtensionDexterityBonus
-    | GhostItmEffec_ExtensionHaste
-    | GhostItmEffec_ExtensionCurrentHpBonus
-    | GhostItmEffec_ExtensionMaximumHpBonus
-    | GhostItmEffec_ExtensionIntelligenceBonus
-    | GhostItmEffec_ExtensionInvisibility
-    | GhostItmEffec_ExtensionLoreBonus
-    | GhostItmEffec_ExtensionLuckBonus
-    | GhostItmEffec_ExtensionMoraleBonus
-    | GhostItmEffec_ExtensionPanic
-    | GhostItmEffec_ExtensionPoison
-    | GhostItmEffec_ExtensionAcidResistanceBonus
-    | GhostItmEffec_ExtensionColdResistanceBonus
-    | GhostItmEffec_ExtensionElectricityResistanceBonus
-    | GhostItmEffec_ExtensionFireResistanceBonus
-    | GhostItmEffec_ExtensionSaveVsDeathBonus
-    | GhostItmEffec_ExtensionSaveVsWandBonus
-    | GhostItmEffec_ExtensionSaveVsPolymorphBonus
-    | GhostItmEffec_ExtensionSaveVsBreathBonus
-    | GhostItmEffec_ExtensionSaveVsSpellBonus
-    | GhostItmEffec_ExtensionSilence
-    | GhostItmEffec_ExtensionSparkle
-    | GhostItmEffec_ExtensionBonusWizardSpell
-    | GhostItmEffec_ExtensionStrengthBonus
-    | GhostItmEffec_ExtensionStun
-    | GhostItmEffec_ExtensionWisdomBonus
-    | GhostItmEffec_ExtensionBaseThac0Bonus
-    | GhostItmEffec_ExtensionMoveSilentlyBonus
-    | GhostItmEffec_ExtensionBonusPriestSpell
-    | GhostItmEffec_ExtensionBlur
-    | GhostItmEffec_ExtensionTranslucency
-    | GhostItmEffec_ExtensionAttackDamageBonus
-    | GhostItmEffec_ExtensionBlindness
-    | GhostItmEffec_ExtensionImmunityToProjectile
-    | GhostItmEffec_ExtensionMagicalFireResistanceBonus
-    | GhostItmEffec_ExtensionMagicalColdResistanceBonus
-    | GhostItmEffec_ExtensionSlashingResistanceBonus
-    | GhostItmEffec_ExtensionCrushingResistanceBonus
-    | GhostItmEffec_ExtensionPiercingResistanceBonus
-    | GhostItmEffec_ExtensionMissileResistanceBonus
-    | GhostItmEffec_ExtensionOpenLockBonus
-    | GhostItmEffec_ExtensionFindTrapBonus
-    | GhostItmEffec_ExtensionPickPocketBonus
-    | GhostItmEffec_ExtensionFatigueBonus
-    | GhostItmEffec_ExtensionIntoxicationBonus
-    | GhostItmEffec_ExtensionExceptionalStrengthBonus
-    | GhostItmEffec_ExtensionRegeneration
-    | GhostItmEffectExtension_ImmunityToEffect
-    | GhostItmEffectExtension_XpBonus
-    | GhostItmEffectExtension_RemoveGold
-    | GhostItmEffectExtension_MoraleBreak
-    | GhostItmEffectExtension_Paralyze
-    | GhostItmEffectExtension_ImmunityToWeapons
-    | GhostItmEffectExtension_Confusion
-    | GhostItmEffectExtension_SetAnimationSequence
-    | GhostItmEffectExtension_CastSpell
-    | GhostItmEffectExtension_LearnSpell
-    | GhostItmEffectExtension_CastSpellAtPoint
-    | GhostItmEffectExtension_MirrorImageEffect
-    | GhostItmEffectExtension_RemoveFear
-    | GhostItmEffectExtension_MagicResistanceBonus
-    | GhostItmEffectExtension_PreventPortraitIcon
-    | GhostItmEffectExtension_PoisonResistanceBonus
-    | GhostItmEffectExtension_PlaySound
-    | GhostItmEffectExtension_ProtectionmFromSpell
-    | GhostItmEffectExtension_MinimumHp
-    | GhostItmEffectExtension_PlayVisualEffect
-    | GhostItmEffectExtension_DisableDisplayString
-    | GhostItmEffectExtension_ShakeScreen
-    | GhostItmEffectExtension_Thac0Bonus
-    | GhostItmEffectExtension_ImmunityToSpecificAnimation
-    | GhostItmEffectExtension_ImmunityToTurnUndead
-    | GhostItmEffectExtension_CriticalHitBonus
-    | GhostItmEffectExtension_RestrictItem
-    | GhostItmEffectExtension_FlashScreen
-    | GhostItmEffectExtension_SoulExodus
-    | GhostItmEffectExtension_PlayBamFile
-    | GhostItmEffectExtension_Embalm
-    | GhostItmEffectExtension_HitPointTransfer
+  = | GhostItmEffect_AcBonus
+    | GhostItmEffect_ModifyAttacksPerRound
+    | GhostItmEffect_Berserk
+    | GhostItmEffect_CharismaBonus
+    | GhostItmEffect_SetColor
+    | GhostItmEffect_SetColorGlowPulse
+    | GhostItmEffec_ConsitutionBonus
+    | GhostItmEffec_CurePoison
+    | GhostItmEffec_Damage
+    | GhostItmEffec_DexterityBonus
+    | GhostItmEffec_Haste
+    | GhostItmEffec_CurrentHpBonus
+    | GhostItmEffec_MaximumHpBonus
+    | GhostItmEffec_IntelligenceBonus
+    | GhostItmEffec_Invisibility
+    | GhostItmEffec_LoreBonus
+    | GhostItmEffec_LuckBonus
+    | GhostItmEffec_MoraleBonus
+    | GhostItmEffec_Panic
+    | GhostItmEffec_Poison
+    | GhostItmEffec_AcidResistanceBonus
+    | GhostItmEffec_ColdResistanceBonus
+    | GhostItmEffec_ElectricityResistanceBonus
+    | GhostItmEffec_FireResistanceBonus
+    | GhostItmEffec_SaveVsDeathBonus
+    | GhostItmEffec_SaveVsWandBonus
+    | GhostItmEffec_SaveVsPolymorphBonus
+    | GhostItmEffec_SaveVsBreathBonus
+    | GhostItmEffec_SaveVsSpellBonus
+    | GhostItmEffec_Silence
+    | GhostItmEffec_Sparkle
+    | GhostItmEffec_BonusWizardSpell
+    | GhostItmEffec_StrengthBonus
+    | GhostItmEffec_Stun
+    | GhostItmEffec_WisdomBonus
+    | GhostItmEffec_BaseThac0Bonus
+    | GhostItmEffec_MoveSilentlyBonus
+    | GhostItmEffec_BonusPriestSpell
+    | GhostItmEffec_Blur
+    | GhostItmEffec_Translucency
+    | GhostItmEffec_AttackDamageBonus
+    | GhostItmEffec_Blindness
+    | GhostItmEffec_ImmunityToProjectile
+    | GhostItmEffec_MagicalFireResistanceBonus
+    | GhostItmEffec_MagicalColdResistanceBonus
+    | GhostItmEffec_SlashingResistanceBonus
+    | GhostItmEffec_CrushingResistanceBonus
+    | GhostItmEffec_PiercingResistanceBonus
+    | GhostItmEffec_MissileResistanceBonus
+    | GhostItmEffec_OpenLockBonus
+    | GhostItmEffec_FindTrapBonus
+    | GhostItmEffec_PickPocketBonus
+    | GhostItmEffec_FatigueBonus
+    | GhostItmEffec_IntoxicationBonus
+    | GhostItmEffec_ExceptionalStrengthBonus
+    | GhostItmEffec_Regeneration
+    | GhostItmEffect_ImmunityToEffect
+    | GhostItmEffect_XpBonus
+    | GhostItmEffect_RemoveGold
+    | GhostItmEffect_MoraleBreak
+    | GhostItmEffect_Paralyze
+    | GhostItmEffect_ImmunityToWeapons
+    | GhostItmEffect_Confusion
+    | GhostItmEffect_SetAnimationSequence
+    | GhostItmEffect_CastSpell
+    | GhostItmEffect_LearnSpell
+    | GhostItmEffect_CastSpellAtPoint
+    | GhostItmEffect_MirrorImageEffect
+    | GhostItmEffect_RemoveFear
+    | GhostItmEffect_MagicResistanceBonus
+    | GhostItmEffect_PreventPortraitIcon
+    | GhostItmEffect_PoisonResistanceBonus
+    | GhostItmEffect_PlaySound
+    | GhostItmEffect_ProtectionmFromSpell
+    | GhostItmEffect_MinimumHp
+    | GhostItmEffect_PlayVisualEffect
+    | GhostItmEffect_DisableDisplayString
+    | GhostItmEffect_ShakeScreen
+    | GhostItmEffect_Thac0Bonus
+    | GhostItmEffect_ImmunityToSpecificAnimation
+    | GhostItmEffect_ImmunityToTurnUndead
+    | GhostItmEffect_CriticalHitBonus
+    | GhostItmEffect_RestrictItem
+    | GhostItmEffect_FlashScreen
+    | GhostItmEffect_SoulExodus
+    | GhostItmEffect_PlayBamFile
+    | GhostItmEffect_Embalm
+    | GhostItmEffect_HitPointTransfer
 ;
 
 export type GhostItm = GhostItmV10;

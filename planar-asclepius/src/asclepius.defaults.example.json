@@ -1,0 +1,45 @@
+{
+	"asclepius": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-asclepius",
+		"dist": "ABSOLUTE/PATH/TO/planar-echo/planar-asclepius/dist",
+		"defaultsJson": "ABSOLUTE/PATH/TO/planar-echo/planar-asclepius/src/asclepius.defaults.json"
+	},
+	"repository": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo"
+	},
+	"daemon": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-daemon",
+		"dist": "ABSOLUTE/PATH/TO/planar-echo/planar-daemon/dist"
+	},
+	"ghost": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-ghost"
+	},
+	"kernel": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-kernel",
+		"dist": "ABSOLUTE/PATH/TO/planar-echo/planar-kernel/dist"
+	},
+	"mods": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-mods",
+		"dist": "ABSOLUTE/PATH/TO/planar-echo/planar-mods/dist"
+	},
+	"modsRuntime": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-mods-runtime"
+	},
+	"prism": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-prism",
+		"dist": "ABSOLUTE/PATH/TO/planar-echo/planar-prism/dist",
+		"defaultsJson": "ABSOLUTE/PATH/TO/planar-echo/planar-prism/prism.defaults.json"
+	},
+	"shared": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-shared",
+		"dist": "ABSOLUTE/PATH/TO/planar-echo/planar-shared/dist"
+	},
+	"shell": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-shell",
+		"dist": "ABSOLUTE/PATH/TO/planar-echo/planar-shell/dist"
+	},
+	"weidu": {
+		"root": "ABSOLUTE/PATH/TO/planar-echo/planar-weidu",
+		"exe": "ABSOLUTE/PATH/TO/planar-echo/planar-weidu/weidu.exe"
+	}
+}

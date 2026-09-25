@@ -6,7 +6,7 @@ import svgr from 'vite-plugin-svgr';
 import type { UserConfig } from 'vite';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }): UserConfig => {
+export default defineConfig((): UserConfig => {
   return {
     base: '/', // mode === 'production' ? '/' : '/',
     plugins: [
@@ -31,7 +31,6 @@ export default defineConfig(({ mode }): UserConfig => {
       alias: {
         '@': resolve(__dirname, 'src'),
         '@planar/shared': resolve(__dirname, '../planar-shared/src/index.ts'),
-        '@planar/kernel': resolve(__dirname, '../planar-kernel/src/index.ts'),
       },
     },
     server: {
@@ -44,7 +43,6 @@ export default defineConfig(({ mode }): UserConfig => {
     optimizeDeps: {
       exclude: [
         '@planar/shared',
-        '@planar/kernel',
       ],
       esbuildOptions: {
         format: 'esm',

@@ -8,14 +8,14 @@ import type {
   WeiduExeDirValidateResult,
 } from './types.js';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const weiduIsOk = async (weiduExeDir: string): Promise<boolean> => {
-  return true;
+const weiduIsOk = (weiduExeDir: string): Promise<boolean> => {
+  void weiduExeDir;
+  return Promise.resolve(true);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const binariesAreOk = async (chitinKeyFile: string): Promise<boolean> => {
-  return true;
+const binariesAreOk = (chitinKeyFile: string): Promise<boolean> => {
+  void chitinKeyFile;
+  return Promise.resolve(true);
 };
 
 export const validate = async (paths: Paths): Promise<void> => {

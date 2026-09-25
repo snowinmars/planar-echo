@@ -14,7 +14,8 @@ import { useId } from 'react';
 /**
  * This component is a placeholder for FormControl to correctly set the shrink label state on SSR.
  */
-function SSRInitialFilled(_: BaseNumberField.Root.Props) {
+function SSRInitialFilled(props: BaseNumberField.Root.Props) {
+  void props;
   return null;
 }
 SSRInitialFilled.muiName = 'Input';

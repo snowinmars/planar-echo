@@ -23,7 +23,20 @@ const Convert: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // step4 (ghost path) is not affected by any other steps, so it may be validated in parallel
+    store.step4Start();
+
+    return () => {
+      store.step4Destroy();
+    };
+  }, []);
+
+  useEffect(() => {
     if (store.step6Valid) navigate('/')?.catch(e => console.error(e));
+
+    return () => {
+      store.step6Destroy();
+    };
   }, [store.step6Valid]);
 
   return (
@@ -64,7 +77,6 @@ const Convert: FC = () => {
           valid={store.step2Valid}
           loading={store.step2Loading || store.step6Loading}
           weiduExeDir={store.weiduExeDir}
-          setWeiduExeDir={store.setWeiduExeDir}
           validate={store.step2Validate}
           downloadWeidu={store.step2DownloadWeidu}
           comment={store.step2Comment}
@@ -95,7 +107,6 @@ const Convert: FC = () => {
           valid={store.step4Valid}
           loading={store.step4Loading || store.step6Loading}
           ghostDir={store.ghostDir}
-          setGhostDir={store.setGhostDir}
           comment={store.step4Comment}
           commentArgs={store.step4CommentArgs}
           resultType={store.step4ResultType}

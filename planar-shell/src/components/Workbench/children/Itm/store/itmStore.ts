@@ -3,18 +3,15 @@ import { create } from 'zustand';
 import { nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-import { postApiGhostItm } from '@/swagger/client';
+import { getApiGhostByResourceType } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
 import { loadGhostItm } from './itmApi';
 
-import type { GhostItm, Maybe } from '@planar/shared';
-
-import type { GameLanguage } from '@/swagger/client';
+import type { GameLanguage, GhostItm, Maybe } from '@planar/shared';
 
 export type ItmStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   gameLanguage: GameLanguage;
   loading: boolean;
 
@@ -29,7 +26,6 @@ export type ItmStore = Readonly<{
 
 export const useItmStore = create<ItmStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   gameLanguage: planarLocalStorage.get<GameLanguage>('gameLanguage')!,
   loading: false,
 
@@ -43,24 +39,14 @@ export const useItmStore = create<ItmStore>((set, get) => ({
     });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const { error, data } = await postApiGhostItm({
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
         client,
         baseURL: serverUrl,
-        body: { ghostDir: ghostDir }, // may use server filter here, but nah
+        path: { resourceType: 'itm' },
+        throwOnError: true,
       });
-
-      if (error) {
-        console.error(error);
-        set({
-          itms: [],
-        });
-      }
-      else {
-        set({
-          itms: data,
-        });
-      }
+      set({ itms: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -78,13 +64,9 @@ export const useItmStore = create<ItmStore>((set, get) => ({
     });
 
     try {
-      const {
-        serverUrl,
-        ghostDir,
-      } = get();
+      const { serverUrl } = get();
       const t = await loadGhostItm({
         serverUrl,
-        ghostDir,
         itmId: itmId,
       });
 

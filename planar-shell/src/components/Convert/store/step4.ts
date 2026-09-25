@@ -1,16 +1,26 @@
+import { isAxiosError } from 'axios';
 import { debounce, interval, Subject } from 'rxjs';
 
 import { nothing } from '@planar/shared';
 
-import planarLocalStorage from '@/shared/planarLocalStorage';
-import { postApiFsOpenDir, postApiFsValidateGhostDir } from '@/swagger/client';
+import { backendUrl } from '@/shared/backendUrl';
+import { getApiPaths, postApiFsOpenDir, postApiFsValidateGhostDir } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
+import { getAxiosApiErrorBody } from './shared';
+
+import type { Subscription } from 'rxjs';
 import type { StateCreator } from 'zustand';
+
+import type { Maybe } from '@planar/shared';
 
 import type { PostApiFsOpenDirErrors, PostApiFsValidateGhostDirErrors } from '@/swagger/client';
 
-import type { LandingState, LandingStateStep4, ZustandGetType, ZustandSetType } from './types';
+import type { LandingState, LandingStateStep4, ZustandSetType } from './types';
+
+const isCanceled = (error: unknown): boolean => isAxiosError(error) && error.code === 'ERR_CANCELED';
+
+const VALIDATION_DEBOUNCE_MS = 300;
 
 type FormErrorStateProps = PostApiFsValidateGhostDirErrors[404 | 406];
 const translateErrorState = (error: FormErrorStateProps): string => {
@@ -38,50 +48,37 @@ const translateOpenDirError = (error: OpenDirErrorStateProps): string => {
 const openDir = async (
   serverUrl: string,
   set: ZustandSetType<LandingStateStep4>,
-  get: ZustandGetType<LandingStateStep4>,
 ): Promise<void> => {
-  const { ghostDir } = get();
-  if (!ghostDir) return;
-
   try {
-    const { error } = await postApiFsOpenDir({
+    const paths = await getApiPaths({
+      client,
+      baseURL: backendUrl(),
+      throwOnError: true,
+    });
+    set({ ghostDir: paths.data.ghost.root });
+
+    await postApiFsOpenDir({
       client,
       baseURL: serverUrl,
-      body: { dir: ghostDir },
+      body: { dir: paths.data.ghost.root },
+      throwOnError: true,
     });
-
-    if (error) {
-      set({
-        step4Comment: translateOpenDirError(error),
-        step4CommentArgs: {},
-        step4ResultType: 'error',
-      });
-    }
   }
   catch (e: unknown) {
     console.error(e);
     set({
-      step4Comment: 'landing.step4.comments.unknown',
+      step4Comment: translateOpenDirError(getAxiosApiErrorBody(e)),
       step4CommentArgs: {},
       step4ResultType: 'error',
     });
   }
 };
 
-const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep4>, get: ZustandGetType<LandingStateStep4>) => {
-  const { ghostDir } = get();
-
-  if (!ghostDir) {
-    set({
-      step4Loading: false,
-      step4Comment: '',
-      step4CommentArgs: {},
-      step4ResultType: nothing(),
-      step4Valid: false,
-    });
-    return;
-  };
-
+const validate = async (
+  serverUrl: string,
+  set: ZustandSetType<LandingStateStep4>,
+  signal: AbortSignal,
+): Promise<void> => {
   set({
     step4Loading: true,
     step4Comment: 'landing.step4.comments.loading',
@@ -91,35 +88,36 @@ const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep4
   });
 
   try {
-    const { error } = await postApiFsValidateGhostDir({
+    const paths = await getApiPaths({
+      client,
+      baseURL: backendUrl(),
+      throwOnError: true,
+    });
+    if (signal.aborted) return;
+    set({ ghostDir: paths.data.ghost.root });
+
+    await postApiFsValidateGhostDir({
       client,
       baseURL: serverUrl,
-      body: { ghostDir },
+      signal,
+      throwOnError: true,
     });
 
-    set({ step4Loading: false });
-
-    if (error) {
-      set({
-        step4Comment: translateErrorState(error),
-        step4CommentArgs: {},
-        step4ResultType: 'error',
-        step4Valid: false,
-      });
-    }
-    else {
-      set({
-        step4Comment: 'landing.step4.comments.success',
-        step4CommentArgs: {},
-        step4ResultType: 'success',
-        step4Valid: true,
-      });
-    }
+    if (signal.aborted) return;
+    set({
+      step4Loading: false,
+      step4Comment: 'landing.step4.comments.success',
+      step4CommentArgs: {},
+      step4ResultType: 'success',
+      step4Valid: true,
+    });
   }
   catch (e: unknown) {
+    if (signal.aborted || isCanceled(e) || (e instanceof DOMException && e.name === 'AbortError')) return;
     console.error(e);
     set({
-      step4Comment: 'landing.step4.comments.unknown',
+      step4Loading: false,
+      step4Comment: translateErrorState(getAxiosApiErrorBody(e)),
       step4CommentArgs: {},
       step4ResultType: 'error',
       step4Valid: false,
@@ -128,24 +126,47 @@ const validate = async (serverUrl: string, set: ZustandSetType<LandingStateStep4
 };
 
 export const useLandingStoreStep4: StateCreator<LandingState, [], [], LandingStateStep4> = (set, get) => {
-  const validate$ = new Subject<void>();
-  const subscription = validate$
-    .pipe(debounce(() => interval(1000)))
-    .subscribe(() => {
-      const { serverUrl } = get();
-      validate(serverUrl, set, get).catch(e => console.error(e));
-    });
+  let validationAbortController: Maybe<AbortController>;
+  let validate$: Maybe<Subject<void>>;
+  let subscription: Maybe<Subscription>;
 
-  const ghostDir = planarLocalStorage.get<string>('ghostDir', '')!;
-  validate$.next();
+  const cancelValidation = (): void => {
+    validationAbortController?.abort();
+    validationAbortController = nothing();
+  };
+
+  const runValidation = (): Promise<void> => {
+    cancelValidation();
+    const abortController = new AbortController();
+    validationAbortController = abortController;
+    const { serverUrl } = get();
+
+    return validate(serverUrl, set, abortController.signal)
+      .finally(() => {
+        if (validationAbortController === abortController) {
+          validationAbortController = nothing();
+        }
+      });
+  };
+
+  const startValidation = (): void => {
+    if (subscription && !subscription.closed) return;
+
+    validate$ = new Subject<void>();
+    subscription = validate$
+      .pipe(debounce(() => interval(VALIDATION_DEBOUNCE_MS)))
+      .subscribe(() => {
+        runValidation().catch(e => console.error(e));
+      });
+  };
+
+  const scheduleValidation = (): void => {
+    startValidation();
+    validate$?.next();
+  };
 
   return {
-    ghostDir,
-    setGhostDir: (ghostDir: string): void => {
-      set({ ghostDir });
-      planarLocalStorage.set('ghostDir', ghostDir);
-      validate$.next();
-    },
+    ghostDir: '',
 
     step4Valid: false,
     step4Loading: false,
@@ -153,17 +174,18 @@ export const useLandingStoreStep4: StateCreator<LandingState, [], [], LandingSta
     step4CommentArgs: {},
     step4ResultType: nothing(),
 
-    step4Validate: () => {
-      const { serverUrl } = get();
-      return validate(serverUrl, set, get);
-    },
+    step4Validate: runValidation,
     step4OpenDir: () => {
       const { serverUrl } = get();
-      return openDir(serverUrl, set, get);
+      return openDir(serverUrl, set);
     },
+    step4Start: scheduleValidation,
     step4Destroy: () => {
-      subscription.unsubscribe();
-      validate$.complete();
+      cancelValidation();
+      subscription?.unsubscribe();
+      validate$?.complete();
+      subscription = nothing();
+      validate$ = nothing();
     },
   };
 };

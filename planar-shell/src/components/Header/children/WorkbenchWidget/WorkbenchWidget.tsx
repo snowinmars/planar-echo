@@ -1,7 +1,6 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
-import { isAxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -11,26 +10,21 @@ import { isNothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
 import VirtualizedListbox from '@/shared/VirtualizedListbox';
-import { postApiGhostSearch } from '@/swagger/client';
+import { getApiGhost } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
 import type { FC } from 'react';
 
-import type { GhostType } from '@planar/shared';
+import type { GetApiGhostResponse } from '@/swagger/client';
 
 import styles from './WorkbenchWidget.module.scss';
 
-type GhostSearchHit = Readonly<{
-  type: GhostType;
-  id: string;
-}>;
-
-const optionKey = (hit: GhostSearchHit): string => `${hit.type}:${hit.id}`;
+const optionKey = (hit: GetApiGhostResponse[number]): string => `${hit.type}:${hit.id}`;
 
 const WorkbenchWidget: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [hits, setHits] = useState<GhostSearchHit[]>([]);
+  const [hits, setHits] = useState<GetApiGhostResponse[number][]>([]);
   const [loading, setLoading] = useState(false);
   const queryRef = useRef<Subject<string> | null>(null);
 
@@ -50,28 +44,23 @@ const WorkbenchWidget: FC = () => {
       abortController = new AbortController();
       const { signal } = abortController;
       const serverUrl = planarLocalStorage.get('serverUrl')!;
-      const ghostDir = planarLocalStorage.get('ghostDir')!;
       setLoading(true);
 
-      postApiGhostSearch({
+      getApiGhost({
         client,
         baseURL: serverUrl,
-        body: { ghostDir, partialName: trimmed },
+        query: { partialName: trimmed },
+        throwOnError: true,
         signal,
       })
-        .then(({ error, data }) => {
+        .then((response) => {
           if (signal.aborted) return;
-          if (error) {
-            console.error(error);
-            setHits([]);
-            return;
-          }
-          setHits(data ?? []);
+          setHits(response.data);
         })
         .catch((e: unknown) => {
-          if (isAxiosError(e) && e.code === 'ERR_CANCELED') return;
+          if (signal.aborted) return;
           console.error(e);
-          if (!signal.aborted) setHits([]);
+          setHits([]);
         })
         .finally(() => {
           if (!signal.aborted) setLoading(false);

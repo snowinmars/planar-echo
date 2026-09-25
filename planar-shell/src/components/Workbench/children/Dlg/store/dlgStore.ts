@@ -2,7 +2,7 @@ import { nothing } from '@planar/shared';
 
 import { planarStoreId } from '@/engine/store/planarRuntime.types';
 import { getZustandCharacter, getZustandNarrative } from '@/engine/store/worldStores';
-import { postApiGhostDlg } from '@/swagger/client';
+import { getApiGhostByResourceType } from '@/swagger/client';
 import { client } from '@/swagger/client/client.gen';
 
 import { dlgRepository } from './dlgRepository';
@@ -53,21 +53,15 @@ export const createDlgStore = (runtime: PlanarRuntime): StateCreator<DlgStore> =
   };
 
   const loadDlgTree = async (dlgId: string, initialStateId: Maybe<StateId>): Promise<void> => {
-    const {
-      serverUrl,
-      ghostDir,
-    } = runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).getState();
+    const { serverUrl } = runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).getState();
 
     const narrative = getZustandNarrative();
     const character = getZustandCharacter();
 
     if (!narrative || !character) throw new Error('World stores were not initialized');
-    if (!ghostDir) throw new Error('Ghost directory should be initialized here');
-
     await withLoading(async () => {
       const tree = await dlgRepository.loadDlgTree({
         serverUrl,
-        ghostDir,
         dlgId,
         narrative,
         character,
@@ -124,29 +118,17 @@ export const createDlgStore = (runtime: PlanarRuntime): StateCreator<DlgStore> =
   });
 
   const loadDlgsIds = async (): Promise<void> => {
-    const {
-      serverUrl,
-      ghostDir,
-    } = runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).getState();
-
-    if (!ghostDir) throw new Error('Ghost directory should be initialized here');
+    const { serverUrl } = runtime.getStore<LocalStorageStore>(planarStoreId.localStorage).getState();
 
     await withLoading(async () => {
-      const { error, data } = await postApiGhostDlg({
+      const listed = await getApiGhostByResourceType({
         client,
         baseURL: serverUrl,
-        body: { ghostDir }, // may use server filter here, but nah
+        path: { resourceType: 'dlg' },
+        throwOnError: true,
       });
 
-      if (error) {
-        console.error(error);
-        set({ dlgs: [] });
-      }
-      else {
-        set({
-          dlgs: data,
-        });
-      }
+      set({ dlgs: listed.data });
     });
   };
 

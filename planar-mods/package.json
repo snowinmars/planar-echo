@@ -3,23 +3,18 @@
   "type": "module",
   "license": "GPL-3.0-or-later",
   "version": "0.0.1",
-  "description": "Default PST:EE play mods",
+  "description": "Reserved first-party modpack; runtime composition currently unavailable",
   "author": "snowinmars",
   "scripts": {
-    "build": "tsc --noEmit && node ./build.mjs",
-    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "tsc",
+    "clean": "node src/dev/clean.js",
     "lint": "eslint ."
-  },
-  "dependencies": {
-    "@planar/kernel": "workspace:*",
-    "@planar/shared": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^25.5.0",
     "@typescript-eslint/parser": "^8.57.1",
-    "esbuild": "^0.28.0",
     "eslint": "^10.1.0",
     "eslint-plugin-chai-friendly": "^1.2.1",
     "eslint-plugin-import-x": "^4.17.1",
@@ -27,8 +22,16 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.1"
   },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "main": "./area-render/src/client.ts"
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  }
 }

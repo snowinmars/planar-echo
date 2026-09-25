@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostTwoda, loadGhostTwoda } from './twodaApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostTwoda, Maybe } from '@planar/shared';
 
 export type TwodaStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   twodas: string[];
   currentTwodaId: Maybe<string>;
@@ -22,7 +24,6 @@ export type TwodaStore = Readonly<{
 
 export const useTwodaStore = create<TwodaStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   twodas: [],
   currentTwodaId: nothing(),
@@ -30,8 +31,14 @@ export const useTwodaStore = create<TwodaStore>((set, get) => ({
   loadTwodas: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ twodas: await listGhostTwoda(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'twoda' },
+        throwOnError: true,
+      });
+      set({ twodas: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -44,8 +51,18 @@ export const useTwodaStore = create<TwodaStore>((set, get) => ({
   loadTwoda: async (twodaId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentTwodaId: twodaId, currentTwoda: await loadGhostTwoda({ serverUrl, ghostDir, twodaId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'twoda', resourceName: twodaId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostTwoda>(skeletonResponse.data.data.content);
+      set({
+        currentTwodaId: twodaId,
+        currentTwoda: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

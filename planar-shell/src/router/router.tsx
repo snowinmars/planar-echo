@@ -30,8 +30,6 @@ const Are = lazy(() => import('@/components/Workbench/children/Are'));
 const Twoda = lazy(() => import('@/components/Workbench/children/Twoda'));
 const Src = lazy(() => import('@/components/Workbench/children/Src'));
 const Stores = lazy(() => import('@/components/Stores'));
-const Play = lazy(() => import('@/components/Play'));
-const Mods = lazy(() => import('@/components/Mods'));
 
 // https://github.com/remix-run/react-router/issues/12474#issuecomment-2538281149
 const HelloDevs: FC<PropsWithChildren> = ({ children }) => {
@@ -108,12 +106,6 @@ const router = createBrowserRouter([{
   }, {
     path: '/src/:srcId?',
     element: <HelloDevs><Src /></HelloDevs>,
-  }, {
-    path: '/play',
-    element: <HelloDevs><Play /></HelloDevs>,
-  }, {
-    path: '/mods',
-    element: <HelloDevs><Mods /></HelloDevs>,
   }, {
     path: '/settings',
     element: <HelloDevs><Settings /></HelloDevs>,

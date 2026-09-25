@@ -1,16 +1,13 @@
 import { WebSocketServer } from 'ws';
 
-import { just, optional } from '@planar/shared';
+import { just } from '@planar/shared';
 
-import { parsePlanarPathsCookie } from '@/helpers/cookie.js';
-
-import { attachPlayWs } from '../wsController/play/attachPlayWs.js';
 import { attachPrismIndexWs } from './prism/attachPrismIndexWs.js';
 
 import type { IncomingMessage, Server, ServerResponse } from 'http';
 import type { Duplex } from 'stream';
 
-import type { PathsStore } from '@/shared/pathsStore.js';
+import type { Paths } from '@/shared/createPaths.types.js';
 
 // drops ?.. from url
 const pathnameOf = (req: IncomingMessage): string => {
@@ -21,12 +18,10 @@ const pathnameOf = (req: IncomingMessage): string => {
 
 const createWsRouter = (
   server: Server<typeof IncomingMessage, typeof ServerResponse>,
-  paths: PathsStore,
+  paths: Paths,
 ): void => {
   const prismWss = new WebSocketServer({ noServer: true });
-  const playWss = new WebSocketServer({ noServer: true });
-  attachPrismIndexWs(prismWss);
-  attachPlayWs(req => optional(parsePlanarPathsCookie(req.headers.cookie), paths.current), playWss);
+  attachPrismIndexWs(prismWss, paths);
 
   server.on('upgrade', (req: IncomingMessage, socket: Duplex, head: Buffer) => {
     const pathname = pathnameOf(req);
@@ -34,11 +29,6 @@ const createWsRouter = (
     if (pathname === '/api/prism/index') return prismWss
       .handleUpgrade(req, socket, head, (ws) => {
         prismWss.emit('connection', ws, req);
-      });
-
-    if (pathname === '/api/play') return playWss
-      .handleUpgrade(req, socket, head, (ws) => {
-        playWss.emit('connection', ws, req);
       });
 
     socket.destroy();

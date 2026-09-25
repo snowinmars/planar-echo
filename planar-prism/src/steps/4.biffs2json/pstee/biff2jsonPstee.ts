@@ -242,7 +242,7 @@ const biffs2jsonPstee = async (
   const files = await collectAcmFiles(musicDir);
 
   const acms: RawAcm[] = [];
-  const acmsIterator = await parseAcms(files);
+  const acmsIterator = parseAcms(files);
   for await (const acm of acmsIterator) {
     acms.push(acm);
     await paths.ghostDir.saveJson.acm(acm.resourceName, acm);

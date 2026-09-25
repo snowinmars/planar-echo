@@ -6,10 +6,7 @@ import type { Progress } from './progress.js';
  * Props to file prism index.js // TODO [snow]: write normal way, lol
  */
 type PrismIndexProps = Readonly<{
-  weiduExeDir: string;
   chitinKeyFile: string;
-  prismDir: string;
-  ghostDir: string;
   gameLanguage: GameLanguage;
   gameName: GameName;
 }>;
@@ -17,6 +14,17 @@ type PrismIndexProps = Readonly<{
 export type PrismIndexStartMessage = Readonly<{
   type: 'start';
   data: PrismIndexProps;
+}>;
+
+type PrismIndexRunProps = PrismIndexProps & Readonly<{
+  weiduExeDir: string;
+  ghostDir: string;
+  prismDir: string;
+}>;
+
+export type PrismIndexRunMessage = Readonly<{
+  type: 'start';
+  data: PrismIndexRunProps;
 }>;
 
 export type PrismIndexProgressMessage = Readonly<{

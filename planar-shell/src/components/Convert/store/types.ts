@@ -46,7 +46,6 @@ export type WeiduDownloadPlatform = 'windows' | 'linux' | 'mac';
 
 export type LandingStateStep2 = Readonly<{
   weiduExeDir: string;
-  setWeiduExeDir: (weiduExeDir: string) => void;
   step2Valid: boolean;
   step2Loading: boolean;
   step2Comment: string;
@@ -71,7 +70,6 @@ export type LandingStateStep3 = Readonly<{
 
 export type LandingStateStep4 = Readonly<{
   ghostDir: string;
-  setGhostDir: (ghostDir: string) => void;
   step4Valid: boolean;
   step4Loading: boolean;
   step4Comment: string;
@@ -79,6 +77,7 @@ export type LandingStateStep4 = Readonly<{
   step4ResultType: Maybe<'success' | 'error'>;
   step4Validate: () => Promise<void>;
   step4OpenDir: () => Promise<void>;
+  step4Start: () => void;
   step4Destroy: () => void;
 }>;
 

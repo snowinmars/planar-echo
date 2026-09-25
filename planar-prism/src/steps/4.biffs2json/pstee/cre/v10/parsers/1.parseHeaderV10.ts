@@ -241,7 +241,7 @@ export const parseHeaderV10 = ({
   const theClass = reader.map.ubyte<ClassId>(x => externalOffsetMap.parseExternal(x, ids.get('class.ids')!.entries));
   const specific = reader.map.ubyte(extendMap.specific.parse);
   const gender = reader.map.ubyte(extendMap.gender.parse);
-  const objectSpec1 = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('object.ids')!.entries)); // TODO [snow]: should I use ObjectIdsReferencesV10 here from docs?
+  const objectSpec1 = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('object.ids')!.entries));
   const objectSpec2 = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('object.ids')!.entries));
   const objectSpec3 = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('object.ids')!.entries));
   const objectSpec4 = reader.map.ubyte(x => externalOffsetMap.parseExternal(x, ids.get('object.ids')!.entries));

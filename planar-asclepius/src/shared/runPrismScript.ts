@@ -11,13 +11,17 @@ import type {
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
   PrismIndexProgressMessage,
-  PrismIndexStartMessage,
+  PrismIndexRunMessage,
 } from '@planar/shared';
 
-type PrismIndexMessage = PrismIndexStartMessage | PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
+type PrismIndexMessage = PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
 type PrismIndexResponse = PrismIndexProgressMessage['data'] | PrismIndexErrorMessage['data'];
 
-export const runPrismScript = <T>(prismDir: string, commandName: string, data: T): Observable<PrismIndexResponse> => {
+export const runPrismScript = (
+  prismDir: string,
+  commandName: string,
+  data: PrismIndexRunMessage['data'],
+): Observable<PrismIndexResponse> => {
   const destroy$ = new Subject<void>();
   let child: ChildProcess;
   return new Observable<PrismIndexResponse>((subscriber) => {
@@ -33,7 +37,8 @@ export const runPrismScript = <T>(prismDir: string, commandName: string, data: T
     child.stdout?.pipe(process.stdout);
     child.stderr?.pipe(process.stderr);
 
-    child.send({ type: 'start', data });
+    const start: PrismIndexRunMessage = { type: 'start', data };
+    child.send(start);
 
     child.on('message', (msg: PrismIndexMessage) => {
       if (msg.type === 'progress') return subscriber.next(msg.data);

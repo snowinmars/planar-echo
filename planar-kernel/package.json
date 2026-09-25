@@ -7,41 +7,23 @@
     "url": "https://github.com/snowinmars/planar-echo.git"
   },
   "version": "0.0.1",
-  "description": "CRPG kernel: World, walk grid, cell math. No clock apply, Express, Pixi, fs, or pathfinding.",
+  "description": "Reserved policy-free deterministic runtime core",
   "author": "snowinmars",
   "scripts": {
     "build": "tsc && tsc-alias",
     "clean": "node src/dev/clean.js",
-    "lint": "eslint .",
-    "test": "mocha"
-  },
-  "dependencies": {
-    "@planar/shared": "workspace:*"
-  },
-  "mocha": {
-    "node-option": [
-      "import=tsx"
-    ],
-    "spec": "src/**/*.spec.ts",
-    "extension": [
-      "ts"
-    ]
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/chai": "^5.2.3",
-    "@types/mocha": "^10.0.10",
     "@types/node": "^25.5.0",
     "@typescript-eslint/parser": "^8.57.1",
-    "chai": "^6.2.2",
     "eslint": "^10.1.0",
     "eslint-plugin-chai-friendly": "^1.2.1",
     "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-simple-import-sort": "^14.0.0",
-    "mocha": "^11.7.5",
     "tsc-alias": "^1.8.16",
-    "tsx": "^4.22.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.1"
   },

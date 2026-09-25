@@ -4,7 +4,6 @@ import type { DisposeFunction } from './helpers';
 
 export type LocalStorageStore = Readonly<{
   serverUrl: string;
-  ghostDir: Maybe<string>;
   gameLanguage: Maybe<GameLanguage>;
   dlgRenderer: string; // TODO [snow]: entype
   dlgMarks: Readonly<{

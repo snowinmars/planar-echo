@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostAcm, loadGhostAcm } from './acmApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostAcm, Maybe } from '@planar/shared';
 
 export type AcmStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   acms: string[];
   currentAcmId: Maybe<string>;
@@ -22,7 +24,6 @@ export type AcmStore = Readonly<{
 
 export const useAcmStore = create<AcmStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   acms: [],
   currentAcmId: nothing(),
@@ -30,9 +31,14 @@ export const useAcmStore = create<AcmStore>((set, get) => ({
   loadAcms: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      const data = await listGhostAcm(serverUrl, ghostDir);
-      set({ acms: data });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'acm' },
+        throwOnError: true,
+      });
+      set({ acms: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -45,9 +51,18 @@ export const useAcmStore = create<AcmStore>((set, get) => ({
   loadAcm: async (acmId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      const t = await loadGhostAcm({ serverUrl, ghostDir, acmId });
-      set({ currentAcmId: acmId, currentAcm: t });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'acm', resourceName: acmId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostAcm>(skeletonResponse.data.data.content);
+      set({
+        currentAcmId: acmId,
+        currentAcm: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

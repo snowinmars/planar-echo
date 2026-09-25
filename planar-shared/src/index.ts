@@ -201,104 +201,12 @@ export type {
 export { isNothing, just, maybe, maybeMap, nothing, optional } from './maybe.js';
 export { objectEntries, objectKeys, objectValues } from './objects.js';
 export type { PartialWriteable } from './partialWriteable.js';
-export { animationIdToHex4 } from './play/animationIdToHex4.js';
-export type {
-  AssetAtlas,
-  AssetKey,
-  AssetValueOf,
-  ClientAssets,
-  LoadedBamArt,
-  LoadedTisArt,
-} from './play/assets.js';
-export {
-  DEFAULT_ARE,
-  DEFAULT_PERSONAL_SPACE,
-  DEFAULT_PLAYER_CRE,
-  DEFAULT_SPEED_PX_PER_TICK,
-  MAX_PERSONAL_SPACE,
-  PASSABLE_WALK,
-  PLAYER_ACTOR_ID,
-  TICK_HZ,
-  UNPASSABLE_WALK,
-} from './play/constants.js';
-export type { Envelope, EnvelopePatch } from './play/envelope.js';
-export type {
-  ClientGhostReader,
-  ClientLayerName,
-  ClientModExports,
-  ClientModHost,
-  ClientOnAreaLoadCtx,
-  ClientOnAreaUnloadCtx,
-  ClientOnFrameCtx,
-  ClientOnPatchesCtx,
-  ModBag,
-  ServerFloorOverlayCtx,
-  ServerGhostReader,
-  ServerModExports,
-  ServerModHost,
-  ServerOccupancyCtx,
-  ServerOnAreaLoadCtx,
-  ServerOnAreaUnloadCtx,
-  ServerOnCommandCtx,
-  ServerOnTickCtx,
-  VisibleBounds,
-} from './play/host.js';
-export type { MemoStore } from './play/memoLoad.js';
-export { createMemoStore } from './play/memoLoad.js';
-export type {
-  ActiveJsonMods,
-  ClientHookName,
-  ComposedQueryName,
-  HookName,
-  ModManifest,
-  ModSide,
-  QueryCardinality,
-  QueryName,
-  RadioSlot,
-  ServerHookName,
-  SlotBoundQueryName,
-} from './play/modManifest.js';
-export {
-  CLIENT_HOOKS,
-  COMPOSED_QUERY_NAMES,
-  isClientHookName,
-  isComposedQueryName,
-  isServerHookName,
-  isSlotBoundQueryName,
-  MOD_SIDES,
-  queryCardinalityOf,
-  RADIO_SLOTS,
-  REQUIRED_CLIENT_SLOTS,
-  SERVER_HOOKS,
-  SERVER_QUERIES,
-  SERVER_QUERY_NAMES,
-  SLOT_BOUND_QUERY_NAMES,
-  slotOfQuery,
-} from './play/modManifest.js';
-export { parseModManifest } from './play/parseModManifest.js';
-export type {
-  EntityId,
-  FromDaemon,
-  InputCommand,
-  Meta,
-  MetaPatchRow,
-  Patch,
-  SeatId,
-  Snapshot,
-  ToDaemon,
-  WalkGrid,
-} from './play/protocol.js';
-export { validateActiveJsonMods } from './play/validateActiveJsonMods.js';
-export type {
-  ConsumableHookEffects,
-  HookEffects,
-  WorldEffect,
-} from './play/worldEffect.js';
 export type {
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
   PrismIndexProgressMessage,
   PrismIndexReadyMessage,
+  PrismIndexRunMessage,
   PrismIndexStartMessage,
 } from './prismIndexStartMessage.js';
 export type {

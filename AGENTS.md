@@ -9,20 +9,22 @@
 
 ## Purpose and status
 
-- **VERIFIED CURRENT STATE:** planar-echo is a GPL-3.0-or-later, local-first TypeScript monorepo that converts user-owned game data (currently PST:EE only) and runs a browser-based runtime.
+- **VERIFIED CURRENT STATE:** planar-echo is a GPL-3.0-or-later, local-first TypeScript monorepo that converts user-owned game data (currently PST:EE only) for a browser-based Workbench.
 - **VERIFIED CURRENT STATE:** it is an active tech preview; Prism currently implements PST:EE only.
-- **NORMATIVE TARGET ARCHITECTURE:** it is an independent Infinity Engine-compatible platform with PST:EE as the reference profile and replaceable game policy.
+- **VERIFIED CURRENT STATE:** the legacy Play/mod runtime was removed in Milestone 0; `/play` and `/mods` are explicit unavailable states.
+- **NORMATIVE TARGET ARCHITECTURE:** it is a server-authoritative multiplayer mod runtime for Infinity Engine content, with PST:EE as the reference workload and replaceable game policy.
 - Adding an enum value or target statement does not add parser support, parity, or verified coverage.
 
 ## Workspace index
 
-- [`@planar/shared`](planar-shared/AGENTS.md) — browser-safe contracts plus an explicit Node export.
-- [`@planar/kernel`](planar-kernel/AGENTS.md) — policy-free World data and deterministic transforms.
-- [`@planar/daemon`](planar-daemon/AGENTS.md) — authoritative 30 Hz World owner and server-mod host.
-- [`@planar/mods`](planar-mods/AGENTS.md) — replaceable default PST:EE client/server mod composition.
-- [`@planar/prism`](planar-prism/AGENTS.md) — standalone conversion CLI and fork/IPC worker.
-- [`@planar/asclepius`](planar-asclepius/AGENTS.md) — HTTP, WebSocket, artifacts, defaults, and child-process orchestration.
-- [`@planar/shell`](planar-shell/AGENTS.md) — React UI, replicated view, rendering, input, and client mods.
+- [`@planar/shared`](planar-shared/AGENTS.md) - browser-safe contracts plus an explicit Node export.
+- [`@planar/ie`](planar-ie/AGENTS.md) - IE/Ghost contracts, transforms, and reusable format libraries.
+- [`@planar/kernel`](planar-kernel/AGENTS.md) - reserved policy-free deterministic runtime core.
+- [`@planar/daemon`](planar-daemon/AGENTS.md) - reserved authoritative session host; currently unavailable.
+- [`@planar/mods`](planar-mods/AGENTS.md) - reserved first-party conformance/PST modpacks; currently empty.
+- [`@planar/prism`](planar-prism/AGENTS.md) - standalone conversion CLI and fork/IPC worker.
+- [`@planar/asclepius`](planar-asclepius/AGENTS.md) - HTTP, Prism WebSocket, local artifacts, defaults, and child-process orchestration.
+- [`@planar/shell`](planar-shell/AGENTS.md) - conversion, Workbench, stores, and settings UI; runtime UI is unavailable.
 
 ## Local non-workspace directories
 
@@ -45,13 +47,15 @@
 
 ## Cross-package invariants
 
-- Asclepius starts Prism and daemon through `process.fork` and structured IPC; stdout/stderr are human logs, not protocol.
-- Daemon is the sole authoritative live `World` owner and writer. Asclepius relays play traffic and must not simulate.
-- Server mods request mutation through `WorldEffect`; daemon validates and applies effects at that boundary.
-- Client mods may render, present UI, collect input, and form commands; they never mutate authoritative state.
-- Default PST:EE behavior belongs in replaceable mods, not privileged kernel or daemon policy.
+- The canonical target is [`docs/architecture/modular-runtime.md`](docs/architecture/modular-runtime.md); do not reconstruct the removed API from history.
+- Asclepius starts Prism through `process.fork` and structured IPC; stdout/stderr are human logs, not protocol.
+- The target session uses one daemon, one frozen exact modpack lock, and one authoritative descriptor.
+- The target World is generic protocol tables/resources; all authoritative writes are atomic transactions.
+- The target tick is commands → sequential systems DAG → read-only post-commit events → projected replication.
+- Default PST:EE behavior belongs in replaceable mods and `@planar/ie`, not privileged kernel or daemon policy.
 - Kernel stays deterministic, policy-free, and free of process, filesystem, HTTP, WebSocket, and renderer concerns.
 - Prism remains usable without Asclepius.
+- Remote sessions never supply executable client code or user-owned game content; those artifacts stay local.
 - User-owned game data, WeiDU, Ghost output, and runtime mods remain local.
 
 ## API and schema changes
@@ -73,7 +77,7 @@
 
 - Do not create commits unless the user explicitly asks.
 - Do not run tests without user permission.
-- Handoff commands: `yarn test`, `yarn workspace @planar/kernel test`, `yarn workspace @planar/prism test`, and `yarn workspace @planar/shell test`.
+- Handoff commands currently available: `yarn test`, `yarn workspace @planar/prism test`, and `yarn workspace @planar/shell test`.
 
 ## Documentation roles
 

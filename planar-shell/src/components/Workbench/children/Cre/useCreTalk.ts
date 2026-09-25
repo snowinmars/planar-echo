@@ -15,12 +15,10 @@ export const useCreTalk = (): Readonly<{
   const {
     currentCreId,
     serverUrl,
-    ghostDir,
     gameLanguage,
   } = useCreStore(useShallow(state => ({
     currentCreId: state.currentCreId,
     serverUrl: state.serverUrl,
-    ghostDir: state.ghostDir,
     gameLanguage: state.gameLanguage,
   })));
 
@@ -31,7 +29,6 @@ export const useCreTalk = (): Readonly<{
     try {
       const { dlgId, stateId } = await resolveCreDlg({
         serverUrl,
-        ghostDir,
         gameLanguage,
         creId: currentCreId,
       });
@@ -50,7 +47,7 @@ export const useCreTalk = (): Readonly<{
     finally {
       setTalking(false);
     }
-  }, [currentCreId, talking, serverUrl, ghostDir, gameLanguage, navigate]);
+  }, [currentCreId, talking, serverUrl, gameLanguage, navigate]);
 
   return { startTalk, talking };
 };

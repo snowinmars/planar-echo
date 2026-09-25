@@ -10,8 +10,10 @@ RUN npm install -g corepack && corepack enable && corepack prepare yarn@4.16.0 -
 FROM base AS deps
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY planar-shared/package.json    ./planar-shared/
+COPY planar-ie/package.json        ./planar-ie/
 COPY planar-kernel/package.json    ./planar-kernel/
 COPY planar-daemon/package.json    ./planar-daemon/
+COPY planar-mods/package.json      ./planar-mods/
 COPY planar-prism/package.json     ./planar-prism/
 COPY planar-asclepius/package.json ./planar-asclepius/
 COPY planar-shell/package.json     ./planar-shell/
@@ -19,8 +21,10 @@ RUN yarn install --immutable
 
 FROM deps AS build
 COPY planar-shared    ./planar-shared
+COPY planar-ie        ./planar-ie
 COPY planar-kernel    ./planar-kernel
 COPY planar-daemon    ./planar-daemon
+COPY planar-mods      ./planar-mods
 COPY planar-prism     ./planar-prism
 COPY planar-asclepius ./planar-asclepius
 COPY planar-shell     ./planar-shell
@@ -45,11 +49,17 @@ COPY --from=build /app/planar-shared/package.json ./planar-shared/
 COPY --from=build /app/planar-shared/dist/ ./planar-shared/dist/
 COPY --from=build /app/planar-shared/src/ ./planar-shared/src/
 
+COPY --from=build /app/planar-ie/package.json ./planar-ie/
+COPY --from=build /app/planar-ie/dist/ ./planar-ie/dist/
+
 COPY --from=build /app/planar-kernel/package.json ./planar-kernel/
 COPY --from=build /app/planar-kernel/dist/ ./planar-kernel/dist/
 
 COPY --from=build /app/planar-daemon/package.json ./planar-daemon/
 COPY --from=build /app/planar-daemon/dist/ ./planar-daemon/dist/
+
+COPY --from=build /app/planar-mods/package.json ./planar-mods/
+COPY --from=build /app/planar-mods/dist/ ./planar-mods/dist/
 
 COPY --from=build /app/planar-prism/package.json ./planar-prism/
 COPY --from=build /app/planar-prism/dist/ ./planar-prism/dist/

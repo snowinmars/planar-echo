@@ -20,7 +20,6 @@ type Step2Props = WithClassName & Readonly<{
   disabled: boolean;
   valid: boolean;
   weiduExeDir: LandingStateStep2['weiduExeDir'];
-  setWeiduExeDir: LandingStateStep2['setWeiduExeDir'];
   loading: LandingStateStep2['step2Loading'];
   comment: LandingStateStep2['step2Comment'];
   commentArgs: LandingStateStep2['step2CommentArgs'];
@@ -45,7 +44,6 @@ const Step2: FC<Step2Props> = (props) => {
         <Content
           disabled={props.disabled}
           weiduExeDir={props.weiduExeDir}
-          setWeiduExeDir={props.setWeiduExeDir}
           loading={props.loading}
           validate={props.validate}
           downloadWeidu={props.downloadWeidu}

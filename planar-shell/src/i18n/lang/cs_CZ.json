@@ -9,7 +9,7 @@
       "1": "Prozkoumejte PST:EE lokálně.",
       "2": "planar-echo převádí legálně získanou instalaci PST:EE na data, která lze zkoumat v místním prohlížečovém pracovním prostředí.",
       "3": "Současný produkt a směr.",
-      "4": "Nyní jsou k dispozici převod a Workbench. Play a Mods jsou experimentální nástroje pro ověřování vyvíjeného běhového prostředí.",
+      "4": "Nyní jsou k dispozici převod a Workbench.",
       "5": "Cílem je nezávislé běhové prostředí kompatibilní s Infinity Engine. Dnes je podporováno pouze PST:EE."
     },
     "runnerGuard": {
@@ -17,8 +17,6 @@
       "or": "nebo",
       "convert": "Přetvořit formu",
       "workbench": "Jdi k pracovnímu stolu",
-      "play": "Hrát (experimentální)",
-      "mods": "Mody (experimentální)",
       "stores": "Datová úložiště"
     },
     "step0": {
@@ -39,7 +37,7 @@
       }
     },
     "step2": {
-      "weiduExeDir": "Cesta k weidu.exe",
+      "weiduExeDir": "Cesta k weidu",
       "comments": {
         "default": "Stáhnout weidu",
         "weiduExeVersion": "Nalezena verze weidu.exe: {{version}}",
@@ -314,19 +312,6 @@
         "ravel": "Ravel"
       }
     }
-  },
-  "mods": {
-    "title": "Mods",
-    "hint": "Autosaves active.json after 300ms. Restart /play. Not live.",
-    "missingActive": "active.json is missing. Asclepius seeds factory on start if dist exists.",
-    "installDefaults": "Install default mods",
-    "installing": "Building mods…",
-    "copied": "copied: {{ids}}",
-    "slots": "Radio slots",
-    "enabled": "Enabled",
-    "serverHooks": "Server hook order",
-    "clientHooks": "Client hook order",
-    "queries": "Query order"
   },
   "themes": {
     "light": "Světlý",

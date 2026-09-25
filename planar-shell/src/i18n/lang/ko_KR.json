@@ -9,7 +9,7 @@
       "1": "PST:EE를 로컬에서 살펴보세요.",
       "2": "planar-echo는 합법적으로 취득한 PST:EE 설치본을 로컬 브라우저 Workbench에서 살펴볼 수 있는 데이터로 변환합니다.",
       "3": "현재 제품과 개발 방향.",
-      "4": "현재 변환 기능과 Workbench를 사용할 수 있습니다. Play와 Mods는 개발 중인 런타임을 검증하기 위한 실험적 도구입니다.",
+      "4": "현재 변환 기능과 Workbench를 사용할 수 있습니다.",
       "5": "장기 목표는 Infinity Engine과 호환되는 독립 런타임입니다. 현재 지원되는 프로필은 PST:EE뿐입니다."
     },
     "runnerGuard": {
@@ -17,8 +17,6 @@
       "or": "또는",
       "convert": "형태 재구성",
       "workbench": "작업대로 가세요",
-      "play": "플레이(실험적)",
-      "mods": "모드(실험적)",
       "stores": "데이터 저장소"
     },
     "step0": {
@@ -39,7 +37,7 @@
       }
     },
     "step2": {
-      "weiduExeDir": "weidu.exe 경로",
+      "weiduExeDir": "weidu 경로",
       "comments": {
         "default": "weidu 다운로드",
         "weiduExeVersion": "발견된 weidu.exe 버전: {{version}}",
@@ -314,19 +312,6 @@
         "ravel": "래벌"
       }
     }
-  },
-  "mods": {
-    "title": "Mods",
-    "hint": "Autosaves active.json after 300ms. Restart /play. Not live.",
-    "missingActive": "active.json is missing. Asclepius seeds factory on start if dist exists.",
-    "installDefaults": "Install default mods",
-    "installing": "Building mods…",
-    "copied": "copied: {{ids}}",
-    "slots": "Radio slots",
-    "enabled": "Enabled",
-    "serverHooks": "Server hook order",
-    "clientHooks": "Client hook order",
-    "queries": "Query order"
   },
   "themes": {
     "light": "라이트",

@@ -14,9 +14,8 @@ import styles from './Content.module.scss';
 type ContentProps = Readonly<{
   disabled: boolean;
   ghostDir: LandingStateStep4['ghostDir'];
-  setGhostDir: LandingStateStep4['setGhostDir'];
   loading: boolean;
-  validate: (ghostDir: string) => Promise<void>;
+  validate: () => Promise<void>;
   openDir: LandingStateStep4['step4OpenDir'];
 }>;
 const Content: FC<ContentProps> = (props: ContentProps) => {
@@ -27,11 +26,7 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
       <TextField
         className={styles.input}
         value={props.ghostDir}
-        onChange={(e) => {
-          const value = e.target.value;
-          props.setGhostDir(value);
-        }}
-        disabled={props.loading || props.disabled}
+        disabled={true}
         fullWidth
         label={t('landing.step4.ghostDir')}
         placeholder="Empty output directory"
@@ -43,7 +38,7 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
           aria-label="replay"
           disabled={!props.ghostDir || props.loading || props.disabled}
           onClick={() => {
-            if (props.ghostDir && !props.disabled) props.validate(props.ghostDir).catch((e: unknown) => console.error(e));
+            if (props.ghostDir && !props.disabled) props.validate().catch((e: unknown) => console.error(e));
           }}
         >
           <ReplayIcon />

@@ -2,6 +2,7 @@
   "eslint.workingDirectories": [
     "planar-asclepius",
     "planar-daemon",
+    "planar-ie",
     "planar-kernel",
     "planar-mods",
     "planar-prism",

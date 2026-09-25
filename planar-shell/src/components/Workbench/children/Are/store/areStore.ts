@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostAre, loadGhostAre } from './areApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostAre, Maybe } from '@planar/shared';
 
 export type AreStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   ares: string[];
   currentAreId: Maybe<string>;
@@ -22,7 +24,6 @@ export type AreStore = Readonly<{
 
 export const useAreStore = create<AreStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   ares: [],
   currentAreId: nothing(),
@@ -30,8 +31,14 @@ export const useAreStore = create<AreStore>((set, get) => ({
   loadAres: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ ares: await listGhostAre(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'are' },
+        throwOnError: true,
+      });
+      set({ ares: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -44,8 +51,18 @@ export const useAreStore = create<AreStore>((set, get) => ({
   loadAre: async (areId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentAreId: areId, currentAre: await loadGhostAre({ serverUrl, ghostDir, areId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'are', resourceName: areId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostAre>(skeletonResponse.data.data.content);
+      set({
+        currentAreId: areId,
+        currentAre: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

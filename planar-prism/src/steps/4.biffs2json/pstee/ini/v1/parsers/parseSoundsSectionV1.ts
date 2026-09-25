@@ -1,5 +1,3 @@
-import { nothing } from '@planar/shared';
-
 import { findEntry } from './shared.js';
 
 import type { Maybe } from '@planar/shared';

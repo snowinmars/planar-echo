@@ -14,9 +14,11 @@ import type {
   SafeError,
 } from '@planar/shared';
 
+import type { Paths } from '@/shared/createPaths.types.js';
+
 type Message = PrismIndexStartMessage | PrismIndexProgressMessage | PrismIndexCompleteMessage | PrismIndexErrorMessage;
 
-export const attachPrismIndexWs = (wss: WebSocketServer): void => {
+export const attachPrismIndexWs = (wss: WebSocketServer, paths: Paths): void => {
   wss.on('connection', (ws: WebSocket) => {
     ws.send(JSON.stringify({ type: 'ready' }));
 
@@ -46,20 +48,8 @@ export const attachPrismIndexWs = (wss: WebSocketServer): void => {
           logger.warn('data cannot be empty');
           return;
         }
-        if (!startMessage.data.weiduExeDir) {
-          logger.warn('data.weiduExeDir cannot be empty');
-          return;
-        }
         if (!startMessage.data.chitinKeyFile) {
           logger.warn('data.chitinKeyFile cannot be empty');
-          return;
-        }
-        if (!startMessage.data.ghostDir) {
-          logger.warn('data.ghostDir cannot be empty');
-          return;
-        }
-        if (!startMessage.data.prismDir) {
-          logger.warn('data.prismDir cannot be empty');
           return;
         }
         if (!startMessage.data.gameLanguage) {
@@ -71,7 +61,12 @@ export const attachPrismIndexWs = (wss: WebSocketServer): void => {
           return;
         }
 
-        runPrismIndex(ws, startMessage.data);
+        runPrismIndex(ws, {
+          ...startMessage.data,
+          weiduExeDir: paths.weidu.exe,
+          ghostDir: paths.ghost.root,
+          prismDir: paths.prism.dist,
+        });
       }
     });
   });

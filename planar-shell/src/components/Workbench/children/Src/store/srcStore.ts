@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostSrc, loadGhostSrc } from './srcApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostSrc, Maybe } from '@planar/shared';
 
 export type SrcStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
   srcs: string[];
   currentSrcId: Maybe<string>;
@@ -22,7 +24,6 @@ export type SrcStore = Readonly<{
 
 export const useSrcStore = create<SrcStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
   srcs: [],
   currentSrcId: nothing(),
@@ -30,8 +31,14 @@ export const useSrcStore = create<SrcStore>((set, get) => ({
   loadSrcs: async (): Promise<void> => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ srcs: await listGhostSrc(serverUrl, ghostDir) });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'src' },
+        throwOnError: true,
+      });
+      set({ srcs: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -44,8 +51,18 @@ export const useSrcStore = create<SrcStore>((set, get) => ({
   loadSrc: async (srcId: string) => {
     set({ loading: true });
     try {
-      const { serverUrl, ghostDir } = get();
-      set({ currentSrcId: srcId, currentSrc: await loadGhostSrc({ serverUrl, ghostDir, srcId }) });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'src', resourceName: srcId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostSrc>(skeletonResponse.data.data.content);
+      set({
+        currentSrcId: srcId,
+        currentSrc: skeleton(),
+      });
     }
     catch (e: unknown) {
       console.error(e);

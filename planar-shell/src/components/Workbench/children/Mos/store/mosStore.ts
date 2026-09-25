@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostMos, loadGhostMos } from './mosApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostMos, Maybe } from '@planar/shared';
 
 export type MosStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
 
   moss: string[];
@@ -24,7 +26,6 @@ export type MosStore = Readonly<{
 
 export const useMosStore = create<MosStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
 
   moss: [],
@@ -35,9 +36,14 @@ export const useMosStore = create<MosStore>((set, get) => ({
     set({ loading: true });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const data = await listGhostMos(serverUrl, ghostDir);
-      set({ moss: data });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'mos' },
+        throwOnError: true,
+      });
+      set({ moss: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -52,11 +58,17 @@ export const useMosStore = create<MosStore>((set, get) => ({
     set({ loading: true });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const t = await loadGhostMos({ serverUrl, ghostDir, mosId });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'mos', resourceName: mosId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostMos>(skeletonResponse.data.data.content);
       set({
         currentMosId: mosId,
-        currentMos: t,
+        currentMos: skeleton(),
       });
     }
     catch (e: unknown) {

@@ -5,11 +5,11 @@ import { packageDir } from '@planar/shared/node';
 import { mkdirsIfNotExists, saveBinaryToFile, saveToFile } from '@/shared/customFs.js';
 
 import type { Maybe } from '@planar/shared';
-import type { PrismIndexStartMessage } from '@planar/shared';
+import type { PrismIndexRunMessage } from '@planar/shared';
 
 import type { Paths } from './types.js';
 
-type CreatePathsProps = PrismIndexStartMessage['data'] & Readonly<{
+type CreatePathsProps = PrismIndexRunMessage['data'] & Readonly<{
   recreate?: Maybe<boolean>;
 }>;
 type NamingFunction = (x: string) => string;

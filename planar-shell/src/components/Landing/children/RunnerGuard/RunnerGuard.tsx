@@ -29,26 +29,6 @@ const RunnerGuard: FC = () => {
       >
         {t('landing.runnerGuard.workbench')}
       </Button>
-      <Typography>
-        {t('landing.runnerGuard.or')}
-      </Typography>
-      <Button
-        component={RouterLink}
-        to="/play"
-        nativeButton={false}
-      >
-        {t('landing.runnerGuard.play')}
-      </Button>
-      <Typography>
-        {t('landing.runnerGuard.or')}
-      </Typography>
-      <Button
-        component={RouterLink}
-        to="/mods"
-        nativeButton={false}
-      >
-        {t('landing.runnerGuard.mods')}
-      </Button>
     </div>
   );
 };

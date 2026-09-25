@@ -12,9 +12,6 @@ import type { Router } from 'express';
 import type { GameLanguage } from '@planar/shared';
 
 const body = z.object({
-  weiduExeDir: z.string().min(1, 'Weidu directory path is required').openapi({
-    example: '/abs/weidu',
-  }),
   chitinKeyFile: z.string().min(1, 'CHITIN.key file path is required').openapi({
     example: '/abs/CHITIN.key',
   }),
@@ -75,7 +72,7 @@ export default (registry: OpenAPIRegistry, router: Router): void => {
     validate({ body }),
     async (req, res) => {
       const result = await action({
-        weiduExeDir: req.body.weiduExeDir,
+        weiduExeDir: req.planarPaths.weidu.exe,
         chitinKeyFile: req.body.chitinKeyFile,
         gameLanguage: req.body.gameLanguage,
       });

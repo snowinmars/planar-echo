@@ -8,9 +8,9 @@ import { detectAudioContainer } from '../shared/audio/index.js';
 import type { AcmFile } from './collectAcmFiles.js';
 import type { RawAcm } from './parseAcms.types.js';
 
-export const parseAcms = async (
+export const parseAcms = (
   acms: AcmFile[],
-): Promise<AsyncIterableIterator<RawAcm>> => iterate<AcmFile, RawAcm>(
+): AsyncIterableIterator<RawAcm> => iterate<AcmFile, RawAcm>(
   acms,
   async ({ absPath, resourceName }, i) => {
     const buffer = await readFile(absPath);

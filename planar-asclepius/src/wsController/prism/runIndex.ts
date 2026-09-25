@@ -9,7 +9,7 @@ import type {
   PrismIndexCompleteMessage,
   PrismIndexErrorMessage,
   PrismIndexProgressMessage,
-  PrismIndexStartMessage,
+  PrismIndexRunMessage,
   Progress,
   ProgressStep,
 } from '@planar/shared';
@@ -54,7 +54,7 @@ export const runCommand = (command: string, step: ProgressStep): Observable<Pris
   });
 };
 
-const run = (data: PrismIndexStartMessage['data']): Observable<PrismIndexResponseData> => {
+const run = (data: PrismIndexRunMessage['data']): Observable<PrismIndexResponseData> => {
   // TODO [snow]: these lines are now the only lines that requires yarn as a runtime dependency
   // It is possible to run these commands through pure node. Do it
   const obs0 = runCommand(`yarn workspace @planar/prism build`, 'buildPrism'); // TODO [snow]: use dir from args
@@ -65,7 +65,7 @@ const run = (data: PrismIndexStartMessage['data']): Observable<PrismIndexRespons
   return concat(obs0, obs1, obs2);
 };
 
-export const runPrismIndex = (ws: WebSocket, data: PrismIndexStartMessage['data']) => {
+export const runPrismIndex = (ws: WebSocket, data: PrismIndexRunMessage['data']) => {
   return run(data)
     .subscribe({
       next: (data) => {

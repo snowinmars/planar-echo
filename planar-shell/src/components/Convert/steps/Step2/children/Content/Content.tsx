@@ -19,7 +19,6 @@ const platforms: WeiduDownloadPlatform[] = ['windows', 'linux', 'mac'];
 type ContentProps = Readonly<{
   disabled: boolean;
   weiduExeDir: LandingStateStep2['weiduExeDir'];
-  setWeiduExeDir: LandingStateStep2['setWeiduExeDir'];
   loading: LandingStateStep2['step2Loading'];
   validate: LandingStateStep2['step2Validate'];
   downloadWeidu: LandingStateStep2['step2DownloadWeidu'];
@@ -46,11 +45,7 @@ const Content: FC<ContentProps> = (props: ContentProps) => {
       <TextField
         className={styles.input}
         value={props.weiduExeDir}
-        onChange={(e) => {
-          const value = e.target.value;
-          props.setWeiduExeDir(value);
-        }}
-        disabled={props.loading || props.disabled}
+        disabled={true}
         fullWidth
         label={t('landing.step2.weiduExeDir')}
         placeholder="D:\Games\weidu\weidu.exe"

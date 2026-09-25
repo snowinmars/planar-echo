@@ -20,7 +20,10 @@ import type { WavAssetResult } from './writeWav.js';
 const toJobs = (items: ReadonlyArray<{ resourceName: string }>): PoolJob[] =>
   items.map(item => ({ resourceName: item.resourceName, payload: item }));
 
-const drain = async <T>(gen: AsyncGenerator<T>, onEach?: (value: T) => Promise<void>): Promise<void> => {
+const drain = async <T>(
+  gen: AsyncGenerator<T>,
+  onEach?: (value: T) => void | Promise<void>,
+): Promise<void> => {
   for await (const value of gen) {
     if (onEach) await onEach(value);
   }
@@ -42,7 +45,7 @@ export const raw2assetsPstee = async (
     decompiledRoot,
     assetsRoot,
     step: 'pvrz_raw2assets',
-  }), async (result) => {
+  }), (result) => {
     pvrzRgbaIndex.set(result.resourceName, {
       width: result.width,
       height: result.height,

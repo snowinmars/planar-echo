@@ -11,7 +11,7 @@
   "author": "snowinmars",
   "scripts": {
     "start": "tsx src/index.ts",
-    "build": "tsc && tsc-alias",
+    "build": "tsc && tsc-alias && node src/dev/copyDefaults.js",
     "clean": "node src/dev/clean.js",
     "serve": "node dist/index.js",
     "lint": "eslint .",

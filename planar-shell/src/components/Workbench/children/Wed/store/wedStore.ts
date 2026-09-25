@@ -1,16 +1,18 @@
 import { create } from 'zustand';
 
-import { nothing } from '@planar/shared';
+import { evalGhostFactory, nothing } from '@planar/shared';
 
 import planarLocalStorage from '@/shared/planarLocalStorage';
-
-import { listGhostWed, loadGhostWed } from './wedApi';
+import {
+  getApiGhostByResourceType,
+  getApiGhostByResourceTypeByResourceNameSkeleton,
+} from '@/swagger/client';
+import { client } from '@/swagger/client/client.gen';
 
 import type { GhostWed, Maybe } from '@planar/shared';
 
 export type WedStore = Readonly<{
   serverUrl: string;
-  ghostDir: string;
   loading: boolean;
 
   weds: string[];
@@ -24,7 +26,6 @@ export type WedStore = Readonly<{
 
 export const useWedStore = create<WedStore>((set, get) => ({
   serverUrl: planarLocalStorage.get('serverUrl')!,
-  ghostDir: planarLocalStorage.get('ghostDir')!,
   loading: false,
 
   weds: [],
@@ -35,9 +36,14 @@ export const useWedStore = create<WedStore>((set, get) => ({
     set({ loading: true });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const data = await listGhostWed(serverUrl, ghostDir);
-      set({ weds: data });
+      const { serverUrl } = get();
+      const listed = await getApiGhostByResourceType({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'wed' },
+        throwOnError: true,
+      });
+      set({ weds: listed.data });
     }
     catch (e: unknown) {
       console.error(e);
@@ -52,11 +58,17 @@ export const useWedStore = create<WedStore>((set, get) => ({
     set({ loading: true });
 
     try {
-      const { serverUrl, ghostDir } = get();
-      const t = await loadGhostWed({ serverUrl, ghostDir, wedId });
+      const { serverUrl } = get();
+      const skeletonResponse = await getApiGhostByResourceTypeByResourceNameSkeleton({
+        client,
+        baseURL: serverUrl,
+        path: { resourceType: 'wed', resourceName: wedId },
+        throwOnError: true,
+      });
+      const skeleton = evalGhostFactory<GhostWed>(skeletonResponse.data.data.content);
       set({
         currentWedId: wedId,
-        currentWed: t,
+        currentWed: skeleton(),
       });
     }
     catch (e: unknown) {

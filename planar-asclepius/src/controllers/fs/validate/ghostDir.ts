@@ -1,4 +1,3 @@
-import validate from 'express-zod-safe';
 import { z } from 'zod';
 
 import action from '@/services/fs/validate/ghostDir/action.js';
@@ -7,11 +6,6 @@ import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
 import type { Router } from 'express';
 
-const body = z.object({
-  ghostDir: z.string().min(1, 'Ghost directory path is required').openapi({
-    example: '/abs/ghost',
-  }),
-});
 const responseOk = z.object({});
 const responseError = z.object({
   error: z.object({
@@ -23,17 +17,7 @@ const routeConfig = (): RouteConfig => ({
   method: 'post',
   path: '/api/fs/validate/ghostDir',
   tags: ['fs'],
-  description: 'Validates ghost output access',
-  request: {
-    body: {
-      required: true,
-      content: {
-        'application/json': {
-          schema: body,
-        },
-      },
-    },
-  },
+  description: 'Validates the configured ghost directory',
   responses: {
     200: {
       description: 'Ghost is valid',
@@ -66,10 +50,9 @@ export default (registry: OpenAPIRegistry, router: Router): void => {
   registry.registerPath(routeConfig());
 
   router.post('/api/fs/validate/ghostDir',
-    validate({ body }),
     async (req, res) => {
       const result = await action({
-        ghostDir: req.body.ghostDir,
+        ghostDir: req.planarPaths.ghost.root,
       });
 
       if (result.ok) {

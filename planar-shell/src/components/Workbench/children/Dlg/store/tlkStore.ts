@@ -65,16 +65,14 @@ export const createTlkStore = (runtime: PlanarRuntime): StateCreator<TlkStore> =
   };
 
   const fetchMissing = (missingTlkRefs: number[]): Promise<Map<number, string>> => {
-    const { serverUrl, ghostDir, gameLanguage } = runtime
+    const { serverUrl, gameLanguage } = runtime
       .getStore<LocalStorageStore>(planarStoreId.localStorage)
       .getState();
 
-    if (!ghostDir) throw new Error('Ghost directory cannot be empty here');
     if (!gameLanguage) throw new Error('Game language cannot be empty here');
 
     return dlgRepository.loadTlkLines({
       serverUrl,
-      ghostDir,
       gameLanguage,
       tlkRefs: missingTlkRefs,
     });
@@ -135,11 +133,6 @@ export const createTlkStore = (runtime: PlanarRuntime): StateCreator<TlkStore> =
 
       masterSubscription.add(
         planarLocalStorage.onKeyChange('gameLanguage').subscribe(() => {
-          invalidateTlk().catch(e => console.error(e));
-        }),
-      );
-      masterSubscription.add(
-        planarLocalStorage.onKeyChange('ghostDir').subscribe(() => {
           invalidateTlk().catch(e => console.error(e));
         }),
       );
