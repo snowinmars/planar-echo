@@ -10,6 +10,9 @@
     "clean": "node src/dev/clean.js",
     "lint": "eslint ."
   },
+  "dependencies": {
+    "@planar/shared": "workspace:*"
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
@@ -32,6 +35,16 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./conformance/contract": {
+      "import": "./dist/conformance/contract.js",
+      "types": "./dist/conformance/contract.d.ts",
+      "default": "./dist/conformance/contract.js"
+    },
+    "./conformance/server": {
+      "import": "./dist/conformance/server.js",
+      "types": "./dist/conformance/server.d.ts",
+      "default": "./dist/conformance/server.js"
     }
   }
 }

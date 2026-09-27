@@ -4,11 +4,12 @@ Scope: closest guidance for `planar-asclepius/**`; inherit the root guide.
 
 ## Status and ownership
 
-- **VERIFIED CURRENT STATE:** own HTTP/REST, live and stored OpenAPI, Shell and
-  Ghost delivery, defaults/paths, Prism WebSocket orchestration, and the Prism
-  child process.
-- **VERIFIED CURRENT STATE:** there is no play WebSocket, daemon spawn, mod
-  composition API, or runtime-mod static route after Milestone 0.
+- **VERIFIED CURRENT STATE:** own HTTP/REST, OpenAPI, Shell and Ghost delivery,
+  Prism WebSocket orchestration, and the Prism child process.
+- **VERIFIED CURRENT STATE:** `PLANAR_ROLE` is `client-host`, `session-gateway`,
+  or `both` (default). Session roles fork one daemon and relay `/api/session`.
+  Client roles serve `/client-mods/conformance/`. There is still no legacy
+  `/api/play` or mod-composition REST API.
 - **NORMATIVE TARGET:** compose explicit local client-host, remote
   session-gateway, or combined solo roles without simulating.
 

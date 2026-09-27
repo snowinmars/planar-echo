@@ -1,9 +1,7 @@
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router';
 
 import BackendUrl from './children/BackendUrl';
 import DlgHistorySettings from './children/DlgHistorySettings/DlgHistorySettings';

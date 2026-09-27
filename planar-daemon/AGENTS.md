@@ -4,9 +4,9 @@ Scope: closest guidance for `planar-daemon/**`; inherit the root guide.
 
 ## Status
 
-- **VERIFIED CURRENT STATE:** the executable is an explicit
-  runtime-unavailable stub. Legacy Ghost loading, hooks, queries, effects, and
-  session code were removed in Milestone 0.
+- **VERIFIED CURRENT STATE:** IPC session worker. Loads one resolved server
+  entry, admits commands, ticks, and projects rows. `yarn start` without a
+  parent exits because the daemon is not a standalone simulator.
 - **NORMATIVE TARGET:** one process hosts exactly one authoritative session
   using one frozen lock and authoritative descriptor.
 - Do not restore the removed API or add a temporary adapter.
@@ -38,5 +38,4 @@ Scope: closest guidance for `planar-daemon/**`; inherit the root guide.
 
 - Build: `yarn workspace @planar/daemon build`
 - Lint: `yarn workspace @planar/daemon lint`
-- `yarn workspace @planar/daemon start` intentionally exits with an unavailable
-  message until the networked-conformance milestone.
+- `yarn workspace @planar/daemon start` exits unless Asclepius forked the process with IPC.

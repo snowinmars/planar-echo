@@ -1,6 +1,7 @@
 /**
- * Reserved workspace for the first-party modpack.
+ * First-party conformance modpack.
  *
- * Milestone 0 intentionally ships no runtime mods.
+ * Runtime packages load contract, server, and client through explicit entry
+ * URLs. This barrel stays empty so a static import cannot pull policy.
  */
 export {};

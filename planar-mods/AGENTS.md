@@ -4,9 +4,9 @@ Scope: closest guidance for `planar-mods/**`; inherit the root guide.
 
 ## Status
 
-- **VERIFIED CURRENT STATE:** this workspace is an intentionally empty package
-  shell. All authored legacy mods, `mod.json` files, `factory-active.json`, and
-  the old bundler were removed in Milestone 0.
+- **VERIFIED CURRENT STATE:** permanent conformance modpack
+  `planar.conformance.dot` with contract, server, and Canvas2D client entries.
+  The package barrel stays empty so a static import cannot pull policy.
 - **NORMATIVE TARGET:** own permanent multiplayer conformance mods and
   replaceable first-party PST:EE profile mods.
 - Do not restore hooks, queries, radio slots, `WorldEffect`, `active.json`, or
@@ -41,5 +41,5 @@ Scope: closest guidance for `planar-mods/**`; inherit the root guide.
 
 - Build: `yarn workspace @planar/mods build`
 - Lint: `yarn workspace @planar/mods lint`
-- Milestone 0 produces only an empty package export. Do not claim a default
-  composition exists.
+- The conformance modpack is the executable specification for the dot session.
+  Do not claim PST composition, reconnect, or replay from it.

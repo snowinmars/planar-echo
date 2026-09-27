@@ -6,9 +6,9 @@ Scope: closest guidance for `planar-shell/**`; inherit the root guide.
 
 - **VERIFIED CURRENT STATE:** own landing, conversion, Workbench inspectors,
 	stores, settings, localization, and browser persistence.
-- **VERIFIED CURRENT STATE:** `/play` and `/mods` render an explicit unavailable
-	page. Legacy replica, Pixi runtime, client-mod loader, and mod editor were
-	removed in Milestone 0.
+- **VERIFIED CURRENT STATE:** `/play` is the conformance replica. It keeps
+  `clientOrigin` and `sessionOrigin` apart, loads the local Canvas2D client
+  mod, and submits semantic move commands. `/mods` is not a composition editor.
 - **NORMATIVE TARGET:** own the local client-mod host, read-only projected
 	replica, presentation, UI/input, and semantic command formation.
 

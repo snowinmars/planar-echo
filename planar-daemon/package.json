@@ -13,7 +13,12 @@
     "build": "tsc && tsc-alias",
     "clean": "node src/dev/clean.js",
     "start": "tsx src/index.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "tsx test/admit.test.ts"
+  },
+  "dependencies": {
+    "@planar/kernel": "workspace:*",
+    "@planar/shared": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

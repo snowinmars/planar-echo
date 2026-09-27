@@ -218,6 +218,38 @@ export { progressSteps } from './progress.js';
 export { creToDlgs, dlgToCres } from './resourceMappers/creToDlg.js';
 export { dlgToCreOrItm } from './resourceMappers/dlgToCreOrItm.js';
 export { dlgToItms, itmToDlgs } from './resourceMappers/itmToDlgs.js';
+export type {
+  CapabilityContract,
+  ClientCommand,
+  ClientFrame,
+  ClientHello,
+  ClientMount,
+  ClientMountHost,
+  CommandContext,
+  CommandContract,
+  DaemonInbound,
+  DaemonOutbound,
+  EventContract,
+  FrozenLock,
+  ModContract,
+  ModpackManifest,
+  ProtocolContract,
+  ProtocolRow,
+  Replication,
+  ResourceContract,
+  ResourceRow,
+  SeatDeclaration,
+  ServerHost,
+  SessionFrame,
+  SystemContext,
+  SystemContract,
+  Token,
+  TransientEvent,
+  WiredProtocol,
+  WiredToken,
+} from './runtime/index.js';
+export type { ResolveInput } from './runtime/index.js';
+export { canonicalHash, canonicalString, fnv1a64, resolveModpack, tokenKey } from './runtime/index.js';
 export type { SafeError } from './safeError.js';
 export { sleep } from './sleep.js';
 export { withoutExtension } from './withoutExtension.js';

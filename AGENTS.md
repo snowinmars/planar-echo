@@ -10,8 +10,10 @@
 ## Purpose and status
 
 - **VERIFIED CURRENT STATE:** planar-echo is a GPL-3.0-or-later, local-first TypeScript monorepo that converts user-owned game data (currently PST:EE only) for a browser-based Workbench.
-- **VERIFIED CURRENT STATE:** it is an active tech preview; Prism currently implements PST:EE only.
-- **VERIFIED CURRENT STATE:** the legacy Play/mod runtime was removed in Milestone 0; `/play` and `/mods` are explicit unavailable states.
+- **VERIFIED CURRENT STATE:** Prism currently implements PST:EE only. Milestone
+  1 adds one authoritative conformance session: two seats, one daemon, a
+  read-only Shell replica. Play is `/play`. Reconnect, replay, and IE content
+  are not in this session.
 - **NORMATIVE TARGET ARCHITECTURE:** it is a server-authoritative multiplayer mod runtime for Infinity Engine content, with PST:EE as the reference workload and replaceable game policy.
 - Adding an enum value or target statement does not add parser support, parity, or verified coverage.
 

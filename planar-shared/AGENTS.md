@@ -5,8 +5,9 @@ Scope: closest guidance for `planar-shared/**`; inherit the root guide.
 ## Status and ownership
 
 - **VERIFIED CURRENT STATE:** own browser-safe Ghost contracts, Prism IPC
-  messages, dialogue/resource helpers, `Maybe`, geometry, and general
-  cross-package utilities.
+  messages, dialogue/resource helpers, `Maybe`, geometry, general utilities,
+  and the game-neutral runtime tokens, canonical codec, modpack resolver, and
+  session frames.
 - **VERIFIED CURRENT STATE:** the legacy play protocol, host, effects, and mod
   composition contracts were removed in Milestone 0.
 - **NORMATIVE TARGET:** own game-neutral contract tokens, canonical codecs,

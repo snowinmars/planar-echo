@@ -1,320 +1,321 @@
 {
-  "layout": {
-    "error": "Ошибка инициализации, см. F12"
-  },
-  "landing": {
-    "intro": {
-      "techdemo": "Предварительная версия",
-      "convert": "Придать форму",
-      "1": "Исследуйте PST:EE локально.",
-      "2": "planar-echo преобразует легально купленную PST:EE в данные для исследования в локальном браузерном верстаке.",
-      "3": "Текущий продукт и направление.",
-      "4": "Сейчас доступны конвертация и Workbench.",
-      "5": "Цель - независимый рантайм, совместимый с Infinity Engine. Сегодня поддерживается только PST:EE."
-    },
-    "runnerGuard": {
-      "ghostDir": "Каталог с игрой",
-      "or": "или",
-      "convert": "Придать форму",
-      "workbench": "Подойти к верстаку",
-      "stores": "Данные"
-    },
-    "step0": {
-      "serverUrl": "Адрес сервера planar-asclepius",
-      "comments": {
-        "default": ""
-      }
-    },
-    "step1": {
-      "gameName": "Игра",
-      "gameLanguage": "Язык игры",
-      "gameNames": {
-        "bg1ee": "Baldur's Gate: Enhanced Edition",
-        "bg2ee": "Baldur's Gate II: Enhanced Edition",
-        "iwdee": "Icewind Dale: Enhanced Edition",
-        "iwd2": "Icewind Dale II",
-        "pstee": "Planescape: Torment: Enhanced Edition"
-      }
-    },
-    "step2": {
-      "weiduExeDir": "Путь к weidu",
-      "comments": {
-        "default": "Скачать weidu",
-        "weiduExeVersion": "Найдена версия weidu.exe: {{version}}",
-        "loading": "Проверяю...",
-        "connection": "Проверь соединение",
-        "FILE_NOT_FOUND": "Файл weidu.exe не найден",
-        "WEIDU_ERROR": "Ошибка weidu",
-        "downloading": "Скачиваю WeiDU...",
-        "DOWNLOAD_FAILED": "Не удалось скачать WeiDU",
-        "EXTRACT_FAILED": "Не удалось распаковать WeiDU",
-        "BINARY_NOT_FOUND": "Бинарник WeiDU не найден в архиве",
-        "unknown": "Ошибка, см. F12"
-      },
-      "download": {
-        "windows": "Windows",
-        "linux": "Linux",
-        "mac": "Mac"
-      }
-    },
-    "step3": {
-      "chitinKeyFile": "Путь к CHITIN.KEY",
-      "comments": {
-        "default": "Что такое CHITIN.KEY?",
-        "biffsCount": "Найдено исходников: {{biffsCount}}",
-        "loading": "Проверяю...",
-        "connection": "Проверь соединение",
-        "FILE_NOT_FOUND": "Файл CHITIN.KEY не найден",
-        "unknown": "Ошибка, см. F12"
-      }
-    },
-    "step4": {
-      "ghostDir": "Путь к директории для результата",
-      "comments": {
-        "default": "Пустая директория для результата",
-        "success": "Подходит",
-        "loading": "Проверяю...",
-        "connection": "Проверь соединение",
-        "DIRECTORY_NOT_FOUND": "Директория не найдена",
-        "DIRECTORY_NOT_EMPTY": "Директория не пуста",
-        "NOT_A_DIRECTORY": "Путь не является директорией",
-        "OPEN_FAILED": "Не удалось открыть директорию",
-        "unknown": "Ошибка, см. F12"
-      }
-    },
-    "step5": {
-      "ownGame": "Я использую легально полученную копию PST:EE.",
-      "comment": "Я отвечаю за соблюдение условий, применимых к моей копии, и действующего права.",
-      "legal": "Правовая политика и контент"
-    },
-    "step6": {
-      "start": "Места на диске достаточно, я хочу начать",
-      "progress": "Сожрано {{currentRssMb}} мб оперативной памяти",
-      "buildPrism": "Сборка Prism",
-      "decompileBiffs": "Декомпиляция .biff архивов",
-      "ids_raw2json": ".ids в json",
-      "twoda_raw2json": ".2da в json",
-      "src_raw2json": ".src в json",
-      "buildGhost": "Компиляция ghost",
-      "cre_raw2json": ".cre в json",
-      "dlg_raw2json": ".dlg в json",
-      "effV10_raw2json": ".eff v1.0 в json",
-      "effV20_raw2json": ".eff v2.0 в json",
-      "ini_raw2json": ".ini в json",
-      "itm_raw2json": ".itm в json",
-      "tlk_raw2json": ".tlk в json",
-      "bcs_raw2json": ".bcs в json",
-      "wed_raw2json": ".wed в json",
-      "are_raw2json": ".are в json",
-      "pvrz_raw2json": ".pvrz в json",
-      "tis_raw2json": ".tis в json",
-      "mos_raw2json": ".mos в json",
-      "bmp_raw2json": ".bmp в json",
-      "bam_raw2json": ".bam в json",
-      "wav_raw2json": ".wav в json",
-      "acm_raw2json": ".acm в json",
-      "mus_raw2json": ".mus в json",
-      "pvrz_raw2assets": ".pvrz в assets",
-      "bam_raw2assets": ".bam в assets",
-      "mos_raw2assets": ".mos в assets",
-      "tis_raw2assets": ".tis в assets",
-      "bmp_raw2assets": ".bmp в assets",
-      "wav_raw2assets": ".wav в assets",
-      "acm_raw2assets": ".acm в assets",
-      "tlk_json2ghost": ".tlk json в ghost",
-      "cre_json2ghost": ".cre json в ghost",
-      "dlg_json2ghost": ".dlg json в ghost",
-      "itm_json2ghost": ".itm json в ghost",
-      "bcs_json2ghost": ".bcs json в ghost",
-      "mos_json2ghost": ".mos json в ghost",
-      "pvrz_json2ghost": ".pvrz json в ghost",
-      "tis_json2ghost": ".tis json в ghost",
-      "wed_json2ghost": ".wed json в ghost",
-      "are_json2ghost": ".are json в ghost",
-      "bmp_json2ghost": ".bmp json в ghost",
-      "bam_json2ghost": ".bam json в ghost",
-      "wav_json2ghost": ".wav json в ghost",
-      "acm_json2ghost": ".acm json в ghost",
-      "mus_json2ghost": ".mus json в ghost",
-      "eff_json2ghost": ".eff json в ghost",
-      "ids_json2ghost": ".ids json в ghost",
-      "twoda_json2ghost": ".2da json в ghost",
-      "src_json2ghost": ".src json в ghost",
-      "ini_json2ghost": ".ini json в ghost"
-    }
-  },
-  "run": {
-    "dlgsLabel": "Dlg (всего {{amount}})",
-    "cresLabel": "Cre (всего {{amount}})",
-    "itmsLabel": "Itm (всего {{amount}})",
-    "bcsLabel": "Bcs (всего {{amount}})",
-    "mosLabel": "Mos (всего {{amount}})",
-    "pvrzLabel": "Pvrz (всего {{amount}})",
-    "tisLabel": "Tis (всего {{amount}})",
-    "wedLabel": "Wed (всего {{amount}})",
-    "acmLabel": "Acm (всего {{amount}})",
-    "bamLabel": "Bam (всего {{amount}})",
-    "bmpLabel": "Bmp (всего {{amount}})",
-    "wavLabel": "Wav (всего {{amount}})",
-    "musLabel": "Mus (всего {{amount}})",
-    "effLabel": "Eff (всего {{amount}})",
-    "idsLabel": "Ids (всего {{amount}})",
-    "twodaLabel": "2da (всего {{amount}})",
-    "srcLabel": "Src (всего {{amount}})",
-    "areLabel": "Are (всего {{amount}})",
-    "iniLabel": "Ini (всего {{amount}})",
-    "workbenchSearchLabel": "Ghost (всего {{amount}})",
-    "imageLoadError": "Не удалось загрузить картинку",
-    "audioLoadError": "Не удалось загрузить звук",
-    "statesLabel": "Метка (всего {{amount}})",
-    "cre": {
-      "talk": "Поговорить",
-      "nameTlk": "Имя",
-      "tooltipTlk": "Описание",
-      "hp": "Здоровье",
-      "characteristics": "Характеристики ",
-      "strength": "Сила",
-      "intelligence": "Интеллект",
-      "wisdom": "Мудрость",
-      "dexterity": "Ловкость",
-      "constitution": "Телосложение",
-      "charisma": "Харизма",
-      "sex": "Пол",
-      "race": "Раса",
-      "theClass": "Класс",
-      "gender": "Гендер (голос)",
-      "fightCharacteristics": "Боевые характеристики",
-      "naturalAc": "Естественная броня",
-      "effectiveAc": "Эффективная броня",
-      "thac0": "Thac0",
-      "numberOfAttacksPerRound": "Аттак в раунд",
-      "secondaryAbilities": "Способности",
-      "hideInShadows": "Сокрытие в тенях",
-      "detectIllusion": "Раскрытие иллюзий",
-      "setTraps": "Установка ловушек",
-      "lore": "Знания",
-      "lockpicking": "Взлом",
-      "moveSilently": "Красться",
-      "findOrDisarmTraps": "Обезвреживание ловушек",
-      "pickPockets": "Воровство",
-      "other": "Разное",
-      "soundsTitle": "Звуки",
-      "colourIndex": "Цвета",
-      "acModifier": "Модификатры класса брони",
-      "saveVersus": "Спасброски",
-      "resistances": "Сопротивления",
-      "proficiencies": "Специализации",
-      "scripts": "Скрипты",
-      "techInfo": "Техническая информация"
-    },
-    "itm": {
-      "talk": "Поговорить",
-      "unidentifiedDescriptionTlk": "Описание до опознания",
-      "identifiedDescriptionTlk": "Описание после опознания",
-      "properties": "Свойства",
-      "abilities": "Абилка предмета",
-      "abilitiesEffects": "Эффект абилки",
-      "effects": "Эффект премета"
-    }
-  },
-  "settings": {
-    "gameInterfaceSettings": "Настройки интерфейса игры",
-    "serverSettings": "Настройки сервера",
-    "saveDefaultsToJson": "Сохранить пути в asclepius.defaults.json",
-    "saveDefaultsSaved": "Записано в json",
-    "saveDefaultsFailed": "Не записалось, смотри F12",
-    "backendUrl": {
-      "title": "Адрес сервера",
-      "pinging": "Проверяю",
-      "pingSucceed": "Норм",
-      "pingFailed": "Не норм"
-    },
-    "ghostDir": {
-      "title": "Директория planar-ghost",
-      "loading": "Загружаю...",
-      "saving": "Проверяю...",
-      "saved": "Сохранено",
-      "failed": "Ошибка, см. F12"
-    },
-    "prismDir": {
-      "title": "Директория planar-prism",
-      "loading": "Загружаю...",
-      "saving": "Проверяю...",
-      "saved": "Сохранено",
-      "failed": "Ошибка, см. F12"
-    },
-    "shellDir": {
-      "title": "Директория planar-shell",
-      "loading": "Загружаю...",
-      "saving": "Проверяю...",
-      "saved": "Сохранено",
-      "failed": "Ошибка, см. F12"
-    },
-    "modsDir": {
-      "title": "Директория модов",
-      "loading": "Загружаю...",
-      "saving": "Проверяю...",
-      "saved": "Сохранено",
-      "failed": "Ошибка, см. F12"
-    },
-    "dlgRenderer": {
-      "title": "Вид диалога",
-      "pstee": "Как в оригинале",
-      "pstee-two-columns": "Как в оригинале, но в две колонки",
-      "narrat": "Как в Narrat"
-    },
-    "dlgHistory": {
-      "title": "История диалогов",
-      "tlkCacheMaxLines": "Строк TLK в памяти (LRU)",
-      "pageSize": "Строк на странице",
-      "browsedPages": "Страниц в браузере",
-      "storedPages": "Страниц на жёстком диске",
-      "unlimited": "Хранить без ограничений",
-      "apply": "Применить настройки",
-      "reset": "Сброс",
-      "help": "История диалогов хранится страницами. На каждой странице {{pageSize}} строк. У каждой строки есть номер, но нет перевода. На экран подгружаются {{browsedPages}} последних страниц из {{storedPages}}, хранящихся на жёстком диске. Переводы для строк хранятся в lru кэше, который вмещает {{tlkCacheMaxLines}} элементов. При промахе кэша переводы подгружаются с asclepius.\nЧем больше страниц хранится на жёстком диске - тем больше места на диске потребляет игра, но тем дальше в прошлое можно пролистать историю диалогов.\nЧем больше страниц подгружается на экран с жёсткого диска, тем больше нагрузка на браузер."
-    },
-    "theme": {
-      "title": "Цветовая тема"
-    },
-    "language": {
-      "title": "Язык интерфейса"
-    },
-    "dlgMarks": {
-      "title": "Метки в диалогах",
-      "markDisposers": "Отмечать завершающие реплики",
-      "markExterns": "Отмечать extern (dev)"
-    },
-    "localData": {
-      "clearLocalStorage": "Очистить local storage",
-      "clearIndexedDb": "Очистить indexedDb"
-    }
-  },
-  "stores": {
-    "tabs": {
-      "title": "Данные",
-      "narrative": {
-        "title": "Повествовательные",
-        "search": "Всего {{amount}} переменных"
-      },
-      "characters": {
-        "title": "Персонажи",
-        "search": "Всего {{amount}} персонажей",
-        "namelessOne": "Безымянный",
-        "morte": "Морт",
-        "annah": "Анна",
-        "dakkon": "Даккон",
-        "grace": "Падшая Грация",
-        "nordom": "Нордом",
-        "ignus": "Игнус",
-        "vhailor": "Вейлор",
-        "deionarra": "Дейонарра",
-        "ravel": "Равель"
-      }
-    }
-  },
-  "themes": {
-    "light": "Светлая",
-    "dark": "Тёмная"
-  }
+	"layout": {
+		"error": "Ошибка инициализации, см. F12"
+	},
+	"landing": {
+		"intro": {
+			"techdemo": "Предварительная версия",
+			"convert": "Придать форму",
+			"1": "Исследуйте PST:EE локально.",
+			"2": "planar-echo преобразует легально купленную PST:EE в данные для исследования в локальном браузерном верстаке.",
+			"3": "Текущий продукт и направление.",
+			"4": "Сейчас доступны конвертация и Workbench.",
+			"5": "Цель - независимый рантайм, совместимый с Infinity Engine. Сегодня поддерживается только PST:EE."
+		},
+		"runnerGuard": {
+			"ghostDir": "Каталог с игрой",
+			"or": "или",
+			"convert": "Придать форму",
+			"play": "Играть",
+			"workbench": "Подойти к верстаку",
+			"stores": "Данные"
+		},
+		"step0": {
+			"serverUrl": "Адрес сервера planar-asclepius",
+			"comments": {
+				"default": ""
+			}
+		},
+		"step1": {
+			"gameName": "Игра",
+			"gameLanguage": "Язык игры",
+			"gameNames": {
+				"bg1ee": "Baldur's Gate: Enhanced Edition",
+				"bg2ee": "Baldur's Gate II: Enhanced Edition",
+				"iwdee": "Icewind Dale: Enhanced Edition",
+				"iwd2": "Icewind Dale II",
+				"pstee": "Planescape: Torment: Enhanced Edition"
+			}
+		},
+		"step2": {
+			"weiduExeDir": "Путь к weidu",
+			"comments": {
+				"default": "Скачать weidu",
+				"weiduExeVersion": "Найдена версия weidu.exe: {{version}}",
+				"loading": "Проверяю...",
+				"connection": "Проверь соединение",
+				"FILE_NOT_FOUND": "Файл weidu.exe не найден",
+				"WEIDU_ERROR": "Ошибка weidu",
+				"downloading": "Скачиваю WeiDU...",
+				"DOWNLOAD_FAILED": "Не удалось скачать WeiDU",
+				"EXTRACT_FAILED": "Не удалось распаковать WeiDU",
+				"BINARY_NOT_FOUND": "Бинарник WeiDU не найден в архиве",
+				"unknown": "Ошибка, см. F12"
+			},
+			"download": {
+				"windows": "Windows",
+				"linux": "Linux",
+				"mac": "Mac"
+			}
+		},
+		"step3": {
+			"chitinKeyFile": "Путь к CHITIN.KEY",
+			"comments": {
+				"default": "Что такое CHITIN.KEY?",
+				"biffsCount": "Найдено исходников: {{biffsCount}}",
+				"loading": "Проверяю...",
+				"connection": "Проверь соединение",
+				"FILE_NOT_FOUND": "Файл CHITIN.KEY не найден",
+				"unknown": "Ошибка, см. F12"
+			}
+		},
+		"step4": {
+			"ghostDir": "Путь к директории для результата",
+			"comments": {
+				"default": "Пустая директория для результата",
+				"success": "Подходит",
+				"loading": "Проверяю...",
+				"connection": "Проверь соединение",
+				"DIRECTORY_NOT_FOUND": "Директория не найдена",
+				"DIRECTORY_NOT_EMPTY": "Директория не пуста",
+				"NOT_A_DIRECTORY": "Путь не является директорией",
+				"OPEN_FAILED": "Не удалось открыть директорию",
+				"unknown": "Ошибка, см. F12"
+			}
+		},
+		"step5": {
+			"ownGame": "Я использую легально полученную копию PST:EE.",
+			"comment": "Я отвечаю за соблюдение условий, применимых к моей копии, и действующего права.",
+			"legal": "Правовая политика и контент"
+		},
+		"step6": {
+			"start": "Места на диске достаточно, я хочу начать",
+			"progress": "Сожрано {{currentRssMb}} мб оперативной памяти",
+			"buildPrism": "Сборка Prism",
+			"decompileBiffs": "Декомпиляция .biff архивов",
+			"ids_raw2json": ".ids в json",
+			"twoda_raw2json": ".2da в json",
+			"src_raw2json": ".src в json",
+			"buildGhost": "Компиляция ghost",
+			"cre_raw2json": ".cre в json",
+			"dlg_raw2json": ".dlg в json",
+			"effV10_raw2json": ".eff v1.0 в json",
+			"effV20_raw2json": ".eff v2.0 в json",
+			"ini_raw2json": ".ini в json",
+			"itm_raw2json": ".itm в json",
+			"tlk_raw2json": ".tlk в json",
+			"bcs_raw2json": ".bcs в json",
+			"wed_raw2json": ".wed в json",
+			"are_raw2json": ".are в json",
+			"pvrz_raw2json": ".pvrz в json",
+			"tis_raw2json": ".tis в json",
+			"mos_raw2json": ".mos в json",
+			"bmp_raw2json": ".bmp в json",
+			"bam_raw2json": ".bam в json",
+			"wav_raw2json": ".wav в json",
+			"acm_raw2json": ".acm в json",
+			"mus_raw2json": ".mus в json",
+			"pvrz_raw2assets": ".pvrz в assets",
+			"bam_raw2assets": ".bam в assets",
+			"mos_raw2assets": ".mos в assets",
+			"tis_raw2assets": ".tis в assets",
+			"bmp_raw2assets": ".bmp в assets",
+			"wav_raw2assets": ".wav в assets",
+			"acm_raw2assets": ".acm в assets",
+			"tlk_json2ghost": ".tlk json в ghost",
+			"cre_json2ghost": ".cre json в ghost",
+			"dlg_json2ghost": ".dlg json в ghost",
+			"itm_json2ghost": ".itm json в ghost",
+			"bcs_json2ghost": ".bcs json в ghost",
+			"mos_json2ghost": ".mos json в ghost",
+			"pvrz_json2ghost": ".pvrz json в ghost",
+			"tis_json2ghost": ".tis json в ghost",
+			"wed_json2ghost": ".wed json в ghost",
+			"are_json2ghost": ".are json в ghost",
+			"bmp_json2ghost": ".bmp json в ghost",
+			"bam_json2ghost": ".bam json в ghost",
+			"wav_json2ghost": ".wav json в ghost",
+			"acm_json2ghost": ".acm json в ghost",
+			"mus_json2ghost": ".mus json в ghost",
+			"eff_json2ghost": ".eff json в ghost",
+			"ids_json2ghost": ".ids json в ghost",
+			"twoda_json2ghost": ".2da json в ghost",
+			"src_json2ghost": ".src json в ghost",
+			"ini_json2ghost": ".ini json в ghost"
+		}
+	},
+	"run": {
+		"dlgsLabel": "Dlg (всего {{amount}})",
+		"cresLabel": "Cre (всего {{amount}})",
+		"itmsLabel": "Itm (всего {{amount}})",
+		"bcsLabel": "Bcs (всего {{amount}})",
+		"mosLabel": "Mos (всего {{amount}})",
+		"pvrzLabel": "Pvrz (всего {{amount}})",
+		"tisLabel": "Tis (всего {{amount}})",
+		"wedLabel": "Wed (всего {{amount}})",
+		"acmLabel": "Acm (всего {{amount}})",
+		"bamLabel": "Bam (всего {{amount}})",
+		"bmpLabel": "Bmp (всего {{amount}})",
+		"wavLabel": "Wav (всего {{amount}})",
+		"musLabel": "Mus (всего {{amount}})",
+		"effLabel": "Eff (всего {{amount}})",
+		"idsLabel": "Ids (всего {{amount}})",
+		"twodaLabel": "2da (всего {{amount}})",
+		"srcLabel": "Src (всего {{amount}})",
+		"areLabel": "Are (всего {{amount}})",
+		"iniLabel": "Ini (всего {{amount}})",
+		"workbenchSearchLabel": "Ghost (всего {{amount}})",
+		"imageLoadError": "Не удалось загрузить картинку",
+		"audioLoadError": "Не удалось загрузить звук",
+		"statesLabel": "Метка (всего {{amount}})",
+		"cre": {
+			"talk": "Поговорить",
+			"nameTlk": "Имя",
+			"tooltipTlk": "Описание",
+			"hp": "Здоровье",
+			"characteristics": "Характеристики ",
+			"strength": "Сила",
+			"intelligence": "Интеллект",
+			"wisdom": "Мудрость",
+			"dexterity": "Ловкость",
+			"constitution": "Телосложение",
+			"charisma": "Харизма",
+			"sex": "Пол",
+			"race": "Раса",
+			"theClass": "Класс",
+			"gender": "Гендер (голос)",
+			"fightCharacteristics": "Боевые характеристики",
+			"naturalAc": "Естественная броня",
+			"effectiveAc": "Эффективная броня",
+			"thac0": "Thac0",
+			"numberOfAttacksPerRound": "Аттак в раунд",
+			"secondaryAbilities": "Способности",
+			"hideInShadows": "Сокрытие в тенях",
+			"detectIllusion": "Раскрытие иллюзий",
+			"setTraps": "Установка ловушек",
+			"lore": "Знания",
+			"lockpicking": "Взлом",
+			"moveSilently": "Красться",
+			"findOrDisarmTraps": "Обезвреживание ловушек",
+			"pickPockets": "Воровство",
+			"other": "Разное",
+			"soundsTitle": "Звуки",
+			"colourIndex": "Цвета",
+			"acModifier": "Модификатры класса брони",
+			"saveVersus": "Спасброски",
+			"resistances": "Сопротивления",
+			"proficiencies": "Специализации",
+			"scripts": "Скрипты",
+			"techInfo": "Техническая информация"
+		},
+		"itm": {
+			"talk": "Поговорить",
+			"unidentifiedDescriptionTlk": "Описание до опознания",
+			"identifiedDescriptionTlk": "Описание после опознания",
+			"properties": "Свойства",
+			"abilities": "Абилка предмета",
+			"abilitiesEffects": "Эффект абилки",
+			"effects": "Эффект премета"
+		}
+	},
+	"settings": {
+		"gameInterfaceSettings": "Настройки интерфейса игры",
+		"serverSettings": "Настройки сервера",
+		"saveDefaultsToJson": "Сохранить пути в asclepius.defaults.json",
+		"saveDefaultsSaved": "Записано в json",
+		"saveDefaultsFailed": "Не записалось, смотри F12",
+		"backendUrl": {
+			"title": "Адрес сервера",
+			"pinging": "Проверяю",
+			"pingSucceed": "Норм",
+			"pingFailed": "Не норм"
+		},
+		"ghostDir": {
+			"title": "Директория planar-ghost",
+			"loading": "Загружаю...",
+			"saving": "Проверяю...",
+			"saved": "Сохранено",
+			"failed": "Ошибка, см. F12"
+		},
+		"prismDir": {
+			"title": "Директория planar-prism",
+			"loading": "Загружаю...",
+			"saving": "Проверяю...",
+			"saved": "Сохранено",
+			"failed": "Ошибка, см. F12"
+		},
+		"shellDir": {
+			"title": "Директория planar-shell",
+			"loading": "Загружаю...",
+			"saving": "Проверяю...",
+			"saved": "Сохранено",
+			"failed": "Ошибка, см. F12"
+		},
+		"modsDir": {
+			"title": "Директория модов",
+			"loading": "Загружаю...",
+			"saving": "Проверяю...",
+			"saved": "Сохранено",
+			"failed": "Ошибка, см. F12"
+		},
+		"dlgRenderer": {
+			"title": "Вид диалога",
+			"pstee": "Как в оригинале",
+			"pstee-two-columns": "Как в оригинале, но в две колонки",
+			"narrat": "Как в Narrat"
+		},
+		"dlgHistory": {
+			"title": "История диалогов",
+			"tlkCacheMaxLines": "Строк TLK в памяти (LRU)",
+			"pageSize": "Строк на странице",
+			"browsedPages": "Страниц в браузере",
+			"storedPages": "Страниц на жёстком диске",
+			"unlimited": "Хранить без ограничений",
+			"apply": "Применить настройки",
+			"reset": "Сброс",
+			"help": "История диалогов хранится страницами. На каждой странице {{pageSize}} строк. У каждой строки есть номер, но нет перевода. На экран подгружаются {{browsedPages}} последних страниц из {{storedPages}}, хранящихся на жёстком диске. Переводы для строк хранятся в lru кэше, который вмещает {{tlkCacheMaxLines}} элементов. При промахе кэша переводы подгружаются с asclepius.\nЧем больше страниц хранится на жёстком диске - тем больше места на диске потребляет игра, но тем дальше в прошлое можно пролистать историю диалогов.\nЧем больше страниц подгружается на экран с жёсткого диска, тем больше нагрузка на браузер."
+		},
+		"theme": {
+			"title": "Цветовая тема"
+		},
+		"language": {
+			"title": "Язык интерфейса"
+		},
+		"dlgMarks": {
+			"title": "Метки в диалогах",
+			"markDisposers": "Отмечать завершающие реплики",
+			"markExterns": "Отмечать extern (dev)"
+		},
+		"localData": {
+			"clearLocalStorage": "Очистить local storage",
+			"clearIndexedDb": "Очистить indexedDb"
+		}
+	},
+	"stores": {
+		"tabs": {
+			"title": "Данные",
+			"narrative": {
+				"title": "Повествовательные",
+				"search": "Всего {{amount}} переменных"
+			},
+			"characters": {
+				"title": "Персонажи",
+				"search": "Всего {{amount}} персонажей",
+				"namelessOne": "Безымянный",
+				"morte": "Морт",
+				"annah": "Анна",
+				"dakkon": "Даккон",
+				"grace": "Падшая Грация",
+				"nordom": "Нордом",
+				"ignus": "Игнус",
+				"vhailor": "Вейлор",
+				"deionarra": "Дейонарра",
+				"ravel": "Равель"
+			}
+		}
+	},
+	"themes": {
+		"light": "Светлая",
+		"dark": "Тёмная"
+	}
 }

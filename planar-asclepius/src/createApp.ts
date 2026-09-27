@@ -1,3 +1,6 @@
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
+
 import cors from 'cors';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
@@ -14,6 +17,9 @@ import type { JsonObject } from 'swagger-ui-express';
 
 import type { Paths } from '@/shared/createPaths.types.js';
 
+const require = createRequire(import.meta.url);
+const CLIENT_FILES = new Set(['client.js', 'contract.js']);
+
 export type CreatedApp = Readonly<{
   app: Express;
   paths: Paths;
@@ -21,21 +27,34 @@ export type CreatedApp = Readonly<{
 
 const sendFile = (res: Response, fullPath: string) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   if (fullPath.endsWith('.js')) {
     res.type('application/javascript');
   }
   return res.status(200).sendFile(fullPath);
 };
 
-export const createApp = (paths: Paths): CreatedApp => {
+export const createApp = (paths: Paths, options: { serveClientMods: boolean }): CreatedApp => {
   const app = express();
 
   app.use(express.json());
   app.use(cors({
-    origin: 'http://localhost:3000', // TODO [snow]: do not hardcode it
+    origin: 'http://localhost:3000',
     credentials: true,
   }));
   app.use(attachPlanarPaths(paths));
+
+  if (options.serveClientMods) {
+    const conformanceDir = dirname(require.resolve('@planar/mods/conformance/contract'));
+    app.get('/client-mods/conformance/:file', (req, res) => {
+      const file = req.params.file;
+      if (typeof file !== 'string' || !CLIENT_FILES.has(file)) {
+        res.status(404).json({ error: { message: 'Unknown client mod file', code: 'not_found' } });
+        return;
+      }
+      sendFile(res, join(conformanceDir, file));
+    });
+  }
 
   app.get('/api/swagger/swagger.json', (_req, res) => {
     res.setHeader('Content-Type', 'application/json');

@@ -4,9 +4,9 @@ Scope: closest guidance for `planar-kernel/**`; inherit the root guide.
 
 ## Status
 
-- **VERIFIED CURRENT STATE:** this is an intentionally empty package shell. The
-  fixed legacy World, snapshots, patch folding, and walk-grid helpers were
-  removed in Milestone 0.
+- **VERIFIED CURRENT STATE:** deterministic session kernel. Frozen registry,
+  monotonic entity ids, protocol tables, resources, atomic transactions,
+  sequential systems, named PRNG streams, and checkpoint hashes.
 - **NORMATIVE TARGET:** own the policy-free deterministic runtime substrate
   defined by the canonical architecture.
 - Do not reconstruct deleted behavior from git history. New APIs arrive through
@@ -38,5 +38,4 @@ Scope: closest guidance for `planar-kernel/**`; inherit the root guide.
 
 - Build: `yarn workspace @planar/kernel build`
 - Lint: `yarn workspace @planar/kernel lint`
-- There is no kernel test command in Milestone 0. Add tests with the first real
-  runtime primitives; do not claim coverage from the package shell.
+- Unit test, only with user permission: `yarn workspace @planar/kernel test`

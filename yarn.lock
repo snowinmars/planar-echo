@@ -1816,6 +1816,8 @@ __metadata:
   resolution: "@planar/daemon@workspace:planar-daemon"
   dependencies:
     "@eslint/js": "npm:^10.0.1"
+    "@planar/kernel": "workspace:*"
+    "@planar/shared": "workspace:*"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/node": "npm:^25.5.0"
     "@typescript-eslint/parser": "npm:^8.57.1"
@@ -1849,11 +1851,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@planar/kernel@workspace:planar-kernel":
+"@planar/kernel@workspace:*, @planar/kernel@workspace:planar-kernel":
   version: 0.0.0-use.local
   resolution: "@planar/kernel@workspace:planar-kernel"
   dependencies:
     "@eslint/js": "npm:^10.0.1"
+    "@planar/shared": "workspace:*"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/node": "npm:^25.5.0"
     "@typescript-eslint/parser": "npm:^8.57.1"
@@ -1862,6 +1865,7 @@ __metadata:
     eslint-plugin-import-x: "npm:^4.17.1"
     eslint-plugin-simple-import-sort: "npm:^14.0.0"
     tsc-alias: "npm:^1.8.16"
+    tsx: "npm:^4.22.2"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.57.1"
   languageName: unknown
@@ -1872,6 +1876,7 @@ __metadata:
   resolution: "@planar/mods@workspace:planar-mods"
   dependencies:
     "@eslint/js": "npm:^10.0.1"
+    "@planar/shared": "workspace:*"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/node": "npm:^25.5.0"
     "@typescript-eslint/parser": "npm:^8.57.1"

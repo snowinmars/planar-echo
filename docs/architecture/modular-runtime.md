@@ -51,6 +51,26 @@ implementation.
 - The legacy `Envelope`, `WorldEffect`, hooks, queries, `active.json`
   composition, authored runtime mods, and their loaders have been removed.
 
+## VERIFIED MILESTONE 1 STATE
+
+- `@planar/shared` owns browser-safe runtime tokens, canonical codecs, modpack
+  resolution, and session frames.
+- `@planar/kernel` runs one deterministic session: frozen registry, entity ids,
+  protocol tables, resources, atomic transactions, a systems DAG, named PRNG
+  streams, and checkpoint hashes.
+- `@planar/daemon` is an IPC worker: it loads one server entry, admits
+  commands, ticks, and projects rows. It does not speak HTTP.
+- `@planar/asclepius` forks one daemon when the role is `session-gateway` or
+  `both`, and serves the conformance client entry only for `client-host` or
+  `both`.
+- `@planar/mods` contains the permanent conformance dot: transform protocol,
+  move command, integrate system, Canvas2D client.
+- Shell `/play` is a read-only replica. `clientOrigin` and `sessionOrigin` are
+  separate. Two seats are `alpha` and `bravo`.
+- Reconnect, catch-up, save/replay, and per-client backpressure are not
+  implemented. A hash here is FNV-1a 64 of canonical JSON, not a cryptographic
+  digest.
+
 ## Session invariant
 
 ### NORMATIVE TARGET
