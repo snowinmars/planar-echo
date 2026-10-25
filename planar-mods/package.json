@@ -36,6 +36,16 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./catalog": {
+      "import": "./dist/catalog.js",
+      "types": "./dist/catalog.d.ts",
+      "default": "./dist/catalog.js"
+    },
+    "./modpack": {
+      "import": "./dist/manifest.js",
+      "types": "./dist/manifest.d.ts",
+      "default": "./dist/manifest.js"
+    },
     "./conformance/contract": {
       "import": "./dist/conformance/contract.js",
       "types": "./dist/conformance/contract.d.ts",

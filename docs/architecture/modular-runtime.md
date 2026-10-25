@@ -83,8 +83,8 @@ One session consists of:
 - one monotonically advancing logical tick;
 - zero or more authenticated principals connected through a gateway.
 
-The registry, mod instances, provider choices, execution plan, schemas, wire
-IDs, authoritative artifact hashes, and configuration are immutable for the
+The registry, mod instances, provider choices, execution plan, schemas, token
+keys, authoritative artifact hashes, and configuration are immutable for the
 session lifetime. Installing or editing files cannot mutate a running session.
 A changed composition starts a new session.
 
@@ -114,8 +114,8 @@ Every protocol/resource contract has:
 - canonical bytes suitable for wire frames, snapshots, logs, and hashes.
 
 Registration happens only while resolving and booting a session. Unknown
-protocols cannot appear after registry freeze. Wire IDs are lock-derived and
-must never depend on JavaScript import order.
+protocols cannot appear after registry freeze. Token keys are the frozen
+identity and must never depend on JavaScript import order.
 
 Behavioral state that affects future authority belongs in World or in another
 kernel-owned persisted primitive. Hidden mutable module state is forbidden.
@@ -257,7 +257,7 @@ choices, and server policy. The resolver:
 1. resolves one exact artifact version per mod ID;
 2. computes and validates the dependency closure;
 3. resolves capabilities and optional features;
-4. registers contracts and assigns stable wire IDs;
+4. registers contracts and freezes token keys;
 5. validates grants and the systems DAG;
 6. hashes configs, executable artifacts, contracts, and authoritative content;
 7. emits an immutable lock and execution plan.

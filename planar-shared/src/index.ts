@@ -222,7 +222,7 @@ export type {
   CapabilityContract,
   ClientCommand,
   ClientFrame,
-  ClientHello,
+  ClientAnnouncedSessionLock,
   ClientMount,
   ClientMountHost,
   CommandContext,
@@ -235,11 +235,16 @@ export type {
   ModpackManifest,
   ProtocolContract,
   ProtocolRow,
-  Replication,
+  ReplicateTo,
   ResourceContract,
   ResourceRow,
   SeatDeclaration,
   ServerHost,
+  SessionFrame_AnnounceSessionLock,
+  SessionFrame_Bye,
+  SessionFrame_JoinedSession,
+  SessionFrame_Reject,
+  SessionFrame_ReplicateTo,
   SessionFrame,
   SystemContext,
   SystemContract,
@@ -253,3 +258,4 @@ export { canonicalHash, canonicalString, fnv1a64, resolveModpack, tokenKey } fro
 export type { SafeError } from './safeError.js';
 export { sleep } from './sleep.js';
 export { withoutExtension } from './withoutExtension.js';
+export { isRecord } from './isRecord.js'

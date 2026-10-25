@@ -1,6 +1,8 @@
-import { WORLD } from './contract.js';
+import { MOVE, WORLD } from './contract.js';
 
 import type { ClientMount } from '@planar/shared';
+
+export const commandId = MOVE;
 
 const COLORS: Record<number, string> = {
   1: '#4ea3ff',

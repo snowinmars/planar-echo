@@ -14,17 +14,17 @@ const MOVED = 'planar.conformance/moved@1';
 const INTEGRATE = 'planar.conformance/integrate@1';
 
 const contract = {
-  id: 'planar.conformance.dot',
+  id: 'planar.conformance',
   version: '1.0.0',
   protocols: [{
     kind: 'protocol',
     token: { id: 'planar.conformance/transform', version: 1 },
-    replication: 'session',
+    replicateTo: 'session',
   }],
   resources: [{
     kind: 'resource',
     token: { id: 'planar.conformance/intents', version: 1 },
-    replication: 'none',
+    replicateTo: 'none',
   }],
   commands: [{ kind: 'command', token: { id: 'planar.conformance/move', version: 1 } }],
   events: [{ kind: 'event', token: { id: 'planar.conformance/moved', version: 1 } }],
@@ -92,15 +92,14 @@ void test('two principals see both dots and cannot use a foreign epoch', () => {
   assert.equal(host.join('c-stranger', 'stranger', lock.lockHash).ok, false);
   assert.match(host.join('c-bad', 'bravo', 'deadbeef').ok ? '' : 'lock mismatch', /lock mismatch/);
 
-  assert.equal(host.admit('c-alpha', alpha.frame.rows[0] ? lock.commands[0]?.wireId ?? 0 : 0, 99, { dx: 1, dy: 0 }), 'stale connection epoch');
-  const moveWire = lock.commands[0]?.wireId ?? 0;
-  assert.equal(host.admit('c-alpha', moveWire, alpha.frame.connectionEpoch, { dx: 1, dy: 0 }), null);
+  assert.equal(host.admit('c-alpha', MOVE, 99, { dx: 1, dy: 0 }), 'stale connection epoch');
+  assert.equal(host.admit('c-alpha', MOVE, alpha.frame.connectionEpoch, { dx: 1, dy: 0 }), null);
   const frame = host.tick();
-  assert.equal(frame.type, 'replication');
-  if (frame.type !== 'replication') return;
+  assert.equal(frame.type, 'replicateTo');
+  if (frame.type !== 'replicateTo') return;
   const own = frame.rows.find(row => row.entityId === alpha.frame.ownedEntityId);
   assert.deepEqual(own?.value, { x: 1, y: 0 });
   const projected = host.project(frame);
   assert.equal(projected.length, 2);
-  assert.equal(projected[0]?.frame.type === 'replication' ? projected[0].frame.rows.length : 0, 2);
+  assert.equal(projected[0]?.frame.type === 'replicateTo' ? projected[0].frame.rows.length : 0, 2);
 });

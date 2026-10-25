@@ -23,7 +23,7 @@ export const patchTlk = (tlk: RawTlk): string => {
   for (let i = 0; i < values.length; i++) {
     const { index, text } = values[i]!;
 
-    writer.write(`"${index}": ${JSON.stringify(text)}`, 2);
+    writer.write(`'${index}': ${JSON.stringify(text)}`, 2);
 
     if (i < values.length - 1) writer.writeLine(',');
     else writer.br();

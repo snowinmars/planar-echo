@@ -8,14 +8,10 @@ import {
   WORLD,
 } from './contract.js';
 
-import type { ServerHost } from '@planar/shared';
+import { isRecord, type ServerHost } from '@planar/shared';
 
 type Point = { x: number; y: number };
 type Intent = { entityId: number; dx: number; dy: number };
-
-const isRecord = (value: unknown): value is Record<string, unknown> => {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-};
 
 const point = (value: unknown): Point | null => {
   if (!isRecord(value)) return null;

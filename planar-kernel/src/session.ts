@@ -5,7 +5,7 @@ import { NamedPrng, seedFromHash } from './prng.js';
 import type { FrozenLock, ProtocolRow, ResourceRow, TransientEvent } from '@planar/shared';
 
 export type AdmittedCommand = Readonly<{
-  commandWireId: number;
+  commandId: string;
   principalId: string;
   payload: unknown;
 }>;
@@ -15,21 +15,21 @@ export type ScheduledCommand = AdmittedCommand & Readonly<{ earliestTick: number
 export type CommandHandler = (input: Readonly<{
   principalId: string;
   payload: unknown;
-  readProtocol: (entityId: number, wireId: number) => unknown;
-  writeProtocol: (entityId: number, wireId: number, value: unknown) => void;
-  readResource: (wireId: number) => unknown;
-  writeResource: (wireId: number, value: unknown) => void;
+  readProtocol: (entityId: number, key: string) => unknown;
+  writeProtocol: (entityId: number, key: string, value: unknown) => void;
+  readResource: (key: string) => unknown;
+  writeResource: (key: string, value: unknown) => void;
   createEntity: () => number;
 }>) => void;
 
 export type SystemHandler = (input: Readonly<{
   tick: number;
   prng: (name: string) => number;
-  readProtocol: (entityId: number, wireId: number) => unknown;
-  writeProtocol: (entityId: number, wireId: number, value: unknown) => void;
-  readResource: (wireId: number) => unknown;
-  writeResource: (wireId: number, value: unknown) => void;
-  emit: (wireId: number, data: unknown) => void;
+  readProtocol: (entityId: number, key: string) => unknown;
+  writeProtocol: (entityId: number, key: string, value: unknown) => void;
+  readResource: (key: string) => unknown;
+  writeResource: (key: string, value: unknown) => void;
+  emit: (key: string, data: unknown) => void;
   schedule: (earliestTick: number, command: AdmittedCommand) => void;
 }>) => void;
 
@@ -45,12 +45,12 @@ export type TickResult = Readonly<{
 type Staged = {
   creates: number[];
   protocols: Map<string, unknown>;
-  resources: Map<number, unknown>;
+  resources: Map<string, unknown>;
   events: TransientEvent[];
   seats: Map<string, number>;
 };
 
-const cell = (entityId: number, wireId: number): string => `${entityId}:${wireId}`;
+const cell = (entityId: number, key: string): string => `${entityId}:${key}`;
 
 const cloneData = (value: unknown): unknown => {
   if (value === undefined) throw new Error('Undefined is not world data');
@@ -62,10 +62,10 @@ export class SessionKernel {
   private nextEntity = 1;
   private readonly alive = new Set<number>();
   private readonly protocols = new Map<string, unknown>();
-  private readonly resources = new Map<number, unknown>();
-  private readonly protocolReplication = new Map<number, FrozenLock['protocols'][number]['replication']>();
-  private readonly resourceReplication = new Map<number, FrozenLock['resources'][number]['replication']>();
-  private readonly commandHandlers = new Map<number, CommandHandler>();
+  private readonly resources = new Map<string, unknown>();
+  private readonly protocolReplicateTo = new Map<string, FrozenLock['protocols'][number]['replicateTo']>();
+  private readonly resourceReplicateTo = new Map<string, FrozenLock['resources'][number]['replicateTo']>();
+  private readonly commandHandlers = new Map<string, CommandHandler>();
   private readonly systems: { id: string; handler: SystemHandler | null }[];
   private readonly scheduled: ScheduledCommand[] = [];
   private readonly seats = new Map<string, number>();
@@ -73,8 +73,8 @@ export class SessionKernel {
   private current: Staged | null = null;
 
   public constructor(private readonly lock: FrozenLock) {
-    for (const protocol of lock.protocols) this.protocolReplication.set(protocol.wireId, protocol.replication);
-    for (const resource of lock.resources) this.resourceReplication.set(resource.wireId, resource.replication);
+    for (const protocol of lock.protocols) this.protocolReplicateTo.set(protocol.key, protocol.replicateTo);
+    for (const resource of lock.resources) this.resourceReplicateTo.set(resource.key, resource.replicateTo);
     this.systems = lock.systems.map(id => ({ id, handler: null }));
     this.prng = new NamedPrng(seedFromHash(lock.lockHash));
   }
@@ -83,24 +83,24 @@ export class SessionKernel {
     return this.tick;
   }
 
-  public registerCommand(wireId: number, handler: CommandHandler): void {
-    if (![...this.lock.commands].some(command => command.wireId === wireId)) {
-      throw new Error(`Unknown command wire ${wireId}`);
+  public registerCommand(commandId: string, handler: CommandHandler): void {
+    if (![...this.lock.commands].some(command => command.key === commandId)) {
+      throw new Error(`Unknown command '${commandId}'`);
     }
-    if (this.commandHandlers.has(wireId)) throw new Error(`Command wire ${wireId} already has a handler`);
-    this.commandHandlers.set(wireId, handler);
+    if (this.commandHandlers.has(commandId)) throw new Error(`Command '${commandId}' already has a handler`);
+    this.commandHandlers.set(commandId, handler);
   }
 
   public registerSystem(id: string, handler: SystemHandler): void {
     const node = this.systems.find(system => system.id === id);
-    if (!node) throw new Error(`System "${id}" is not in the lock`);
-    if (node.handler) throw new Error(`System "${id}" already has a handler`);
+    if (!node) throw new Error(`System '${id}' is not in the lock`);
+    if (node.handler) throw new Error(`System '${id}' already has a handler`);
     node.handler = handler;
   }
 
   public assertHandlers(): void {
     for (const system of this.systems) {
-      if (!system.handler) throw new Error(`System "${system.id}" has no handler`);
+      if (!system.handler) throw new Error(`System '${system.id}' has no handler`);
     }
   }
 
@@ -120,27 +120,27 @@ export class SessionKernel {
     return this.stageCreate(this.mustStage());
   }
 
-  public readProtocol(entityId: number, wireId: number): unknown {
-    return this.readStagedProtocol(this.mustStage(), entityId, wireId);
+  public readProtocol(entityId: number, key: string): unknown {
+    return this.readStagedProtocol(this.mustStage(), entityId, key);
   }
 
-  public writeProtocol(entityId: number, wireId: number, value: unknown): void {
-    this.stageProtocol(this.mustStage(), entityId, wireId, value);
+  public writeProtocol(entityId: number, key: string, value: unknown): void {
+    this.stageProtocol(this.mustStage(), entityId, key, value);
   }
 
-  public readResource(wireId: number): unknown {
+  public readResource(key: string): unknown {
     const stage = this.mustStage();
-    return stage.resources.get(wireId) ?? this.resources.get(wireId);
+    return stage.resources.get(key) ?? this.resources.get(key);
   }
 
-  public writeResource(wireId: number, value: unknown): void {
-    this.stageResource(this.mustStage(), wireId, value);
+  public writeResource(key: string, value: unknown): void {
+    this.stageResource(this.mustStage(), key, value);
   }
 
   public bindSeat(principalId: string, entityId: number): void {
     const stage = this.mustStage();
     if (!this.lock.seats.some(seat => seat.principalId === principalId)) {
-      throw new Error(`Unknown principal "${principalId}"`);
+      throw new Error(`Unknown principal '${principalId}'`);
     }
     if (!this.entityVisible(stage, entityId)) throw new Error(`Unknown entity ${entityId}`);
     stage.seats.set(principalId, entityId);
@@ -158,7 +158,7 @@ export class SessionKernel {
     const due = this.scheduled.filter(command => command.earliestTick <= this.tick + 1);
     this.scheduled.splice(0, this.scheduled.length, ...this.scheduled.filter(command => command.earliestTick > this.tick + 1));
     const batch = [
-      ...due.map(command => ({ commandWireId: command.commandWireId, principalId: command.principalId, payload: command.payload })),
+      ...due.map(command => ({ commandId: command.commandId, principalId: command.principalId, payload: command.payload })),
       ...commands,
     ];
     for (const command of batch) {
@@ -167,17 +167,17 @@ export class SessionKernel {
     }
     for (const system of this.systems) {
       const handler = system.handler;
-      if (!handler) throw new Error(`System "${system.id}" has no handler`);
+      if (!handler) throw new Error(`System '${system.id}' has no handler`);
       const stage = this.openStage();
       try {
         handler({
           tick: this.tick + 1,
           prng: name => this.prng.next(name),
-          readProtocol: (entityId, wireId) => this.readStagedProtocol(stage, entityId, wireId),
-          writeProtocol: (entityId, wireId, value) => this.stageProtocol(stage, entityId, wireId, value),
-          readResource: wireId => stage.resources.get(wireId) ?? this.resources.get(wireId),
-          writeResource: (wireId, value) => this.stageResource(stage, wireId, value),
-          emit: (wireId, data) => stage.events.push({ wireId, data: cloneData(data) }),
+          readProtocol: (entityId, key) => this.readStagedProtocol(stage, entityId, key),
+          writeProtocol: (entityId, key, value) => this.stageProtocol(stage, entityId, key, value),
+          readResource: key => stage.resources.get(key) ?? this.resources.get(key),
+          writeResource: (key, value) => this.stageResource(stage, key, value),
+          emit: (key, data) => stage.events.push({ key, data: cloneData(data) }),
           schedule: (earliestTick, scheduled) => {
             if (earliestTick <= this.tick + 1) throw new Error('Scheduled command must target a future tick');
             this.scheduled.push({ ...scheduled, earliestTick });
@@ -188,7 +188,7 @@ export class SessionKernel {
       }
       catch (error: unknown) {
         const message = error instanceof Error ? error.message : 'system failed';
-        const failure = new Error(`System "${system.id}" failed: ${message}`);
+        const failure = new Error(`System '${system.id}' failed: ${message}`);
         (failure as Error & { cause: unknown }).cause = error;
         throw failure;
       }
@@ -209,7 +209,7 @@ export class SessionKernel {
       tick: this.tick,
       entities: [...this.alive].sort((left, right) => left - right),
       protocols: [...this.protocols.entries()].sort(([left], [right]) => left.localeCompare(right)),
-      resources: [...this.resources.entries()].sort(([left], [right]) => left - right),
+      resources: [...this.resources.entries()].sort(([left], [right]) => left.localeCompare(right)),
       prng: this.prng.exportState(),
       seats: [...this.seats.entries()].sort(([left], [right]) => left.localeCompare(right)),
       scheduled: this.scheduled,
@@ -218,24 +218,24 @@ export class SessionKernel {
 
   public projectedProtocols(): ProtocolRow[] {
     const rows: ProtocolRow[] = [];
-    for (const [key, value] of this.protocols) {
-      const [entityText, wireText] = key.split(':');
-      const entityId = Number(entityText);
-      const wireId = Number(wireText);
-      if (this.protocolReplication.get(wireId) === 'none') continue;
-      rows.push({ entityId, wireId, value });
+    for (const [cellKey, value] of this.protocols) {
+      const splitAt = cellKey.indexOf(':');
+      const entityId = Number(cellKey.slice(0, splitAt));
+      const key = cellKey.slice(splitAt + 1);
+      if (this.protocolReplicateTo.get(key) === 'none') continue;
+      rows.push({ entityId, key, value });
     }
-    rows.sort((left, right) => left.entityId - right.entityId || left.wireId - right.wireId);
+    rows.sort((left, right) => left.entityId - right.entityId || left.key.localeCompare(right.key));
     return rows;
   }
 
   public projectedResources(): ResourceRow[] {
     const rows: ResourceRow[] = [];
-    for (const [wireId, value] of this.resources) {
-      if (this.resourceReplication.get(wireId) === 'none') continue;
-      rows.push({ wireId, value });
+    for (const [key, value] of this.resources) {
+      if (this.resourceReplicateTo.get(key) === 'none') continue;
+      rows.push({ key, value });
     }
-    rows.sort((left, right) => left.wireId - right.wireId);
+    rows.sort((left, right) => left.key.localeCompare(right.key));
     return rows;
   }
 
@@ -244,17 +244,17 @@ export class SessionKernel {
   }
 
   private applyCommand(command: AdmittedCommand, events: TransientEvent[]): string | null {
-    const handler = this.commandHandlers.get(command.commandWireId);
-    if (!handler) return `no handler for command ${command.commandWireId}`;
+    const handler = this.commandHandlers.get(command.commandId);
+    if (!handler) return `no handler for command ${command.commandId}`;
     const stage = this.openStage();
     try {
       handler({
         principalId: command.principalId,
         payload: command.payload,
-        readProtocol: (entityId, wireId) => this.readStagedProtocol(stage, entityId, wireId),
-        writeProtocol: (entityId, wireId, value) => this.stageProtocol(stage, entityId, wireId, value),
-        readResource: wireId => stage.resources.get(wireId) ?? this.resources.get(wireId),
-        writeResource: (wireId, value) => this.stageResource(stage, wireId, value),
+        readProtocol: (entityId, key) => this.readStagedProtocol(stage, entityId, key),
+        writeProtocol: (entityId, key, value) => this.stageProtocol(stage, entityId, key, value),
+        readResource: key => stage.resources.get(key) ?? this.resources.get(key),
+        writeResource: (key, value) => this.stageResource(stage, key, value),
         createEntity: () => this.stageCreate(stage),
       });
       events.push(...stage.events);
@@ -280,19 +280,19 @@ export class SessionKernel {
     return this.alive.has(entityId) || stage.creates.includes(entityId);
   }
 
-  private stageProtocol(stage: Staged, entityId: number, wireId: number, value: unknown): void {
-    if (!this.protocolReplication.has(wireId)) throw new Error(`Unknown protocol wire ${wireId}`);
+  private stageProtocol(stage: Staged, entityId: number, key: string, value: unknown): void {
+    if (!this.protocolReplicateTo.has(key)) throw new Error(`Unknown protocol '${key}'`);
     if (!this.entityVisible(stage, entityId)) throw new Error(`Unknown entity ${entityId}`);
-    stage.protocols.set(cell(entityId, wireId), cloneData(value));
+    stage.protocols.set(cell(entityId, key), cloneData(value));
   }
 
-  private stageResource(stage: Staged, wireId: number, value: unknown): void {
-    if (!this.resourceReplication.has(wireId)) throw new Error(`Unknown resource wire ${wireId}`);
-    stage.resources.set(wireId, cloneData(value));
+  private stageResource(stage: Staged, key: string, value: unknown): void {
+    if (!this.resourceReplicateTo.has(key)) throw new Error(`Unknown resource '${key}'`);
+    stage.resources.set(key, cloneData(value));
   }
 
-  private readStagedProtocol(stage: Staged, entityId: number, wireId: number): unknown {
-    return stage.protocols.get(cell(entityId, wireId)) ?? this.protocols.get(cell(entityId, wireId));
+  private readStagedProtocol(stage: Staged, entityId: number, key: string): unknown {
+    return stage.protocols.get(cell(entityId, key)) ?? this.protocols.get(cell(entityId, key));
   }
 
   private commit(stage: Staged): void {
@@ -301,7 +301,7 @@ export class SessionKernel {
       this.nextEntity = Math.max(this.nextEntity, entityId + 1);
     }
     for (const [key, value] of stage.protocols) this.protocols.set(key, value);
-    for (const [wireId, value] of stage.resources) this.resources.set(wireId, value);
+    for (const [key, value] of stage.resources) this.resources.set(key, value);
     for (const [principalId, entityId] of stage.seats) this.seats.set(principalId, entityId);
   }
 

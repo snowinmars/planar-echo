@@ -2,6 +2,36 @@
 
 Scope: closest guidance for `planar-asclepius/**`; inherit the root guide.
 
+sequenceDiagram
+  participant Mod as client mod
+  participant Shell as Shell /play
+  participant Gw as Asclepius gateway
+  participant Host as daemon host
+  participant Ker as kernel
+
+  Note over Gw,Host: старт сессии, клиента ещё нет
+  Gw->>Host: IPC boot(lock, serverModuleUrls)
+  Host->>Gw: IPC ready(sessionId, lockHash)
+
+  Shell->>Gw: WebSocket /api/session
+  Gw->>Shell: announceSessionLock
+  Shell->>Gw: hello(seat, lockHash)
+  Gw->>Host: IPC join
+  Host->>Gw: IPC deliver(joinedSession | reject)
+  Gw->>Shell: тот же SessionFrame
+
+  Mod->>Shell: sendMove(dx, dy)
+  Shell->>Gw: command(commandId, epoch, payload)
+  Gw->>Host: IPC command
+  Note over Host,Ker: очередь до тика 50 мс
+  Host->>Ker: runTick
+  Ker-->>Host: TickResult
+  Host->>Gw: IPC deliver(replication на каждое соединение)
+  Gw->>Shell: replication
+  Shell->>Mod: readTransforms()
+
+  Note over Host,Shell: admit отверг — deliver(reject). Демон умер — gateway сам шлёт bye. Сокет закрылся — IPC leave, кадра нет.
+
 ## Status and ownership
 
 - **VERIFIED CURRENT STATE:** own HTTP/REST, OpenAPI, Shell and Ghost delivery,

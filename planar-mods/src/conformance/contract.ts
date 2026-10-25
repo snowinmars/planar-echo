@@ -1,4 +1,4 @@
-import type { ModContract, ModpackManifest } from '@planar/shared';
+import type { ModContract } from '@planar/shared';
 
 export const TRANSFORM = 'planar.conformance/transform@1';
 export const INTENTS = 'planar.conformance/intents@1';
@@ -10,18 +10,18 @@ export const BOUNDS = 'planar.conformance/render@1';
 export const STEP = 12;
 export const WORLD = 480;
 
-export const conformanceContract = {
-  id: 'planar.conformance.dot',
+export const contract: ModContract = {
+  id: 'planar.conformance',
   version: '1.0.0',
   protocols: [{
     kind: 'protocol',
     token: { id: 'planar.conformance/transform', version: 1 },
-    replication: 'session',
+    replicateTo: 'session',
   }],
   resources: [{
     kind: 'resource',
     token: { id: 'planar.conformance/intents', version: 1 },
-    replication: 'none',
+    replicateTo: 'none',
   }],
   commands: [{
     kind: 'command',
@@ -38,17 +38,7 @@ export const conformanceContract = {
   }],
   systems: [{
     id: INTEGRATE,
-    after: [],
     before: [],
+    after: [],
   }],
-} as const satisfies ModContract;
-
-export const conformanceManifest = {
-  id: 'planar.conformance.dot',
-  version: '1.0.0',
-  mods: [{ id: conformanceContract.id, version: conformanceContract.version }],
-  seats: [
-    { principalId: 'alpha', commands: [MOVE] },
-    { principalId: 'bravo', commands: [MOVE] },
-  ],
-} as const satisfies ModpackManifest;
+} as const;

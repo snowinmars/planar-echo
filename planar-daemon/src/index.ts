@@ -2,13 +2,9 @@ import { randomUUID } from 'node:crypto';
 
 import { SessionHost } from './host.js';
 
-import type { DaemonInbound, DaemonOutbound, SessionFrame } from '@planar/shared';
+import { isRecord, type DaemonInbound, type DaemonOutbound, type SessionFrame } from '@planar/shared';
 
 const TICK_MS = 50;
-
-const isRecord = (value: unknown): value is Record<string, unknown> => {
-  return typeof value === 'object' && value !== null;
-};
 
 const send = (message: DaemonOutbound): void => {
   if (!process.send) throw new Error('Daemon has no IPC channel');
@@ -41,7 +37,7 @@ const main = (): void => {
     ticking = true;
     try {
       const frame = host.tick();
-      if (frame.type !== 'replication') return;
+      if (frame.type !== 'replicateTo') return;
       for (const delivery of host.project(frame)) {
         send({ type: 'deliver', connectionId: delivery.connectionId, frame: delivery.frame });
       }
@@ -69,7 +65,7 @@ const main = (): void => {
       case 'boot': {
         if (host) throw new Error('Session is already booted');
         host = new SessionHost(randomUUID(), message.lock);
-        await host.loadServer(message.serverModuleUrl);
+        await host.loadServers(message.serverModuleUrls);
         timer = setInterval(tick, TICK_MS);
         send({ type: 'ready', sessionId: host.sessionId, lockHash: host.lockHash });
         return;
@@ -87,7 +83,7 @@ const main = (): void => {
         if (!host) throw new Error('Session is not booted');
         const reason = host.admit(
           message.connectionId,
-          message.commandWireId,
+          message.commandId,
           message.connectionEpoch,
           message.payload,
         );

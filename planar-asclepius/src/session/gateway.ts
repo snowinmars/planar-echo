@@ -1,10 +1,10 @@
 import { fork } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
-import { dirname, join } from 'node:path';
-import { pathToFileURL } from 'node:url';
 
-import { resolveModpack } from '@planar/shared';
+import { readModCatalog } from '@planar/mods/catalog';
+import { manifest } from '@planar/mods/modpack';
+import { isNothing, isRecord, nothing, resolveModpack } from '@planar/shared';
 
 import logger from '@/shared/logger.js';
 
@@ -12,9 +12,21 @@ import type { ChildProcess } from 'node:child_process';
 
 import type { WebSocket } from 'ws';
 
-import type { DaemonInbound, DaemonOutbound, FrozenLock, ModContract, ModpackManifest, SessionFrame } from '@planar/shared';
+import type {
+  ClientAnnouncedSessionLock,
+  ClientCommand,
+  DaemonInbound,
+  DaemonOutbound,
+  FrozenLock,
+  Maybe,
+  ModContract,
+  SessionFrame,
+  SessionFrame_AnnounceSessionLock
+} from '@planar/shared';
 
 const require = createRequire(import.meta.url);
+
+const WS_TRY_AGAIN_LATER = 1013;
 
 const messageText = (data: unknown): string => {
   if (typeof data === 'string') return data;
@@ -26,105 +38,140 @@ const messageText = (data: unknown): string => {
   throw new Error('Session frame is not text');
 };
 
-const isRecord = (value: unknown): value is Record<string, unknown> => {
-  return typeof value === 'object' && value !== null;
-};
-
 type SocketState = {
   id: string;
   socket: WebSocket;
   epoch: number | null;
 };
 
+const parsedIsClientAnnouncedSessionLock = (parsed: unknown): parsed is ClientAnnouncedSessionLock => {
+  if (!isRecord(parsed) || typeof parsed.type !== 'string') return false;
+  // TODO [snow]: add zod validation?
+  return parsed.type === 'announcedSessionLock';
+}
+const parsedIsClientCommand = (parsed: unknown): parsed is ClientCommand => {
+  if (!isRecord(parsed) || typeof parsed.type !== 'string') return false;
+  // TODO [snow]: add zod validation?
+  return parsed.type === 'command';
+}
+
+const loadContract = async (specifier: string): Promise<ModContract> => {
+  const loaded: unknown = await import(specifier);
+  // TODO [snow]: add zod?
+  if (!isRecord(loaded) || !loaded.contract) throw new Error(`Mod contract module '${specifier}' has no contract export`);
+
+  return loaded.contract as ModContract;
+};
+
 export class SessionGateway {
-  private child: ChildProcess | null = null;
-  private lock: FrozenLock | null = null;
+  private daemonChild: Maybe<ChildProcess> = nothing();
+  private modpackLock: Maybe<FrozenLock> = nothing();
   private ready = false;
-  private readonly sockets = new Map<string, SocketState>();
-  private stopping = false;
+  private sockets = new Map<string, SocketState>();
 
   public get lockHash(): string {
-    if (!this.lock) throw new Error('Session lock is not resolved');
-    return this.lock.lockHash;
+    if (isNothing(this.modpackLock)) throw new Error('Modpack lock is not resolved for this session');
+    return this.modpackLock.lockHash;
   }
 
   public async start(): Promise<void> {
-    const conformanceDir = dirname(require.resolve('@planar/mods/conformance/contract'));
-    const contractUrl = join(conformanceDir, 'contract.js');
-    const serverModuleUrl = join(conformanceDir, 'server.js');
-    const loaded: unknown = await import(pathToFileURL(contractUrl).href);
-    if (!isRecord(loaded)) throw new Error('Conformance contract module is empty');
-    const manifest = loaded.conformanceManifest as ModpackManifest;
-    const contract = loaded.conformanceContract as ModContract;
-    this.lock = resolveModpack({ manifest, contracts: [contract] });
+    const descriptors = readModCatalog();
+
+    const loaded: { contract: ModContract; serverSpecifier: string }[] = [];
+    for (const descriptor of descriptors) {
+      loaded.push({
+        contract: await loadContract(descriptor.contractSpecifier),
+        serverSpecifier: descriptor.serverSpecifier,
+      });
+    }
+
+    this.modpackLock = resolveModpack({ manifest, contracts: loaded.map(entry => entry.contract) });;
+
+    const serverModuleUrls = this.modpackLock.mods.map((mod) => {
+      const loadedMod = loaded.find(x => x.contract.id === mod.id)!;
+      return import.meta.resolve(loadedMod.serverSpecifier);
+    });
+
     const daemonEntry = require.resolve('@planar/daemon');
-    const child = fork(daemonEntry, [], {
+    this.daemonChild = fork(daemonEntry, [], {
       stdio: ['ignore', 'inherit', 'inherit', 'ipc'],
     });
-    this.child = child;
-    child.on('exit', (code) => {
-      if (this.stopping) return;
+    this.daemonChild.on('exit', (code) => {
       this.failAll(`daemon exited (${code ?? 'null'})`);
     });
-    const ready = new Promise<void>((resolve, reject) => {
-      let settled = false;
-      const finish = (error?: Error): void => {
-        if (settled) return;
-        settled = true;
+
+    const waitForReadyFromDaemon = new Promise<void>((resolve, reject) => {
+      const awaited = (error: Maybe<Error> = nothing()): void => {
         if (error) reject(error);
         else resolve();
       };
+
       const onMessage = (message: DaemonOutbound): void => {
-        if (message.type === 'ready') {
-          this.ready = true;
-          finish();
-          return;
+        const t = message.type;
+
+        switch (t) {
+          case 'ready': {
+            this.ready = true;
+            awaited();
+            break;
+          }
+          case 'fatal': {
+            this.failAll(message.message);
+            awaited(new Error(message.message));
+            break;
+          }
+          case 'deliver':
+          case 'broadcast': {
+            this.onDaemon(message);
+            break;
+          }
+          default: throw new Error(`Unknown daemon message type '${t}'`);
         }
-        if (message.type === 'fatal') {
-          this.failAll(message.message);
-          finish(new Error(message.message));
-          return;
-        }
-        this.onDaemon(message);
       };
-      child.on('message', onMessage);
-      child.on('error', error => finish(error));
+
+      this.daemonChild?.on('message', onMessage);
+      this.daemonChild?.on('error', error => awaited(error));
     });
-    this.sendDaemon({ type: 'boot', lock: this.lock, serverModuleUrl });
-    await ready;
-    logger.info(`Session ${this.lock.lockHash} is authoritative`);
+
+    this.sendDaemon({ type: 'boot', lock: this.modpackLock, serverModuleUrls });
+
+    await waitForReadyFromDaemon;
+
+    logger.info(`Session ${this.modpackLock.lockHash} is authoritative`);
   }
 
   public stop(): void {
-    this.stopping = true;
-    if (this.child && !this.child.killed) {
+    this.ready = false;
+
+    if (this.daemonChild && !this.daemonChild.killed) {
       this.sendDaemon({ type: 'shutdown' });
-      this.child.kill();
+      this.daemonChild.kill(); // TODO [snow]: maybe not a best idea to kill after shutdown
     }
-    this.child = null;
+
+    this.daemonChild = nothing();
+
     for (const state of this.sockets.values()) state.socket.close();
     this.sockets.clear();
   }
 
   public attach(socket: WebSocket): void {
-    if (!this.lock || !this.ready) {
-      socket.close(1013, 'session is not ready');
+    if (!this.ready) {
+      socket.close(WS_TRY_AGAIN_LATER, 'Session is not ready');
       return;
     }
+
+    if (!this.modpackLock) throw new Error('Modpack was not locked after gateway became ready');
+
     const id = randomUUID();
     const state: SocketState = { id, socket, epoch: null };
     this.sockets.set(id, state);
-    const move = this.lock.commands.find(command => command.key === 'planar.conformance/move@1');
-    if (!move) {
-      socket.close(1011, 'move command missing');
-      return;
+
+    const m: SessionFrame_AnnounceSessionLock = {
+      type: 'announceSessionLock',
+      lockHash: this.modpackLock.lockHash,
+      allowedSeats: this.modpackLock.seats.map(seat => seat.principalId),
     }
-    this.send(socket, {
-      type: 'offer',
-      lockHash: this.lock.lockHash,
-      moveWireId: move.wireId,
-      seats: this.lock.seats.map(seat => seat.principalId),
-    });
+    this.send(socket, m);
     socket.on('message', (data) => {
       try {
         this.onClient(state, messageText(data));
@@ -142,11 +189,11 @@ export class SessionGateway {
 
   private onClient(state: SocketState, raw: string): void {
     const parsed: unknown = JSON.parse(raw);
-    if (!isRecord(parsed) || typeof parsed.type !== 'string') throw new Error('Malformed client frame');
-    if (parsed.type === 'hello') {
-      if (typeof parsed.principalId !== 'string' || typeof parsed.lockHash !== 'string') {
-        throw new Error('Malformed hello');
-      }
+
+    const isAnnouncedSessionLock = parsedIsClientAnnouncedSessionLock(parsed);
+    const isCommand = parsedIsClientCommand(parsed);
+
+    if (isAnnouncedSessionLock) {
       this.sendDaemon({
         type: 'join',
         connectionId: state.id,
@@ -155,20 +202,19 @@ export class SessionGateway {
       });
       return;
     }
-    if (parsed.type === 'command') {
-      if (typeof parsed.commandWireId !== 'number' || typeof parsed.connectionEpoch !== 'number') {
-        throw new Error('Malformed command');
-      }
+
+    if (isCommand) {
       this.sendDaemon({
         type: 'command',
         connectionId: state.id,
-        commandWireId: parsed.commandWireId,
+        commandId: parsed.commandId,
         connectionEpoch: parsed.connectionEpoch,
         payload: parsed.payload,
       });
       return;
     }
-    throw new Error(`Unknown client frame ${parsed.type}`);
+
+    throw new Error(`Unknown client frame '${parsed}'`);
   }
 
   private onDaemon(message: DaemonOutbound): void {
@@ -182,7 +228,7 @@ export class SessionGateway {
       case 'deliver': {
         const state = this.sockets.get(message.connectionId);
         if (!state) return;
-        if (message.frame.type === 'welcome') state.epoch = message.frame.connectionEpoch;
+        if (message.frame.type === 'joinedSession') state.epoch = message.frame.connectionEpoch;
         this.send(state.socket, message.frame);
         return;
       }
@@ -198,7 +244,7 @@ export class SessionGateway {
   }
 
   private sendDaemon(message: DaemonInbound): void {
-    this.child?.send(message);
+    this.daemonChild?.send(message);
   }
 
   private failAll(reason: string): void {

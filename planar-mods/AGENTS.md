@@ -4,9 +4,11 @@ Scope: closest guidance for `planar-mods/**`; inherit the root guide.
 
 ## Status
 
-- **VERIFIED CURRENT STATE:** permanent conformance modpack
-  `planar.conformance.dot` with contract, server, and Canvas2D client entries.
-  The package barrel stays empty so a static import cannot pull policy.
+- **VERIFIED CURRENT STATE:** permanent conformance mod
+  `planar.conformance` with contract, server, and Canvas2D client entries.
+  Session composition is the explicit `@planar/mods/modpack` entry
+  (`planar.modpack`): it lists member mods and seat grants. The package barrel
+  stays empty so a static import cannot pull policy.
 - **NORMATIVE TARGET:** own permanent multiplayer conformance mods and
   replaceable first-party PST:EE profile mods.
 - Do not restore hooks, queries, radio slots, `WorldEffect`, `active.json`, or

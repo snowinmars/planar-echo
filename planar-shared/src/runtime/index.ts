@@ -1,11 +1,11 @@
 export { canonicalHash, canonicalString, fnv1a64 } from './canonical.js';
-export type { ResolveInput } from './resolve.js';
-export { resolveModpack } from './resolve.js';
+export type { ResolveInput } from './resolveModpack.js';
+export { resolveModpack } from './resolveModpack.js';
 export type {
   CapabilityContract,
   ClientCommand,
   ClientFrame,
-  ClientHello,
+  ClientAnnouncedSessionLock,
   ClientMount,
   ClientMountHost,
   CommandContext,
@@ -18,11 +18,16 @@ export type {
   ModpackManifest,
   ProtocolContract,
   ProtocolRow,
-  Replication,
+  ReplicateTo,
   ResourceContract,
   ResourceRow,
   SeatDeclaration,
   ServerHost,
+  SessionFrame_AnnounceSessionLock,
+  SessionFrame_Bye,
+  SessionFrame_JoinedSession,
+  SessionFrame_Reject,
+  SessionFrame_ReplicateTo,
   SessionFrame,
   SystemContext,
   SystemContract,

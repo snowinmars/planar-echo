@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws';
 
-import { just } from '@planar/shared';
+import { just, type Maybe } from '@planar/shared';
 
 import { attachPrismIndexWs } from './prism/attachPrismIndexWs.js';
 
@@ -19,7 +19,7 @@ const pathnameOf = (req: IncomingMessage): string => {
 const createWsRouter = (
   server: Server<typeof IncomingMessage, typeof ServerResponse>,
   paths: Paths,
-  gateway: SessionGateway | null,
+  gateway: Maybe<SessionGateway>,
 ): void => {
   const prismWss = new WebSocketServer({ noServer: true });
   attachPrismIndexWs(prismWss, paths);

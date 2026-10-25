@@ -1,8 +1,6 @@
-const MAX_DEPTH = 32;
+import { isRecord } from "@/isRecord.js";
 
-const isRecord = (value: unknown): value is Record<string, unknown> => {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-};
+const MAX_DEPTH = 32;
 
 export const canonicalString = (value: unknown, depth = 0): string => {
   if (depth > MAX_DEPTH) throw new Error('Canonical value is too deep');
@@ -29,7 +27,7 @@ export const canonicalString = (value: unknown, depth = 0): string => {
   const keys = Object.keys(value).sort();
   const body = keys.map((key) => {
     const child = value[key];
-    if (child === undefined) throw new Error(`Canonical object key "${key}" is undefined`);
+    if (child === undefined) throw new Error(`Canonical object key '${key}' is undefined`);
     return `${JSON.stringify(key)}:${canonicalString(child, depth + 1)}`;
   });
 

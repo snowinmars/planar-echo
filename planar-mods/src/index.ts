@@ -1,7 +1,7 @@
 /**
- * First-party conformance modpack.
+ * First-party mods.
  *
- * Runtime packages load contract, server, and client through explicit entry
- * URLs. This barrel stays empty so a static import cannot pull policy.
+ * Runtime packages load the modpack, contract, server, and client through
+ * explicit entry URLs. This barrel stays empty so a static import cannot pull policy.
  */
 export {};
